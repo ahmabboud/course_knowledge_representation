@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ===========================================================================
+     LECTURE TEMPLATE — copy this file, rename it, replace the content.
+     Read AGENTS.md first. The short version:
+       1. Copy to lectures/<course>-session-NN.html
+       2. Fill in the <title>, <body data-*> attributes and the slide sections
+       3. Delete the slides you do not use. Do not delete the frame.
+       4. Add the lecture to index.html
+     Rules that matter:
+       · Never add a <style> block. Extend assets/lu.css instead.
+       · Every slide needs data-label (TOC + search) and data-minutes (pacing).
+       · Every slide needs a <template data-notes> — the presenter view and the
+         printed handout both read it.
+       · Nothing on a slide may be smaller than 20px.
+       · Two grounds only: default paper, and .slide--night for dividers.
+     =========================================================================== -->
+<title>SESSION TITLE — COURSE NAME, Session N</title>
+<meta name="description" content="One sentence. Shown in search results and link previews.">
+<meta name="theme-color" content="#96122B">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/lu.css?v=1.0.2">
+</head>
+
+<body
+  data-deck-id="COURSE-sNN"
+  data-course="COURSE NAME"
+  data-session="Session N of M"
+  data-duration="180"
+  data-app-root="../"
+  data-unit="Lebanese University · MSc">
+
+<a class="lu-skip" href="#slide-2">Skip to the first content slide</a>
+
+<div class="deck">
+<div class="deck__stage">
+
+<!-- ── 01 · TITLE ────────────────────────────────────────────────────────── -->
+<section class="slide slide--night" data-chrome="none" data-label="Title" data-section="Opening" data-minutes="2">
+  <div class="slide__body" style="justify-content:space-between">
+    <div class="lu-row" style="justify-content:space-between;align-items:flex-start">
+      <div class="lu-lockup">
+        <span class="lu-lockup__mark">LU</span>
+        <span class="lu-lockup__text">
+          <span class="lu-lockup__name">Lebanese University</span>
+          <span class="lu-lockup__unit">FACULTY · PROGRAMME</span>
+        </span>
+      </div>
+      <div class="lu-tag lu-tag--red" style="background:transparent;color:#FF9AA7;border-color:#96122B">Module N · MODULE NAME</div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-eyebrow">COURSE NAME · Session N of M</div>
+      <h1 class="lu-display" style="max-width:24ch">SESSION TITLE</h1>
+      <p class="lu-lead" style="max-width:44ch">The session objective, in one sentence, written as what the participant will be able to do.</p>
+    </div>
+    <div class="lu-row" style="justify-content:space-between;font-size:var(--lu-t-caption);color:var(--lu-on-night-2)">
+      <span>180 minutes · NN lecture · NN lab · NN discussion</span>
+      <span>Press <kbd>&rarr;</kbd> to begin · <kbd>?</kbd> for shortcuts</span>
+    </div>
+  </div>
+  <template data-notes><p>What to say in the first ninety seconds.</p></template>
+</section>
+
+<!-- ── 02 · RECAP / WHERE WE ARE ─────────────────────────────────────────── -->
+<section class="slide" data-label="Where we are" data-section="Opening" data-minutes="4">
+  <div class="lu-eyebrow">Recap</div>
+  <h2 class="lu-h1" style="max-width:30ch">One claim, not a summary.</h2>
+  <ul class="lu-pipeline" style="margin-top:var(--lu-s5)">
+    <li data-state="done"><span class="lu-pipeline__n">01</span><span class="lu-pipeline__t">Stage</span><span class="lu-pipeline__d">note</span></li>
+    <li data-state="active"><span class="lu-pipeline__n">02</span><span class="lu-pipeline__t">Stage</span><span class="lu-pipeline__d">You are here</span></li>
+    <li data-state="muted"><span class="lu-pipeline__n">03</span><span class="lu-pipeline__t">Stage</span><span class="lu-pipeline__d">note</span></li>
+  </ul>
+  <template data-notes><p>Notes.</p></template>
+</section>
+
+<!-- ── 03 · SECTION DIVIDER ──────────────────────────────────────────────── -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 1 · NAME" data-section="SECTION NAME" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part one of three · NN minutes</div>
+    <h2 class="lu-display-xl" style="max-width:20ch">Section name</h2>
+    <p class="lu-lead" style="max-width:40ch">Why this section exists, framed as the question it answers.</p>
+  </div>
+  <template data-notes><p>Ten seconds. Dividers are punctuation.</p></template>
+</section>
+
+<!-- ── 04 · CONTENT: split with a progressive build and a term popover ───── -->
+<section class="slide" data-label="Content slide" data-section="SECTION NAME" data-minutes="8">
+  <div class="lu-eyebrow">Eyebrow</div>
+  <h2 class="lu-h1" style="max-width:34ch">Headline that makes a claim</h2>
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <p class="lu-p">Body copy. Keep it under sixty characters a line and never below 20px.</p>
+      <ul class="lu-list">
+        <li>A point, with a <button class="lu-term" type="button" data-term="Term" data-kind="Category">term<template>The definition, one or two sentences. <p>A second paragraph for the thing that is not in the textbook.</p></template></button> that opens on click.</li>
+        <li>A second point.</li>
+      </ul>
+      <div class="lu-callout">
+        <span class="lu-callout__label">Trap</span>
+        <p class="lu-sub">The misconception this slide exists to break.</p>
+      </div>
+    </div>
+    <div class="lu-stack" data-build="1">
+      <div class="lu-code lu-code--sm" data-name="filename.ttl">
+<pre><code><span class="tok-com"># comment</span>
+<span class="tok-fn">:Thing</span> <span class="tok-kw">a</span> owl:Class .</code></pre>
+      </div>
+      <div class="lu-reveal" data-build="2">
+        <button class="lu-reveal__btn" type="button">Question the room will ask</button>
+        <div class="lu-reveal__panel" hidden><p>The answer.</p></div>
+      </div>
+    </div>
+  </div>
+  <template data-notes><p>Notes. Name the expected question and the answer.</p></template>
+</section>
+
+<!-- ── 05 · CHECK QUESTION ───────────────────────────────────────────────── -->
+<section class="slide slide--tint" data-label="Check question" data-section="SECTION NAME" data-minutes="4">
+  <div class="lu-eyebrow">Check question</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-mcq" data-qid="UNIQUE-q1" data-answer="b"
+         data-label="Short label for the self-check list"
+         data-fb-correct=" Why it is right, and what that implies."
+         data-fb-wrong=" What the wrong choice reveals about the misconception.">
+      <p class="lu-mcq__q">The question.</p>
+      <div class="lu-mcq__opts">
+        <button class="lu-mcq__opt" type="button" data-key="a">Option A<span class="lu-mcq__why" hidden>Why this is wrong.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="b">Option B<span class="lu-mcq__why" hidden>Correct, and why.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="c">Option C<span class="lu-mcq__why" hidden>Why this is wrong.</span></button>
+      </div>
+      <div class="lu-mcq__fb" hidden></div>
+    </div>
+    <div class="lu-callout lu-callout--concept">
+      <span class="lu-callout__label">The idea behind the question</span>
+      <p class="lu-sub">One sentence.</p>
+    </div>
+  </div>
+  <template data-notes><p>Give them forty seconds. The distractor that catches people is X, which tells you Y.</p></template>
+</section>
+
+<!-- ── 06 · LAB BRIEF ────────────────────────────────────────────────────── -->
+<section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="6">
+  <div class="lu-eyebrow">Hands-on lab · NN minutes · starts now</div>
+  <h2 class="lu-h1" style="max-width:32ch">What they build</h2>
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <ol class="lu-list lu-list--num">
+      <li>First step, phrased as an instruction.</li>
+      <li>Second step.</li>
+    </ol>
+    <div class="lu-callout lu-callout--concept">
+      <span class="lu-callout__label">Deliverable · end of session</span>
+      <p class="lu-sub">Exactly what is committed, and where.</p>
+    </div>
+  </div>
+  <template data-notes><p>Brief in NN minutes then stop talking. Most common blocker: …</p></template>
+</section>
+
+<!-- ── 07 · WRAP ─────────────────────────────────────────────────────────── -->
+<section class="slide slide--tint" data-label="Discussion and wrap" data-section="Wrap" data-minutes="8">
+  <div class="lu-eyebrow">Discussion and wrap · NN minutes</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <h2 class="lu-h2">The discussion prompt, as an instruction.</h2>
+      <ul class="lu-list"><li>What to report back.</li></ul>
+      <div class="lu-callout">
+        <span class="lu-callout__label">Before next session</span>
+        <p class="lu-sub">Reading, with chapters.</p>
+      </div>
+    </div>
+    <div class="lu-card">
+      <span class="lu-card__label">Next session</span>
+      <h3 class="lu-h3">Session N+1 · TITLE</h3>
+      <p class="lu-sub">One sentence connecting today to next week.</p>
+    </div>
+  </div>
+  <template data-notes><p>Notes.</p></template>
+</section>
+
+<!-- ── 08 · SELF-CHECK (keep this slide last) ────────────────────────────── -->
+<section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="4">
+  <div class="lu-eyebrow">Self-check</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <h2 class="lu-h2">How you did on this session's questions</h2>
+      <div data-score></div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">Studying alone?</span>
+        <p class="lu-sub">Press <kbd>S</kbd> for study mode. Every definition popup becomes an inline note, every reveal opens, every build step shows, and answers are filled in.</p>
+      </div>
+      <p class="lu-caption">Answers and position are stored in this browser only.</p>
+    </div>
+  </div>
+  <template data-notes><p>Close here so students leave knowing where the self-study affordances are.</p></template>
+</section>
+
+</div><!-- /stage -->
+</div><!-- /deck -->
+
+<!-- Only needed on lectures that use a .lu-query sandbox. Delete otherwise. -->
+<script src="../assets/sparql-lite.js?v=1.0.2"></script>
+<script src="../assets/lu-deck.js?v=1.0.2" defer></script>
+</body>
+</html>

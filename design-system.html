@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design system — LU Teaching Slides</title>
+<meta name="description" content="The design system and component library behind the Lebanese University interactive teaching slide template.">
+<meta name="theme-color" content="#96122B">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/lu.css?v=1.0.2">
+</head>
+<body class="page-mode" data-deck-id="design-system" data-app-root="./">
+
+<main class="page">
+
+<div class="page-hero">
+  <div class="lu-lockup">
+    <span class="lu-lockup__mark">LU</span>
+    <span class="lu-lockup__text">
+      <span class="lu-lockup__name">Lebanese University</span>
+      <span class="lu-lockup__unit">Interactive teaching slides · design system v1.0</span>
+    </span>
+  </div>
+  <h1>The design system behind the lectures</h1>
+  <p class="page-lede">One stylesheet, one runtime, twelve interactive components. Everything here is plain HTML, CSS and JavaScript with no build step and no dependencies, so a lecture is a single file an instructor can open from a USB stick or publish to GitHub Pages unchanged.</p>
+  <div class="lu-row" style="gap:var(--lu-s3)">
+    <a class="lu-btn lu-btn--primary lu-btn--sm" href="lectures/kr-session-03.html">Open the worked example lecture</a>
+    <a class="lu-btn lu-btn--sm" href="lectures/_template.html">Open the empty template</a>
+    <a class="lu-btn lu-btn--ghost lu-btn--sm" href="index.html">Course index</a>
+  </div>
+</div>
+
+<nav aria-label="On this page" style="margin-bottom:var(--lu-s10)">
+  <h2 class="lu-card__label" style="margin-bottom:var(--lu-s3)">On this page</h2>
+  <div class="ds-toc">
+    <a href="#principles">1 · Principles</a>
+    <a href="#colour">2 · Colour</a>
+    <a href="#type">3 · Typography</a>
+    <a href="#grounds">4 · Grounds and the slide frame</a>
+    <a href="#space">5 · Space, grid, layout</a>
+    <a href="#layouts">6 · Slide layouts</a>
+    <a href="#graphics">7 · Graphics kit</a>
+    <a href="#components">8 · Interactive components</a>
+    <a href="#runtime">9 · Runtime and keyboard</a>
+    <a href="#a11y">10 · Accessibility contract</a>
+    <a href="#rules">11 · Rules for agents</a>
+  </div>
+</nav>
+
+<!-- ============================================================ 1 -->
+<section id="principles">
+  <h2>1 · Principles</h2>
+  <p class="ds-note" style="margin-top:var(--lu-s4)">Five decisions that everything else follows from. If a new component contradicts one of these, the component is wrong.</p>
+  <div class="lu-cards" style="margin-top:var(--lu-s5)">
+    <div class="lu-card">
+      <span class="lu-card__label">01 · Graphic first, then prose</span>
+      <p class="ds-note">A slide's job is to carry one idea visually. Reach for a diagram primitive before a bullet list, and for a bullet list before a paragraph. Paragraphs belong in the speaker notes.</p>
+    </div>
+    <div class="lu-card">
+      <span class="lu-card__label">02 · Interaction that teaches</span>
+      <p class="ds-note">Every interactive element exists to make a misconception visible, not to decorate. A popover holds the definition a student would otherwise guess; a check question exists because a specific wrong answer is common.</p>
+    </div>
+    <div class="lu-card">
+      <span class="lu-card__label">03 · Motion is barely there</span>
+      <p class="ds-note">120 to 180 milliseconds, opacity and a six-pixel rise. Nothing spins, bounces, or parallaxes. <code>prefers-reduced-motion</code> collapses it to nothing and the deck still works.</p>
+    </div>
+    <div class="lu-card">
+      <span class="lu-card__label">04 · Static pages, no build</span>
+      <p class="ds-note">No bundler, no framework, no CDN at runtime beyond the webfonts. A lecture works from <code>file://</code>, from GitHub Pages, and offline once cached.</p>
+    </div>
+    <div class="lu-card">
+      <span class="lu-card__label">05 · Accessible by construction</span>
+      <p class="ds-note">Keyboard parity for every mouse interaction, 20px type floor, AA contrast, one visible focus treatment, and no colour-only signalling.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 2 -->
+<section id="colour">
+  <h2>2 · Colour</h2>
+  <p class="ds-note" style="margin-top:var(--lu-s4)">The palette is built on the Lebanese University's red, white and green. Red carries the brand and the slide frame; cedar green carries correctness and concepts; the neutrals are warm on the paper side and cool on the ink side, so a white slide never reads as clinical. <b>Two grounds per deck, no more.</b></p>
+
+  <h3 style="margin-top:var(--lu-s7)">Brand red — frame, emphasis, wrong answers</h3>
+  <div class="ds-swatches" style="margin-top:var(--lu-s4)">
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-red-900);color:#fff">#6E0D20</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-red-900</span><span class="ds-swatch__use">Text on red tints</span></div></div>
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-red-700);color:#fff">#96122B</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-red-700</span><span class="ds-swatch__use">Primary. Slide rule, eyebrows, primary buttons. 8.0:1 on white</span></div></div>
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-red-500);color:#fff">#D62839</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-red-500</span><span class="ds-swatch__use">Accent on night grounds only. Never body text on white</span></div></div>
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-red-050);color:var(--lu-red-900)">#FCF3F4</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-red-050</span><span class="ds-swatch__use">Callout and wrong-answer ground</span></div></div>
+  </div>
+
+  <h3 style="margin-top:var(--lu-s7)">Cedar green — concepts, correctness, inference</h3>
+  <div class="ds-swatches" style="margin-top:var(--lu-s4)">
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-green-900);color:#fff">#06371F</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-green-900</span><span class="ds-swatch__use">Text on green tints</span></div></div>
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-green-700);color:#fff">#0B5E3B</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-green-700</span><span class="ds-swatch__use">Correct answers, concept callouts. 7.6:1 on white</span></div></div>
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-green-500);color:#fff">#16A06A</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-green-500</span><span class="ds-swatch__use">Inferred edges in diagrams</span></div></div>
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-green-050);color:var(--lu-green-900)">#F1F8F4</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-green-050</span><span class="ds-swatch__use">Concept callout and correct-answer ground</span></div></div>
+  </div>
+
+  <h3 style="margin-top:var(--lu-s7)">Neutrals</h3>
+  <div class="ds-swatches" style="margin-top:var(--lu-s4)">
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-ink);color:#fff">#14171C</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-ink</span><span class="ds-swatch__use">Headings and primary text</span></div></div>
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-ink-2);color:#fff">#3E4650</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-ink-2</span><span class="ds-swatch__use">Secondary text, node outlines</span></div></div>
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-ink-3);color:#fff">#6B7480</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-ink-3</span><span class="ds-swatch__use">Captions. 4.6:1 on paper — the smallest text allowed</span></div></div>
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-paper-2);color:var(--lu-ink)">#F7F5F2</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-paper-2</span><span class="ds-swatch__use">Cards, code wells, tinted slides</span></div></div>
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-line);color:var(--lu-ink)">#DCD6CF</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-line</span><span class="ds-swatch__use">Hairlines</span></div></div>
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-night);color:var(--lu-on-night)">#101418</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-night</span><span class="ds-swatch__use">Section dividers, code blocks, presenter view</span></div></div>
+    <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--lu-focus);color:#fff">#0B63CE</div><div class="ds-swatch__meta"><span class="ds-swatch__name">--lu-focus</span><span class="ds-swatch__use">Focus ring. Deliberately not brand red, so focus never reads as an error</span></div></div>
+  </div>
+
+  <div class="lu-callout" style="margin-top:var(--lu-s6)">
+    <span class="lu-callout__label">The logo is a placeholder</span>
+    <p class="ds-note">The <code>LU</code> mark in the lockup is a typographic stand-in, not the university's crest. Save the official asset as <code>assets/lu-crest.svg</code> and swap the span for <code>&lt;span class="lu-lockup__mark"&gt;&lt;img src="assets/lu-crest.svg" alt="Lebanese University"&gt;&lt;/span&gt;</code>. Do not redraw the crest by hand.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 3 -->
+<section id="type">
+  <h2>3 · Typography</h2>
+  <p class="ds-note" style="margin-top:var(--lu-s4)"><b>Source Serif 4</b> for display and headlines — a scholarly voice with real optical sizing that survives projection. <b>IBM Plex Sans</b> for body, UI and captions. <b>IBM Plex Mono</b> for code, IRIs, identifiers and numeric columns. Three families, one job each.</p>
+
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>Slide type scale</b><span>literal px on the 1600×900 canvas</span><code>--lu-t-*</code></div>
+    <div class="ds-demo__stage lu-stack">
+      <div class="lu-eyebrow">Eyebrow · 20px · 0.12em tracking</div>
+      <div class="lu-display-xl" style="font-size:92px">Display XL · 92</div>
+      <div class="lu-display" style="font-size:68px">Display · 68 · section dividers</div>
+      <div class="lu-h1" style="font-size:54px">Heading 1 · 54 · slide headlines</div>
+      <div class="lu-h2" style="font-size:38px">Heading 2 · 38 · secondary headlines</div>
+      <div class="lu-h3" style="font-size:29px">Heading 3 · 29 · card and component titles</div>
+      <div class="lu-lead" style="font-size:31px;max-width:none">Lead · 31 · one-sentence framing under a headline</div>
+      <div style="font-size:26px">Body · 26 · the default. Lists, list items, callout copy.</div>
+      <div class="lu-sub" style="font-size:22px">Small · 22 · dense components, table cells, reveal panels</div>
+      <div class="lu-caption" style="font-size:20px">Caption · 20 · figure captions, footnotes. <b>This is the floor. Nothing goes below it.</b></div>
+    </div>
+  </div>
+
+  <div class="lu-callout lu-callout--concept" style="margin-top:var(--lu-s5)">
+    <span class="lu-callout__label">Why 1600 × 900 and not 1920 × 1080</span>
+    <p class="ds-note">A teaching slide carries more text than a keynote slide. At 1600 the same physical type size is a larger number, which makes the 20px floor comfortable rather than a constant fight. The runtime scales the canvas to any screen, so projection is unaffected.</p>
+  </div>
+
+  <h3 style="margin-top:var(--lu-s7)">Self-hosting the fonts</h3>
+  <p class="ds-note">The template loads the two families from Google Fonts. For a fully offline deck, drop the woff2 files into <code>assets/fonts/</code>, add <code>@font-face</code> rules to the <code>@font-face</code> block at the top of <code>lu.css</code>, and delete the three <code>&lt;link&gt;</code> tags from each lecture. Nothing else changes — the stack falls back to Georgia and the system sans, which are metrically close enough that layout does not break.</p>
+</section>
+
+<!-- ============================================================ 4 -->
+<section id="grounds">
+  <h2>4 · Grounds and the slide frame</h2>
+  <p class="ds-note" style="margin-top:var(--lu-s4)">Three grounds, and a deck may use at most the first two freely. The frame — course label, red rule, unit line, slide number — is injected by the runtime, so an author writes content only.</p>
+
+  <div class="lu-cards" style="margin-top:var(--lu-s5)">
+    <div class="lu-card">
+      <span class="lu-card__label">Default · paper</span>
+      <p class="ds-note">White. Every content slide. <code>&lt;section class="slide"&gt;</code></p>
+    </div>
+    <div class="lu-card">
+      <span class="lu-card__label">Tint · warm off-white</span>
+      <p class="ds-note">Marks a change of activity: a check question, a drill, a discussion. <code>.slide--tint</code></p>
+    </div>
+    <div class="lu-card">
+      <span class="lu-card__label">Night · deep ink</span>
+      <p class="ds-note">Title slide and section dividers only. Pair with <code>data-chrome="none"</code>. <code>.slide--night</code></p>
+    </div>
+  </div>
+
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>Frame anatomy</b><span>what the runtime adds around your content</span></div>
+    <div class="ds-demo__stage">
+      <div style="border:1px solid var(--lu-line);border-radius:var(--lu-r2);padding:var(--lu-s5);background:var(--lu-paper)">
+        <div style="display:flex;justify-content:space-between;border-bottom:2px solid var(--lu-red-700);padding-bottom:8px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--lu-ink-2)">
+          <span>Course name — from <code style="text-transform:none">data-course</code></span>
+          <span style="color:var(--lu-ink-3)">Section · session — from <code style="text-transform:none">data-section</code></span>
+        </div>
+        <div style="padding:var(--lu-s6) 0;color:var(--lu-ink-3);font-size:14px;text-align:center;border:1px dashed var(--lu-line-2);margin:var(--lu-s4) 0;border-radius:var(--lu-r2)">
+          <code>.slide__body</code> — everything you write goes here, wrapped automatically
+        </div>
+        <div style="display:flex;justify-content:space-between;border-top:1px solid var(--lu-line);padding-top:8px;font-size:13px;color:var(--lu-ink-3)">
+          <span>Unit line — from <code>data-unit</code></span><span>04 / 21</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lu-reveal" style="margin-top:var(--lu-s5)">
+    <button class="lu-reveal__btn" type="button">Slide attributes, and what each one drives</button>
+    <div class="lu-reveal__panel" hidden>
+      <table class="lu-table" style="font-size:15px">
+        <thead><tr><th>Attribute</th><th>Required</th><th>Drives</th></tr></thead>
+        <tbody>
+          <tr><td><code>data-label</code></td><td>Yes</td><td>Contents panel, search results, presenter heading, screen-reader announcement</td></tr>
+          <tr><td><code>data-section</code></td><td>Yes</td><td>Contents grouping and the right-hand side of the slide header</td></tr>
+          <tr><td><code>data-minutes</code></td><td>Yes</td><td>The pacing indicator: planned minutes against elapsed</td></tr>
+          <tr><td><code>&lt;template data-notes&gt;</code></td><td>Yes</td><td>Presenter view and the printed handout</td></tr>
+          <tr><td><code>data-chrome="none"</code></td><td>No</td><td>Suppresses the injected header and footer. Title and divider slides only</td></tr>
+          <tr><td><code>data-build</code></td><td>No</td><td>Progressive reveal step, on any element. Numbers group elements into one step</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 5 -->
+<section id="space">
+  <h2>5 · Space, grid, layout</h2>
+  <p class="ds-note" style="margin-top:var(--lu-s4)">A 4-based scale, a 12-column grid with a 34px gutter, and four split ratios. Sibling groups are laid out with flex or grid and <code>gap</code> — never with margins on individual children.</p>
+
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>Space scale</b><code>--lu-s1 … --lu-s10</code></div>
+    <div class="ds-demo__stage" style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap">
+      <div style="text-align:center"><div style="width:4px;height:4px;background:var(--lu-red-700)"></div><div class="lu-caption" style="font-size:11px">4</div></div>
+      <div style="text-align:center"><div style="width:8px;height:8px;background:var(--lu-red-700)"></div><div class="lu-caption" style="font-size:11px">8</div></div>
+      <div style="text-align:center"><div style="width:12px;height:12px;background:var(--lu-red-700)"></div><div class="lu-caption" style="font-size:11px">12</div></div>
+      <div style="text-align:center"><div style="width:16px;height:16px;background:var(--lu-red-700)"></div><div class="lu-caption" style="font-size:11px">16</div></div>
+      <div style="text-align:center"><div style="width:24px;height:24px;background:var(--lu-red-700)"></div><div class="lu-caption" style="font-size:11px">24</div></div>
+      <div style="text-align:center"><div style="width:32px;height:32px;background:var(--lu-red-700)"></div><div class="lu-caption" style="font-size:11px">32</div></div>
+      <div style="text-align:center"><div style="width:40px;height:40px;background:var(--lu-red-700)"></div><div class="lu-caption" style="font-size:11px">40</div></div>
+      <div style="text-align:center"><div style="width:56px;height:56px;background:var(--lu-red-700)"></div><div class="lu-caption" style="font-size:11px">56</div></div>
+      <div style="text-align:center"><div style="width:72px;height:72px;background:var(--lu-red-700)"></div><div class="lu-caption" style="font-size:11px">72</div></div>
+      <div style="text-align:center"><div style="width:96px;height:96px;background:var(--lu-red-700)"></div><div class="lu-caption" style="font-size:11px">96</div></div>
+    </div>
+  </div>
+
+  <div class="lu-reveal" style="margin-top:var(--lu-s5)">
+    <button class="lu-reveal__btn" type="button">Layout utilities, with when to use each</button>
+    <div class="lu-reveal__panel" hidden>
+      <table class="lu-table" style="font-size:15px">
+        <thead><tr><th>Class</th><th>Use for</th></tr></thead>
+        <tbody>
+          <tr><td><code>.lu-split</code></td><td>Two equal columns. Text left, graphic right.</td></tr>
+          <tr><td><code>.lu-split--wide-left</code></td><td>7:5. The default content slide — argument left, evidence right.</td></tr>
+          <tr><td><code>.lu-split--wide-right</code></td><td>5:7. When the code block or diagram is the point.</td></tr>
+          <tr><td><code>.lu-grid</code> + <code>.lu-col-N</code></td><td>Three or more parallel items — a row of cards.</td></tr>
+          <tr><td><code>.lu-stack</code></td><td>Vertical rhythm inside a column. <code>--tight</code> and <code>--loose</code> variants.</td></tr>
+          <tr><td><code>.lu-row</code></td><td>Horizontal group of tags, buttons or short items. Wraps.</td></tr>
+          <tr><td><code>.lu-center</code></td><td>Vertically centred content. Divider slides.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 6 -->
+<section id="layouts">
+  <h2>6 · Slide layouts</h2>
+  <p class="ds-note" style="margin-top:var(--lu-s4)">Nine layouts cover a 180-minute session. Rhythm matters more than variety: a divider before every part, a check question after every concept block, and a tinted slide whenever the room's activity changes.</p>
+  <table class="lu-table" style="margin-top:var(--lu-s5)">
+    <thead><tr><th>Layout</th><th>Ground</th><th>Built from</th><th>Rhythm</th></tr></thead>
+    <tbody>
+      <tr><td><b>Title</b></td><td>Night, no chrome</td><td>Lockup, eyebrow, <code>.lu-display</code>, lead, meta row</td><td>Once, first</td></tr>
+      <tr><td><b>Recap / where we are</b></td><td>Paper</td><td><code>.lu-pipeline</code> + two callouts</td><td>Once, second</td></tr>
+      <tr><td><b>Objective</b></td><td>Tint</td><td><code>.lu-statement</code> + <code>.lu-layers</code> time budget</td><td>Once, third</td></tr>
+      <tr><td><b>Section divider</b></td><td>Night, no chrome</td><td>Eyebrow, <code>.lu-display-xl</code>, lead</td><td>Before every part</td></tr>
+      <tr><td><b>Concept</b></td><td>Paper</td><td><code>.lu-split</code>, list with term popovers, code, reveal</td><td>The bulk of the lecture</td></tr>
+      <tr><td><b>Walkthrough</b></td><td>Paper</td><td><code>.lu-walk</code> over a <code>.lu-board</code> or SVG</td><td>One per session, on the hardest idea</td></tr>
+      <tr><td><b>Check / drill</b></td><td>Tint</td><td><code>.lu-mcq</code>, <code>.lu-blanks</code>, <code>.lu-sort</code>, <code>.lu-poll</code></td><td>After each concept block</td></tr>
+      <tr><td><b>Lab brief</b></td><td>Paper</td><td>Numbered list + deliverable callout + code</td><td>Once, before the lab</td></tr>
+      <tr><td><b>Wrap and self-check</b></td><td>Tint, then paper</td><td>Discussion prompt, next-session card, <code>[data-score]</code></td><td>Last two slides</td></tr>
+    </tbody>
+    <caption>The worked example lecture uses all nine in this order. Copy its structure rather than inventing a new one.</caption>
+  </table>
+</section>
+
+<!-- ============================================================ 7 -->
+<section id="graphics">
+  <h2>7 · Graphics kit</h2>
+  <p class="ds-note" style="margin-top:var(--lu-s4)">Three routes to a graphic, in strict order of preference. Going down the list costs more effort and more maintenance, so exhaust each level before moving on.</p>
+
+  <h3 style="margin-top:var(--lu-s7)">Route 1 · CSS diagram primitives — use these first</h3>
+  <p class="ds-note">Semantic HTML, restyled by the design system, animatable and highlightable by state attribute. Six primitives cover most of what a technical lecture needs.</p>
+
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>Pipeline</b><span>staged flow; <code>data-state="done | active | muted"</code></span><code>.lu-pipeline</code></div>
+    <div class="ds-demo__stage">
+      <ul class="lu-pipeline">
+        <li data-state="done"><span class="lu-pipeline__n">01</span><span class="lu-pipeline__t">Profile</span><span class="lu-pipeline__d">Recover constraints</span></li>
+        <li data-state="active"><span class="lu-pipeline__n">02</span><span class="lu-pipeline__t">Model</span><span class="lu-pipeline__d">You are here</span></li>
+        <li data-state="muted"><span class="lu-pipeline__n">03</span><span class="lu-pipeline__t">Validate</span><span class="lu-pipeline__d">SHACL</span></li>
+        <li data-state="muted"><span class="lu-pipeline__n">04</span><span class="lu-pipeline__t">Deploy</span><span class="lu-pipeline__d">One command</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>Layer stack</b><span>strata, highest abstraction on top</span><code>.lu-layers</code></div>
+    <div class="ds-demo__stage">
+      <ul class="lu-layers">
+        <li><span class="lu-layers__name">Access layer</span><span class="lu-layers__note">Natural language questions, validation and repair loop</span></li>
+        <li data-state="active"><span class="lu-layers__name">Semantic layer</span><span class="lu-layers__note">Ontology, shapes, mappings</span></li>
+        <li><span class="lu-layers__name">Operational data</span><span class="lu-layers__note">PostgreSQL, CSV extracts</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>Node-edge board</b><span>positioned nodes over an SVG edge layer; three node kinds</span><code>.lu-board</code> <code>.lu-node</code></div>
+    <div class="ds-demo__stage">
+      <div class="lu-board" style="aspect-ratio:16/6">
+        <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 375" preserveAspectRatio="none" aria-hidden="true">
+          <defs><marker id="ds-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs>
+          <path class="lu-edge lu-edge--strong" style="color:var(--lu-ink-2);marker-end:url(#ds-arrow)" d="M 260 90 L 690 90"/>
+          <path class="lu-edge lu-edge--infer" style="color:var(--lu-green-600);marker-end:url(#ds-arrow)" d="M 200 265 L 200 130"/>
+          <text class="lu-edge-label" x="400" y="75">ul:handledBy</text>
+          <text class="lu-edge-label" x="215" y="210" style="fill:var(--lu-green-700)">inferred</text>
+        </svg>
+        <div class="lu-node lu-node--class" style="left:22%;top:24%">ul:Shipment</div>
+        <div class="lu-node lu-node--class" style="left:72%;top:24%">ul:Carrier</div>
+        <div class="lu-node lu-node--instance" style="left:22%;top:76%">ship-4471</div>
+      </div>
+      <p class="lu-caption" style="margin-top:12px"><b>Node kinds.</b> <code>--class</code> red rectangle, <code>--instance</code> green pill, <code>--literal</code> grey monospace. <b>Edge kinds.</b> <code>--strong</code> asserted, <code>--infer</code> dashed green for entailment.</p>
+    </div>
+  </div>
+
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>Also available</b></div>
+    <div class="ds-demo__stage lu-stack">
+      <div class="lu-matrix">
+        <div><span class="lu-matrix__t">Materialise</span><span class="lu-matrix__d">Fast queries, stale data</span></div>
+        <div><span class="lu-matrix__t">Virtualise</span><span class="lu-matrix__d">Fresh data, slower queries</span></div>
+        <div><span class="lu-matrix__t">Both</span><span class="lu-matrix__d">Two systems to keep in step</span></div>
+        <div><span class="lu-matrix__t">Neither</span><span class="lu-matrix__d">Hand-written ETL you will regret</span></div>
+      </div>
+      <p class="lu-caption"><code>.lu-matrix</code> for a 2×2 · <code>.lu-table</code> for comparisons and query results · <code>.lu-defs</code> for a term inventory</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:var(--lu-s8)">Route 2 · Inline SVG, using the kit's classes</h3>
+  <p class="ds-note">When the relationship is genuinely geometric — a curve, a proof tree, a spatial layout. Never hardcode a hex value: use <code>.s-fill-red</code>, <code>.s-stroke</code>, <code>.s-hair</code>, <code>.s-label</code>, <code>.s-mono</code> so the diagram follows the palette. Set <code>role="img"</code> and a <code>&lt;title&gt;</code>, or <code>aria-hidden="true"</code> when a caption already carries the meaning.</p>
+
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>SVG kit classes</b><code>.lu-svg</code></div>
+    <div class="ds-demo__stage">
+      <svg class="lu-svg" viewBox="0 0 900 150" role="img" style="max-width:700px"><title>Example using the SVG kit classes</title>
+        <rect x="10" y="30" width="180" height="70" rx="8" class="s-fill-paper"/>
+        <rect x="10" y="30" width="180" height="70" rx="8" class="s-stroke"/>
+        <text x="100" y="72" text-anchor="middle" class="s-mono">TBox</text>
+        <path class="s-stroke-red" d="M 200 65 L 330 65" style="marker-end:url(#ds-arrow)"/>
+        <text x="265" y="50" text-anchor="middle" class="s-label">entails</text>
+        <circle cx="410" cy="65" r="38" class="s-fill-green"/>
+        <text x="410" y="72" text-anchor="middle" fill="#fff" class="s-mono">⊑</text>
+        <path class="s-hair" d="M 470 20 L 470 110"/>
+        <text x="500" y="60" class="s-label">.s-hair for structure that is not content</text>
+        <text x="500" y="88" class="s-label">.s-label for annotation, .s-mono for identifiers</text>
+      </svg>
+    </div>
+  </div>
+
+  <h3 style="margin-top:var(--lu-s8)">Route 3 · Image placeholders the instructor fills in</h3>
+  <p class="ds-note">For anything photographic or captured: tool screenshots, whiteboard photographs, plots from a real run. <b>Never draw these.</b> Ship a placeholder that says exactly what capture belongs there, at what path, and what must be visible in it — then the instructor's job is unambiguous.</p>
+
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>Figure placeholder</b><code>.lu-figure</code> <code>.lu-figure__ph</code></div>
+    <div class="ds-demo__stage">
+      <figure class="lu-figure" style="max-width:640px">
+        <div class="lu-figure__ph">
+          <span class="lu-figure__ph-title">Protégé screenshot: SCRO loaded, inferred hierarchy open</span>
+          <span class="lu-figure__ph-note">Drop a 1600×900 capture at <code>assets/img/s3-protege-scro.png</code>. Show the class tree left, one inferred subsumption right.</span>
+        </div>
+        <figcaption><b>Figure 3.1.</b> Caption states what the reader should notice, not what the image is.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 8 -->
+<section id="components">
+  <h2>8 · Interactive components</h2>
+  <p class="ds-note" style="margin-top:var(--lu-s4)">Twelve components, all live below. Everything with a <code>data-qid</code> is graded and reports into the end-of-deck self-check automatically; give every one a unique id within the lecture. Answers persist in <code>localStorage</code> under the deck's own namespace and are never sent anywhere.</p>
+
+  <!-- 1 -->
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>1 · Term popover</b><span>the definition a student would otherwise guess</span><code>.lu-term</code></div>
+    <div class="ds-demo__stage">
+      <p style="font-size:var(--lu-t-small);max-width:60ch">The <button class="lu-term" type="button" data-term="open world assumption" data-kind="Semantics">open world assumption<template>Absence of a statement is <b>not</b> evidence of its falsehood. If the graph does not say a shipment has a carrier, OWL concludes nothing — it does not conclude there is no carrier.<p>This is the single most expensive misunderstanding a database engineer brings to the subject, and it is why validation needs SHACL rather than a reasoner.</p></template></button> is why a reasoner will infer rather than complain. Click the term. Press <kbd>Esc</kbd> to dismiss, or <kbd>S</kbd> in a lecture to turn every popover into an inline note.</p>
+      <div class="lu-reveal" style="margin-top:var(--lu-s5)">
+        <button class="lu-reveal__btn" type="button">Markup</button>
+        <div class="lu-reveal__panel" hidden>
+<pre class="lu-mono" style="font-size:14px;line-height:1.6;overflow:auto">&lt;button class="lu-term" type="button"
+        data-term="open world assumption" data-kind="Semantics"&gt;
+  open world assumption
+  &lt;template&gt;Absence of a statement is &lt;b&gt;not&lt;/b&gt; evidence…
+    &lt;p&gt;A second paragraph for the thing not in the textbook.&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/button&gt;</pre>
+          <p class="lu-caption">Rich definitions go in the <code>&lt;template&gt;</code>. For a one-liner, use <code>data-def="…"</code> instead. <code>data-kind</code> is the small red category label.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>2 · Click to reveal</b><span>hold an answer back so the room has to think</span><code>.lu-reveal</code></div>
+    <div class="ds-demo__stage">
+      <div class="lu-reveal">
+        <button class="lu-reveal__btn" type="button">Why can a consistent ontology still be wrong?</button>
+        <div class="lu-reveal__panel" hidden><p>Because consistency only asks whether some model exists. Declaring a domain and then attaching the property to the wrong class yields a valid entailment, not an error — the reasoner quietly reclassifies your data.</p></div>
+      </div>
+      <p class="lu-caption" style="margin-top:12px">Real <code>aria-expanded</code> and <code>aria-controls</code>; the panel is <code>hidden</code>, so it is out of the accessibility tree until opened, and printed handouts force it open.</p>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>3 · Multiple choice with per-option feedback</b><span>graded</span><code>.lu-mcq</code></div>
+    <div class="ds-demo__stage">
+      <div class="lu-mcq" data-qid="ds-demo-mcq" data-answer="b"
+           data-label="Demo: what does owl:sameAs assert?"
+           data-fb-correct=" It is a logical identity, and the reasoner propagates every property in both directions."
+           data-fb-wrong=" owl:sameAs is not a similarity score. Probabilistic linkage belongs in an entity-resolution layer with a reported confidence.">
+        <p class="lu-mcq__q">What does <code>owl:sameAs</code> assert between two IRIs?</p>
+        <div class="lu-mcq__opts">
+          <button class="lu-mcq__opt" type="button" data-key="a">That they probably refer to the same thing<span class="lu-mcq__why" hidden>No. There is no probability in the semantics. That claim belongs in your entity-resolution layer.</span></button>
+          <button class="lu-mcq__opt" type="button" data-key="b">That they denote the same individual, so every property of one holds of the other<span class="lu-mcq__why" hidden>Correct, and the propagation is why misuse is expensive to undo.</span></button>
+          <button class="lu-mcq__opt" type="button" data-key="c">That they belong to the same class<span class="lu-mcq__why" hidden>That is <code>rdf:type</code> agreement, a much weaker claim.</span></button>
+        </div>
+        <div class="lu-mcq__fb" hidden></div>
+      </div>
+      <div class="lu-reveal" style="margin-top:var(--lu-s5)">
+        <button class="lu-reveal__btn" type="button">Markup</button>
+        <div class="lu-reveal__panel" hidden>
+<pre class="lu-mono" style="font-size:14px;line-height:1.6;overflow:auto">&lt;div class="lu-mcq" data-qid="s3-q1" data-answer="b"
+     data-label="Short label for the self-check list"
+     data-fb-correct=" Why it is right."
+     data-fb-wrong=" What the wrong choice reveals."&gt;
+  &lt;p class="lu-mcq__q"&gt;The question.&lt;/p&gt;
+  &lt;div class="lu-mcq__opts"&gt;
+    &lt;button class="lu-mcq__opt" type="button" data-key="a"&gt;Option A
+      &lt;span class="lu-mcq__why" hidden&gt;Why this is wrong.&lt;/span&gt;
+    &lt;/button&gt;
+    …
+  &lt;/div&gt;
+  &lt;div class="lu-mcq__fb" hidden&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+          <p class="lu-caption">Write a <code>.lu-mcq__why</code> for <em>every</em> option, including the correct one. The rationale is the teaching; the verdict is just bookkeeping. The runtime injects the A/B/C keys.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>4 · Diagram walkthrough</b><span>arrow keys work when focused</span><code>.lu-walk</code></div>
+    <div class="ds-demo__stage">
+      <div class="lu-walk" data-label="Demo walkthrough" style="min-height:260px">
+        <div class="lu-walk__view">
+          <div data-walk-step="1" data-caption-short="Asserted" data-caption="<b>Step 1.</b> Two classes and one property. Nothing controversial.">
+            <ul class="lu-pipeline"><li data-state="active"><span class="lu-pipeline__t">Asserted</span><span class="lu-pipeline__d">What you wrote</span></li><li data-state="muted"><span class="lu-pipeline__t">Inferred</span><span class="lu-pipeline__d">—</span></li><li data-state="muted"><span class="lu-pipeline__t">Unsatisfiable</span><span class="lu-pipeline__d">—</span></li></ul>
+          </div>
+          <div data-walk-step="2" data-caption-short="Inferred" data-caption="<b>Step 2.</b> The domain axiom entails a subsumption you did not intend. No warning is issued." hidden>
+            <ul class="lu-pipeline"><li data-state="done"><span class="lu-pipeline__t">Asserted</span><span class="lu-pipeline__d">What you wrote</span></li><li data-state="active"><span class="lu-pipeline__t">Inferred</span><span class="lu-pipeline__d">Silent entailment</span></li><li data-state="muted"><span class="lu-pipeline__t">Unsatisfiable</span><span class="lu-pipeline__d">—</span></li></ul>
+          </div>
+          <div data-walk-step="3" data-caption-short="Made to fail" data-caption="<b>Step 3.</b> Add a disjointness axiom and the same data now makes the class unsatisfiable — a silent entailment converted into a findable error." hidden>
+            <ul class="lu-pipeline"><li data-state="done"><span class="lu-pipeline__t">Asserted</span><span class="lu-pipeline__d">What you wrote</span></li><li data-state="done"><span class="lu-pipeline__t">Inferred</span><span class="lu-pipeline__d">Silent entailment</span></li><li data-state="active"><span class="lu-pipeline__t">Unsatisfiable</span><span class="lu-pipeline__d">Now it turns red</span></li></ul>
+          </div>
+        </div>
+      </div>
+      <p class="lu-caption" style="margin-top:12px">Each step is one <code>[data-walk-step]</code> with a <code>data-caption</code> (inline HTML allowed) and a short <code>data-caption-short</code> for the dot's accessible name. The runtime injects dots, captions, counter and buttons, and announces caption changes politely.</p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>5 · Progressive build</b><span>steps within a slide; deep-linkable as <code>#/12/2</code></span><code>data-build</code></div>
+    <div class="ds-demo__stage">
+      <p class="ds-note">Put <code>data-build="1"</code>, <code>"2"</code>, <code>"3"</code> on any elements. Same number means same step. The right arrow consumes build steps before advancing the slide, and the left arrow walks back through them. Two styles beyond the default rise:</p>
+      <table class="lu-table" style="margin-top:var(--lu-s4);font-size:15px">
+        <tbody>
+          <tr><td><code>data-build="1"</code></td><td>Fades and rises in. The default.</td></tr>
+          <tr><td><code>data-build-style="dim"</code></td><td>Present but at 28% opacity, then comes up to full. For a diagram that must be visible from the start.</td></tr>
+          <tr><td><code>data-build-style="hold"</code></td><td>Occupies layout but invisible, so nothing shifts when it appears. For anything below the fold of a dense slide.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>6 · Code block: copy, and run JavaScript in a sandbox</b><code>.lu-code</code> <code>data-run="js"</code></div>
+    <div class="ds-demo__stage ds-demo__stage--night">
+      <div class="lu-code lu-code--sm" data-name="profile-check.js" data-run="js">
+<pre><code><span class="tok-kw">const</span> outsideEL = [<span class="tok-str">'allValuesFrom'</span>, <span class="tok-str">'cardinality'</span>, <span class="tok-str">'complementOf'</span>];
+<span class="tok-kw">const</span> used = [<span class="tok-str">'someValuesFrom'</span>, <span class="tok-str">'cardinality'</span>];
+console.log(used.filter(c =&gt; outsideEL.includes(c)));</code></pre>
+      </div>
+      <p class="lu-caption" style="margin-top:12px;color:var(--lu-on-night-2)">Copy is always available. <code>data-run="js"</code> adds a Run button that executes in a <code>sandbox="allow-scripts"</code> iframe with no page access, captures <code>console</code> output, and is killed after three seconds. Highlighting is hand-applied with <code>.tok-*</code> spans — there is no syntax-highlighting library to load.</p>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>7 · Drag to order</b><span>graded · full keyboard alternative</span><code>.lu-sort</code></div>
+    <div class="ds-demo__stage">
+      <div class="lu-sort" data-qid="ds-demo-sort" data-label="Demo: order the method">
+        <ul class="lu-sort__list">
+          <li class="lu-sort__item" data-rank="2"><span>Search for a published ontology</span></li>
+          <li class="lu-sort__item" data-rank="1"><span>Write the competency questions</span></li>
+          <li class="lu-sort__item" data-rank="3"><span>Extend it only where a question needs it</span></li>
+        </ul>
+      </div>
+      <p class="lu-caption" style="margin-top:12px">Correct order is ascending <code>data-rank</code>. Drag with a mouse, or use the injected up and down buttons — every drag interaction in this system has a button equivalent, which is the WCAG 2.2 dragging-movements requirement.</p>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>8 · Fill in the blank</b><span>graded · tolerant matching</span><code>.lu-blanks</code></div>
+    <div class="ds-demo__stage">
+      <div class="lu-blanks" data-qid="ds-demo-blanks" data-label="Demo: vocabulary">
+        <p>Schema-level axioms live in the <input class="lu-blank" data-answer="TBox|T-Box" data-label="Schema-level box" placeholder="?box">, and the reasoning task that produces the inferred hierarchy is <input class="lu-blank lu-blank--wide" data-answer="classification" data-label="Reasoning task" placeholder="task">.</p>
+      </div>
+      <p class="lu-caption" style="margin-top:12px">Pipe-separated alternatives in <code>data-answer</code>; matching is case- and punctuation-insensitive. <kbd>Enter</kbd> checks. Every input needs a <code>data-label</code> — it becomes the accessible name.</p>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>9 · Compare wipe</b><span>two states of the same thing, registered line for line</span><code>.lu-compare</code></div>
+    <div class="ds-demo__stage">
+      <div class="lu-compare" data-a="Stays in EL" data-b="Leaves EL" data-start="50">
+        <div class="lu-compare__stage" style="min-height:250px">
+          <div class="lu-compare__pane lu-compare__pane--a">
+<pre class="lu-mono" style="font-size:17px;line-height:1.7;margin:0">ul:AtRiskShipment ⊑ ul:Shipment
+  ⊓ ∃ul:handledBy.ul:SanctionedCarrier
+
+
+OWL 2 EL · ELK · polynomial time</pre>
+          </div>
+          <div class="lu-compare__pane lu-compare__pane--b">
+<pre class="lu-mono" style="font-size:17px;line-height:1.7;margin:0">ul:AtRiskShipment ⊑ ul:Shipment
+  ⊓ ∀ul:handledBy.ul:SanctionedCarrier
+  ⊓ ≥2 ul:handledBy.ul:Carrier
+  ⊓ ¬ul:InsuredShipment
+OWL 2 DL · HermiT · exponential worst case</pre>
+          </div>
+        </div>
+      </div>
+      <p class="lu-caption" style="margin-top:12px"><b>Registration is the whole rule.</b> Both panes are absolutely positioned on the same baselines, so a wipe only reads if the two versions line up — the same axiom, the same diagram, the same table with one column changed. Two <em>different</em> prose passages garble at the seam; for those use <code>.lu-split</code> and two columns. The seam is an <code>&lt;input type="range"&gt;</code>, so it is keyboard-operable and labelled for free, and printing unclips both panes into two side-by-side columns.</p>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>10 · Live query sandbox</b><span>SPARQL, offline, no server</span><code>.lu-query</code></div>
+    <div class="ds-demo__stage">
+      <div class="lu-query" data-lang="sparql" style="min-height:320px">
+        <template data-data>
+          @prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+          @prefix ul:   &lt;https://ul.edu.lb/kr/scm#&gt; .
+          ul:ship-4471 a ul:LateShipment ; rdfs:label "SHP-4471" ; ul:daysLate 6 .
+          ul:ship-4488 a ul:LateShipment ; rdfs:label "SHP-4488" ; ul:daysLate 2 .
+          ul:ship-4510 a ul:LateShipment ; rdfs:label "SHP-4510" ; ul:daysLate 14 .
+        </template>
+        <template data-query>
+PREFIX ul:   &lt;https://ul.edu.lb/kr/scm#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT ?ship ?days
+WHERE {
+  ?s rdfs:label ?ship ; ul:daysLate ?days .
+  FILTER ( ?days &gt; 3 )
+}
+ORDER BY DESC(?days)
+        </template>
+      </div>
+      <p class="lu-caption" style="margin-top:12px"><code>assets/sparql-lite.js</code> is a teaching-sized engine: Turtle in a <code>&lt;template data-data&gt;</code>, and SELECT with a basic graph pattern, OPTIONAL, FILTER, GROUP BY, COUNT, ORDER BY and LIMIT. UNION, MINUS, BIND, property paths and subqueries raise a readable error rather than failing silently — say so in class and name what a real endpoint would do. <kbd>Ctrl</kbd>+<kbd>Enter</kbd> runs.</p>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>11 · Timed room poll</b><span>graded · countdown, then a manual tally</span><code>.lu-poll</code></div>
+    <div class="ds-demo__stage">
+      <div class="lu-poll" data-qid="ds-demo-poll" data-seconds="30" data-answer="b" data-label="Demo poll">
+        <p class="lu-mcq__q" style="font-size:22px">A class exists because the source table has a column for it. Keep it?</p>
+        <div class="lu-mcq__opts">
+          <button class="lu-mcq__opt" type="button" data-key="a">Keep it — the data has the column<span class="lu-mcq__why" hidden>The source schema is not an argument.</span></button>
+          <button class="lu-mcq__opt" type="button" data-key="b">Delete it unless a competency question needs it<span class="lu-mcq__why" hidden>Correct. Scope comes from the questions.</span></button>
+        </div>
+      </div>
+      <div class="lu-callout lu-callout--neutral" style="margin-top:var(--lu-s5)">
+        <span class="lu-callout__label">Honest limitation</span>
+        <p class="ds-note">A static page has no backend, so votes cannot be aggregated across devices. Each student's answer is recorded on their own machine; the instructor tallies the room with the plus and minus buttons after revealing. If you need true live aggregation, that is a service, not a slide — and it is the one thing in this system that would stop working offline.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>12 · Self-check</b><span>collects every graded component in the deck</span><code>[data-score]</code></div>
+    <div class="ds-demo__stage">
+      <div data-score></div>
+      <p class="lu-caption" style="margin-top:var(--lu-s5)">One empty <code>&lt;div data-score&gt;&lt;/div&gt;</code> on the last slide. It finds every component with a <code>data-qid</code>, reports attempted against correct, links back to the slide each question is on, and offers a clear-answers button scoped to this deck alone. The three demos above are feeding it right now.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 9 -->
+<section id="runtime">
+  <h2>9 · Runtime and keyboard</h2>
+  <p class="ds-note" style="margin-top:var(--lu-s4)">One script, <code>assets/lu-deck.js</code>, loaded with <code>defer</code>. It frames the slides, injects the chrome, and wires every component it finds. Ten runtime features, all keyboard-first.</p>
+
+  <div class="lu-cards" style="margin-top:var(--lu-s5)">
+    <div class="lu-card"><span class="lu-card__label">Presenter view · <kbd>P</kbd></span><p class="ds-note">Opens a second window with notes, the current and next slide, a wall clock, elapsed time and pacing. Synchronised over <code>BroadcastChannel</code>; arrow keys in either window drive both.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Deep links</span><p class="ds-note"><code>#/12</code> is slide 12, <code>#/12/2</code> is slide 12 at build step 2. Shareable, bookmarkable, and what the contents panel and search write.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Pacing · <kbd>T</kbd></span><p class="ds-note">Sums <code>data-minutes</code> up to the current slide and compares it with elapsed time. Turns amber past two minutes behind, green when ahead.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Contents · <kbd>O</kbd></span><p class="ds-note">Built from <code>data-label</code>, grouped by <code>data-section</code>, with the current slide marked. Focus is trapped and returned.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Search · <kbd>/</kbd></span><p class="ds-note">Indexes the rendered text of every slide on first use and jumps to a hit. No index file to build or keep in step.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Study mode · <kbd>S</kbd></span><p class="ds-note">Popovers become inline notes, reveals open, builds show, answers fill in. This is what a student who missed the session gets.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Handout</span><p class="ds-note">One page per slide with instructor notes appended, colours preserved, everything expanded. Print or save as PDF from the browser.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Saved state</span><p class="ds-note">Position, answers, query drafts and mode, in <code>localStorage</code> under <code>lu:&lt;deck-id&gt;:*</code>. Namespaced per lecture, cleared only by the user.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Offline · PWA</span><p class="ds-note">A service worker caches the shell and every visited lecture. Installable, and works on a train. Asset links carry a <code>?v=</code> version; bump it when you edit <code>assets/</code>. Registration is skipped on <code>file://</code>.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Fullscreen and jump</span><p class="ds-note"><kbd>F</kbd> for fullscreen; type a number to jump to that slide; <kbd>Home</kbd> and <kbd>End</kbd> for the ends; <kbd>?</kbd> lists everything.</p></div>
+  </div>
+</section>
+
+<!-- ============================================================ 10 -->
+<section id="a11y">
+  <h2>10 · Accessibility contract</h2>
+  <p class="ds-note" style="margin-top:var(--lu-s4)">The target is WCAG 2.2 AA, and these are the specific commitments the system makes. A new component that breaks one of them is not finished.</p>
+  <table class="lu-table" style="margin-top:var(--lu-s5)">
+    <thead><tr><th>Commitment</th><th>How it is met</th></tr></thead>
+    <tbody>
+      <tr><td>Text contrast 4.5:1, headline-scale 3:1</td><td>Ink on paper is 13:1; the lightest permitted text, <code>--lu-ink-3</code>, is 4.6:1. Token comments record each ratio. No alpha-muted or <code>color-mix</code> text.</td></tr>
+      <tr><td>Keyboard parity with every pointer action</td><td>Drag ordering has up and down buttons; the compare wipe is a range input; walkthroughs respond to arrow keys; the popover closes on <kbd>Esc</kbd>.</td></tr>
+      <tr><td>Visible focus, never removed</td><td>One <code>:focus-visible</code> rule: 3px blue ring, 2px offset, recoloured on night grounds. Blue, not brand red, so focus never reads as an error.</td></tr>
+      <tr><td>Target size</td><td>Buttons are at least 48px high, 40px for the small variant, and 34px only for the auto-hiding chrome, which duplicates keyboard shortcuts.</td></tr>
+      <tr><td>Not by colour alone</td><td>Correct and wrong carry a tick or cross glyph and a written verdict as well as green or red. Pipeline and layer states change border weight, not only fill.</td></tr>
+      <tr><td>Reduced motion</td><td><code>prefers-reduced-motion</code> collapses all durations to 1ms. No animation is load-bearing.</td></tr>
+      <tr><td>Screen-reader announcements</td><td>Slide changes and walkthrough captions go to polite live regions. Every slide is a labelled <code>role="group"</code> with <code>aria-roledescription="slide"</code> and an <em>n</em> of <em>m</em> label.</td></tr>
+      <tr><td>Focus management in overlays</td><td>Contents, search and shortcuts are <code>aria-modal</code> dialogs with a tab loop and focus returned to the trigger.</td></tr>
+      <tr><td>Structure and language</td><td>One <code>lang</code>, real heading levels, a skip link to the first content slide, and text in the DOM rather than baked into images.</td></tr>
+      <tr><td>Zoom and reflow</td><td>Non-slide pages reflow to 320px. Slides are a fixed canvas by nature; the handout and study modes are the accessible route for anyone who needs to zoom into content.</td></tr>
+    </tbody>
+  </table>
+  <div class="lu-callout" style="margin-top:var(--lu-s5)">
+    <span class="lu-callout__label">Known gap, stated rather than hidden</span>
+    <p class="ds-note">A 1600×900 scaled canvas cannot satisfy the 1.4.10 reflow criterion the way a document can — that is inherent to slides, not to this implementation. Study mode and the printed handout are the conforming alternative versions, and every lecture links to them. Say this in a course accessibility statement rather than claiming full AA for the slide view.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 11 -->
+<section id="rules">
+  <h2>11 · Rules for agents building lectures</h2>
+  <p class="ds-note" style="margin-top:var(--lu-s4)">The full brief is in <code>AGENTS.md</code>. These are the rules that get broken most often.</p>
+  <ol class="lu-list lu-list--num" style="margin-top:var(--lu-s5);font-size:16px">
+    <li><b>Copy <code>lectures/_template.html</code>.</b> Do not start from a blank file and do not restructure the frame.</li>
+    <li><b>Never add a <code>&lt;style&gt;</code> block or an inline style that introduces a new colour, size or font.</b> Layout nudges with the existing tokens are fine; new design decisions belong in <code>lu.css</code>.</li>
+    <li><b>Every slide gets <code>data-label</code>, <code>data-section</code>, <code>data-minutes</code> and a <code>&lt;template data-notes&gt;</code>.</b> Four attributes, no exceptions — three navigation features and the handout depend on them.</li>
+    <li><b>Notes are for the instructor, not a transcript.</b> What to say, how long to spend, the question the room will ask, the blocker that will appear at minute 20.</li>
+    <li><b>Unique <code>data-qid</code> per graded component,</b> prefixed with the session — <code>s3-q1</code>, not <code>q1</code>.</li>
+    <li><b>Write a rationale for every option,</b> including correct ones. A verdict without a reason teaches nothing.</li>
+    <li><b>Diagrams: primitives, then SVG, then a placeholder.</b> Never draw a screenshot or a photograph as SVG.</li>
+    <li><b>Nothing below 20px, five bullets to a slide, sixty characters to a line.</b> If it does not fit, the slide is two slides.</li>
+    <li><b>Two grounds per deck.</b> Paper and night, with tint to mark a change of activity. No third background colour.</li>
+    <li><b>No emoji, no gradient backgrounds, no invented icon set.</b> The type and the palette carry the tone.</li>
+    <li><b>Add the finished lecture to <code>index.html</code>.</b> A lecture nobody can navigate to does not exist.</li>
+  </ol>
+</section>
+
+<footer style="margin-top:var(--lu-s10);padding-top:var(--lu-s6);border-top:3px solid var(--lu-red-700);display:flex;gap:var(--lu-s5);flex-wrap:wrap;align-items:baseline">
+  <div class="lu-lockup">
+    <span class="lu-lockup__mark">LU</span>
+    <span class="lu-lockup__text"><span class="lu-lockup__name">Lebanese University</span><span class="lu-lockup__unit">Teaching slide system · design system v1.0</span></span>
+  </div>
+  <p class="lu-caption" style="flex:1;min-width:280px">Palette derived from the university's red, white and green. The crest in the lockup is a typographic placeholder pending the official asset.</p>
+</footer>
+
+</main>
+
+<script src="assets/sparql-lite.js?v=1.0.2"></script>
+<script src="assets/lu-deck.js?v=1.0.2" defer></script>
+</body>
+</html>

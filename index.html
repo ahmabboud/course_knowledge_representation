@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knowledge Representation — Lebanese University, MSc</title>
+<meta name="description" content="Interactive HTML lectures for Knowledge Representation, MSc, Lebanese University. 24 contact hours across 8 sessions. Runs in any browser, works offline, printable as a handout.">
+<meta name="theme-color" content="#96122B">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/lu.css?v=1.0.2">
+</head>
+<body class="page-mode" data-deck-id="index" data-app-root="./">
+
+<main class="page">
+
+<div class="page-hero">
+  <div class="lu-lockup">
+    <span class="lu-lockup__mark">LU</span>
+    <span class="lu-lockup__text">
+      <span class="lu-lockup__name">Lebanese University</span>
+      <span class="lu-lockup__unit">Faculty of Sciences · MSc Computer Science</span>
+    </span>
+  </div>
+  <h1>Knowledge Representation</h1>
+  <p class="page-lede">Each lecture is one HTML page. It runs in any browser with no install, keeps your place and your answers on your own device, expands into a self-study version, and prints as a handout with the instructor's notes attached.</p>
+  <div class="lu-row" style="gap:var(--lu-s3)">
+    <a class="lu-btn lu-btn--sm lu-btn--ghost" href="design-system.html">Design system and component library</a>
+    <a class="lu-btn lu-btn--sm lu-btn--ghost" href="lectures/_template.html">Empty lecture template</a>
+  </div>
+</div>
+
+<section>
+  <h2>The eight sessions</h2>
+  <p class="ds-note" style="margin-top:var(--lu-s3)">24 contact hours · 8 sessions of 3 hours · MSc. One enterprise problem, a supply chain, carried from raw operational data through to a deployed system that can be queried in natural language. Every lab from Session 3 extends the participant's own graded system.</p>
+  <div class="lu-cards" style="margin-top:var(--lu-s6)">
+    <a class="lu-lecture-card" href="lectures/kr-session-01.html">
+      <span class="lu-lecture-card__n">Session 01 · Module 1</span>
+      <span class="lu-lecture-card__t">Enterprise Knowledge Representation and the Supply Chain Problem</span>
+      <span class="lu-lecture-card__d">Why an enterprise needs a semantic layer, the reference architecture the course builds against, and the first confrontation with the real data.</span>
+      <span class="lu-lecture-card__meta"><span>22 slides</span><span>180 min</span><span>4 questions</span><span>Architecture walkthrough</span></span>
+    </a>
+    <span class="lu-lecture-card" aria-disabled="true">
+      <span class="lu-lecture-card__n">Session 02 · Module 1</span>
+      <span class="lu-lecture-card__t">RDF, SPARQL, and the Graph as a Data Model</span>
+      <span class="lu-lecture-card__d">Get the supply chain data into a graph and query it, so later modelling decisions are made against something running.</span>
+      <span class="lu-lecture-card__meta"><span>Not yet built</span></span>
+    </span>
+    <a class="lu-lecture-card" href="lectures/kr-session-03.html">
+      <span class="lu-lecture-card__n">Session 03 · Module 2</span>
+      <span class="lu-lecture-card__t">Ontology Engineering: Description Logic, OWL, and Reuse</span>
+      <span class="lu-lecture-card__d">Reuse published industrial ontologies where they exist, extend them where they do not, and let a reasoner find the modelling errors.</span>
+      <span class="lu-lecture-card__meta"><span>21 slides</span><span>180 min</span><span>4 questions</span><span>SPARQL sandbox</span></span>
+    </a>
+    <span class="lu-lecture-card" aria-disabled="true">
+      <span class="lu-lecture-card__n">Session 04 · Module 2</span>
+      <span class="lu-lecture-card__t">Constraints, Quality, and Provenance: SHACL</span>
+      <span class="lu-lecture-card__d">Turn the constraint inventory into executable validation, and settle what a reasoner entails against what a validator checks.</span>
+      <span class="lu-lecture-card__meta"><span>Not yet built</span><span>Milestone 1</span></span>
+    </span>
+    <span class="lu-lecture-card" aria-disabled="true">
+      <span class="lu-lecture-card__n">Session 05 · Module 3</span>
+      <span class="lu-lecture-card__t">Integrating Operational Data</span>
+      <span class="lu-lecture-card__d">Connect the live relational source to the ontology by both integration architectures, and resolve duplicate entities.</span>
+      <span class="lu-lecture-card__meta"><span>Not yet built</span></span>
+    </span>
+    <span class="lu-lecture-card" aria-disabled="true">
+      <span class="lu-lecture-card__n">Session 06 · Module 4</span>
+      <span class="lu-lecture-card__t">Learning Over the Graph: Embeddings and Graph Neural Networks</span>
+      <span class="lu-lecture-card__d">Predict something useful from graph structure, and evaluate it honestly enough that the number survives review.</span>
+      <span class="lu-lecture-card__meta"><span>Not yet built</span><span>Milestone 2</span></span>
+    </span>
+    <span class="lu-lecture-card" aria-disabled="true">
+      <span class="lu-lecture-card__n">Session 07 · Module 5</span>
+      <span class="lu-lecture-card__t">The Agentic Query Layer, Deployment, and Open Problems</span>
+      <span class="lu-lecture-card__d">Let a non-technical stakeholder ask the graph a question in their own words, then look at what the field has not solved.</span>
+      <span class="lu-lecture-card__meta"><span>Not yet built</span></span>
+    </span>
+    <span class="lu-lecture-card" aria-disabled="true">
+      <span class="lu-lecture-card__n">Session 08 · Module 5</span>
+      <span class="lu-lecture-card__t">Supervised Build, Deployment, and Defense</span>
+      <span class="lu-lecture-card__d">Deploy the accumulated system as one reproducible stack, with the instructor present, and defend every layer of it.</span>
+      <span class="lu-lecture-card__meta"><span>Not yet built</span></span>
+    </span>
+  </div>
+</section>
+
+
+<section>
+  <h2>How to use a lecture</h2>
+  <div class="lu-cards" style="margin-top:var(--lu-s5)">
+    <div class="lu-card">
+      <span class="lu-card__label">Teaching</span>
+      <p class="ds-note">Open the lecture, press <kbd>F</kbd> for fullscreen and <kbd>P</kbd> for presenter view on your second screen. <kbd>T</kbd> starts the session timer; the pacing readout tells you whether you are behind the plan.</p>
+    </div>
+    <div class="lu-card">
+      <span class="lu-card__label">Studying</span>
+      <p class="ds-note">Press <kbd>S</kbd>. Every definition becomes an inline note, every held-back answer opens, and your position and answers are remembered on your own device. <kbd>/</kbd> searches the whole lecture.</p>
+    </div>
+    <div class="lu-card">
+      <span class="lu-card__label">Offline and on paper</span>
+      <p class="ds-note">Install the site from your browser's address bar and lectures you have opened work without a network. <b>Handout</b> in the bottom bar prints one page per slide with the notes attached.</p>
+    </div>
+  </div>
+</section>
+
+<footer style="margin-top:var(--lu-s10);padding-top:var(--lu-s6);border-top:3px solid var(--lu-red-700);display:flex;gap:var(--lu-s5);flex-wrap:wrap;align-items:baseline">
+  <div class="lu-lockup">
+    <span class="lu-lockup__mark">LU</span>
+    <span class="lu-lockup__text"><span class="lu-lockup__name">Lebanese University</span><span class="lu-lockup__unit">Faculty of Sciences · MSc Computer Science</span></span>
+  </div>
+  <p class="lu-caption" style="flex:1;min-width:280px">Answers and progress are stored in your browser and never transmitted. The crest in the lockup is a placeholder pending the official asset.</p>
+</footer>
+
+</main>
+
+<script src="assets/lu-deck.js?v=1.0.2" defer></script>
+</body>
+</html>
