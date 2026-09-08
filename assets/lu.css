@@ -1000,24 +1000,38 @@ body.lu-presenter .deck, body.lu-presenter .lu-hud, body.lu-presenter .lu-progre
    14. PRINT / HANDOUT
    -------------------------------------------------------------------------- */
 @page { size: 1600px 900px; margin: 0; }
+/* Handout pages carry the slide AND the instructor notes, so they need to be
+   taller than a slide. A named page is the only way to vary this per mode. */
+@page lu-handout-page { size: 1600px 1500px; margin: 0; }
 @media print {
   html, body { background: #fff !important; height: auto !important; overflow: visible !important; }
   .lu-hud, .lu-progress, .lu-overlay, .lu-toast, .lu-skip, .lu-pop { display: none !important; }
   .deck { position: static !important; inset: auto !important; overflow: visible !important; display: block !important; background: #fff !important; }
   .deck__stage { position: static !important; left: auto !important; top: auto !important; transform: none !important; width: 1600px !important; height: auto !important; }
+  /* height:auto and overflow:visible are the whole fix. On screen a slide is a
+     fixed 900px box that clips, which is a deliberate projection constraint.
+     On paper there is no reason to lose text: let the slide grow and let a
+     long one run onto a second sheet. Previously the printed handout silently
+     cut 237px off slide 2, because .lu-print-notes is a flex child of .slide
+     and took its space from the body. */
   .slide {
     position: relative !important; inset: auto !important;
-    display: flex !important; width: 1600px; height: 900px;
-    break-after: page; page-break-after: always; break-inside: avoid;
+    display: flex !important; width: 1600px;
+    height: auto !important; min-height: 900px;
+    overflow: visible !important;
+    break-after: page; page-break-after: always; break-inside: auto;
     border: 0 !important;
   }
+  body.lu-handout .slide { page: lu-handout-page; }
+  .slide__body { overflow: visible !important; }
+  .lu-print-notes { flex: none; }
   .slide:last-of-type { break-after: auto; page-break-after: auto; }
   .slide--night { background: var(--lu-night) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   [data-build] { opacity: 1 !important; transform: none !important; visibility: visible !important; }
   .lu-reveal__panel { display: block !important; }
   .lu-walk__view > [data-walk-step] { display: block !important; height: auto !important; }
-  .lu-walk__view [data-walk-step] > .lu-board { width: 100% !important; height: auto !important; aspect-ratio: 16 / 7 !important; }
+  .lu-walk__view [data-walk-step] > .lu-board { width: 100% !important; height: 400px !important; aspect-ratio: auto !important; }
   .lu-code pre { overflow: visible !important; }
   /* A wipe cannot print. Unclip both panes and set them side by side. */
   .lu-compare__seam, .lu-compare__range { display: none !important; }

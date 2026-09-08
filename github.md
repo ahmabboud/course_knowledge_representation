@@ -95,6 +95,27 @@ deck stays `overflow:hidden`, and expanding every reveal makes clipping worse.
 1.4.10. That claim is currently false. Fixing it is a design-system decision,
 not made here.
 
+### Print and handout were cutting content on every slide
+
+`.slide` is `height:900px; overflow:hidden`, and the print block did not
+override either. `.lu-print-notes` is appended as a flex child *inside* the
+slide, so in handout mode the notes took their height out of the slide body and
+the rest was clipped. Measured on slide 2: notes 276px, body squeezed to 376px
+when it needed 613, so **237px of content was silently cut from the printed
+handout**, mid-sentence.
+
+Fixed in the print block: `height:auto; min-height:900px; overflow:visible`,
+`break-inside:auto`, and `.slide__body { overflow: visible }`. On paper there is
+no reason to lose text; a long slide simply runs onto a second sheet. Handout
+mode now uses a named `@page lu-handout-page` at 1600x1500 so a slide and its
+notes fit on one sheet. The printed walkthrough board is pinned to 400px to
+match the screen geometry rather than 700px per step.
+
+Verified by forcing the print media block to apply on screen and re-measuring
+all 22 slides: content cut went from every slide with notes to **zero slides**.
+Stylesheet parses clean (tinycss2: 433 top-level rules, 0 errors, 21 rules in
+the print block, both `@page` rules present).
+
 ### Verified how
 
 Components were exercised directly on the live page: MCQ, fill-in-the-blank,
