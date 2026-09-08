@@ -1,4 +1,4 @@
-# AGENTS.md — building a lecture in this repository
+# AGENTS.md, building a lecture in this repository
 
 You are writing an interactive teaching lecture as a **single static HTML file**. Read this whole file before you write anything. When it and your own instincts disagree, this file wins.
 
@@ -13,7 +13,7 @@ design-system.html             The design system + live gallery of all 12 compon
 AGENTS.md                      This file.
 manifest.webmanifest           PWA manifest.
 sw.js                          Service worker (offline cache).
-.nojekyll                      Required — without it GitHub Pages hides _template.html.
+.nojekyll                      Required, without it GitHub Pages hides _template.html.
 .github/workflows/pages.yml    Deploy. There is no build step.
 assets/
   lu.css                       The entire design system. ~1,200 lines, sectioned.
@@ -46,6 +46,15 @@ No framework. No bundler. No npm. No CDN at runtime except the two webfonts. A l
    Then by hand: `→` through every slide and every build step, `?`, `O`, `/`,
    `S`, and **print preview with Handout on**. Nothing may throw.
 
+   A query sandbox can also be verified away from the browser, which is faster
+   and works before the page is deployed:
+
+   ```
+   node -e "global.window={}; require('./assets/sparql-lite.js');
+     const {parse,query}=global.window.LUSparql; /* feed it the templates */"
+   ```
+
+
 ---
 
 ## 2. Non-negotiable rules
@@ -64,7 +73,7 @@ No framework. No bundler. No npm. No CDN at runtime except the two webfonts. A l
 
 ---
 
-## 2b. Seven traps this system has already shipped
+## 2b. Nine traps this system has already shipped
 
 Every one of these was invisible in the HTML and obvious under measurement.
 `scripts/audit-deck.js` checks all of them. Read this before you get clever.
@@ -78,6 +87,8 @@ Every one of these was invisible in the HTML and obvious under measurement.
 | **The tall column sets the height** | Trimming a two-column slide by shortening the short column changes nothing. | Measure both columns first. Cut the tall one. |
 | **Print is a second layout** | `.slide` is `height:900px; overflow:hidden` and the print block overrode neither, while `.lu-print-notes` is a flex child *inside* the slide. The handout silently cut 237px off every slide with notes. | Any change to slide sizing must be checked in print preview with Handout on. |
 | **You may be measuring a stale page** | GitHub Pages serves HTML with `max-age=600`, so a plain `fetch` inside the service worker was answered by the HTTP cache. Hours were spent measuring a version that was not on the server. | Always verify with a `?cb=` cache-buster, and confirm the version you think you loaded. |
+| **A sandbox that runs and returns nothing** | A `.lu-query` seeded with a find-the-violation query over data containing no violation. It parsed, executed, reported "0 rows" and read to the student as a broken button. | Run the seeded query through the engine and confirm it returns rows. Any query you *suggest* in a caption too. |
+| **Em dashes and stray characters** | 74 em dashes across the decks, five of them emitted by the runtime into visible UI (the study-mode toast, a popover aria-label, the presenter label, the empty result cell). | This course does not use em or en dashes as punctuation. Non-ASCII on a slide must be a deliberate symbol. The audit checks both. |
 
 Two measurement rules that cost real time:
 
@@ -86,7 +97,7 @@ Two measurement rules that cost real time:
   inflates every number by `1/scale`. Pick one and say which.
 - **State.** A restored answer or an open reveal makes a slide taller. Clear
   the deck's `lu:` localStorage keys before measuring a baseline, and measure
-  the revealed state separately — that is the state you teach in.
+  the revealed state separately. That is the state you teach in.
 
 ## 3. Anatomy of a lecture file
 
@@ -122,15 +133,15 @@ The runtime wraps your slide content in `.slide__body` and injects the header, f
 
 Copy these from `kr-session-03.html` rather than composing from scratch.
 
-1. **Title** — night, no chrome. Lockup, eyebrow, `.lu-display`, lead, meta row.
-2. **Recap / where we are** — paper. `.lu-pipeline` showing the stage you are at, plus two callouts: what they brought, what is still missing.
-3. **Objective** — tint. `.lu-statement` with the deliverable, plus `.lu-layers` for the time budget.
-4. **Section divider** — night, no chrome. One per part.
-5. **Concept** — paper. `.lu-split--wide-left`: argument left with term popovers, evidence right (code, diagram, reveal). This is most of the lecture.
-6. **Walkthrough** — paper. One per session, on the single hardest idea.
-7. **Check / drill** — tint. After each concept block.
-8. **Lab brief** — paper. Numbered steps, deliverable callout.
-9. **Wrap**, then **self-check** — tint, then paper. Always the last two slides.
+1. **Title**, night, no chrome. Lockup, eyebrow, `.lu-display`, lead, meta row.
+2. **Recap / where we are**, paper. `.lu-pipeline` showing the stage you are at, plus two callouts: what they brought, what is still missing.
+3. **Objective**, tint. `.lu-statement` with the deliverable, plus `.lu-layers` for the time budget.
+4. **Section divider**, night, no chrome. One per part.
+5. **Concept**, paper. `.lu-split--wide-left`: argument left with term popovers, evidence right (code, diagram, reveal). This is most of the lecture.
+6. **Walkthrough**, paper. One per session, on the single hardest idea.
+7. **Check / drill**, tint. After each concept block.
+8. **Lab brief**, paper. Numbered steps, deliverable callout.
+9. **Wrap**, then **self-check**, tint, then paper. Always the last two slides.
 
 Rhythm target for 180 minutes: about 20 slides, a divider before every part, a check question after every concept block, and never more than four consecutive paper slides.
 
@@ -138,7 +149,7 @@ Rhythm target for 180 minutes: about 20 slides, a divider before every part, a c
 
 ## 5. Component cheat sheet
 
-Full live examples with markup: `design-system.html` §8. Graded components are marked ⓖ — they need a `data-qid` and appear in the self-check.
+Full live examples with markup: `design-system.html` §8. Graded components are marked ⓖ, they need a `data-qid` and appear in the self-check.
 
 | Component | Class | Notes |
 |---|---|---|
@@ -147,12 +158,12 @@ Full live examples with markup: `design-system.html` §8. Graded components are 
 | Multiple choice ⓖ | `.lu-mcq` | `data-answer="b"`, `data-label`, `data-fb-correct`, `data-fb-wrong`; each `.lu-mcq__opt` has `data-key` and a hidden `.lu-mcq__why`. |
 | Walkthrough | `.lu-walk` | Children `[data-walk-step]` with `data-caption` (HTML ok) and `data-caption-short`. Arrow keys when focused. |
 | Progressive build | `data-build="1"` on any element | Same number = same step. `data-build-style="dim"` or `"hold"`. Deep-links as `#/12/2`. |
-| Code block | `.lu-code` + `<pre><code>` | `data-name` is the filename chip. `data-run="js"` adds a sandboxed Run. Highlight with `.tok-kw/-str/-num/-com/-fn/-var` spans — there is no highlighter library. |
-| Drag to order ⓖ | `.lu-sort` > `.lu-sort__list` > `.lu-sort__item[data-rank]` | Correct order is ascending `data-rank`. Up/down buttons are injected — do not remove them, they are the keyboard path. |
+| Code block | `.lu-code` + `<pre><code>` | `data-name` is the filename chip. `data-run="js"` adds a sandboxed Run. Highlight with `.tok-kw/-str/-num/-com/-fn/-var` spans, there is no highlighter library. |
+| Drag to order ⓖ | `.lu-sort` > `.lu-sort__list` > `.lu-sort__item[data-rank]` | Correct order is ascending `data-rank`. Up/down buttons are injected, do not remove them, they are the keyboard path. |
 | Fill the blank ⓖ | `.lu-blanks` with `input.lu-blank` | `data-answer="TBox\|T-Box"`, `data-label` (accessible name). Matching ignores case and punctuation. |
-| Compare wipe | `.lu-compare` + two `.lu-compare__pane--a/--b` | `data-a`, `data-b` label the sides. **Registered content only:** two states of the same thing, sharing baselines (identical first line, identical structure). Two different prose passages garble at the seam — use `.lu-split` for those. Prints as two columns. |
+| Compare wipe | `.lu-compare` + two `.lu-compare__pane--a/--b` | `data-a`, `data-b` label the sides. **Registered content only:** two states of the same thing, sharing baselines (identical first line, identical structure). Two different prose passages garble at the seam, use `.lu-split` for those. Prints as two columns. |
 | Query sandbox | `.lu-query` | `<template data-data>` Turtle, `<template data-query>` seed query. Escape `<` and `>` as `&lt;` `&gt;` inside templates. Needs `sparql-lite.js`. |
-| Timed poll ⓖ | `.lu-poll` | `data-seconds`, `data-answer`. Local answers only — a static page cannot aggregate votes. Instructor tallies the room manually. |
+| Timed poll ⓖ | `.lu-poll` | `data-seconds`, `data-answer`. Local answers only, a static page cannot aggregate votes. Instructor tallies the room manually. |
 | Self-check ⓖ | `<div data-score></div>` | One per deck, on the last slide. Finds every `data-qid` by itself. |
 
 Other useful pieces: `.lu-pipeline`, `.lu-layers`, `.lu-board`/`.lu-node`/`.lu-edge`, `.lu-matrix`, `.lu-table`, `.lu-defs`, `.lu-callout` (+`--concept`, `--neutral`), `.lu-card`, `.lu-tag`, `.lu-list` (+`--num`, `--check`, `--tight`), `.lu-figure`, `.lu-statement`.
@@ -186,13 +197,13 @@ The target is WCAG 2.2 AA. The system meets most of it structurally; these are t
 
 - Give every `input.lu-blank` a `data-label`.
 - Give every `[data-walk-step]` a `data-caption-short`.
-- Never remove the injected up/down buttons from a `.lu-sort` — they are the keyboard equivalent of dragging (SC 2.5.7).
+- Never remove the injected up/down buttons from a `.lu-sort`, they are the keyboard equivalent of dragging (SC 2.5.7).
 - Never say "the green one" or "the red box". Name the thing.
 - Decorative SVG gets `aria-hidden="true"`; meaningful SVG gets `role="img"` and a `<title>`.
 - Do not add a `tabindex` above 0, and do not remove focus outlines.
 - Keep the skip link as the first element in `<body>`.
 
-Known gap, stated honestly: a scaled fixed canvas cannot satisfy SC 1.4.10 reflow. The printed handout is a conforming alternative. **Study mode is not, yet** — it sets `.lu-selfstudy` but the deck stays `overflow:hidden`, so a long slide is still clipped and expanding every reveal makes it worse. Do not claim unqualified AA for the slide view, and do not claim study mode as the reflow alternative until it scrolls.
+Known gap, stated honestly: a scaled fixed canvas cannot satisfy SC 1.4.10 reflow. The printed handout is a conforming alternative. **Study mode is not, yet**, it sets `.lu-selfstudy` but the deck stays `overflow:hidden`, so a long slide is still clipped and expanding every reveal makes it worse. Do not claim unqualified AA for the slide view, and do not claim study mode as the reflow alternative until it scrolls.
 
 ---
 
@@ -201,7 +212,7 @@ Known gap, stated honestly: a scaled fixed canvas cannot satisfy SC 1.4.10 reflo
 `→`/`Space` next step or slide · `←` back · `↓`/`↑` skip builds · digits jump · `Home`/`End` · `O` contents · `/` search · `T` timer · `S` study mode · `P` presenter view · `F` fullscreen · `?` shortcuts · `Esc` close.
 
 - Deep links: `#/12` and `#/12/3`.
-- State in `localStorage` under `lu:<deck-id>:*` — position, answers, query drafts, study mode. **Never write outside your own namespace, and never clear the whole store.**
+- State in `localStorage` under `lu:<deck-id>:*`, position, answers, query drafts, study mode. **Never write outside your own namespace, and never clear the whole store.**
 - Presenter view is the same file with `?presenter=1`, synchronised over `BroadcastChannel`.
 - `window.LUDeck.go(n)` jumps to slide *n* (1-indexed) if you need it from the console.
 
@@ -214,7 +225,7 @@ Push to `main`. The workflow uploads the repository as-is. Nothing to build, not
 Two things that will bite you:
 
 - **`.nojekyll` must exist.** Jekyll excludes files beginning with `_`, so without it `lectures/_template.html` 404s.
-- **Asset links are versioned** (`assets/lu.css?v=1.0.2`). When you edit anything in `assets/`, bump that query string in all four HTML files and in the `SHELL` list in `sw.js` — one find-and-replace. Skip it and returning visitors keep the old stylesheet. Assets are otherwise served stale-while-revalidate, so it self-heals on the load after next; the version bump makes it immediate.
+- **Asset links are versioned** (`assets/lu.css?v=1.0.2`). When you edit anything in `assets/`, bump that query string in all four HTML files and in the `SHELL` list in `sw.js`, one find-and-replace. Skip it and returning visitors keep the old stylesheet. Assets are otherwise served stale-while-revalidate, so it self-heals on the load after next; the version bump makes it immediate.
 
 ---
 
