@@ -662,6 +662,13 @@ strong, .lu-strong { font-weight: 600; }
   font-size: var(--lu-t-caption); color: var(--lu-ink-2);
   margin-top: var(--lu-s2); display: block; text-wrap: pretty;
 }
+/* Without this the display:block above beats the UA [hidden] rule and every
+   unrevealed rationale still occupies space, making MCQ and poll slides
+   several times taller than the slide. */
+.lu-mcq__why[hidden] { display: none; }
+/* Restored poll selection: marks what the student picked, never asserts it
+   was right. Correctness is only shown on reveal. */
+.lu-mcq__opt[data-picked] { border-color: var(--lu-ink-2); background: var(--lu-paper-2); }
 .lu-mcq__why::before { content: "→ "; color: var(--lu-ink-3); }
 .lu-mcq__fb {
   font-size: var(--lu-t-small); padding: var(--lu-s4) var(--lu-s5);
@@ -677,6 +684,11 @@ strong, .lu-strong { font-weight: 600; }
 .lu-walk { display: flex; flex-direction: column; gap: var(--lu-s4); min-height: 0; flex: 1 1 auto; }
 .lu-walk__view { flex: 1 1 auto; min-height: 0; display: grid; place-items: center; }
 .lu-walk__view > * { width: 100%; }
+/* A .lu-board is width:100% + aspect-ratio, so inside a height-constrained
+   walkthrough it computes a height taller than the space available and
+   overlaps the caption bar. Let the height lead and derive the width. */
+.lu-walk__view > [data-walk-step] { height: 100%; min-height: 0; display: grid; place-items: center; }
+.lu-walk__view [data-walk-step] > .lu-board { width: auto; height: 100%; max-width: 100%; }
 .lu-walk__bar { display: flex; align-items: center; gap: var(--lu-s4); flex: none; }
 .lu-walk__dots { display: flex; gap: var(--lu-s2); flex: none; }
 .lu-walk__dot {
@@ -992,7 +1004,8 @@ body.lu-presenter .deck, body.lu-presenter .lu-hud, body.lu-presenter .lu-progre
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   [data-build] { opacity: 1 !important; transform: none !important; visibility: visible !important; }
   .lu-reveal__panel { display: block !important; }
-  .lu-walk__view > [data-walk-step] { display: block !important; }
+  .lu-walk__view > [data-walk-step] { display: block !important; height: auto !important; }
+  .lu-walk__view [data-walk-step] > .lu-board { width: 100% !important; height: auto !important; }
   .lu-code pre { overflow: visible !important; }
   /* A wipe cannot print. Unclip both panes and set them side by side. */
   .lu-compare__seam, .lu-compare__range { display: none !important; }

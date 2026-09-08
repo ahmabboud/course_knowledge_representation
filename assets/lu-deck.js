@@ -1231,7 +1231,7 @@
         });
         if (answers[qid]) {
           var mine = qsa('.lu-mcq__opt', p).filter(function (o) { return o.getAttribute('data-key') === answers[qid]; })[0];
-          if (mine) mine.setAttribute('data-verdict', 'correct');
+          if (mine) mine.setAttribute('data-picked', 'true');
         }
         paint();
       });

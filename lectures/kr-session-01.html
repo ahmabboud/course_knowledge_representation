@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/lu.css?v=1.0.2">
+<link rel="stylesheet" href="../assets/lu.css?v=1.0.3">
 </head>
 
 <body
@@ -69,7 +69,7 @@
     <div class="lu-stack">
       <p class="lu-statement">A supplier's plant has been sanctioned overnight. Which of the products you shipped last quarter contain a part that passed through it?</p>
       <p class="lu-p">Every fact needed to answer sits inside the company already. None of it sits in one place, and no two systems agree on what a supplier is.</p>
-      <div class="lu-callout" data-build="3">
+      <div class="lu-callout" data-build="2">
         <span class="lu-callout__label">The honest answer in most organisations</span>
         <p class="lu-sub">Three weeks, four analysts, and a spreadsheet nobody will be able to reproduce next quarter.</p>
       </div>
@@ -84,14 +84,10 @@
           <tr><td>PLM</td><td>Bill of materials</td><td><code>mfr_ref</code></td></tr>
           <tr><td>TMS</td><td>Shipments, lanes</td><td><code>party_no</code></td></tr>
           <tr><td>CRM</td><td>Customer orders</td><td>does not model one</td></tr>
-          <tr><td>Warehouse</td><td>Last night's copy of all five</td><td>all five, unreconciled</td></tr>
+          <tr><td>Warehouse</td><td>Copy of all five</td><td>all five, unreconciled</td></tr>
         </tbody>
-        <caption>Six systems, five names, no shared identity. This is not a broken company. This is a normal one.</caption>
+        <caption>Six systems, five names, no shared identity. The warehouse copied the tables, not the meaning. This is not a broken company, it is a normal one.</caption>
       </table>
-      <div class="lu-callout lu-callout--neutral" data-build="2">
-        <span class="lu-callout__label">Why the warehouse does not solve it</span>
-        <p class="lu-sub">It copied the tables. It did not copy the meaning, because the meaning was never written down anywhere a machine could read.</p>
-      </div>
     </div>
   </div>
   <template data-notes>
@@ -119,16 +115,13 @@ last quarter, and who did we ship them to?
 <span class="tok-com"># Your system writes this, checks it, and repairs it</span>
 <span class="tok-com"># if it does not validate against your own ontology:</span>
 <span class="tok-kw">SELECT</span> ?product ?customer <span class="tok-kw">WHERE</span> {
-  ?part  ul:producedAt      ul:plant-P114 .
-  ?good  ul:hasComponent+   ?part .
-  ?ship  ul:carries         ?good ;
-         ul:consignedTo     ?customer ;
-         ul:dispatchedOn    ?d .
-  <span class="tok-kw">FILTER</span>(?d &gt;= <span class="tok-str">"2026-04-01"</span>^^xsd:date)
+  ?part ul:producedAt    ul:plant-P114 .
+  ?good ul:hasComponent+ ?part .
+  ?ship ul:carries       ?good ;
+        ul:consignedTo   ?customer .
 }
 
-<span class="tok-com"># And it answers, with every row cited back to the</span>
-<span class="tok-com"># source table and column it came from.</span></code></pre>
+<span class="tok-com"># Then answers, every row cited to its source column.</span></code></pre>
       </div>
       <p class="lu-caption">You are not expected to read this yet. You are expected to want to.</p>
     </div>
@@ -142,8 +135,7 @@ last quarter, and who did we ship them to?
         <span class="lu-card__label">Why this is worth your term</span>
         <ul class="lu-list lu-list--tight lu-list--check">
           <li>Nothing in this stack is a toy. Every tool is one used in production somewhere.</li>
-          <li>Everything you build is open source and yours to keep and show.</li>
-          <li>The transferable skill is the method, not the supply chain.</li>
+          <li>Everything you build is open source and yours to keep.</li>
         </ul>
       </div>
     </div>
@@ -177,7 +169,7 @@ last quarter, and who did we ship them to?
           <li><span class="lu-layers__name">Discussion · 25 min</span><span class="lu-layers__note">Failure gallery, then compare inventories and count what only one person found</span></li>
         </ul>
       </div>
-      <p class="lu-caption">Reading before Session 2: Hogan et al. Chapter 1, Introduction, and Chapter 2, Data Graphs. Sequeda and Lassila Chapter 1. Hogan is free in full at kgbook.org.</p>
+      <p class="lu-caption">Reading before Session 2: Hogan et al. Chapters 1 and 2, free at kgbook.org. Sequeda and Lassila Chapter 1.</p>
     </div>
   </div>
   <template data-notes>
@@ -204,9 +196,8 @@ last quarter, and who did we ship them to?
     <div class="lu-stack">
       <p class="lu-p">A column type says a value is a string of at most 20 characters. It does not say the string names a legal entity, that two of them may be the same company, or that one of them stopped existing in 2019.</p>
       <ul class="lu-list">
-        <li>Meaning lives in three places, none of them machine-readable: the heads of four people, a wiki page last edited in 2021, and the WHERE clauses of about 300 reports.</li>
+        <li>Meaning lives in three places, none machine-readable: four people's heads, a stale wiki page, and 300 report WHERE clauses.</li>
         <li>A <button class="lu-term" type="button" data-term="Semantic layer" data-kind="Architecture"><span class="lu-term-word">semantic layer</span><template>A <b>semantic layer</b> is an explicit, machine-readable model of what the organisation's data means, sitting above the systems that store it.<p>Explicit is the load-bearing word. The knowledge already exists; it is just distributed across people, documents and query code where no program can reach it. The work of this course is moving it somewhere a program can.</p></template></button> is that knowledge written down where a program can reach it.</li>
-        <li>Written down once, it serves every system, instead of being re-derived by every report author.</li>
       </ul>
       <div class="lu-callout">
         <span class="lu-callout__label">Trap</span>
@@ -224,18 +215,16 @@ last quarter, and who did we ship them to?
   status      <span class="tok-kw">CHAR</span>(1)
 );
 
-<span class="tok-com">-- Everything a human knows, that it does not:</span>
-<span class="tok-com">--   status 'A' means active, 'H' means on hold,</span>
-<span class="tok-com">--     and 'X' is a merged duplicate, not a deletion</span>
-<span class="tok-com">--   country is the billing country, not the plant</span>
-<span class="tok-com">--   a vendor and a manufacturer are different things</span>
-<span class="tok-com">--     and this table quietly holds both</span></code></pre>
+<span class="tok-com">-- What a human knows and it does not:</span>
+<span class="tok-com">--   'X' is a merged duplicate, not a deletion</span>
+<span class="tok-com">--   country is the billing one, not the plant</span>
+<span class="tok-com">--   vendor and manufacturer differ, and this</span>
+<span class="tok-com">--     table quietly holds both</span></code></pre>
       </div>
       <div class="lu-reveal" data-build="2">
-        <button class="lu-reveal__btn" type="button">The four comments below the table are the course</button>
+        <button class="lu-reveal__btn" type="button">Those comments are the course</button>
         <div class="lu-reveal__panel" hidden>
-          <p>Each one becomes something concrete. The status codes become an enumerated class with a definition (Session 3). The billing-against-plant distinction becomes two properties instead of one (Session 3). The merged-duplicate rule becomes a SHACL shape that fails a build (Session 4). The vendor-against-manufacturer conflation becomes an entity resolution problem with a reported error rate (Session 5).</p>
-          <p>That is the honest description of this course: taking the comments out of the heads and the wiki and making them execute.</p>
+          <p>Billing against plant becomes two properties (Session 3). The merged-duplicate rule becomes a SHACL shape that fails a build (Session 4). Vendor against manufacturer becomes entity resolution with a reported error rate (Session 5). The course is taking those comments out of people's heads and making them execute.</p>
         </div>
       </div>
     </div>
@@ -275,16 +264,12 @@ approved    <span class="tok-kw">true</span></code></pre>
     <div class="lu-stack">
       <p class="lu-p">Both are right. Purchasing needs the legal entity it pays; engineering needs the plant that made the part. One company, two plants, two countries, and one word doing both jobs.</p>
       <ul class="lu-list">
-        <li>Join them on name and you get a plausible answer that is wrong at exactly the moment it matters, which is when a specific plant is sanctioned.</li>
-        <li>Nobody made an error. The error is that the distinction was never written down.</li>
+        <li>Join them on name and you get a plausible answer that is wrong exactly when it matters, which is when a specific plant is sanctioned.</li>
+        <li>Nobody erred. The distinction was never written down.</li>
       </ul>
       <div class="lu-callout" data-build="2">
         <span class="lu-callout__label">Say this one out loud</span>
-        <p class="lu-sub">Integration failures are almost never bad data. They are two correct models of the world meeting with no record of how they differ.</p>
-      </div>
-      <div class="lu-callout lu-callout--neutral" data-build="3">
-        <span class="lu-callout__label">Where this goes</span>
-        <p class="lu-sub">In Session 3 these become two classes with different definitions. In Session 5 you decide, with a number attached, whether V-8841 and NORDWIND-PL2 are the same thing.</p>
+        <p class="lu-sub">Integration failures are almost never bad data. They are two correct models of the world meeting with no record of how they differ. In Session 3 these become two classes; in Session 5 you decide, with a number attached, whether they are the same thing.</p>
       </div>
     </div>
   </div>
@@ -305,23 +290,22 @@ approved    <span class="tok-kw">true</span></code></pre>
          data-qid="s1-q1"
          data-answer="b"
          data-label="What does a join that works on 80 percent of rows establish?"
-         data-fb-correct=" A join is evidence that values coincide. Meaning is a separate claim and needs a separate argument, which is exactly what an ontology is for."
-         data-fb-wrong=" Watch the direction of the inference. Values matching is an observation about strings. Meaning being shared is a modelling claim, and no amount of overlap establishes it.">
+         data-fb-correct=" A join shows values coincide. Shared meaning is a separate claim, and an ontology is where you make it."
+         data-fb-wrong=" Values matching is an observation about strings. Shared meaning is a modelling claim, and no amount of overlap establishes it.">
       <p class="lu-mcq__q">Two systems store suppliers. One column is <code>vendor_id</code>, the other <code>supplier_code</code>, both strings. An engineer maps them one to one and the join succeeds on 80 percent of rows. What has been established?</p>
       <div class="lu-mcq__opts">
-        <button class="lu-mcq__opt" type="button" data-key="a">The two columns mean the same thing<span class="lu-mcq__why" hidden>A working join shows that values coincide, not that the concepts do. Purchasing's legal entity and engineering's manufacturing plant overlap heavily and are still different things.</span></button>
-        <button class="lu-mcq__opt" type="button" data-key="b">Only that 80 percent of the values coincide<span class="lu-mcq__why" hidden>Correct. That is the whole of what the evidence supports. Any claim about meaning has to be argued and written down separately.</span></button>
-        <button class="lu-mcq__opt" type="button" data-key="c">That the second system's schema is wrong<span class="lu-mcq__why" hidden>Neither schema is wrong. Both are locally correct for the work their owners do, which is precisely what makes the mismatch hard to see.</span></button>
-        <button class="lu-mcq__opt" type="button" data-key="d">That the remaining 20 percent are data quality errors<span class="lu-mcq__why" hidden>This is the most expensive wrong answer, because it sends you to clean data rather than to model meaning. The 20 percent may be subsidiaries, second plants or historical vendors, all of them correct.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="a">The two columns mean the same thing<span class="lu-mcq__why" hidden>Values coinciding is not concepts coinciding. A legal entity and a manufacturing plant overlap heavily and stay different things.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="b">Only that 80 percent of the values coincide<span class="lu-mcq__why" hidden>Correct. That is all the evidence supports. Meaning must be argued and written down separately.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="c">That the second system's schema is wrong<span class="lu-mcq__why" hidden>Neither is wrong. Both are locally correct for their owners, which is what makes the mismatch hard to see.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="d">That the remaining 20 percent are data quality errors<span class="lu-mcq__why" hidden>The most expensive wrong answer: it sends you to clean data instead of modelling meaning. Those rows may be subsidiaries or second plants, all correct.</span></button>
       </div>
       <div class="lu-mcq__fb" hidden></div>
     </div>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept">
         <span class="lu-callout__label">The habit this question is training</span>
-        <p class="lu-sub">Separate what the data shows from what you have decided it means. Every hour of this course lives on that line.</p>
+        <p class="lu-sub">Separate what the data shows from what you decided it means. Every hour of this course lives on that line.</p>
       </div>
-      <p class="lu-caption">Your answer is saved in this browser so you can review it on the self-check slide at the end.</p>
     </div>
   </div>
   <template data-notes>
@@ -349,7 +333,7 @@ approved    <span class="tok-kw">true</span></code></pre>
     <div class="lu-walk__view">
 
       <div data-walk-step="1" data-caption-short="Where you start"
-           data-caption="<b>Step 1 &mdash; where every organisation starts.</b> Systems that are individually correct and mutually unintelligible. There is no arrow between them because there is no agreed meaning to draw one with.">
+           data-caption="<b>Step 1, where every organisation starts.</b> Systems that are individually correct and mutually unintelligible. There is no arrow between them because there is no agreed meaning to draw one with.">
         <div class="lu-board">
           <div class="lu-node" style="left:8%;top:22%">ERP</div>
           <div class="lu-node" style="left:30%;top:22%">WMS</div>
@@ -361,7 +345,7 @@ approved    <span class="tok-kw">true</span></code></pre>
       </div>
 
       <div data-walk-step="2" data-caption-short="Profile and recover the rules"
-           data-caption="<b>Step 2 &mdash; today.</b> Before modelling anything you find out what the data actually contains and which rules it silently obeys. The constraint inventory you write in the lab is the raw material for the next three sessions.">
+           data-caption="<b>Step 2, today.</b> Before modelling anything you find out what the data actually contains and which rules it silently obeys. The constraint inventory you write in the lab is the raw material for the next three sessions.">
         <div class="lu-board">
           <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
             <defs><marker id="lu-arrow-s1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs>
@@ -375,7 +359,7 @@ approved    <span class="tok-kw">true</span></code></pre>
       </div>
 
       <div data-walk-step="3" data-caption-short="Model and validate"
-           data-caption="<b>Step 3 &mdash; Sessions 3 and 4.</b> The rules become two different artefacts, and keeping them apart is the intellectual core of the course. The ontology says what things <em>are</em>. The shape graph says what the data <em>must look like</em>. One infers, the other refuses.">
+           data-caption="<b>Step 3, Sessions 3 and 4.</b> The rules become two different artefacts, and keeping them apart is the intellectual core of the course. The ontology says what things <em>are</em>. The shape graph says what the data <em>must look like</em>. One infers, the other refuses.">
         <div class="lu-board">
           <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
             <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 260 300 L 420 160"/>
@@ -388,7 +372,7 @@ approved    <span class="tok-kw">true</span></code></pre>
       </div>
 
       <div data-walk-step="4" data-caption-short="Map the live data in"
-           data-caption="<b>Step 4 &mdash; Session 5.</b> The model meets the running database. Two architectures do this: copy the tables into the graph, or leave them in place and rewrite the query. You will build both and argue for one.">
+           data-caption="<b>Step 4, Session 5.</b> The model meets the running database. Two architectures do this: copy the tables into the graph, or leave them in place and rewrite the query. You will build both and argue for one.">
         <div class="lu-board">
           <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
             <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 240 330 L 460 220"/>
@@ -402,7 +386,7 @@ approved    <span class="tok-kw">true</span></code></pre>
       </div>
 
       <div data-walk-step="5" data-caption-short="Predict, ask, deploy"
-           data-caption="<b>Step 5 &mdash; Sessions 6, 7 and 8.</b> A graph neural network predicts which shipment slips next. A language model turns an English question into a query, checks it against the ontology and repairs it if it fails. Then the whole stack ships as containers.">
+           data-caption="<b>Step 5, Sessions 6, 7 and 8.</b> A graph neural network predicts which shipment slips next. A language model turns an English question into a query, checks it against the ontology and repairs it if it fails. Then the whole stack ships as containers.">
         <div class="lu-board">
           <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
             <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 290 220 L 430 140"/>
@@ -444,9 +428,8 @@ approved    <span class="tok-kw">true</span></code></pre>
 <span class="tok-fn">ul:LateShipment</span> <span class="tok-kw">rdfs:subClassOf</span> <span class="tok-fn">ul:Shipment</span> .</code></pre>
       </div>
       <ul class="lu-list lu-list--tight">
-        <li>Globally unique names, so two organisations can merge graphs without a meeting.</li>
-        <li>The vocabulary is itself queryable, which is what makes OWL and SHACL possible at all.</li>
-        <li>Verbose. Attributes on a relationship need extra machinery.</li>
+        <li>Global names, so two organisations merge graphs without a meeting.</li>
+        <li>The vocabulary is itself queryable. That is what makes OWL and SHACL possible.</li>
       </ul>
     </div>
 
@@ -461,13 +444,12 @@ approved    <span class="tok-kw">true</span></code></pre>
 <span class="tok-com">// Nothing anywhere defines what it means.</span></code></pre>
       </div>
       <ul class="lu-list lu-list--tight">
-        <li>Properties on edges without ceremony, and a friendlier query language.</li>
-        <li>Excellent when the graph is the application and nobody outside will read it.</li>
-        <li>No standard schema language, so no reasoning and no published vocabulary to reuse.</li>
+        <li>Edge properties without ceremony, and a friendlier query language.</li>
+        <li>No standard schema language, so no reasoning and nothing published to reuse.</li>
       </ul>
       <div class="lu-callout" data-build="2">
         <span class="lu-callout__label">Why this course is RDF-native</span>
-        <p class="lu-sub">Reuse of published industrial ontologies, validation with SHACL and reasoning are the substance of this course, and none of the three exist in the property graph world. You meet Cypher again in Session 2 and then we move on.</p>
+        <p class="lu-sub">Ontology reuse, SHACL validation and reasoning are the substance of this course, and none of the three exist in the property graph world.</p>
       </div>
     </div>
   </div>
@@ -512,16 +494,14 @@ Absence of data means unknown.</pre>
     <div class="lu-stack lu-stack--tight">
       <span class="lu-tag lu-tag--green">Why open world is the right default here</span>
       <ul class="lu-list lu-list--tight lu-list--check">
-        <li>No single system ever holds all the facts about a supplier.</li>
+        <li>No single system holds all the facts about a supplier.</li>
         <li>Merging a partner's graph adds knowledge without invalidating yours.</li>
-        <li>It is honest: your ERP genuinely does not know what the PLM knows.</li>
       </ul>
     </div>
     <div class="lu-stack lu-stack--tight">
       <span class="lu-tag lu-tag--red">What it costs you, and who pays it back</span>
       <ul class="lu-list lu-list--tight">
-        <li>A reasoner will never tell you a required value is missing. It will infer, not complain.</li>
-        <li>So OWL cannot be your validator, however much it looks like one.</li>
+        <li>A reasoner never reports a missing required value. It infers, it does not complain, so OWL cannot be your validator.</li>
         <li><button class="lu-term" type="button" data-term="SHACL" data-kind="Constraint language"><span class="lu-term-word">SHACL</span><template><b>SHACL</b> is the Shapes Constraint Language. It validates an RDF graph against explicit expectations under a <b>closed world</b> reading, which is exactly the reading OWL refuses to take.<p>This is why Session 4 exists as its own session, and why the constraint inventory you write today is the input to it rather than to the ontology.</p></template></button> supplies the closed-world half, in Session 4.</li>
       </ul>
     </div>
@@ -582,22 +562,22 @@ Absence of data means unknown.</pre>
     <div class="lu-card lu-col-3" data-build="1">
       <span class="lu-card__label">01 · Traceability</span>
       <h3 class="lu-h3">Which products contain a part from this plant?</h3>
-      <p class="lu-sub">A recall or a sanction turns this into a legal deadline. Answering in hours instead of weeks is the difference between a targeted recall and a total one.</p>
+      <p class="lu-sub">A recall or sanction turns this into a legal deadline. Hours instead of weeks is the difference between a targeted recall and a total one.</p>
     </div>
     <div class="lu-card lu-col-3" data-build="2">
       <span class="lu-card__label">02 · Supplier risk</span>
       <h3 class="lu-h3">If this supplier fails, what has no second source?</h3>
-      <p class="lu-sub">Requires walking the bill of materials to arbitrary depth. This is the query SQL is worst at and a graph is best at.</p>
+      <p class="lu-sub">Walks the bill of materials to arbitrary depth. The query SQL is worst at and a graph is best at.</p>
     </div>
     <div class="lu-card lu-col-3" data-build="3">
       <span class="lu-card__label">03 · Late delivery</span>
       <h3 class="lu-h3">Which shipment slips next, and why this one?</h3>
-      <p class="lu-sub">The prediction is Session 6. The <em>why</em> is what a graph gives you that a flat table does not: the path through supplier, lane and carrier that explains it.</p>
+      <p class="lu-sub">Prediction is Session 6. The <em>why</em> is what a graph adds: the path through supplier, lane and carrier that explains it.</p>
     </div>
     <div class="lu-card lu-col-3" data-build="4">
       <span class="lu-card__label">04 · Cost of a wrong answer</span>
       <h3 class="lu-h3">What does a confident wrong answer cost?</h3>
-      <p class="lu-sub">More than no answer. This is why your system needs a refusal path, and why Session 7 grades whether it can say it does not know.</p>
+      <p class="lu-sub">More than no answer. Session 7 grades whether your system can say it does not know.</p>
     </div>
   </div>
 
@@ -620,26 +600,24 @@ Absence of data means unknown.</pre>
     <table class="lu-table">
       <thead><tr><th>Tool</th><th>Status as of September 2026</th><th>Verdict</th></tr></thead>
       <tbody>
-        <tr><td>DGL</td><td>No commits in 2026; latest on PyPI is from May 2024, built against a PyTorch two years old</td><td>Do not build on it</td></tr>
+        <tr><td>DGL</td><td>No commits in 2026; latest on PyPI is May 2024, built against a PyTorch two years old</td><td>Do not build on it</td></tr>
         <tr><td>Blazegraph</td><td>Repository archived; last release February 2020</td><td>Do not build on it</td></tr>
-        <tr><td>D2RQ</td><td>Last release 2012</td><td>Do not build on it</td></tr>
-        <tr><td>AmpliGraph</td><td>Fresh version number, but pinned to a frozen TensorFlow and Python 3.11</td><td>The sneakiest category</td></tr>
+        <tr><td>AmpliGraph</td><td>Fresh version number, pinned to a frozen TensorFlow and Python 3.11</td><td>The sneakiest category</td></tr>
         <tr><td>PyTorch Geometric</td><td>Released July 2026, current PyTorch, first-class heterogeneous graphs</td><td>This is what we use</td></tr>
-        <tr><td>Protege, pySHACL, Ontop, Morph-KGC</td><td>All released in 2026, all actively maintained</td><td>This is what we use</td></tr>
+        <tr><td>Protege, pySHACL, Ontop, Morph-KGC</td><td>All released in 2026, actively maintained</td><td>This is what we use</td></tr>
       </tbody>
-      <caption>Every row was checked against release dates and commit history rather than documentation, which is a skill in itself.</caption>
+      <caption>Checked against release dates and commit history, not documentation. D2RQ, last released in 2012, is still in tutorials today.</caption>
     </table>
 
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept">
         <span class="lu-callout__label">The transferable skill</span>
-        <p class="lu-sub">Before you adopt anything: check the last commit, the last release on the package index, and whether the pinned dependencies still install. A confident README is not evidence.</p>
+        <p class="lu-sub">Check the last commit, the last release on the package index, and whether the pins still install. A confident README is not evidence.</p>
       </div>
       <div class="lu-reveal">
         <button class="lu-reveal__btn" type="button">The category that catches experienced engineers</button>
         <div class="lu-reveal__panel" hidden>
-          <p>A fresh version number on a frozen stack. AmpliGraph released in July 2026 and pins TensorFlow 2.15, numpy below 2.0 and Python 3.11 or lower. It looks alive on the package page and will not install beside anything current. You lose the first hour of a lab to it and conclude you did something wrong.</p>
-          <p>The same trap applies to licences. Two tools in this space carry AGPL, one declares no licence at all, and one popular vocabulary carries two contradictory licence statements in the same repository. You will meet that last one in Session 3.</p>
+          <p>A fresh version number on a frozen stack. AmpliGraph released in July 2026 and pins TensorFlow 2.15 and Python 3.11 or lower. It looks alive and will not install beside anything current, so you lose the first hour of a lab and conclude you did something wrong. Licences hide the same way: one popular vocabulary in this space carries two contradictory licence statements in the same repository, and you meet it in Session 3.</p>
         </div>
       </div>
     </div>
@@ -660,10 +638,10 @@ Absence of data means unknown.</pre>
     <div class="lu-poll" data-qid="s1-poll" data-seconds="45" data-answer="b" data-label="Which library would you build a 2026 course on?">
       <p class="lu-mcq__q">You are choosing the graph learning library for a course that runs next year. You have twenty minutes to decide. Which evidence settles it?</p>
       <div class="lu-mcq__opts">
-        <button class="lu-mcq__opt" type="button" data-key="a">The one with the most tutorials and Stack Overflow answers<span class="lu-mcq__why" hidden>Tutorial volume is a lagging indicator. It measures how popular a tool was three years ago, which is exactly how abandoned libraries stay in curricula.</span></button>
-        <button class="lu-mcq__opt" type="button" data-key="b">The date of the last release, and whether its pins install today<span class="lu-mcq__why" hidden>Correct, and it takes about four minutes to check. Release date plus a trial install in a clean environment catches both the abandoned tools and the frozen-stack ones.</span></button>
-        <button class="lu-mcq__opt" type="button" data-key="c">The number of GitHub stars<span class="lu-mcq__why" hidden>Stars never go down. A project can be archived for six years and keep every star it ever earned.</span></button>
-        <button class="lu-mcq__opt" type="button" data-key="d">Whether a large company sponsors it<span class="lu-mcq__why" hidden>Helpful but not decisive. Several libraries in this space carry a large sponsor's name and have had no substantive commit in over a year.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="a">The most tutorials and Stack Overflow answers<span class="lu-mcq__why" hidden>A lagging indicator. It measures popularity three years ago, which is how abandoned libraries stay in curricula.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="b">The last release date, and whether its pins install today<span class="lu-mcq__why" hidden>Correct, and four minutes of work. Release date plus a trial install in a clean environment catches both failure modes.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="c">The number of GitHub stars<span class="lu-mcq__why" hidden>Stars never go down. A project can be archived six years and keep every one.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="d">Whether a large company sponsors it<span class="lu-mcq__why" hidden>Helpful, not decisive. Several libraries here carry a big sponsor and no commit in over a year.</span></button>
       </div>
     </div>
 
@@ -672,11 +650,10 @@ Absence of data means unknown.</pre>
         <span class="lu-card__label">How to run this</span>
         <ul class="lu-list lu-list--tight">
           <li>Start the timer; everyone answers on their own device.</li>
-          <li>Reveal, then tally the room with the plus buttons so the spread is visible.</li>
-          <li>Spend the remaining time on whoever picked <b>a</b>, which is the most defensible wrong answer here.</li>
+          <li>Reveal, then tally the room with the plus buttons.</li>
+          <li>Spend the rest on whoever picked <b>a</b>, the most defensible wrong answer.</li>
         </ul>
       </div>
-      <p class="lu-caption">The tally is local to this machine. Nothing is uploaded and no student device reports anything.</p>
     </div>
   </div>
   <template data-notes>
@@ -691,11 +668,11 @@ Absence of data means unknown.</pre>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
     <ol class="lu-list lu-list--num">
-      <li>Run the provided smoke-test notebook. It checks Python 3.12, JDK 21, Docker and Protege in one pass. Do not skip it because things "seem fine".</li>
-      <li>Load <b>DataCo</b> and <b>Brunel</b> from the starter repository. Both are already downloaded; do not re-fetch them.</li>
-      <li>Profile both with <b>ydata-profiling</b>, then open them in <b>OpenRefine</b> and look at the value clusters. The clusters are where the rules hide.</li>
-      <li>Trace the referential structure across the seven Brunel tables: order, plant, port, carrier, rate band.</li>
-      <li>Write the <b>constraint inventory</b> in the provided table. Every entry needs the evidence in the data that supports it.</li>
+      <li>Run the smoke-test notebook. It checks Python 3.12, JDK 21, Docker and Protege in one pass. Do not skip it because things seem fine.</li>
+      <li>Load <b>DataCo</b> and <b>Brunel</b> from the starter repository. Both are already downloaded.</li>
+      <li>Profile both with <b>ydata-profiling</b>, then cluster values in <b>OpenRefine</b>. The clusters are where the rules hide.</li>
+      <li>Trace the structure across the seven Brunel tables: order, plant, port, carrier, rate band.</li>
+      <li>Write the <b>constraint inventory</b>. Every entry needs its evidence in the data.</li>
     </ol>
 
     <div class="lu-stack">
@@ -706,16 +683,15 @@ Absence of data means unknown.</pre>
       <div class="lu-code lu-code--sm" data-name="how an inventory entry is scored" data-run="js">
 <pre><code><span class="tok-com">// An entry scores only if all three are present.</span>
 <span class="tok-kw">const</span> entry = {
-  rule:     <span class="tok-str">'A shipment is never delivered before dispatch'</span>,
+  rule:     <span class="tok-str">'Never delivered before dispatch'</span>,
   evidence: <span class="tok-str">'0 of 180,519 rows violate it'</span>,
-  source:   <span class="tok-str">'DataCo.orders, shipping_date vs order_date'</span>
+  source:   <span class="tok-str">'DataCo.orders, ship vs order date'</span>
 };
-
-<span class="tok-kw">const</span> ok = [<span class="tok-str">'rule'</span>,<span class="tok-str">'evidence'</span>,<span class="tok-str">'source'</span>]
+<span class="tok-kw">const</span> bad = [<span class="tok-str">'rule'</span>,<span class="tok-str">'evidence'</span>,<span class="tok-str">'source'</span>]
   .filter(k =&gt; !entry[k] || entry[k].length &lt; 8);
-console.log(ok.length ? <span class="tok-str">'Incomplete: '</span> + ok : <span class="tok-str">'Scores.'</span>);</code></pre>
+console.log(bad.length ? <span class="tok-str">'Incomplete: '</span>+bad : <span class="tok-str">'Scores.'</span>);</code></pre>
       </div>
-      <p class="lu-caption">Editable and runnable here. Blank a field and run it again to see what a marker sees.</p>
+      <p class="lu-caption">Editable and runnable. Blank a field, run again, see what a marker sees.</p>
     </div>
   </div>
   <template data-notes>
@@ -800,7 +776,7 @@ console.log(ok.length ? <span class="tok-str">'Incomplete: '</span> + ok : <span
 
   <div class="lu-callout" style="margin-top:var(--lu-s5)">
     <span class="lu-callout__label">Then, for the remaining minutes</span>
-    <p class="lu-sub">Compare constraint inventories in pairs. Count how many rules only one of you found. That number is the argument for writing meaning down instead of keeping it in a head.</p>
+    <p class="lu-sub">Compare inventories in pairs. Count the rules only one of you found. That number is the argument for writing meaning down.</p>
   </div>
   <template data-notes>
     <p>Nine minutes. Take each case as a show of hands before opening the reveal, and let them disagree.</p>
@@ -863,7 +839,7 @@ console.log(ok.length ? <span class="tok-str">'Incomplete: '</span> + ok : <span
           <li>Any slide is linkable: add <code>#/10</code> to the address to share the architecture walkthrough.</li>
         </ul>
       </div>
-      <p class="lu-caption">Your answers and position are stored in this browser only. Clearing them affects nothing else.</p>
+      <p class="lu-caption">Answers and position are stored in this browser only.</p>
     </div>
   </div>
   <template data-notes>
@@ -874,6 +850,6 @@ console.log(ok.length ? <span class="tok-str">'Incomplete: '</span> + ok : <span
 </div><!-- /stage -->
 </div><!-- /deck -->
 
-<script src="../assets/lu-deck.js?v=1.0.2" defer></script>
+<script src="../assets/lu-deck.js?v=1.0.3" defer></script>
 </body>
 </html>

@@ -5,26 +5,39 @@ upstream template: ahmabboud/LebUniv_Course_Template @ `2322f1a`
 ## Last sync
 
 date: 2026-09-07
-commit: `0a6ca86` (`Knowledge Representation course site: design system, Session 1 and Session 3`)
-status: committed locally, **not yet pushed**. The remote is configured and the
-repository exists and is empty. Run `git push -u origin main` from a terminal
-with your GitHub credentials.
+commits: `537820e` (initial), `68599d9` (defect fixes)
+status: `537820e` is pushed and live. **`68599d9` is committed locally and not
+yet pushed.** Run `git push origin main`.
 direction: this repository is DOWNSTREAM of the template. The stylesheet,
-runtime and authoring contract were authored in `LebUniv_Course_Template` and
-copied here unchanged. Fixes to `assets/` belong upstream, then flow back.
+runtime and authoring contract were authored in `LebUniv_Course_Template`.
 
-### In this commit
+### `68599d9` fixes three defects that belong upstream
 
-- Full template copy: `assets/lu.css`, `assets/lu-deck.js`, `assets/sparql-lite.js`,
-  `design-system.html`, `lectures/_template.html`, `AGENTS.md`, `PROMPT.md`,
-  the Pages workflow, the PWA manifest and the service worker.
-- `lectures/kr-session-01.html` authored here. 22 slides, 180 minutes.
-- `lectures/kr-session-03.html` carried over from the template, where it was
-  written as the worked example. It is a real session of this course.
-- `index.html` narrowed to Knowledge Representation, sessions ordered 1 to 8,
-  Session 1 and Session 3 linked, the other six marked not yet built.
-- `manifest.webmanifest` and `README.md` retitled for the course.
-- `uploads/` and `github.md` from the template were not copied.
+Diagnosed against the live site. All three are in `assets/` and affect every
+deck built on this system, including the `kr-session-03` reference lecture,
+which shows the same symptoms.
+
+| # | File | Defect | Effect |
+|---|---|---|---|
+| 1 | `lu.css` | `.lu-mcq__why` set `display:block` with no `[hidden]` companion rule, so the UA `[hidden]` rule lost | Every unrevealed rationale still occupied space. MCQ and poll slides rendered 4 to 5 times taller than the slide: 1,440px and 1,398px of overflow here, 859px and 1,234px in session 3 |
+| 2 | `lu.css` | A `.lu-board` inside `.lu-walk__view` is `width:100%` plus `aspect-ratio`, so it derived a height taller than the space available | The diagram overlapped the walkthrough caption bar by 90px here and 78px in session 3. Height now leads, width follows, with a print override |
+| 3 | `lu-deck.js` | On reload the poll set `data-verdict="correct"` on whatever the student had answered, ignoring `data-answer` | A student restoring a wrong answer saw it confirmed as right. Now marks `data-picked` and leaves correctness to the reveal |
+
+**These three fixes should be ported to `LebUniv_Course_Template`.** Until they
+are, every new course seeded from the template inherits all three.
+
+Also in `68599d9`: 46 content trims across 14 slides of session 1, and the
+`&mdash;` entities removed from the walkthrough captions. Asset query strings
+bumped to `v=1.0.3` in all four HTML files and in `SHELL` in `sw.js`.
+
+### Verified how
+
+Components were exercised directly on the live page: MCQ, fill-in-the-blank,
+drag-to-order, poll, reveals, term popovers, the compare wipe, code copy and
+run, progressive builds and the self-check all function correctly. The two
+`lu.css` fixes were injected into the live page and re-measured before being
+written to the file. **The content trims have not yet been measured against a
+live render** and should be re-checked after this commit deploys.
 
 ## Screen map
 

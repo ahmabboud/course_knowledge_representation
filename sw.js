@@ -12,9 +12,9 @@ const SHELL = [
   './',
   './index.html',
   './design-system.html',
-  './assets/lu.css?v=1.0.2',
-  './assets/lu-deck.js?v=1.0.2',
-  './assets/sparql-lite.js?v=1.0.2',
+  './assets/lu.css?v=1.0.3',
+  './assets/lu-deck.js?v=1.0.3',
+  './assets/sparql-lite.js?v=1.0.3',
   './manifest.webmanifest'
 ];
 
