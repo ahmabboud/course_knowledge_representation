@@ -53,6 +53,48 @@ the board's 1448x400 render so `preserveAspectRatio="none"` does not stretch
 the labels. Verified: every edge endpoint lands within 0 to 16px of a node and
 no two nodes overlap, on all five steps.
 
+### Two more defects found by driving the deployed page
+
+**Stale cache (the worst one).** GitHub Pages serves HTML with
+`Cache-Control: max-age=600`. `sw.js` was network-first for documents, but its
+plain `fetch(req)` is answered by the browser's own HTTP cache, so "network
+first" quietly meant "stale first" and a student who once opened a lecture kept
+that version through reloads. Measured directly: server had v1.0.3, the browser
+rendered v1.0.2 with `transferSize: 0`. Fixed with `fetch(req, {cache:'no-store'})`,
+`CACHE` bumped to `lu-slides-v3`, and registration with `updateViaCache:'none'`
+plus an explicit `reg.update()`.
+
+**`.lu-mcq__why` landed in the 44px key column.** `.lu-mcq__opt` is a
+`44px 1fr` grid and the rationale is its third child, so with no explicit column
+it fell into the narrow one and rendered **one word per line, 44px wide and
+462px tall instead of 691x54**. Every revealed rationale in every MCQ and poll,
+in every deck. Fixed with `.lu-mcq__why { grid-column: 2; }`. This, not long
+prose, is what made the check-question slides explode.
+
+### Slide overflow: what is real and what is left
+
+A `.slide` is a fixed box with `overflow:hidden`, so content that does not fit
+is cut with no scrollbar and no error. Measured on the deployed page, clean
+localStorage, in canvas pixels against a 652px body:
+
+| | clipped slides | worst |
+|---|---|---|
+| before | 11 | 559px |
+| after the grid-column fix and the trims | 3 | 125px |
+
+A runtime guard now logs every overflowing slide to the console at load, so
+this fails loudly for the author instead of silently for the student.
+
+**Auto-fit was tried and rejected.** Shrinking an overflowing body to fit needed
+a scale below 0.78 on nine of ten slides, which pushes the 20px type floor under
+16px. Evidence, not preference: the fix is less content, not smaller content.
+
+**Known gap:** study mode (`S`) does not reflow. It sets `.lu-selfstudy` but the
+deck stays `overflow:hidden`, and expanding every reveal makes clipping worse.
+`AGENTS.md` claims study mode is the reflow-conforming alternative for WCAG
+1.4.10. That claim is currently false. Fixing it is a design-system decision,
+not made here.
+
 ### Verified how
 
 Components were exercised directly on the live page: MCQ, fill-in-the-blank,

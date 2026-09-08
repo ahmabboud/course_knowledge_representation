@@ -666,6 +666,11 @@ strong, .lu-strong { font-weight: 600; }
    unrevealed rationale still occupies space, making MCQ and poll slides
    several times taller than the slide. */
 .lu-mcq__why[hidden] { display: none; }
+/* .lu-mcq__opt is a 44px/1fr grid. The rationale is the option's third child,
+   so without an explicit column it lands in the 44px key column on the next
+   implicit row and renders one word per line, ~460px tall instead of ~54px.
+   Every revealed rationale in every MCQ and poll was doing this. */
+.lu-mcq__why { grid-column: 2; }
 /* Restored poll selection: marks what the student picked, never asserts it
    was right. Correctness is only shown on reveal. */
 .lu-mcq__opt[data-picked] { border-color: var(--lu-ink-2); background: var(--lu-paper-2); }

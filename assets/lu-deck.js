@@ -1383,9 +1383,32 @@
     if (location.protocol !== 'http:' && location.protocol !== 'https:') return;
     try {
       navigator.serviceWorker.register(new URL(APP_ROOT + 'sw.js', location.href).href, {
-        scope: new URL(APP_ROOT, location.href).href
-      }).catch(function () { /* offline cache is a bonus, never a blocker */ });
+        scope: new URL(APP_ROOT, location.href).href,
+        // Never let the HTTP cache answer for sw.js itself, or a fixed worker
+        // can take a day to reach a browser that already has the old one.
+        updateViaCache: 'none'
+      }).then(function (reg) { if (reg && reg.update) reg.update(); })
+        .catch(function () { /* offline cache is a bonus, never a blocker */ });
     } catch (e) {}
+  }
+
+  /* Authoring guard. A .slide is a fixed box with overflow:hidden, so content
+     that does not fit is silently cut off the bottom with no scrollbar and no
+     error. Report it once, loudly, to whoever is writing the lecture. */
+  function auditOverflow() {
+    setTimeout(function () {
+      var bad = [];
+      qsa('.slide').forEach(function (s, i) {
+        var body = qs('.slide__body', s);
+        if (!body) return;
+        var over = body.scrollHeight - body.clientHeight;
+        if (over > 4) bad.push('  slide ' + (i + 1) + ' ("' + (s.getAttribute('data-label') || '') + '") overflows by ' + over + 'px');
+      });
+      if (bad.length) {
+        console.warn('[lu-deck] ' + bad.length + ' slide(s) overflow the slide box and are being clipped:\n' + bad.join('\n') +
+          '\nContent below the cut is invisible to students and cannot be scrolled to. Shorten the slide or split it in two.');
+      }
+    }, 1200);
   }
 
   /* ================================================================ BOOT */
@@ -1404,6 +1427,7 @@
     Score.init();
     if (IS_PRESENTER) PV.build();
     registerSW();
+    auditOverflow();
     window.LUDeck = { deck: Deck, go: function (n) { Deck.go(n - 1, 0); }, toast: toast, store: Store };
   }
 

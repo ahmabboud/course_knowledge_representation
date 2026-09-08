@@ -7,14 +7,14 @@
                lu.css lands on the next load without anyone bumping a version.
      · Webfonts → cache first. They never change.
    CACHE only needs bumping if you want to evict everything at once. */
-const CACHE = 'lu-slides-v2';
+const CACHE = 'lu-slides-v3';
 const SHELL = [
   './',
   './index.html',
   './design-system.html',
-  './assets/lu.css?v=1.0.4',
-  './assets/lu-deck.js?v=1.0.4',
-  './assets/sparql-lite.js?v=1.0.4',
+  './assets/lu.css?v=1.0.5',
+  './assets/lu-deck.js?v=1.0.5',
+  './assets/sparql-lite.js?v=1.0.5',
   './manifest.webmanifest'
 ];
 
@@ -44,8 +44,12 @@ self.addEventListener('fetch', (e) => {
 
   if (isDoc) {
     // Network first: an updated lecture wins, a cached one covers offline.
+    // cache:'no-store' matters. GitHub Pages serves HTML with max-age=600, so
+    // a plain fetch() here is answered by the browser's HTTP cache and
+    // "network first" quietly becomes "ten minutes stale first". Students then
+    // sit on an old lecture through a reload.
     e.respondWith(
-      fetch(req)
+      fetch(req, { cache: 'no-store' })
         .then((res) => {
           const copy = res.clone();
           caches.open(CACHE).then((c) => c.put(req, copy));
