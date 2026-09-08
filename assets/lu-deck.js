@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LU Teaching Slides — Deck Runtime
+   LU Teaching Slides, Deck Runtime
    lu-deck.js · v1.0 · no dependencies, no build step, works from file://
    --------------------------------------------------------------------------
    Reads from <body>:
@@ -343,7 +343,7 @@
       qsa('.lu-reveal__btn').forEach(function (b) { if (on) Reveal.set(b, true); });
       qsa('.lu-term').forEach(function (t) { Term.inline(t, !!on); });
       Deck.setStep(on ? Deck.steps.length : Deck.step, true);
-      if (!quiet) toast(on ? 'Study mode on — everything expanded' : 'Study mode off');
+      if (!quiet) toast(on ? 'Study mode on, everything expanded' : 'Study mode off');
     },
 
     printHandout: function () {
@@ -605,7 +605,7 @@
       Term.closeAll();
       var pop = el('div', 'lu-pop');
       pop.setAttribute('role', 'dialog');
-      pop.setAttribute('aria-label', (t.getAttribute('data-term') || t.textContent.trim()) + ' — definition');
+      pop.setAttribute('aria-label', (t.getAttribute('data-term') || t.textContent.trim()) + ' definition');
       pop.innerHTML =
         '<button class="lu-pop__close" aria-label="Close definition">&times;</button>' +
         (t.getAttribute('data-kind') ? '<div class="lu-pop__kind">' + t.getAttribute('data-kind') + '</div>' : '') +
@@ -1127,7 +1127,7 @@
       var tb = el('tbody');
       res.rows.slice(0, 60).forEach(function (r) {
         var row = el('tr');
-        res.vars.forEach(function (v) { row.appendChild(el('td', null, r[v] == null ? '—' : r[v])); });
+        res.vars.forEach(function (v) { row.appendChild(el('td', null, r[v] == null ? '\u00b7' : r[v])); });
         tb.appendChild(row);
       });
       t.appendChild(tb);
@@ -1297,7 +1297,7 @@
       wrap.innerHTML =
         '<div class="lu-pv__top">' +
         '<div class="lu-pv__clock" data-pv-clock>00:00</div>' +
-        '<div class="lu-pv__elapsed" data-pv-time>—</div>' +
+        '<div class="lu-pv__elapsed" data-pv-time>00:00</div>' +
         '<div class="lu-pv__pace" data-pv-pace>on plan</div>' +
         '</div>' +
         '<div class="lu-pv__notes"><h3 data-pv-label>Slide</h3><div data-pv-notes></div></div>' +
@@ -1357,7 +1357,7 @@
       if (!m.light || PV.at !== i) {
         PV.at = i;
         var s = PV.slides[i];
-        qs('[data-pv-label]', PV.wrap).textContent = 'Slide ' + (i + 1) + ' — ' + ((s && s.getAttribute('data-label')) || '');
+        qs('[data-pv-label]', PV.wrap).textContent = 'Slide ' + (i + 1) + ' \u00b7 ' + ((s && s.getAttribute('data-label')) || '');
         var notes = s ? Deck.notesFor(s) : '';
         qs('[data-pv-notes]', PV.wrap).innerHTML = notes || '<p style="opacity:.6">No notes for this slide.</p>';
         qs('[data-pv-meta]', PV.wrap).textContent =

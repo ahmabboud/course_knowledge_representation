@@ -1,4 +1,4 @@
-/* audit-deck.js — paste into the browser console on any lecture page.
+/* audit-deck.js, paste into the browser console on any lecture page.
  *
  * Every defect this repository shipped in its first month was invisible in the
  * HTML source and obvious the moment something rendered and got measured.
@@ -30,9 +30,9 @@
   })();
   const canvasPx = (screenPx) => Math.round(screenPx / stageScale);
 
-  const report = { overflow: [], revealedOverflow: [], hiddenLeaks: [], gridEscapes: [], tinyText: [], collisions: [], edges: [] };
+  const report = { overflow: [], revealedOverflow: [], hiddenLeaks: [], gridEscapes: [], strayChars: [], tinyText: [], collisions: [], edges: [] };
 
-  /* 1. OVERFLOW — content taller than the slide box is clipped with no
+  /* 1. OVERFLOW, content taller than the slide box is clipped with no
         scrollbar and no error. Students simply never see it. */
   for (let i = 0; i < slides.length; i++) {
     go(i + 1); await sleep(90);
@@ -41,7 +41,7 @@
     if (over > 4) report.overflow.push({ slide: i + 1, label: slides[i].dataset.label, cutPx: over });
   }
 
-  /* 2. OVERFLOW AFTER REVEAL — the state a slide is actually taught in.
+  /* 2. OVERFLOW AFTER REVEAL, the state a slide is actually taught in.
         Every reveal open, every rationale shown. */
   document.querySelectorAll('.lu-reveal__panel, .lu-mcq__why').forEach(e => { e.hidden = false; });
   await sleep(200);
@@ -52,7 +52,7 @@
     if (over > 4) report.revealedOverflow.push({ slide: i + 1, label: slides[i].dataset.label, cutPx: over });
   }
 
-  /* 3. [hidden] THAT DOES NOT HIDE — a class rule setting `display` beats the
+  /* 3. [hidden] THAT DOES NOT HIDE, a class rule setting `display` beats the
         UA [hidden] rule at equal-or-higher specificity. The element keeps its
         space, or renders on top of its siblings. Shipped twice here. */
   document.querySelectorAll('[hidden]').forEach(e => {
@@ -61,7 +61,7 @@
     }
   });
 
-  /* 4. GRID ESCAPES — a child of a narrow-first-column grid with no explicit
+  /* 4. GRID ESCAPES, a child of a narrow-first-column grid with no explicit
         grid-column lands in the narrow column and renders one word per line.
         This is what made .lu-mcq__why 44px wide and 462px tall. */
   document.querySelectorAll('.lu-mcq__opt, .lu-poll .lu-mcq__opt').forEach(opt => {
@@ -76,6 +76,25 @@
     });
   });
 
+  /* 4b. STRAY CHARACTERS, mojibake from a bad copy-paste, and em/en dashes,
+        which this course does not use as punctuation. Everything else
+        non-ASCII on a slide should be a deliberate symbol. */
+  const ALLOWED = new Set(['\u00b7','\u2192','\u2190','\u2191','\u2193','\u2018','\u2019','\u201c','\u201d',
+    '\u2291','\u2203','\u2200','\u2293','\u00ac','\u2265','\u2264','\u00d7','\u2227','\u2228','\u00e9','\u2026']);
+  const seen = {};
+  document.querySelectorAll('.slide').forEach((s, i) => {
+    for (const ch of s.textContent) {
+      if (ch.charCodeAt(0) < 128 || ALLOWED.has(ch)) continue;
+      const k = ch + ' U+' + ch.charCodeAt(0).toString(16).toUpperCase();
+      (seen[k] = seen[k] || { char: k, count: 0, firstSlide: i + 1 }).count++;
+    }
+    if (/[\u2014\u2013]/.test(s.textContent)) {
+      const k = 'em/en dash';
+      (seen[k] = seen[k] || { char: k, count: 0, firstSlide: i + 1 }).count++;
+    }
+  });
+  report.strayChars = Object.values(seen);
+
   /* 5. TEXT BELOW THE 20px PROJECTION FLOOR */
   document.querySelectorAll('.slide *').forEach(e => {
     if (!e.textContent.trim() || e.children.length) return;
@@ -83,7 +102,7 @@
     if (fs && fs < 20) report.tinyText.push({ cls: (typeof e.className === 'string' ? e.className : e.tagName), fontSize: fs });
   });
 
-  /* 6. DIAGRAM SANITY — nodes overlapping each other, and SVG edge endpoints
+  /* 6. DIAGRAM SANITY, nodes overlapping each other, and SVG edge endpoints
         that do not reach any node. Node positions are percentages and paths
         are viewBox units; setting them independently by eye does not work. */
   for (let i = 0; i < slides.length; i++) {
@@ -129,6 +148,7 @@
   show('revealedOverflow', 'No slide overflows once revealed', 'This is the state you teach in. Shorten rationales and reveal panels.');
   show('hiddenLeaks', '[hidden] actually hides', 'A class rule is setting display and beating the UA [hidden] rule. Add a [hidden] companion, or do not set display at all.');
   show('gridEscapes', 'Nothing escaped into a narrow grid column', 'Give the child an explicit grid-column.');
+  show('strayChars', 'No stray or mojibake characters', 'Non-ASCII on a slide should be a deliberate symbol. Em and en dashes are not used as punctuation in this course.');
   show('tinyText', 'No text below the 20px floor', 'Projection floor is --lu-t-caption.');
   show('collisions', 'No diagram nodes overlap', 'Reposition, or make the board taller.');
   show('edges', 'Every edge endpoint reaches a node', 'Compute path coords from node percentages: viewBox x = left% * (vbWidth/100), y = top% * (vbHeight/100).');

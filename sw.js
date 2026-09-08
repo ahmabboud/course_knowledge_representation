@@ -1,4 +1,4 @@
-/* LU Teaching Slides — offline cache.
+/* LU Teaching Slides, offline cache.
    Strategy:
      · HTML  → network first, cache fallback. An edited lecture is never stale;
                a lecture you have opened before still works with no network.

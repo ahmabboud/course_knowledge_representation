@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ontology Engineering: Description Logic, OWL, and Reuse — Knowledge Representation, Session 3</title>
+<title>Ontology Engineering: Description Logic, OWL, and Reuse · Knowledge Representation, Session 3</title>
 <meta name="description" content="Session 3 of Knowledge Representation, MSc, Lebanese University. Description logic, OWL 2 profiles, ontology reuse on IOF SCRO.">
 <meta name="theme-color" content="#96122B">
 <link rel="manifest" href="../manifest.webmanifest">
@@ -87,7 +87,7 @@
     </div>
   </div>
   <template data-notes>
-    <p>Keep this to four minutes. The pipeline graphic is the spine of the whole course — point at stage 04 and say it out loud.</p>
+    <p>Keep this to four minutes. The pipeline graphic is the spine of the whole course, point at stage 04 and say it out loud.</p>
     <ul><li>If anyone asks about SHACL now, park it. Session 4 is built on the contrast and stealing it today weakens both.</li></ul>
   </template>
 </section>
@@ -112,7 +112,7 @@
           <li><span class="lu-layers__name">Discussion · 20 min</span><span class="lu-layers__note">Swap ontologies in pairs, answer each other's competency questions</span></li>
         </ul>
       </div>
-      <p class="lu-caption">Reading before next session: Hogan et al. Chapter 4. Allemang, Hendler and Gandon — Basic OWL, Counting and sets in OWL, Expert modelling in OWL.</p>
+      <p class="lu-caption">Reading before next session: Hogan et al. Chapter 4. Allemang, Hendler and Gandon: Basic OWL, Counting and sets in OWL, Expert modelling in OWL.</p>
     </div>
   </div>
   <template data-notes>
@@ -125,7 +125,7 @@
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part one of three · 25 minutes</div>
     <h2 class="lu-display-xl" style="max-width:20ch">Description logic</h2>
-    <p class="lu-lead" style="max-width:40ch">You already have first-order logic. Today's question is not what description logic can say — it is what it deliberately gives up, and what you get in exchange.</p>
+    <p class="lu-lead" style="max-width:40ch">You already have first-order logic. Today's question is not what description logic can say. It is what it deliberately gives up, and what you get in exchange.</p>
   </div>
   <template data-notes><p>Ten seconds. Section dividers are punctuation, not content.</p></template>
 </section>
@@ -139,13 +139,13 @@
     <div class="lu-stack">
       <p class="lu-p">Description logic is a family of fragments of first-order logic restricted to unary and binary predicates, with no explicit variables. That restriction is the whole point: it buys back decidability, and with it a reasoner that terminates.</p>
       <ul class="lu-list">
-        <li>A <button class="lu-term" type="button" data-term="TBox" data-kind="Terminological box"><span class="lu-term-word">TBox</span><template>The <b>TBox</b> holds terminological axioms — the schema level. <code>Shipment ⊑ ∃hasCarrier.Carrier</code> says every shipment has some carrier. It constrains all possible worlds, not one dataset.<p>In OWL you are writing the TBox whenever you touch a class or a property. In your project this is the file <code>ontology.ttl</code>.</p></template></button> holds axioms about classes and properties.</li>
-        <li>An <button class="lu-term" type="button" data-term="ABox" data-kind="Assertional box"><span class="lu-term-word">ABox</span><template>The <b>ABox</b> holds assertional axioms about individuals — the instance level. <code>shipment/4471 rdf:type DelayedShipment</code>.<p>Your mapped supply-chain data from Session 5 will be almost entirely ABox. Keeping the two apart is what lets you version the model separately from the data.</p></template></button> holds assertions about individuals.</li>
+        <li>A <button class="lu-term" type="button" data-term="TBox" data-kind="Terminological box"><span class="lu-term-word">TBox</span><template>The <b>TBox</b> holds terminological axioms at the schema level. <code>Shipment ⊑ ∃hasCarrier.Carrier</code> says every shipment has some carrier. It constrains all possible worlds, not one dataset.<p>In OWL you are writing the TBox whenever you touch a class or a property. In your project this is the file <code>ontology.ttl</code>.</p></template></button> holds axioms about classes and properties.</li>
+        <li>An <button class="lu-term" type="button" data-term="ABox" data-kind="Assertional box"><span class="lu-term-word">ABox</span><template>The <b>ABox</b> holds assertional axioms about individuals at the instance level. <code>shipment/4471 rdf:type DelayedShipment</code>.<p>Your mapped supply-chain data from Session 5 will be almost entirely ABox. Keeping the two apart is what lets you version the model separately from the data.</p></template></button> holds assertions about individuals.</li>
         <li>Concept and role constructors replace quantified formulae: intersection, union, complement, existential and universal restriction, cardinality.</li>
       </ul>
       <div class="lu-callout">
         <span class="lu-callout__label">The exchange rate</span>
-        <p class="lu-sub">Full first-order logic is undecidable, so no reasoner can be both complete and guaranteed to halt. Every DL you meet is a point on that trade curve — and OWL 2's profiles are three named points on it.</p>
+        <p class="lu-sub">Full first-order logic is undecidable, so no reasoner can be both complete and guaranteed to halt. Every DL you meet is a point on that trade curve, and OWL 2's profiles are three named points on it.</p>
       </div>
     </div>
 
@@ -167,7 +167,7 @@ Shipment ⊑ ∃hasCarrier.Carrier
       <div class="lu-reveal" data-build="2">
         <button class="lu-reveal__btn" type="button">Why the variable-free syntax matters in practice</button>
         <div class="lu-reveal__panel" hidden>
-          <p>Because it makes the axioms composable objects rather than sentences. A tool can compute the subsumption hierarchy of a set of DL axioms; it cannot do the same for arbitrary FOL sentences. Every Protégé feature you will use in the lab — the inferred hierarchy, the unsatisfiable-class highlight, the explanation pane — exists because of that restriction.</p>
+          <p>Because it makes the axioms composable objects rather than sentences. A tool can compute the subsumption hierarchy of a set of DL axioms; it cannot do the same for arbitrary FOL sentences. Every Protégé feature you will use in the lab (the inferred hierarchy, the unsatisfiable-class highlight, the explanation pane) exists because of that restriction.</p>
         </div>
       </div>
     </div>
@@ -176,7 +176,7 @@ Shipment ⊑ ∃hasCarrier.Carrier
     <p>Ten minutes, and resist expanding it. They have the logic already; what they lack is the engineering framing.</p>
     <ul>
       <li>The three-ways code block is the slide. Walk it top to bottom and say the same sentence three times.</li>
-      <li>Expected question: "so why not just use Prolog / a rule engine?" Answer briefly — open world, and no closed-world negation. Park the rest for Session 4.</li>
+      <li>Expected question: "so why not just use Prolog / a rule engine?" Answer briefly: open world, and no closed-world negation. Park the rest for Session 4.</li>
     </ul>
   </template>
 </section>
@@ -210,12 +210,12 @@ Shipment ⊑ ∃hasCarrier.Carrier
   <div class="lu-reveal" style="margin-top:var(--lu-s6)" data-build="4">
     <button class="lu-reveal__btn" type="button">The failure mode nobody expects: a satisfiable ontology that is silently wrong</button>
     <div class="lu-reveal__panel" hidden>
-      <p>A consistent ontology with a clean red-free hierarchy can still be wrong, and this is the common case. If you declare <code>hasCarrier</code> with domain <code>Shipment</code> and then assert <code>purchaseOrder/88 :hasCarrier carrier/DHL</code>, no reasoner complains — it quietly <em>infers</em> that the purchase order is a shipment. Under the open world assumption that is a valid entailment, not an error.</p>
+      <p>A consistent ontology with a clean red-free hierarchy can still be wrong, and this is the common case. If you declare <code>hasCarrier</code> with domain <code>Shipment</code> and then assert <code>purchaseOrder/88 :hasCarrier carrier/DHL</code>, no reasoner complains. It quietly <em>infers</em> that the purchase order is a shipment. Under the open world assumption that is a valid entailment, not an error.</p>
       <p><b>This is why Session 4 exists.</b> Catching it needs closed-world validation, which is SHACL's job, not OWL's. Today, notice the pattern; next week, make it fail a build.</p>
     </div>
   </div>
   <template data-notes>
-    <p>Seven minutes. Build the three cards one at a time — do not show all three at once, they read as a taxonomy rather than three separate tools.</p>
+    <p>Seven minutes. Build the three cards one at a time. Shown together they read as a taxonomy rather than three separate tools.</p>
     <ul><li>The reveal at the bottom is the seed of Session 4. Plant it, do not water it.</li></ul>
   </template>
 </section>
@@ -242,7 +242,7 @@ Shipment ⊑ ∃hasCarrier.Carrier
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept">
         <span class="lu-callout__label">Read the hierarchy as a claim</span>
-        <p class="lu-sub">Every inferred line is the reasoner telling you what you said. When it disagrees with what you meant, the model is wrong — not the reasoner.</p>
+        <p class="lu-sub">Every inferred line is the reasoner telling you what you said. When it disagrees with what you meant, the model is wrong, not the reasoner.</p>
       </div>
       <p class="lu-caption">Your answer is saved in this browser so you can review it on the self-check slide at the end.</p>
     </div>
@@ -257,7 +257,7 @@ Shipment ⊑ ∃hasCarrier.Carrier
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part two of three · 25 minutes</div>
     <h2 class="lu-display-xl" style="max-width:22ch">OWL 2 and its profiles</h2>
-    <p class="lu-lead" style="max-width:44ch">Syntax over the semantics we just fixed — and one engineering decision that determines whether reasoning finishes on a graph of realistic size.</p>
+    <p class="lu-lead" style="max-width:44ch">Syntax over the semantics we just fixed, plus the one engineering decision that determines whether reasoning finishes on a graph of realistic size.</p>
   </div>
   <template data-notes><p>Ten seconds.</p></template>
 </section>
@@ -278,7 +278,7 @@ Shipment ⊑ ∃hasCarrier.Carrier
       </dl>
       <div class="lu-callout" data-build="1">
         <span class="lu-callout__label">Two traps, both common in submissions</span>
-        <p class="lu-sub"><b>Domain and range are not constraints.</b> They are entailment rules; asserting one lets the reasoner classify anything you attach. <b><button class="lu-term" type="button" data-term="owl:sameAs" data-kind="Identity axiom">owl:sameAs<template><code>owl:sameAs</code> asserts that two IRIs denote <b>the same individual</b>, so every property of one holds of the other, in both directions, forever.<p>It is routinely misused for "these records probably refer to the same supplier". That is a <i>similarity</i> claim, and it belongs in your Session 5 entity-resolution layer with a reported confidence — not as a logical identity that a reasoner will propagate through your whole graph.</p></template></button> is not a fuzzy match.</b> It is a logical identity and the reasoner will propagate it everywhere.</p>
+        <p class="lu-sub"><b>Domain and range are not constraints.</b> They are entailment rules; asserting one lets the reasoner classify anything you attach. <b><button class="lu-term" type="button" data-term="owl:sameAs" data-kind="Identity axiom">owl:sameAs<template><code>owl:sameAs</code> asserts that two IRIs denote <b>the same individual</b>, so every property of one holds of the other, in both directions, forever.<p>It is routinely misused for "these records probably refer to the same supplier". That is a <i>similarity</i> claim, and it belongs in your Session 5 entity-resolution layer with a reported confidence, not as a logical identity that a reasoner will propagate through your whole graph.</p></template></button> is not a fuzzy match.</b> It is a logical identity and the reasoner will propagate it everywhere.</p>
       </div>
     </div>
 
@@ -297,7 +297,7 @@ Shipment ⊑ ∃hasCarrier.Carrier
      owl:someValuesFrom <span class="tok-fn">ul:CommittedDate</span> ] ;
   <span class="tok-kw">skos:definition</span> <span class="tok-str">"A transport whose actual delivery</span>
      <span class="tok-str">follows the committed delivery date."</span> ;
-  <span class="tok-com"># CQ annotation — graded. See slide 15.</span>
+  <span class="tok-com"># CQ annotation, graded. See slide 15.</span>
   <span class="tok-kw">ul:answersCQ</span> <span class="tok-str">"Which shipments arrived late last quarter?"</span> .
 
 <span class="tok-fn">ul:LateShipment</span> owl:disjointWith <span class="tok-fn">ul:CancelledShipment</span> .
@@ -307,10 +307,10 @@ Shipment ⊑ ∃hasCarrier.Carrier
     </div>
   </div>
   <template data-notes>
-    <p>Nine minutes. Type nothing live — they have this file in the starter repo. Use the code block as the reading text.</p>
+    <p>Nine minutes. Type nothing live, they have this file in the starter repo. Use the code block as the reading text.</p>
     <ul>
       <li>Spend the time on the two traps. Domain-as-constraint is the single most expensive misunderstanding SQL engineers bring in, and it will cost them marks at Milestone 1.</li>
-      <li>Click the <code>owl:sameAs</code> popup — it forward-references Session 5 entity resolution deliberately.</li>
+      <li>Click the <code>owl:sameAs</code> popup. It forward-references Session 5 entity resolution deliberately.</li>
     </ul>
   </template>
 </section>
@@ -320,7 +320,7 @@ Shipment ⊑ ∃hasCarrier.Carrier
   <div class="lu-eyebrow">Profiles as an engineering decision</div>
   <h2 class="lu-h1">Drag the seam. Same intent, different profile, different guarantee.</h2>
 
-  <div class="lu-compare" data-a="EL — tractable" data-b="Full DL — expressive" data-start="52" style="margin-top:var(--lu-s4)">
+  <div class="lu-compare" data-a="EL, tractable" data-b="Full DL, expressive" data-start="52" style="margin-top:var(--lu-s4)">
     <div class="lu-compare__stage" style="min-height:250px">
       <div class="lu-compare__pane lu-compare__pane--a">
 <pre class="lu-mono" style="font-size:24px;line-height:1.75;margin:0">ul:AtRiskShipment ⊑ ul:Shipment
@@ -360,7 +360,7 @@ OWL 2 DL · HermiT · exponential worst case</pre>
 
   <div class="lu-row" style="margin-top:var(--lu-s4);gap:var(--lu-s6)" data-build="2">
     <span class="lu-tag lu-tag--green">Declare your profile in the report</span>
-    <p class="lu-caption" style="flex:1">ROBOT will tell you which profile you are in. If it is not the one you intended, that is a finding, not a formality — and the Session 8 defence will ask why.</p>
+    <p class="lu-caption" style="flex:1">ROBOT will tell you which profile you are in. If it is not the one you intended, that is a finding, not a formality, and the Session 8 defence will ask why.</p>
   </div>
   <template data-notes>
     <p>Drag the seam slowly, twice. Then ask: which of the four conjuncts on the right cost us EL? Answer: the last three; only the intersection and existential survive.</p>
@@ -411,7 +411,7 @@ OWL 2 DL · HermiT · exponential worst case</pre>
     <div class="lu-walk__view">
       <!-- step 1 -->
       <div data-walk-step="1" data-caption-short="What you asserted"
-           data-caption="<b>Step 1 — what you asserted.</b> Three classes, one property. <code>ul:handledBy</code> has domain <code>Shipment</code> and range <code>Carrier</code>. Nothing controversial yet.">
+           data-caption="<b>Step 1, what you asserted.</b> Three classes, one property. <code>ul:handledBy</code> has domain <code>Shipment</code> and range <code>Carrier</code>. Nothing controversial yet.">
         <div class="lu-board">
           <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
             <defs><marker id="lu-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs>
@@ -425,7 +425,7 @@ OWL 2 DL · HermiT · exponential worst case</pre>
       </div>
       <!-- step 2 -->
       <div data-walk-step="2" data-caption-short="The data arrives"
-           data-caption="<b>Step 2 — the data arrives.</b> Your Session 2 mapping attached <code>ul:handledBy</code> to a purchase order. In SQL this would be a foreign-key error. Here, nothing complains.">
+           data-caption="<b>Step 2, the data arrives.</b> Your Session 2 mapping attached <code>ul:handledBy</code> to a purchase order. In SQL this would be a foreign-key error. Here, nothing complains.">
         <div class="lu-board">
           <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
             <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 250 120 L 700 120"/>
@@ -440,7 +440,7 @@ OWL 2 DL · HermiT · exponential worst case</pre>
       </div>
       <!-- step 3 -->
       <div data-walk-step="3" data-caption-short="What the reasoner infers"
-           data-caption="<b>Step 3 — what the reasoner infers.</b> Domain axioms are entailment rules, so ELK concludes <code>PurchaseOrder ⊑ Shipment</code>. It is not a warning. It is a new, dashed, perfectly valid subsumption in your hierarchy.">
+           data-caption="<b>Step 3, what the reasoner infers.</b> Domain axioms are entailment rules, so ELK concludes <code>PurchaseOrder ⊑ Shipment</code>. It is not a warning. It is a new, dashed, perfectly valid subsumption in your hierarchy.">
         <div class="lu-board">
           <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
             <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 250 120 L 700 120"/>
@@ -455,7 +455,7 @@ OWL 2 DL · HermiT · exponential worst case</pre>
       </div>
       <!-- step 4 -->
       <div data-walk-step="4" data-caption-short="Making it fail"
-           data-caption="<b>Step 4 — make it fail loudly.</b> Add <code>ul:PurchaseOrder owl:disjointWith ul:Shipment</code>. Now the same data makes the class unsatisfiable and Protégé turns it red. You have converted a silent entailment into a findable error.">
+           data-caption="<b>Step 4, make it fail loudly.</b> Add <code>ul:PurchaseOrder owl:disjointWith ul:Shipment</code>. Now the same data makes the class unsatisfiable and Protégé turns it red. You have converted a silent entailment into a findable error.">
         <div class="lu-board">
           <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
             <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 250 120 L 700 120"/>
@@ -525,7 +525,7 @@ OWL 2 DL · HermiT · exponential worst case</pre>
     </div>
   </div>
   <template data-notes>
-    <p>Seven minutes. Build the stack bottom-up so BFO does not dominate — they will spend under five minutes of the whole course inside BFO itself.</p>
+    <p>Seven minutes. Build the stack bottom-up so BFO does not dominate. They will spend under five minutes of the whole course inside BFO itself.</p>
     <ul><li>Replace the figure placeholder before teaching: a screenshot of your own workspace, not a generic one.</li></ul>
   </template>
 </section>
@@ -566,7 +566,7 @@ OWL 2 DL · HermiT · exponential worst case</pre>
     </div>
   </div>
   <template data-notes>
-    <p>Let them argue about whether reuse-search comes before or after writing the questions. It comes after — you cannot judge whether SCRO covers you until you know what you are asking. That argument is the teaching moment.</p>
+    <p>Let them argue about whether reuse-search comes before or after writing the questions. It comes after, you cannot judge whether SCRO covers you until you know what you are asking. That argument is the teaching moment.</p>
   </template>
 </section>
 
@@ -648,7 +648,7 @@ ORDER BY ?label
     <div class="lu-poll" data-qid="s3-poll" data-seconds="45" data-answer="b" data-label="Does ul:RefrigeratedTruck earn its place?">
       <p class="lu-mcq__q">A participant adds <code>ul:RefrigeratedTruck</code> to their ontology because the DataCo table has a <code>vehicle_type</code> column. What should happen to it?</p>
       <div class="lu-mcq__opts">
-        <button class="lu-mcq__opt" type="button" data-key="a">Keep it — the data has the column, so the model needs the class<span class="lu-mcq__why" hidden>The source schema is not an argument. Half of any operational schema is there for reasons no current question depends on.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="a">Keep it, the data has the column, so the model needs the class<span class="lu-mcq__why" hidden>The source schema is not an argument. Half of any operational schema is there for reasons no current question depends on.</span></button>
         <button class="lu-mcq__opt" type="button" data-key="b">Delete it unless a competency question needs the distinction<span class="lu-mcq__why" hidden>Correct. Scope is set by the questions, not the source columns. If cold-chain integrity is not asked about, the class is cost without benefit.</span></button>
         <button class="lu-mcq__opt" type="button" data-key="c">Keep it, but only as an annotation property<span class="lu-mcq__why" hidden>This hides the decision rather than making it. If the distinction matters, model it; if it does not, remove it.</span></button>
         <button class="lu-mcq__opt" type="button" data-key="d">Replace it with a GS1 term regardless<span class="lu-mcq__why" hidden>Reuse is right in general, but reusing a term you do not need is still an unearned class.</span></button>
@@ -661,7 +661,7 @@ ORDER BY ?label
         <ul class="lu-list lu-list--tight">
           <li>Start the timer, everyone answers on their own device.</li>
           <li>Reveal, then tally the room with the plus buttons so the distribution is visible.</li>
-          <li>Spend the remaining time on whoever picked <b>a</b> — that is the schema-first instinct this course exists to dislodge.</li>
+          <li>Spend the remaining time on whoever picked <b>a</b>. That is the schema-first instinct this course exists to dislodge.</li>
         </ul>
       </div>
       <p class="lu-caption">The tally is local to this machine. Nothing is uploaded, and no student device reports anything to you.</p>
@@ -685,7 +685,7 @@ ORDER BY ?label
       <li>Run <b>ELK</b>, then <b>HermiT</b>. Read the inferred hierarchy for unsatisfiable classes, unintended equivalences and subsumptions you did not mean.</li>
       <li>Fix <b>the model</b>, not the reasoner output. Re-run until the hierarchy matches your intent.</li>
       <li>Run <b>ROBOT</b> from the command line for a quality report, and record which OWL profile you are in.</li>
-      <li>Ten-minute <b>licensing exercise</b> — see the next slide.</li>
+      <li>Ten-minute <b>licensing exercise</b>, see the next slide.</li>
     </ol>
 
     <div class="lu-stack">
@@ -709,7 +709,7 @@ console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + h
     </div>
   </div>
   <template data-notes>
-    <p>Six minutes to brief, then stop talking. Circulate — do not narrate from the front.</p>
+    <p>Six minutes to brief, then stop talking. Circulate, do not narrate from the front.</p>
     <ul>
       <li>Most common blocker at minute 20: HermiT never returns. Cause is almost always a cardinality axiom on a property with a large ABox. Have them switch to ELK and note the profile violation.</li>
       <li>Second most common: they started from an empty file because SCRO "looked complicated". Send them back.</li>
@@ -732,7 +732,7 @@ console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + h
       <div class="lu-reveal">
         <button class="lu-reveal__btn" type="button">Why this exercise is in the course at all</button>
         <div class="lu-reveal__panel" hidden>
-          <p>Because it is the honest reason the course builds on IOF SCRO rather than SCORVoc, and because every third-party ontology, vocabulary and dataset in your final report must be listed with its licence. A vocabulary with two contradictory licence statements is not a hypothetical — it is the first one a supply-chain search turns up.</p>
+          <p>Because it is the honest reason the course builds on IOF SCRO rather than SCORVoc, and because every third-party ontology, vocabulary and dataset in your final report must be listed with its licence. A vocabulary with two contradictory licence statements is not a hypothetical. It is the first one a supply-chain search turns up.</p>
           <p>The transferable skill: when the licence is ambiguous, the ambiguity is the finding. Record it and choose differently.</p>
         </div>
       </div>
@@ -741,14 +741,14 @@ console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + h
     <div class="lu-figure">
       <div class="lu-figure__ph">
         <span class="lu-figure__ph-title">Screenshot: the two contradictory licence statements, side by side</span>
-        <span class="lu-figure__ph-note">Capture both notices from the same repository at the same commit, crop to the licence text, and save as <code>assets/img/s3-licence-conflict.png</code>. Date the capture in the caption — this may be fixed upstream.</span>
+        <span class="lu-figure__ph-note">Capture both notices from the same repository at the same commit, crop to the licence text, and save as <code>assets/img/s3-licence-conflict.png</code>. Date the capture in the caption, this may be fixed upstream.</span>
       </div>
       <figcaption><b>Figure 3.2.</b> Same repository, same commit, two incompatible claims. Replace with your own capture and record the date.</figcaption>
     </div>
   </div>
   <template data-notes>
     <p>Ten minutes inside the lab block, run as a whole-room pause. Do it live rather than from a screenshot if the network holds.</p>
-    <ul><li>Check upstream before teaching — if the conflict has been resolved, the exercise still works but the caption must say so.</li></ul>
+    <ul><li>Check upstream before teaching, if the conflict has been resolved, the exercise still works but the caption must say so.</li></ul>
   </template>
 </section>
 
@@ -765,7 +765,7 @@ console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + h
       </ul>
       <div class="lu-callout">
         <span class="lu-callout__label">Before Session 4</span>
-        <p class="lu-sub">Hogan et al. Chapter 4, Deductive Knowledge. Allemang, Hendler and Gandon: Basic OWL, Counting and sets in OWL, Expert modelling in OWL. Bring your constraint inventory from Session 1 — next week every entry becomes an executable SHACL shape.</p>
+        <p class="lu-sub">Hogan et al. Chapter 4, Deductive Knowledge. Allemang, Hendler and Gandon: Basic OWL, Counting and sets in OWL, Expert modelling in OWL. Bring your constraint inventory from Session 1, next week every entry becomes an executable SHACL shape.</p>
       </div>
     </div>
 
@@ -783,7 +783,7 @@ console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + h
     </div>
   </div>
   <template data-notes>
-    <p>Eight minutes of the twenty. Keep pairs to eight minutes hard, then use the remainder for the room-level comparison — how many people extended SCRO with something it already had?</p>
+    <p>Eight minutes of the twenty. Keep pairs to eight minutes hard, then use the remainder for the room-level comparison, how many people extended SCRO with something it already had?</p>
   </template>
 </section>
 

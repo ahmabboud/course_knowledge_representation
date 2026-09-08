@@ -1,5 +1,5 @@
 /* ==========================================================================
-   sparql-lite.js — a teaching-sized SPARQL engine, in the browser, offline.
+   sparql-lite.js, a teaching-sized SPARQL engine, in the browser, offline.
    --------------------------------------------------------------------------
    PURPOSE
      Lets a slide ship a real query sandbox with no server and no CDN, so a
@@ -17,7 +17,7 @@
                     strstarts(), strends(), bound(), str(), lang(),
                     isIRI(), isLiteral(), numbers and string literals.
 
-   NOT SUPPORTED (deliberately — say so in class rather than pretend)
+   NOT SUPPORTED (deliberately, say so in class rather than pretend)
      UNION, MINUS, property paths, subqueries, named graphs, BIND, VALUES,
      CONSTRUCT/ASK/DESCRIBE, federation, entailment of any kind.
      A query that uses them raises a readable error.
@@ -190,7 +190,7 @@
     function expand(pn) {
       var at = pn.indexOf(':');
       var pre = pn.slice(0, at), loc = pn.slice(at + 1);
-      if (!(pre in prefixes)) throw new Error('Unknown prefix "' + pre + ':" — add a PREFIX line.');
+      if (!(pre in prefixes)) throw new Error('Unknown prefix "' + pre + ':", add a PREFIX line.');
       return prefixes[pre] + loc;
     }
     function term(t) {
