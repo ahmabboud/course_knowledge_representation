@@ -336,6 +336,8 @@ ul:supplier/erp/V8841</code></pre>
       ul:order-103 a ul:Order ; rdfs:label "ORD-103" ; ul:fromPlant ul:plant-PL7 ; ul:viaPort ul:port-HAM ; ul:handledBy ul:carrier-dhl ; ul:weightKg 950 ; ul:daysLate 14 .
       ul:order-104 a ul:Order ; rdfs:label "ORD-104" ; ul:fromPlant ul:plant-PL7 ; ul:viaPort ul:port-HAM ; ul:handledBy ul:carrier-xpo ; ul:weightKg 60 ; ul:daysLate 2 .
       ul:order-105 a ul:Order ; rdfs:label "ORD-105" ; ul:fromPlant ul:plant-PL2 ; ul:viaPort ul:port-HAM ; ul:handledBy ul:carrier-mae ; ul:weightKg 700 ; ul:daysLate 0 .
+      ul:order-106 a ul:Order ; rdfs:label "ORD-106" ; ul:fromPlant ul:plant-PL7 ; ul:viaPort ul:port-BRE ; ul:handledBy ul:carrier-dhl ; ul:weightKg 240 ; ul:daysLate 1 .
+      ul:order-107 a ul:Order ; rdfs:label "ORD-107" ; ul:fromPlant ul:plant-PL7 ; ul:viaPort ul:port-BRE ; ul:handledBy ul:carrier-xpo ; ul:weightKg 515 ; ul:daysLate 0 .
 
       ul:plant-PL2 a ul:Plant ; rdfs:label "Brno" ; ul:servesPort ul:port-BRE ; ul:servesPort ul:port-HAM .
       ul:plant-PL7 a ul:Plant ; rdfs:label "Gdansk" ; ul:servesPort ul:port-HAM .
@@ -361,11 +363,12 @@ WHERE {
     </template>
   </div>
 
-  <p class="lu-caption" style="margin-top:var(--lu-s3)"><b>Try next:</b> count late orders per carrier with <code>GROUP BY</code>, or filter <code>?w &gt; 500</code> on <code>ul:weightKg</code>. <kbd>Ctrl</kbd>+<kbd>Enter</kbd> runs.</p>
+  <p class="lu-caption" style="margin-top:var(--lu-s3)">Two rows come back, and they are the whole point. <b>Try next:</b> count late orders per carrier with <code>GROUP BY</code>, or filter <code>?w &gt; 500</code> on <code>ul:weightKg</code>. <kbd>Ctrl</kbd>+<kbd>Enter</kbd> runs.</p>
   <template data-notes>
-    <p>Ten minutes. Run the shipped query first: it is a constraint from the Session 1 inventory, expressed as a query. That connection is the point.</p>
+    <p>Ten minutes. Run the shipped query first. It is the Session 1 plant-and-port constraint expressed as a query, and it returns <b>ORD-106 and ORD-107</b>, both Gdansk shipping through Bremerhaven, which Gdansk does not serve.</p>
     <ul>
-      <li>The engine is a teaching subset: no UNION, MINUS, BIND or property paths. Say so when it refuses and name what a real endpoint would do.</li>
+      <li>Ask what those two rows mean before you say anything. In Session 1 the same shape of exception turned out to be transhipments, so the <em>rule</em> was wrong rather than the rows. That is the judgement this session is training.</li>
+      <li>The engine is a teaching subset: no UNION, MINUS, BIND or property paths. Say so when it refuses, and name what a real endpoint would do.</li>
       <li>Take one question from the room and type it live. Being wrong in front of them is useful here.</li>
     </ul>
   </template>

@@ -30,7 +30,7 @@
   })();
   const canvasPx = (screenPx) => Math.round(screenPx / stageScale);
 
-  const report = { overflow: [], revealedOverflow: [], hiddenLeaks: [], gridEscapes: [], strayChars: [], tinyText: [], collisions: [], edges: [] };
+  const report = { overflow: [], revealedOverflow: [], hiddenLeaks: [], gridEscapes: [], strayChars: [], deadSandboxes: [], tinyText: [], collisions: [], edges: [] };
 
   /* 1. OVERFLOW, content taller than the slide box is clipped with no
         scrollbar and no error. Students simply never see it. */
@@ -95,6 +95,28 @@
   });
   report.strayChars = Object.values(seen);
 
+  /* 4c. DEAD SANDBOXES, a .lu-query whose seeded query parses and runs but
+        returns nothing. It looks like a broken button to a student and it
+        teaches nothing. Usually the data has no row that satisfies the
+        pattern, which is an authoring mistake, not an engine failure. */
+  if (window.LUSparql) {
+    document.querySelectorAll('.lu-query').forEach((qbox, i) => {
+      const dt = qbox.querySelector('template[data-data]');
+      const qt = qbox.querySelector('template[data-query]');
+      if (!dt || !qt) return;
+      const dec = (t) => { const d = document.createElement('textarea'); d.innerHTML = t; return d.value; };
+      try {
+        const g = window.LUSparql.parse(dec(dt.innerHTML));
+        const res = window.LUSparql.query(g, dec(qt.innerHTML));
+        if (!res.rows.length) {
+          report.deadSandboxes.push({ sandbox: i + 1, rows: 0, note: 'seeded query returns no rows' });
+        }
+      } catch (e) {
+        report.deadSandboxes.push({ sandbox: i + 1, rows: 'error', note: e.message });
+      }
+    });
+  }
+
   /* 5. TEXT BELOW THE 20px PROJECTION FLOOR */
   document.querySelectorAll('.slide *').forEach(e => {
     if (!e.textContent.trim() || e.children.length) return;
@@ -149,6 +171,7 @@
   show('hiddenLeaks', '[hidden] actually hides', 'A class rule is setting display and beating the UA [hidden] rule. Add a [hidden] companion, or do not set display at all.');
   show('gridEscapes', 'Nothing escaped into a narrow grid column', 'Give the child an explicit grid-column.');
   show('strayChars', 'No stray or mojibake characters', 'Non-ASCII on a slide should be a deliberate symbol. Em and en dashes are not used as punctuation in this course.');
+  show('deadSandboxes', 'Every query sandbox returns rows', 'A sandbox that runs and returns nothing reads as a broken button. Seed data that actually satisfies the pattern.');
   show('tinyText', 'No text below the 20px floor', 'Projection floor is --lu-t-caption.');
   show('collisions', 'No diagram nodes overlap', 'Reposition, or make the board taller.');
   show('edges', 'Every edge endpoint reaches a node', 'Compute path coords from node percentages: viewBox x = left% * (vbWidth/100), y = top% * (vbHeight/100).');
