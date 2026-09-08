@@ -21,6 +21,8 @@ assets/
   sparql-lite.js               Offline SPARQL engine. Only needed for query sandboxes.
   icon.svg, icon-maskable.svg  PWA icons.
   img/                         Instructor-supplied screenshots and plots.
+scripts/
+  audit-deck.js                Paste into the console. Measures what static checks cannot.
 lectures/
   _template.html               COPY THIS. Your starting point, always.
   kr-session-03.html           The worked example. Read it before writing your own.
@@ -38,7 +40,11 @@ No framework. No bundler. No npm. No CDN at runtime except the two webfonts. A l
 4. Fill in `<title>`, the `<meta name="description">`, and the `<body data-*>` attributes.
 5. Write the slides. Delete template slides you do not need; never delete the deck frame (`.deck > .deck__stage > .slide`).
 6. Add a card for the lecture in `index.html` (copy an existing `<a class="lu-lecture-card">`).
-7. Check it: open it, press `→` through every slide, press `?`, `O`, `/`, `S`, and print preview. Nothing may throw in the console.
+7. **Verify by measuring, not by reading.** Serve it over http, open with a
+   `?cb=` cache-buster, clear this deck's `lu:` localStorage keys, reload, and
+   paste `scripts/audit-deck.js` into the console. Fix everything it reports.
+   Then by hand: `→` through every slide and every build step, `?`, `O`, `/`,
+   `S`, and **print preview with Handout on**. Nothing may throw.
 
 ---
 
@@ -57,6 +63,30 @@ No framework. No bundler. No npm. No CDN at runtime except the two webfonts. A l
 | **Never draw a photograph or a screenshot as SVG.** Ship a `.lu-figure__ph` placeholder saying exactly what capture goes where. | An honest placeholder is useful. A hand-drawn fake screenshot is a lie that ships. |
 
 ---
+
+## 2b. Seven traps this system has already shipped
+
+Every one of these was invisible in the HTML and obvious under measurement.
+`scripts/audit-deck.js` checks all of them. Read this before you get clever.
+
+| Trap | What happened | Rule |
+|---|---|---|
+| **`display` beats `[hidden]`** | `.lu-mcq__why{display:block}` and later `[data-walk-step]{display:grid}` both outranked the UA `[hidden]` rule. Rationales kept their space; all five walkthrough steps rendered stacked. | Never set `display` on something the runtime hides. If you must, ship a `[hidden]{display:none}` companion in the same commit. |
+| **Grid children need a column** | `.lu-mcq__opt` is `44px 1fr`. `.lu-mcq__why` had no `grid-column`, landed in the 44px column, and rendered one word per line at 44x462 instead of 691x54. | Any child of a grid with a narrow first column gets an explicit `grid-column`. |
+| **`aspect-ratio` ignores available height** | `.lu-board` is `width:100%` plus `aspect-ratio`, so inside a height-constrained walkthrough it computed a height taller than the space and covered the caption bar. | In a height-constrained box, set an explicit height and `aspect-ratio:auto`. The canvas is a fixed 1600x900, so a fixed px height is deterministic. |
+| **Source order decides ties** | `.lu-svg{height:auto}` is declared after `.lu-board__edges{height:100%}` at equal specificity, so edge layers kept the wrong height and arrows drifted off the diagram. | When two single-class rules fight, raise specificity deliberately (`.lu-board > .lu-board__edges`). |
+| **The tall column sets the height** | Trimming a two-column slide by shortening the short column changes nothing. | Measure both columns first. Cut the tall one. |
+| **Print is a second layout** | `.slide` is `height:900px; overflow:hidden` and the print block overrode neither, while `.lu-print-notes` is a flex child *inside* the slide. The handout silently cut 237px off every slide with notes. | Any change to slide sizing must be checked in print preview with Handout on. |
+| **You may be measuring a stale page** | GitHub Pages serves HTML with `max-age=600`, so a plain `fetch` inside the service worker was answered by the HTTP cache. Hours were spent measuring a version that was not on the server. | Always verify with a `?cb=` cache-buster, and confirm the version you think you loaded. |
+
+Two measurement rules that cost real time:
+
+- **Units.** `getBoundingClientRect()` is in scaled screen pixels;
+  `clientHeight` / `scrollHeight` are in unscaled canvas pixels. Mixing them
+  inflates every number by `1/scale`. Pick one and say which.
+- **State.** A restored answer or an open reveal makes a slide taller. Clear
+  the deck's `lu:` localStorage keys before measuring a baseline, and measure
+  the revealed state separately — that is the state you teach in.
 
 ## 3. Anatomy of a lecture file
 
@@ -162,7 +192,7 @@ The target is WCAG 2.2 AA. The system meets most of it structurally; these are t
 - Do not add a `tabindex` above 0, and do not remove focus outlines.
 - Keep the skip link as the first element in `<body>`.
 
-Known and accepted gap: a scaled fixed canvas cannot satisfy SC 1.4.10 reflow. Study mode (`S`) and the printed handout are the conforming alternative versions. Say that in a course accessibility statement; do not claim unqualified AA for the slide view.
+Known gap, stated honestly: a scaled fixed canvas cannot satisfy SC 1.4.10 reflow. The printed handout is a conforming alternative. **Study mode is not, yet** — it sets `.lu-selfstudy` but the deck stays `overflow:hidden`, so a long slide is still clipped and expanding every reveal makes it worse. Do not claim unqualified AA for the slide view, and do not claim study mode as the reflow alternative until it scrolls.
 
 ---
 
