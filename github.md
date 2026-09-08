@@ -30,6 +30,29 @@ Also in `68599d9`: 46 content trims across 14 slides of session 1, and the
 `&mdash;` entities removed from the walkthrough captions. Asset query strings
 bumped to `v=1.0.3` in all four HTML files and in `SHELL` in `sw.js`.
 
+### `NEXT` corrects a regression I introduced in `68599d9`
+
+`68599d9` fixed the board overlap with `display:grid` on `[data-walk-step]`,
+which is the same class of bug as defect 1 in the table above: it beat the UA
+`[hidden]` rule, so all five walkthrough steps rendered stacked on top of each
+other. `width:auto` also collapsed the board to 90x39px and crammed the nodes.
+
+Corrected: no `display` is set on the step at all, `[hidden]` is asserted
+explicitly, and the board keeps full width with `aspect-ratio:auto` and a fixed
+`height:400px`. The stage is a fixed 1600x900 canvas, so a fixed height is
+deterministic. A fourth defect surfaced doing this: `.lu-svg{height:auto}` is
+declared after `.lu-board__edges{height:100%}` at equal specificity, so the
+edge layer kept its own height and the arrows drifted off the diagram.
+`.lu-board > .lu-board__edges` outranks it.
+
+The session 1 walkthrough geometry was also rebuilt. Node positions are in
+percentages and SVG paths are in viewBox units; I had set them independently by
+eye and they did not correspond, so no edge met a node. Coordinates are now
+computed from the node positions, and the viewBox is `0 0 1000 276` to match
+the board's 1448x400 render so `preserveAspectRatio="none"` does not stretch
+the labels. Verified: every edge endpoint lands within 0 to 16px of a node and
+no two nodes overlap, on all five steps.
+
 ### Verified how
 
 Components were exercised directly on the live page: MCQ, fill-in-the-blank,

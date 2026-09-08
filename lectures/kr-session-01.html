@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/lu.css?v=1.0.3">
+<link rel="stylesheet" href="../assets/lu.css?v=1.0.4">
 </head>
 
 <body
@@ -332,73 +332,15 @@ approved    <span class="tok-kw">true</span></code></pre>
   <div class="lu-walk" data-label="Reference architecture build-up">
     <div class="lu-walk__view">
 
-      <div data-walk-step="1" data-caption-short="Where you start"
-           data-caption="<b>Step 1, where every organisation starts.</b> Systems that are individually correct and mutually unintelligible. There is no arrow between them because there is no agreed meaning to draw one with.">
-        <div class="lu-board">
-          <div class="lu-node" style="left:8%;top:22%">ERP</div>
-          <div class="lu-node" style="left:30%;top:22%">WMS</div>
-          <div class="lu-node" style="left:52%;top:22%">PLM</div>
-          <div class="lu-node" style="left:74%;top:22%">TMS</div>
-          <div class="lu-node" data-state="muted" style="left:19%;top:66%">CRM</div>
-          <div class="lu-node" data-state="muted" style="left:52%;top:66%">Warehouse copy</div>
-        </div>
-      </div>
+      <div data-walk-step="1" data-caption-short="Where you start" data-caption="<b>Step 1, where every organisation starts.</b> Systems that are individually correct and mutually unintelligible. There is no arrow between them because there is no agreed meaning to draw one with."><div class="lu-board"><div class="lu-node" style="left:11%;top:26%">ERP</div><div class="lu-node" style="left:29%;top:26%">WMS</div><div class="lu-node" style="left:47%;top:26%">PLM</div><div class="lu-node" style="left:65%;top:26%">TMS</div><div class="lu-node" data-state="muted" style="left:20%;top:68%">CRM</div><div class="lu-node" data-state="muted" style="left:50%;top:68%">Warehouse copy</div></div></div>
 
-      <div data-walk-step="2" data-caption-short="Profile and recover the rules"
-           data-caption="<b>Step 2, today.</b> Before modelling anything you find out what the data actually contains and which rules it silently obeys. The constraint inventory you write in the lab is the raw material for the next three sessions.">
-        <div class="lu-board">
-          <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
-            <defs><marker id="lu-arrow-s1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs>
-            <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 200 150 L 480 300"/>
-            <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 700 150 L 560 300"/>
-          </svg>
-          <div class="lu-node" data-state="muted" style="left:12%;top:22%">Sources</div>
-          <div class="lu-node" data-state="muted" style="left:68%;top:22%">Sources</div>
-          <div class="lu-node" data-state="active" style="left:40%;top:66%">Profiling &amp; constraint inventory</div>
-        </div>
-      </div>
+      <div data-walk-step="2" data-caption-short="Profile and recover the rules" data-caption="<b>Step 2, today.</b> Before modelling anything you find out what the data actually contains and which rules it silently obeys. The constraint inventory you write in the lab is the raw material for the next three sessions."><div class="lu-board"><svg class="lu-board__edges lu-svg" viewBox="0 0 1000 276" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="s1w2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs><path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 230 80 L 415 185" marker-end="url(#s1w2)"/><path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 650 80 L 470 185" marker-end="url(#s1w2)"/></svg><div class="lu-node" data-state="muted" style="left:22%;top:22%">ERP · WMS · PLM</div><div class="lu-node" data-state="muted" style="left:66%;top:22%">TMS · CRM · WH</div><div class="lu-node" data-state="active" style="left:44%;top:74%">Profiling &amp; constraint inventory</div></div></div>
 
-      <div data-walk-step="3" data-caption-short="Model and validate"
-           data-caption="<b>Step 3, Sessions 3 and 4.</b> The rules become two different artefacts, and keeping them apart is the intellectual core of the course. The ontology says what things <em>are</em>. The shape graph says what the data <em>must look like</em>. One infers, the other refuses.">
-        <div class="lu-board">
-          <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
-            <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 260 300 L 420 160"/>
-            <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 260 320 L 660 320"/>
-          </svg>
-          <div class="lu-node" data-state="muted" style="left:10%;top:66%">Constraint inventory</div>
-          <div class="lu-node lu-node--class" data-state="active" style="left:40%;top:22%">Ontology · OWL</div>
-          <div class="lu-node lu-node--class" data-state="active" style="left:66%;top:66%">Shapes · SHACL</div>
-        </div>
-      </div>
+      <div data-walk-step="3" data-caption-short="Model and validate" data-caption="<b>Step 3, Sessions 3 and 4.</b> The rules become two different artefacts, and keeping them apart is the intellectual core of the course. The ontology says what things <em>are</em>. The shape graph says what the data <em>must look like</em>. One infers, the other refuses."><div class="lu-board"><svg class="lu-board__edges lu-svg" viewBox="0 0 1000 276" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="s1w3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs><path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 200 182 L 460 80" marker-end="url(#s1w3)"/><path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 235 199 L 757 199" marker-end="url(#s1w3)"/></svg><div class="lu-node" data-state="muted" style="left:16%;top:72%">Constraint inventory</div><div class="lu-node lu-node--class" data-state="active" style="left:48%;top:22%">Ontology · OWL</div><div class="lu-node lu-node--class" data-state="active" style="left:82%;top:72%">Shapes · SHACL</div></div></div>
 
-      <div data-walk-step="4" data-caption-short="Map the live data in"
-           data-caption="<b>Step 4, Session 5.</b> The model meets the running database. Two architectures do this: copy the tables into the graph, or leave them in place and rewrite the query. You will build both and argue for one.">
-        <div class="lu-board">
-          <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
-            <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 240 330 L 460 220"/>
-            <path class="lu-edge lu-edge--infer s-arrow" style="color:var(--lu-green-600)" d="M 620 190 L 460 190"/>
-            <text class="lu-edge-label" x="480" y="160">RML mapping</text>
-          </svg>
-          <div class="lu-node" data-state="muted" style="left:8%;top:70%">PostgreSQL</div>
-          <div class="lu-node lu-node--class" style="left:60%;top:36%">Ontology</div>
-          <div class="lu-node" data-state="active" style="left:32%;top:36%">Knowledge graph</div>
-        </div>
-      </div>
+      <div data-walk-step="4" data-caption-short="Map the live data in" data-caption="<b>Step 4, Session 5.</b> The model meets the running database. Two architectures do this: copy the tables into the graph, or leave them in place and rewrite the query. You will build both and argue for one."><div class="lu-board"><svg class="lu-board__edges lu-svg" viewBox="0 0 1000 276" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="s1w4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs><path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 185 192 L 375 128" marker-end="url(#s1w4)"/><path class="lu-edge lu-edge--infer s-arrow" style="color:var(--lu-green-600)" d="M 748 62 L 512 108" marker-end="url(#s1w4)"/><text class="lu-edge-label" x="548" y="86">RML mapping</text></svg><div class="lu-node" data-state="muted" style="left:13%;top:74%">PostgreSQL</div><div class="lu-node" data-state="active" style="left:44%;top:42%">Knowledge graph</div><div class="lu-node lu-node--class" style="left:80%;top:20%">Ontology</div></div></div>
 
-      <div data-walk-step="5" data-caption-short="Predict, ask, deploy"
-           data-caption="<b>Step 5, Sessions 6, 7 and 8.</b> A graph neural network predicts which shipment slips next. A language model turns an English question into a query, checks it against the ontology and repairs it if it fails. Then the whole stack ships as containers.">
-        <div class="lu-board">
-          <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
-            <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 290 220 L 430 140"/>
-            <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 290 240 L 430 320"/>
-            <path class="lu-edge lu-edge--infer s-arrow" style="color:var(--lu-green-600)" d="M 640 330 L 540 330"/>
-            <text class="lu-edge-label" x="560" y="300">repair loop</text>
-          </svg>
-          <div class="lu-node" data-state="muted" style="left:8%;top:44%">Knowledge graph</div>
-          <div class="lu-node lu-node--class" style="left:42%;top:18%">GNN · prediction</div>
-          <div class="lu-node lu-node--class" data-state="active" style="left:42%;top:68%">Question in English</div>
-        </div>
-      </div>
+      <div data-walk-step="5" data-caption-short="Predict, ask, deploy" data-caption="<b>Step 5, Sessions 6, 7 and 8.</b> A graph neural network predicts which shipment slips next. A language model turns an English question into a query, checks it against the ontology and repairs it if it fails. Then the whole stack ships as containers."><div class="lu-board"><svg class="lu-board__edges lu-svg" viewBox="0 0 1000 276" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="s1w5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs><path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 208 118 L 432 70" marker-end="url(#s1w5)"/><path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-ink-2)" d="M 208 137 L 423 198" marker-end="url(#s1w5)"/><path class="lu-edge lu-edge--infer" style="color:var(--lu-green-600)" d="M 578 200 C 660 184 660 224 580 216" marker-end="url(#s1w5)"/><text class="lu-edge-label" x="592" y="176" style="fill:var(--lu-green-700)">repair loop</text></svg><div class="lu-node" data-state="muted" style="left:14%;top:46%">Knowledge graph</div><div class="lu-node lu-node--class" style="left:50%;top:20%">GNN · prediction</div><div class="lu-node lu-node--class" data-state="active" style="left:50%;top:76%">Question in English</div></div></div>
 
     </div>
   </div>
@@ -850,6 +792,6 @@ console.log(bad.length ? <span class="tok-str">'Incomplete: '</span>+bad : <span
 </div><!-- /stage -->
 </div><!-- /deck -->
 
-<script src="../assets/lu-deck.js?v=1.0.3" defer></script>
+<script src="../assets/lu-deck.js?v=1.0.4" defer></script>
 </body>
 </html>

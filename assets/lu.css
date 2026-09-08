@@ -685,10 +685,17 @@ strong, .lu-strong { font-weight: 600; }
 .lu-walk__view { flex: 1 1 auto; min-height: 0; display: grid; place-items: center; }
 .lu-walk__view > * { width: 100%; }
 /* A .lu-board is width:100% + aspect-ratio, so inside a height-constrained
-   walkthrough it computes a height taller than the space available and
-   overlaps the caption bar. Let the height lead and derive the width. */
-.lu-walk__view > [data-walk-step] { height: 100%; min-height: 0; display: grid; place-items: center; }
-.lu-walk__view [data-walk-step] > .lu-board { width: auto; height: 100%; max-width: 100%; }
+   walkthrough it derives a height taller than the space available and overlaps
+   the caption bar. The stage is a fixed 1600x900 canvas, so a fixed height is
+   deterministic: keep the full width, drop the ratio, fit the space.
+   Do NOT set `display` on [data-walk-step] here. It beats the UA [hidden]
+   rule and every step renders stacked on top of the others. */
+.lu-walk__view > [data-walk-step][hidden] { display: none; }
+.lu-walk__view [data-walk-step] > .lu-board { width: 100%; aspect-ratio: auto; height: 400px; }
+/* .lu-svg sets height:auto and is declared after .lu-board__edges, so at equal
+   specificity it wins and the edge layer keeps its own height instead of the
+   board's. Two classes to outrank it. */
+.lu-board > .lu-board__edges { height: 100%; }
 .lu-walk__bar { display: flex; align-items: center; gap: var(--lu-s4); flex: none; }
 .lu-walk__dots { display: flex; gap: var(--lu-s2); flex: none; }
 .lu-walk__dot {
@@ -1005,7 +1012,7 @@ body.lu-presenter .deck, body.lu-presenter .lu-hud, body.lu-presenter .lu-progre
   [data-build] { opacity: 1 !important; transform: none !important; visibility: visible !important; }
   .lu-reveal__panel { display: block !important; }
   .lu-walk__view > [data-walk-step] { display: block !important; height: auto !important; }
-  .lu-walk__view [data-walk-step] > .lu-board { width: 100% !important; height: auto !important; }
+  .lu-walk__view [data-walk-step] > .lu-board { width: 100% !important; height: auto !important; aspect-ratio: 16 / 7 !important; }
   .lu-code pre { overflow: visible !important; }
   /* A wipe cannot print. Unclip both panes and set them side by side. */
   .lu-compare__seam, .lu-compare__range { display: none !important; }
