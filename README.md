@@ -1,4 +1,4 @@
-# Knowledge Representation — Lebanese University, MSc
+# Knowledge Representation, Lebanese University, MSc
 
 Interactive HTML lectures for the Knowledge Representation course. 24 contact hours, 8 sessions of 3 hours. Static pages, no build step, deployed to GitHub Pages as-is.
 
@@ -23,12 +23,12 @@ One enterprise problem, a supply chain, carried from raw operational data throug
 
 ## Repository
 
-- **`index.html`** — the course index students land on.
-- **`lectures/kr-session-NN.html`** — one self-contained lecture per file.
-- **`design-system.html`** — the design system and a live gallery of all twelve interactive components. Start here before authoring.
-- **`lectures/_template.html`** — copy this to start a new session.
-- **`AGENTS.md`** — the authoring contract. Read it before writing a lecture, whether you are a person or an agent.
-- **`PROMPT.md`** — the paste-ready brief for handing a new session to an agent.
+- **`index.html`**, the course index students land on.
+- **`lectures/kr-session-NN.html`**, one self-contained lecture per file.
+- **`design-system.html`**, the design system and a live gallery of all twelve interactive components. Start here before authoring.
+- **`lectures/_template.html`**, copy this to start a new session.
+- **`AGENTS.md`**, the authoring contract. Read it before writing a lecture, whether you are a person or an agent.
+- **`PROMPT.md`**, the paste-ready brief for handing a new session to an agent.
 
 Built from the [`LebUniv_Course_Template`](https://github.com/ahmabboud/LebUniv_Course_Template) design system. Fixes to the stylesheet or runtime belong upstream in the template, not here.
 
