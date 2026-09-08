@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" class="lu-deck-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RDF, SPARQL, and the Graph as a Data Model · Knowledge Representation, Session 2</title>
+<meta name="description" content="Session 2 of Knowledge Representation, MSc, Lebanese University. RDF triples, IRI design, SPARQL 1.1 and property paths, against a real supply chain slice.">
+<meta name="theme-color" content="#96122B">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/lu.css?v=1.1.0">
+</head>
+
+<body
+  data-deck-id="kr-s02"
+  data-course="Knowledge Representation"
+  data-session="Session 2 of 8"
+  data-duration="180"
+  data-app-root="../"
+  data-unit="Lebanese University · MSc">
+
+<a class="lu-skip" href="#slide-2">Skip to the first content slide</a>
+
+<div class="deck">
+<div class="deck__stage">
+
+<!-- ==================================================================== 01 -->
+<section class="slide slide--night" data-chrome="none" data-label="Title" data-section="Opening" data-minutes="2">
+  <div class="slide__body" style="justify-content:space-between">
+    <div class="lu-row" style="justify-content:space-between;align-items:flex-start">
+      <div class="lu-lockup">
+        <span class="lu-lockup__mark">LU</span>
+        <span class="lu-lockup__text">
+          <span class="lu-lockup__name">Lebanese University</span>
+          <span class="lu-lockup__unit">Faculty of Sciences · MSc Computer Science</span>
+        </span>
+      </div>
+      <div class="lu-tag lu-tag--red" style="background:transparent;color:#FF9AA7;border-color:#96122B">Module 1 · Representation and integration</div>
+    </div>
+
+    <div class="lu-stack">
+      <div class="lu-eyebrow">Knowledge Representation · Session 2 of 8</div>
+      <h1 class="lu-display" style="max-width:24ch">RDF, SPARQL, and the Graph as a Data Model</h1>
+      <p class="lu-lead" style="max-width:44ch">Today the graph stops being a diagram and starts being a database you can query.</p>
+    </div>
+
+    <div class="lu-row" style="justify-content:space-between;font-size:var(--lu-t-caption);color:var(--lu-on-night-2)">
+      <span>180 minutes · 60 lecture · 100 lab · 20 discussion</span>
+      <span>Press <kbd>&rarr;</kbd> to begin · <kbd>?</kbd> for shortcuts</span>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Ninety seconds. The promise for today is concrete: they leave with a running endpoint answering questions about real data.</p>
+    <ul>
+      <li>Collect the constraint inventories from Session 1 before you start. Anyone without one is behind and should pair.</li>
+      <li>This is the least conceptual session of the eight. Keep the pace up and get them into the lab early.</li>
+    </ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 02 -->
+<section class="slide" data-label="Where we are in the architecture" data-section="Opening" data-minutes="4">
+  <div class="lu-eyebrow">Recap</div>
+  <h2 class="lu-h1" style="max-width:32ch">You have rules on paper. Today they get somewhere to live.</h2>
+
+  <ul class="lu-pipeline" style="margin-top:var(--lu-s5)" data-build="1" data-build-style="dim">
+    <li data-state="done"><span class="lu-pipeline__n">01</span><span class="lu-pipeline__t">Sources</span><span class="lu-pipeline__d">DataCo, Brunel</span></li>
+    <li data-state="done"><span class="lu-pipeline__n">02</span><span class="lu-pipeline__t">Profiling</span><span class="lu-pipeline__d">Constraint inventory</span></li>
+    <li data-state="active"><span class="lu-pipeline__n">03</span><span class="lu-pipeline__t">Graph</span><span class="lu-pipeline__d">You are here</span></li>
+    <li data-state="muted"><span class="lu-pipeline__n">04</span><span class="lu-pipeline__t">Ontology</span><span class="lu-pipeline__d">OWL · Session 3</span></li>
+    <li data-state="muted"><span class="lu-pipeline__n">05</span><span class="lu-pipeline__t">Constraints</span><span class="lu-pipeline__d">SHACL · Session 4</span></li>
+    <li data-state="muted"><span class="lu-pipeline__n">06</span><span class="lu-pipeline__t">Mappings</span><span class="lu-pipeline__d">RML · Session 5</span></li>
+    <li data-state="muted"><span class="lu-pipeline__n">07</span><span class="lu-pipeline__t">Learning</span><span class="lu-pipeline__d">GNN · Session 6</span></li>
+    <li data-state="muted"><span class="lu-pipeline__n">08</span><span class="lu-pipeline__t">Access</span><span class="lu-pipeline__d">Text to SPARQL · 7</span></li>
+  </ul>
+
+  <div class="lu-callout" style="margin-top:var(--lu-s5)" data-build="2">
+    <span class="lu-callout__label">Why this comes before the ontology</span>
+    <p class="lu-sub">Modelling decisions made in the abstract are guesses. From next week you argue about a model with a running endpoint in front of you.</p>
+  </div>
+  <template data-notes>
+    <p>Four minutes. Same graphic as Session 1 slide 10 and Session 3. Point at stage 03 and say it out loud.</p>
+    <ul><li>Expected question: "why not model first, then load?" Because you cannot tell whether a class earns its place until you have tried to answer a question with it.</li></ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 03 -->
+<section class="slide slide--tint" data-label="Session objective and shape" data-section="Opening" data-minutes="3">
+  <div class="lu-eyebrow">Objective</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <p class="lu-statement">By the end of today a slice of the supply chain data is loaded in a real endpoint, and you can answer questions against it that were awkward in SQL.</p>
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">Deliverable, end of session</span>
+        <p class="lu-sub">A loaded SPARQL endpoint, a written IRI scheme you can defend, and a query notebook answering the provided question set with timings.</p>
+      </div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-card">
+        <span class="lu-card__label">How the 180 minutes are spent</span>
+        <ul class="lu-layers">
+          <li><span class="lu-layers__name">Lecture · 60 min</span><span class="lu-layers__note">RDF, IRI design, SPARQL, property paths</span></li>
+          <li><span class="lu-layers__name">Hands-on lab · 100 min</span><span class="lu-layers__note">Convert, load, query, time, compare</span></li>
+          <li><span class="lu-layers__name">Discussion · 20 min</span><span class="lu-layers__note">Agree the cohort IRI convention</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Read the deliverable aloud. The phrase that matters is <b>defend</b>: the IRI scheme is graded on the reasoning, not the syntax.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 04 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 1 · The data model" data-section="The data model" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part one of three · 20 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:20ch">One data structure, all the way down</h2>
+    <p class="lu-lead" style="max-width:40ch">RDF has exactly one shape. Everything else today is a consequence of that.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 05 -->
+<section class="slide" data-label="RDF: everything is a triple" data-section="The data model" data-minutes="8">
+  <div class="lu-eyebrow">The whole model</div>
+  <h2 class="lu-h1" style="max-width:34ch">Subject, predicate, object. There is no second construct.</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <ul class="lu-list">
+        <li>Subjects and predicates are <button class="lu-term" type="button" data-term="IRI" data-kind="Identifier"><span class="lu-term-word">IRIs</span><template>An <b>IRI</b> is an Internationalised Resource Identifier: a globally unique name for a thing. It looks like a URL and often is one, but it names a supplier, not a web page.<p>Global uniqueness is the whole point. Two organisations can merge graphs with no prior agreement, because a clash is impossible unless they meant the same thing.</p></template></button>. Objects are IRIs or literals.</li>
+        <li>A literal carries a datatype: <code>"6"^^xsd:integer</code>.</li>
+        <li>The schema is triples too, in the same graph, queried the same way.</li>
+      </ul>
+      <div class="lu-callout">
+        <span class="lu-callout__label">What this buys</span>
+        <p class="lu-sub">No table to alter. Adding a fact about a supplier is adding a row, never a migration.</p>
+      </div>
+    </div>
+
+    <div class="lu-stack" data-build="1">
+      <div class="lu-code lu-code--sm" data-name="shipment.ttl">
+<pre><code><span class="tok-kw">@prefix</span> <span class="tok-fn">ul</span>: <span class="tok-str">&lt;https://ul.edu.lb/kr/scm#&gt;</span> .
+
+<span class="tok-fn">ul:ship-4471</span> <span class="tok-kw">a</span>              <span class="tok-fn">ul:Shipment</span> ;
+    <span class="tok-kw">ul:handledBy</span>   <span class="tok-fn">ul:carrier-dhl</span> ;
+    <span class="tok-kw">ul:daysLate</span>    <span class="tok-str">6</span> ;
+    <span class="tok-kw">ul:departedFrom</span> <span class="tok-fn">ul:plant-P114</span> .</code></pre>
+      </div>
+      <p class="lu-caption">Four triples. The semicolon repeats the subject.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Eight minutes. Read the Turtle aloud as four English sentences. That is the whole teaching move on this slide.</p>
+    <ul>
+      <li>Expected question: "is this not just EAV, which we are taught to avoid?" Yes, structurally. The difference is global names and a standard query language, so it federates instead of rotting.</li>
+      <li>Do not mention blank nodes unless asked. They cost five minutes and buy nothing today.</li>
+    </ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 06 -->
+<section class="slide" data-label="IRI design is the irreversible decision" data-section="The data model" data-minutes="8">
+  <div class="lu-eyebrow">The decision you cannot quietly undo</div>
+  <h2 class="lu-h1" style="max-width:34ch">Your IRI scheme is a contract with every future data source.</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <div class="lu-code lu-code--sm" data-name="three schemes, one supplier">
+<pre><code><span class="tok-com"># Breaks when ERP is not the only source</span>
+ul:supplier-V8841
+
+<span class="tok-com"># Breaks when the name changes</span>
+ul:supplier-Nordwind-Components-GmbH
+
+<span class="tok-com"># Survives both</span>
+ul:supplier/erp/V8841</code></pre>
+      </div>
+    </div>
+
+    <div class="lu-stack">
+      <ul class="lu-list">
+        <li>Say which system minted the identifier. You will have two sources by Session 5.</li>
+        <li>Never encode anything that changes: names, status, country.</li>
+        <li>Opaque keys are fine. Readable keys are kinder to debug.</li>
+      </ul>
+      <div class="lu-callout" data-build="1">
+        <span class="lu-callout__label">Trap</span>
+        <p class="lu-sub">One IRI per real thing, not per row. The same supplier in two systems is two IRIs and a Session 5 decision, not a silent merge now.</p>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Eight minutes, and it is the most valuable slide of the session. IRI schemes are cheap to change today and expensive in Session 5.</p>
+    <ul>
+      <li>Ask what breaks in scheme one when the WMS extract arrives. Answer: nothing collides, which is worse, because you cannot tell which V8841 you have.</li>
+      <li>The third scheme is what the cohort will agree in the discussion block.</li>
+    </ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 07 -->
+<section class="slide slide--tint" data-label="Check: what a good IRI encodes" data-section="The data model" data-minutes="4">
+  <div class="lu-eyebrow">Check question</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-mcq"
+         data-qid="s2-q1"
+         data-answer="c"
+         data-label="Which IRI scheme survives a second source?"
+         data-fb-correct=" Naming the minting system keeps two sources distinguishable, which is exactly what Session 5 needs."
+         data-fb-wrong=" Ask what happens when the second system arrives with its own V8841 that means a different company.">
+      <p class="lu-mcq__q">You will load a second supplier source in Session 5. Which scheme survives it?</p>
+      <div class="lu-mcq__opts">
+        <button class="lu-mcq__opt" type="button" data-key="a"><code>ul:supplier-V8841</code><span class="lu-mcq__why" hidden>The ERP key with no source. A second system's V8841 silently means something else.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="b"><code>ul:supplier-Nordwind-GmbH</code><span class="lu-mcq__why" hidden>Names change and are not unique. This breaks on the first rename.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="c"><code>ul:supplier/erp/V8841</code><span class="lu-mcq__why" hidden>Correct. The source is part of the name, so two systems cannot collide by accident.</span></button>
+        <button class="lu-mcq__opt" type="button" data-key="d"><code>ul:supplier-a3f9c1</code><span class="lu-mcq__why" hidden>Opaque and unique, but it loses the provenance you need to resolve duplicates later.</span></button>
+      </div>
+      <div class="lu-mcq__fb" hidden></div>
+    </div>
+    <div class="lu-callout lu-callout--concept">
+      <span class="lu-callout__label">The habit</span>
+      <p class="lu-sub">Name things so that the next source cannot lie to you by accident.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Forty seconds, show of hands, reveal. Watch for <b>d</b>: it is the instinct of someone who has been burned by meaningful keys, and it is nearly right.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 08 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 2 · Asking questions" data-section="SPARQL" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part two of three · 25 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:22ch">SPARQL, and the question SQL is bad at</h2>
+    <p class="lu-lead" style="max-width:40ch">Most of SPARQL is familiar. One part of it is the reason the graph exists.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 09 -->
+<section class="slide" data-label="SPARQL: patterns, not joins" data-section="SPARQL" data-minutes="8">
+  <div class="lu-eyebrow">The mental model</div>
+  <h2 class="lu-h1" style="max-width:34ch">You draw the shape you want. The engine finds every match.</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <div class="lu-code lu-code--sm" data-name="late shipments by carrier">
+<pre><code><span class="tok-kw">SELECT</span> ?carrier (<span class="tok-fn">COUNT</span>(?s) <span class="tok-kw">AS</span> ?n)
+<span class="tok-kw">WHERE</span> {
+  ?s ul:handledBy ?carrier ;
+     ul:daysLate  ?d .
+  <span class="tok-kw">FILTER</span>(?d &gt; 0)
+}
+<span class="tok-kw">GROUP BY</span> ?carrier</code></pre>
+      </div>
+      <p class="lu-caption">A basic graph pattern is a set of triples with variables in it.</p>
+    </div>
+
+    <div class="lu-stack">
+      <ul class="lu-list lu-list--tight">
+        <li><b>SELECT</b> for tables, <b>ASK</b> for yes or no, <b>CONSTRUCT</b> for a new graph, <b>DESCRIBE</b> for whatever the endpoint thinks is relevant.</li>
+        <li><code>OPTIONAL</code> is the left join. <code>FILTER</code> is the WHERE clause.</li>
+      </ul>
+      <div class="lu-reveal" data-build="1">
+        <button class="lu-reveal__btn" type="button">Why CONSTRUCT matters later</button>
+        <div class="lu-reveal__panel" hidden>
+          <p>It takes a graph and returns a graph, so it composes. In Session 5 you will use it to reshape a mapped graph without touching the mapping, and in Session 7 the agent uses it to build a small answer graph it can cite from.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Eight minutes. They know SQL, so teach the differences and skip the rest. Do not enumerate all four query forms slowly.</p>
+    <ul><li>The one sentence to land: in SQL you say how to join, in SPARQL you say what the shape looks like.</li></ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 10 -->
+<section class="slide" data-label="Property paths: unbounded depth" data-section="SPARQL" data-minutes="8">
+  <div class="lu-eyebrow">The reason the graph exists</div>
+  <h2 class="lu-h1" style="max-width:36ch">"Any depth of sub-assembly" is one character.</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <div class="lu-code lu-code--sm" data-name="SPARQL · property path">
+<pre><code><span class="tok-com"># Every part, at any depth</span>
+?good ul:hasComponent+ ?part .</code></pre>
+      </div>
+      <div class="lu-code lu-code--sm" data-name="SQL · the same question" data-build="1">
+<pre><code><span class="tok-kw">WITH RECURSIVE</span> bom(good, part) <span class="tok-kw">AS</span> (
+  <span class="tok-kw">SELECT</span> good, part <span class="tok-kw">FROM</span> component
+  <span class="tok-kw">UNION ALL</span>
+  <span class="tok-kw">SELECT</span> b.good, c.part
+  <span class="tok-kw">FROM</span> bom b <span class="tok-kw">JOIN</span> component c
+    <span class="tok-kw">ON</span> c.good = b.part )
+<span class="tok-kw">SELECT</span> * <span class="tok-kw">FROM</span> bom;</code></pre>
+      </div>
+    </div>
+
+    <div class="lu-stack">
+      <ul class="lu-list">
+        <li><code>+</code> one or more, <code>*</code> zero or more, <code>/</code> sequence, <code>|</code> alternative, <code>^</code> reverse.</li>
+        <li>This is the Session 1 sanction question: which finished goods contain a part from that plant.</li>
+      </ul>
+      <div class="lu-callout" data-build="2">
+        <span class="lu-callout__label">Honest limit</span>
+        <p class="lu-sub">Paths are expensive and hard to predict. On a large graph an unbounded <code>+</code> is where your query goes to die.</p>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Eight minutes, and it is the payoff slide. Build the SQL only after they have read the one-line SPARQL.</p>
+    <ul>
+      <li>Be fair: the recursive CTE works and is not exotic. The argument is expressiveness and readability, not capability.</li>
+      <li>Say the honest limit out loud. Overselling paths here costs you credibility in Session 5.</li>
+    </ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 11 -->
+<section class="slide" data-label="Query the supply chain live" data-section="SPARQL" data-minutes="10">
+  <div class="lu-eyebrow">Sandbox · runs in your browser, offline</div>
+  <h2 class="lu-h2" style="margin-bottom:var(--lu-s2)">A slice of the Brunel data. Edit the query and run it.</h2>
+
+  <div class="lu-query" data-lang="sparql">
+    <template data-data>
+      @prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+      @prefix ul:   &lt;https://ul.edu.lb/kr/scm#&gt; .
+
+      ul:order-101 a ul:Order ; rdfs:label "ORD-101" ; ul:fromPlant ul:plant-PL2 ; ul:viaPort ul:port-BRE ; ul:handledBy ul:carrier-dhl ; ul:weightKg 420 ; ul:daysLate 6 .
+      ul:order-102 a ul:Order ; rdfs:label "ORD-102" ; ul:fromPlant ul:plant-PL2 ; ul:viaPort ul:port-BRE ; ul:handledBy ul:carrier-mae ; ul:weightKg 180 ; ul:daysLate 0 .
+      ul:order-103 a ul:Order ; rdfs:label "ORD-103" ; ul:fromPlant ul:plant-PL7 ; ul:viaPort ul:port-HAM ; ul:handledBy ul:carrier-dhl ; ul:weightKg 950 ; ul:daysLate 14 .
+      ul:order-104 a ul:Order ; rdfs:label "ORD-104" ; ul:fromPlant ul:plant-PL7 ; ul:viaPort ul:port-HAM ; ul:handledBy ul:carrier-xpo ; ul:weightKg 60 ; ul:daysLate 2 .
+      ul:order-105 a ul:Order ; rdfs:label "ORD-105" ; ul:fromPlant ul:plant-PL2 ; ul:viaPort ul:port-HAM ; ul:handledBy ul:carrier-mae ; ul:weightKg 700 ; ul:daysLate 0 .
+
+      ul:plant-PL2 a ul:Plant ; rdfs:label "Brno" ; ul:servesPort ul:port-BRE ; ul:servesPort ul:port-HAM .
+      ul:plant-PL7 a ul:Plant ; rdfs:label "Gdansk" ; ul:servesPort ul:port-HAM .
+      ul:port-BRE a ul:Port ; rdfs:label "Bremerhaven" .
+      ul:port-HAM a ul:Port ; rdfs:label "Hamburg" .
+      ul:carrier-dhl a ul:Carrier ; rdfs:label "DHL" .
+      ul:carrier-mae a ul:Carrier ; rdfs:label "Maersk" .
+      ul:carrier-xpo a ul:Carrier ; rdfs:label "XPO" .
+    </template>
+    <template data-query>
+PREFIX ul:   &lt;https://ul.edu.lb/kr/scm#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+# Which orders went through a port their plant does not serve?
+SELECT ?order ?plant ?port
+WHERE {
+  ?o rdfs:label ?order ; ul:fromPlant ?p ; ul:viaPort ?pt .
+  ?p rdfs:label ?plant .
+  ?pt rdfs:label ?port .
+  OPTIONAL { ?p ul:servesPort ?pt . ?pt rdfs:label ?ok }
+  FILTER ( !bound(?ok) )
+}
+    </template>
+  </div>
+
+  <p class="lu-caption" style="margin-top:var(--lu-s3)"><b>Try next:</b> count late orders per carrier with <code>GROUP BY</code>, or filter <code>?w &gt; 500</code> on <code>ul:weightKg</code>. <kbd>Ctrl</kbd>+<kbd>Enter</kbd> runs.</p>
+  <template data-notes>
+    <p>Ten minutes. Run the shipped query first: it is a constraint from the Session 1 inventory, expressed as a query. That connection is the point.</p>
+    <ul>
+      <li>The engine is a teaching subset: no UNION, MINUS, BIND or property paths. Say so when it refuses and name what a real endpoint would do.</li>
+      <li>Take one question from the room and type it live. Being wrong in front of them is useful here.</li>
+    </ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 12 -->
+<section class="slide slide--tint" data-label="Drill: vocabulary from part two" data-section="SPARQL" data-minutes="4">
+  <div class="lu-eyebrow">Drill · complete the statements</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-card">
+      <span class="lu-card__label">Fill in the blanks</span>
+      <div class="lu-blanks" data-qid="s2-blanks" data-label="Session 2 core vocabulary">
+        <p>The three parts of a triple are subject, <input class="lu-blank" data-answer="predicate|property" data-label="Middle part of a triple" placeholder="?"> and object.</p>
+        <p>To match a relationship at any depth, append <input class="lu-blank" data-answer="+|plus" data-label="Property path operator for one or more" placeholder="?"> to the property.</p>
+        <p>The query form that returns a graph rather than a table is <input class="lu-blank lu-blank--wide" data-answer="CONSTRUCT" data-label="Query form returning a graph" placeholder="form">.</p>
+      </div>
+    </div>
+    <div class="lu-callout lu-callout--concept">
+      <span class="lu-callout__label">Why these three</span>
+      <p class="lu-sub">They are the pieces you use in every remaining session, including the generated queries in Session 7.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. Ninety seconds to type, then check as a room. CONSTRUCT is the one people miss, which is worth knowing before Session 5.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 13 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 3 · The comparison" data-section="Graph models" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part three of three · 12 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:22ch">The other graph model</h2>
+    <p class="lu-lead" style="max-width:42ch">You will meet property graphs in industry more often than RDF. Know exactly what each one gives up.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 14 -->
+<section class="slide" data-label="RDF against labelled property graphs" data-section="Graph models" data-minutes="7">
+  <div class="lu-eyebrow">A modelling choice, not a vendor preference</div>
+  <h2 class="lu-h1" style="max-width:34ch">One of these can carry a schema you can reason over.</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <span class="lu-tag lu-tag--green">RDF</span>
+      <div class="lu-code lu-code--sm" data-name="Turtle">
+<pre><code><span class="tok-fn">ul:ship-4471</span> <span class="tok-kw">ul:handledBy</span> <span class="tok-fn">ul:carrier-dhl</span> .
+<span class="tok-fn">ul:LateShipment</span> <span class="tok-kw">rdfs:subClassOf</span> <span class="tok-fn">ul:Shipment</span> .</code></pre>
+      </div>
+      <ul class="lu-list lu-list--tight">
+        <li>Global names, so graphs merge without a meeting.</li>
+        <li>The vocabulary is queryable, which is what makes OWL and SHACL possible.</li>
+      </ul>
+    </div>
+
+    <div class="lu-stack" data-build="1">
+      <span class="lu-tag">Property graph</span>
+      <div class="lu-code lu-code--sm" data-name="Cypher">
+<pre><code>(<span class="tok-fn">s</span>:Shipment {id:<span class="tok-str">'4471'</span>})
+  -[:<span class="tok-kw">HANDLED_BY</span> {cost:812}]-&gt;
+(<span class="tok-fn">c</span>:Carrier {name:<span class="tok-str">'DHL'</span>})</code></pre>
+      </div>
+      <ul class="lu-list lu-list--tight">
+        <li>Properties on edges without ceremony, friendlier language.</li>
+        <li>The label is a string. Nothing defines it, so nothing can reason over it.</li>
+      </ul>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Seven minutes, and stay fair. Someone will have a Neo4j certificate and they are right about everything on the right.</p>
+    <ul>
+      <li>The line to land: a string label cannot be reasoned over. That is the entire argument.</li>
+      <li>Honest answer to "which do employers want": both, and property graphs are more common. We teach the harder half because the concepts transfer downward.</li>
+    </ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 15 -->
+<section class="slide slide--tint" data-label="Poll: which model for this job?" data-section="Graph models" data-minutes="4">
+  <div class="lu-eyebrow">Room poll · 45 seconds</div>
+  <div class="lu-poll" data-qid="s2-poll" data-seconds="45" data-answer="b" data-label="Which graph model fits a cross-company traceability graph?">
+    <p class="lu-mcq__q">Four companies must publish part-origin data the others can combine, with no shared database and no central authority. Which model?</p>
+    <div class="lu-mcq__opts">
+      <button class="lu-mcq__opt" type="button" data-key="a">Property graph, the queries are simpler<span class="lu-mcq__why" hidden>Query ergonomics do not help when four parties must agree what a node means with no shared schema language.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="b">RDF, global names let the graphs merge unmet<span class="lu-mcq__why" hidden>Correct. Global identifiers and a shared vocabulary are the federation problem, and this is where RDF earns its cost.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="c">Either, the difference is only syntax<span class="lu-mcq__why" hidden>The difference is whether the schema is machine-readable, which decides whether the merge is possible at all.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="d">Neither, use a shared relational warehouse<span class="lu-mcq__why" hidden>The honest incumbent answer, and it fails the stated constraint: no shared database, no central authority.</span></button>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Forty-five seconds, then reveal and tally with the plus buttons. Spend the remaining time on <b>d</b>, which is what most organisations actually do and why it keeps failing at company boundaries.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 16 -->
+<section class="slide" data-label="Lab brief · 100 minutes" data-section="Lab" data-minutes="6">
+  <div class="lu-eyebrow">Hands-on lab · 100 minutes · starts now</div>
+  <h2 class="lu-h1" style="max-width:32ch">Load the supply chain and query it</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <ol class="lu-list lu-list--num">
+      <li>Design your <b>IRI scheme</b> and write three lines justifying it.</li>
+      <li>Convert a Brunel slice to Turtle with <b>rdflib</b> from the starter notebook.</li>
+      <li>Load into <b>Fuseki</b> with TDB2 and confirm the endpoint answers.</li>
+      <li>Work the provided question set, and <b>record a timing</b> for each query.</li>
+      <li>Run the multi-hop question in <b>Neo4j with Cypher</b> and note the differences.</li>
+    </ol>
+
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">Deliverable · end of session</span>
+        <p class="lu-sub">Loaded endpoint, documented IRI scheme, query notebook with timings. Committed, not left on your laptop.</p>
+      </div>
+      <div class="lu-callout">
+        <span class="lu-callout__label">If JDK 21 fails you</span>
+        <p class="lu-sub">Fall back to Oxigraph through pyoxigraph. Same queries, no Java, and it is the path you want above a million triples anyway.</p>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes to brief, then stop talking and circulate.</p>
+    <ul>
+      <li>Blocker at minute 15: Fuseki refuses to start on a JDK below 21. Have the Oxigraph fallback ready rather than debugging Java.</li>
+      <li>Blocker at minute 40: they write the property path against a predicate that does not chain, and get an empty result rather than an error. Show them how to check with a one-hop query first.</li>
+    </ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 17 -->
+<section class="slide" data-label="Inside the lab: order the conversion" data-section="Lab" data-minutes="8">
+  <div class="lu-eyebrow">Inside the lab · worked method</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-sort" data-qid="s2-sort" data-label="Order the table-to-graph conversion method">
+      <p class="lu-h3" style="margin-bottom:var(--lu-s3)">Put the conversion in the order you will actually work in.</p>
+      <ul class="lu-sort__list">
+        <li class="lu-sort__item" data-rank="3"><span>Emit one triple per column that carries meaning</span></li>
+        <li class="lu-sort__item" data-rank="1"><span>Decide what the rows are about, and which column identifies it</span></li>
+        <li class="lu-sort__item" data-rank="5"><span>Query for a fact you know is true, to prove the load worked</span></li>
+        <li class="lu-sort__item" data-rank="2"><span>Design the IRI for that thing, including its source system</span></li>
+        <li class="lu-sort__item" data-rank="4"><span>Turn foreign keys into IRIs, not string literals</span></li>
+      </ul>
+    </div>
+
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">Step 4 is where most marks are lost</span>
+        <p class="lu-sub">A foreign key left as a literal makes a graph you cannot traverse. <code>ul:order-101 ul:fromPlant "PL2"</code> is a dead end; <code>ul:plant-PL2</code> is an edge.</p>
+      </div>
+      <div class="lu-reveal">
+        <button class="lu-reveal__btn" type="button">Why step 5 is not optional</button>
+        <div class="lu-reveal__panel" hidden>
+          <p>A load that silently produced zero triples looks identical to one that worked, until you query it. Pick a fact you can verify by eye in the source table, ask for it, and only then trust the rest.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Eight minutes, run as a pause about twenty-five minutes into the lab, once everyone has a Turtle file.</p>
+    <ul><li>The literal-against-IRI point is the single most common conversion error and it is invisible until a path query returns nothing.</li></ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 18 -->
+<section class="slide" data-label="Discussion: agree the IRI convention" data-section="Wrap" data-minutes="8">
+  <div class="lu-eyebrow">Discussion · 20 minutes</div>
+  <h2 class="lu-h2" style="max-width:36ch">Compare IRI schemes in pairs. Find the one that breaks first.</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <ul class="lu-list">
+      <li>Show your partner your scheme and the three lines defending it.</li>
+      <li>Try to break it: a second source, a renamed supplier, a merged company.</li>
+      <li>Bring back the convention you would both adopt.</li>
+    </ul>
+    <div class="lu-callout">
+      <span class="lu-callout__label">Outcome</span>
+      <p class="lu-sub">The cohort agrees one IRI convention before leaving. From Session 3 everyone models against it, and in Session 5 it is what makes two sources reconcilable.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Eight minutes in pairs, hard stop, then take the room-level vote on the convention and write it on the board. Photograph it: they will need it for six weeks.</p>
+    <ul><li>If the room splits, pick one yourself and say why. An agreed imperfect convention beats two good ones.</li></ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 19 -->
+<section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="5">
+  <div class="lu-eyebrow">Wrap</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <h2 class="lu-h2">One sentence to leave with.</h2>
+      <p class="lu-statement">A graph is not a better table. It is a data model where the schema is data, which is the only reason a machine can reason about meaning at all.</p>
+      <div class="lu-callout">
+        <span class="lu-callout__label">Before Session 3</span>
+        <p class="lu-sub">Hogan et al. Chapters 2 and 3, free at kgbook.org. Allemang, Hendler and Gandon, the RDF and SPARQL chapters. Bring your endpoint running.</p>
+      </div>
+    </div>
+
+    <div class="lu-card">
+      <span class="lu-card__label">Next session</span>
+      <h3 class="lu-h3">Session 3 · Ontology Engineering: Description Logic, OWL, and Reuse</h3>
+      <p class="lu-sub">Your graph says <code>ul:handledBy</code> and means nothing to anyone else. Next week you give it meaning a reasoner can act on, built on a published industrial ontology.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. End on the statement. Then reading and deliverable in twenty seconds.</p>
+    <ul><li>Ask one person for the query that surprised them. It sells Session 3 better than anything you can say.</li></ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 20 -->
+<section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="4">
+  <div class="lu-eyebrow">Self-check</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <h2 class="lu-h2">How you did on this session's questions</h2>
+      <div data-score></div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">Studying alone?</span>
+        <p class="lu-sub">Press <kbd>S</kbd> for study mode. Every definition becomes an inline note, every reveal opens, and answers are filled in.</p>
+      </div>
+      <p class="lu-caption">Answers and position are stored in this browser only.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Close here. Point at the sandbox on slide 11 as the thing to replay before Session 3.</p>
+  </template>
+</section>
+
+</div><!-- /stage -->
+</div><!-- /deck -->
+
+<script src="../assets/sparql-lite.js?v=1.1.0"></script>
+<script src="../assets/lu-deck.js?v=1.1.0" defer></script>
+</body>
+</html>

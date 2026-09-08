@@ -125,6 +125,26 @@ run, progressive builds and the self-check all function correctly. The two
 written to the file. **The content trims have not yet been measured against a
 live render** and should be re-checked after this commit deploys.
 
+### Session 2 built and pre-verified
+
+`lectures/kr-session-02.html`, RDF, SPARQL, and the Graph as a Data Model.
+20 slides, 104 slide-minutes, four graded components (`s2-q1`, `s2-blanks`,
+`s2-poll`, `s2-sort`), and a live SPARQL sandbox over a Brunel slice whose
+seeded query is a Session 1 constraint expressed as a query.
+
+Measured before shipping, not after, by injecting each slide body into a
+running deck: **17 of 20 slides fit exactly**, one was 21px over and was
+trimmed. The two apparent failures (poll 514px, sort 1198px) were artefacts of
+the harness: un-wired `.lu-mcq__opt` and `.lu-sort__item` collapse into the
+narrow grid column, the same failure mode as the rationale bug. Checked against
+the runtime-wired equivalents in Session 1 instead: the wired sort fits with
+zero overflow at 568px, and the wired sandbox in Session 3 is 430px on a slide
+that fits, which is the same structure as Session 2 slide 11.
+
+Still to confirm after deploy, because a harness cannot: the wired poll on
+slide 15, the sandbox on slide 11, presenter view, study mode, and print with
+Handout on. Run `scripts/audit-deck.js`.
+
 ## Screen map
 
 | Repo path | Built from |
