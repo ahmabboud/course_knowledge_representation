@@ -25,7 +25,7 @@ Give the agent access to the repository, then paste this, filling the four brack
 >
 > Hard constraints: no `<style>` blocks and no new colours, fonts or sizes; nothing below 20px; every slide needs `data-label`, `data-section`, `data-minutes` and a `<template data-notes>`; every graded component needs a session-prefixed unique `data-qid`; every answer option needs a rationale; diagrams use the CSS primitives first, inline SVG second, a `.lu-figure__ph` placeholder third, never a hand-drawn screenshot.
 >
-> Budget roughly **one slide per 8 to 9 minutes** of contact time, a divider before every part, and a check question after every concept block. End with the wrap slide and the self-check slide.
+> Budget **3 to 4 minutes per content slide**, so a 180-minute session is about 24 to 28 slides. Aim for 5 to 8 beats per slide, a beat being one thing you can point at and talk to. A divider before every part, a check question after every concept block. End with the wrap slide and the self-check slide.
 
 That is the whole handoff. The agent needs nothing else from you.
 

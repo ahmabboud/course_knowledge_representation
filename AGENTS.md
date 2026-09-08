@@ -143,7 +143,24 @@ Copy these from `kr-session-03.html` rather than composing from scratch.
 8. **Lab brief**, paper. Numbered steps, deliverable callout.
 9. **Wrap**, then **self-check**, tint, then paper. Always the last two slides.
 
-Rhythm target for 180 minutes: about 20 slides, a divider before every part, a check question after every concept block, and never more than four consecutive paper slides.
+**Pacing: 3 to 4 minutes per content slide.** A three-hour session with 60
+minutes of lecture wants 15 to 20 lecture slides, not 11. Counting dividers and
+the wrap, a 180-minute session lands around 24 to 28 slides in total.
+
+This number was wrong here for a while. The original guidance said "about 20
+slides for 180 minutes", which works out at 6 to 7 minutes per slide. That asks
+the instructor to talk for six minutes against six things on screen, and it
+leaves the student with a study artifact holding a fraction of what was said.
+It is also what pushed slides over the fixed slide box, because the fix for a
+slide with too much on it is to split it, not to shrink it.
+
+A useful signal while writing: count the *beats* on a slide, meaning the things
+you can point at and talk to (a bullet, a code line, a table row, a callout, a
+reveal, a walkthrough step). Aim for 5 to 8 beats on a 4-minute slide. Under
+about 1 beat per minute and the slide is carrying more time than content.
+
+Also: a divider before every part, a check question after every concept block,
+and never more than four consecutive paper slides.
 
 ---
 
