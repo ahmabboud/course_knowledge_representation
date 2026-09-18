@@ -8,6 +8,14 @@ brief slide.
 
 ## Run, in order
 
+Two ways to run this lab: the individual scripts below, one stage at a
+time from a terminal; or `lab_walkthrough.py`, a `# %%`-cell notebook
+that imports and calls the same functions but shows each stage's
+result as a table or chart, open it in JupyterLab or VS Code to
+present the lab live instead of reading terminal output. Both stay in
+sync because the notebook calls into the scripts, it does not
+reimplement them.
+
 1. From the repository root: `docker compose up -d` (Fuseki and Neo4j).
 2. `python convert_to_rdf.py` — converts a slice of the Brunel tables to
    Turtle with rdflib, using `common/iri.py`'s scheme. Writes

@@ -16,6 +16,10 @@ lab brief slide.
    ydata-profiling, writes an HTML report per dataset next to this
    README (gitignored, regenerate, do not commit). Cluster values in
    OpenRefine separately; OpenRefine is a GUI tool, not scripted here.
+   This file is written in `# %%` cells (Jupytext), so open it in
+   JupyterLab or VS Code instead to run it step by step, with the
+   missingness charts and DataCo's full profile rendered inline as you
+   go, rather than running it as one batch script.
 4. Fill in `constraint_inventory_template.csv` as you work. An entry
    needs all three columns: the rule, the evidence in the data, and the
    source column or table. Two out of three is not a finding, per the

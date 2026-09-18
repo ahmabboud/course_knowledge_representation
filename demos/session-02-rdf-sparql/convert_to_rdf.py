@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 
 import pandas as pd
-from rdflib import Graph, Literal, Namespace, RDF, RDFS, XSD
+from rdflib import Graph, Literal, Namespace, RDF, RDFS, URIRef, XSD
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common.data_paths import BRUNEL_TABLES  # noqa: E402
@@ -35,18 +35,18 @@ def build_graph() -> Graph:
     # the relationship the Session 1 constraint ("a plant can only
     # serve ports it is linked to") is expressed against.
     for _, row in plant_ports.iterrows():
-        plant = plant_iri(SOURCE, str(row["Plant Code"]))
-        port = port_iri(SOURCE, str(row["Port"]))
-        g.add((UL[plant.rsplit("#", 1)[1]] if False else __import__("rdflib").URIRef(plant), RDF.type, UL.Plant))
-        g.add((__import__("rdflib").URIRef(port), RDF.type, UL.Port))
-        g.add((__import__("rdflib").URIRef(plant), UL.servesPort, __import__("rdflib").URIRef(port)))
+        plant = URIRef(plant_iri(SOURCE, str(row["Plant Code"])))
+        port = URIRef(port_iri(SOURCE, str(row["Port"])))
+        g.add((plant, RDF.type, UL.Plant))
+        g.add((port, RDF.type, UL.Port))
+        g.add((plant, UL.servesPort, port))
 
     # Orders, with the fields the Session 2 question set actually
     # queries: fromPlant, viaPort, weight, and the day-count fields
     # needed for a "days late" filter once a due date is available.
     for _, row in order_list.iterrows():
-        order = __import__("rdflib").URIRef(order_iri(SOURCE, str(row["Order ID"])))
-        plant = __import__("rdflib").URIRef(plant_iri(SOURCE, str(row["Origin Port"])))
+        order = URIRef(order_iri(SOURCE, str(row["Order ID"])))
+        plant = URIRef(plant_iri(SOURCE, str(row["Origin Port"])))
         g.add((order, RDF.type, UL.Order))
         g.add((order, RDFS.label, Literal(str(row["Order ID"]))))
         g.add((order, UL.fromPlant, plant))

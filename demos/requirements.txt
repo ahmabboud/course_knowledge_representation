@@ -18,9 +18,12 @@ neo4j
 # Constraint validation — Session 4 onward
 pyshacl
 
-# Notebooks
+# Notebooks and presentation
 jupyterlab
 ipykernel
+jupytext    # opens the `# %%`-marked .py labs as real notebooks
+matplotlib  # quick-look charts (missingness, timings)
+networkx    # small inline graph drawings, Session 2 onward
 
 # Testing
 pytest
