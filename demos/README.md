@@ -35,14 +35,15 @@ session-07-access-layer/
 session-08-deploy-and-defend/
 ```
 
-Sessions 1 and 2 have working starter code, matching the lab briefs in
-the built lecture decks. Sessions 3 through 8 have a README each,
-accurate to the syllabus segment text and naming the real tools, but no
-code yet, those sessions' lecture decks are not built yet either (see
-`course_knowledge_representation/README.md`'s status table), and writing
-lab code ahead of the deck it serves risks locking in the wrong shape.
-Build each session's lab code when that session's deck is built, from
-its own README here.
+Sessions 1 and 2 have working lab code, matching the lab briefs in
+their built lecture decks. Session 3's lecture deck is built too, but
+its lab code is not, its README states what to build once it is time.
+Sessions 4 through 8 have a README each, accurate to the syllabus
+segment text and naming the real tools, but neither lab code nor a
+lecture deck yet (see `course_knowledge_representation/README.md`'s
+status table), and writing lab code ahead of the deck it serves risks
+locking in the wrong shape. Build each session's lab code once that
+session's deck exists, from its own README here.
 
 ## Setup, once
 

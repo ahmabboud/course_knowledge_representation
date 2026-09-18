@@ -13,7 +13,7 @@ One enterprise problem, a supply chain, carried from raw operational data throug
 | # | Module | Title | Status |
 |---|---|---|---|
 | 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Built |
-| 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | To build |
+| 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Built |
 | 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Built |
 | 4 | 2 | Constraints, Quality, and Provenance: SHACL | To build · Milestone 1 |
 | 5 | 3 | Integrating Operational Data | To build |
