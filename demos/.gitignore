@@ -15,6 +15,9 @@ data/*
 !data/README.md
 !data/fetch_data.py
 
+# Session 3: real third-party ontologies, fetched not committed
+session-03-ontology/workspace/
+
 # Generated graphs and reports, regenerate, do not commit
 *.ttl.bak
 profiling_report_*.html

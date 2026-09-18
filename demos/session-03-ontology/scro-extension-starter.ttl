@@ -1,0 +1,93 @@
+## scro-extension-starter.ttl
+##
+## Copied into workspace/ by fetch_ontologies.py so Protege opens with
+## a real starting point, not an empty file. This is the shape the
+## lecture's own "scro-extension.ttl" slide shows: reuse a published
+## class first, subclass it, define it, tag it with the competency
+## question it answers.
+##
+## One deliberate correction from the slide's own illustration: the
+## slide subclasses `iof:MaterialTransport`, a name chosen to teach
+## the pattern, not a class that exists in the real IOF Supply Chain
+## ontology (checked against Release_202603 while building this lab).
+## This file subclasses `ioc:Shipment` instead, a real class from that
+## release (`https://spec.industrialontologies.org/ontology/construct/Shipment`),
+## so opening this in Protege with the real SCRO loaded resolves
+## cleanly rather than leaving a dangling reference.
+##
+## Delete this comment block once you start extending the file for
+## real; it is orientation, not part of your submission.
+
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix iof:  <https://spec.industrialontologies.org/ontology/core/Core/> .
+@prefix ioc:  <https://spec.industrialontologies.org/ontology/construct/> .
+@prefix gs1:  <https://gs1.org/voc/> .
+@prefix ul:   <https://ul.edu.lb/kr/scm#> .
+
+<https://ul.edu.lb/kr/scm#> a owl:Ontology ;
+    rdfs:label "UL Knowledge Representation course: supply chain extension" ;
+    owl:imports <https://spec.industrialontologies.org/ontology/supplychain/SupplyChain/> .
+
+## Two annotation properties every class in your submission uses.
+## Declared here once so the reasoner and ROBOT both recognise them as
+## annotations, not as undeclared punning.
+
+ul:answersCQ a owl:AnnotationProperty ;
+    rdfs:label "answers competency question" ;
+    rdfs:comment "The competency question (see competency_questions_template.md) this class exists to answer. A class with none has not earned its place, per the lecture's own rule." .
+
+ul:profile a owl:AnnotationProperty ;
+    rdfs:label "intended OWL profile" ;
+    rdfs:comment "EL, DL or QL: which profile this axiom set was written for, recorded so the ROBOT report's profile check is not a surprise." .
+
+## Reuse first: subclass a published class from the real SCRO you just
+## imported, rather than inventing one from scratch.
+
+ul:LateShipment a owl:Class ;
+    rdfs:subClassOf ioc:Shipment ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty ul:deliveredAfter ;
+        owl:someValuesFrom ul:CommittedDate
+    ] ;
+    rdfs:label "Late shipment"@en ;
+    skos:definition "A transport whose actual delivery follows the committed delivery date."@en ;
+    ul:profile "EL" ;
+    # CQ annotation, graded. See competency_questions_template.md, Q1.
+    ul:answersCQ "Which shipments arrived late last quarter, by carrier?" .
+
+ul:CancelledShipment a owl:Class ;
+    rdfs:subClassOf ioc:Shipment ;
+    rdfs:label "Cancelled shipment"@en ;
+    skos:definition "A shipment withdrawn before delivery."@en ;
+    ul:profile "EL" .
+
+ul:LateShipment owl:disjointWith ul:CancelledShipment .
+
+ul:deliveredAfter a owl:ObjectProperty ;
+    rdfs:label "delivered after"@en ;
+    rdfs:domain ul:LateShipment ;
+    owl:inverseOf ul:committedBefore .
+
+ul:committedBefore a owl:ObjectProperty ;
+    rdfs:label "committed before"@en .
+
+ul:CommittedDate a owl:Class ;
+    rdfs:label "Committed date"@en ;
+    skos:definition "The delivery date a carrier committed to at booking."@en ;
+    ul:profile "EL" .
+
+## Two traps, both common in submissions (per the lecture):
+##
+## 1. Domain and range are not constraints, they are entailment rules.
+##    Asserting one lets the reasoner classify anything you attach it
+##    to; it does not reject anything.
+## 2. owl:sameAs is a logical identity the reasoner propagates in both
+##    directions, forever. "These two supplier records probably match"
+##    is a similarity claim with a confidence, not owl:sameAs, and
+##    belongs in the Session 5 entity-resolution layer instead.
+##
+## Your own extension continues below. You need eight classes with a
+## ul:answersCQ each; two are here as worked examples, six are yours.
