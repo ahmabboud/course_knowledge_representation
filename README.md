@@ -6,7 +6,7 @@ Interactive HTML lectures for the Knowledge Representation course. 24 contact ho
 
 ## The course in one paragraph
 
-One enterprise problem, a supply chain, carried from raw operational data through to a deployed system that can be queried in natural language. Profile the source data and recover the constraints nobody wrote down, model the domain as an OWL ontology on top of published industrial ontologies, express the constraints as SHACL shapes, map the operational relational data into the graph, train a graph neural network on the result, and put a schema-aware language model query layer on top. Every lab from Session 3 onward extends your own graded system.
+One enterprise problem, a supply chain, carried from raw operational data through to a deployed system that can be queried in natural language. Profile the source data and recover the constraints nobody wrote down, model the domain as an OWL ontology on top of published industrial ontologies, express the constraints as SHACL shapes, map the operational relational data into the graph, train a graph neural network on the result, and put a schema-aware language model query layer on top. Every lab from Session 3 onward demonstrates the technique on the course's own supply chain case. Teams of 2 to 3, on their own chosen topic and open database, apply the same technique to their own project from directly after Session 1, and are evaluated on that project at the end.
 
 ## Sessions
 
