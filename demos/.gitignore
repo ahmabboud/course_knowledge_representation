@@ -1,0 +1,25 @@
+# Secrets
+.env
+*.key
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Data, fetched not committed
+data/*
+!data/README.md
+!data/fetch_data.py
+
+# Generated graphs and reports, regenerate, do not commit
+*.ttl.bak
+profiling_report_*.html
+
+# OS and editor
+.DS_Store
+.vscode/
+.idea/

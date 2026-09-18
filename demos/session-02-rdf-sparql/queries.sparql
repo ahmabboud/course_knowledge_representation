@@ -1,0 +1,30 @@
+# The provided question set, single-hop through genuinely hard. Run
+# these with run_queries.py, which times each one.
+
+# --- Q1: single-hop lookup ---
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT ?order ?plant WHERE {
+  ?order a ul:Order ; ul:fromPlant ?plant .
+} LIMIT 20
+
+# --- Q2: aggregation ---
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT ?plant (COUNT(?order) AS ?n) WHERE {
+  ?order a ul:Order ; ul:fromPlant ?plant .
+} GROUP BY ?plant ORDER BY DESC(?n)
+
+# --- Q3: the plant/port constraint from Session 1, as a query ---
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT ?order ?plant ?port WHERE {
+  ?order ul:fromPlant ?plant .
+  OPTIONAL { ?plant ul:servesPort ?port }
+  FILTER (!BOUND(?port))
+}
+
+# --- Q4: property path, the question SQL is awkward at ---
+# Fill in once a multi-hop relation (e.g. hasComponent) is in the slice;
+# see the Session 1 sanction-question framing on lecture slide 3.
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT ?good ?part WHERE {
+  ?good ul:hasComponent+ ?part .
+}

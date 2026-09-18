@@ -1,0 +1,2 @@
+rule,evidence_in_data,source_column_or_table
+"Example: a shipment cannot be delivered before it is dispatched","<fill in: e.g. 0 of N rows violate this>","<fill in: e.g. Brunel OrderList.DispatchDate vs DeliveryDate>"

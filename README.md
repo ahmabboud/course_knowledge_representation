@@ -27,6 +27,7 @@ One enterprise problem, a supply chain, carried from raw operational data throug
 - **`lectures/kr-session-NN.html`**, one self-contained lecture per file.
 - **`design-system.html`**, the design system and a live gallery of all twelve interactive components. Start here before authoring.
 - **`lectures/_template.html`**, copy this to start a new session.
+- **`demos/`**, instructor-only lab material run live during specific sessions, real code against real data (Docker services, a local Neo4j, notebooks and scripts), separate from the small in-slide sandboxes. See `demos/README.md` for setup, and each `demos/session-NN-.../README.md` for that session's own lab.
 - **`AGENTS.md`**, the authoring contract. Read it before writing a lecture, whether you are a person or an agent.
 - **`PROMPT.md`**, the paste-ready brief for handing a new session to an agent.
 

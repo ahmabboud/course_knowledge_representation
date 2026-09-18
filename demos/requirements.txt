@@ -1,0 +1,27 @@
+# Shared across every session. A session's own README names anything
+# additional it needs on top of this (PyTorch Geometric in Session 6,
+# for example), install that inside that session's own work, not here,
+# so this file does not grow dependencies most sessions never use.
+
+# Data handling and profiling — Session 1
+pandas
+ydata-profiling
+
+# RDF and SPARQL — Sessions 2 onward
+rdflib
+SPARQLWrapper
+pyoxigraph          # fallback triplestore when Fuseki/JDK misbehaves
+
+# Graph database driver — Session 2 comparison, and later sessions
+neo4j
+
+# Constraint validation — Session 4 onward
+pyshacl
+
+# Notebooks
+jupyterlab
+ipykernel
+
+# Testing
+pytest
+python-dotenv
