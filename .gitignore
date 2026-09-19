@@ -1,3 +1,7 @@
 uploads/
 .thumbnail
 .DS_Store
+
+# Stale temp files left behind by some iCloud/FUSE filesystem bridges
+# during editing. Harmless, never worth committing.
+.fuse_hidden*
