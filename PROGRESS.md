@@ -96,6 +96,33 @@ licensing exercise (a real, still-live SCORVoc licence conflict, documented
 in `workspace/LICENCES.md`, deliberately left unsolved so the room resolves
 it live). Nothing further to build here unless the deck's brief changes.
 
+### Slide QA, 2026-09-19
+
+- **Slide 6 ("The three reasoning tasks"), fixed, a real bug.** The three
+  cards plus the click-to-reveal panel below them slightly exceeded the
+  fixed 1600×900 slide canvas once the panel was opened, so the reveal
+  button's text was visibly sliced off at the bottom (confirmed by
+  rendering the deck headless and measuring the DOM, not just by eye).
+  Fixed by trimming card and reveal copy to a tighter word count (same
+  meaning, fewer wrapped lines) and dropping two redundant inline
+  `margin-top` styles that double-spaced on top of the slide's own flex
+  gap, a pattern this slide had that no other slide in the deck uses.
+  Re-verified headless with every card and the reveal panel open: fits
+  cleanly with margin to spare. If a future edit to this slide's copy
+  makes it grow again, check it the same way: open `lectures/kr-session-03.html#/6`
+  in a browser, step `→` through all four builds, click the reveal open,
+  and look for clipped text at the bottom edge.
+- **Slide 14 ("The upper ontology stack"), not a bug, by design.** Landing
+  on it directly shows only the heading and the figure placeholder; the
+  four ontology layers, the alignment tags, and the callout are
+  `data-build` steps that reveal one at a time on `→` (same mechanic as
+  slide 6's cards), and the figure is an intentional placeholder already
+  on `README.md`'s "Before teaching from it" checklist. Confirmed by
+  stepping through the builds; no code change made. Worth knowing if this
+  question comes up again for a different slide: check whether the
+  "missing" content is behind an unstepped `data-build`, or press `S` for
+  study mode, before assuming it's broken.
+
 ## What's next
 
 **Session 4 (SHACL)** is the next unbuilt session, and the one carrying
