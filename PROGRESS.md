@@ -17,7 +17,7 @@ or lab-code progress, that is this file's job.
 |---|---|---|---|---|
 | 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Built | Built, notebook-presented |
 | 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Built | Built, notebook-presented |
-| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Built, reworded for run-and-observe, visual QA of the reworded slides still owed, see Session 3 detail | Built as a run-and-observe walkthrough on a finished reference ontology, Protege/reasoner steps run live in the room from it |
+| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Built, reworded for run-and-observe, all 22 slides verified 0px overflow live, interactive click-through and print preview still owed, see Session 3 detail | Built as a run-and-observe walkthrough on a finished reference ontology, Protege/reasoner steps run live in the room from it |
 | 4 | 2 | Constraints, Quality, and Provenance: SHACL | Not built | Not started |
 | 5 | 3 | Integrating Operational Data | Not built | Not started |
 | 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | Not built | Not started |
@@ -74,7 +74,9 @@ with a plain import). Nothing left to build here.
 ## Session 3, detail
 
 Deck built. Lab redesigned 2026-09-19 (see "Redesign round 3" below)
-from an authoring exercise into a run-and-observe walkthrough:
+from an authoring exercise into a run-and-observe walkthrough, then
+every slide checked live and every found overflow bug fixed the same
+day (see "Verification and cleanup round" below):
 
 - `fetch_ontologies.py`, downloads the real IOF Core and Supply Chain
   (SCRO) ontologies at tag `Release_202603` (MIT licensed), the real
@@ -258,6 +260,107 @@ permission restriction on this mount blocked every `rm`, `git rm`, and
 and `competency_questions_template.md` are now stub files pointing at
 their replacements. Delete both by hand next time you have normal
 filesystem access to this repository.
+
+### Verification and cleanup round, 2026-09-19: every slide checked live
+
+Round 3's own note above flagged that slides 3, 15, 18 and 20 were
+edited but never rendered. This round verified them against the real
+deployed page (`ahmabboud.github.io/course_knowledge_representation`,
+via a browser, not the sandbox) using the deck's own audit protocol:
+cache-busted load, cleared `localStorage`, measure `scrollHeight -
+clientHeight` on `.slide__body` in both default and fully-revealed
+states, patch candidate fixes into the live DOM before writing them to
+source. Slides 3, 15, 18 and 20 all measured 0px overflow once fixed
+(commit `8de8815`).
+
+That same live audit, run across all 22 slides rather than just the
+four just-edited ones, found a second, larger, and unrelated set of
+overflow bugs already present in the deck before this session touched
+it (commit `5ec5432`):
+
+- **Where we are in the architecture** (slide 2): title wrapped to 3
+  lines against a 30ch max-width; widened to 46ch.
+- **DL as a fragment of first-order logic** (slide 5): both columns and
+  the reveal panel overflowed, in both default and revealed states.
+  Trimmed the intro paragraph, list, callout, code block and reveal
+  text; needed a scoped `--lu-s5` override on the section to also
+  shrink the body's own flex gap.
+- **The three reasoning tasks** (slide 6): reveal panel text needed to
+  drop to a single line, 2 lines was still 6px over.
+- **Check: which task finds which bug** (slide 7): an MCQ next to a
+  companion callout. Once answered, every option's rationale reveals
+  and the MCQ alone needs ~940px, more than the whole slide. Fixed the
+  same way the deck's own build-time notes describe for this pattern:
+  dropped the companion, widened the MCQ to full width, and still had
+  to cut it from 4 options to 3 (moved the dropped rationale into
+  speaker notes) to fit both the correct-answer and wrong-answer
+  feedback text.
+- **OWL 2 constructs you will use today** (slide 9): a 5-term
+  definition list plus a two-traps callout next to an 18-line real
+  Turtle file plus caption, at 9 minutes of content on one slide. Both
+  columns ran roughly 200 to 370px over even after trimming text, past
+  the point where trimming alone is the right fix. Split into two
+  slides (constructs vocabulary; then the reference-file code
+  walkthrough), 5 and 4 minutes respectively, same total. Renumbered
+  the deck's own numbered HTML comments from slide 10 onward to match
+  (deck is now 22 slides, was 21).
+- **EL or RL: the same model, two profiles** (slide 10, was 11):
+  trimmed the compare-slider panes' min-height and the two list
+  columns; needed the same scoped `--lu-s5` trick as slide 5.
+- **Profile decision table + drill** (slide 11, was "Walkthrough:
+  reading reasoner output" in this file's own earlier, incorrect
+  numbering, corrected by re-testing every slide by its label rather
+  than by position): three fill-in-the-blank sentences wrapped to 3
+  lines each in the split's narrower column; shortened the surrounding
+  prose rather than the blanks themselves.
+- **The upper ontology stack** (slide 14): figure caption and
+  alignment-hazard callout trimmed.
+- **Poll: does this class earn its place?** (slide 17): same
+  MCQ-plus-companion pattern as slide 7, but worse, a poll also shows a
+  results-bar visualisation and a large countdown timer alongside the
+  per-option rationale once revealed. Dropped the companion "how to run
+  this" card (moved to notes), widened to full width, cut from 4
+  options to 3, reduced option padding, and added a stylesheet rule
+  (`assets/lu.css`) hiding the timer once the poll is revealed, since
+  the countdown is no longer relevant at that point and the room
+  needed the height back.
+- **The licensing exercise** (slide 18, was 19): numbered list and
+  reveal-panel paragraphs trimmed to fit; detail moved to notes.
+- **Self-check** (slide 21): study-mode callout trimmed by one line.
+
+Also fixed in `assets/lu.css`, not `kr-session-03.html`, so it applies
+to every lecture that uses a poll: `.lu-poll__bars` had no `[hidden]`
+companion rule, so its own `display: flex` beat the UA `[hidden]` rule
+and the results bars occupied their full height even before a poll was
+revealed. The same fix already exists twice elsewhere in this
+stylesheet for the identical trap (`.lu-reveal__panel[hidden]`,
+`.lu-mcq__why[hidden]`); added the third. Also fixed a sub-20px inline
+`font-size:18px` on the walkthrough slide's "unsatisfiable" node label
+(the deck's own stated floor is 20px).
+
+Reviewed and deliberately left alone: the poll's `&minus;`/`+` tally
+buttons (a deliberate stepper-symbol pairing, not a stray punctuation
+character), and `kbd`/inline-`code` elements rendering at 13 to
+19.8px. The second one is a real, literal violation of this
+stylesheet's own stated "floor is 20px" comment, but it is a shared,
+pervasive convention used the same way in every lecture across all 8
+sessions, not something introduced by or specific to Session 3.
+Changing it means picking a new floor for keyboard-key badges and
+inline code system-wide and belongs upstream in
+`LebUniv_Course_Template`, per this repository's own README, as a
+deliberate decision, not a side effect of a Session 3 bug-fix pass.
+
+Every fix above was verified live (0px overflow, or ≤2px, treated as
+sub-pixel rounding) against the deployed page before being written to
+source, in both the default and, where relevant, the fully-revealed or
+fully-answered state. Tag balance (`div`/`section`/`ul`/`ol`/`li`/`p`/
+`span`/`button`/`table`/`tr`/`td`/`th`/`dl`/`dt`/`dd`, open vs. close)
+re-checked after all edits. Not yet done: the print-preview-with-
+Handout-mode check, and a full click-through of every interactive
+element per the lecture-builder skill's own testing protocol (term
+popovers, every MCQ option from a clean state, the sort/drag exercise,
+the query sandbox, study mode combined with print). Do that before
+calling this deck fully verified.
 
 ## What's next
 

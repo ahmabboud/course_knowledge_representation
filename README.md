@@ -14,7 +14,7 @@ One enterprise problem, a supply chain, carried from raw operational data throug
 |---|---|---|---|
 | 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Built |
 | 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Built |
-| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Built (visual QA of the reworded lab slides pending, see `PROGRESS.md`) |
+| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Built, verified 0px overflow live across all 22 slides (interactive click-through and print preview still owed, see `PROGRESS.md`) |
 | 4 | 2 | Constraints, Quality, and Provenance: SHACL | To build · Milestone 1 |
 | 5 | 3 | Integrating Operational Data | To build |
 | 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | To build · Milestone 2 |
