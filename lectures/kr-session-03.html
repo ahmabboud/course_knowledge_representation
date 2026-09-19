@@ -696,7 +696,7 @@ ORDER BY ?label
 <pre><code><span class="tok-com">// robot reason --input scro-extension.ttl \</span>
 <span class="tok-com">//   --reasoner ELK --output reasoned.ttl</span>
 <span class="tok-com">// robot report --input reasoned.ttl \</span>
-<span class="tok-com">//   --output report.tsv --profile QC</span>
+<span class="tok-com">//   --output report.tsv --fail-on none</span>
 
 <span class="tok-com">// Run this cell to check your OWL profile choice:</span>
 <span class="tok-kw">const</span> used = [<span class="tok-str">'someValuesFrom'</span>, <span class="tok-str">'intersectionOf'</span>, <span class="tok-str">'cardinality'</span>];

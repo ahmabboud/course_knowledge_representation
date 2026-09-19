@@ -15,8 +15,16 @@ data/*
 !data/README.md
 !data/fetch_data.py
 
-# Session 3: real third-party ontologies, fetched not committed
-session-03-ontology/workspace/
+# Session 3: real third-party ontologies, fetched not committed.
+# The whole folder used to be ignored, but the student's own deliverables
+# (scro-extension.ttl, reasoned.ttl, report.tsv) also land in here, per
+# session-03-ontology/README.md, and a blanket ignore silently dropped
+# them too. Ignore the fetched third-party material by default, then
+# explicitly un-ignore the three files a student is meant to commit.
+session-03-ontology/workspace/*
+!session-03-ontology/workspace/scro-extension.ttl
+!session-03-ontology/workspace/reasoned.ttl
+!session-03-ontology/workspace/report.tsv
 
 # Generated graphs and reports, regenerate, do not commit
 *.ttl.bak
