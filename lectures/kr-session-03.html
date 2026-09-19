@@ -97,10 +97,10 @@
   <div class="lu-eyebrow">Objective</div>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
-      <p class="lu-statement">By the end of today you will have an ontology built on a published industrial standard, annotated with the questions it exists to answer, and a clean reasoner run proving it says what you meant.</p>
+      <p class="lu-statement">By the end of today you will have watched a real ontology, built on a published industrial standard, reasoned over live, and read a real quality report explaining what a clean run actually proves.</p>
       <div class="lu-callout lu-callout--concept">
-        <span class="lu-callout__label">Deliverable, due at the end of the session</span>
-        <p class="lu-sub">Domain ontology v1 on IOF SCRO · eight annotated competency questions · clean ELK and HermiT run · recorded OWL profile · ROBOT quality report.</p>
+        <span class="lu-callout__label">What you will have seen, by the end of the session</span>
+        <p class="lu-sub">Domain ontology on IOF SCRO answering eight competency questions · clean ELK and HermiT run · recorded OWL profile per class · ROBOT quality report. Read together today, not built by you, you build one like it on your own team's topic.</p>
       </div>
     </div>
     <div class="lu-stack">
@@ -108,15 +108,15 @@
         <span class="lu-card__label">How the 180 minutes are spent</span>
         <ul class="lu-layers">
           <li><span class="lu-layers__name">Lecture · 65 min</span><span class="lu-layers__note">Description logic, OWL 2 and its profiles, reuse and alignment</span></li>
-          <li><span class="lu-layers__name">Hands-on lab · 95 min</span><span class="lu-layers__note">Build on SCRO in Protégé, run the reasoners, ROBOT report, licensing exercise</span></li>
-          <li><span class="lu-layers__name">Discussion · 20 min</span><span class="lu-layers__note">Swap ontologies in pairs, answer each other's competency questions</span></li>
+          <li><span class="lu-layers__name">Guided walkthrough · 95 min</span><span class="lu-layers__note">Run the finished reference ontology in Protégé, watch the reasoners and ROBOT report, licensing exercise</span></li>
+          <li><span class="lu-layers__name">Discussion · 20 min</span><span class="lu-layers__note">Discuss the reference ontology's design choices, then check in on each team's own topic</span></li>
         </ul>
       </div>
       <p class="lu-caption">Reading before next session: Hogan et al. Chapter 4. Allemang, Hendler and Gandon: Basic OWL, Counting and sets in OWL, Expert modelling in OWL.</p>
     </div>
   </div>
   <template data-notes>
-    <p>Read the deliverable aloud verbatim. Participants consistently under-scope the competency questions, so name the number: eight, annotated in the file, not in a notebook.</p>
+    <p>Read what they will see aloud verbatim. Name the number, eight competency questions, so they know what to look for once the file opens, not because they are about to write any of them.</p>
   </template>
 </section>
 
@@ -282,7 +282,7 @@ Shipment ⊑ ∃hasCarrier.Carrier
     </div>
 
     <div class="lu-stack">
-      <div class="lu-code" data-name="scro-extension.ttl · the shape of your lab file">
+      <div class="lu-code" data-name="scro-extension-reference.ttl · the shape of the reference file">
 <pre><code><span class="tok-kw">@prefix</span> <span class="tok-fn">iof</span>: <span class="tok-str">&lt;https://spec.industrialontologies.org/ontology/core/Core/&gt;</span> .
 <span class="tok-kw">@prefix</span> <span class="tok-fn">gs1</span>: <span class="tok-str">&lt;https://gs1.org/voc/&gt;</span> .
 <span class="tok-kw">@prefix</span> <span class="tok-fn">ul</span>:  <span class="tok-str">&lt;https://ul.edu.lb/kr/scm#&gt;</span> .
@@ -296,17 +296,17 @@ Shipment ⊑ ∃hasCarrier.Carrier
      owl:someValuesFrom <span class="tok-fn">ul:CommittedDate</span> ] ;
   <span class="tok-kw">skos:definition</span> <span class="tok-str">"A transport whose actual delivery</span>
      <span class="tok-str">follows the committed delivery date."</span> ;
-  <span class="tok-com"># CQ annotation, graded. See slide 15.</span>
+  <span class="tok-com"># CQ annotation. See slide 15.</span>
   <span class="tok-kw">ul:answersCQ</span> <span class="tok-str">"Which shipments arrived late last quarter?"</span> .
 
 <span class="tok-fn">ul:LateShipment</span> owl:disjointWith <span class="tok-fn">ul:CancelledShipment</span> .
 <span class="tok-fn">ul:deliveredAfter</span> owl:inverseOf <span class="tok-fn">ul:committedBefore</span> .</code></pre>
       </div>
-      <p class="lu-caption">Every class in your submission needs the <code>skos:definition</code> and at least one <code>ul:answersCQ</code>. A class with neither has not earned its place.</p>
+      <p class="lu-caption">Every class needs a <code>skos:definition</code> and at least one <code>ul:answersCQ</code>, a rule this reference file follows and your own project's ontology will too. A class with neither has not earned its place.</p>
     </div>
   </div>
   <template data-notes>
-    <p>Nine minutes. Type nothing live, they have this file in the starter repo. Use the code block as the reading text.</p>
+    <p>Nine minutes. Type nothing live, they have this file in the reference ontology workspace already. Use the code block as the reading text.</p>
     <ul>
       <li>Spend the time on the two traps. Domain-as-constraint is the single most expensive misunderstanding SQL engineers bring in, and it will cost them marks at Milestone 1.</li>
       <li>Click the <code>owl:sameAs</code> popup. It forward-references Session 5 entity resolution deliberately.</li>
@@ -499,7 +499,7 @@ OWL 2 DL · HermiT · exponential worst case</pre>
       <ul class="lu-layers">
         <li data-build="1"><span class="lu-layers__name">BFO 2020</span><span class="lu-layers__note">ISO/IEC 21838-2 foundational ontology. Continuant against occurrent, and little else you touch directly.</span></li>
         <li data-build="2"><span class="lu-layers__name">IOF Core</span><span class="lu-layers__note">Industrial Ontologies Foundry mid-level: material entities, processes, information content.</span></li>
-        <li data-build="3"><span class="lu-layers__name">IOF SCRO</span><span class="lu-layers__note">Supply Chain Reference Ontology. Your starting file in the lab, already loaded in the workspace.</span></li>
+        <li data-build="3"><span class="lu-layers__name">IOF SCRO</span><span class="lu-layers__note">Supply Chain Reference Ontology. The reference file's base import, already loaded in the workspace you open today.</span></li>
         <li data-build="4" data-state="active"><span class="lu-layers__name">ul:… your extension</span><span class="lu-layers__note">Only the classes your competency questions demand and SCRO does not already provide.</span></li>
       </ul>
       <div class="lu-row" data-build="5">
@@ -515,7 +515,7 @@ OWL 2 DL · HermiT · exponential worst case</pre>
           <span class="lu-figure__ph-title">Protégé screenshot: SCRO loaded, inferred hierarchy panel open</span>
           <span class="lu-figure__ph-note">Drop a 1600×900 capture at <code>assets/img/s3-protege-scro.png</code> and replace this placeholder with an <code>&lt;img&gt;</code>. Show the class tree on the left and one inferred (yellow) subsumption on the right.</span>
         </div>
-        <figcaption><b>Figure 3.1.</b> The workspace participants open at minute 70. Captured from the starter repository, not from an empty project.</figcaption>
+        <figcaption><b>Figure 3.1.</b> The workspace opened live at minute 70. Captured from the finished reference ontology, not from an empty project.</figcaption>
       </div>
       <div class="lu-callout" data-build="6">
         <span class="lu-callout__label">Alignment hazard</span>
@@ -551,7 +551,7 @@ OWL 2 DL · HermiT · exponential worst case</pre>
         <p class="lu-sub">A class earns its place by answering a question the organisation actually asks. If you cannot name the question, delete the class.</p>
       </div>
       <div class="lu-reveal">
-        <button class="lu-reveal__btn" type="button">Four competency questions to start from</button>
+        <button class="lu-reveal__btn" type="button">Four of this ontology's eight competency questions</button>
         <div class="lu-reveal__panel" hidden>
           <ol class="lu-list lu-list--num lu-list--tight">
             <li>Which shipments arrived after their committed date last quarter, by carrier?</li>
@@ -559,7 +559,7 @@ OWL 2 DL · HermiT · exponential worst case</pre>
             <li>If supplier S fails, which finished goods lose their only source of a component?</li>
             <li>Which freight rate band applies to a consignment of weight W on lane L?</li>
           </ol>
-          <p class="lu-caption">You need eight, recorded in the ontology as <code>ul:answersCQ</code> annotations. Four are given; four are yours.</p>
+          <p class="lu-caption">Eight in total, each recorded in the ontology as a <code>ul:answersCQ</code> annotation. The reference file you open next answers all eight, on your own project you will draft all eight yourself.</p>
         </div>
       </div>
     </div>
@@ -673,45 +673,44 @@ ORDER BY ?label
 
 <!-- ==================================================================== 18 -->
 <section class="slide" data-label="Lab brief · 95 minutes" data-section="Lab" data-minutes="6">
-  <div class="lu-eyebrow">Hands-on lab · 95 minutes · starts now</div>
-  <h2 class="lu-h1" style="max-width:32ch">Build ontology v1 on IOF SCRO</h2>
+  <div class="lu-eyebrow">Guided walkthrough · 95 minutes · starts now</div>
+  <h2 class="lu-h1" style="max-width:32ch">Run and read ontology v1, already built on IOF SCRO</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
     <ol class="lu-list lu-list--num">
-      <li>Open the provided Protégé workspace with <b>IOF SCRO already loaded</b>. Do not start from an empty file.</li>
-      <li>Write <b>eight competency questions</b> and record each as a <code>ul:answersCQ</code> annotation.</li>
-      <li>Extend SCRO with the classes and properties your <b>Session 1 constraint inventory</b> demands, reusing GS1 Web Vocabulary terms where they fit.</li>
-      <li>Run <b>ELK</b>, then <b>HermiT</b>. Read the inferred hierarchy for unsatisfiable classes, unintended equivalences and subsumptions you did not mean.</li>
-      <li>Fix <b>the model</b>, not the reasoner output. Re-run until the hierarchy matches your intent.</li>
-      <li>Run <b>ROBOT</b> from the command line for a quality report, and record which OWL profile you are in.</li>
+      <li>Open the provided Protégé workspace: the finished reference ontology, <b>IOF SCRO already loaded and imported</b>, nothing to add. Notice which classes and properties are reused directly from SCRO, and which two are new because neither SCRO nor GS1 covers that concept.</li>
+      <li>Find each of the <b>eight competency questions</b> in the file, recorded as a <code>ul:answersCQ</code> annotation on the class that answers it.</li>
+      <li>Run <b>ELK</b>, then <b>HermiT</b>. Read the inferred hierarchy together: what did the reasoner add that nobody asserted directly? This run comes back clean, no unsatisfiable classes, no unintended equivalences, that clean result is the target state you re-run toward on your own project.</li>
+      <li>Run <b>ROBOT</b> from the command line for a quality report, and check it against the OWL profile already recorded on each class.</li>
+      <li>Discuss <code>ul:CancelledShipment</code> live: it has no competency question, on purpose. Keep it or delete it?</li>
       <li>Ten-minute <b>licensing exercise</b>, see the next slide.</li>
     </ol>
 
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept">
-        <span class="lu-callout__label">Deliverable · end of session</span>
-        <p class="lu-sub">Domain ontology v1 on IOF SCRO, eight annotated competency questions, a clean reasoner run, a recorded OWL profile, and a ROBOT quality report. Committed to your repository, not sitting on your laptop.</p>
+        <span class="lu-callout__label">What this walkthrough shows</span>
+        <p class="lu-sub">A domain ontology already built on IOF SCRO, eight annotated competency questions, a clean reasoner run, a recorded OWL profile, and a ROBOT quality report. Nothing to submit today, run this same pipeline on your own team's topic as you build it.</p>
       </div>
       <div class="lu-code lu-code--sm" data-name="terminal · the two commands you will actually need" data-run="js">
-<pre><code><span class="tok-com">// robot reason --input scro-extension.ttl \</span>
+<pre><code><span class="tok-com">// robot reason --input scro-extension-reference.ttl \</span>
 <span class="tok-com">//   --reasoner ELK --output reasoned.ttl</span>
 <span class="tok-com">// robot report --input reasoned.ttl \</span>
 <span class="tok-com">//   --output report.tsv --fail-on none</span>
 
-<span class="tok-com">// Run this cell to check your OWL profile choice:</span>
+<span class="tok-com">// Run this cell to check the reference file's OWL profile tags:</span>
 <span class="tok-kw">const</span> used = [<span class="tok-str">'someValuesFrom'</span>, <span class="tok-str">'intersectionOf'</span>, <span class="tok-str">'cardinality'</span>];
 <span class="tok-kw">const</span> outsideEL = [<span class="tok-str">'allValuesFrom'</span>, <span class="tok-str">'cardinality'</span>, <span class="tok-str">'complementOf'</span>, <span class="tok-str">'inverseOf'</span>];
 <span class="tok-kw">const</span> hits = used.filter(c => outsideEL.includes(c));
 console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + hits.join(<span class="tok-str">', '</span>) : <span class="tok-str">'EL-safe.'</span>);</code></pre>
       </div>
-      <p class="lu-caption">Editable and runnable in the browser. Change the <code>used</code> array to your own construct list before you commit to a profile.</p>
+      <p class="lu-caption">Editable and runnable in the browser. Try it against a class's own construct list from the reference file first, then reuse this same check on your own project's classes later.</p>
     </div>
   </div>
   <template data-notes>
-    <p>Six minutes to brief, then stop talking. Circulate, do not narrate from the front.</p>
+    <p>Narrate this from the front, live, on the projector. The file is finished, so the room watches one clean run together rather than each troubleshooting their own.</p>
     <ul>
-      <li>Most common blocker at minute 20: HermiT never returns. Cause is almost always a cardinality axiom on a property with a large ABox. Have them switch to ELK and note the profile violation.</li>
-      <li>Second most common: they started from an empty file because SCRO "looked complicated". Send them back.</li>
+      <li>If HermiT is slow to return, that is a cold JVM start, not a bug, give it a minute before switching to ELK and saying why.</li>
+      <li>Step 5 is the one moment to open the floor: ask the room to argue for keeping or deleting <code>ul:CancelledShipment</code> before you say what you'd do.</li>
     </ul>
   </template>
 </section>
@@ -756,11 +755,11 @@ console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + h
   <div class="lu-eyebrow">Discussion and wrap · 20 minutes</div>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
-      <h2 class="lu-h2">Exchange ontologies in pairs. Try to answer your partner's competency questions against their model.</h2>
+      <h2 class="lu-h2">In pairs, discuss the reference ontology, then check in on your own team's topic.</h2>
       <ul class="lu-list">
-        <li>Report what <b>could not</b> be answered, and whether the gap is a missing class, a missing property, or a question that was never really about the graph.</li>
-        <li>Name one class in your partner's ontology that has not earned its place, and say which question you looked for and failed to find.</li>
-        <li>Note any place their extension duplicates something SCRO already provides. That is the most common Milestone 1 deduction.</li>
+        <li>Pick one of the eight competency questions and try to answer it yourselves against the reference ontology, using the DL query tab or a SPARQL query. Report what could not be answered cleanly, if anything.</li>
+        <li>Decide together: keep <code>ul:CancelledShipment</code> or delete it? Name the competency question that would earn it a place, if you think one exists.</li>
+        <li>Check in on your own team's topic: which of your competency questions already has a class, and does anything you have added so far duplicate something your topic's own published vocabulary already provides? That is the most common Milestone 1 deduction.</li>
       </ul>
       <div class="lu-callout">
         <span class="lu-callout__label">Before Session 4</span>
@@ -776,13 +775,13 @@ console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + h
         <p class="lu-caption">Milestone 1 is due at the end of Session 4 and is worth 20 percent.</p>
       </div>
       <div class="lu-row">
-        <span class="lu-tag lu-tag--red">Deliverable due tonight</span>
-        <span class="lu-caption" style="flex:1">Push ontology v1, the CQ annotations, the reasoner log and the ROBOT report to your repository before you leave.</span>
+        <span class="lu-tag">Push tonight, if you have it</span>
+        <span class="lu-caption" style="flex:1">Nothing is due from today's walkthrough. Whatever progress your team made on your own topic's ontology today, however small, push it before you leave, that habit is worth more than waiting for a milestone deadline to start it.</span>
       </div>
     </div>
   </div>
   <template data-notes>
-    <p>Eight minutes of the twenty. Keep pairs to eight minutes hard, then use the remainder for the room-level comparison, how many people extended SCRO with something it already had?</p>
+    <p>Eight minutes of the twenty. Keep pairs to eight minutes hard, then use the remainder for the room-level comparison: how many teams' own topics already have a class that duplicates something their reused vocabulary already provides?</p>
   </template>
 </section>
 

@@ -17,7 +17,7 @@ or lab-code progress, that is this file's job.
 |---|---|---|---|---|
 | 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Built | Built, notebook-presented |
 | 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Built | Built, notebook-presented |
-| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Built | Scriptable parts built, Protege/reasoner steps are manual by design |
+| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Built, reworded for run-and-observe, visual QA of the reworded slides still owed, see Session 3 detail | Built as a run-and-observe walkthrough on a finished reference ontology, Protege/reasoner steps run live in the room from it |
 | 4 | 2 | Constraints, Quality, and Provenance: SHACL | Not built | Not started |
 | 5 | 3 | Integrating Operational Data | Not built | Not started |
 | 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | Not built | Not started |
@@ -73,28 +73,37 @@ with a plain import). Nothing left to build here.
 
 ## Session 3, detail
 
-Deck built. Lab is smaller by design, Protege is a GUI application, so only
-its scriptable parts are built:
+Deck built. Lab redesigned 2026-09-19 (see "Redesign round 3" below)
+from an authoring exercise into a run-and-observe walkthrough:
 
 - `fetch_ontologies.py`, downloads the real IOF Core and Supply Chain
-  (SCRO) ontologies at tag `Release_202603` (MIT licensed), plus the real
-  GS1 Web Vocabulary (Apache 2.0), into a gitignored `workspace/`, with a
-  self-check that the SupplyChain to Core to BFO import chain resolves
-  fully offline before Protege ever opens.
-- `scro-extension-starter.ttl`, a valid starter ontology (verified with
-  rdflib), correcting the deck's own illustrative example
-  (`iof:MaterialTransport`, which does not exist in real SCRO) to a real,
-  verified class (`ioc:Shipment`), with the correction documented inline.
-- `competency_questions_template.md`, seeded with the deck's four given
-  competency questions.
+  (SCRO) ontologies at tag `Release_202603` (MIT licensed), the real
+  GS1 Web Vocabulary (Apache 2.0), and copies in the finished reference
+  ontology, into a gitignored `workspace/`, with a self-check that the
+  SupplyChain to Core to BFO import chain resolves fully offline before
+  Protege ever opens.
+- `scro-extension-reference.ttl`, a complete, finished ontology
+  (verified with rdflib), all eight competency questions answered,
+  nothing left for anyone to add or fix. Correcting the deck's own
+  illustrative example (`iof:MaterialTransport`, which does not exist
+  in real SCRO) to a real, verified class (`ioc:Shipment`), and reusing
+  several more real SCRO classes and properties directly
+  (`ioc:Facility`, `ioc:Carrier`, `ioc:MaterialComponent`,
+  `ioc:MaterialProduct`, `ioc:PurchaseOrder`, `ioc:ShippingRoute`,
+  `ioc:dependsOnProduct`, `ioc:dependsOnSupplier`), all checked against
+  the real Release_202603 files, not assumed.
+- `competency_questions.md`, a reference (not a worksheet) mapping all
+  eight competency questions to the class that answers each, and
+  explaining the four classes that deliberately do not answer one.
 - `robot_report.py`, wraps the two ROBOT commands the deck's lab brief
-  shows (`reason` with ELK, then `report` at QC profile).
+  shows (`reason` with ELK, then `report --fail-on none`), against the
+  finished reference file.
 
-Still manual, by design, per the deck: opening the starter file in Protege,
-running ELK then HermiT, reading the inferred hierarchy, and the ten-minute
-licensing exercise (a real, still-live SCORVoc licence conflict, documented
-in `workspace/LICENCES.md`, deliberately left unsolved so the room resolves
-it live). Nothing further to build here unless the deck's brief changes.
+Protege, the reasoners, and the licensing exercise are still run live
+in the room, per the deck and this lab's own README, now framed as
+something the room watches and discusses rather than something each
+student builds, see "Redesign round 3" below for why. Nothing further
+to build here unless the deck's brief changes.
 
 ### Slide QA, 2026-09-19
 
@@ -169,6 +178,86 @@ lab. Also still open: a real `robot_report.py` run against a file with
 several real added classes, not just the bare starter, to see what a
 realistic `report.tsv` looks like. Sandbox used for this round had no
 path to install ROBOT itself to do that here.
+
+### Redesign round 3, 2026-09-19: run-and-observe, not build-it-yourself
+
+Instructor decision, overriding round 2's fixes rather than building on
+them: round 2 made the authoring-based lab's own files internally
+consistent, but the lab's whole shape was the actual problem. Feedback:
+the lab needs to be straightforward to run, with no unclear step, and
+was not expecting students to draft competency questions or extend an
+ontology live at all, just run the pipeline and observe it.
+
+What changed:
+
+- `scro-extension-starter.ttl` (a starter meant to be extended) is
+  replaced by `scro-extension-reference.ttl` (a finished ontology,
+  meant to be opened, reasoned over, and read, never edited). All eight
+  competency questions are answered in the file itself, authored using
+  real SCRO reuse wherever SCRO covers the concept, and two genuinely
+  new classes (`ul:Port`, `ul:FreightRateBand`) where reuse search
+  against both SCRO and GS1 came up empty, an honest, checked outcome,
+  not an assumption. `ul:CancelledShipment` (no competency question, on
+  purpose) and three support classes (`ul:CommittedDate`, `ul:Plant`,
+  `ul:Port`) are kept and explained inline, so the "classes with no
+  competency question" query still has something real to find and
+  discuss, without anyone needing to have written anything themselves.
+- `competency_questions_template.md` (a fill-in-the-blanks worksheet)
+  is replaced by `competency_questions.md` (a reference table, question
+  to class, plus where the real authoring skill actually gets
+  practiced: each team's own capstone topic, not this file).
+- `README.md` rewritten end to end as a run-in-order script for
+  whoever is driving the room, addressed to that person (matching
+  `demos/README.md`'s own description of this repository as
+  instructor-run, live), not to a student working alone at a laptop.
+  Removed the individual "push your ontology to your repository
+  tonight" deliverable, there is no student deliverable from this
+  session's shared-case walkthrough, the real deliverable stays the
+  team's own capstone milestone. Added a "Nothing here is broken"
+  section: since every file is now supposed to come back clean, the
+  README now says explicitly what a real problem looks like versus the
+  two documented, deliberate exceptions, so a genuine bug is not
+  mistaken for part of the design, or the reverse.
+- `fetch_ontologies.py` and `robot_report.py` reworded throughout,
+  starter/extend language removed, function and default-filename
+  renamed to match (`copy_reference`,
+  `scro-extension-reference.ttl`), the "Save As before editing" Protege
+  instruction dropped since nothing gets edited.
+- `demos/.gitignore` and `demos/README.md` reworded to stop calling the
+  workspace outputs "student deliverables," they are the instructor's
+  own checked-in example of a clean run.
+- The lecture deck (`lectures/kr-session-03.html`) updated to match, in
+  every place it previously described a 95-minute individual
+  build-and-submit exercise: the objective slide's deliverable callout
+  and "how the 180 minutes are spent" list, the "four given, four
+  yours" competency-question reveal (now "four of eight, shown as a
+  preview"), the reading slide's code block and caption
+  (`scro-extension-reference.ttl`, not `scro-extension.ttl`, and not
+  "graded"), the ontology-layers slide's SCRO note and Figure 3.1
+  caption, the lab brief's title, numbered steps (now six: open,
+  find the CQs, run ELK/HermiT, run ROBOT, discuss
+  `ul:CancelledShipment`, licensing exercise), its terminal command
+  (`scro-extension-reference.ttl`) and deliverable callout, and the
+  closing pairs exercise (now: answer a CQ against the reference file,
+  debate `ul:CancelledShipment`, then check in on the team's own
+  topic, replacing "push ontology v1 to your repository tonight" with
+  an optional, no-pressure push of real capstone progress).
+  Tag-balance checked (`section`/`div`/`ol`/`ul`/`li`/`h2`/`p` open and
+  close counts match) but **not** visually rendered, this sandbox
+  cannot open local files in a browser to headlessly check layout the
+  way the 2026-09-19 slide-6 fix did. Several edited slides (3, 15, 18,
+  20) now carry longer paragraph and list-item text than before; do
+  the same headless step-through those slides got during that earlier
+  fix (`lectures/kr-session-03.html#/3`, `#/15`, `#/18`, `#/20`) before
+  trusting them not to clip, especially slide 18's numbered list and
+  deliverable callout, the ones that grew the most.
+
+Two old files could not be deleted from this session (a filesystem
+permission restriction on this mount blocked every `rm`, `git rm`, and
+`unlink`, even though renaming worked): `scro-extension-starter.ttl`
+and `competency_questions_template.md` are now stub files pointing at
+their replacements. Delete both by hand next time you have normal
+filesystem access to this repository.
 
 ## What's next
 

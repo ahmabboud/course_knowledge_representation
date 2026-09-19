@@ -36,11 +36,13 @@ session-08-deploy-and-defend/
 ```
 
 Sessions 1 through 3 have working lab code, matching the lab briefs in
-their built lecture decks. Session 3's is smaller than 1 and 2's by
-design, Protege itself is a GUI, so `fetch_ontologies.py`, the starter
-ontology, the competency-question template and the ROBOT wrapper are
-built and verified, while the Protege and reasoner steps are done by
-hand in the room, per its own README. Sessions 4 through 8 have a
+their built lecture decks. Session 3 is a run-and-observe walkthrough,
+not a build-it-yourself lab: `fetch_ontologies.py`, a finished
+reference ontology, a competency-question reference doc, and the ROBOT
+wrapper are all built and verified, and the Protege and reasoner steps
+are run live in the room from those same finished files, nobody drafts
+a competency question or extends an ontology in this one, see its own
+README for why. Sessions 4 through 8 have a
 README each, accurate to the syllabus segment text and naming the real
 tools, but neither lab code nor a lecture deck yet (see
 `course_knowledge_representation/README.md`'s status table), and

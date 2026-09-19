@@ -1,7 +1,10 @@
-"""Fetch the real ontologies this lab builds on, into workspace/, so
+"""Fetch the real ontologies this lab runs against, into workspace/, so
 Protege opens with IOF SCRO already loaded and every import resolved
-offline, per the lecture's own instruction: "Do not start from an
-empty file."
+offline. Also copies in the finished reference ontology
+(scro-extension-reference.ttl) this session's walkthrough opens,
+reasons over, and reports on. Nothing fetched or copied here is meant
+to be edited; this is a run-and-observe lab, not a build-it-yourself
+one, see README.md.
 
 Sources, verified before writing this script (see workspace/LICENCES.md
 for the full citations once this has run):
@@ -14,7 +17,10 @@ for the full citations once this has run):
 - GS1 Web Vocabulary: ref.gs1.org/voc/data/gs1Voc.ttl, Apache 2.0 per
   the schema:license triple embedded in the file itself, with a GS1 IP
   Policy patent caveat alongside it (recorded verbatim in LICENCES.md,
-  not paraphrased).
+  not paraphrased). Fetched for completeness and for the licensing
+  exercise; scro-extension-reference.ttl checked it and did not end up
+  needing anything from it, worth showing live if it comes up, reuse
+  search coming up empty is a real, honest outcome too.
 
 Run once before Session 3, and again if IOF cuts a new release: `python
 fetch_ontologies.py`.
@@ -78,13 +84,13 @@ def fetch_iof():
 
 
 def fetch_gs1():
-    """Best-effort. GS1 is only needed later, for the term-reuse step,
-    not to open Protege. A network hiccup here (flaky wifi, a proxy
-    having a bad day) should not take out the rest of the script, so
-    this warns and returns rather than raising: main() still runs
-    write_licences_note(), copy_starter(), and verify_catalog() either
-    way. Re-run this script later, or fetch the one file by hand from
-    the URL below, if this warns.
+    """Best-effort. GS1 is only needed for the licensing exercise, not
+    to open Protege or to run the reasoners and ROBOT. A network hiccup
+    here (flaky wifi, a proxy having a bad day) should not take out the
+    rest of the script, so this warns and returns rather than raising:
+    main() still runs write_licences_note(), copy_reference(), and
+    verify_catalog() either way. Re-run this script later, or fetch the
+    one file by hand from the URL below, if this warns.
     """
     dst_dir = WORKSPACE / "gs1"
     dst_dir.mkdir(parents=True, exist_ok=True)
@@ -94,7 +100,7 @@ def fetch_gs1():
         urllib.request.urlretrieve(GS1_VOC_URL, dst)
     except OSError as e:
         print(f"  WARNING: could not download GS1 Web Vocabulary ({e}).")
-        print(f"  Not fatal, you only need this for the term-reuse step.")
+        print(f"  Not fatal, only the licensing exercise needs it.")
         print(f"  Retry later with: python fetch_ontologies.py")
         print(f"  or fetch it by hand from {GS1_VOC_URL} into {dst}")
         return
@@ -158,9 +164,9 @@ def write_licences_note():
     print(f"Wrote {dst}")
 
 
-def copy_starter():
-    src = HERE / "scro-extension-starter.ttl"
-    dst = WORKSPACE / "scro-extension-starter.ttl"
+def copy_reference():
+    src = HERE / "scro-extension-reference.ttl"
+    dst = WORKSPACE / "scro-extension-reference.ttl"
     shutil.copy2(src, dst)
     print(f"Copied {src.name} into workspace/")
 
@@ -197,20 +203,21 @@ def verify_catalog():
 def main():
     WORKSPACE.mkdir(exist_ok=True)
     fetch_iof()
-    # Order matters: copy_starter() and write_licences_note() are what a
-    # student needs to open Protege, so they run before the GS1 fetch,
-    # which is only needed later, for the term-reuse step. That way a
-    # GS1 network failure (handled inside fetch_gs1 itself, see there)
-    # never blocks the part of this script Protege actually depends on.
-    copy_starter()
+    # Order matters: copy_reference() and write_licences_note() are what
+    # this walkthrough needs to open Protege, so they run before the
+    # GS1 fetch, which is only needed for the licensing exercise, not
+    # to open the file. That way a GS1 network failure (handled inside
+    # fetch_gs1 itself, see there) never blocks the part of this script
+    # Protege actually depends on.
+    copy_reference()
     write_licences_note()
     fetch_gs1()
     verify_catalog()
     print()
     print("Done. In Protege: Open File, browse to")
-    print(f"  {WORKSPACE / 'scro-extension-starter.ttl'}")
-    print("Save As scro-extension.ttl in the same folder before editing,")
-    print("so the starter stays intact for reference.")
+    print(f"  {WORKSPACE / 'scro-extension-reference.ttl'}")
+    print("This file is finished, nothing to edit or Save As. Run ELK,")
+    print("then HermiT, and read the inferred hierarchy, per README.md.")
 
 
 if __name__ == "__main__":

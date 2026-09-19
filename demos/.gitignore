@@ -16,13 +16,17 @@ data/*
 !data/fetch_data.py
 
 # Session 3: real third-party ontologies, fetched not committed.
-# The whole folder used to be ignored, but the student's own deliverables
-# (scro-extension.ttl, reasoned.ttl, report.tsv) also land in here, per
-# session-03-ontology/README.md, and a blanket ignore silently dropped
-# them too. Ignore the fetched third-party material by default, then
-# explicitly un-ignore the three files a student is meant to commit.
+# The whole folder used to be ignored, but this lab's own verified
+# reference outputs (reasoned.ttl, report.tsv, and the copy of
+# scro-extension-reference.ttl fetch_ontologies.py places here) also
+# land in workspace/, and a blanket ignore silently dropped them too.
+# This is now a run-and-observe lab, not an authoring one, so these are
+# not student deliverables, they are the instructor's own checked-in
+# example of what a clean run of this pipeline produces. Ignore the
+# fetched third-party material by default, then explicitly un-ignore
+# the three files worth keeping in the repository.
 session-03-ontology/workspace/*
-!session-03-ontology/workspace/scro-extension.ttl
+!session-03-ontology/workspace/scro-extension-reference.ttl
 !session-03-ontology/workspace/reasoned.ttl
 !session-03-ontology/workspace/report.tsv
 

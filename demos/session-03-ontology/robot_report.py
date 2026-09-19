@@ -1,6 +1,10 @@
-"""Run the two ROBOT commands this lab needs:
+"""Run the two ROBOT commands this lab needs, against the finished
+reference ontology (scro-extension-reference.ttl), the same file this
+session's Protege walkthrough opens and reasons over. Nothing here
+edits that file, this script only reads it and writes its own two
+output files next to it:
 
-    robot reason --input scro-extension.ttl --reasoner ELK --output reasoned.ttl
+    robot reason --input scro-extension-reference.ttl --reasoner ELK --output reasoned.ttl
     robot report --input reasoned.ttl --output report.tsv --fail-on none
 
 ROBOT (robot.obolibrary.org) is a Java command-line tool. This script
@@ -66,7 +70,7 @@ def run(cmd: list[str]):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--input", default="scro-extension.ttl", help="your extension file (default: scro-extension.ttl)")
+    parser.add_argument("--input", default="scro-extension-reference.ttl", help="the reference ontology to run against (default: scro-extension-reference.ttl)")
     parser.add_argument("--reasoner", default="ELK", choices=["ELK", "HermiT"], help="reasoner for the reason step (default: ELK)")
     parser.add_argument("--profile", default=None, help="path to a custom ROBOT report rules file (default: ROBOT's own bundled rules)")
     parser.add_argument("--jar", default=None, help="path to robot.jar, if robot is not on PATH")
@@ -76,7 +80,8 @@ def main():
 
     input_path = Path(args.input)
     if not input_path.exists():
-        sys.exit(f"{input_path} not found. Run this from your session-03-ontology working copy, next to your own scro-extension.ttl.")
+        sys.exit(f"{input_path} not found. Run this from workspace/, next to the "
+                 f"scro-extension-reference.ttl that fetch_ontologies.py copied there.")
 
     reasoned_path = input_path.with_name("reasoned.ttl")
     report_path = input_path.with_name("report.tsv")
@@ -104,12 +109,13 @@ def main():
 
     print()
     print(f"Wrote {reasoned_path} and {report_path}.")
-    print("ERROR and WARN rows in report.tsv are normal for a file you have not")
-    print("finished yet, that is what the report is for. Read them, do not chase")
-    print("zero rows before the lab is done.")
-    print("Record which OWL profile you ended up in (see the profile-check")
-    print("cell on the lecture's lab brief slide), and push all three files:")
-    print(f"{input_path.name}, {reasoned_path.name}, {report_path.name}.")
+    print("This reference ontology is finished, so report.tsv should come back")
+    print("clean, or close to it. Read it anyway: this is what a clean report")
+    print("actually looks like, the thing to compare your own team's project's")
+    print("report against once you start running this same pipeline on it.")
+    print("Cross-check report.tsv against the ul:profile tag each class in")
+    print("scro-extension-reference.ttl already carries (see the profile-check")
+    print("cell on the lecture's lab brief slide for how that tag was decided).")
 
 
 if __name__ == "__main__":
