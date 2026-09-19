@@ -78,11 +78,26 @@ def fetch_iof():
 
 
 def fetch_gs1():
+    """Best-effort. GS1 is only needed later, for the term-reuse step,
+    not to open Protege. A network hiccup here (flaky wifi, a proxy
+    having a bad day) should not take out the rest of the script, so
+    this warns and returns rather than raising: main() still runs
+    write_licences_note(), copy_starter(), and verify_catalog() either
+    way. Re-run this script later, or fetch the one file by hand from
+    the URL below, if this warns.
+    """
     dst_dir = WORKSPACE / "gs1"
     dst_dir.mkdir(parents=True, exist_ok=True)
     dst = dst_dir / "gs1Voc.ttl"
     print(f"Downloading {GS1_VOC_URL}")
-    urllib.request.urlretrieve(GS1_VOC_URL, dst)
+    try:
+        urllib.request.urlretrieve(GS1_VOC_URL, dst)
+    except OSError as e:
+        print(f"  WARNING: could not download GS1 Web Vocabulary ({e}).")
+        print(f"  Not fatal, you only need this for the term-reuse step.")
+        print(f"  Retry later with: python fetch_ontologies.py")
+        print(f"  or fetch it by hand from {GS1_VOC_URL} into {dst}")
+        return
     size_kb = dst.stat().st_size / 1024
     print(f"  wrote {dst} ({size_kb:.0f} KB)")
 
@@ -182,9 +197,14 @@ def verify_catalog():
 def main():
     WORKSPACE.mkdir(exist_ok=True)
     fetch_iof()
-    fetch_gs1()
-    write_licences_note()
+    # Order matters: copy_starter() and write_licences_note() are what a
+    # student needs to open Protege, so they run before the GS1 fetch,
+    # which is only needed later, for the term-reuse step. That way a
+    # GS1 network failure (handled inside fetch_gs1 itself, see there)
+    # never blocks the part of this script Protege actually depends on.
     copy_starter()
+    write_licences_note()
+    fetch_gs1()
     verify_catalog()
     print()
     print("Done. In Protege: Open File, browse to")

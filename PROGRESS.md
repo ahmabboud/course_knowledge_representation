@@ -123,6 +123,53 @@ it live). Nothing further to build here unless the deck's brief changes.
   "missing" content is behind an unstepped `data-build`, or press `S` for
   study mode, before assuming it's broken.
 
+### Lab dry-run round 2, 2026-09-19: three straightforwardness fixes
+
+Goal this round: the lab should be unambiguous to run, no step where a
+student has to guess. Re-ran `fetch_ontologies.py` end to end and
+re-read the starter file and templates with that lens. Found and fixed
+three real issues, none of them reasoning bugs, all of them "a student
+would stop here and not know what to do":
+
+- **`fetch_ontologies.py` had a single point of failure.** `fetch_gs1()`
+  had no error handling and ran before `copy_starter()` and
+  `write_licences_note()`, so any network hiccup on the GS1 download
+  (the least essential fetch, only needed for the later term-reuse
+  step) crashed the script with a raw traceback and skipped the parts
+  a student actually needs to open Protege. Fixed: `fetch_gs1()` now
+  warns and continues on failure, and runs after the starter-file copy
+  and licence note, so those always complete regardless. Verified by
+  forcing the GS1 request to fail: the script now finishes cleanly with
+  a warning, catalog check still passes.
+- **The starter file failed its own "every class needs a competency
+  question" rule, twice, unexplained.** Running the lecture's own
+  "classes with no competency question" SPARQL query against the
+  untouched starter returns `CancelledShipment` and `CommittedDate`.
+  `CancelledShipment` not having one is deliberate, it is the deck's
+  own later exercise target, but that framing lived only in the slide,
+  not in the lab files. `CommittedDate` not having one is a different,
+  legitimate reason (it is a support class, not a business entity a
+  competency question would name), also never stated anywhere. A
+  student running that query on their own lightly-edited file could
+  not have told a designed exercise from an oversight. Fixed: added a
+  comment on each explaining which is which and why.
+- **Two different, disagreeing counts of classes left to build.**
+  `README.md` and `competency_questions_template.md` both say four
+  competency questions given, four the student's own. The starter
+  file's own closing comment said "six are yours," undercounting by
+  one: only one of the four given questions has a class built for it,
+  so seven classes are actually needed, not six. Fixed: reworded the
+  starter file's closing comment to state the count the same way as
+  the other two files, and corrected it to seven.
+
+None of this touches the manual Protege walkthrough itself (open,
+extend, run ELK then HermiT, read the hierarchy), which still has not
+been dry-run by anyone, that remains the biggest untested part of this
+lab. Also still open: a real `robot_report.py` run against a file with
+several real added classes, not just the bare starter, to see what a
+realistic `report.tsv` looks like. Sandbox used for this round had no
+path to install ROBOT itself to do that here.
+
 ## What's next
 
 **Session 4 (SHACL)** is the next unbuilt session, and the one carrying
