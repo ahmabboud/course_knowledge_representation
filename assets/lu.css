@@ -823,7 +823,14 @@ strong, .lu-strong { font-weight: 600; }
 .lu-poll__fill { height: 100%; width: 100%; background: var(--lu-red-700); transition: width 1s linear; }
 .lu-poll.is-up .lu-poll__fill { background: var(--lu-ink-3); }
 .lu-poll.is-up .lu-poll__timer { color: var(--lu-ink-3); }
+/* Once the answer is revealed the countdown no longer matters, and a
+   4-option poll with the timer, the per-option rationale and the results
+   bars all showing at once overflows the slide. Free that height back. */
+.lu-poll:has(.lu-poll__bars:not([hidden])) .lu-poll__timer { display: none; }
 .lu-poll__bars { display: flex; flex-direction: column; gap: var(--lu-s3); }
+/* Without this the display:flex above beats the UA [hidden] rule and the
+   bars keep their layout space, and height, before the poll closes. */
+.lu-poll__bars[hidden] { display: none; }
 .lu-poll__bar { display: grid; grid-template-columns: 44px 1fr 90px; gap: var(--lu-s4); align-items: center; font-size: var(--lu-t-small); }
 .lu-poll__meter { height: 34px; background: var(--lu-paper-3); border-radius: var(--lu-r1); overflow: hidden; }
 .lu-poll__meter > span { display: block; height: 100%; width: 0; background: var(--lu-ink-2); transition: width var(--lu-dur-2) var(--lu-ease); }
