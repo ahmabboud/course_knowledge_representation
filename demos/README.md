@@ -35,15 +35,18 @@ session-07-access-layer/
 session-08-deploy-and-defend/
 ```
 
-Sessions 1 and 2 have working lab code, matching the lab briefs in
-their built lecture decks. Session 3's lecture deck is built too, but
-its lab code is not, its README states what to build once it is time.
-Sessions 4 through 8 have a README each, accurate to the syllabus
-segment text and naming the real tools, but neither lab code nor a
-lecture deck yet (see `course_knowledge_representation/README.md`'s
-status table), and writing lab code ahead of the deck it serves risks
-locking in the wrong shape. Build each session's lab code once that
-session's deck exists, from its own README here.
+Sessions 1 through 3 have working lab code, matching the lab briefs in
+their built lecture decks. Session 3's is smaller than 1 and 2's by
+design, Protege itself is a GUI, so `fetch_ontologies.py`, the starter
+ontology, the competency-question template and the ROBOT wrapper are
+built and verified, while the Protege and reasoner steps are done by
+hand in the room, per its own README. Sessions 4 through 8 have a
+README each, accurate to the syllabus segment text and naming the real
+tools, but neither lab code nor a lecture deck yet (see
+`course_knowledge_representation/README.md`'s status table), and
+writing lab code ahead of the deck it serves risks locking in the
+wrong shape. Build each session's lab code once that session's deck
+exists, from its own README here.
 
 ## Setup, once
 
