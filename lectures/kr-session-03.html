@@ -108,8 +108,8 @@
         <span class="lu-card__label">How the 180 minutes are spent</span>
         <ul class="lu-layers">
           <li><span class="lu-layers__name">Lecture · 65 min</span><span class="lu-layers__note">Description logic, OWL 2 and its profiles, reuse and alignment</span></li>
-          <li><span class="lu-layers__name">Guided walkthrough · 95 min</span><span class="lu-layers__note">Run the finished reference ontology in Protégé, watch the reasoners and ROBOT report, licensing exercise</span></li>
-          <li><span class="lu-layers__name">Discussion · 20 min</span><span class="lu-layers__note">Discuss the reference ontology's design choices, then check in on each team's own topic</span></li>
+          <li><span class="lu-layers__name">Guided walkthrough · 95 min</span><span class="lu-layers__note">Run in Protégé, watch the reasoner and ROBOT report</span></li>
+          <li><span class="lu-layers__name">Discussion · 20 min</span><span class="lu-layers__note">Discuss design choices, then check in on each topic</span></li>
         </ul>
       </div>
       <p class="lu-caption">Reading before next session: Hogan et al. Chapter 4. Allemang, Hendler and Gandon: Basic OWL, Counting and sets in OWL, Expert modelling in OWL.</p>
@@ -546,12 +546,8 @@ OWL 2 DL · HermiT · exponential worst case</pre>
     </div>
 
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept">
-        <span class="lu-callout__label">The rule that decides scope</span>
-        <p class="lu-sub">A class earns its place by answering a question the organisation actually asks. If you cannot name the question, delete the class.</p>
-      </div>
       <div class="lu-reveal">
-        <button class="lu-reveal__btn" type="button">Four of this ontology's eight competency questions</button>
+        <button class="lu-reveal__btn" type="button">Four of eight competency questions</button>
         <div class="lu-reveal__panel" hidden>
           <ol class="lu-list lu-list--num lu-list--tight">
             <li>Which shipments arrived after their committed date last quarter, by carrier?</li>
@@ -559,13 +555,14 @@ OWL 2 DL · HermiT · exponential worst case</pre>
             <li>If supplier S fails, which finished goods lose their only source of a component?</li>
             <li>Which freight rate band applies to a consignment of weight W on lane L?</li>
           </ol>
-          <p class="lu-caption">Eight in total, recorded as <code>ul:answersCQ</code> annotations, already answered in the file you open next.</p>
+          <p class="lu-caption">Recorded as <code>ul:answersCQ</code> annotations, already answered in the file you open next.</p>
         </div>
       </div>
     </div>
   </div>
   <template data-notes>
     <p>Let them argue about whether reuse-search comes before or after writing the questions. It comes after, you cannot judge whether SCRO covers you until you know what you are asking. That argument is the teaching moment.</p>
+    <p><b>The rule that decides scope</b> (cut from the slide itself, the reveal panel needed the room): a class earns its place by answering a question the organisation actually asks. If you cannot name the question, delete the class. Say this out loud before opening the reveal.</p>
   </template>
 </section>
 
@@ -674,37 +671,30 @@ ORDER BY ?label
 <!-- ==================================================================== 18 -->
 <section class="slide" data-label="Lab brief · 95 minutes" data-section="Lab" data-minutes="6">
   <div class="lu-eyebrow">Guided walkthrough · 95 minutes · starts now</div>
-  <h2 class="lu-h1" style="max-width:32ch">Run and read ontology v1, already built on IOF SCRO</h2>
+  <h2 class="lu-h1" style="max-width:32ch">Run ontology v1 on IOF SCRO</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
     <ol class="lu-list lu-list--num">
-      <li>Open the provided Protégé workspace: the finished reference ontology, <b>IOF SCRO already loaded</b>, nothing to add.</li>
-      <li>Find each of the <b>eight competency questions</b>, recorded as a <code>ul:answersCQ</code> annotation on its class.</li>
-      <li>Run <b>ELK</b>, then <b>HermiT</b>. Read the inferred hierarchy: what did the reasoner add that nobody asserted?</li>
-      <li>Run <b>ROBOT</b> from the command line for a quality report, and check it against each class's recorded OWL profile.</li>
-      <li>Discuss <code>ul:CancelledShipment</code> live: no competency question, on purpose, keep it or delete it?</li>
+      <li>Open the provided Protégé workspace: <b>IOF SCRO already loaded</b>, nothing to add.</li>
+      <li>Find each <b>competency question</b>, recorded as a <code>ul:answersCQ</code> annotation.</li>
+      <li>Run <b>ELK</b>, then <b>HermiT</b>. Read the inferred hierarchy: what did the reasoner add?</li>
+      <li>Run <b>ROBOT</b> for a quality report, checked against each class's recorded OWL profile.</li>
+      <li>Discuss <code>ul:CancelledShipment</code> live: no competency question, on purpose. Keep or delete?</li>
       <li>Ten-minute <b>licensing exercise</b>, see the next slide.</li>
     </ol>
 
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept">
         <span class="lu-callout__label">What this walkthrough shows</span>
-        <p class="lu-sub">A domain ontology already built on IOF SCRO, eight annotated competency questions, a clean reasoner run, a recorded OWL profile, and a ROBOT quality report. Nothing to submit today.</p>
+        <p class="lu-sub">A domain ontology on IOF SCRO answering eight competency questions, a clean reasoner run, a recorded OWL profile, a ROBOT report.</p>
       </div>
       <div class="lu-code lu-code--sm" data-name="terminal · the two commands you will actually need" data-run="js">
 <pre><code><span class="tok-com">// robot reason \</span>
 <span class="tok-com">//   --input scro-extension-reference.ttl \</span>
 <span class="tok-com">//   --reasoner ELK --output reasoned.ttl</span>
 <span class="tok-com">// robot report --input reasoned.ttl \</span>
-<span class="tok-com">//   --output report.tsv --fail-on none</span>
-
-<span class="tok-com">// Run this cell to check an OWL profile tag:</span>
-<span class="tok-kw">const</span> used = [<span class="tok-str">'someValuesFrom'</span>, <span class="tok-str">'intersectionOf'</span>, <span class="tok-str">'cardinality'</span>];
-<span class="tok-kw">const</span> outsideEL = [<span class="tok-str">'allValuesFrom'</span>, <span class="tok-str">'cardinality'</span>, <span class="tok-str">'complementOf'</span>, <span class="tok-str">'inverseOf'</span>];
-<span class="tok-kw">const</span> hits = used.filter(c => outsideEL.includes(c));
-console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + hits.join(<span class="tok-str">', '</span>) : <span class="tok-str">'EL-safe.'</span>);</code></pre>
+<span class="tok-com">//   --output report.tsv --fail-on none</span></code></pre>
       </div>
-      <p class="lu-caption">Editable and runnable in the browser. Try it against the reference file's own construct list, then reuse it on your own project later.</p>
     </div>
   </div>
   <template data-notes>
@@ -760,9 +750,9 @@ console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + h
     <div class="lu-stack">
       <h2 class="lu-h2">In pairs, discuss the reference ontology, then check in on your own team's topic.</h2>
       <ul class="lu-list">
-        <li>Pick one competency question and try answering it against the reference ontology yourselves, DL query tab or SPARQL. Report what did not work.</li>
-        <li>Decide together: keep <code>ul:CancelledShipment</code> or delete it? Name the question that would earn it a place, if one exists.</li>
-        <li>Check your own team's topic: does anything you added duplicate something your topic's vocabulary already provides? The most common Milestone 1 deduction.</li>
+        <li>Pick one competency question, answer it against the reference ontology yourselves.</li>
+        <li>Decide together: keep <code>ul:CancelledShipment</code> or delete it?</li>
+        <li>Check your own topic: does anything duplicate your topic's vocabulary? Most common Milestone 1 deduction.</li>
       </ul>
       <div class="lu-callout">
         <span class="lu-callout__label">Before Session 4</span>
@@ -785,6 +775,10 @@ console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + h
   </div>
   <template data-notes>
     <p>Eight minutes of the twenty. Keep pairs to eight minutes hard, then use the remainder for the room-level comparison: how many teams' own topics already have a class that duplicates something their reused vocabulary already provides?</p>
+    <ul>
+      <li>Step 1: use the DL query tab or a SPARQL query against the reference ontology, not just eyeballing it.</li>
+      <li>Step 2: press for the harder half of the question too, if they'd keep it, what competency question would they write to earn it a place?</li>
+    </ul>
   </template>
 </section>
 
