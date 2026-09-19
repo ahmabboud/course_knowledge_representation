@@ -559,7 +559,7 @@ OWL 2 DL · HermiT · exponential worst case</pre>
             <li>If supplier S fails, which finished goods lose their only source of a component?</li>
             <li>Which freight rate band applies to a consignment of weight W on lane L?</li>
           </ol>
-          <p class="lu-caption">Eight in total, each recorded in the ontology as a <code>ul:answersCQ</code> annotation. The reference file you open next answers all eight, on your own project you will draft all eight yourself.</p>
+          <p class="lu-caption">Eight in total, recorded as <code>ul:answersCQ</code> annotations, already answered in the file you open next.</p>
         </div>
       </div>
     </div>
@@ -678,37 +678,40 @@ ORDER BY ?label
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
     <ol class="lu-list lu-list--num">
-      <li>Open the provided Protégé workspace: the finished reference ontology, <b>IOF SCRO already loaded and imported</b>, nothing to add. Notice which classes and properties are reused directly from SCRO, and which two are new because neither SCRO nor GS1 covers that concept.</li>
-      <li>Find each of the <b>eight competency questions</b> in the file, recorded as a <code>ul:answersCQ</code> annotation on the class that answers it.</li>
-      <li>Run <b>ELK</b>, then <b>HermiT</b>. Read the inferred hierarchy together: what did the reasoner add that nobody asserted directly? This run comes back clean, no unsatisfiable classes, no unintended equivalences, that clean result is the target state you re-run toward on your own project.</li>
-      <li>Run <b>ROBOT</b> from the command line for a quality report, and check it against the OWL profile already recorded on each class.</li>
-      <li>Discuss <code>ul:CancelledShipment</code> live: it has no competency question, on purpose. Keep it or delete it?</li>
+      <li>Open the provided Protégé workspace: the finished reference ontology, <b>IOF SCRO already loaded</b>, nothing to add.</li>
+      <li>Find each of the <b>eight competency questions</b>, recorded as a <code>ul:answersCQ</code> annotation on its class.</li>
+      <li>Run <b>ELK</b>, then <b>HermiT</b>. Read the inferred hierarchy: what did the reasoner add that nobody asserted?</li>
+      <li>Run <b>ROBOT</b> from the command line for a quality report, and check it against each class's recorded OWL profile.</li>
+      <li>Discuss <code>ul:CancelledShipment</code> live: no competency question, on purpose, keep it or delete it?</li>
       <li>Ten-minute <b>licensing exercise</b>, see the next slide.</li>
     </ol>
 
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept">
         <span class="lu-callout__label">What this walkthrough shows</span>
-        <p class="lu-sub">A domain ontology already built on IOF SCRO, eight annotated competency questions, a clean reasoner run, a recorded OWL profile, and a ROBOT quality report. Nothing to submit today, run this same pipeline on your own team's topic as you build it.</p>
+        <p class="lu-sub">A domain ontology already built on IOF SCRO, eight annotated competency questions, a clean reasoner run, a recorded OWL profile, and a ROBOT quality report. Nothing to submit today.</p>
       </div>
       <div class="lu-code lu-code--sm" data-name="terminal · the two commands you will actually need" data-run="js">
-<pre><code><span class="tok-com">// robot reason --input scro-extension-reference.ttl \</span>
+<pre><code><span class="tok-com">// robot reason \</span>
+<span class="tok-com">//   --input scro-extension-reference.ttl \</span>
 <span class="tok-com">//   --reasoner ELK --output reasoned.ttl</span>
 <span class="tok-com">// robot report --input reasoned.ttl \</span>
 <span class="tok-com">//   --output report.tsv --fail-on none</span>
 
-<span class="tok-com">// Run this cell to check the reference file's OWL profile tags:</span>
+<span class="tok-com">// Run this cell to check an OWL profile tag:</span>
 <span class="tok-kw">const</span> used = [<span class="tok-str">'someValuesFrom'</span>, <span class="tok-str">'intersectionOf'</span>, <span class="tok-str">'cardinality'</span>];
 <span class="tok-kw">const</span> outsideEL = [<span class="tok-str">'allValuesFrom'</span>, <span class="tok-str">'cardinality'</span>, <span class="tok-str">'complementOf'</span>, <span class="tok-str">'inverseOf'</span>];
 <span class="tok-kw">const</span> hits = used.filter(c => outsideEL.includes(c));
 console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + hits.join(<span class="tok-str">', '</span>) : <span class="tok-str">'EL-safe.'</span>);</code></pre>
       </div>
-      <p class="lu-caption">Editable and runnable in the browser. Try it against a class's own construct list from the reference file first, then reuse this same check on your own project's classes later.</p>
+      <p class="lu-caption">Editable and runnable in the browser. Try it against the reference file's own construct list, then reuse it on your own project later.</p>
     </div>
   </div>
   <template data-notes>
     <p>Narrate this from the front, live, on the projector. The file is finished, so the room watches one clean run together rather than each troubleshooting their own.</p>
     <ul>
+      <li>Step 1: point out which classes and properties are reused straight from SCRO, and that <code>ul:Port</code> and <code>ul:FreightRateBand</code> are new only because neither SCRO nor GS1 covers those concepts, checked, not assumed.</li>
+      <li>Step 3: this run comes back clean, no unsatisfiable classes, no unintended equivalences. That clean result is the target state they re-run toward on their own project, say so explicitly.</li>
       <li>If HermiT is slow to return, that is a cold JVM start, not a bug, give it a minute before switching to ELK and saying why.</li>
       <li>Step 5 is the one moment to open the floor: ask the room to argue for keeping or deleting <code>ul:CancelledShipment</code> before you say what you'd do.</li>
     </ul>
@@ -757,9 +760,9 @@ console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + h
     <div class="lu-stack">
       <h2 class="lu-h2">In pairs, discuss the reference ontology, then check in on your own team's topic.</h2>
       <ul class="lu-list">
-        <li>Pick one of the eight competency questions and try to answer it yourselves against the reference ontology, using the DL query tab or a SPARQL query. Report what could not be answered cleanly, if anything.</li>
-        <li>Decide together: keep <code>ul:CancelledShipment</code> or delete it? Name the competency question that would earn it a place, if you think one exists.</li>
-        <li>Check in on your own team's topic: which of your competency questions already has a class, and does anything you have added so far duplicate something your topic's own published vocabulary already provides? That is the most common Milestone 1 deduction.</li>
+        <li>Pick one competency question and try answering it against the reference ontology yourselves, DL query tab or SPARQL. Report what did not work.</li>
+        <li>Decide together: keep <code>ul:CancelledShipment</code> or delete it? Name the question that would earn it a place, if one exists.</li>
+        <li>Check your own team's topic: does anything you added duplicate something your topic's vocabulary already provides? The most common Milestone 1 deduction.</li>
       </ul>
       <div class="lu-callout">
         <span class="lu-callout__label">Before Session 4</span>
@@ -776,7 +779,7 @@ console.log(hits.length ? <span class="tok-str">'Not EL. Offenders: '</span> + h
       </div>
       <div class="lu-row">
         <span class="lu-tag">Push tonight, if you have it</span>
-        <span class="lu-caption" style="flex:1">Nothing is due from today's walkthrough. Whatever progress your team made on your own topic's ontology today, however small, push it before you leave, that habit is worth more than waiting for a milestone deadline to start it.</span>
+        <span class="lu-caption" style="flex:1">Nothing is due from today. Push whatever progress your own team made on your topic today, however small.</span>
       </div>
     </div>
   </div>
