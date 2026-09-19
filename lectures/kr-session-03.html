@@ -186,32 +186,31 @@ Shipment ⊑ ∃hasCarrier.Carrier
   <div class="lu-eyebrow">What a reasoner actually does for you</div>
   <h2 class="lu-h1">Three standard tasks, three different bugs they find</h2>
 
-  <div class="lu-grid" style="margin-top:var(--lu-s5)">
+  <div class="lu-grid">
     <div class="lu-card lu-col-4" data-build="1">
       <span class="lu-card__label">01 · Consistency</span>
       <h3 class="lu-h3">Can this ontology have any model at all?</h3>
-      <p class="lu-sub">An inconsistent ontology entails everything, which makes every downstream answer worthless. Usually caused by a disjointness axiom colliding with a cardinality one.</p>
+      <p class="lu-sub">An inconsistent ontology entails everything, so every answer is worthless. Usually a disjointness axiom colliding with a cardinality one.</p>
       <p class="lu-caption"><b>Finds:</b> contradictory axioms.</p>
     </div>
     <div class="lu-card lu-col-4" data-build="2">
       <span class="lu-card__label">02 · Classification</span>
-      <h3 class="lu-h3">What is a subclass of what, once you take the axioms seriously?</h3>
-      <p class="lu-sub">The inferred hierarchy is the single most useful diagnostic in the lab. Read it as a claim about your intent and check whether you meant it.</p>
-      <p class="lu-caption"><b>Finds:</b> unintended subsumptions and equivalences.</p>
+      <h3 class="lu-h3">What subsumes what?</h3>
+      <p class="lu-sub">The inferred hierarchy is the most useful diagnostic in the lab: a claim about your intent, worth checking you meant it.</p>
+      <p class="lu-caption"><b>Finds:</b> subsumptions you did not intend.</p>
     </div>
     <div class="lu-card lu-col-4" data-build="3">
       <span class="lu-card__label">03 · Instance realisation</span>
       <h3 class="lu-h3">Which classes does this individual belong to?</h3>
-      <p class="lu-sub">This is where the ontology earns money: a shipment gets classified as <code>AtRiskShipment</code> without anyone writing a rule that says so.</p>
-      <p class="lu-caption"><b>Finds:</b> mis-modelled restrictions on real data.</p>
+      <p class="lu-sub">This is where the ontology pays off: a shipment gets classified <code>AtRiskShipment</code>, no one writing a rule that says so.</p>
+      <p class="lu-caption"><b>Finds:</b> bad restrictions on real data.</p>
     </div>
   </div>
 
-  <div class="lu-reveal" style="margin-top:var(--lu-s6)" data-build="4">
+  <div class="lu-reveal" data-build="4">
     <button class="lu-reveal__btn" type="button">The failure mode nobody expects: a satisfiable ontology that is silently wrong</button>
     <div class="lu-reveal__panel" hidden>
-      <p>A consistent ontology with a clean red-free hierarchy can still be wrong, and this is the common case. If you declare <code>hasCarrier</code> with domain <code>Shipment</code> and then assert <code>purchaseOrder/88 :hasCarrier carrier/DHL</code>, no reasoner complains. It quietly <em>infers</em> that the purchase order is a shipment. Under the open world assumption that is a valid entailment, not an error.</p>
-      <p><b>This is why Session 4 exists.</b> Catching it needs closed-world validation, which is SHACL's job, not OWL's. Today, notice the pattern; next week, make it fail a build.</p>
+      <p>A clean hierarchy can still be silently wrong: assert <code>purchaseOrder/88 :hasCarrier carrier/DHL</code> and no reasoner complains, it just <em>infers</em> the order is a shipment. <b>Why Session 4 exists:</b> that needs closed-world validation, SHACL's job, not OWL's.</p>
     </div>
   </div>
   <template data-notes>
