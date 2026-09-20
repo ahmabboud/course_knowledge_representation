@@ -168,8 +168,8 @@ last quarter, and who did we ship them to?
 <section class="slide slide--night" data-chrome="none" data-label="Part 1 · Meaning is not in the schema" data-section="Meaning and storage" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part one of three · 18 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:20ch">Meaning is not in the schema</h2>
-    <p class="lu-lead" style="max-width:42ch">You already know how to store this data. The question today is where its meaning went, and why nobody noticed it leaving.</p>
+    <h2 class="lu-display-xl" style="max-width:24ch">You already know how to store this. So where did its meaning go?</h2>
+    <p class="lu-lead" style="max-width:42ch">Meaning is not in the schema. Nobody wrote it down anywhere a program can reach it, and nobody noticed it leaving.</p>
   </div>
   <template data-notes><p>Ten seconds. Dividers are punctuation.</p></template>
 </section>
@@ -183,7 +183,7 @@ last quarter, and who did we ship them to?
     <div class="lu-stack">
       <p class="lu-p">A column type says a value is a string of at most 20 characters. It does not say the string names a legal entity, or that two of them may be the same company.</p>
       <ul class="lu-list">
-        <li>Meaning lives in three places, none machine-readable: four people's heads, a stale wiki, and 300 report WHERE clauses.</li>
+        <li>Meaning lives in three places, <b>none machine-readable</b>: four people's heads, a stale wiki, and 300 report WHERE clauses.</li>
         <li>A <button class="lu-term" type="button" data-term="Semantic layer" data-kind="Architecture"><span class="lu-term-word">semantic layer</span><template>A <b>semantic layer</b> is an explicit, machine-readable model of what the organisation's data means, sitting above the systems that store it.<p>Explicit is the load-bearing word. The knowledge already exists; it is just distributed across people, documents and query code where no program can reach it. The work of this course is moving it somewhere a program can.</p></template></button> is that knowledge where a program can reach it.</li>
       </ul>
     </div>
@@ -247,7 +247,7 @@ country     <span class="tok-str">'CZ'</span>   <span class="tok-com">-- manufac
       </ul>
       <div class="lu-callout" data-build="2">
         <span class="lu-callout__label">Say this one out loud</span>
-        <p class="lu-sub">Integration failures are almost never bad data. They are two correct models of the world meeting with no record of how they differ. Session 3 makes them two classes; Session 5 decides, with a number, whether they are the same thing.</p>
+        <p class="lu-sub">Integration failures are almost never bad data. <b>They are two correct models of the world meeting with no record of how they differ.</b> Session 3 makes them two classes; Session 5 decides, with a number, whether they are the same thing.</p>
       </div>
     </div>
   </div>
@@ -282,7 +282,7 @@ country     <span class="tok-str">'CZ'</span>   <span class="tok-com">-- manufac
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept">
         <span class="lu-callout__label">The habit this question is training</span>
-        <p class="lu-sub">Separate what the data shows from what you decided it means. Every hour of this course lives on that line.</p>
+        <p class="lu-sub"><b>Separate what the data shows from what you decided it means.</b> Every hour of this course lives on that line.</p>
       </div>
     </div>
   </div>
@@ -296,8 +296,8 @@ country     <span class="tok-str">'CZ'</span>   <span class="tok-com">-- manufac
 <section class="slide slide--night" data-chrome="none" data-label="Part 2 · The reference architecture" data-section="Reference architecture" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part two of three · 30 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:22ch">The architecture we build for eight weeks</h2>
-    <p class="lu-lead" style="max-width:42ch">Eight stages. Each session adds one. By Session 8 the whole thing starts from a clean checkout with one command.</p>
+    <h2 class="lu-display-xl" style="max-width:24ch">Eight independent stages. How do they end up as one pipeline?</h2>
+    <p class="lu-lead" style="max-width:42ch">Each session adds one stage. By Session 8 the whole thing starts from a clean checkout with one command.</p>
   </div>
   <template data-notes><p>Ten seconds.</p></template>
 </section>
@@ -346,7 +346,7 @@ country     <span class="tok-str">'CZ'</span>   <span class="tok-com">-- manufac
 <span class="tok-fn">ul:LateShipment</span> <span class="tok-kw">rdfs:subClassOf</span> <span class="tok-fn">ul:Shipment</span> .</code></pre>
       </div>
       <ul class="lu-list lu-list--tight">
-        <li>Global names, so two organisations merge graphs without a meeting.</li>
+        <li>Global names, so two organisations <b>merge graphs without a meeting</b>.</li>
         <li>The vocabulary is itself queryable. That is what makes OWL possible.</li>
       </ul>
     </div>
@@ -360,7 +360,7 @@ country     <span class="tok-str">'CZ'</span>   <span class="tok-com">-- manufac
       </div>
       <ul class="lu-list lu-list--tight">
         <li>Edge properties without ceremony, friendlier query language.</li>
-        <li>No standard schema language, so no reasoning and nothing to reuse.</li>
+        <li><b>No standard schema language, so no reasoning and nothing to reuse.</b></li>
       </ul>
     </div>
   </div>
@@ -411,7 +411,7 @@ Absence of data means unknown.</pre>
     <div class="lu-stack lu-stack--tight">
       <span class="lu-tag lu-tag--red">What it costs you, and who pays it back</span>
       <ul class="lu-list lu-list--tight">
-        <li>A reasoner never reports a missing value. It infers rather than complains, so OWL cannot be your validator.</li>
+        <li>A reasoner never reports a missing value. It infers rather than complains, so <b>OWL cannot be your validator</b>.</li>
         <li><button class="lu-term" type="button" data-term="SHACL" data-kind="Constraint language"><span class="lu-term-word">SHACL</span><template><b>SHACL</b> is the Shapes Constraint Language. It validates an RDF graph against explicit expectations under a <b>closed world</b> reading, which is exactly the reading OWL refuses to take.<p>This is why Session 4 exists as its own session, and why the constraint inventory you write today is the input to it rather than to the ontology.</p></template></button> supplies the closed-world half, in Session 4.</li>
       </ul>
     </div>
@@ -457,7 +457,7 @@ Absence of data means unknown.</pre>
 <section class="slide slide--night" data-chrome="none" data-label="Part 3 · What it is worth, and what actually works" data-section="Value and tooling" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part three of three · 15 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:22ch">What it is worth, and which tools are actually alive</h2>
+    <h2 class="lu-display-xl" style="max-width:22ch">What is this actually worth, and which tools are still alive?</h2>
     <p class="lu-lead" style="max-width:42ch">Two things a textbook will not tell you: where the money is, and which famous library has not shipped a commit since 2025.</p>
   </div>
   <template data-notes><p>Ten seconds. This part is short and it is the one they remember.</p></template>
@@ -493,7 +493,7 @@ Absence of data means unknown.</pre>
 
   <div class="lu-callout" style="margin-top:var(--lu-s4)" data-build="5">
     <span class="lu-callout__label">Keep this framing</span>
-    <p class="lu-sub">Nobody funds an ontology. They fund question 1 with a deadline.</p>
+    <p class="lu-sub">Nobody funds an ontology. <b>They fund question 1 with a deadline.</b></p>
   </div>
   <template data-notes>
     <p>Six minutes. Build the four cards one at a time; shown together they read as a list and lose their force.</p>
@@ -521,7 +521,7 @@ Absence of data means unknown.</pre>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept">
         <span class="lu-callout__label">The transferable skill</span>
-        <p class="lu-sub">Check the last commit, the last release on the package index, and whether the pins still install. A confident README is not evidence.</p>
+        <p class="lu-sub">Check the last commit, the last release on the package index, and whether the pins still install. <b>A confident README is not evidence.</b></p>
       </div>
       <div class="lu-reveal">
         <button class="lu-reveal__btn" type="button">The category that catches experienced engineers</button>

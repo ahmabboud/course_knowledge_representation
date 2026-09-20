@@ -83,7 +83,7 @@
     </div>
     <div class="lu-callout" data-build="3">
       <span class="lu-callout__label">What is still missing</span>
-      <p class="lu-sub">A vocabulary with meaning a machine can act on. Your <code>ex:late</code> predicate means nothing to another system, and RDFS cannot tell you that two supplier records must be the same thing.</p>
+      <p class="lu-sub">A vocabulary with meaning a machine can act on. Your <code>ex:late</code> predicate means nothing to another system, and <b>RDFS cannot tell you that two supplier records must be the same thing.</b></p>
     </div>
   </div>
   <template data-notes>
@@ -124,8 +124,8 @@
 <section class="slide slide--night" data-chrome="none" data-label="Part 1 · Description logic" data-section="Description logic" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part one of three · 25 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:20ch">Description logic</h2>
-    <p class="lu-lead" style="max-width:40ch">You already have first-order logic. Today's question is not what description logic can say. It is what it deliberately gives up, and what you get in exchange.</p>
+    <h2 class="lu-display-xl" style="max-width:24ch">You already have first-order logic. What do you give up to make it decidable?</h2>
+    <p class="lu-lead" style="max-width:40ch">Description logic is the answer, and the trade is deliberate. Today's question is not what it can say, it is what it gives up, and what you get in exchange.</p>
   </div>
   <template data-notes><p>Ten seconds. Section dividers are punctuation, not content.</p></template>
 </section>
@@ -197,7 +197,7 @@ Shipment ⊑ ∃hasCarrier.Carrier
     <div class="lu-card lu-col-4" data-build="3">
       <span class="lu-card__label">03 · Instance realisation</span>
       <h3 class="lu-h3">Which classes does this individual belong to?</h3>
-      <p class="lu-sub">This is where the ontology pays off: a shipment gets classified <code>AtRiskShipment</code>, no one writing a rule that says so.</p>
+      <p class="lu-sub"><b>This is where the ontology pays off:</b> a shipment gets classified <code>AtRiskShipment</code>, no one writing a rule that says so.</p>
       <p class="lu-caption"><b>Finds:</b> bad restrictions on real data.</p>
     </div>
   </div>
@@ -245,8 +245,8 @@ Shipment ⊑ ∃hasCarrier.Carrier
 <section class="slide slide--night" data-chrome="none" data-label="Part 2 · OWL 2" data-section="OWL 2" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part two of three · 25 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:22ch">OWL 2 and its profiles</h2>
-    <p class="lu-lead" style="max-width:44ch">Syntax over the semantics we just fixed, plus the one engineering decision that determines whether reasoning finishes on a graph of realistic size.</p>
+    <h2 class="lu-display-xl" style="max-width:24ch">One decision decides whether your reasoner finishes at all. Which one?</h2>
+    <p class="lu-lead" style="max-width:44ch">OWL 2 is syntax over the semantics we just fixed, plus the profile choice that determines whether reasoning finishes on a graph of realistic size.</p>
   </div>
   <template data-notes><p>Ten seconds.</p></template>
 </section>
@@ -295,7 +295,7 @@ Shipment ⊑ ∃hasCarrier.Carrier
 <span class="tok-fn">ul:LateShipment</span> owl:disjointWith <span class="tok-fn">ul:CancelledShipment</span> .
 <span class="tok-fn">ul:deliveredAfter</span> owl:inverseOf <span class="tok-fn">ul:committedBefore</span> .</code></pre>
     </div>
-    <p class="lu-caption">Every class needs a <code>skos:definition</code> and at least one <code>ul:answersCQ</code>. A class with neither has not earned its place.</p>
+    <p class="lu-caption">Every class needs a <code>skos:definition</code> and at least one <code>ul:answersCQ</code>. <b>A class with neither has not earned its place.</b></p>
   </div>
   <template data-notes>
     <p>Four minutes. Type nothing live, they have this file in the reference ontology workspace already. Use the code block as the reading text.</p>
@@ -475,8 +475,8 @@ OWL 2 DL · HermiT · exponential worst case</pre>
 <section class="slide slide--night" data-chrome="none" data-label="Part 3 · Reuse" data-section="Reuse and alignment" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part three of three · 15 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:22ch">Reuse, or build your own private vocabulary nobody can read</h2>
-    <p class="lu-lead" style="max-width:44ch">Industrial ontologies already exist for supply chain. Not using them is a decision, and it is one you have to justify.</p>
+    <h2 class="lu-display-xl" style="max-width:24ch">Industrial ontologies for supply chain already exist. Why build your own?</h2>
+    <p class="lu-lead" style="max-width:44ch">Not reusing them is a decision, not a default, and it is one you have to justify.</p>
   </div>
   <template data-notes><p>Ten seconds.</p></template>
 </section>
@@ -702,7 +702,7 @@ ORDER BY ?label
         <button class="lu-reveal__btn" type="button">Why this exercise is in the course at all</button>
         <div class="lu-reveal__panel" hidden>
           <p>It is why the course builds on IOF SCRO, not SCORVoc: every third-party vocabulary needs a listed licence, and a contradiction like this is the first result a search turns up.</p>
-          <p>The transferable skill: an ambiguous licence is the finding.</p>
+          <p>The transferable skill: <b>an ambiguous licence is the finding.</b></p>
         </div>
       </div>
     </div>

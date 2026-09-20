@@ -115,8 +115,8 @@
 <section class="slide slide--night" data-chrome="none" data-label="Part 1 · The data model" data-section="The data model" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part one of three · 20 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:20ch">One data structure, all the way down</h2>
-    <p class="lu-lead" style="max-width:40ch">RDF has exactly one shape. Everything else today is a consequence of that.</p>
+    <h2 class="lu-display-xl" style="max-width:24ch">What if adding a new kind of fact needed no migration at all?</h2>
+    <p class="lu-lead" style="max-width:42ch">A relational schema is agreed on once and changed carefully. RDF has exactly one shape, forever, so nothing has to be agreed on in advance.</p>
   </div>
   <template data-notes><p>Ten seconds.</p></template>
 </section>
@@ -135,13 +135,17 @@
       </ul>
     </div>
 
-    <div class="lu-stack" data-build="1">
-      <div class="lu-code lu-code--sm" data-name="shipment.ttl">
-<pre><code><span class="tok-kw">@prefix</span> <span class="tok-fn">ul</span>: <span class="tok-str">&lt;https://ul.edu.lb/kr/scm#&gt;</span> .
-
-<span class="tok-fn">ul:ship-4471</span> <span class="tok-kw">ul:handledBy</span> <span class="tok-fn">ul:carrier-dhl</span> .</code></pre>
+    <div class="lu-stack">
+      <div class="lu-board" style="aspect-ratio:16/6">
+        <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 375" preserveAspectRatio="none" aria-hidden="true">
+          <defs><marker id="s2-tri-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs>
+          <path class="lu-edge lu-edge--strong" style="color:var(--lu-red-700);stroke:var(--lu-red-700);marker-end:url(#s2-tri-arrow)" d="M 260 190 L 700 190"/>
+          <text class="lu-edge-label" x="480" y="175" text-anchor="middle" style="fill:var(--lu-red-700)">ul:handledBy</text>
+        </svg>
+        <div class="lu-node lu-node--instance" style="left:22%;top:44%">ship-4471</div>
+        <div class="lu-node lu-node--instance" style="left:72%;top:44%">carrier-dhl</div>
       </div>
-      <p class="lu-caption">Shipment 4471 is handled by DHL. One sentence, one triple.</p>
+      <p class="lu-caption" style="margin-top:var(--lu-s2)">Subject, predicate, object: <b>one labelled edge</b>, drawn exactly as it is stored.</p>
     </div>
   </div>
   <template data-notes>
@@ -149,6 +153,7 @@
     <ul>
       <li>Do not mention blank nodes unless asked. They cost five minutes and buy nothing today.</li>
       <li>Expected question: "is this not just EAV, which we are taught to avoid?" Yes, structurally. Park it, the next slide answers it.</li>
+      <li>Turtle for this exact edge, if asked: <code>@prefix ul: &lt;https://ul.edu.lb/kr/scm#&gt; . ul:ship-4471 ul:handledBy ul:carrier-dhl .</code> The next slide shows the full syntax.</li>
     </ul>
   </template>
 </section>
@@ -174,7 +179,7 @@
     <div class="lu-stack">
       <ul class="lu-list">
         <li>A literal carries a datatype: <code>"6"^^xsd:integer</code>. The <code>^^</code> is Turtle for "typed as".</li>
-        <li>Because the vocabulary is triples, you can query it. That is what makes OWL and SHACL possible at all.</li>
+        <li>Because the vocabulary is triples, you can query it. <b>That is what makes OWL and SHACL possible at all.</b></li>
       </ul>
       <div class="lu-callout" data-build="1">
         <span class="lu-callout__label">This is the answer to the EAV objection</span>
@@ -208,7 +213,7 @@ ul:supplier/erp/V8841</code></pre>
     <div class="lu-stack" data-build="1">
       <div class="lu-callout lu-callout--concept">
         <span class="lu-callout__label">What breaks, and when</span>
-        <p class="lu-sub">The first does not collide when the WMS extract arrives, which is worse than colliding: you cannot tell which V8841 you are holding.</p>
+        <p class="lu-sub">The first does not collide when the WMS extract arrives, which is <b>worse than colliding: you cannot tell which V8841 you are holding.</b></p>
       </div>
     </div>
   </div>
@@ -273,8 +278,8 @@ ul:supplier/erp/V8841</code></pre>
 <section class="slide slide--night" data-chrome="none" data-label="Part 2 · Asking questions" data-section="SPARQL" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part two of three · 26 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:22ch">SPARQL, and the question SQL is bad at</h2>
-    <p class="lu-lead" style="max-width:40ch">Most of SPARQL is familiar. One part of it is the reason the graph exists.</p>
+    <h2 class="lu-display-xl" style="max-width:24ch">What can this graph answer that SQL genuinely struggles with?</h2>
+    <p class="lu-lead" style="max-width:40ch">Most of SPARQL is familiar. One part of it is the reason the graph exists at all.</p>
   </div>
   <template data-notes><p>Ten seconds.</p></template>
 </section>
@@ -328,7 +333,7 @@ ul:supplier/erp/V8841</code></pre>
       </ul>
       <div class="lu-callout" data-build="1">
         <span class="lu-callout__label">The one sentence</span>
-        <p class="lu-sub">In SQL you say how to join. In SPARQL you say what the answer looks like.</p>
+        <p class="lu-sub"><b>In SQL you say how to join. In SPARQL you say what the answer looks like.</b></p>
       </div>
     </div>
   </div>
@@ -471,8 +476,8 @@ WHERE {
 <section class="slide slide--night" data-chrome="none" data-label="Part 3 · The comparison" data-section="Graph models" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part three of three · 11 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:22ch">The other graph model</h2>
-    <p class="lu-lead" style="max-width:42ch">You will meet property graphs in industry more often than RDF. Know exactly what each one gives up.</p>
+    <h2 class="lu-display-xl" style="max-width:24ch">Four companies must merge their graphs with no shared database. Which model survives that?</h2>
+    <p class="lu-lead" style="max-width:42ch">You will meet property graphs in industry more than RDF. This part is about the one thing only one of them can do.</p>
   </div>
   <template data-notes><p>Ten seconds.</p></template>
 </section>
@@ -483,16 +488,34 @@ WHERE {
   <h2 class="lu-h1" style="max-width:34ch">One shipment, one carrier, written both ways.</h2>
 
   <div class="lu-split" style="margin-top:var(--lu-s4)">
-    <div class="lu-stack">
+    <div class="lu-stack" style="gap:var(--lu-s2)">
       <span class="lu-tag lu-tag--green">RDF · Turtle</span>
+      <div class="lu-board" style="aspect-ratio:16/4;margin-bottom:var(--lu-s1)">
+        <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 250" preserveAspectRatio="none" aria-hidden="true">
+          <defs><marker id="s2-m2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs>
+          <path class="lu-edge lu-edge--strong" style="color:var(--lu-ink-2);marker-end:url(#s2-m2-arrow)" d="M 240 125 L 700 125"/>
+          <text class="lu-edge-label" x="470" y="109" text-anchor="middle">ul:handledBy</text>
+        </svg>
+        <div class="lu-node lu-node--instance" style="left:20%;top:30%">ship-4471</div>
+        <div class="lu-node lu-node--instance" style="left:68%;top:30%">carrier-dhl</div>
+      </div>
       <div class="lu-code lu-code--sm" data-name="triples">
 <pre><code><span class="tok-fn">ul:ship-4471</span> <span class="tok-kw">ul:handledBy</span> <span class="tok-fn">ul:carrier-dhl</span> .
 <span class="tok-fn">ul:LateShipment</span> <span class="tok-kw">rdfs:subClassOf</span> <span class="tok-fn">ul:Shipment</span> .</code></pre>
       </div>
     </div>
 
-    <div class="lu-stack" data-build="1">
+    <div class="lu-stack" style="gap:var(--lu-s2)">
       <span class="lu-tag">Property graph · Cypher</span>
+      <div class="lu-board" style="aspect-ratio:16/4;margin-bottom:var(--lu-s1)">
+        <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 250" preserveAspectRatio="none" aria-hidden="true">
+          <defs><marker id="s2-m3-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs>
+          <path class="lu-edge" style="color:var(--lu-ink-3);marker-end:url(#s2-m3-arrow)" d="M 260 125 L 700 125"/>
+          <text class="lu-edge-label" x="480" y="109" text-anchor="middle">HANDLED_BY</text>
+        </svg>
+        <div class="lu-node" style="left:20%;top:24%;line-height:1.3">s:Shipment<br><span style="font-weight:400;font-size:17px">{id:'4471'}</span></div>
+        <div class="lu-node" style="left:66%;top:24%;line-height:1.3">c:Carrier<br><span style="font-weight:400;font-size:17px">{name:'DHL'}</span></div>
+      </div>
       <div class="lu-code lu-code--sm" data-name="nodes with dictionaries">
 <pre><code>(<span class="tok-fn">s</span>:Shipment {id:<span class="tok-str">'4471'</span>})
   -[:<span class="tok-kw">HANDLED_BY</span> {cost:812}]-&gt;
@@ -524,7 +547,7 @@ WHERE {
       <span class="lu-tag">The property graph gives you</span>
       <ul class="lu-list lu-list--tight">
         <li>Edge properties without ceremony, and a friendlier language.</li>
-        <li>But the label is a string, and a string cannot be reasoned over.</li>
+        <li><b>But the label is a string, and a string cannot be reasoned over.</b></li>
       </ul>
     </div>
   </div>
