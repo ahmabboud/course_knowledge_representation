@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en" class="lu-deck-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning Over the Graph · Knowledge Representation, Session 6</title>
+<meta name="description" content="Session 6 of Knowledge Representation, MSc, Lebanese University. Knowledge graph embeddings, message passing and GNNs, heterogeneous graphs with RGCNConv, and leakage in graph splits. Milestone 2.">
+<meta name="theme-color" content="#96122B">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/lu.css?v=1.1.0">
+</head>
+
+<body
+  data-deck-id="kr-s06"
+  data-course="Knowledge Representation"
+  data-session="Session 6 of 8"
+  data-duration="250"
+  data-app-root="../"
+  data-unit="Lebanese University · MSc">
+
+<a class="lu-skip" href="#slide-2">Skip to the first content slide</a>
+
+<div class="deck">
+<div class="deck__stage">
+
+<!-- ==================================================================== 01 -->
+<section class="slide slide--night" data-chrome="none" data-label="Title" data-section="Opening" data-minutes="2">
+  <div class="slide__body" style="justify-content:space-between">
+    <div class="lu-row" style="justify-content:space-between;align-items:flex-start">
+      <div class="lu-lockup">
+        <span class="lu-lockup__mark">LU</span>
+        <span class="lu-lockup__text">
+          <span class="lu-lockup__name">Lebanese University</span>
+          <span class="lu-lockup__unit">Faculty of Sciences · MSc Computer Science</span>
+        </span>
+      </div>
+      <div class="lu-tag lu-tag--red" style="background:transparent;color:#FF9AA7;border-color:#96122B">Module 4 · Learning</div>
+    </div>
+
+    <div class="lu-stack">
+      <div class="lu-eyebrow">Knowledge Representation · Session 6 of 8</div>
+      <h1 class="lu-display" style="max-width:26ch">Learning Over the Graph</h1>
+      <p class="lu-lead" style="max-width:44ch">Five sessions built a graph you could query and validate. Today you ask it to predict something, and you evaluate that prediction honestly enough that the number would survive review.</p>
+    </div>
+
+    <div class="lu-row" style="justify-content:space-between;font-size:var(--lu-t-caption);color:var(--lu-on-night-2)">
+      <span>~250 minutes · lecture, lab, and Milestone 2</span>
+      <span>Press <kbd>&rarr;</kbd> to begin · <kbd>?</kbd> for shortcuts</span>
+    </div>
+  </div>
+  <template data-notes>
+    <p>This session runs long, by design, same as Sessions 4 and 5: two families of model, a real crash and a real leakage demonstration, each done for real, is genuinely more than 180 minutes of honest content. Say that at the top.</p>
+    <ul>
+      <li>Milestone 2 is due at the close of today's lab, worth 20 percent of the grade, against each team's own capstone topic.</li>
+    </ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 02 -->
+<section class="slide" data-label="Where we are in the architecture" data-section="Opening" data-minutes="4">
+  <div class="lu-eyebrow">Recap</div>
+  <h2 class="lu-h1" style="max-width:46ch">Session 5 made the graph <em style="font-style:italic;color:var(--lu-red-700)">generated</em>, not hand-placed. It still only answered what you asked.</h2>
+
+  <ul class="lu-pipeline" style="margin-top:var(--lu-s5)" data-build="1" data-build-style="dim">
+    <li data-state="done"><span class="lu-pipeline__n">01</span><span class="lu-pipeline__t">Sources</span><span class="lu-pipeline__d">DataCo, Brunel</span></li>
+    <li data-state="done"><span class="lu-pipeline__n">02</span><span class="lu-pipeline__t">Profiling</span><span class="lu-pipeline__d">Constraint inventory</span></li>
+    <li data-state="done"><span class="lu-pipeline__n">03</span><span class="lu-pipeline__t">Graph</span><span class="lu-pipeline__d">RDF, IRIs, SPARQL</span></li>
+    <li data-state="done"><span class="lu-pipeline__n">04</span><span class="lu-pipeline__t">Ontology</span><span class="lu-pipeline__d">OWL on IOF SCRO</span></li>
+    <li data-state="done"><span class="lu-pipeline__n">05</span><span class="lu-pipeline__t">Constraints</span><span class="lu-pipeline__d">SHACL, Milestone 1</span></li>
+    <li data-state="done"><span class="lu-pipeline__n">06</span><span class="lu-pipeline__t">Mappings</span><span class="lu-pipeline__d">RML, materialize/virtualize</span></li>
+    <li data-state="active"><span class="lu-pipeline__n">07</span><span class="lu-pipeline__t">Learning</span><span class="lu-pipeline__d">You are here</span></li>
+    <li data-state="muted"><span class="lu-pipeline__n">08</span><span class="lu-pipeline__t">Access</span><span class="lu-pipeline__d">Text to SPARQL · 7</span></li>
+  </ul>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s6)">
+    <div class="lu-callout lu-callout--neutral" data-build="2">
+      <span class="lu-callout__label">What you brought to this room</span>
+      <p class="lu-sub">A graph that SHACL keeps honest and SPARQL can query: every question so far has had a written, deterministic answer sitting somewhere in the data.</p>
+    </div>
+    <div class="lu-callout" data-build="3">
+      <span class="lu-callout__label">What no query can do</span>
+      <p class="lu-sub"><code>ul:po99</code> has no carrier, that is a fact you can query. <b>Whether the next order like it will arrive late is not a fact in the graph yet, it is a prediction you have to learn.</b></p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. Every prior session's "answer" was already sitting in the graph, waiting for the right query. Today's answer does not exist until a model is trained. Mark that shift as clearly as Session 5 marked "the graph is generated, not hand-placed".</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 03 -->
+<section class="slide slide--tint" data-label="Session objective and shape" data-section="Opening" data-minutes="3">
+  <div class="lu-eyebrow">Objective</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <p class="lu-statement">By the end of today you can train a model that predicts late deliveries from graph structure, evaluate it in a way that cannot be fooled by an easy split, and say honestly whether it beat a plain gradient-boosted tree.</p>
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">Milestone 2, due at the close of the lab</span>
+        <p class="lu-sub">A trained node classification model, a trained link prediction model, a leakage-free split, a tabular baseline, and a written evaluation of the limits. Twenty percent of the grade.</p>
+      </div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-card">
+        <span class="lu-card__label">How the ~250 minutes are spent</span>
+        <ul class="lu-layers">
+          <li><span class="lu-layers__name">Lecture · ~125 min</span><span class="lu-layers__note">Embeddings, message passing, heterogeneous GNNs, leakage</span></li>
+          <li><span class="lu-layers__name">Hands-on lab · 95 min</span><span class="lu-layers__note">HeteroData, both classifiers, TransE, PyKEEN, the split</span></li>
+          <li><span class="lu-layers__name">Clinic and wrap · 30 min</span><span class="lu-layers__note">Does your team's own split leak, then the honest debrief</span></li>
+        </ul>
+      </div>
+      <p class="lu-caption">Reading before next session: Hogan et al., Chapter 5. Kejriwal et al., Chapter 10. Hamilton, Graph Representation Learning, message-passing chapters, optional.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Name the shift explicitly: every model trained today is only as good as its evaluation. A model with a beautiful random-split number and a dishonest temporal-split number is worse than no model, because it will ship.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 04 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 1 · Why learn on a graph at all" data-section="Graph versus tabular" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part one of six · ~14 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">You could flatten every table into one row per order and hand it to a gradient-boosted tree. Why build a graph model at all?</h2>
+    <p class="lu-lead" style="max-width:44ch">Sometimes you should not. That answer is today's first honest lesson, not a footnote.</p>
+  </div>
+  <template data-notes><p>Ten seconds. Dividers are punctuation.</p></template>
+</section>
+
+<!-- ==================================================================== 05 -->
+<section class="slide" data-label="The flattened join is a real competitor" data-section="Graph versus tabular" data-minutes="6">
+  <div class="lu-eyebrow">Set the terms honestly</div>
+  <h2 class="lu-h1" style="max-width:42ch">A gradient-boosted tree on the flattened join is not a straw man</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack" style="gap:var(--lu-s3)">
+      <p class="lu-p">Denormalize the graph back into one row per order: the order's own fields, plus its supplier's, product's, plant's, port's and carrier's static attributes copied onto that row. Feed it to XGBoost.</p>
+      <ul class="lu-list">
+        <li>No message passing, no embeddings, minutes to train, easy to explain to a non-technical stakeholder.</li>
+        <li>It only sees what is on that one row. A pattern that lives in the graph's structure, two suppliers sharing a port neither one's own columns record, is invisible to it.</li>
+      </ul>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">The honest question this session answers</span>
+      <p class="lu-sub">Not "which is better". When does the graph's structure carry a signal the flattened row cannot, and when is the flattened row already enough? Today's own lab produces a real, un-cherry-picked answer for one task.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. Resist letting the room assume graph models automatically win, that assumption is exactly what today's own results will complicate, honestly, not rhetorically.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 06 -->
+<section class="slide" data-label="Where structure earns its keep" data-section="Graph versus tabular" data-minutes="5">
+  <div class="lu-eyebrow">The real advantage, stated precisely</div>
+  <h2 class="lu-h1">Structure helps when the label depends on a neighbor's neighbor</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <p class="lu-p">A flattened row can only encode what one entity's own columns record. A graph model can propagate information across hops: a product's risk depends on its plant, which depends on which port serves it, which depends on which carrier operates there.</p>
+      <p class="lu-p">This is also exactly where <b>the ontology earns its keep</b>: the class hierarchy and property definitions from Sessions 3 and 4 are what determine which node and edge types even exist to learn over. A sloppier ontology gives a sloppier graph, which gives a worse model, before a single weight is trained.</p>
+    </div>
+    <div class="lu-callout" data-build="1">
+      <span class="lu-callout__label">Held for later, with real numbers</span>
+      <p class="lu-sub">Part 5 closes the loop: the same late-delivery task, a real gradient-boosted baseline, and two real graph models, run for real on the same split. The honest scorecard is worth waiting for.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Name the ontology connection explicitly, it is easy for this session to feel disconnected from Sessions 3 and 4, and it is not: node and edge types are not free, someone modeled them.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 07 -->
+<section class="slide slide--tint" data-label="Check: when would you skip the graph" data-section="Graph versus tabular" data-minutes="4">
+  <div class="lu-eyebrow">Check question</div>
+  <div class="lu-mcq"
+       data-qid="s6-q1"
+       data-answer="b"
+       data-label="When a flattened tabular model beats a graph model"
+       data-fb-correct=" Correct. If every feature that matters is already a column on the row, message passing has nothing to add and only adds training and serving cost."
+       data-fb-wrong=" Think about what a graph model adds over a flat row: propagated neighbor information. When none of that is needed, it is pure cost.">
+    <p class="lu-mcq__q">A team's late-delivery signal turns out to depend entirely on the order's own declared SLA and the carrier's own historical late rate, both already columns on the flattened row. What is the strongest reason to still reach for a graph model here?</p>
+    <div class="lu-mcq__opts">
+      <button class="lu-mcq__opt" type="button" data-key="a">Graph models are always more accurate<span class="lu-mcq__why" hidden>Not a general truth, and today's own lab results will show a case where it is false.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="b">There is no strong reason, a tabular baseline is the right call here<span class="lu-mcq__why" hidden>Correct. If the signal is already fully captured in the row's own columns, message passing adds training complexity for no structural gain.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="c">Graph models are required once you have an ontology<span class="lu-mcq__why" hidden>An ontology is what defines the node and edge types a graph model could use, it does not obligate you to use one.</span></button>
+    </div>
+    <div class="lu-mcq__fb" hidden></div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. This question is the whole session's thesis in miniature: reach for structure because you can name the multi-hop signal it captures, not by default.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 08 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 2 · Knowledge graph embeddings" data-section="Embeddings" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part two of six · ~26 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Will supplier ul:acme ever supply product ul:widget-9? That edge does not exist yet. Score it anyway.</h2>
+    <p class="lu-lead" style="max-width:44ch">Link prediction, and the evaluation mistake that is easy to make without noticing.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 09 -->
+<section class="slide" data-label="Scoring functions, link prediction as the task" data-section="Embeddings" data-minutes="6">
+  <div class="lu-eyebrow">Four scoring functions, one shared idea</div>
+  <h2 class="lu-h1">Embed entities and relations, score a triple by geometry</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-stack">
+      <p class="lu-p">Every entity and every relation gets a learned vector. A candidate triple (head, relation, tail) is scored by a fixed geometric rule on those vectors, no message passing yet, just embeddings and arithmetic.</p>
+      <dl class="lu-defs">
+        <dt>TransE</dt><dd>head + relation ≈ tail. Translation in vector space, today's lab.</dd>
+        <dt>DistMult</dt><dd>A bilinear product, symmetric by construction, cannot model direction.</dd>
+        <dt>ComplEx</dt><dd>Complex-valued embeddings, fixes DistMult's symmetry problem.</dd>
+        <dt>RotatE</dt><dd>Relations as rotations in complex space, captures composition patterns the others miss.</dd>
+      </dl>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">The task, precisely</span>
+      <p class="lu-sub">Link prediction: given (supplier, supplies, ?), rank every candidate product by score. A good model ranks real supplier/product pairs near the top and everything else near the bottom.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. Do not derive the four formulas on the board, name what each one buys you and move on, today's lab runs one of them for real, that is where the understanding actually lands.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 10 -->
+<section class="slide" data-label="Negative sampling, why a score alone is not enough" data-section="Embeddings" data-minutes="5">
+  <div class="lu-eyebrow">Training signal</div>
+  <h2 class="lu-h1">A model that scores everything highly has learned nothing</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack" style="gap:var(--lu-s3)">
+      <p class="lu-p">The graph only records true triples. Without counter-examples, pushing every real triple's score up is free, embeddings collapse to a trivial solution that scores everything the same.</p>
+      <p class="lu-p"><b>Negative sampling</b> fixes this: corrupt a real triple by swapping its head or its tail for a random entity, and train the model to score the real triple above its corrupted version.</p>
+    </div>
+    <div class="lu-code lu-code--sm" data-name="the real method every torch_geometric.nn.kge model inherits">
+<pre><code><span class="tok-com"># base class KGEModel, read from the installed source</span>
+<span class="tok-kw">def</span> <span class="tok-fn">random_sample</span>(self, head_index, rel_type, tail_index):
+    <span class="tok-com"># corrupts head OR tail, never both at once</span>
+    ...</code></pre>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Name the "never both at once" detail explicitly, corrupting both would produce a triple so obviously wrong it teaches the model nothing useful, a subtlety worth having read the real source for.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 11 -->
+<section class="slide" data-label="TransE, the real installed source" data-section="Embeddings" data-minutes="6">
+  <div class="lu-eyebrow">Not described, read</div>
+  <h2 class="lu-h1">torch_geometric.nn.kge.TransE, roughly sixty lines, verified against the real 2.8.0 install</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="torch_geometric/nn/kge/transe.py, real signatures">
+<pre><code><span class="tok-kw">class</span> <span class="tok-fn">TransE</span>(KGEModel):
+  <span class="tok-kw">def</span> <span class="tok-fn">__init__</span>(self, num_nodes<span class="tok-kw">:</span> <span class="tok-fn">int</span>,
+      num_relations<span class="tok-kw">:</span> <span class="tok-fn">int</span>, hidden_channels<span class="tok-kw">:</span> <span class="tok-fn">int</span>,
+      margin<span class="tok-kw">:</span> <span class="tok-fn">float</span> = <span class="tok-num">1.0</span>, p_norm<span class="tok-kw">:</span> <span class="tok-fn">float</span> = <span class="tok-num">1.0</span>): ...
+
+  <span class="tok-kw">def</span> <span class="tok-fn">forward</span>(self, head_index, rel_type, tail_index):
+    <span class="tok-com"># -||(h + r) - t||_p , h and t L_p-normalized</span>
+
+  <span class="tok-kw">def</span> <span class="tok-fn">loss</span>(self, head_index, rel_type, tail_index):
+    <span class="tok-com"># margin_ranking_loss(pos_score, neg_score)</span></code></pre>
+    </div>
+    <div class="lu-stack">
+      <p class="lu-p">The forward pass is the whole idea in one line: score is negative distance between (head + relation) and tail, after normalizing. Small distance, high score.</p>
+      <p class="lu-p">Real run, this session, 22 entities (10 suppliers, 12 products), 1 relation, 92 train / 23 test triples:</p>
+      <div class="lu-code lu-code--sm" data-name="real console output">
+<pre><code>TransE(<span class="tok-num">22</span>, num_relations=<span class="tok-num">1</span>, hidden_channels=<span class="tok-num">32</span>)
+test mean_rank=<span class="tok-num">8.00</span>  MRR=<span class="tok-num">0.1325</span>  Hits@10=<span class="tok-num">0.6087</span></code></pre>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. Hold the MRR number lightly here, the next slide explains why 0.1325 is not the number to judge the model by, and that reveal is more effective if this slide does not pre-empt it.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 12 -->
+<section class="slide slide--tint" data-label="Filtered versus unfiltered, a real gotcha" data-section="Embeddings" data-minutes="6" style="--lu-s5:12px">
+  <div class="lu-eyebrow">The evaluation mistake, made and caught this session</div>
+  <h2 class="lu-h1">Same triples, same model family, two honest-looking numbers</h2>
+
+  <div class="lu-compare" data-a="torch_geometric.nn.kge, built in" data-b="PyKEEN, filtered" data-start="50" style="margin-top:var(--lu-s3)">
+    <div class="lu-compare__stage" style="min-height:230px">
+      <div class="lu-compare__pane lu-compare__pane--a">
+<pre class="lu-mono" style="font-size:22px;line-height:1.7;margin:0">MRR: 0.1325
+Ranks the true tail against
+  every other node, including
+  OTHER known-true triples for
+  the same (head, relation) and
+  even nonsensical candidates.
+Not the standard KGE protocol.</pre>
+      </div>
+      <div class="lu-compare__pane lu-compare__pane--b">
+<pre class="lu-mono" style="font-size:22px;line-height:1.7;margin:0">MRR: 0.7681
+Filters out every other known
+  true triple before ranking,
+  so only genuinely wrong
+  candidates can outrank the
+  real answer. Hits@10: 1.0000.
+The standard KGE protocol.</pre>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes, most important slide of Part 2. The gap is almost entirely methodology, not model quality, say that plainly. A model's own built-in .test() method silently being the wrong metric is exactly the kind of bug that ships if nobody reads the source.</p>
+    <ul><li>This is why the syllabus names "evaluated with filtered mean reciprocal rank" as its own bullet, not decoration.</li></ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 13 -->
+<section class="slide slide--tint" data-label="Check: what filtering removes" data-section="Embeddings" data-minutes="4">
+  <div class="lu-eyebrow">Check question</div>
+  <div class="lu-mcq"
+       data-qid="s6-q2"
+       data-answer="a"
+       data-label="What filtered ranking removes before scoring"
+       data-fb-correct=" Correct. Filtering removes other known-true triples from the candidate pool, so only genuinely wrong answers can outrank the real one."
+       data-fb-wrong=" Filtering does not touch the model or the test set size, it changes which candidates are allowed to outrank the true answer during ranking.">
+    <p class="lu-mcq__q">Filtered ranking gave a dramatically higher MRR than the unfiltered built-in evaluation on the same triples this session. What did filtering actually remove?</p>
+    <div class="lu-mcq__opts">
+      <button class="lu-mcq__opt" type="button" data-key="a">Other known-true triples from the candidate pool, before ranking<span class="lu-mcq__why" hidden>Correct. A true triple for a different, also-correct pair should not be able to "beat" the one being scored.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="b">Low-confidence predictions, below some threshold<span class="lu-mcq__why" hidden>Filtering is not a confidence threshold, it changes the candidate pool the ranking is computed over.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="c">Test triples the model was never trained to predict<span class="lu-mcq__why" hidden>Both evaluations used the same test triples, the test set did not change, the ranking protocol did.</span></button>
+    </div>
+    <div class="lu-mcq__fb" hidden></div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. This locks in Part 2 before message passing changes the subject.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 14 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 3 · Message passing and GNNs" data-section="Message passing" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part three of six · ~16 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Embeddings score a pair. They never look at the graph around them. What if a node's neighbors are the signal?</h2>
+    <p class="lu-lead" style="max-width:44ch">Message passing: the general framework under every graph neural network.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 15 -->
+<section class="slide" data-label="Walkthrough: one round of message passing" data-section="Message passing" data-minutes="7">
+  <div class="lu-eyebrow">Diagnostic walkthrough</div>
+  <h2 class="lu-h2">An order's embedding, built from what surrounds it</h2>
+
+  <div class="lu-walk" data-label="Neighborhood aggregation, one order node">
+    <div class="lu-walk__view">
+      <div data-walk-step="1" data-caption-short="Start: raw features only"
+           data-caption="<b>Step 1, start.</b> Before any message passing, ul:po104's embedding is just its own raw features: order value, quantity, SLA days. It knows nothing about its carrier or its port yet.">
+        <div class="lu-board">
+          <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
+            <defs><marker id="lu-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs>
+          </svg>
+          <div class="lu-node lu-node--class" data-state="active" style="left:45%;top:48%">ul:po104</div>
+          <div class="lu-node lu-node--instance" data-state="muted" style="left:12%;top:15%">aramex</div>
+          <div class="lu-node lu-node--instance" data-state="muted" style="left:80%;top:15%">product</div>
+          <div class="lu-node lu-node--instance" data-state="muted" style="left:12%;top:80%">port</div>
+          <div class="lu-node lu-node--instance" data-state="muted" style="left:80%;top:80%">supplier</div>
+        </div>
+      </div>
+      <div data-walk-step="2" data-caption-short="Neighbors send messages"
+           data-caption="<b>Step 2, neighbors send messages.</b> Every directly connected node (its carrier, product, port, supplier) sends a message, a function of its own current embedding, along its edge.">
+        <div class="lu-board">
+          <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
+            <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-green-600)" d="M 180 130 L 430 220"/>
+            <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-green-600)" d="M 780 130 L 500 220"/>
+            <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-green-600)" d="M 180 320 L 430 250"/>
+            <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-green-600)" d="M 780 320 L 500 250"/>
+          </svg>
+          <div class="lu-node lu-node--class" data-state="active" style="left:45%;top:48%">ul:po104</div>
+          <div class="lu-node lu-node--instance" style="left:12%;top:15%">aramex</div>
+          <div class="lu-node lu-node--instance" style="left:80%;top:15%">product</div>
+          <div class="lu-node lu-node--instance" style="left:12%;top:80%">port</div>
+          <div class="lu-node lu-node--instance" style="left:80%;top:80%">supplier</div>
+        </div>
+      </div>
+      <div data-walk-step="3" data-caption-short="Aggregate and update"
+           data-caption="<b>Step 3, aggregate and update.</b> The four incoming messages are combined (sum, mean, or a learned function) into one vector, then combined with po104's own prior embedding to produce its new one. One round done.">
+        <div class="lu-board">
+          <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
+            <path class="lu-edge lu-edge--infer" style="color:var(--lu-green-600)" d="M 180 130 L 430 220"/>
+            <path class="lu-edge lu-edge--infer" style="color:var(--lu-green-600)" d="M 780 130 L 500 220"/>
+            <path class="lu-edge lu-edge--infer" style="color:var(--lu-green-600)" d="M 180 320 L 430 250"/>
+            <path class="lu-edge lu-edge--infer" style="color:var(--lu-green-600)" d="M 780 320 L 500 250"/>
+            <text class="lu-edge-label" x="330" y="300" style="fill:var(--lu-green-700)">new embedding = f(self, neighbors)</text>
+          </svg>
+          <div class="lu-node lu-node--class" data-state="active" style="left:45%;top:48%">ul:po104</div>
+          <div class="lu-node lu-node--instance" data-state="muted" style="left:12%;top:15%">aramex</div>
+          <div class="lu-node lu-node--instance" data-state="muted" style="left:80%;top:15%">product</div>
+          <div class="lu-node lu-node--instance" data-state="muted" style="left:12%;top:80%">port</div>
+          <div class="lu-node lu-node--instance" data-state="muted" style="left:80%;top:80%">supplier</div>
+        </div>
+      </div>
+      <div data-walk-step="4" data-caption-short="Stack layers for depth"
+           data-caption="<b>Step 4, stack layers.</b> One round only reaches direct neighbors. Two rounds reach neighbors of neighbors, the port's other suppliers become visible to po104, two hops away, exactly the congestion signal Part 5's leakage demo depends on.">
+        <div class="lu-board">
+          <svg class="lu-board__edges lu-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
+            <path class="lu-edge lu-edge--infer" style="color:var(--lu-ink-3)" d="M 180 130 L 430 220"/>
+            <path class="lu-edge lu-edge--infer" style="color:var(--lu-ink-3)" d="M 780 130 L 500 220"/>
+            <path class="lu-edge lu-edge--strong s-arrow" style="color:var(--lu-red-700)" d="M 180 320 L 430 250"/>
+            <text class="lu-edge-label" x="330" y="300" style="fill:var(--lu-red-700)">2 hops via port, now visible</text>
+          </svg>
+          <div class="lu-node lu-node--class" data-state="active" style="left:45%;top:48%">ul:po104</div>
+          <div class="lu-node lu-node--instance" data-state="muted" style="left:12%;top:15%">aramex</div>
+          <div class="lu-node lu-node--instance" data-state="muted" style="left:80%;top:15%">product</div>
+          <div class="lu-node lu-node--instance" data-state="active" style="left:12%;top:80%">port</div>
+          <div class="lu-node lu-node--instance" data-state="muted" style="left:80%;top:80%">supplier</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Seven minutes, this is the session's central mechanic. Step through once narrating each addition, then ask: what happens if you stack ten layers instead of two? The next slide's answer, oversmoothing, lands harder after this walkthrough than before it.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 16 -->
+<section class="slide" data-label="Depth, oversmoothing, and the two settings" data-section="Message passing" data-minutes="6">
+  <div class="lu-eyebrow">How far is too far</div>
+  <h2 class="lu-h1">More layers is not always a better model</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack" style="gap:var(--lu-s3)">
+      <dl class="lu-defs">
+        <dt>Oversmoothing</dt><dd>Stack enough layers and every node's embedding converges toward the same average, distinct nodes become indistinguishable, exactly the opposite of the goal.</dd>
+        <dt>Transductive</dt><dd>The model is trained on a fixed graph and only ever asked about nodes already in it. Most academic GNN benchmarks are this.</dd>
+        <dt>Inductive</dt><dd>The model must generalize to nodes or edges that did not exist at training time. A new order next week. Closer to the real deployment story.</dd>
+      </dl>
+    </div>
+    <div class="lu-callout" data-build="1">
+      <span class="lu-callout__label">Held for Part 5, with a real number</span>
+      <p class="lu-sub">Today's own leakage demo needed to switch from transductive to inductive evaluation before a real distribution shift in the data actually showed up as a model failure. That switch mattered more than the split itself.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. Do not resolve the transductive/inductive foreshadowing here, Part 5 pays it off with a real, surprising finding: the regime change alone was not enough, the evaluation protocol had to change too.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 17 -->
+<section class="slide slide--tint" data-label="Drill: message passing vocabulary" data-section="Message passing" data-minutes="4">
+  <div class="lu-eyebrow">Drill · complete the statement</div>
+  <div class="lu-card">
+    <span class="lu-card__label">Fill the blanks</span>
+    <div class="lu-blanks" data-qid="s6-blanks" data-label="Message passing and evaluation vocabulary">
+      <p>Stacking too many message-passing layers can cause <input class="lu-blank lu-blank--wide" data-answer="oversmoothing" data-label="Too many layers" placeholder="term">, where distinct nodes converge to similar embeddings.</p>
+      <p>A model that must generalize to nodes unseen at training time is being evaluated in the <input class="lu-blank" style="width:170px" data-answer="inductive" data-label="Unseen-node setting" placeholder="setting"> setting.</p>
+      <p>Ranking a true triple only against genuinely wrong candidates, not other known-true ones, is called <input class="lu-blank lu-blank--wide" data-answer="filtered ranking|filtered evaluation|filtering" data-label="Evaluation protocol" placeholder="protocol">.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. This checkpoint covers Parts 2 and 3 together, both feed directly into Part 4's heterogeneous story.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 18 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 4 · Heterogeneous graphs" data-section="Heterogeneous GNNs" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part four of six · ~25 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Every real enterprise graph has typed nodes and typed edges. Plain message passing was not built for that.</h2>
+    <p class="lu-lead" style="max-width:44ch">Two ways to teach it, run and compared for real, this session.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 19 -->
+<section class="slide" data-label="HeteroData, the real shape" data-section="Heterogeneous GNNs" data-minutes="5">
+  <div class="lu-eyebrow">Not described, printed</div>
+  <h2 class="lu-h1">Six node types, nine relation types, one real object</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="real print(data), this session's synthetic graph">
+<pre><code>HeteroData(
+  supplier={ x=[<span class="tok-num">10</span>, <span class="tok-num">4</span>] },
+  product={ x=[<span class="tok-num">12</span>, <span class="tok-num">6</span>] },
+  plant={ x=[<span class="tok-num">4</span>, <span class="tok-num">4</span>] },
+  port={ x=[<span class="tok-num">4</span>, <span class="tok-num">5</span>] },
+  carrier={ x=[<span class="tok-num">3</span>, <span class="tok-num">2</span>] },
+  order={ x=[<span class="tok-num">360</span>, <span class="tok-num">3</span>], y=[<span class="tok-num">360</span>] },
+  (order, ordered_from, supplier)=...
+  (order, shipped_via, carrier)=...
+  <span class="tok-com">-- 9 relation types total --</span>
+)</code></pre>
+    </div>
+    <div class="lu-stack">
+      <p class="lu-p">Exactly the six node types the syllabus names: supplier, product, order, plant, port, carrier. 360 orders, 170 late, 47.2 percent, the label this whole session predicts.</p>
+      <p class="lu-p">Every node and edge type traces back to a class or property Session 3's ontology defined. This object is the ontology, instantiated as tensors.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. The provided conversion utility in today's lab builds exactly this object, students do not hand-write it, class time goes to the models that consume it.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 20 -->
+<section class="slide" data-label="to_hetero, and the real crash it produced" data-section="Heterogeneous GNNs" data-minutes="7" style="--lu-s5:12px">
+  <div class="lu-eyebrow">A real bug, not a hypothetical one</div>
+  <h2 class="lu-h1">The one-line version, and the error it actually threw</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-stack" style="gap:var(--lu-s3)">
+      <div class="lu-code lu-code--sm" data-name="torch_geometric.nn.to_hetero, real signature">
+<pre><code><span class="tok-kw">def</span> <span class="tok-fn">to_hetero</span>(module, metadata,
+    aggr=<span class="tok-str">'sum'</span>, input_map=<span class="tok-kw">None</span>, debug=<span class="tok-kw">False</span>)
+<span class="tok-com"># metadata = HeteroData.metadata():
+#   (node_types, edge_types)</span></code></pre>
+      </div>
+      <p class="lu-p">Wrap an ordinary GraphSAGE module, hand it the graph's own metadata, and it rewrites the module per node and edge type automatically, via <code>torch.fx</code> tracing.</p>
+    </div>
+    <div class="lu-callout" data-build="1">
+      <span class="lu-callout__label">What actually happened, first attempt</span>
+      <p class="lu-sub"><code>ValueError: Cannot generate a graph node 'relu' for type 'order' since it does not exist.</code> Every edge was built order→neighbor, so <code>order</code> was never a message <b>destination</b>, its embedding was never produced. Fix: <code>T.ToUndirected()</code> before <code>to_hetero()</code>.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Seven minutes, the best gotcha of the session. This is a real, reproduced crash from building this lab, not an invented teaching example. It makes concrete exactly what Part 3's walkthrough showed: a node with no incoming messages has nothing to update.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 21 -->
+<section class="slide" data-label="RGCNConv, wired explicitly" data-section="Heterogeneous GNNs" data-minutes="6">
+  <div class="lu-eyebrow">The second way</div>
+  <h2 class="lu-h1">One relation-specific weight matrix per edge type</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="RGCNConv, real signature">
+<pre><code>RGCNConv.<span class="tok-fn">__init__</span>(self, in_channels, out_channels,
+  num_relations, num_bases=<span class="tok-kw">None</span>,
+  num_blocks=<span class="tok-kw">None</span>, aggr=<span class="tok-str">'mean'</span>, ...)
+
+RGCNConv.<span class="tok-fn">forward</span>(self, x,
+  edge_index, edge_type=<span class="tok-kw">None</span>)</code></pre>
+    </div>
+    <div class="lu-stack">
+      <p class="lu-p">Not a <code>HeteroData</code> object, a single homogeneous graph plus an integer <code>edge_type</code> per edge. Today's 9 relation types, with reverses added by hand for a fair comparison, became <code>num_relations=18</code>.</p>
+      <div class="lu-callout lu-callout--concept" data-build="1">
+        <span class="lu-callout__label">The parameter explosion, named for real</span>
+        <p class="lu-sub">One full weight matrix per relation id scales badly. <code>num_bases</code> and <code>num_blocks</code> are real, verified constructor arguments that exist specifically to regularize this away, basis- and block-diagonal decomposition.</p>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. This slide is the syllabus's "parameter explosion" bullet made concrete: eighteen relation ids, each wanting its own matrix, is exactly the pressure num_bases exists to relieve.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 22 -->
+<section class="slide" data-label="Two models, same split, real numbers" data-section="Heterogeneous GNNs" data-minutes="6">
+  <div class="lu-eyebrow">Run, not estimated</div>
+  <h2 class="lu-h1">to_hetero/GraphSAGE against explicit RGCNConv, head to head</h2>
+
+  <table class="lu-table" style="margin-top:var(--lu-s4)">
+    <thead><tr><th></th><th>to_hetero(GraphSAGE)</th><th>Explicit RGCNConv</th></tr></thead>
+    <tbody>
+      <tr><td>Test accuracy</td><td>0.600</td><td>0.582</td></tr>
+      <tr><td>Test F1</td><td>0.421</td><td>0.378</td></tr>
+      <tr><td>Trainable parameters</td><td>3,748</td><td>2,450</td></tr>
+      <tr><td>Best epoch (early stopped)</td><td>7</td><td>17</td></tr>
+    </tbody>
+  </table>
+  <p class="lu-caption" style="margin-top:var(--lu-s3)">Majority-class baseline: 0.528. Both models clear it. A fixed 100-epoch run without early stopping hit 100 percent train accuracy and a test score <em>below</em> baseline on this small graph, textbook overfitting, fixed with early stopping and a smaller hidden size.</p>
+  <template data-notes>
+    <p>Six minutes. Name the overfitting fix honestly, it is as real a finding as the headline numbers: a fixed epoch count on 360 nodes memorized the training set. Early stopping on a held-out validation slice is not boilerplate here, it is load-bearing.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 23 -->
+<section class="slide slide--tint" data-label="Poll: which model wins, and by how much" data-section="Heterogeneous GNNs" data-minutes="4" style="--lu-s5:12px">
+  <div class="lu-eyebrow">Room poll · 45 seconds</div>
+  <div class="lu-poll" style="gap:var(--lu-s3)" data-qid="s6-poll" data-seconds="45" data-answer="c" data-label="Whether the SAGE versus RGCN gap is real">
+    <p class="lu-mcq__q">Given the real test accuracy gap between to_hetero/GraphSAGE (0.600) and explicit RGCNConv (0.582) on the same task, same split: is this a meaningful architecture win, or noise?</p>
+    <div class="lu-mcq__opts">
+      <button class="lu-mcq__opt" style="padding:var(--lu-s3) var(--lu-s5)" type="button" data-key="a">A clear, meaningful win for GraphSAGE<span class="lu-mcq__why" hidden>A single-run gap this small, on a 55-example test set, is within normal run-to-run noise, not a demonstrated architecture advantage.</span></button>
+      <button class="lu-mcq__opt" style="padding:var(--lu-s3) var(--lu-s5)" type="button" data-key="b">Meaningless, the two architectures are provably identical<span class="lu-mcq__why" hidden>They are not identical, RGCNConv genuinely wires relation-specific weights differently. The claim to avoid is treating an 0.018 gap as proof either way.</span></button>
+      <button class="lu-mcq__opt" style="padding:var(--lu-s3) var(--lu-s5)" type="button" data-key="c">Too small a gap, on too small a test set, to call either way<span class="lu-mcq__why" hidden>Correct. Report both numbers, do not crown a winner from one run on 55 test examples. Part 5's multi-seed check is exactly this discipline applied to a bigger claim.</span></button>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Forty-five seconds. This poll rehearses the statistical honesty Part 5's leakage demo needs at scale: one run, one gap, is not evidence.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 24 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 5 · Leakage in graph splits" data-section="Leakage" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part five of six · ~26 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">A random split gave this session's model a great number. A random split is also the wrong question to ask a supply chain graph.</h2>
+    <p class="lu-lead" style="max-width:44ch">The part most published work gets wrong, reproduced honestly, with real numbers.</p>
+  </div>
+  <template data-notes><p>Ten seconds. This is the session's most important part, protect its time.</p></template>
+</section>
+
+<!-- ==================================================================== 25 -->
+<section class="slide" data-label="Why a random split lies to you" data-section="Leakage" data-minutes="5">
+  <div class="lu-eyebrow">The mechanism</div>
+  <h2 class="lu-h1">Randomness hides a distribution shift, it does not remove one</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack" style="gap:var(--lu-s3)">
+      <p class="lu-p">A supply chain changes over time: a port gets congested, a carrier's contract changes, a plant opens. A model trained on data from every period and tested on a random sample from every period has effectively seen the future during training.</p>
+      <ul class="lu-list">
+        <li>Split <b>edges</b> when the question is about relationships forming, not about which node exists.</li>
+        <li>Split <b>temporally</b> whenever time is a real dimension in the domain, which for a supply chain, it always is.</li>
+      </ul>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">Today's own reproduction</span>
+      <p class="lu-sub">A real port-congestion regime change was injected into this session's synthetic data specifically to make this failure mode visible, honestly, rather than asserted from a textbook.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Name the injected regime change plainly before the walkthrough, so the room understands the next slide's numbers come from a controlled, understood cause, not a mystery.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 26 -->
+<section class="slide" data-label="The real regime change" data-section="Leakage" data-minutes="5">
+  <div class="lu-eyebrow">What was actually injected</div>
+  <h2 class="lu-h1">Port of Hamburg, a genuine congestion event, 2026-01-01</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="real measured late rates, this session's synthetic graph">
+<pre><code>Port of Hamburg, BEFORE 2026-01-01:
+  late rate <span class="tok-num">41.7%</span>  (n=<span class="tok-num">36</span>)
+Port of Hamburg, AFTER  2026-01-01:
+  late rate <span class="tok-num">100.0%</span>  (n=<span class="tok-num">42</span>)
+All other ports, overall:
+  late rate <span class="tok-num">40.1%</span>  (n=<span class="tok-num">282</span>)</code></pre>
+    </div>
+    <div class="lu-callout" data-build="1">
+      <span class="lu-callout__label">Deliberately not given to the model directly</span>
+      <p class="lu-sub">No feature encodes the regime change itself. The only way a model can learn about it is by having actually seen orders from after the cutoff during training, exactly the thing a temporal split withholds.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Hamburg going from 41.7 to 100.0 percent late is not subtle, it is deliberately a strong, unmistakable signal, so the next slide's gap is attributable to the split protocol, not to a weak effect.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 27 -->
+<section class="slide slide--tint" data-label="The headline result, same protocol otherwise" data-section="Leakage" data-minutes="7" style="--lu-s5:12px">
+  <div class="lu-eyebrow">Same architecture, same hyperparameters, same seed, same n</div>
+  <h2 class="lu-h1">Random split beats its own baseline. Temporal split loses to its own.</h2>
+
+  <div class="lu-compare" data-a="Random split" data-b="Temporal split" data-start="50" style="margin-top:var(--lu-s3)">
+    <div class="lu-compare__stage" style="min-height:230px">
+      <div class="lu-compare__pane lu-compare__pane--a">
+<pre class="lu-mono" style="font-size:22px;line-height:1.7;margin:0">n_test:      108
+Baseline:    0.528
+GNN accuracy: 0.6111
+GNN F1:       0.4000
+Beats its own baseline.</pre>
+      </div>
+      <div class="lu-compare__pane lu-compare__pane--b">
+<pre class="lu-mono" style="font-size:22px;line-height:1.7;margin:0">n_test:      108
+Baseline:    0.583
+GNN accuracy: 0.4630
+GNN F1:       0.1471
+WORSE than its own baseline.</pre>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Seven minutes, the session's single most important number. The temporal model is not merely worse, it is worse than guessing "on time" or "late" every single time, once evaluated the honest way. A model this bad would still have shipped on the random split's number.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 28 -->
+<section class="slide" data-label="One run is not evidence, five seeds is closer" data-section="Leakage" data-minutes="5">
+  <div class="lu-eyebrow">The honest caveat, run for real</div>
+  <h2 class="lu-h1">The exact gap is noisy. The qualitative story is not.</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="real 5-seed robustness check">
+<pre><code>seed=0  gap=+<span class="tok-num">0.1574</span>   seed=1  gap=+<span class="tok-num">0.0370</span>
+seed=2  gap=+<span class="tok-num">0.1019</span>   seed=3  gap=+<span class="tok-num">0.1204</span>
+seed=4  gap=<span class="tok-num">-0.0093</span>
+Temporal acc &lt;= its baseline: <span class="tok-num">5/5</span> seeds
+Random acc   &lt;= its baseline: <span class="tok-num">2/5</span> seeds</code></pre>
+    </div>
+    <div class="lu-stack">
+      <p class="lu-p">One seed even shows a small negative gap, report that honestly rather than hiding it. The magnitude varies run to run on a small graph.</p>
+      <div class="lu-callout lu-callout--concept" data-build="1">
+        <span class="lu-callout__label">What stays true in all five</span>
+        <p class="lu-sub">The temporally-split model never once beat its own trivial majority-class baseline. The randomly-split model usually did. That asymmetry, not any single accuracy figure, is the defensible finding.</p>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. This is the standard a team's own Milestone 2 evaluation should be held to: not one lucky number, a claim that survives being checked more than once.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 29 -->
+<section class="slide" data-label="What it actually took to see the gap" data-section="Leakage" data-minutes="5">
+  <div class="lu-eyebrow">The part a textbook skips</div>
+  <h2 class="lu-h1">A real regime change alone was not enough</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack" style="gap:var(--lu-s3)">
+      <p class="lu-p">The first attempt: a plain random-vs-temporal relabeling of a static graph, trained and evaluated transductively (the whole graph visible throughout). <b>It showed no gap at all.</b></p>
+      <p class="lu-p">A transductive model's message passing sees every node's features regardless of which split assigned a label, so relabeling alone withholds nothing structural.</p>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">What actually made it work</span>
+      <p class="lu-sub">Switch to inductive evaluation: the train-time graph contains only train-period orders and edges, test orders are added only at evaluation time. Only then does withholding "the future" have any structural effect at all.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. This connects directly back to Part 3's transductive/inductive definitions, and it is the single most transferable lesson in the session: leakage is a property of the evaluation protocol, a plausible-sounding split on a static graph can still leak everything.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 30 -->
+<section class="slide" data-label="The honest scorecard, all three models" data-section="Leakage" data-minutes="6">
+  <div class="lu-eyebrow">Closing Part 1's open question</div>
+  <h2 class="lu-h1">Graph models against the tabular baseline, same split, same task</h2>
+
+  <table class="lu-table" style="margin-top:var(--lu-s4)">
+    <thead><tr><th>Model</th><th>Test accuracy</th><th>Test F1</th></tr></thead>
+    <tbody>
+      <tr><td>to_hetero(GraphSAGE)</td><td>0.600</td><td>0.421</td></tr>
+      <tr><td>Explicit RGCNConv</td><td>0.582</td><td>0.378</td></tr>
+      <tr><td>XGBoost, flattened join</td><td>0.564</td><td><b>0.556</b></td></tr>
+    </tbody>
+  </table>
+  <p class="lu-caption" style="margin-top:var(--lu-s3)">Genuinely mixed, not cherry-picked either way: both graph models edge out XGBoost on accuracy, XGBoost has the best F1, the better balance on the minority "late" class. XGBoost's own top two features, found automatically: the two Hamburg one-hot columns.</p>
+  <template data-notes>
+    <p>Six minutes. Say plainly: on this task, a well-tuned gradient-boosted tree is competitive with, and by one metric better than, both graph models, because the strongest signal was one categorical column away all along. That is Part 1's question, answered honestly rather than resolved in the graph's favor by default.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 31 -->
+<section class="slide slide--tint" data-label="Discussion: whose model lost, and why that is fine" data-section="Leakage" data-minutes="4" style="--lu-s5:12px">
+  <div class="lu-eyebrow">Show of hands, no scoring, 45 seconds</div>
+  <h2 class="lu-h1" style="max-width:44ch">Both graph models here lose to XGBoost on F1, the metric that matters most for a rare "late" class. What should a Milestone 2 report do with that?</h2>
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-callout lu-callout--neutral">
+      <span class="lu-callout__label">Tempting, and wrong</span>
+      <p class="lu-sub">Keep tuning the graph model until it wins, then report that. This is exactly how a random-split-shaped mistake happens again, optimizing against the metric you want rather than reporting the one you got.</p>
+    </div>
+    <div class="lu-callout lu-callout--concept">
+      <span class="lu-callout__label">The right call</span>
+      <p class="lu-sub">Report it as-is, with an honest explanation of why. A graph model losing to a strong tabular baseline, explained honestly, is a legitimate and gradeable result per the syllabus, not a failure to hide.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Forty-five seconds. This is the discussion-and-wrap segment's own question, asked early so the room has already committed to a position before the open discussion. Ask for a show of hands rather than a formal poll here.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 32 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 6 · Closing the loop" data-section="Closing" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part six of six · ~8 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Everything above runs, for real, against your own team's data in the next 95 minutes.</h2>
+    <p class="lu-lead" style="max-width:44ch">The lab, then the clinic, then Session 7's reading list.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 33 -->
+<section class="slide" data-label="What is next: the agentic query layer" data-section="Closing" data-minutes="3">
+  <div class="lu-eyebrow">Handoff to Session 7</div>
+  <h2 class="lu-h2">A trained model is not yet something anyone can ask a question</h2>
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-stack">
+      <p class="lu-p">Session 7 puts a natural-language query layer in front of everything built so far, the graph, the shapes, and today's models, and opens the deployment and open-problems discussion.</p>
+    </div>
+    <div class="lu-callout" data-build="1">
+      <span class="lu-callout__label">Reading, issued now</span>
+      <p class="lu-sub">Hogan et al., Chapter 5, Inductive Knowledge. Kejriwal et al., Chapter 10, Representation Learning for Knowledge Graphs. Read before Session 7.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Three minutes. Keep this brief, its job is to name what is coming, not to teach it early.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 34 -->
+<section class="slide" data-label="Lab brief · 95 minutes, your own topic" data-section="Closing" data-minutes="5">
+  <div class="lu-eyebrow">Hands-on lab</div>
+  <h2 class="lu-h1">Milestone 2, against your own capstone data</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <ol class="lu-list lu-list--num lu-list--tight">
+      <li>Build your <code>HeteroData</code> object with the provided conversion utility, over your own team's integrated graph.</li>
+      <li>Train the late-delivery classifier both ways, <code>to_hetero</code>/GraphSAGE and explicit RGCNConv, compare.</li>
+      <li>Train TransE link prediction with <code>torch_geometric.nn.kge</code>, then add PyKEEN for filtered MRR and Hits@k.</li>
+      <li>Build a temporal split, rerun both classifiers, and compare honestly against the random-split numbers.</li>
+      <li>Establish the XGBoost or scikit-learn baseline on the flattened join, and state plainly whether the graph model beat it.</li>
+    </ol>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">This is Milestone 2</span>
+        <p class="lu-sub">Due at the close of this lab: both trained models, a leakage-free temporal split, a tabular baseline, and a written evaluation stating the result's real limits.</p>
+      </div>
+      <p class="lu-caption">The clinic right after this reviews specifically whether your split leaks, bring the split, not just the final numbers.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Circulate. The most common blocker will be to_hetero's real error from this lecture, order-shaped node types with no reverse edges, watch for it and point straight back to ToUndirected() rather than letting a team debug from scratch.</p>
+    <ul><li>Second most common: a random split that looks great and a team that wants to stop there. Ask for the temporal number before signing off.</li></ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 35 -->
+<section class="slide slide--tint" data-label="Clinic and wrap" data-section="Wrap" data-minutes="8">
+  <div class="lu-eyebrow">Clinic and wrap · 30 minutes</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <h2 class="lu-h2">15-minute clinic: does your split leak</h2>
+      <p class="lu-p">Each team reviews its own Milestone 2 evaluation design with a neighboring team, specifically: is the split temporal where time matters, and is it genuinely inductive.</p>
+      <p class="lu-p" style="margin-top:var(--lu-s4)">Then 15 minutes of open discussion: whose graph model lost to the tabular baseline, and why that is a legitimate, reportable result rather than a failure.</p>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-card">
+        <span class="lu-card__label">Next session</span>
+        <h3 class="lu-h3">Session 7 · The Agentic Query Layer</h3>
+        <p class="lu-sub">Deployment and open problems. No milestone due, Milestone 2 closed today.</p>
+      </div>
+      <div class="lu-row">
+        <span class="lu-tag">Milestone 2 due today</span>
+        <span class="lu-caption" style="flex:1">Submit before leaving the room, per the assessment table.</span>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Thirty minutes total. Keep the clinic focused narrowly on leakage, not a full model review, that is what the written evaluation is for. The open discussion is where the room's honesty about losing to a baseline actually gets modeled, by the instructor first if needed.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 36 -->
+<section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="4">
+  <div class="lu-eyebrow">Self-check</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <h2 class="lu-h2">How you did on this session's questions</h2>
+      <div data-score></div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">Studying alone?</span>
+        <p class="lu-sub">Press <kbd>S</kbd> for study mode: every popup becomes an inline note, every reveal opens, answers fill in. Press <kbd>S</kbd> again to return.</p>
+      </div>
+      <div class="lu-card lu-card--flat">
+        <span class="lu-card__label">Also available</span>
+        <ul class="lu-list lu-list--tight">
+          <li><kbd>O</kbd> contents · <kbd>/</kbd> search this lecture · <kbd>?</kbd> all shortcuts</li>
+          <li><b>Handout</b> in the bottom bar prints one page per slide with the instructor notes attached.</li>
+          <li>Any slide is linkable: add <code>#/12</code> to the address to share slide 12.</li>
+        </ul>
+      </div>
+      <p class="lu-caption">Your answers and position are stored in this browser only. Clearing them affects nothing else.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Close the session here, so students leave knowing where the self-study affordances are.</p>
+  </template>
+</section>
+
+</div><!-- /stage -->
+</div><!-- /deck -->
+
+<script src="../assets/lu-deck.js?v=1.1.0" defer></script>
+</body>
+</html>
