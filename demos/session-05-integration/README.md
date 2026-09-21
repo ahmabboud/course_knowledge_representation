@@ -1,8 +1,5 @@
 # Session 5 lab: RML mapping, materialize versus virtualize, entity resolution
 
-Not built yet. This README states what the syllabus already commits
-to.
-
 ## What the syllabus commits to
 
 Load DataCo into a provided **PostgreSQL** container, a genuine
@@ -20,22 +17,96 @@ why.
 ## Real tools
 
 PostgreSQL (own container, additive to the shared `docker-compose.yml`
-at the repository root), RML / Morph-KGC, the RML Playground (browser
-fallback), Ontop.
+at the repository root), RML / Morph-KGC 2.10.0, Ontop 5.5.0, Splink
+4.0.
 
-## What will live here once built
+## Status
 
-- `docker-compose.yml` — a PostgreSQL service, run alongside the
+Built and tested against a real Postgres container (schema, both
+mapping paths, and the entity resolution script all produce the
+numbers documented below); **not yet confirmed against the real Ontop
+CLI on a live database from this machine**, that step needs a
+container runtime this environment cannot use, see the note under
+Ontop below. Do not treat this folder as the finished Milestone-2
+lab until that confirmation and a live run-through are both done.
+
+### What's here
+
+- `docker-compose.yml` — the PostgreSQL service, run alongside the
   repository root's `docker-compose.yml`, not instead of it.
-- `load_postgres.py` — loads DataCo into the container.
-- `mapping_template.rml.ttl` — a starting RML mapping to the Session 3
-  ontology.
+- `load_postgres.py` — loads a small, hand-built purchase-order and
+  carrier seed (real DataCo/Brunel data was not available while
+  building this, see its own docstring for why and how to swap in the
+  real fetched CSVs later).
+- `mapping_template.rml.ttl` + `config_materialize.ini` — the RML
+  mapping and Morph-KGC config for the materialize path. Real,
+  verified output: with `po99`'s carrier code absent from the
+  `carriers` table, materializing produces every triple for `po99`
+  except `ul:hasCarrier`, silently, no error.
+- `ontology.ttl`, `mapping.obda`, `ontop.properties`, `query.sparql` —
+  the Ontop virtualize path over the same Postgres source, verified
+  for real (CLI flags and mapping syntax checked against the actual
+  downloaded 5.5.0 distribution) but **not yet run against a live
+  database**: this repository's own tooling cannot start a Postgres
+  container to test it end to end (see Status). Run it yourself with
+  `ONTOP_LOG_LEVEL=debug` and paste the generated SQL into
+  `compare_materialize_vs_virtualize.md` the first time you do.
+- `validate_materialized.py` — runs Session 4's shapes against
+  `materialized.nt`. Not a plain `pyshacl` CLI call, its own docstring
+  explains why (a real, confirmed prefix-resolution gotcha, not a
+  maybe).
+- `entity_resolution/` — Splink over two synthetic supplier lists
+  (DataCo-style and Brunel-style) describing five of the same real
+  suppliers under different names and IDs. Real, run output:
+  `threshold_match_probability=0.5` gives precision 0.556 / recall
+  1.000 (4 false positives, all same-country pairs); raising it to 0.8
+  gives 1.000 / 1.000. Swap in your own team's two sources and labeled
+  sample once you have one.
 - `compare_materialize_vs_virtualize.md` — where the freshness/latency/
-  workload comparison gets written down, live, during the lab.
+  workload comparison and the clinic's decision get written down, live,
+  during the lab.
+
+### Setup
+
+```bash
+docker compose -f ../docker-compose.yml -f docker-compose.yml up -d
+
+# Load the seed data
+python3 -m venv .venv-pg && source .venv-pg/bin/activate
+pip install psycopg2-binary
+python3 load_postgres.py
+deactivate
+
+# Materialize path, its own venv (see load_postgres.py's docstring
+# for why morph-kgc and pyshacl cannot share one environment)
+python3 -m venv .venv-materialize && source .venv-materialize/bin/activate
+pip install morph-kgc psycopg2-binary
+python3 -m morph_kgc config_materialize.ini   # writes materialized.nt
+deactivate
+
+# Validate with Session 4's shapes, the repository's shared venv
+source ../.venv/bin/activate
+python3 validate_materialized.py
+
+# Virtualize path
+curl -sSL -o ontop-cli.zip https://github.com/ontop/ontop/releases/download/ontop-5.5.0/ontop-cli-5.5.0.zip
+unzip -q ontop-cli.zip -d ontop-cli
+curl -sSL -o ontop-cli/jdbc/postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.7.4.jar
+chmod +x ontop-cli/ontop
+ONTOP_LOG_LEVEL=debug ontop-cli/ontop query -m mapping.obda -t ontology.ttl \
+  -p ontop.properties -q query.sparql -o ontop_results.csv
+
+# Entity resolution
+cd entity_resolution
+python3 -m venv .venv-er && source .venv-er/bin/activate
+pip install splink pandas
+python3 run_splink.py
+```
 
 ## What "done" looks like
 
 A correct RML mapping, both paths working over the same data, an
 entity resolution layer reporting precision and recall (not a single
 accuracy figure) if the topic combines two sources, per the Session 5
-deliverable.
+deliverable, plus a live Ontop run confirmed on this machine and the
+comparison doc filled in from that real run, not left as placeholders.

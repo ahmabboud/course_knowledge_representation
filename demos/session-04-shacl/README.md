@@ -1,7 +1,11 @@
 # Session 4 lab: the SHACL shape graph, Milestone 1
 
 Not built yet. This README states what the syllabus already commits
-to.
+to. One exception: `shapes_template.ttl` in this folder is a small,
+real, tested starter shape (added to unblock Session 5's lab, which
+needs to run "Session 4's shapes" against its own mapped output), not
+the full milestone build below. See its own header comment before
+treating it as more than that.
 
 ## What the syllabus commits to
 

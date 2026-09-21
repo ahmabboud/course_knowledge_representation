@@ -1,0 +1,46 @@
+# Minimal, real starter shape, added only to unblock Session 5's lab
+# (which needs to run "Session 4's shapes" against its own mapped
+# output). This is NOT the full Milestone 1 build: the syllabus asks
+# for one shape per entry in each team's own Session 1 constraint
+# inventory, plus provenance annotations, a version IRI, and a CI
+# gate (see this folder's own README, "What will live here once
+# built"). That per-team, constraint-inventory-driven build is still
+# open. Extend this file with your own team's inventory rather than
+# replacing it outright, the PurchaseOrder shape below is real and
+# tested (pySHACL 0.40.1, both a MinCountConstraintComponent and the
+# SPARQLConstraint below fire correctly against real data with a
+# missing or backwards-dated field).
+@prefix ul: <https://ul.edu.lb/kr/scm#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ul:PurchaseOrderShape
+    a sh:NodeShape ;
+    sh:targetClass ul:PurchaseOrder ;
+    sh:property [
+        sh:path ul:hasCarrier ;
+        sh:class ul:Carrier ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "hasCarrier must point to a declared ul:Carrier instance." ;
+    ] ;
+    sh:property [
+        sh:path ul:dispatchDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "dispatchDate is mandatory and must be an xsd:date." ;
+    ] ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "deliveryDate must not be before dispatchDate." ;
+        sh:prefixes ul: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this ul:dispatchDate ?d .
+                $this ul:deliveryDate ?r .
+                FILTER (?r < ?d)
+            }
+        """ ;
+    ] .

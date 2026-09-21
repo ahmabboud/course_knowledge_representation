@@ -1,0 +1,14 @@
+# The same question, asked twice: once against materialized.ttl (any
+# SPARQL engine, e.g. rdflib or Fuseki), once through Ontop straight
+# against Postgres. po99 has no resolvable carrier, so it is silently
+# absent from both result sets, that gap is what Session 4's shapes
+# are for.
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT ?po ?carrierName ?dispatchDate ?deliveryDate WHERE {
+  ?po a ul:PurchaseOrder ;
+      ul:hasCarrier ?carrier ;
+      ul:dispatchDate ?dispatchDate ;
+      ul:deliveryDate ?deliveryDate .
+  ?carrier ul:carrierName ?carrierName .
+}
+ORDER BY ?po

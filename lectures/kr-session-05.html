@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en" class="lu-deck-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integrating Operational Data · Knowledge Representation, Session 5</title>
+<meta name="description" content="Session 5 of Knowledge Representation, MSc, Lebanese University. R2RML and RML, materialize versus virtualize, mapping design patterns, and entity resolution with Splink.">
+<meta name="theme-color" content="#96122B">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/lu.css?v=1.1.0">
+</head>
+
+<body
+  data-deck-id="kr-s05"
+  data-course="Knowledge Representation"
+  data-session="Session 5 of 8"
+  data-duration="215"
+  data-app-root="../"
+  data-unit="Lebanese University · MSc">
+
+<a class="lu-skip" href="#slide-2">Skip to the first content slide</a>
+
+<div class="deck">
+<div class="deck__stage">
+
+<!-- ==================================================================== 01 -->
+<section class="slide slide--night" data-chrome="none" data-label="Title" data-section="Opening" data-minutes="2">
+  <div class="slide__body" style="justify-content:space-between">
+    <div class="lu-row" style="justify-content:space-between;align-items:flex-start">
+      <div class="lu-lockup">
+        <span class="lu-lockup__mark">LU</span>
+        <span class="lu-lockup__text">
+          <span class="lu-lockup__name">Lebanese University</span>
+          <span class="lu-lockup__unit">Faculty of Sciences · MSc Computer Science</span>
+        </span>
+      </div>
+      <div class="lu-tag lu-tag--red" style="background:transparent;color:#FF9AA7;border-color:#96122B">Module 3 · Integration</div>
+    </div>
+
+    <div class="lu-stack">
+      <div class="lu-eyebrow">Knowledge Representation · Session 5 of 8</div>
+      <h1 class="lu-display" style="max-width:26ch">Integrating Operational Data</h1>
+      <p class="lu-lead" style="max-width:44ch">Every graph you have queried so far was loaded once, by hand. Today it is connected to a live database, and the moment two sources meet, some of their records turn out to be the same thing.</p>
+    </div>
+
+    <div class="lu-row" style="justify-content:space-between;font-size:var(--lu-t-caption);color:var(--lu-on-night-2)">
+      <span>~215 minutes · lecture, lab, and a team checkpoint</span>
+      <span>Press <kbd>&rarr;</kbd> to begin · <kbd>?</kbd> for shortcuts</span>
+    </div>
+  </div>
+  <template data-notes>
+    <p>This session also runs long, by design: two mapping engines and an entity-resolution tool, each run for real, is genuinely more than 180 minutes of honest content. Say that at the top.</p>
+    <ul>
+      <li>No milestone is due today. Milestone 1 was Session 4; Milestone 2 is Session 6. Today's checkpoint is a 10-minute architecture decision, not a submission.</li>
+    </ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 02 -->
+<section class="slide" data-label="Where we are in the architecture" data-section="Opening" data-minutes="4">
+  <div class="lu-eyebrow">Recap</div>
+  <h2 class="lu-h1" style="max-width:46ch">Session 4 gave the graph a <em style="font-style:italic;color:var(--lu-red-700)">floor</em>. It still assumed the graph was already there.</h2>
+
+  <ul class="lu-pipeline" style="margin-top:var(--lu-s5)" data-build="1" data-build-style="dim">
+    <li data-state="done"><span class="lu-pipeline__n">01</span><span class="lu-pipeline__t">Sources</span><span class="lu-pipeline__d">DataCo, Brunel</span></li>
+    <li data-state="done"><span class="lu-pipeline__n">02</span><span class="lu-pipeline__t">Profiling</span><span class="lu-pipeline__d">Constraint inventory</span></li>
+    <li data-state="done"><span class="lu-pipeline__n">03</span><span class="lu-pipeline__t">Graph</span><span class="lu-pipeline__d">RDF, IRIs, SPARQL</span></li>
+    <li data-state="done"><span class="lu-pipeline__n">04</span><span class="lu-pipeline__t">Ontology</span><span class="lu-pipeline__d">OWL on IOF SCRO</span></li>
+    <li data-state="done"><span class="lu-pipeline__n">05</span><span class="lu-pipeline__t">Constraints</span><span class="lu-pipeline__d">SHACL, Milestone 1</span></li>
+    <li data-state="active"><span class="lu-pipeline__n">06</span><span class="lu-pipeline__t">Mappings</span><span class="lu-pipeline__d">You are here</span></li>
+    <li data-state="muted"><span class="lu-pipeline__n">07</span><span class="lu-pipeline__t">Learning</span><span class="lu-pipeline__d">GNN · Session 6</span></li>
+    <li data-state="muted"><span class="lu-pipeline__n">08</span><span class="lu-pipeline__t">Access</span><span class="lu-pipeline__d">Text to SPARQL · 7</span></li>
+  </ul>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s6)">
+    <div class="lu-callout lu-callout--neutral" data-build="2">
+      <span class="lu-callout__label">What you brought to this room</span>
+      <p class="lu-sub">A SHACL shape graph that validates <code>ul:po88</code> cleanly and catches exactly what it should on <code>ul:po99</code>: a broken carrier reference, a delivery before its dispatch.</p>
+    </div>
+    <div class="lu-callout" data-build="3">
+      <span class="lu-callout__label">What every example so far has skipped</span>
+      <p class="lu-sub">Where did <code>ul:po88</code> come from? In every session up to now, you or a script typed it in, or loaded a CSV once. <b>Today the graph is generated, live, from a real relational database.</b></p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. The honesty of this recap is the hook: every worked example this course has used was hand-placed. Naming that plainly earns the room's attention for what changes today.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 03 -->
+<section class="slide slide--tint" data-label="Session objective and shape" data-section="Opening" data-minutes="3">
+  <div class="lu-eyebrow">Objective</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <p class="lu-statement">By the end of today you can connect a real database to your ontology two ways, know when to pick each, and resolve duplicate entities from two sources describing the same thing.</p>
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">No milestone today</span>
+        <p class="lu-sub">The 10-minute clinic is a decision checkpoint, not a submission: your team states which integration architecture it will use, and why.</p>
+      </div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-card">
+        <span class="lu-card__label">How the ~215 minutes are spent</span>
+        <ul class="lu-layers">
+          <li><span class="lu-layers__name">Lecture · ~95 min</span><span class="lu-layers__note">R2RML/RML, materialize vs. virtualize, mapping patterns, entity resolution</span></li>
+          <li><span class="lu-layers__name">Hands-on lab · 95 min</span><span class="lu-layers__note">Postgres, Morph-KGC, Ontop, Session 4's shapes, Splink</span></li>
+          <li><span class="lu-layers__name">Clinic and wrap · 25 min</span><span class="lu-layers__note">Team decision, then what SHACL caught that the reasoner did not</span></li>
+        </ul>
+      </div>
+      <p class="lu-caption">Reading before next session: Sequeda and Lassila, Ch. 2 to 3. Kejriwal et al., Ch. 8, Instance Matching.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Name the shift explicitly: every SPARQL query before today ran against a graph someone had already built. Today the graph itself is the output of a pipeline you configure, and that pipeline can be wrong in its own, new ways.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 04 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 1 · The correspondence problem" data-section="The integration problem" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part one of six · ~9 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Your ontology describes classes and properties. DataCo's database describes tables and columns. Who says these are the same thing?</h2>
+    <p class="lu-lead" style="max-width:44ch">Nobody, until you write it down. That declaration is today's whole subject.</p>
+  </div>
+  <template data-notes><p>Ten seconds. Dividers are punctuation.</p></template>
+</section>
+
+<!-- ==================================================================== 05 -->
+<section class="slide" data-label="The correspondence problem, stated properly" data-section="The integration problem" data-minutes="5">
+  <div class="lu-eyebrow">Two models of the same reality</div>
+  <h2 class="lu-h1" style="max-width:40ch">A conceptual model and an operational one, and nothing connecting them yet</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack" style="gap:var(--lu-s3)">
+      <p class="lu-p">Your ontology says a <code>ul:PurchaseOrder</code> has a <code>ul:hasCarrier</code>. DataCo's real schema says a row in <code>purchase_orders</code> has a <code>carrier_code</code> column that is a foreign key into <code>carriers</code>.</p>
+      <ul class="lu-list">
+        <li>Both are correct descriptions of the same business fact.</li>
+        <li>Neither format understands the other. A table has no notion of a class hierarchy; an ontology has no notion of a foreign key.</li>
+      </ul>
+    </div>
+    <div class="lu-stack" style="gap:var(--lu-s3)" data-build="1">
+      <div class="lu-callout">
+        <span class="lu-callout__label">The gap</span>
+        <p class="lu-sub">Something has to declare, explicitly, that <code>purchase_orders.carrier_code</code> pointing at <code>carriers.carrier_code</code> <b>means</b> <code>ul:hasCarrier</code>.</p>
+      </div>
+      <div class="lu-callout lu-callout--concept" data-build="2">
+        <span class="lu-callout__label">Today's answer</span>
+        <p class="lu-sub">A mapping language. Two real, current ones: R2RML, a stable W3C Recommendation, and RML, its actively developed successor.</p>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. This is the entire session compressed into one idea: nothing here is hard once you accept that the correspondence must be written down somewhere, by someone, and that "somewhere" is a mapping file, not a comment or a convention.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 06 -->
+<section class="slide" data-label="What is genuinely new about today" data-section="The integration problem" data-minutes="4">
+  <div class="lu-eyebrow">Honest framing</div>
+  <h2 class="lu-h1">The graph stops being a snapshot</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <ul class="lu-list">
+        <li>Sessions 2 through 4 all used a graph that was loaded <b>once</b>, then queried, reasoned over, and validated as a fixed thing.</li>
+        <li>A real enterprise database changes constantly. A mapping either has to be re-run (materialize) or the graph has to not really exist at all, and be computed on demand (virtualize).</li>
+        <li>Both are legitimate, real, production architectures. Today you build one of each, over the same data, and compare them honestly.</li>
+      </ul>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">Why this is not academic</span>
+      <p class="lu-sub">Your capstone's real data is not a CSV you exported once. It is a live source. The architecture decision you make in today's clinic is one your project actually has to live with.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. Land the point that "materialize versus virtualize" is not a textbook dichotomy, it is a decision every team makes for real in the next ten minutes of class time.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 07 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 2 · R2RML and RML" data-section="R2RML and RML" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part two of six · ~24 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Write the correspondence once. Both engines you use today read the same file format.</h2>
+    <p class="lu-lead" style="max-width:44ch">Triples maps, logical sources, subject and predicate-object maps: four pieces, reused everywhere.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 08 -->
+<section class="slide" data-label="R2RML and RML, standards status" data-section="R2RML and RML" data-minutes="5">
+  <div class="lu-eyebrow">Know what you are actually standing on</div>
+  <h2 class="lu-h1">One stable Recommendation, one still-moving successor</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <div class="lu-card">
+        <span class="lu-card__label">R2RML</span>
+        <h3 class="lu-h3">W3C Recommendation, 2012</h3>
+        <p class="lu-sub">Relational-to-RDF only. Stable, unlikely to change, what Ontop's native mapping format is built on.</p>
+      </div>
+    </div>
+    <div class="lu-stack" data-build="1">
+      <div class="lu-card">
+        <span class="lu-card__label">RML</span>
+        <h3 class="lu-h3">Final Community Group Reports, 2025</h3>
+        <p class="lu-sub">A superset of R2RML covering CSV, JSON, XML and more. A Working Group to formalize it has been proposed but is not yet chartered: the syntax you write today is real and current, but not frozen the way R2RML is.</p>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. This is the same discipline as Session 4's GitHub Actions version-pin note: say plainly what is settled and what is not, rather than presenting a Community Group Report as if it had Recommendation-level permanence.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 09 -->
+<section class="slide" data-label="TriplesMap and logical source" data-section="R2RML and RML" data-minutes="5">
+  <div class="lu-eyebrow">The two required pieces</div>
+  <h2 class="lu-h1">Where the rows come from, and what triples they become</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="the shape every mapping starts from">
+<pre><code><span class="tok-fn">&lt;#CarrierMap&gt;</span> <span class="tok-kw">a</span> rr:TriplesMap ;
+  rml:logicalSource [
+    rr:tableName <span class="tok-str">"carriers"</span> ;
+  ] ;
+  rr:subjectMap [ <span class="tok-com">...</span> ] ;
+  rr:predicateObjectMap [ <span class="tok-com">...</span> ] .</code></pre>
+    </div>
+    <ul class="lu-list lu-list--tight">
+      <li>A <b>TriplesMap</b> produces zero or more triples, one iteration per row.</li>
+      <li>Its <b>logical source</b> says where the rows come from: a table name, a SQL query, or, in RML, a CSV or JSON file.</li>
+      <li>Everything else in a mapping fills in what happens <em>per row</em>.</li>
+    </ul>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Keep this one slide entirely mechanical, the interesting design decisions come two slides from now.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 10 -->
+<section class="slide" data-label="Subject maps and predicate-object maps" data-section="R2RML and RML" data-minutes="5">
+  <div class="lu-eyebrow">Turning one row into triples</div>
+  <h2 class="lu-h1">A URI template, and one map per column</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="carriers(carrier_code, carrier_name)">
+<pre><code>rr:subjectMap [
+  rr:template <span class="tok-str">"https://.../ul#{carrier_code}"</span> ;
+  rr:class <span class="tok-fn">ul:Carrier</span>
+] ;
+rr:predicateObjectMap [
+  rr:predicate <span class="tok-fn">ul:carrierName</span> ;
+  rr:objectMap [ rml:reference <span class="tok-str">"carrier_name"</span> ]
+] .</code></pre>
+    </div>
+    <ul class="lu-list lu-list--tight">
+      <li>The <b>subject map</b> builds one URI per row, using a column value inside <code>{ }</code>, and can assert an <code>rr:class</code> at the same time.</li>
+      <li>Each <b>predicate-object map</b> is one column, mapped to one property, on that same subject.</li>
+      <li>A row with a <code>NULL</code> in a mapped column simply produces no triple for that property. Nothing errors.</li>
+    </ul>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Plant the NULL behaviour here deliberately, it is the exact mechanism behind the real bug two slides in Part 3 turns on.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 11 -->
+<section class="slide" data-label="Foreign key to object property, tested for real" data-section="R2RML and RML" data-minutes="6">
+  <div class="lu-eyebrow">The pattern you will actually use</div>
+  <h2 class="lu-h1">rr:parentTriplesMap, the mapping-language version of a JOIN</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="this exact mapping was run, this session, against real Postgres">
+<pre><code>rr:predicateObjectMap [
+  rr:predicate <span class="tok-fn">ul:hasCarrier</span> ;
+  rr:objectMap [
+    rr:parentTriplesMap <span class="tok-fn">&lt;#CarrierMap&gt;</span> ;
+    rr:joinCondition [
+      rr:child <span class="tok-str">"carrier_code"</span> ;
+      rr:parent <span class="tok-str">"carrier_code"</span> ] ] ] .</code></pre>
+    </div>
+    <ul class="lu-list lu-list--tight">
+      <li>Instead of a literal, the object comes from <b>another TriplesMap's subject</b>, matched by the join condition.</li>
+      <li>This is exactly how a foreign key becomes an object property, the first of the four mapping patterns Part 4 covers in depth.</li>
+      <li>Materialized for real with Morph-KGC this session, against the same <code>po88</code> example Session 4 used.</li>
+    </ul>
+  </div>
+  <template data-notes>
+    <p>Six minutes. This is not a textbook example, it is the mapping that produced the real output the next Part shows. Say that plainly.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 12 -->
+<section class="slide" data-label="RML modules beyond core" data-section="R2RML and RML" data-minutes="4">
+  <div class="lu-eyebrow">What most teaching material skips</div>
+  <h2 class="lu-h1">Logical views: a mapping source that is itself a query</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <p class="lu-p">Core RML maps directly against a table. The <b>logical views</b> module lets the logical source be an arbitrary SQL query instead, joining or reshaping data before the mapping ever sees it.</p>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">Why it matters</span>
+      <p class="lu-sub">A denormalized report table, or a join across three tables the schema never modeled as one relationship, becomes mappable without touching the database schema itself.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. Name this as a real gap in most RML tutorials, which stop at core, so the room knows it exists before they need it for a messier real schema.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 13 -->
+<section class="slide slide--tint" data-label="Check: what a mapping actually needs" data-section="R2RML and RML" data-minutes="4">
+  <div class="lu-eyebrow">Check question</div>
+  <div class="lu-mcq"
+       data-qid="s5-q1"
+       data-answer="c"
+       data-label="What does a bare TriplesMap with no rr:class or rr:parentTriplesMap actually produce?"
+       data-fb-correct=" Correct. A logical source and a subject map are the only required pieces; the rest add properties or relationships."
+       data-fb-wrong=" A TriplesMap needs a logical source and a subject map. Everything else, including rr:class, is optional.">
+    <p class="lu-mcq__q">A TriplesMap has a logical source and a subject map with an <code>rr:template</code>, but no <code>rr:class</code> and no predicate-object maps at all. What happens when it runs?</p>
+    <div class="lu-mcq__opts">
+      <button class="lu-mcq__opt" type="button" data-key="a">It fails to run, rr:class is required<span class="lu-mcq__why" hidden>rr:class is optional. A subject map can exist without ever asserting a type.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="b">It produces no triples at all<span class="lu-mcq__why" hidden>It produces one URI per row, it just asserts nothing about it yet.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="c">It mints one URI per row, with no type and no properties asserted<span class="lu-mcq__why" hidden>Correct. The subject map alone is enough to generate a subject per row; everything else is additive.</span></button>
+    </div>
+    <div class="lu-mcq__fb" hidden></div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. This distinction, minimal-but-valid versus complete, matters directly for debugging: an empty-looking result is often a correctly running mapping with an incomplete predicate-object map, not a broken one.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 14 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 3 · Materialize versus virtualize" data-section="Materialize vs virtualize" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part three of six · ~22 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Run the mapping once and load the result, or leave the data where it is and rewrite every query?</h2>
+    <p class="lu-lead" style="max-width:44ch">Both are real architectures. You build one of each, this session, over the same source.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 15 -->
+<section class="slide" data-label="Two architectures, one decision" data-section="Materialize vs virtualize" data-minutes="5">
+  <div class="lu-eyebrow">Materialize, or virtualize</div>
+  <h2 class="lu-h1">Transform and load, or leave in place and rewrite</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <div class="lu-card">
+        <span class="lu-card__label">Materialize</span>
+        <h3 class="lu-h3">Morph-KGC</h3>
+        <p class="lu-sub">Run the mapping, get a real RDF graph, load it into your triple store. The database is only read once per run.</p>
+      </div>
+    </div>
+    <div class="lu-stack" data-build="1">
+      <div class="lu-card">
+        <span class="lu-card__label">Virtualize</span>
+        <h3 class="lu-h3">Ontop</h3>
+        <p class="lu-sub">The graph never exists as triples. A SPARQL query is rewritten into SQL, at query time, against the live database.</p>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Resist collapsing this into "which one is better", the next slide's tradeoff table is the actual content, this one just names the two options cleanly.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 16 -->
+<section class="slide slide--tint" data-label="The real tradeoff" data-section="Materialize vs virtualize" data-minutes="5" style="--lu-s5:12px">
+  <div class="lu-eyebrow">Four axes, and they do not all agree</div>
+  <h2 class="lu-h1">Freshness, cost, query performance, write access</h2>
+
+  <div class="lu-compare" data-a="Materialize" data-b="Virtualize" data-start="50" style="margin-top:var(--lu-s3)">
+    <div class="lu-compare__stage" style="min-height:230px">
+      <div class="lu-compare__pane lu-compare__pane--a">
+<pre class="lu-mono" style="font-size:22px;line-height:1.7;margin:0">Freshness: as of last run
+Cost: query is cheap, triple
+  store storage is not free
+Query perf: fast, indexed
+  like any triple store
+Write access: read-only copy,
+  source can still be edited</pre>
+      </div>
+      <div class="lu-compare__pane lu-compare__pane--b">
+<pre class="lu-mono" style="font-size:22px;line-height:1.7;margin:0">Freshness: always current
+Cost: no duplicate storage,
+  DB carries the query load
+Query perf: bounded by SQL
+  rewriting and the DB itself
+Write access: same source,
+  no separate copy to drift</pre>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Let the room sit with the honest fact that neither column is strictly better, then say plainly: this is why the clinic asks each team to justify a choice, not just name one.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 17 -->
+<section class="slide" data-label="Materializing for real, this session" data-section="Materialize vs virtualize" data-minutes="6">
+  <div class="lu-eyebrow">Run one, not described</div>
+  <h2 class="lu-h1">Morph-KGC 2.10.0, the mapping from two slides ago, real Postgres</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="actual output, this session">
+<pre><code><span class="tok-fn">ul:po88</span> <span class="tok-kw">a</span> <span class="tok-fn">ul:PurchaseOrder</span> ;
+  <span class="tok-fn">ul:hasCarrier</span> <span class="tok-fn">ul:dhl</span> ;
+  <span class="tok-fn">ul:dispatchDate</span> <span class="tok-str">"2026-03-10"</span>^^xsd:date ;
+  <span class="tok-fn">ul:deliveryDate</span> <span class="tok-str">"2026-03-14"</span>^^xsd:date .
+
+<span class="tok-fn">ul:po99</span> <span class="tok-kw">a</span> <span class="tok-fn">ul:PurchaseOrder</span> ;
+  <span class="tok-fn">ul:dispatchDate</span> <span class="tok-str">"2026-03-20"</span>^^xsd:date ;
+  <span class="tok-fn">ul:deliveryDate</span> <span class="tok-str">"2026-03-18"</span>^^xsd:date .
+  <span class="tok-com"># no ul:hasCarrier at all</span></code></pre>
+    </div>
+    <ul class="lu-list lu-list--tight">
+      <li><code>po88</code> materializes exactly as expected, three properties, one carrier.</li>
+      <li><code>po99</code>'s carrier column does not match any row in <code>carriers</code>: the join fails, and produces no triple, not an error.</li>
+      <li>The next slide is about exactly why that second line is a real problem.</li>
+    </ul>
+  </div>
+  <template data-notes>
+    <p>Six minutes. This is real captured output from this session's own preparation, not an invented example, say that once, plainly.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 18 -->
+<section class="slide" data-label="A mapping bug that produces no error" data-section="Materialize vs virtualize" data-minutes="6">
+  <div class="lu-eyebrow">The real finding, this session</div>
+  <h2 class="lu-h1">A broken foreign key does not fail. It goes quiet.</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <p class="lu-p">Nothing in the materialize step complained. Morph-KGC ran cleanly, exit code zero, and simply produced two fewer triples than a naive reading of the source data would suggest.</p>
+      <ul class="lu-list">
+        <li>A join with no match is not a mapping error. It is defined, silent, and easy to miss.</li>
+        <li>This is exactly the failure mode Session 4's shapes exist to catch, and Part 6 of today runs them against this real output to prove it.</li>
+      </ul>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">The lesson</span>
+      <p class="lu-sub">A mapping that runs without errors has told you nothing about whether the resulting graph is complete. Only a validator checks that.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. This is the single most important slide in Part 3, slow down here. The room needs to feel, not just hear, that "it ran" and "it's correct" are different claims.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 19 -->
+<section class="slide" data-label="Ontop and virtualization" data-section="Materialize vs virtualize" data-minutes="5">
+  <div class="lu-eyebrow">The other architecture, same source</div>
+  <h2 class="lu-h1">Ontop 5.5, an R2RML or native mapping, no materialize step</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="mapping.obda, Ontop's native format">
+<pre><code>mappingId  purchase-order-mapping
+target     <span class="tok-fn">ul:{po_id}</span> <span class="tok-kw">a</span> <span class="tok-fn">ul:PurchaseOrder</span> ;
+  <span class="tok-fn">ul:hasCarrier</span> <span class="tok-fn">ul:{carrier_code}</span> .
+source     <span class="tok-str">SELECT po_id, carrier_code
+  FROM purchase_orders
+  WHERE carrier_code IS NOT NULL</span></code></pre>
+    </div>
+    <ul class="lu-list lu-list--tight">
+      <li>Ontop's own <code>.obda</code> format is more compact than R2RML for the same mapping; it accepts either.</li>
+      <li>A SPARQL query against this mapping never touches a materialized graph. It is compiled, live, into SQL against Postgres.</li>
+      <li>The CLI's real subcommands: <code>query</code>, <code>materialize</code>, <code>endpoint</code>, <code>bootstrap</code>, <code>validate</code>. Today you use <code>query</code>.</li>
+    </ul>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Note the explicit WHERE clause filtering out the NULL carrier here, unlike Morph-KGC's implicit join-miss behaviour two slides ago, this is a deliberate, visible choice in the mapping's own source query.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 20 -->
+<section class="slide" data-label="What Ontop actually sends to Postgres" data-section="Materialize vs virtualize" data-minutes="6">
+  <div class="lu-eyebrow">Inspecting the rewrite</div>
+  <h2 class="lu-h1">A SPARQL query in, a SQL query out</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-stack">
+      <div class="lu-code lu-code--sm" data-name="the SPARQL query">
+<pre><code><span class="tok-kw">SELECT</span> ?po ?carrierName <span class="tok-kw">WHERE</span> {
+  ?po <span class="tok-kw">a</span> <span class="tok-fn">ul:PurchaseOrder</span> ;
+      <span class="tok-fn">ul:hasCarrier</span> ?carrier .
+  ?carrier <span class="tok-fn">ul:carrierName</span> ?carrierName .
+}</code></pre>
+      </div>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">What to watch for, live in the lab</span>
+      <p class="lu-sub">Ontop rewrites the property-path join above into a single SQL <code>JOIN</code> between <code>purchase_orders</code> and <code>carriers</code>, with the <code>WHERE carrier_code IS NOT NULL</code> filter from the mapping folded in. You run this exact query with debug logging on, in the lab, and read the real SQL Ontop generated yourself, it is not a fixed answer to memorize.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. Frame this honestly as a live-lab moment rather than a memorized answer: the specific SQL depends on Ontop's optimizer, and reading a real rewrite is more valuable than a slide claiming to show one.</p>
+    <ul><li>If class time allows, run it on the projector before the lab starts, so the room has seen it once before doing it themselves.</li></ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 21 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 4 · Mapping design patterns" data-section="Mapping patterns" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part four of six · ~20 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">A schema was designed for storage efficiency, not meaning. Translating it takes judgment, not a mechanical rule.</h2>
+    <p class="lu-lead" style="max-width:44ch">Sequeda and Lassila's patterns, and the ones that look right and are not.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 22 -->
+<section class="slide" data-label="Three patterns, one family" data-section="Mapping patterns" data-minutes="4">
+  <div class="lu-eyebrow">From Sequeda and Lassila</div>
+  <h2 class="lu-h1">A relational shape has a default graph shape. Not always the right one.</h2>
+
+  <div class="lu-grid" style="margin-top:var(--lu-s4)">
+    <div class="lu-card lu-col-4" data-build="1">
+      <span class="lu-card__label">Foreign key</span>
+      <h3 class="lu-h3">Object property</h3>
+      <p class="lu-sub">Already seen: rr:parentTriplesMap plus a join condition. The default, and usually right.</p>
+    </div>
+    <div class="lu-card lu-col-4" data-build="2">
+      <span class="lu-card__label">Join table</span>
+      <h3 class="lu-h3">A relationship</h3>
+      <p class="lu-sub">A table with two foreign keys and nothing else becomes a direct property between the two entities it joins.</p>
+    </div>
+    <div class="lu-card lu-col-4" data-build="3">
+      <span class="lu-card__label">Denormalized column</span>
+      <h3 class="lu-h3">A class hierarchy</h3>
+      <p class="lu-sub">A status or type column, with a fixed small set of values, often maps better to a subclass than a datatype property.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. This slide is the map, the next two are the territory, each with a worked column-level example.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 23 -->
+<section class="slide" data-label="Join table, worked" data-section="Mapping patterns" data-minutes="5">
+  <div class="lu-eyebrow">Pattern two</div>
+  <h2 class="lu-h1">A pure join table has no identity of its own</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="order_carriers(po_id, carrier_code, leg_number), nothing else">
+<pre><code><span class="tok-fn">&lt;#LegMap&gt;</span> <span class="tok-kw">a</span> rr:TriplesMap ;
+  rml:logicalSource [ rr:tableName <span class="tok-str">"order_carriers"</span> ] ;
+  rr:subjectMap [ rr:template
+    <span class="tok-str">"...#{po_id}"</span> ] ;
+  rr:predicateObjectMap [
+    rr:predicate <span class="tok-fn">ul:hasCarrierLeg</span> ;
+    rr:objectMap [ rr:parentTriplesMap
+      <span class="tok-fn">&lt;#CarrierMap&gt;</span> ;
+      rr:joinCondition [ <span class="tok-com">...</span> ] ] ] .</code></pre>
+    </div>
+    <ul class="lu-list lu-list--tight">
+      <li>The join table itself gets no subject of its own, no type, nothing. Its only job was connecting two other things.</li>
+      <li>If the join table carries its own data, like <code>leg_number</code> above, that column becomes a datatype property on the same statement, or the join table does need its own identity after all.</li>
+      <li>That last case is exactly when a pure relationship pattern stops being enough, judgment, not a rule.</li>
+    </ul>
+  </div>
+  <template data-notes>
+    <p>Five minutes. The leg_number detail is the actual teaching point: a join table with any of its own attributes is a reification case, not a pure relationship, flag that distinction explicitly.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 24 -->
+<section class="slide" data-label="Denormalized column, worked" data-section="Mapping patterns" data-minutes="5">
+  <div class="lu-eyebrow">Pattern three</div>
+  <h2 class="lu-h1">A status column with five values is a class hierarchy in disguise</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="purchase_orders.status: 'pending' | 'dispatched' | 'delivered' | 'cancelled'">
+<pre><code><span class="tok-com"># one triples map per status value,
+# same table, a filtered SQL source</span>
+rml:logicalSource [ rr:query
+  <span class="tok-str">"SELECT * FROM purchase_orders
+   WHERE status = 'cancelled'"</span> ] ;
+rr:subjectMap [ rr:template <span class="tok-str">"...{po_id}"</span> ;
+  rr:class <span class="tok-fn">ul:CancelledOrder</span> ] .</code></pre>
+    </div>
+    <ul class="lu-list lu-list--tight">
+      <li>Four status values become four subclasses of <code>ul:PurchaseOrder</code>, each with its own filtered logical source, the "logical views" module from Part 2 in real use.</li>
+      <li>Reasoning and SHACL shapes can now target <code>ul:CancelledOrder</code> directly, instead of every query re-checking a string column.</li>
+      <li>Only worth it when the values are stable and few. A column with hundreds of distinct values stays a datatype property.</li>
+    </ul>
+  </div>
+  <template data-notes>
+    <p>Five minutes. The judgment call at the end is the point: this pattern is powerful and easy to overuse. A free-text column is never a class hierarchy candidate.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 25 -->
+<section class="slide" data-label="Patterns that look right and are not" data-section="Mapping patterns" data-minutes="5">
+  <div class="lu-eyebrow">The trap</div>
+  <h2 class="lu-h1">A primary key is not always an identity worth an IRI</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <p class="lu-p">A surrogate key like an auto-increment <code>id</code> column exists for the database's own indexing needs. Minting <code>ul:{id}</code> from it produces a real, working URI, that is also meaningless outside the database, and breaks the moment the table is reloaded with new IDs.</p>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">What to use instead</span>
+      <p class="lu-sub">A natural key the business already relies on, an order number, an ISBN, an account code, or a stable hash of several columns together, if no natural key exists.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Tie this back to a concrete failure: if a team's URIs are built from a surrogate key and they ever re-import the source table, every downstream triple silently points at the wrong thing, no error, same silent-failure family as the join-miss two Parts ago.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 26 -->
+<section class="slide slide--tint" data-label="Drill: naming the pattern" data-section="Mapping patterns" data-minutes="4">
+  <div class="lu-eyebrow">Drill · complete the statement</div>
+  <div class="lu-card">
+    <span class="lu-card__label">Fill the blanks</span>
+    <div class="lu-blanks" data-qid="s5-blanks" data-label="Mapping design pattern vocabulary">
+      <p>A foreign key most naturally maps to an <input class="lu-blank lu-blank--wide" data-answer="object property|rr:parentTriplesMap" data-label="Foreign key pattern" placeholder="pattern">.</p>
+      <p>A join table with columns of its own is better modeled as a full entity than as a plain <input class="lu-blank lu-blank--wide" data-answer="relationship|property" data-label="Pure join table pattern" placeholder="pattern">.</p>
+      <p>Minting IRIs from a database's own <input class="lu-blank" style="width:150px" data-answer="surrogate key|auto-increment id|id" data-label="The trap key type" placeholder="?"> breaks the moment the table is reloaded.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. This checkpoint covers all of Part 4, let it land before entity resolution changes the subject entirely.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 27 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 5 · Entity resolution" data-section="Entity resolution" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part five of six · ~27 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">DataCo and Brunel both have a supplier called something close to "Acme". Are they the same company?</h2>
+    <p class="lu-lead" style="max-width:44ch">Probably. "Probably" is the whole problem, and it has an honest way to answer it.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 28 -->
+<section class="slide" data-label="Why identifiers do not match" data-section="Entity resolution" data-minutes="5">
+  <div class="lu-eyebrow">The problem, precisely</div>
+  <h2 class="lu-h1">Two systems, two keys, no shared identifier</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <p class="lu-p">DataCo's supplier table and Brunel's supplier table were built independently. Nobody coordinated their primary keys, their name formatting, or even which fields they bothered to fill in.</p>
+      <ul class="lu-list">
+        <li><code>DC-001, "Acme Logistics Ltd"</code> and <code>BR-101, "Acme Logistics"</code> are, in the real world, the same company.</li>
+        <li>No join condition exists that finds this pair. There is no shared key to join on.</li>
+      </ul>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">The reframe</span>
+      <p class="lu-sub">This is not a mapping problem. It is a classification problem: given a pair of records, decide match or not, with a probability, not a certainty.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. This is the pivot point of the whole session, from deterministic mapping mechanics to probabilistic reasoning about identity. Mark the shift explicitly.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 29 -->
+<section class="slide" data-label="The Fellegi-Sunter framing" data-section="Entity resolution" data-minutes="5">
+  <div class="lu-eyebrow">The classical model</div>
+  <h2 class="lu-h1">Compare every field, weigh the evidence, decide</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-stack">
+      <ul class="lu-list">
+        <li>For each field, ask two questions: how likely is this level of similarity among true matches (the <b>m probability</b>), and among true non-matches (the <b>u probability</b>)?</li>
+        <li>Combine every field's evidence into one match score. High enough, call it a match; low enough, not; in between, review it.</li>
+      </ul>
+    </div>
+    <div class="lu-callout" data-build="1">
+      <span class="lu-callout__label">Why this is not just "similar strings"</span>
+      <p class="lu-sub">Two suppliers sharing a common city is weak evidence, most suppliers in the same city are unrelated. Two suppliers sharing a rare, near-identical name is strong evidence. Fellegi-Sunter weighs fields by how surprising the agreement actually is.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Splink, used in the lab, implements exactly this framework, say that explicitly so the theory does not feel disconnected from the tool.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 30 -->
+<section class="slide" data-label="Blocking, and why it is unavoidable" data-section="Entity resolution" data-minutes="5">
+  <div class="lu-eyebrow">The tractability problem</div>
+  <h2 class="lu-h1">Comparing every pair does not scale</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <p class="lu-p">10,000 DataCo suppliers against 10,000 Brunel suppliers is 100 million pairs. Almost all of them are obviously not matches, and comparing them anyway wastes nearly all the work.</p>
+      <ul class="lu-list">
+        <li><b>Blocking</b> only compares pairs that agree on some cheap key first, same country, same first three letters of a name.</li>
+        <li>Too strict a blocking rule silently drops true matches before comparison ever runs. Too loose, and you are back to comparing almost everything.</li>
+      </ul>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">Tuning blocking is part of the job</span>
+      <p class="lu-sub">The lab's own blocking rule choice changes the result, tested this session, not a hypothetical: the next two slides show exactly how much.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Keep the arithmetic (10,000 squared) concrete, it is the fastest way to make "blocking is necessary" land rather than feel like premature optimization.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 31 -->
+<section class="slide" data-label="Splink, run for real this session" data-section="Entity resolution" data-minutes="5">
+  <div class="lu-eyebrow">Not described, run</div>
+  <h2 class="lu-h1">Splink 4.0.17, DataCo and Brunel suppliers, five real near-duplicates</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-stack">
+      <ul class="lu-list lu-list--tight">
+        <li><code>DC-001 "Acme Logistics Ltd"</code> vs <code>BR-101 "Acme Logistics"</code></li>
+        <li><code>DC-002 "Brunel Freight Group"</code> vs <code>BR-102 "Brunel Freight Grp"</code></li>
+        <li><code>DC-003 "Med Shipping Co"</code> vs <code>BR-103 "Mediterranean Shipping Co"</code></li>
+        <li>Plus a labeled sample: five true pairs, five true non-pairs, known in advance.</li>
+      </ul>
+    </div>
+    <div class="lu-callout" data-build="1">
+      <span class="lu-callout__label">Comparisons used</span>
+      <p class="lu-sub">Jaro-Winkler similarity on name, exact match on city and country, blocked on country to keep the comparison space small, exactly the tradeoff from the last slide.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. This is the setup for the real result on the next slide, do not reveal the numbers yet.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 32 -->
+<section class="slide" data-label="The result, and why one number would lie" data-section="Entity resolution" data-minutes="6">
+  <div class="lu-eyebrow">Real numbers, against the labeled sample</div>
+  <h2 class="lu-h1">100% recall. 56% precision. Very different problems.</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="actual run, threshold 0.5, this session">
+<pre><code>True positives:  5
+False positives: 4
+False negatives: 0
+Precision: 0.556
+Recall:    1.000</code></pre>
+    </div>
+    <ul class="lu-list lu-list--tight">
+      <li>Every real match was found, recall 1.000. Good news, alone.</li>
+      <li>But 4 of the 9 flagged pairs were wrong, different companies that happened to share a country, precision 0.556.</li>
+      <li>A single "accuracy" figure would have buried this entirely. This is exactly why the syllabus, and Splink's own output, report both.</li>
+    </ul>
+  </div>
+  <template data-notes>
+    <p>Six minutes. Let the room sit with the discomfort of a "successful" model that is wrong nearly half the time it flags a match, before the next slide shows the fix costs nothing but a threshold change.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 33 -->
+<section class="slide" data-label="One number moved, both metrics fixed" data-section="Entity resolution" data-minutes="5">
+  <div class="lu-eyebrow">The same model, tuned</div>
+  <h2 class="lu-h1">Raising the match threshold from 0.5 to 0.8</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="same run, threshold 0.8, nothing else changed">
+<pre><code>True positives:  5
+False positives: 0
+False negatives: 0
+Precision: 1.000
+Recall:    1.000</code></pre>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">Why this worked</span>
+      <p class="lu-sub">The five real matches scored 0.93. The four false positives, same-country strangers, scored 0.57. A wide gap existed, the default threshold of 0.5 just was not tuned to sit inside it. Tuning against a labeled sample is not optional, it is the whole job.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Name explicitly that this clean a gap will not always exist, sometimes precision and recall genuinely trade off and a business decision has to pick a point on that curve.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 34 -->
+<section class="slide slide--tint" data-label="Poll: which error costs more" data-section="Entity resolution" data-minutes="4" style="--lu-s5:12px">
+  <div class="lu-eyebrow">Room poll · 45 seconds</div>
+  <div class="lu-poll" style="gap:var(--lu-s3)" data-qid="s5-poll" data-seconds="45" data-answer="b" data-label="Which error a supplier de-duplication pipeline should fear more">
+    <p class="lu-mcq__q">Your entity resolution feeds one "preferred supplier" record used for automatic reorders. Which error costs more: a false positive (two suppliers merged) or a false negative (a duplicate missed)?</p>
+    <div class="lu-mcq__opts">
+      <button class="lu-mcq__opt" style="padding:var(--lu-s3) var(--lu-s5)" type="button" data-key="a">A false negative, it just means an extra record<span class="lu-mcq__why" hidden>A missed duplicate is an annoyance, two records instead of one. Rarely a safety issue on its own.</span></button>
+      <button class="lu-mcq__opt" style="padding:var(--lu-s3) var(--lu-s5)" type="button" data-key="b">A false positive, it can route an order to the wrong company<span class="lu-mcq__why" hidden>Correct. Merging two real suppliers means one company's contract terms and payment details get used for the other. A real operational error, not a cosmetic one.</span></button>
+      <button class="lu-mcq__opt" style="padding:var(--lu-s3) var(--lu-s5)" type="button" data-key="c">They cost the same, precision and recall are symmetric<span class="lu-mcq__why" hidden>The metrics are symmetric mathematically. Their real-world cost almost never is, this question asks about cost, not the formula.</span></button>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Forty-five seconds. The point: the "right" threshold depends on which error costs your specific use case more, there is no universally correct 0.8.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 35 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 6 · Closing the loop" data-section="Closing the loop" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part six of six · ~13 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Session 4's shapes were written against hand-placed data. What happens when you point them at a real pipeline's output?</h2>
+    <p class="lu-lead" style="max-width:44ch">Exactly what they should: they catch the silent gap from Part 3.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 36 -->
+<section class="slide" data-label="Running Session 4's shapes against today's output" data-section="Closing the loop" data-minutes="6">
+  <div class="lu-eyebrow">The bridge, tested for real</div>
+  <h2 class="lu-h1">The exact same shape graph, a newly mapped source</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="pyshacl, this session's real materialized output">
+<pre><code>Conforms: <span class="tok-kw">False</span>
+Constraint Violation in
+  MinCountConstraintComponent
+  Focus Node: <span class="tok-fn">ul:po99</span>
+  Result Path: <span class="tok-fn">ul:hasCarrier</span>
+  Message: hasCarrier must point
+    to a declared ul:Carrier.</code></pre>
+    </div>
+    <ul class="lu-list lu-list--tight">
+      <li>No new shape was written. Session 4's own <code>ul:PurchaseOrderShape</code> ran unmodified against Part 3's real Morph-KGC output.</li>
+      <li>It flags exactly the row the mapping silently dropped a triple for, a <code>MinCountConstraintComponent</code> violation, not the class-mismatch Session 4 originally taught, because here the property is simply absent, not present-and-wrong.</li>
+      <li>A genuine integration bug was found and fixed while preparing this: a materialized graph serialized under a different prefix label broke <code>sh:sparql</code>'s prefix resolution. Binding the prefix explicitly before validating fixed it.</li>
+    </ul>
+  </div>
+  <template data-notes>
+    <p>Six minutes. This is the payoff slide for the whole session: constraint validation is not a one-time Session 4 exercise, it is the acceptance test for every pipeline you build afterward, starting today.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 37 -->
+<section class="slide" data-label="Where each tool actually belongs" data-section="Closing the loop" data-minutes="5">
+  <div class="lu-eyebrow">The discussion this sets up</div>
+  <h2 class="lu-h1">A reasoner, a validator, and a mapping engine catch different things</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <ul class="lu-list">
+        <li>OWL asks: is this consistent with everything asserted? It never noticed <code>po99</code> was missing a carrier at all.</li>
+        <li>SHACL asks: is this graph, as it stands, complete? It caught the gap immediately.</li>
+        <li>Neither one caught the mapping's own silent join failure. Only reading the materialized output, or running the shapes against it, surfaced that.</li>
+      </ul>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">Carried into the wrap discussion</span>
+      <p class="lu-sub">This is the exact question the 15-minute discussion closes on: which mapping errors did SHACL catch that the reasoner did not, and what does that say about where each belongs in a real pipeline?</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Explicitly preview the wrap discussion here, so the lab and clinic that follow are read as building toward it, not as a detour from it.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 38 -->
+<section class="slide" data-label="Lab brief · 95 minutes" data-section="Lab" data-minutes="5">
+  <div class="lu-eyebrow">Hands-on lab · 95 minutes · starts now</div>
+  <h2 class="lu-h1" style="max-width:34ch">Postgres, two mapping engines, Session 4's shapes, and Splink</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <ol class="lu-list lu-list--num lu-list--tight">
+      <li>Load DataCo into the provided Postgres container, a real database, not a CSV.</li>
+      <li>Write an RML mapping to your Session 3 ontology, materialize it with Morph-KGC.</li>
+      <li>Configure Ontop over the same database, answer the same queries by virtualization, inspect the generated SQL.</li>
+      <li>Run Session 4's shapes against the newly mapped graph, triage what fails.</li>
+      <li>Link supplier and customer records across DataCo and Brunel with Splink, tune blocking, report precision and recall.</li>
+    </ol>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">Not a milestone</span>
+        <p class="lu-sub">No submission today. This lab feeds directly into the architecture decision you state in the clinic right after it.</p>
+      </div>
+      <p class="lu-caption">If the local RML toolchain misbehaves, draft the mapping in the browser-based RML Playground first, then bring it back to Morph-KGC.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Circulate. The most common blocker: forgetting the join condition's rr:child and rr:parent point at the same column name on both sides even when the source and target tables name it differently.</p>
+    <ul><li>Second most common: Ontop's JDBC driver missing from its jdbc/ folder, a silent connection failure that looks like a mapping error.</li></ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 39 -->
+<section class="slide slide--tint" data-label="Clinic and wrap" data-section="Wrap" data-minutes="8">
+  <div class="lu-eyebrow">Clinic and wrap · 25 minutes</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <h2 class="lu-h2">10-minute clinic: state your architecture, and why</h2>
+      <p class="lu-p">Each team states, in one or two sentences: materialize or virtualize for your own capstone topic, and names one thing currently blocked.</p>
+      <p class="lu-p" style="margin-top:var(--lu-s4)">Then 15 minutes of discussion: which mapping errors did SHACL catch today that the Session 3 reasoner would not have, and what does that say about where each tool belongs in a pipeline?</p>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-card">
+        <span class="lu-card__label">Next session</span>
+        <h3 class="lu-h3">Session 6 · Learning Over the Graph</h3>
+        <p class="lu-sub">Embeddings and graph neural networks, predicting something useful from the structure you have spent five sessions building. Milestone 2 is due at its close.</p>
+      </div>
+      <div class="lu-row">
+        <span class="lu-tag">No submission today</span>
+        <span class="lu-caption" style="flex:1">The clinic is a decision checkpoint, graded participation, not a deliverable.</span>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Twenty-five minutes total. Keep each team's clinic statement to under thirty seconds, the value is the room hearing that everyone faces a real tradeoff, not a full architecture review.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 40 -->
+<section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="4">
+  <div class="lu-eyebrow">Self-check</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <h2 class="lu-h2">How you did on this session's questions</h2>
+      <div data-score></div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">Studying alone?</span>
+        <p class="lu-sub">Press <kbd>S</kbd> for study mode: every popup becomes an inline note, every reveal opens, answers fill in. Press <kbd>S</kbd> again to return.</p>
+      </div>
+      <div class="lu-card lu-card--flat">
+        <span class="lu-card__label">Also available</span>
+        <ul class="lu-list lu-list--tight">
+          <li><kbd>O</kbd> contents · <kbd>/</kbd> search this lecture · <kbd>?</kbd> all shortcuts</li>
+          <li><b>Handout</b> in the bottom bar prints one page per slide with the instructor notes attached.</li>
+          <li>Any slide is linkable: add <code>#/12</code> to the address to share slide 12.</li>
+        </ul>
+      </div>
+      <p class="lu-caption">Your answers and position are stored in this browser only. Clearing them affects nothing else.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Close the session here, so students leave knowing where the self-study affordances are.</p>
+  </template>
+</section>
+
+</div><!-- /stage -->
+</div><!-- /deck -->
+
+<script src="../assets/lu-deck.js?v=1.1.0" defer></script>
+</body>
+</html>

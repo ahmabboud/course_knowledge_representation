@@ -1,0 +1,26 @@
+# Ontop's own native mapping format, the virtualize path: no
+# materialize step, Ontop rewrites each SPARQL query into SQL at query
+# time, against the same live Postgres load_postgres.py fills.
+#
+#   curl -sSL -o ontop-cli.zip https://github.com/ontop/ontop/releases/download/ontop-5.5.0/ontop-cli-5.5.0.zip
+#   unzip -q ontop-cli.zip -d ontop-cli
+#   curl -sSL -o ontop-cli/jdbc/postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.7.4.jar
+#   chmod +x ontop-cli/ontop
+#   ontop-cli/ontop query -m mapping.obda -t ontology.ttl -p ontop.properties \
+#     -q query.sparql -o ontop_results.csv
+#
+# Add ONTOP_LOG_LEVEL=debug before that command to see the generated
+# SQL, the actual point of running both paths side by side.
+[PrefixDeclaration]
+ul:		https://ul.edu.lb/kr/scm#
+xsd:		http://www.w3.org/2001/XMLSchema#
+
+[MappingDeclaration] @collection [[
+mappingId	purchase-order-mapping
+target		ul:{po_id} a ul:PurchaseOrder ; ul:dispatchDate {dispatch_date}^^xsd:date ; ul:deliveryDate {delivery_date}^^xsd:date ; ul:hasCarrier ul:carrier-{carrier_code} .
+source		SELECT po_id, carrier_code, dispatch_date, delivery_date FROM purchase_orders WHERE carrier_code IS NOT NULL
+
+mappingId	carrier-mapping
+target		ul:carrier-{carrier_code} a ul:Carrier ; ul:carrierName {carrier_name} .
+source		SELECT carrier_code, carrier_name FROM carriers
+]]

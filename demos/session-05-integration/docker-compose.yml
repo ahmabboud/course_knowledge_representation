@@ -1,0 +1,22 @@
+# Session 5's own service, additive to the repository root's docker-compose.yml
+# (which brings up Fuseki and Neo4j). Run both together, from this folder:
+#   docker compose -f ../docker-compose.yml -f docker-compose.yml up -d
+#
+# load_postgres.py creates the schema and loads the seed data; this file
+# only brings up an empty Postgres, on purpose, so the loader stays the
+# one place that defines what "loaded" means (see load_postgres.py's
+# own docstring for why it is not a docker-entrypoint-initdb.d script).
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=kr
+      - POSTGRES_PASSWORD=kr-labs-pw
+      - POSTGRES_DB=dataco
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
