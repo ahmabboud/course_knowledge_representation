@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en" class="lu-deck-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Constraints, Quality, and Provenance: SHACL · Knowledge Representation, Session 4</title>
+<meta name="description" content="Session 4 of Knowledge Representation, MSc, Lebanese University. Closed-world validation with SHACL, provenance, versioning, and a CI gate. Milestone 1.">
+<meta name="theme-color" content="#96122B">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/lu.css?v=1.1.0">
+</head>
+
+<body
+  data-deck-id="kr-s04"
+  data-course="Knowledge Representation"
+  data-session="Session 4 of 8"
+  data-duration="195"
+  data-app-root="../"
+  data-unit="Lebanese University · MSc">
+
+<a class="lu-skip" href="#slide-2">Skip to the first content slide</a>
+
+<div class="deck">
+<div class="deck__stage">
+
+<!-- ==================================================================== 01 -->
+<section class="slide slide--night" data-chrome="none" data-label="Title" data-section="Opening" data-minutes="2">
+  <div class="slide__body" style="justify-content:space-between">
+    <div class="lu-row" style="justify-content:space-between;align-items:flex-start">
+      <div class="lu-lockup">
+        <span class="lu-lockup__mark">LU</span>
+        <span class="lu-lockup__text">
+          <span class="lu-lockup__name">Lebanese University</span>
+          <span class="lu-lockup__unit">Faculty of Sciences · MSc Computer Science</span>
+        </span>
+      </div>
+      <div class="lu-tag lu-tag--red" style="background:transparent;color:#FF9AA7;border-color:#96122B">Module 2 · Ontology and constraints</div>
+    </div>
+
+    <div class="lu-stack">
+      <div class="lu-eyebrow">Knowledge Representation · Session 4 of 8</div>
+      <h1 class="lu-display" style="max-width:26ch">Constraints, Quality, and Provenance: SHACL</h1>
+      <p class="lu-lead" style="max-width:44ch">OWL told you what a valid world looks like. It will not tell you your data is wrong. Today you build the check that will.</p>
+    </div>
+
+    <div class="lu-row" style="justify-content:space-between;font-size:var(--lu-t-caption);color:var(--lu-on-night-2)">
+      <span>~195 minutes · lecture, lab, and Milestone 1 due at close</span>
+      <span>Press <kbd>&rarr;</kbd> to begin · <kbd>?</kbd> for shortcuts</span>
+    </div>
+  </div>
+  <template data-notes>
+    <p>This session runs longer than the standard three hours, by design: the concept load is real and the lab has to be independent build time, not another guided watch. Say this at the top so the room paces itself, not you.</p>
+    <ul>
+      <li>Milestone 1 is due at the end of today, against each team's own topic, not the shared case. Say that once now, and again before the lab.</li>
+    </ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 02 -->
+<section class="slide" data-label="Where we are in the architecture" data-section="Opening" data-minutes="4">
+  <div class="lu-eyebrow">Recap</div>
+  <h2 class="lu-h1" style="max-width:46ch">Session 3 gave the graph <em style="font-style:italic;color:var(--lu-red-700)">meaning</em>. It did not give it a floor.</h2>
+
+  <ul class="lu-pipeline" style="margin-top:var(--lu-s5)" data-build="1" data-build-style="dim">
+    <li data-state="done"><span class="lu-pipeline__n">01</span><span class="lu-pipeline__t">Sources</span><span class="lu-pipeline__d">DataCo, Brunel</span></li>
+    <li data-state="done"><span class="lu-pipeline__n">02</span><span class="lu-pipeline__t">Profiling</span><span class="lu-pipeline__d">Constraint inventory</span></li>
+    <li data-state="done"><span class="lu-pipeline__n">03</span><span class="lu-pipeline__t">Graph</span><span class="lu-pipeline__d">RDF, IRIs, SPARQL</span></li>
+    <li data-state="done"><span class="lu-pipeline__n">04</span><span class="lu-pipeline__t">Ontology</span><span class="lu-pipeline__d">OWL on IOF SCRO</span></li>
+    <li data-state="active"><span class="lu-pipeline__n">05</span><span class="lu-pipeline__t">Constraints</span><span class="lu-pipeline__d">You are here</span></li>
+    <li data-state="muted"><span class="lu-pipeline__n">06</span><span class="lu-pipeline__t">Mappings</span><span class="lu-pipeline__d">RML · Session 5</span></li>
+    <li data-state="muted"><span class="lu-pipeline__n">07</span><span class="lu-pipeline__t">Learning</span><span class="lu-pipeline__d">GNN · Session 6</span></li>
+    <li data-state="muted"><span class="lu-pipeline__n">08</span><span class="lu-pipeline__t">Access</span><span class="lu-pipeline__d">Text to SPARQL · 7</span></li>
+  </ul>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s6)">
+    <div class="lu-callout lu-callout--neutral" data-build="2">
+      <span class="lu-callout__label">What you brought to this room</span>
+      <p class="lu-sub">An OWL ontology on IOF SCRO, a clean ELK and HermiT run, and the exact sentence Session 3 ended on: OWL will infer rather than complain.</p>
+    </div>
+    <div class="lu-callout" data-build="3">
+      <span class="lu-callout__label">What is still missing</span>
+      <p class="lu-sub"><code>purchaseOrder/88 ul:hasCarrier ul:carrier-dhl</code> satisfied every reasoner in the room last week. <b>Nobody checked whether that assertion is actually true of your data.</b></p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. This slide only works if Session 3 actually planted the line, check your own notes from that session before you give this one.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 03 -->
+<section class="slide slide--tint" data-label="Session objective and shape" data-section="Opening" data-minutes="3">
+  <div class="lu-eyebrow">Objective</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <p class="lu-statement">By the end of today every entry in your Session 1 constraint inventory is an executable SHACL shape, run against real data, with every failure triaged and recorded.</p>
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">Milestone 1, due at the close of today</span>
+        <p class="lu-sub">Session 3's ontology, plus this shape graph, a validation report with every failure triaged, provenance annotations, a version IRI, and a working CI gate. Scored against your own team's topic, not the shared case.</p>
+      </div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-card">
+        <span class="lu-card__label">How the ~195 minutes are spent</span>
+        <ul class="lu-layers">
+          <li><span class="lu-layers__name">Lecture · ~115 min</span><span class="lu-layers__note">Open vs closed world, the shapes language, provenance, reuse, CI</span></li>
+          <li><span class="lu-layers__name">Independent lab · 60 min</span><span class="lu-layers__note">Your own team's data, your own team's shapes, self-paced</span></li>
+          <li><span class="lu-layers__name">Milestone check-in · 20 min</span><span class="lu-layers__note">Submit, then a room-level pass on what tripped people up</span></li>
+        </ul>
+      </div>
+      <p class="lu-caption">Reading before next session: Hogan et al. Chapter 3, RDF Schema and closed-world checking. The SHACL W3C Recommendation, Sections 2 and 3.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Name the shift explicitly: Sessions 1 to 3's lab was a guided watch on the shared case. Today's lab is not, it runs on each team's own topic and is the actual graded artifact. Say this before the lecture starts, not only before the lab.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 04 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 1 · The gap OWL leaves open" data-section="Open vs closed world" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part one of six · ~20 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">A reasoner told you your ontology was fine. Why isn't that enough?</h2>
+    <p class="lu-lead" style="max-width:44ch">Because "fine" and "true of your data" are different claims, and OWL only ever makes the first one.</p>
+  </div>
+  <template data-notes><p>Ten seconds. Dividers are punctuation.</p></template>
+</section>
+
+<!-- ==================================================================== 05 -->
+<section class="slide" data-label="The purchase order, revisited" data-section="Open vs closed world" data-minutes="6">
+  <div class="lu-eyebrow">Same data, a different question</div>
+  <h2 class="lu-h1" style="max-width:38ch">Nothing was inconsistent. Something was still wrong.</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack" style="gap:var(--lu-s3)">
+      <p class="lu-p">Session 3 ended on this exact assertion, satisfiable under every reasoner in the room:</p>
+      <div class="lu-code lu-code--sm" data-name="the assertion that started this">
+<pre><code><span class="tok-fn">ul:po88</span> <span class="tok-kw">a</span> <span class="tok-fn">ul:PurchaseOrder</span> ;
+  <span class="tok-fn">ul:hasCarrier</span> <span class="tok-fn">ul:carrier-dhl</span> .</code></pre>
+      </div>
+      <p class="lu-p">ELK and HermiT both accept it. Neither one asks whether <code>ul:carrier-dhl</code> is actually a declared <code>ul:Carrier</code>, or whether this order has a carrier at all.</p>
+    </div>
+    <div class="lu-stack" style="gap:var(--lu-s3)" data-build="1">
+      <div class="lu-callout">
+        <span class="lu-callout__label">The question OWL answers</span>
+        <p class="lu-sub">Could a model of the world exist in which this is true? For almost any assertion, yes, a reasoner can always imagine an unseen individual that makes it work.</p>
+      </div>
+      <div class="lu-callout lu-callout--concept" data-build="2">
+        <span class="lu-callout__label">The question you actually have</span>
+        <p class="lu-sub">Is it true of <b>this</b> data, right now, with nothing left to imagine? That is a different question, and it needs a different tool.</p>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. Do not rush past this, the whole session rests on the room actually feeling the gap, not just hearing the word "closed-world".</p>
+    <ul><li>Expected pushback: "so the reasoner is broken". It is not, it is answering the question it was designed to answer. Say this plainly, it defuses a lot of confusion later.</li></ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 06 -->
+<section class="slide" data-label="Open world assumption, precisely" data-section="Open vs closed world" data-minutes="5">
+  <div class="lu-eyebrow">Definition</div>
+  <h2 class="lu-h1">The open world assumption, stated exactly</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <p class="lu-p"><button class="lu-term" type="button" data-term="OWA" data-kind="Open world assumption"><span class="lu-term-word">Absence of a fact is not evidence of its falsehood.</span><template>Under the <b>open world assumption</b>, a reasoner never concludes <code>&not;P</code> merely because <code>P</code> was never asserted. It can always posit an unseen individual that satisfies <code>P</code> elsewhere.<p>This is exactly the behaviour that made OWL a safe tool for ontology reuse in Session 3: you can extend SCRO without knowing everything SCRO's authors know, because absence in your file is never read as denial.</p></template></button> OWL, RDF and every reasoner you used last week are built on it.</p>
+      <ul class="lu-list">
+        <li><code>ul:po88</code> has no asserted <code>ul:deliveryDate</code>. OWL does not conclude it has none, it concludes only that none is known.</li>
+        <li>This is <b>correct</b> for schema-level modelling: a published ontology can never enumerate every individual that will ever be asserted against it.</li>
+        <li>It is <b>wrong</b> for one specific job: telling you your dataset is complete and clean.</li>
+      </ul>
+    </div>
+    <div class="lu-callout" data-build="1">
+      <span class="lu-callout__label">Say it back</span>
+      <p class="lu-sub">"No delivery date on file" and "this order was never delivered" are different claims. OWA only ever lets you make the first one.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. The popover term is the whole slide, click it and read it slowly. This is the single idea the rest of the session is built on.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 07 -->
+<section class="slide" data-label="Closed world assumption, precisely" data-section="Open vs closed world" data-minutes="5">
+  <div class="lu-eyebrow">Definition</div>
+  <h2 class="lu-h1">The closed world assumption, stated exactly</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <p class="lu-p"><button class="lu-term" type="button" data-term="CWA" data-kind="Closed world assumption"><span class="lu-term-word">What is not present in the data graph is treated as false.</span><template>Under the <b>closed world assumption</b>, the data graph you hand the validator is treated as the whole world, for the purpose of that check. If <code>ul:po88</code> has no <code>ul:deliveryDate</code>, a CWA check concludes it is <b>missing</b>, not merely unknown.<p>This is the assumption every relational database, every form validator and every SQL <code>NOT NULL</code> constraint already makes. SHACL brings that same discipline to a graph.</p></template></button> is how SQL, forms, and every quality report you have ever trusted already work.</p>
+      <ul class="lu-list">
+        <li>A validator working under CWA <b>can</b> say "this order has no carrier" and mean it.</li>
+        <li>SHACL validates a fixed <b>data graph</b>, not an open-ended set of possible models.</li>
+        <li>This is why SHACL, not OWL, is the tool for a quality report.</li>
+      </ul>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">One graph, two disciplines</span>
+      <p class="lu-sub">The same triples. OWL asks "is this satisfiable, in general?" SHACL asks "does this specific graph satisfy this specific shape, right now?"</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Land the SQL analogy hard, it is the fastest bridge for a room with more database background than logic background.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 08 -->
+<section class="slide slide--tint" data-label="OWA and CWA, side by side" data-section="Open vs closed world" data-minutes="6" style="--lu-s5:12px">
+  <div class="lu-eyebrow">The same axiom set, two answers</div>
+  <h2 class="lu-h1">Drag the seam. Same triples, different discipline, different verdict.</h2>
+
+  <div class="lu-compare" data-a="OWA, OWL reasoner" data-b="CWA, SHACL validator" data-start="52" style="margin-top:var(--lu-s3)">
+    <div class="lu-compare__stage" style="min-height:210px">
+      <div class="lu-compare__pane lu-compare__pane--a">
+<pre class="lu-mono" style="font-size:23px;line-height:1.7;margin:0">ul:po88 a ul:PurchaseOrder .
+(no ul:hasCarrier asserted)
+
+"Satisfiable. A carrier may
+exist that was not stated."
+consistent, classifies fine</pre>
+      </div>
+      <div class="lu-compare__pane lu-compare__pane--b">
+<pre class="lu-mono" style="font-size:23px;line-height:1.7;margin:0">ul:po88 a ul:PurchaseOrder .
+(no ul:hasCarrier asserted)
+
+"Violation. ul:hasCarrier
+sh:minCount 1 is not met."
+sh:conforms false</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)" data-build="1">
+    <div class="lu-stack lu-stack--tight">
+      <span class="lu-tag lu-tag--green">Keep OWL for</span>
+      <ul class="lu-list lu-list--tight lu-list--check">
+        <li>Schema-level meaning, reuse, classification.</li>
+        <li>Questions about what is possible in any model.</li>
+      </ul>
+    </div>
+    <div class="lu-stack lu-stack--tight">
+      <span class="lu-tag lu-tag--red">Bring in SHACL for</span>
+      <ul class="lu-list lu-list--tight">
+        <li>Is this graph, as it stands, complete and well formed?</li>
+        <li>A report a data owner can act on, pass or fail.</li>
+      </ul>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. Drag the seam slowly, twice, and read both panes aloud each time. This is the slide people screenshot.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 09 -->
+<section class="slide" data-label="What a reasoner will never catch" data-section="Open vs closed world" data-minutes="7">
+  <div class="lu-eyebrow">A concrete catalogue</div>
+  <h2 class="lu-h1">Four failures your Session 3 ontology cannot see</h2>
+
+  <div class="lu-grid">
+    <div class="lu-card lu-col-3" data-build="1">
+      <span class="lu-card__label">01 · Missing data</span>
+      <h3 class="lu-h3">Missing carrier</h3>
+      <p class="lu-sub">OWA reads this as unknown, not absent. A real order with no carrier is a data-entry gap.</p>
+    </div>
+    <div class="lu-card lu-col-3" data-build="2">
+      <span class="lu-card__label">02 · Cardinality</span>
+      <h3 class="lu-h3">Three carriers</h3>
+      <p class="lu-sub">OWL allows it unless you declared a max cardinality axiom, which most teams skip, for reuse.</p>
+    </div>
+    <div class="lu-card lu-col-3" data-build="3">
+      <span class="lu-card__label">03 · Cross-field</span>
+      <h3 class="lu-h3">Backwards dates</h3>
+      <p class="lu-sub">A relationship between two datatype values. No OWL construct compares two literals directly.</p>
+    </div>
+    <div class="lu-card lu-col-3" data-build="4">
+      <span class="lu-card__label">04 · Untyped ref</span>
+      <h3 class="lu-h3">An untyped IRI</h3>
+      <p class="lu-sub"><code>ul:hasCarrier ul:untracked</code>: <code>ul:untracked</code> is never asserted <code>a ul:Carrier</code>.</p>
+    </div>
+  </div>
+
+  <div class="lu-reveal" data-build="5">
+    <button class="lu-reveal__btn" type="button">All four, in one real pySHACL run, this session</button>
+    <div class="lu-reveal__panel" hidden>
+      <p>Two of these four fail for real, this session, on data extending <code>ul:po88</code>. The other two are your lab work.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Seven minutes. Build the four cards in order, they are the four constraint families the rest of the lecture teaches you to write. Say the family name each time: cardinality, cardinality, SPARQL constraint, class constraint.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 10 -->
+<section class="slide" data-label="Where SHACL sits in the pipeline" data-section="Open vs closed world" data-minutes="4">
+  <div class="lu-eyebrow">Architecture</div>
+  <h2 class="lu-h1">A validator, not a second ontology</h2>
+
+  <div class="lu-stack" style="margin-top:var(--lu-s4)">
+    <ul class="lu-layers">
+      <li data-build="1"><span class="lu-layers__name">Ontology (OWL)</span><span class="lu-layers__note">What the terms mean. Session 3's job, unchanged today.</span></li>
+      <li data-build="2"><span class="lu-layers__name">Data graph</span><span class="lu-layers__note">Your team's own instance data, mapped or asserted.</span></li>
+      <li data-build="3" data-state="active"><span class="lu-layers__name">Shapes graph (SHACL)</span><span class="lu-layers__note">A separate RDF graph of constraints, targeted at the same data.</span></li>
+      <li data-build="4"><span class="lu-layers__name">Validation report</span><span class="lu-layers__note">RDF, machine-readable, checked into your repository.</span></li>
+    </ul>
+    <div class="lu-callout" data-build="5">
+      <span class="lu-callout__label">Worth saying plainly</span>
+      <p class="lu-sub">SHACL shapes are themselves RDF triples, written in Turtle, living in their own file. Nothing new to install, nothing new to learn about the graph.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. Keep this one fast, it is a bridge slide, not a teaching slide.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 11 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 2 · Shapes language core" data-section="SHACL core" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part two of six · ~28 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:24ch">A shape is a claim about a node. What can that claim actually say?</h2>
+    <p class="lu-lead" style="max-width:44ch">Eight component families cover almost everything your constraint inventory needs.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 12 -->
+<section class="slide" data-label="NodeShape and PropertyShape" data-section="SHACL core" data-minutes="6">
+  <div class="lu-eyebrow">Anatomy</div>
+  <h2 class="lu-h1">Two shape kinds, nested inside each other</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s3)">
+    <div class="lu-stack" style="gap:var(--lu-s3)">
+      <ul class="lu-list">
+        <li>A <button class="lu-term" type="button" data-term="NodeShape" data-kind="Node-level shape"><span class="lu-term-word">NodeShape</span><template>A <b>NodeShape</b> constrains a node as a whole, by declaring who it applies to (<code>sh:targetClass</code> and friends) and listing the property shapes that must hold.<p>In your inventory, one NodeShape per class in your Session 3 ontology is the usual shape of the file.</p></template></button> constrains a node directly: which class of individual, and what must hold of it.</li>
+        <li>A <button class="lu-term" type="button" data-term="PropertyShape" data-kind="Property-level shape"><span class="lu-term-word">PropertyShape</span><template>A <b>PropertyShape</b> constrains the values reached by following one <code>sh:path</code> from the focus node. It is where <code>sh:minCount</code>, <code>sh:datatype</code> and the rest actually live.<p>A PropertyShape can be reused across NodeShapes by giving it its own IRI, exactly like SCRO classes were reused across your team's extension.</p></template></button> constrains what you reach by following one property.</li>
+        <li>A NodeShape lists PropertyShapes with <code>sh:property</code>. Most real shapes are a NodeShape wrapping several PropertyShapes.</li>
+      </ul>
+    </div>
+    <div class="lu-stack" data-build="1">
+      <div class="lu-code lu-code--sm" data-name="ul:PurchaseOrderShape, minimal">
+<pre><code><span class="tok-fn">ul:PurchaseOrderShape</span>
+  <span class="tok-kw">a</span> sh:NodeShape ;
+  sh:targetClass <span class="tok-fn">ul:PurchaseOrder</span> ;
+  sh:property [
+    sh:path <span class="tok-fn">ul:hasCarrier</span> ;
+    sh:minCount <span class="tok-num">1</span> ;
+  ] .</code></pre>
+      </div>
+      <p class="lu-caption">The square brackets are a blank node PropertyShape, anonymous and inline. Give one its own IRI only if you reuse it elsewhere.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. Both popovers matter, click them in order, NodeShape then PropertyShape, the nesting only makes sense once both definitions are on screen together.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 13 -->
+<section class="slide" data-label="Targeting: who does a shape apply to" data-section="SHACL core" data-minutes="6">
+  <div class="lu-eyebrow">Targeting</div>
+  <h2 class="lu-h1">Four ways to say which nodes a shape checks</h2>
+
+  <div class="lu-stack" style="margin-top:var(--lu-s4)">
+    <dl class="lu-defs">
+      <dt>sh:targetClass</dt><dd>Every instance of a class. The one you will use almost everywhere: <code>sh:targetClass ul:PurchaseOrder</code>.</dd>
+      <dt>sh:targetNode</dt><dd>One named individual, by IRI. Rare in a shape graph, common while debugging one bad record.</dd>
+      <dt>sh:targetSubjectsOf</dt><dd>Every node that is a subject of a given property, whatever its class. Useful when a property crosses several classes.</dd>
+      <dt>sh:targetObjectsOf</dt><dd>Every node that is an object of a given property. Targets the value end of a relation, not the source end.</dd>
+    </dl>
+    <div class="lu-callout" data-build="1">
+      <span class="lu-callout__label">The trap</span>
+      <p class="lu-sub">No target at all means the shape checks nothing, silently. Unlike a missing <code>WHERE</code> clause, SHACL does not error, it just validates zero nodes and reports conformance.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. Say the trap out loud twice, it is the single most common reason a team's shape graph reports a suspiciously clean pass in the lab.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 14 -->
+<section class="slide" data-label="Cardinality constraints" data-section="SHACL core" data-minutes="5">
+  <div class="lu-eyebrow">Constraint family 1</div>
+  <h2 class="lu-h1">How many values are allowed, exactly</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <div class="lu-code lu-code--sm" data-name="sh:minCount and sh:maxCount">
+<pre><code>sh:path <span class="tok-fn">ul:hasCarrier</span> ;
+sh:minCount <span class="tok-num">1</span> ;
+sh:maxCount <span class="tok-num">1</span> ;</code></pre>
+      </div>
+      <ul class="lu-list">
+        <li><code>sh:minCount 1</code> is how SHACL spells "required". There is no separate <code>sh:required</code>.</li>
+        <li>Omitting <code>sh:maxCount</code> means unbounded, not zero. State it if the field is single valued.</li>
+        <li>Counted per <code>sh:path</code>, per focus node, not across the whole graph.</li>
+      </ul>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">Straight from GS1's own reference shapes</span>
+      <p class="lu-sub"><code>epcis:SchemaVersionShape</code> pairs <code>sh:minCount 1</code> with <code>sh:maxCount 1</code> on every mandatory, single-valued field in the real EPCIS document shape. The same pattern, in production, since before this course existed.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. This is the easiest family, move quickly, the payoff is in the later, harder ones.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 15 -->
+<section class="slide" data-label="Value type constraints" data-section="SHACL core" data-minutes="6">
+  <div class="lu-eyebrow">Constraint family 2</div>
+  <h2 class="lu-h1">What kind of value is allowed</h2>
+
+  <div class="lu-stack" style="margin-top:var(--lu-s4)">
+    <dl class="lu-defs">
+      <dt>sh:datatype</dt><dd>The value is a literal of exactly this XSD datatype: <code>sh:datatype xsd:date</code>.</dd>
+      <dt>sh:class</dt><dd>The value is a resource that is an instance of this class, checked against your Session 3 ontology's own <code>rdf:type</code> assertions.</dd>
+      <dt>sh:nodeKind</dt><dd>Structural, not semantic: <code>sh:IRI</code>, <code>sh:BlankNode</code>, or <code>sh:Literal</code>. Catches a string where an IRI belonged.</dd>
+    </dl>
+    <div class="lu-code lu-code--sm" data-build="1" data-name="the class constraint that catches ul:untracked">
+<pre><code>sh:path <span class="tok-fn">ul:hasCarrier</span> ;
+sh:class <span class="tok-fn">ul:Carrier</span> ;
+sh:message <span class="tok-str">"hasCarrier must point to a declared ul:Carrier."</span> ;</code></pre>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. <code>sh:class</code> is the shape that will catch the <code>ul:untracked</code> failure in a few slides. Flag that connection now so it lands as recognition later, not a new idea.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 16 -->
+<section class="slide" data-label="Pattern and enumeration constraints" data-section="SHACL core" data-minutes="7">
+  <div class="lu-eyebrow">Constraint family 3 · real examples, not invented ones</div>
+  <h2 class="lu-h1">Shape the value itself, not just its type</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s3)">
+    <div class="lu-stack" style="gap:var(--lu-s3)">
+      <p class="lu-p">Two patterns lifted directly from GS1's real <code>EPCIS-SHACL.ttl</code>, the file you reuse later this session.</p>
+      <div class="lu-code lu-code--sm" data-name="sh:pattern, a real regex from GS1">
+<pre><code><span class="tok-com"># epcis:EventTimeZoneOffsetShape</span>
+sh:pattern <span class="tok-str">"^(\\+|-)((0[0-9]|1[0-3])"</span>
+  <span class="tok-str">":([0-5][0-9])|14:00)$"</span> ;</code></pre>
+      </div>
+      <div class="lu-code lu-code--sm" data-name="sh:in, a real controlled vocabulary from GS1">
+<pre><code><span class="tok-com"># epcis:ActionShape</span>
+sh:in ( <span class="tok-str">"ADD"</span> <span class="tok-str">"OBSERVE"</span> <span class="tok-str">"DELETE"</span> ) ;</code></pre>
+      </div>
+    </div>
+    <div class="lu-stack" data-build="1">
+      <div class="lu-callout">
+        <span class="lu-callout__label">sh:pattern</span>
+        <p class="lu-sub">A regular expression the lexical value must match. Format rules OWL's datatype system cannot express: a national ID, a currency code, an ISO offset.</p>
+      </div>
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">sh:in</span>
+        <p class="lu-sub">A closed enumeration. GS1 restricts <code>action</code> to exactly three strings, not "any string", the same way a database <code>CHECK</code> constraint would.</p>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Seven minutes. Say explicitly that these two lines are copied verbatim from a real, deployed standard, not written for this slide. It changes how seriously the room takes "reuse" later.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 17 -->
+<section class="slide" data-label="Logical constraints" data-section="SHACL core" data-minutes="6">
+  <div class="lu-eyebrow">Constraint family 4</div>
+  <h2 class="lu-h1">Combining shapes: or, and, not</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <ul class="lu-list">
+        <li><code>sh:or</code>, at least one listed shape must hold. GS1's <code>SenderShape</code> allows an IRI or a plain string.</li>
+        <li><code>sh:and</code>, every listed shape must hold. Common when composing two reusable shapes.</li>
+        <li><code>sh:not</code>, the shape must fail. GS1 uses it to reject NaN in a numeric field.</li>
+      </ul>
+      <div class="lu-code lu-code--sm" data-name="epcis:SenderShape, real sh:or">
+<pre><code>sh:or (
+  [ sh:nodeKind sh:IRI ; ]
+  [ sh:datatype xsd:string ; ]
+) ;</code></pre>
+      </div>
+    </div>
+    <div class="lu-callout" data-build="1">
+      <span class="lu-callout__label">Why this matters for your own inventory</span>
+      <p class="lu-sub">Real operational data is rarely one clean type. <code>sh:or</code> is how you validate "a carrier code, or an IRI, either is fine" without loosening the constraint to "anything".</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. The GS1 example is doing real work, walk through why sender needed both branches rather than picking one.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 18 -->
+<section class="slide slide--tint" data-label="Check: severity and conformance" data-section="SHACL core" data-minutes="5">
+  <div class="lu-eyebrow">Check question</div>
+  <div class="lu-mcq"
+       data-qid="s4-q1"
+       data-answer="b"
+       data-label="What does sh:Warning severity actually do to sh:conforms?"
+       data-fb-correct=" Correct. Only sh:Violation results flip sh:conforms to false. Warnings and Info are reported, never gating."
+       data-fb-wrong=" Severity changes what the result means to a human reading the report, not whether the graph conforms.">
+    <p class="lu-mcq__q">A shape has <code>sh:severity sh:Warning</code>. The data violates it. What happens to <code>sh:conforms</code> on the report?</p>
+    <div class="lu-mcq__opts">
+      <button class="lu-mcq__opt" type="button" data-key="a">It becomes false, warnings still fail validation<span class="lu-mcq__why" hidden>Only sh:Violation, the default severity, sets conforms to false. A pure sh:Warning graph still conforms.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="b">It stays true, the result is listed but does not gate<span class="lu-mcq__why" hidden>Correct. sh:Violation is the only severity that fails conformance. Warning and Info are visible in the report, not blocking.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="c">The shape is skipped entirely<span class="lu-mcq__why" hidden>Warning shapes still run and still appear in the report, they just do not set conforms to false.</span></button>
+    </div>
+    <div class="lu-mcq__fb" hidden></div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. This is the distinction your triage decision later depends on: a constraint you are not yet confident about goes in as sh:Warning first, sh:Violation once you trust it.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 19 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 3 · Beyond core constraints" data-section="SPARQL constraints" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part three of six · ~22 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:24ch">One core component compares a value against a fixed rule. What compares two values to each other?</h2>
+    <p class="lu-lead" style="max-width:40ch">Nothing in the core vocabulary. That gap has one answer.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 20 -->
+<section class="slide" data-label="The problem core constraints cannot express" data-section="SPARQL constraints" data-minutes="5">
+  <div class="lu-eyebrow">The gap</div>
+  <h2 class="lu-h1">Delivered before it was dispatched</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <p class="lu-p">Every core component you have seen constrains one property against a fixed rule: a datatype, a count, a pattern. None of them compares two properties of the <b>same</b> node to each other.</p>
+      <ul class="lu-list">
+        <li><code>ul:dispatchDate</code> must precede <code>ul:deliveryDate</code>, on the same <code>ul:PurchaseOrder</code>.</li>
+        <li>This is exactly the shape of Session 1's own template example: "a shipment cannot be delivered before it is dispatched."</li>
+      </ul>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">What you need</span>
+      <p class="lu-sub">A general query over the focus node's own neighbourhood. SHACL has exactly one component that gives you that: <code>sh:sparql</code>.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Tie this explicitly back to the constraint inventory template's own example row, they have already seen this exact rule once.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 21 -->
+<section class="slide" data-label="sh:sparql, the escape hatch" data-section="SPARQL constraints" data-minutes="7">
+  <div class="lu-eyebrow">SPARQL-based constraints</div>
+  <h2 class="lu-h1">A SELECT that returns the violations</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="the actual shape, tested this session">
+<pre><code>sh:sparql [
+  <span class="tok-kw">a</span> sh:SPARQLConstraint ;
+  sh:message <span class="tok-str">"deliveryDate before dispatchDate."</span> ;
+  sh:prefixes <span class="tok-fn">ul:</span> ;
+  sh:select <span class="tok-str">"SELECT $this WHERE { $this ul:dispatchDate ?d ; ul:deliveryDate ?r . FILTER (?r &lt; ?d) }"</span> ;
+] .</code></pre>
+    </div>
+    <div class="lu-stack">
+      <ul class="lu-list lu-list--tight">
+        <li><code>$this</code>, bound to the focus node once per candidate.</li>
+        <li>Every returned row is one violation. Zero rows, shape satisfied.</li>
+        <li><code>sh:prefixes</code> reuses prefixes already in your shapes graph.</li>
+      </ul>
+      <div class="lu-callout" data-build="1">
+        <span class="lu-callout__label">When to reach for this</span>
+        <p class="lu-sub">Only when a core component cannot say it. More expensive to evaluate, and a bad query can silently match nothing at all.</p>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Seven minutes. This exact query is run for real two slides from now, say that explicitly so it does not read as a syntax example nobody will see work.</p>
+    <ul><li>Warn about the sandbox trap named in AGENTS.md: always confirm a SPARQL constraint actually returns rows on data you know is bad, before trusting a clean report.</li></ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 22 -->
+<section class="slide" data-label="Walkthrough: building the shape live" data-section="SPARQL constraints" data-minutes="9">
+  <div class="lu-eyebrow">Diagnostic walkthrough</div>
+  <h2 class="lu-h2">One shape, built up in four steps, each one adding a constraint family</h2>
+
+  <div class="lu-walk" data-label="Building ul:PurchaseOrderShape">
+    <div class="lu-walk__view">
+      <div data-walk-step="1" data-caption-short="Target and cardinality"
+           data-caption="<b>Step 1, target and cardinality.</b> Every ul:PurchaseOrder needs exactly one carrier. This alone already catches an order with none.">
+        <div class="lu-code" data-name="step 1"><pre><code><span class="tok-fn">ul:PurchaseOrderShape</span> <span class="tok-kw">a</span> sh:NodeShape ;
+  sh:targetClass <span class="tok-fn">ul:PurchaseOrder</span> ;
+  sh:property [ sh:path <span class="tok-fn">ul:hasCarrier</span> ; sh:minCount <span class="tok-num">1</span> ; sh:maxCount <span class="tok-num">1</span> ] .</code></pre></div>
+      </div>
+      <div data-walk-step="2" data-caption-short="Add the class constraint"
+           data-caption="<b>Step 2, add the class constraint.</b> A carrier is present, but is it a declared ul:Carrier? sh:class checks the type, not just the presence.">
+        <div class="lu-code" data-name="step 2"><pre><code>  sh:property [
+    sh:path <span class="tok-fn">ul:hasCarrier</span> ; sh:class <span class="tok-fn">ul:Carrier</span> ;
+    sh:minCount <span class="tok-num">1</span> ; sh:maxCount <span class="tok-num">1</span> ;
+    sh:message <span class="tok-str">"hasCarrier must be a declared ul:Carrier."</span> ] .</code></pre></div>
+      </div>
+      <div data-walk-step="3" data-caption-short="Add the date fields"
+           data-caption="<b>Step 3, add the date fields.</b> Both dates required, and typed, before you can compare them to each other.">
+        <div class="lu-code" data-name="step 3"><pre><code>  sh:property [ sh:path <span class="tok-fn">ul:dispatchDate</span> ; sh:datatype xsd:date ;
+    sh:minCount <span class="tok-num">1</span> ; sh:maxCount <span class="tok-num">1</span> ] ;
+  sh:property [ sh:path <span class="tok-fn">ul:deliveryDate</span> ; sh:datatype xsd:date ;
+    sh:maxCount <span class="tok-num">1</span> ] .</code></pre></div>
+      </div>
+      <div data-walk-step="4" data-caption-short="Add the SPARQL constraint"
+           data-caption="<b>Step 4, add the cross-field rule.</b> Only sh:sparql can compare the two dates to each other. This is the finished shape, run for real next.">
+        <div class="lu-code" data-name="step 4, finished"><pre><code>  sh:sparql [ a sh:SPARQLConstraint ;
+    sh:message <span class="tok-str">"deliveryDate before dispatchDate."</span> ;
+    sh:select <span class="tok-str">"SELECT $this WHERE { $this ul:dispatchDate ?d ; ul:deliveryDate ?r . FILTER (?r &lt; ?d) }"</span> ] .</code></pre></div>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Nine minutes, second most important slide of the session. Step through once yourself narrating each addition, then ask the room what step 4 catches that steps 1 to 3 together still miss.</p>
+    <ul><li>Answer: nothing in steps 1 to 3 can see a date-ordering problem. Only step 4 can, and only because sh:sparql exists at all.</li></ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 23 -->
+<section class="slide" data-label="Reading a validation report" data-section="SPARQL constraints" data-minutes="6">
+  <div class="lu-eyebrow">The output</div>
+  <h2 class="lu-h1">A report is a graph too, and you read it the same way</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <dl class="lu-defs">
+        <dt>sh:conforms</dt><dd>The single boolean bottom line: did every shape hold, across the whole graph.</dd>
+        <dt>sh:result</dt><dd>One per violation. A conforming graph has zero.</dd>
+        <dt>sh:focusNode</dt><dd>Which node failed. The IRI you go fix.</dd>
+        <dt>sh:resultPath</dt><dd>Which property the failure was found on.</dd>
+        <dt>sh:resultMessage</dt><dd>Your own <code>sh:message</code>, or a generic default if you did not write one.</dd>
+      </dl>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">Why sh:message is not optional in your work</span>
+      <p class="lu-sub">A report with a generic "does not conform" message is unreadable by anyone but its author. Every shape you write this session gets one.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. Point out that GS1's own file has sh:message on every single shape, no exceptions, before you say this is a requirement in the lab too.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 24 -->
+<section class="slide" data-label="Running pySHACL for real" data-section="SPARQL constraints" data-minutes="6">
+  <div class="lu-eyebrow">Live, not simulated</div>
+  <h2 class="lu-h1">The exact report the finished shape produces</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="the second order in the data, po99">
+<pre><code><span class="tok-fn">ul:po99</span> <span class="tok-kw">a</span> <span class="tok-fn">ul:PurchaseOrder</span> ;
+  <span class="tok-fn">ul:hasCarrier</span> <span class="tok-fn">ul:untracked</span> ;
+  <span class="tok-fn">ul:dispatchDate</span> <span class="tok-str">"2026-03-20"</span> ;
+  <span class="tok-fn">ul:deliveryDate</span> <span class="tok-str">"2026-03-18"</span> .
+<span class="tok-com"># ul:untracked is never typed a ul:Carrier</span></code></pre>
+    </div>
+    <div class="lu-code lu-code--sm" data-name="pyshacl -s shapes.ttl -f human data.ttl, real output" data-build="1">
+<pre><code>Conforms: <span class="tok-kw">False</span>
+Results (2):
+<span class="tok-com">Violation in ClassConstraintComponent</span>
+  Focus Node: <span class="tok-fn">ul:po99</span>
+  Message: hasCarrier must be a
+    declared ul:Carrier.
+<span class="tok-com">Violation in SPARQLConstraintComponent</span>
+  Focus Node: <span class="tok-fn">ul:po99</span>
+  Message: deliveryDate before
+    dispatchDate.</code></pre>
+    </div>
+  </div>
+  <p class="lu-caption" style="margin-top:var(--lu-s3)"><code>ul:po88</code>, unchanged from Session 3, produces zero results against the same shape. It was always clean, this only proves it.</p>
+  <template data-notes>
+    <p>Six minutes. This output is real, run this session while preparing the deck, not written from memory. Say that plainly, it matters after the Protégé conversation.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 25 -->
+<section class="slide slide--tint" data-label="Triage: shape wrong, or data wrong" data-section="SPARQL constraints" data-minutes="6">
+  <div class="lu-eyebrow">The decision every violation forces</div>
+  <h2 class="lu-h1">A failing shape is not automatically a data bug</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <ol class="lu-list lu-list--num">
+        <li>Read the focus node and the message. Go look at the source row.</li>
+        <li>Ask: is this genuinely wrong data, or a rule that is too strict for a real, valid case?</li>
+        <li>If the data is wrong: record it, do not silently fix and re-run. The finding is part of your deliverable.</li>
+        <li>If the shape is wrong: loosen it deliberately, note why, keep the old version in git history.</li>
+      </ol>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">This is the actual Milestone 1 grading criterion</span>
+      <p class="lu-sub">"A validation report with every failure triaged" means exactly this decision, written down, for every single violation. Zero violations with no triage log scores worse than a handful, explained.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. This is where the session earns the word "quality" in its title. Spend real time on it, teams that skip triage lose real marks.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 25b -->
+<section class="slide slide--tint" data-label="Poll: violation or warning" data-section="SPARQL constraints" data-minutes="4" style="--lu-s5:12px">
+  <div class="lu-eyebrow">Room poll · 45 seconds</div>
+  <div class="lu-poll" style="gap:var(--lu-s3)" data-qid="s4-poll" data-seconds="45" data-answer="b" data-label="Violation or Warning severity for a not-yet-trusted rule">
+    <p class="lu-mcq__q">Your team is not yet sure <code>ul:deliveryDate</code> should always be present, some legitimate orders may still be in transit. How do you ship the shape today?</p>
+    <div class="lu-mcq__opts">
+      <button class="lu-mcq__opt" style="padding:var(--lu-s3) var(--lu-s5)" type="button" data-key="a">Leave the shape out until you are certain<span class="lu-mcq__why" hidden>An unwritten rule teaches nothing and validates nothing. You lose the signal entirely while you decide.</span></button>
+      <button class="lu-mcq__opt" style="padding:var(--lu-s3) var(--lu-s5)" type="button" data-key="b">Ship it now with sh:severity sh:Warning, tighten later<span class="lu-mcq__why" hidden>Correct. It stays visible in every report without blocking the CI gate, and you promote it to sh:Violation once the team is confident.</span></button>
+      <button class="lu-mcq__opt" style="padding:var(--lu-s3) var(--lu-s5)" type="button" data-key="c">Ship it as sh:Violation, fix false alarms as they appear<span class="lu-mcq__why" hidden>This blocks the CI gate on a rule you do not yet trust, the exact failure mode the severity levels exist to avoid.</span></button>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Forty-five seconds, then reveal and tally by show of hands. This is the practical version of the severity-levels check question from Part 2, now applied to a real decision they will make in the lab in a few minutes.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 26 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 4 · Provenance and versioning" data-section="Provenance" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part four of six · ~13 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:24ch">A clean report, dated when, produced by what, against which version?</h2>
+    <p class="lu-lead" style="max-width:40ch">"Provenance" is in this session's title for a reason: an unattributed quality claim is not a quality claim.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 27 -->
+<section class="slide" data-label="Why provenance is in the title" data-section="Provenance" data-minutes="4">
+  <div class="lu-eyebrow">The third word in the session title</div>
+  <h2 class="lu-h1">A validation report is a claim. Claims need an author and a date.</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <p class="lu-p">"The graph conforms" is worthless on its own six months from now: conforms, checked by what shapes, against what data snapshot, run by whom, when?</p>
+      <ul class="lu-list">
+        <li>The ontology can change (Session 3's file gets a new class).</li>
+        <li>The shapes can change (you loosen a rule after triage).</li>
+        <li>The data can change (a new export lands next week).</li>
+      </ul>
+    </div>
+    <div class="lu-callout" data-build="1">
+      <span class="lu-callout__label">Without provenance</span>
+      <p class="lu-sub">A report that conformed in March, read in September, with no dates or versions attached, tells you nothing about whether it still applies.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. Keep this short and motivating, the mechanics are the next three slides.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 28 -->
+<section class="slide" data-label="Recording provenance in the graph" data-section="Provenance" data-minutes="5">
+  <div class="lu-eyebrow">Mechanics</div>
+  <h2 class="lu-h1">Annotate the report, not just the shapes</h2>
+
+  <div class="lu-stack" style="margin-top:var(--lu-s4)">
+    <div class="lu-code lu-code--sm" data-name="minimal provenance on a triage decision">
+<pre><code><span class="tok-fn">ul:triage-po99-carrier</span> <span class="tok-kw">a</span> <span class="tok-fn">ul:TriageDecision</span> ;
+  <span class="tok-fn">dcterms:created</span> <span class="tok-str">"2026-09-22"</span>^^xsd:date ;
+  <span class="tok-fn">dcterms:creator</span> <span class="tok-str">"team-4"</span> ;
+  <span class="tok-fn">prov:wasGeneratedBy</span> <span class="tok-fn">ul:validationRun-2026-09-22</span> ;
+  <span class="tok-fn">ul:decision</span> <span class="tok-str">"data dirty: carrier code unregistered"</span> .</code></pre>
+    </div>
+    <ul class="lu-list" data-build="1">
+      <li><code>dcterms:created</code> / <code>dcterms:creator</code> cover most of a milestone report, reusing vocabulary already in GS1's own shapes file.</li>
+      <li><code>prov:wasGeneratedBy</code> (W3C PROV) links a decision to the run that produced it, not just a date.</li>
+      <li>Deliberately lightweight: cite the pattern, do not build the whole PROV-O vocabulary.</li>
+    </ul>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Do not go deep into PROV-O's full model, the dcterms-plus-one-prov-property pattern here is genuinely sufficient for the milestone.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 29 -->
+<section class="slide" data-label="Versioning the ontology" data-section="Provenance" data-minutes="4">
+  <div class="lu-eyebrow">Mechanics</div>
+  <h2 class="lu-h1">owl:versionIRI: which ontology, exactly</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <div class="lu-code lu-code--sm" data-name="a version IRI on your Session 3 file">
+<pre><code><span class="tok-fn">&lt;https://ul.edu.lb/kr/scm&gt;</span> <span class="tok-kw">a</span> owl:Ontology ;
+  owl:versionIRI
+    <span class="tok-fn">&lt;https://ul.edu.lb/kr/scm/2026-09-22&gt;</span> ;
+  owl:versionInfo <span class="tok-str">"0.3.0, post Milestone 1"</span> .</code></pre>
+    </div>
+    <div class="lu-callout" data-build="1">
+      <span class="lu-callout__label">Why it earns its place here, not in Session 3</span>
+      <p class="lu-sub">A validation report is only meaningful pinned to one exact ontology version. Without <code>owl:versionIRI</code>, "clean against the ontology" cannot say which ontology.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. If a team already has a version IRI from Session 3, good, this is where it starts earning its keep rather than being decoration.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 30 -->
+<section class="slide slide--tint" data-label="Drill: what belongs in the milestone report" data-section="Provenance" data-minutes="4">
+  <div class="lu-eyebrow">Drill · complete the statement</div>
+  <div class="lu-card">
+    <span class="lu-card__label">Fill the blanks</span>
+    <div class="lu-blanks" data-qid="s4-blanks" data-label="Provenance and versioning vocabulary">
+      <p>The property that pins a report to the exact ontology snapshot it was checked against is <input class="lu-blank lu-blank--wide" data-answer="owl:versionIRI|versionIRI" data-label="Ontology version property" placeholder="property">.</p>
+      <p>Under the closed world assumption, an absent property is treated as <input class="lu-blank" style="width:110px" data-answer="false|missing|absent" data-label="What absence means under CWA" placeholder="?">, unlike under OWA.</p>
+      <p>The SHACL component that lets you compare two properties of the same focus node is <input class="lu-blank lu-blank--wide" data-answer="sh:sparql|SPARQLConstraint|sparql" data-label="Cross-field constraint component" placeholder="component">.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. This is a checkpoint on the whole lecture so far, not just Part 4, let the room feel that before you move on to reuse.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 31 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 5 · Reuse" data-section="Reuse" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part five of six · ~16 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:24ch">You reused an ontology in Session 3. Shape graphs get reused the same way.</h2>
+    <p class="lu-lead" style="max-width:40ch">GS1 has already solved this for EPCIS documents. Read their answer before writing your own.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 32 -->
+<section class="slide" data-label="GS1 EPCIS-SHACL.ttl as a reference" data-section="Reuse" data-minutes="6">
+  <div class="lu-eyebrow">A real, deployed shapes file</div>
+  <h2 class="lu-h1">1,137 lines, GS1's own EPCIS document shapes</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <ul class="lu-list">
+        <li>github.com/gs1/EPCIS, <code>Ontology/EPCIS-SHACL.ttl</code>. Not the URL the syllabus originally pointed at, that one 404s, check before every teaching run.</li>
+        <li>Covers the whole EPCIS document: header, event list, four event types, sensor reports, error declarations.</li>
+        <li>Every property shape carries a human-readable <code>sh:message</code>, no exceptions.</li>
+      </ul>
+    </div>
+    <div class="lu-figure">
+      <div class="lu-figure__ph">
+        <span class="lu-figure__ph-title">Screenshot: EPCIS-SHACL.ttl open in an editor, EventTimeZoneOffsetShape visible</span>
+        <span class="lu-figure__ph-note">Capture the real file at github.com/gs1/EPCIS/blob/master/Ontology/EPCIS-SHACL.ttl, scrolled to the pattern constraint shown two slides ago. Save as <code>assets/img/s4-epcis-shacl.png</code>, size 1600&times;900.</span>
+      </div>
+      <figcaption><b>Figure 4.1.</b> The real file, not a recreation.</figcaption>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. Open the real GitHub file live if the network holds, students respond differently to a scroll through 1,137 real lines than to slide excerpts.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 33 -->
+<section class="slide" data-label="Three patterns worth borrowing" data-section="Reuse" data-minutes="6">
+  <div class="lu-eyebrow">What to actually take from it</div>
+  <h2 class="lu-h1">Not the shapes themselves, the discipline behind them</h2>
+
+  <div class="lu-grid">
+    <div class="lu-card lu-col-4" data-build="1">
+      <span class="lu-card__label">01 · sh:message, always</span>
+      <h3 class="lu-h3">Every shape explains its own failure</h3>
+      <p class="lu-sub">No shape in the file lacks one. Your inventory shapes get the same rule, no exceptions.</p>
+    </div>
+    <div class="lu-card lu-col-4" data-build="2">
+      <span class="lu-card__label">02 · sh:or for real-world messiness</span>
+      <h3 class="lu-h3">Model the actual variation, not the ideal case</h3>
+      <p class="lu-sub"><code>SenderShape</code> accepts IRI or string because real senders arrive both ways. Do not force a false choice.</p>
+    </div>
+    <div class="lu-card lu-col-4" data-build="3">
+      <span class="lu-card__label">03 · Nested sh:node for structure</span>
+      <h3 class="lu-h3">Compose shapes the way you composed ontology classes</h3>
+      <p class="lu-sub"><code>EPCISDocumentShape</code> nests <code>EpcisHeaderShape</code> and <code>EpcisBodyShape</code> rather than flattening everything into one shape.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Six minutes. Build the three cards one at a time. These three are exactly what the README commits the lab to teaching, say that explicitly.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 34 -->
+<section class="slide" data-label="shacl-play, live in the browser" data-section="Reuse" data-minutes="4">
+  <div class="lu-eyebrow">Tooling</div>
+  <h2 class="lu-h1">A second validator, to sanity-check the first</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <p class="lu-p"><a href="https://shacl-play.sparna.fr/play/" class="lu-term" style="text-decoration:underline">shacl-play</a>, a free browser tool: paste a shapes graph and a data graph, validate, and generate human-readable shape documentation and a UML-style diagram.</p>
+      <ul class="lu-list">
+        <li>Useful for a quick check against a second implementation, pySHACL and shacl-play occasionally disagree at the edges of the spec.</li>
+        <li>The documentation generator turns your shapes graph into a page a non-technical reviewer can read, worth attaching to your milestone submission.</li>
+      </ul>
+    </div>
+    <div class="lu-callout" data-build="1">
+      <span class="lu-callout__label">Not a replacement for pySHACL</span>
+      <p class="lu-sub">Your CI gate runs pySHACL, not a browser tool. Use shacl-play for exploration and documentation, not as the system of record.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. Demo it live if the network holds: paste in the PurchaseOrderShape from the walkthrough and show the generated diagram.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 35 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 6 · Validation as a gate" data-section="CI gate" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part six of six · ~16 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:24ch">You ran the validator once. What stops the next commit from breaking it again?</h2>
+    <p class="lu-lead" style="max-width:40ch">Nothing, unless the check runs automatically, every time.</p>
+  </div>
+  <template data-notes><p>Ten seconds.</p></template>
+</section>
+
+<!-- ==================================================================== 36 -->
+<section class="slide" data-label="Why a one-time check is not enough" data-section="CI gate" data-minutes="4">
+  <div class="lu-eyebrow">The problem with a report you ran once</div>
+  <h2 class="lu-h1">A clean report today says nothing about tomorrow's commit</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s4)">
+    <div class="lu-stack">
+      <ul class="lu-list">
+        <li>A teammate edits the mapping script next week, a new set of dirty rows lands unnoticed.</li>
+        <li>Someone loosens a shape to make a report look cleaner, without a triage note.</li>
+        <li>Both are silent unless something runs the check again, automatically, on every change.</li>
+      </ul>
+    </div>
+    <div class="lu-callout lu-callout--concept" data-build="1">
+      <span class="lu-callout__label">The software engineering answer</span>
+      <p class="lu-sub">The same problem, the same fix, as a broken unit test: run it in continuous integration, and block the merge if it fails.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Four minutes. Most of the room already knows CI from other courses, the new part is applying it to data quality, not code.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 37 -->
+<section class="slide" data-label="What the GitHub Action actually runs" data-section="CI gate" data-minutes="6">
+  <div class="lu-eyebrow">The provided workflow, read line by line</div>
+  <h2 class="lu-h1">Four steps, the same commands you ran by hand</h2>
+
+  <div class="lu-code lu-code--sm" style="margin-top:var(--lu-s4)" data-name=".github/workflows/validate.yml">
+<pre><code><span class="tok-kw">on</span>: [push, pull_request]
+<span class="tok-kw">jobs</span>:
+  validate:
+    <span class="tok-kw">runs-on</span>: ubuntu-latest
+    <span class="tok-kw">steps</span>:
+      - <span class="tok-kw">uses</span>: actions/checkout@v4
+      - <span class="tok-kw">uses</span>: actions/setup-python@v5
+        <span class="tok-kw">with</span>: { python-version: <span class="tok-str">"3.12"</span> }
+      - <span class="tok-kw">run</span>: pip install pyshacl
+      - <span class="tok-kw">run</span>: python validate.py --fail-on-violation</code></pre>
+  </div>
+  <p class="lu-caption" data-build="1">Checkout the repository, install Python and pySHACL, run the same <code>validate.py</code> from the lab. Nothing here is new, only automatic.</p>
+  <template data-notes>
+    <p>Six minutes. Walk it top to bottom. Note that action version pins go stale, check actions/checkout and actions/setup-python for their current major tag before teaching, same discipline as the library-maintenance slide in Session 1.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 38 -->
+<section class="slide" data-label="The gate blocking a bad commit" data-section="CI gate" data-minutes="5">
+  <div class="lu-eyebrow">Live, or the closest thing to it</div>
+  <h2 class="lu-h1">A red check on a pull request is the point, not a failure</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <div class="lu-figure">
+      <div class="lu-figure__ph">
+        <span class="lu-figure__ph-title">Screenshot: a GitHub pull request with the validate check failing, red X visible</span>
+        <span class="lu-figure__ph-note">Capture from this course's own team-template repository once a team has a real failing run. Save as <code>assets/img/s4-ci-red.png</code>, size 1600&times;900, crop to the checks panel.</span>
+      </div>
+      <figcaption><b>Figure 4.2.</b> This is success for the gate, even though the run failed.</figcaption>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-callout" data-build="1">
+        <span class="lu-callout__label">Read the red check correctly</span>
+        <p class="lu-sub">It means the gate is doing its job. A gate that never turns red has either perfect data forever, or is not actually wired up. Check which, the second is far more common.</p>
+      </div>
+      <p class="lu-caption">Exactly the same lesson as ROBOT's own non-zero exit on a real violation: a failing check on bad input is correct behaviour, not a bug in the tool.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Five minutes. Replace the placeholder with a real capture once a team has triggered a real failure, do not fake this one.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 39 -->
+<section class="slide" data-label="Lab brief · 60 minutes, your own topic" data-section="Lab" data-minutes="5">
+  <div class="lu-eyebrow">Independent build · 60 minutes · starts now</div>
+  <h2 class="lu-h1" style="max-width:34ch">Shape your own team's inventory, not the shared case</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
+    <ol class="lu-list lu-list--num lu-list--tight">
+      <li>Open your Session 1 constraint inventory for your own team's topic.</li>
+      <li>Write one SHACL shape per entry, with <code>sh:message</code> on every property shape.</li>
+      <li>Run <code>python validate.py</code> after every addition, not once at the end.</li>
+      <li>Triage every violation: shape wrong, or data wrong. Record the decision.</li>
+      <li>Add <code>owl:versionIRI</code> and provenance on your triage decisions.</li>
+      <li>Wire up the provided GitHub Action and confirm it runs on your repository.</li>
+    </ol>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">This is Milestone 1</span>
+        <p class="lu-sub">Submit your repo link before check-in. Grading rewards triage discipline and a working CI gate, not a zero-violation report.</p>
+      </div>
+      <p class="lu-caption">Run it as <code>python validate.py --shapes shapes_template.ttl --data your_team_graph.ttl</code></p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Circulate, do not lecture, this is independent build time. The most common blocker at minute 20: an empty target because sh:targetClass names a class that does not actually match anything in their data. Point them back to the targeting trap slide.</p>
+    <ul>
+      <li>Second most common blocker: a SPARQL constraint that silently returns zero rows on data they know is bad. Have them run the seeded query alone first, exactly like the query-sandbox lesson from Session 3.</li>
+    </ul>
+  </template>
+</section>
+
+<!-- ==================================================================== 40 -->
+<section class="slide slide--tint" data-label="Milestone check-in and wrap" data-section="Wrap" data-minutes="8">
+  <div class="lu-eyebrow">Check-in and wrap · 20 minutes</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <h2 class="lu-h2">Submit, then a room-level pass on what actually tripped people up</h2>
+      <ul class="lu-list">
+        <li>Confirm your repository link is submitted, with the CI gate visibly passing or a documented reason it is not yet green.</li>
+        <li>One team per topic area names their hardest triage decision, briefly.</li>
+        <li>Flag anything that felt like a gap in today's lecture, not just the lab, while it is fresh.</li>
+      </ul>
+      <div class="lu-callout">
+        <span class="lu-callout__label">Before Session 5</span>
+        <p class="lu-sub">Bring your validated shape graph. Session 5 maps your operational relational data into the graph the shapes you wrote today will keep checking.</p>
+      </div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-card">
+        <span class="lu-card__label">Next session</span>
+        <h3 class="lu-h3">Session 5 · Integrating Operational Data</h3>
+        <p class="lu-sub">RML mappings from relational tables into the graph you have been validating against all session. The shapes you wrote today become the acceptance test for that mapping.</p>
+      </div>
+      <div class="lu-row">
+        <span class="lu-tag">Milestone 1 due</span>
+        <span class="lu-caption" style="flex:1">At the close of today. Late submissions follow the syllabus's standard policy.</span>
+      </div>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Eight minutes of the twenty. Keep the topic-area share brief, one sentence each, the value is hearing that other teams hit real triage decisions too, not a full readout.</p>
+  </template>
+</section>
+
+<!-- ==================================================================== 41 -->
+<section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="4">
+  <div class="lu-eyebrow">Self-check</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <h2 class="lu-h2">How you did on this session's questions</h2>
+      <div data-score></div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept">
+        <span class="lu-callout__label">Studying alone?</span>
+        <p class="lu-sub">Press <kbd>S</kbd> for study mode: every popup becomes an inline note, every reveal opens, answers fill in. Press <kbd>S</kbd> again to return.</p>
+      </div>
+      <div class="lu-card lu-card--flat">
+        <span class="lu-card__label">Also available</span>
+        <ul class="lu-list lu-list--tight">
+          <li><kbd>O</kbd> contents · <kbd>/</kbd> search this lecture · <kbd>?</kbd> all shortcuts</li>
+          <li><b>Handout</b> in the bottom bar prints one page per slide with the instructor notes attached.</li>
+          <li>Any slide is linkable: add <code>#/12</code> to the address to share slide 12.</li>
+        </ul>
+      </div>
+      <p class="lu-caption">Your answers and position are stored in this browser only. Clearing them affects nothing else.</p>
+    </div>
+  </div>
+  <template data-notes>
+    <p>Close the session here, so students leave knowing where the self-study affordances are.</p>
+  </template>
+</section>
+
+</div><!-- /stage -->
+</div><!-- /deck -->
+
+<script src="../assets/lu-deck.js?v=1.1.0" defer></script>
+</body>
+</html>

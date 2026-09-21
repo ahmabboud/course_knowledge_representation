@@ -17,8 +17,8 @@ or lab-code progress, that is this file's job.
 |---|---|---|---|---|
 | 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Built | Built, notebook-presented |
 | 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Built | Built, notebook-presented |
-| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Built, reworded for run-and-observe, all 22 slides verified 0px overflow live, interactive click-through and print preview still owed, see Session 3 detail | Built as a run-and-observe walkthrough on a finished reference ontology, Protege/reasoner steps run live in the room from it |
-| 4 | 2 | Constraints, Quality, and Provenance: SHACL | Not built | Not started |
+| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Built | Scriptable parts built, Protege/reasoner steps are manual by design |
+| 4 | 2 | Constraints, Quality, and Provenance: SHACL | Built | Not started |
 | 5 | 3 | Integrating Operational Data | Not built | Not started |
 | 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | Not built | Not started |
 | 7 | 5 | The Agentic Query Layer, Deployment, and Open Problems | Not built | Not started |
@@ -73,294 +73,63 @@ with a plain import). Nothing left to build here.
 
 ## Session 3, detail
 
-Deck built. Lab redesigned 2026-09-19 (see "Redesign round 3" below)
-from an authoring exercise into a run-and-observe walkthrough, then
-every slide checked live and every found overflow bug fixed the same
-day (see "Verification and cleanup round" below):
+Deck built. Lab is smaller by design, Protege is a GUI application, so only
+its scriptable parts are built:
 
 - `fetch_ontologies.py`, downloads the real IOF Core and Supply Chain
-  (SCRO) ontologies at tag `Release_202603` (MIT licensed), the real
-  GS1 Web Vocabulary (Apache 2.0), and copies in the finished reference
-  ontology, into a gitignored `workspace/`, with a self-check that the
-  SupplyChain to Core to BFO import chain resolves fully offline before
-  Protege ever opens.
-- `scro-extension-reference.ttl`, a complete, finished ontology
-  (verified with rdflib), all eight competency questions answered,
-  nothing left for anyone to add or fix. Correcting the deck's own
-  illustrative example (`iof:MaterialTransport`, which does not exist
-  in real SCRO) to a real, verified class (`ioc:Shipment`), and reusing
-  several more real SCRO classes and properties directly
-  (`ioc:Facility`, `ioc:Carrier`, `ioc:MaterialComponent`,
-  `ioc:MaterialProduct`, `ioc:PurchaseOrder`, `ioc:ShippingRoute`,
-  `ioc:dependsOnProduct`, `ioc:dependsOnSupplier`), all checked against
-  the real Release_202603 files, not assumed.
-- `competency_questions.md`, a reference (not a worksheet) mapping all
-  eight competency questions to the class that answers each, and
-  explaining the four classes that deliberately do not answer one.
+  (SCRO) ontologies at tag `Release_202603` (MIT licensed), plus the real
+  GS1 Web Vocabulary (Apache 2.0), into a gitignored `workspace/`, with a
+  self-check that the SupplyChain to Core to BFO import chain resolves
+  fully offline before Protege ever opens.
+- `scro-extension-starter.ttl`, a valid starter ontology (verified with
+  rdflib), correcting the deck's own illustrative example
+  (`iof:MaterialTransport`, which does not exist in real SCRO) to a real,
+  verified class (`ioc:Shipment`), with the correction documented inline.
+- `competency_questions_template.md`, seeded with the deck's four given
+  competency questions.
 - `robot_report.py`, wraps the two ROBOT commands the deck's lab brief
-  shows (`reason` with ELK, then `report --fail-on none`), against the
-  finished reference file.
+  shows (`reason` with ELK, then `report` at QC profile).
 
-Protege, the reasoners, and the licensing exercise are still run live
-in the room, per the deck and this lab's own README, now framed as
-something the room watches and discusses rather than something each
-student builds, see "Redesign round 3" below for why. Nothing further
-to build here unless the deck's brief changes.
+Still manual, by design, per the deck: opening the starter file in Protege,
+running ELK then HermiT, reading the inferred hierarchy, and the ten-minute
+licensing exercise (a real, still-live SCORVoc licence conflict, documented
+in `workspace/LICENCES.md`, deliberately left unsolved so the room resolves
+it live). Nothing further to build here unless the deck's brief changes.
 
-### Slide QA, 2026-09-19
+### Lab dry run, 2026-09-19, two real bugs found and fixed
 
-- **Slide 6 ("The three reasoning tasks"), fixed, a real bug.** The three
-  cards plus the click-to-reveal panel below them slightly exceeded the
-  fixed 1600×900 slide canvas once the panel was opened, so the reveal
-  button's text was visibly sliced off at the bottom (confirmed by
-  rendering the deck headless and measuring the DOM, not just by eye).
-  Fixed by trimming card and reveal copy to a tighter word count (same
-  meaning, fewer wrapped lines) and dropping two redundant inline
-  `margin-top` styles that double-spaced on top of the slide's own flex
-  gap, a pattern this slide had that no other slide in the deck uses.
-  Re-verified headless with every card and the reveal panel open: fits
-  cleanly with margin to spare. If a future edit to this slide's copy
-  makes it grow again, check it the same way: open `lectures/kr-session-03.html#/6`
-  in a browser, step `→` through all four builds, click the reveal open,
-  and look for clipped text at the bottom edge.
-- **Slide 14 ("The upper ontology stack"), not a bug, by design.** Landing
-  on it directly shows only the heading and the figure placeholder; the
-  four ontology layers, the alignment tags, and the callout are
-  `data-build` steps that reveal one at a time on `→` (same mechanic as
-  slide 6's cards), and the figure is an intentional placeholder already
-  on `README.md`'s "Before teaching from it" checklist. Confirmed by
-  stepping through the builds; no code change made. Worth knowing if this
-  question comes up again for a different slide: check whether the
-  "missing" content is behind an unstepped `data-build`, or press `S` for
-  study mode, before assuming it's broken.
+Actually ran the scriptable half of the lab end to end (real network,
+real ROBOT 1.9.10, not just rdflib parse-checks) rather than trusting it
+because it looked right. Found and fixed two bugs neither the earlier
+build nor a parse check had caught:
 
-### Lab dry-run round 2, 2026-09-19: three straightforwardness fixes
+- `robot report --profile QC` is not valid ROBOT syntax (`--profile`
+  wants a custom rules file path, not a named preset), and the lecture
+  slide's own terminal code sample showed the same invalid command.
+  ROBOT's `report` also exits non-zero on ERROR-level violations, the
+  normal case for an unfinished student ontology, so `robot_report.py`
+  was one violation away from crashing on an otherwise-successful run.
+  Fixed both in `robot_report.py` and in `lectures/kr-session-03.html`'s
+  code sample: drop `--profile QC`, add `--fail-on none`.
+- `demos/.gitignore` blanket-ignored `session-03-ontology/workspace/`,
+  which silently dropped the three files `session-03-ontology/README.md`
+  tells students to commit (`scro-extension.ttl`, `reasoned.ttl`,
+  `report.tsv`), since both the fetch script and the Protege "Save As"
+  step put them in that same folder. Narrowed the ignore to the fetched
+  third-party material only; verified with `git check-ignore` and a real
+  `git add` that the right files go either way.
 
-Goal this round: the lab should be unambiguous to run, no step where a
-student has to guess. Re-ran `fetch_ontologies.py` end to end and
-re-read the starter file and templates with that lens. Found and fixed
-three real issues, none of them reasoning bugs, all of them "a student
-would stop here and not know what to do":
-
-- **`fetch_ontologies.py` had a single point of failure.** `fetch_gs1()`
-  had no error handling and ran before `copy_starter()` and
-  `write_licences_note()`, so any network hiccup on the GS1 download
-  (the least essential fetch, only needed for the later term-reuse
-  step) crashed the script with a raw traceback and skipped the parts
-  a student actually needs to open Protege. Fixed: `fetch_gs1()` now
-  warns and continues on failure, and runs after the starter-file copy
-  and licence note, so those always complete regardless. Verified by
-  forcing the GS1 request to fail: the script now finishes cleanly with
-  a warning, catalog check still passes.
-- **The starter file failed its own "every class needs a competency
-  question" rule, twice, unexplained.** Running the lecture's own
-  "classes with no competency question" SPARQL query against the
-  untouched starter returns `CancelledShipment` and `CommittedDate`.
-  `CancelledShipment` not having one is deliberate, it is the deck's
-  own later exercise target, but that framing lived only in the slide,
-  not in the lab files. `CommittedDate` not having one is a different,
-  legitimate reason (it is a support class, not a business entity a
-  competency question would name), also never stated anywhere. A
-  student running that query on their own lightly-edited file could
-  not have told a designed exercise from an oversight. Fixed: added a
-  comment on each explaining which is which and why.
-- **Two different, disagreeing counts of classes left to build.**
-  `README.md` and `competency_questions_template.md` both say four
-  competency questions given, four the student's own. The starter
-  file's own closing comment said "six are yours," undercounting by
-  one: only one of the four given questions has a class built for it,
-  so seven classes are actually needed, not six. Fixed: reworded the
-  starter file's closing comment to state the count the same way as
-  the other two files, and corrected it to seven.
-
-None of this touches the manual Protege walkthrough itself (open,
-extend, run ELK then HermiT, read the hierarchy), which still has not
-been dry-run by anyone, that remains the biggest untested part of this
-lab. Also still open: a real `robot_report.py` run against a file with
-several real added classes, not just the bare starter, to see what a
-realistic `report.tsv` looks like. Sandbox used for this round had no
-path to install ROBOT itself to do that here.
-
-### Redesign round 3, 2026-09-19: run-and-observe, not build-it-yourself
-
-Instructor decision, overriding round 2's fixes rather than building on
-them: round 2 made the authoring-based lab's own files internally
-consistent, but the lab's whole shape was the actual problem. Feedback:
-the lab needs to be straightforward to run, with no unclear step, and
-was not expecting students to draft competency questions or extend an
-ontology live at all, just run the pipeline and observe it.
-
-What changed:
-
-- `scro-extension-starter.ttl` (a starter meant to be extended) is
-  replaced by `scro-extension-reference.ttl` (a finished ontology,
-  meant to be opened, reasoned over, and read, never edited). All eight
-  competency questions are answered in the file itself, authored using
-  real SCRO reuse wherever SCRO covers the concept, and two genuinely
-  new classes (`ul:Port`, `ul:FreightRateBand`) where reuse search
-  against both SCRO and GS1 came up empty, an honest, checked outcome,
-  not an assumption. `ul:CancelledShipment` (no competency question, on
-  purpose) and three support classes (`ul:CommittedDate`, `ul:Plant`,
-  `ul:Port`) are kept and explained inline, so the "classes with no
-  competency question" query still has something real to find and
-  discuss, without anyone needing to have written anything themselves.
-- `competency_questions_template.md` (a fill-in-the-blanks worksheet)
-  is replaced by `competency_questions.md` (a reference table, question
-  to class, plus where the real authoring skill actually gets
-  practiced: each team's own capstone topic, not this file).
-- `README.md` rewritten end to end as a run-in-order script for
-  whoever is driving the room, addressed to that person (matching
-  `demos/README.md`'s own description of this repository as
-  instructor-run, live), not to a student working alone at a laptop.
-  Removed the individual "push your ontology to your repository
-  tonight" deliverable, there is no student deliverable from this
-  session's shared-case walkthrough, the real deliverable stays the
-  team's own capstone milestone. Added a "Nothing here is broken"
-  section: since every file is now supposed to come back clean, the
-  README now says explicitly what a real problem looks like versus the
-  two documented, deliberate exceptions, so a genuine bug is not
-  mistaken for part of the design, or the reverse.
-- `fetch_ontologies.py` and `robot_report.py` reworded throughout,
-  starter/extend language removed, function and default-filename
-  renamed to match (`copy_reference`,
-  `scro-extension-reference.ttl`), the "Save As before editing" Protege
-  instruction dropped since nothing gets edited.
-- `demos/.gitignore` and `demos/README.md` reworded to stop calling the
-  workspace outputs "student deliverables," they are the instructor's
-  own checked-in example of a clean run.
-- The lecture deck (`lectures/kr-session-03.html`) updated to match, in
-  every place it previously described a 95-minute individual
-  build-and-submit exercise: the objective slide's deliverable callout
-  and "how the 180 minutes are spent" list, the "four given, four
-  yours" competency-question reveal (now "four of eight, shown as a
-  preview"), the reading slide's code block and caption
-  (`scro-extension-reference.ttl`, not `scro-extension.ttl`, and not
-  "graded"), the ontology-layers slide's SCRO note and Figure 3.1
-  caption, the lab brief's title, numbered steps (now six: open,
-  find the CQs, run ELK/HermiT, run ROBOT, discuss
-  `ul:CancelledShipment`, licensing exercise), its terminal command
-  (`scro-extension-reference.ttl`) and deliverable callout, and the
-  closing pairs exercise (now: answer a CQ against the reference file,
-  debate `ul:CancelledShipment`, then check in on the team's own
-  topic, replacing "push ontology v1 to your repository tonight" with
-  an optional, no-pressure push of real capstone progress).
-  Tag-balance checked (`section`/`div`/`ol`/`ul`/`li`/`h2`/`p` open and
-  close counts match) but **not** visually rendered, this sandbox
-  cannot open local files in a browser to headlessly check layout the
-  way the 2026-09-19 slide-6 fix did. Several edited slides (3, 15, 18,
-  20) now carry longer paragraph and list-item text than before; do
-  the same headless step-through those slides got during that earlier
-  fix (`lectures/kr-session-03.html#/3`, `#/15`, `#/18`, `#/20`) before
-  trusting them not to clip, especially slide 18's numbered list and
-  deliverable callout, the ones that grew the most.
-
-Two old files could not be deleted from this session (a filesystem
-permission restriction on this mount blocked every `rm`, `git rm`, and
-`unlink`, even though renaming worked): `scro-extension-starter.ttl`
-and `competency_questions_template.md` are now stub files pointing at
-their replacements. Delete both by hand next time you have normal
-filesystem access to this repository.
-
-### Verification and cleanup round, 2026-09-19: every slide checked live
-
-Round 3's own note above flagged that slides 3, 15, 18 and 20 were
-edited but never rendered. This round verified them against the real
-deployed page (`ahmabboud.github.io/course_knowledge_representation`,
-via a browser, not the sandbox) using the deck's own audit protocol:
-cache-busted load, cleared `localStorage`, measure `scrollHeight -
-clientHeight` on `.slide__body` in both default and fully-revealed
-states, patch candidate fixes into the live DOM before writing them to
-source. Slides 3, 15, 18 and 20 all measured 0px overflow once fixed
-(commit `8de8815`).
-
-That same live audit, run across all 22 slides rather than just the
-four just-edited ones, found a second, larger, and unrelated set of
-overflow bugs already present in the deck before this session touched
-it (commit `5ec5432`):
-
-- **Where we are in the architecture** (slide 2): title wrapped to 3
-  lines against a 30ch max-width; widened to 46ch.
-- **DL as a fragment of first-order logic** (slide 5): both columns and
-  the reveal panel overflowed, in both default and revealed states.
-  Trimmed the intro paragraph, list, callout, code block and reveal
-  text; needed a scoped `--lu-s5` override on the section to also
-  shrink the body's own flex gap.
-- **The three reasoning tasks** (slide 6): reveal panel text needed to
-  drop to a single line, 2 lines was still 6px over.
-- **Check: which task finds which bug** (slide 7): an MCQ next to a
-  companion callout. Once answered, every option's rationale reveals
-  and the MCQ alone needs ~940px, more than the whole slide. Fixed the
-  same way the deck's own build-time notes describe for this pattern:
-  dropped the companion, widened the MCQ to full width, and still had
-  to cut it from 4 options to 3 (moved the dropped rationale into
-  speaker notes) to fit both the correct-answer and wrong-answer
-  feedback text.
-- **OWL 2 constructs you will use today** (slide 9): a 5-term
-  definition list plus a two-traps callout next to an 18-line real
-  Turtle file plus caption, at 9 minutes of content on one slide. Both
-  columns ran roughly 200 to 370px over even after trimming text, past
-  the point where trimming alone is the right fix. Split into two
-  slides (constructs vocabulary; then the reference-file code
-  walkthrough), 5 and 4 minutes respectively, same total. Renumbered
-  the deck's own numbered HTML comments from slide 10 onward to match
-  (deck is now 22 slides, was 21).
-- **EL or RL: the same model, two profiles** (slide 10, was 11):
-  trimmed the compare-slider panes' min-height and the two list
-  columns; needed the same scoped `--lu-s5` trick as slide 5.
-- **Profile decision table + drill** (slide 11, was "Walkthrough:
-  reading reasoner output" in this file's own earlier, incorrect
-  numbering, corrected by re-testing every slide by its label rather
-  than by position): three fill-in-the-blank sentences wrapped to 3
-  lines each in the split's narrower column; shortened the surrounding
-  prose rather than the blanks themselves.
-- **The upper ontology stack** (slide 14): figure caption and
-  alignment-hazard callout trimmed.
-- **Poll: does this class earn its place?** (slide 17): same
-  MCQ-plus-companion pattern as slide 7, but worse, a poll also shows a
-  results-bar visualisation and a large countdown timer alongside the
-  per-option rationale once revealed. Dropped the companion "how to run
-  this" card (moved to notes), widened to full width, cut from 4
-  options to 3, reduced option padding, and added a stylesheet rule
-  (`assets/lu.css`) hiding the timer once the poll is revealed, since
-  the countdown is no longer relevant at that point and the room
-  needed the height back.
-- **The licensing exercise** (slide 18, was 19): numbered list and
-  reveal-panel paragraphs trimmed to fit; detail moved to notes.
-- **Self-check** (slide 21): study-mode callout trimmed by one line.
-
-Also fixed in `assets/lu.css`, not `kr-session-03.html`, so it applies
-to every lecture that uses a poll: `.lu-poll__bars` had no `[hidden]`
-companion rule, so its own `display: flex` beat the UA `[hidden]` rule
-and the results bars occupied their full height even before a poll was
-revealed. The same fix already exists twice elsewhere in this
-stylesheet for the identical trap (`.lu-reveal__panel[hidden]`,
-`.lu-mcq__why[hidden]`); added the third. Also fixed a sub-20px inline
-`font-size:18px` on the walkthrough slide's "unsatisfiable" node label
-(the deck's own stated floor is 20px).
-
-Reviewed and deliberately left alone: the poll's `&minus;`/`+` tally
-buttons (a deliberate stepper-symbol pairing, not a stray punctuation
-character), and `kbd`/inline-`code` elements rendering at 13 to
-19.8px. The second one is a real, literal violation of this
-stylesheet's own stated "floor is 20px" comment, but it is a shared,
-pervasive convention used the same way in every lecture across all 8
-sessions, not something introduced by or specific to Session 3.
-Changing it means picking a new floor for keyboard-key badges and
-inline code system-wide and belongs upstream in
-`LebUniv_Course_Template`, per this repository's own README, as a
-deliberate decision, not a side effect of a Session 3 bug-fix pass.
-
-Every fix above was verified live (0px overflow, or ≤2px, treated as
-sub-pixel rounding) against the deployed page before being written to
-source, in both the default and, where relevant, the fully-revealed or
-fully-answered state. Tag balance (`div`/`section`/`ul`/`ol`/`li`/`p`/
-`span`/`button`/`table`/`tr`/`td`/`th`/`dl`/`dt`/`dd`, open vs. close)
-re-checked after all edits. Not yet done: the print-preview-with-
-Handout-mode check, and a full click-through of every interactive
-element per the lecture-builder skill's own testing protocol (term
-popovers, every MCQ option from a clean state, the sort/drag exercise,
-the query sandbox, study mode combined with print). Do that before
-calling this deck fully verified.
+Committed `dd07c41`. Not yet checked, flagged here rather than changed:
+slide 16 ("Query the ontology live")'s sandbox SPARQL data block
+(`lectures/kr-session-03.html` around line 585) still declares
+`ul:Shipment rdfs:subClassOf iof:MaterialTransport`, the same
+illustrative class this session already found does not exist in real
+SCRO and corrected to `ioc:Shipment` in `scro-extension-starter.ttl`.
+That slide's data is an explicitly offline, self-contained sandbox (not
+loaded against the real ontology), so it may be a deliberate
+simplification rather than a bug, but it is inconsistent with the
+now-corrected starter file. Worth a decision next time this file is
+touched: match it to `ioc:Shipment` too, or leave it and say why.
 
 ## What's next
 
