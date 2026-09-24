@@ -3,7 +3,7 @@
 **Any new session or agent: read this file right after `PROGRESS.md`.**
 The checklist below is the single to-do list. Tick an item (`[x]`) and add a
 dated line to the log at the bottom in the same change as the work.
-Last updated: 2026-09-24.
+Last updated: 2026-09-24 (handoff checked; both repos clean and pushed).
 
 Companion documents:
 
@@ -13,7 +13,7 @@ Companion documents:
   Sessions 3, 1, 2.
 - `AGENTS.md` section 2c: the teaching standard; graphics route 0 for flow
   diagrams (`lu-flow`), the default for anything with arrows.
-- `GLOSSARY.md`: plain definitions for every term in Sessions 1 to 6 (232
+- `GLOSSARY.md`: plain definitions for every term in Sessions 1 to 6 (234
   terms). The slides link to it automatically (item 16).
 
 Rules that always hold: never mark a session done in `PROGRESS.md` without
@@ -24,7 +24,35 @@ Pages); never delete a file without asking; no
 dashes in prose; audit every deck you touch before you stop (item 15); every
 new term goes into `GLOSSARY.md` (item 16).
 
-**Where to continue:** Session 1 is closed. Session 2 is rebuilt and waits for the instructor's review (item 8); then Session 3 (item 2). **Session 1 first** (instructor, 2026-09-24: the course has not started and Session 1 is taught first). Next open items are **6 and 7**. Session 3 (item 2) resumes after Session 1 is closed.
+**Where to continue (2026-09-24, end of day):**
+
+1. **Session 2 (item 8):** built, audited and pushed; waits for the instructor's
+   review. Ask for it first. If changes are asked, edit
+   `scripts/deckgen-s2/part_*.py`, run `python3 scripts/deckgen-s2/build.py`,
+   audit (item 15), glossary check (item 16), push (item 10).
+2. **Then Session 3, parts 3 to 6 (item 2),** with items 3 to 5. Reuse the
+   Session 1 and 2 generator pattern (`scripts/deckgen-s1/kit.py`). Convert
+   `demos/session-03-ontology/sample-shipments.ttl` individuals to the IRI
+   convention (`AGENTS.md` 2d) while there.
+3. **Later:** item 9 (Sessions 4 to 6 visual pass; Session 4 examples move to
+   the 2d IRIs), item 18 (syllabus alignment question).
+
+**Settled decisions a new session must not reopen:** tool rule (2c rule 5:
+concept first, one slide per tool, no slide for trivial tools, video only for
+complex GUI tools); timing (2c rule 7: about 180 minutes, about 2 hours slides
+and 1 hour lab, **a guide, not a rule**; `data-minutes` realistic); animation
+(section 7 route 0: grey blocks, colour only for states, animate whatever
+unfolds in steps); labs are **individual**, the capstone is the **team
+project** and its divider says so; IRIs (2d); Fuseki runs from
+`demos/fuseki/Dockerfile` (Apache 5.5.0 release, no login, localhost only).
+
+**How the work was run (2026-09-24):** edits and git on the instructor's Mac
+through the device shell; Playwright audits, Java (Fuseki), Morph-KGC and
+downloads in the cloud workspace, on copies. The Mac repo is the only source
+of truth: never commit from a copy. Not yet run for real: the Docker build of
+`demos/fuseki` (no Docker in the workspace; the instructor runs
+`docker compose up -d` once) and the Ontop path of Session 5.
+
 Items marked `[x]` are done; everything else is still open.
 
 ---
@@ -141,6 +169,10 @@ Items marked `[x]` are done; everything else is still open.
     plain English "edges of the spec".
 17. [ ] Future decks (Sessions 7 and 8): add their terms to `GLOSSARY.md` as a
     `## Session N` table while building them.
+18. [ ] **Syllabus alignment (asked 2026-09-24, no answer yet).** The syllabus
+    still places RDF versus property graphs in Session 1 and gives the lab 85
+    minutes. Ask the instructor whether to update it to match the rebuilt
+    Sessions 1 and 2.
 
 ### Not course material
 
@@ -388,3 +420,5 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-24: Session 1 approved and closed by the instructor. Next: Session 2 (item 8).
 - 2026-09-24: Session 2 rebuilt, deck and lab. Lab bugs found and fixed: `convert_to_rdf.py` linked each order to its Origin Port as if it were a plant, and `neo4j_comparison.py` did the same; the question set had no carrier or port links, so the syllabus's multi-hop question could not run. New lab: full OrderList plus PlantPorts, ProductsPerPlant and FreightRates (rate bands as blank nodes), 135,841 triples, 5 named graphs, a small RDFS schema; `common/iri.py` now separates words (`ul:`, #) from things (`https://ul.edu.lb/kr/id/`, /). Seven questions, all run for real on Fuseki 5.5 and Oxigraph; Neo4j 5.26 comparison; `rdfs_entailment_demo.py` (owlrl). Real findings on the slides: Q6 took 172 s with NOT EXISTS and 2.3 s rewritten; 9,023 orders by type against 9,215 with a subclass path, in both SPARQL and Cypher. Screenshots `s2-fuseki-query.png`, `s2-neo4j-browser.png`. Sandbox now uses nine real orders. Note for the instructor: `docker-compose.yml` uses the `stain/jena-fuseki` image, which is old and not maintained by Apache; the lab was verified with Fuseki 5.5 run directly.
 - 2026-09-24: instructor accepted Session 2's timing and asked to fix the two open points. (1) IRI convention: written into `AGENTS.md` 2d; Session 5's mappings (`mapping_template.rml.ttl`, `mapping.obda`) now mint `https://ul.edu.lb/kr/id/carrier/erp/...` and `.../purchase-order/erp/...`; the RML path was re-run with Morph-KGC 2.10.0 on the same seed rows (SQLite in place of Postgres): 19 triples, po99 still fails the Session 4 shapes as before. The Ontop mapping was changed the same way but not re-run (no Ontop here). Still to convert when rebuilt: Session 3's `sample-shipments.ttl` individuals (`ul:carrier-dhl`...) in item 2, Session 4's slide examples in item 9. (2) Fuseki: `demos/docker-compose.yml` now builds `demos/fuseki/Dockerfile` (Apache's own Fuseki 5.5.0 release, SHA512 checked, Java 21, TDB2 dataset /kr, no login, published on 127.0.0.1 only) instead of the old `stain/jena-fuseki` image. The container command was verified outside Docker (load and all queries); the Docker build itself was not run here.
+
+- 2026-09-24: Handoff check. Both repos clean and in sync with GitHub; stale `.git` lock files removed; credential helper confirmed portable (relative path to `LebUniv/.github-token`). "Where to continue" rewritten with the settled decisions; item 18 added.

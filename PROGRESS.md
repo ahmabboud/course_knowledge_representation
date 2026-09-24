@@ -11,10 +11,10 @@ repository on 2026-09-24 (REPLAN-STATE item 11). "Built" means the file
 exists and works; no session counts as done until the instructor says so.
 
 **Where to continue (2026-09-24):** Session 1 is done. Session 2 is rebuilt and waits for the instructor's review (REPLAN-STATE item 8); then Session 3 parts 3 to 6 (item 2).
-Done most recently: Session 1 overflow fixes and lab verified (2026-09-23),
-design system v1.2 flow diagrams (2026-09-23), automatic glossary on all six
-decks (2026-09-24, REPLAN-STATE item 16: every new term goes into
-`GLOSSARY.md`).
+Done most recently (2026-09-24): Session 1 rebuilt and approved; Session 2
+deck and lab rebuilt and verified; IRI convention written into `AGENTS.md` 2d
+and applied to Session 5 mappings; Fuseki now built from Apache's release
+(`demos/fuseki/`). Every new term goes into `GLOSSARY.md`.
 
 **Read `PROJECT-REDESIGN.md` next.** It covers a separate decision, the
 capstone project's shape (teams of 2 to 3, own topic, own database,
@@ -35,8 +35,8 @@ or lab-code progress, that is this file's job.
 | 7 | 5 | The Agentic Query Layer, Deployment, and Open Problems | Not built | Not started (README only) |
 | 8 | 5 | Supervised Build, Deployment, and Defense | Not built (defense day, see `module-08-defense/`) | N/A, live supervised session |
 
-All six built decks carry the automatic glossary (2026-09-24). None uses
-`lu-flow` diagrams yet. `index.html` has cards for Sessions 1 to 4 only
+All six built decks carry the automatic glossary (2026-09-24). Sessions 1 and 2 use
+`lu-flow` diagrams; Sessions 3 to 6 not yet. `index.html` has cards for Sessions 1 to 4 only
 (REPLAN-STATE 12).
 
 Session 4 carries Milestone 1 (20%), due at end of that session. Session 6
