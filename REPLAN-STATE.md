@@ -24,7 +24,7 @@ Pages); never delete a file without asking; no
 dashes in prose; audit every deck you touch before you stop (item 15); every
 new term goes into `GLOSSARY.md` (item 16).
 
-**Where to continue:** the Session 1 rebuild is built and waits for the instructor's review (items 6, 7); apply his changes, then item 2. **Session 1 first** (instructor, 2026-09-24: the course has not started and Session 1 is taught first). Next open items are **6 and 7**. Session 3 (item 2) resumes after Session 1 is closed.
+**Where to continue:** Session 1 is closed (approved 2026-09-24). Next: **Session 2 rebuild, item 8** (instructor's order, 2026-09-24), then Session 3 (item 2). **Session 1 first** (instructor, 2026-09-24: the course has not started and Session 1 is taught first). Next open items are **6 and 7**. Session 3 (item 2) resumes after Session 1 is closed.
 Items marked `[x]` are done; everything else is still open.
 
 ---
@@ -57,12 +57,12 @@ Items marked `[x]` are done; everything else is still open.
 
 ### B. Session 1
 
-6. [ ] **Built 2026-09-24, awaiting the instructor's review.** **Decided yes (2026-09-24):** build a "Your project begins"
+6. [x] **Done 2026-09-24, approved by the instructor.** **Decided yes (2026-09-24):** build a "Your project begins"
    part in Session 1 (about 4 slides, 15 minutes, before the lab brief:
    what you build, topic menu, team rules and deadline, rubric and
    milestones), as DSCAI module 1 does. Today the capstone is one callout on
    the wrap slide. Build it as part of item 7.
-7. [ ] **Built 2026-09-24, awaiting the instructor's review** (46 slides, 185 minutes, audit clean at rest and revealed, glossary check clean; generator `scripts/deckgen-s1/`, numbers from `demos/session-01-environment-and-constraints/session1_facts.py`). **Full rebuild: more slides, more depth, more visuals.** The current
+7. [x] **Done 2026-09-24, approved by the instructor** (46 slides, 185 minutes, audit clean at rest and revealed, glossary check clean; generator `scripts/deckgen-s1/`, numbers from `demos/session-01-environment-and-constraints/session1_facts.py`). **Full rebuild: more slides, more depth, more visuals.** The current
    deck audits clean since 2026-09-23 but is the old standard: 15 content
    slides, only 4 led by a picture, 112 minutes, no `lu-flow`. Target: about
    33 content slides, every concept slide led by a picture (`AGENTS.md` 2c),
@@ -385,3 +385,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-24: animation rules settled for the rebuilds (both repos, `AGENTS.md` graphics route 0 and `design-system.html`): animate wherever an idea unfolds in steps, not one per session; before an ontology exists, neutral blocks and only states carry colour.
 - 2026-09-24: Session 1 rebuilt with a generator, `scripts/deckgen-s1/` (build.py plus four parts; rebuild with `cd scripts/deckgen-s1 && python3 build.py ../../lectures/kr-session-01.html`). 46 slides, 185 minutes: opening 11, data 25, meaning 20, architecture 15, profiling 30, project 15, lab 65, wrap 4. Thirteen lu-flow diagrams, eleven animated, neutral blocks, states only. Every number from a real run: `session1_facts.py` writes `reference-outputs/s1-facts.txt`. Real screenshots: `assets/img/s1-ydata-alerts.png` (ydata-profiling, Brunel OrderList) and `s1-openrefine-clusters.png` (OpenRefine 3.8.7, Order City, 3 clusters, all different cities). The old deck's plant and port example ("41 of 200 pairs, three transhipments") was not real and is replaced: 22 of 209 pairs, 0 exceptions. RDF against property graphs moved to Session 2 as planned. Glossary: 17 terms added (grain, order line, one to many, clustering, fingerprint, CRF, DTD, VMI, GTFS, OCDS...). `lu-flow.js` v1.2.1 in both repos: optional per diagram `flags` to rename a state badge, and wider badges so text is not clipped.
 - 2026-09-24: instructor review, round 1: the project divider now says plainly it is the team project; a lab title slide added; the lab is individual work (no pairs), inventories compared as a room.
+- 2026-09-24: Session 1 approved and closed by the instructor. Next: Session 2 (item 8).
