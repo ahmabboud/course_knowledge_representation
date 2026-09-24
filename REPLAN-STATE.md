@@ -7,8 +7,8 @@ Last updated: 2026-09-24.
 
 Companion documents:
 
-- `PROGRESS.md`: what is built, per session (its status table is stale for
-  Sessions 4 to 6, see item 11).
+- `PROGRESS.md`: what is built, per session (status table reconciled
+  2026-09-24).
 - `COURSE-REPLAN.md`: the approved plan: audit findings, outlines for
   Sessions 3, 1, 2.
 - `AGENTS.md` section 2c: the teaching standard; graphics route 0 for flow
@@ -82,11 +82,13 @@ Items marked `[x]` are done; everything else is still open.
 
 ### E. Housekeeping
 
-10. [x] **Commits** (local, 2026-09-24: KR `c572639`, template `2e79678`).
-    The instructor pushes. Commit again after each work session.
-11. [ ] `PROGRESS.md` status table is stale: decks for Sessions 5 and 6 exist,
-    the Session 6 lab exists, the Session 4 lab is only a template. Ask the
-    instructor before changing any status.
+10. [x] **Commits.** The instructor pushes. Commit again after each work
+    session. Checked against GitHub on 2026-09-24: KR is pushed through
+    `f489979`; the template repo's GitHub is at `0a91ad2`, so its three local
+    commits `39c8880`, `2e79678`, `a7e4bed` are **not pushed yet**.
+11. [x] `PROGRESS.md` status table reconciled with the repository
+    (2026-09-24, at the instructor's request). Facts only, no session marked
+    done.
 12. [ ] `index.html` has cards only for Sessions 1 to 4. Add 5, 6 and the
     guide deck once the instructor confirms they are ready.
 13. [ ] DSCAI's design system is behind on purpose (instructor's choice,
@@ -260,7 +262,9 @@ Canvas is 1600x900, content width 1448, split columns 688, wide split
 
 ---
 
-## 5. Plan for the Protégé guide deck (open item 1)
+## 5. Plan for the Protégé guide deck (superseded 2026-09-24, see item 1)
+
+Kept as source material only. Do not build this deck.
 
 The next task is the guide deck `lectures/guide-protege.html`. Its plan is
 fixed and its screenshots are already in `assets/img/`. Build it with the
@@ -356,3 +360,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
   (item 6). Next: item 2, Session 3 parts 3 to 6.
 - 2026-09-24: automatic glossary built and wired into all decks (item 16); GLOSSARY.md extended to Sessions 4 to 6; lu.css v1.3.0 (auto term style) in both repos.
 - 2026-09-24: items 7 and `COURSE-REPLAN.md` made explicit about Session 1's planned growth (slide count, depth, visuals); the replan's stale "proposed" status corrected to approved.
+- 2026-09-24: back on track check against the repository and GitHub. PROGRESS status table and "What's next" rewritten from facts (item 11). Found: template repo has three unpushed commits (item 10); old Protégé guide plan marked superseded.

@@ -6,9 +6,9 @@ pick up next. Update it in the same change as any work it describes, do
 not let it drift behind the actual state of the repository.
 
 **Open work lives in `REPLAN-STATE.md`: read it second.** Its checklist is
-the single to-do list (Sessions 1 to 3 rebuild, the Protégé guide, the
-design system, housekeeping). The status table below was last reconciled on
-2026-09-19 and is stale for Sessions 4 to 6; see item 11 there.
+the single to-do list. The status table below was reconciled against the
+repository on 2026-09-24 (REPLAN-STATE item 11). "Built" means the file
+exists and works; no session counts as done until the instructor says so.
 
 **Where to continue (2026-09-24):** REPLAN-STATE item 2, Session 3 parts 3 to 6.
 Done most recently: Session 1 overflow fixes and lab verified (2026-09-23),
@@ -26,14 +26,18 @@ or lab-code progress, that is this file's job.
 
 | # | Module | Title | Lecture deck | Lab code |
 |---|---|---|---|---|
-| 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Built, audit clean 2026-09-23 | Built, verified working by the instructor 2026-09-23 |
-| 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Built | Built, notebook-presented |
-| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Built | Scriptable parts built, Protege/reasoner steps are manual by design |
-| 4 | 2 | Constraints, Quality, and Provenance: SHACL | Built | Not started |
-| 5 | 3 | Integrating Operational Data | Not built | Not started |
-| 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | Not built | Not started |
-| 7 | 5 | The Agentic Query Layer, Deployment, and Open Problems | Not built | Not started |
+| 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Built, old standard (15 content slides, 112 min), audit clean 2026-09-23; full rebuild planned (REPLAN-STATE 6, 7) | Built, verified working by the instructor 2026-09-23 |
+| 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Built, old standard (93 min); two reveal overflows (slides 9, 20); full rebuild planned (REPLAN-STATE 8) | Built, notebook presented |
+| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Old deck live; new deck in progress, parts 1 and 2 built by the generator, parts 3 to 6 next (REPLAN-STATE 2, 3) | Built and reasoner verified (v0 file with a real modelling error, reference fix, sample shipments, reference outputs); `closed_world_demo.py` and README rewrite still open (REPLAN-STATE 4, 5) |
+| 4 | 2 | Constraints, Quality, and Provenance: SHACL | Built (197 min), visual pass pending (REPLAN-STATE 9) | Not built: only README and `shapes_template.ttl` |
+| 5 | 3 | Integrating Operational Data | Built as a draft (172 min), pending the instructor's confirmation; visual pass pending | Built as a draft, tested on Postgres; not yet confirmed with the real Ontop CLI (see its README Status) |
+| 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | Built (159 min), visual pass pending | Built and run end to end on CPU (Milestone 2) |
+| 7 | 5 | The Agentic Query Layer, Deployment, and Open Problems | Not built | Not started (README only) |
 | 8 | 5 | Supervised Build, Deployment, and Defense | Not built (defense day, see `module-08-defense/`) | N/A, live supervised session |
+
+All six built decks carry the automatic glossary (2026-09-24). None uses
+`lu-flow` diagrams yet. `index.html` has cards for Sessions 1 to 4 only
+(REPLAN-STATE 12).
 
 Session 4 carries Milestone 1 (20%), due at end of that session. Session 6
 carries Milestone 2, due at end of that session. Both against each team's
@@ -156,15 +160,10 @@ touched: match it to `ioc:Shipment` too, or leave it and say why.
 
 ## What's next
 
-**Session 4 (SHACL)** is the next unbuilt session, and the one carrying
-Milestone 1. Building order, same as Sessions 1 to 3: confirm the deck
-against the syllabus segment text, build it in `lectures/`, add its
-`index.html` card, then build `demos/session-04-shacl/`'s lab code from its
-own (already-written) README once the deck exists, not before, building lab
-code ahead of the deck it serves risks locking in the wrong shape.
-
-Sessions 5 through 8 remain entirely unbuilt (deck and lab), each with a
-README in `demos/` stating what it will build, accurate to the syllabus.
+See `REPLAN-STATE.md` "Where to continue" (item 2, Session 3 parts 3 to 6).
+After the Sessions 1 to 3 rebuild: the Session 4 lab (only a template
+today), confirming the Session 5 lab on a live Ontop, a visual pass on
+Sessions 4 to 6, then Sessions 7 and 8 (deck and lab).
 
 ## Standing conventions
 
