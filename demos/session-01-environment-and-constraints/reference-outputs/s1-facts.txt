@@ -1,0 +1,74 @@
+== DataCo ==
+rows (order lines) 180519 columns 53
+orders 65752 customers 20652 products 118
+order dates 2015-01-01 00:00:00 to 2018-01-31 23:38:00
+shipped before ordered 0
+Delivery Status {'Late delivery': 98977, 'Advance shipping': 41592, 'Shipping on time': 32196, 'Shipping canceled': 7754}
+late by status 98977 late by days (real > scheduled) 103400
+col_0              False  True 
+Delivery Status                
+Advance shipping   41592      0
+Late delivery          0  98977
+Shipping canceled   3331   4423
+Shipping on time   32196      0
+null counts {'Customer Lname': 8, 'Customer Zipcode': 3, 'Order Zipcode': 155679, 'Product Description': 180519}
+constant columns ['Customer Email', 'Customer Password', 'Product Description', 'Product Status']
+Customer Country {'EE. UU.': 111146, 'Puerto Rico': 69373}
+Order Country (top 5) {'Estados Unidos': 24840, 'Francia': 13222, 'México': 13172, 'Alemania': 9564, 'Australia': 8497} distinct 164
+Shipping Mode {'Standard Class': 107752, 'Second Class': 35216, 'First Class': 27814, 'Same Day': 9737}
+cluster 'Los Angeles' 1845 {'Estados Unidos': 1845} {'California': 1845}
+cluster 'Los Ángeles' 16 {'Chile': 16} {'Bío-Bío': 16}
+cluster 'Macon' 8 {'Estados Unidos': 8} {'Georgia': 8}
+cluster 'Mâcon' 2 {'Francia': 2} {'Borgoña-Franco Condado': 2}
+cluster 'Vitoria' 44 {'España': 44} {'País Vasco': 44}
+cluster 'Vitória' 55 {'Brasil': 55} {'Espíritu Santo': 55}
+   Order Id order date (DateOrders)  Order City Order Country  Product Name   Shipping Mode  Days for shipping (real)  Days for shipment (scheduled)   Delivery Status
+0     77202         1/31/2018 22:56      Bekasi     Indonesia  Smart watch   Standard Class                         3                              4  Advance shipping
+1     75939         1/13/2018 12:27     Bikaner         India  Smart watch   Standard Class                         5                              4     Late delivery
+2     75938         1/13/2018 12:06     Bikaner         India  Smart watch   Standard Class                         4                              4  Shipping on time
+3     75937         1/13/2018 11:45  Townsville     Australia  Smart watch   Standard Class                         3                              4  Advance shipping
+4     75936         1/13/2018 11:24  Townsville     Australia  Smart watch   Standard Class                         2                              4  Advance shipping
+
+== Brunel ==
+OrderList (9215, 14) ['Order ID', 'Order Date', 'Origin Port', 'Carrier', 'TPT', 'Service Level', 'Ship ahead day count', 'Ship Late Day count', 'Customer', 'Product ID', 'Plant Code', 'Destination Port', 'Unit quantity', 'Weight']
+  first row {'Order ID': 1447296446.7, 'Order Date': '2013-05-26 00:00:00', 'Origin Port': 'PORT09', 'Carrier': 'V44_3', 'TPT': 1, 'Service Level': 'CRF', 'Ship ahead day count': 3, 'Ship Late Day count': 0, 'Customer': 'V55555_53', 'Product ID': 1700106, 'Plant Code': 'PLANT16', 'Destination Port': 'PORT09', 'Unit quantity': 808, 'Weight': 14.3}
+FreightRates (1540, 11) ['Carrier', 'orig_port_cd', 'dest_port_cd', 'minm_wgh_qty', 'max_wgh_qty', 'svc_cd', 'minimum cost', 'rate', 'mode_dsc', 'tpt_day_cnt', 'Carrier type']
+  first row {'Carrier': 'V444_6', 'orig_port_cd': 'PORT08', 'dest_port_cd': 'PORT09', 'minm_wgh_qty': 250.0, 'max_wgh_qty': 499.99, 'svc_cd': 'DTD', 'minimum cost': 43.2272, 'rate': 0.7132, 'mode_dsc': 'AIR   ', 'tpt_day_cnt': 2, 'Carrier type': 'V88888888_0'}
+WhCosts (19, 2) ['WH', 'Cost/unit']
+  first row {'WH': 'PLANT15', 'Cost/unit': 1.4150633766876566}
+WhCapacities (19, 2) ['Plant ID', 'Daily Capacity ']
+  first row {'Plant ID': 'PLANT15', 'Daily Capacity ': 11}
+ProductsPerPlant (2036, 2) ['Plant Code', 'Product ID']
+  first row {'Plant Code': 'PLANT15', 'Product ID': 1698815}
+VmiCustomers (14, 2) ['Plant Code', 'Customers']
+  first row {'Plant Code': 'PLANT02', 'Customers': 'V5555555555555_16'}
+PlantPorts (22, 2) ['Plant Code', 'Port']
+  first row {'Plant Code': 'PLANT01', 'Port': 'PORT01'}
+order dates ['2013-05-26 00:00:00']
+Order ID dtype float64 first 1447296446.7 all whole numbers False
+plants 19 ports 11 linked pairs 22 possible pairs 209
+orders leaving through an unlinked port 0
+orders for a product the plant does not make 0
+Service Level  CRF   DTD   DTP
+Carrier                       
+V444_0           0    46  6218
+V444_1           0  2097     0
+V44_3          854     0     0
+carriers in FreightRates ['V444_0', 'V444_1', 'V444_2', 'V444_4', 'V444_5', 'V444_6', 'V444_7', 'V444_8', 'V444_9']
+orders with no rate lane at all 854
+orders with a lane 8361 weight inside a band 6991 weight in a gap between bands 1370
+V444_1 PORT04 DTD bands [(0.01, 0.5), (0.51, 1.0), (1.01, 1.5), (1.51, 2.0), (2.01, 2.5), (70.51, 99.99), (100.0, 299.99), (300.0, 499.99), (500.0, 999.99), (1000.0, 9999.99)]
+mode_dsc raw values ['AIR   ', 'GROUND']
+WhCapacities header ['Plant ID', 'Daily Capacity ']
+
+== Grain and links ==
+order lines per order {1: 19850, 2: 11447, 3: 11398, 4: 11704, 5: 11353}
+        Order Id  Order Item Id order date (DateOrders)                             Product Name  Order Item Quantity     Order City
+77011          2              2           1/1/2015 0:21              Pelican Sunstream 100 Kayak                    1  Dos Quebradas
+87884          2              4           1/1/2015 0:21  Nike Men's CJ Elite 2 TD Football Cleat                    1  Dos Quebradas
+109322         2              3           1/1/2015 0:21     Nike Men's Dri-FIT Victory Golf Polo                    5  Dos Quebradas
+plant to port links {'PLANT01': ['PORT01', 'PORT02'], 'PLANT02': ['PORT03'], 'PLANT03': ['PORT04'], 'PLANT04': ['PORT05'], 'PLANT05': ['PORT06'], 'PLANT06': ['PORT06'], 'PLANT07': ['PORT01', 'PORT02'], 'PLANT08': ['PORT04'], 'PLANT09': ['PORT04'], 'PLANT10': ['PORT01', 'PORT02'], 'PLANT11': ['PORT04'], 'PLANT12': ['PORT04'], 'PLANT13': ['PORT04'], 'PLANT14': ['PORT07'], 'PLANT15': ['PORT08'], 'PLANT16': ['PORT09'], 'PLANT17': ['PORT10'], 'PLANT18': ['PORT11'], 'PLANT19': ['PORT04']}
+orders per plant and origin port {('PLANT03', 'PORT04'): 8541, ('PLANT04', 'PORT05'): 1, ('PLANT08', 'PORT04'): 102, ('PLANT09', 'PORT04'): 12, ('PLANT12', 'PORT04'): 300, ('PLANT13', 'PORT04'): 86, ('PLANT16', 'PORT09'): 173}
+V444_1 PORT04 DTD orders 2097 with weight between 2.5 and 70.51 1364
+example weight in the gap [31.92753623188405, 11.8, 27.5]
+Ship Late Day count zeros 9023 Ship ahead day count zeros 4426

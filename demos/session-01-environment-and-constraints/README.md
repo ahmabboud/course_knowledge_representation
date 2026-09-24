@@ -61,6 +61,12 @@ PowerShell because `cd` and `python` have the same use after activation.
   hidden rules tend to surface.
 - **Protege**, checked by the smoke test, used starting Session 3.
 
+## Where the slide numbers come from
+
+`python session1_facts.py > reference-outputs/s1-facts.txt` recomputes every
+number the Session 1 deck quotes from the real data. If a number on a slide
+and this file disagree, the file wins.
+
 ## What "done" looks like
 
 A profiling report for both datasets, and a constraint inventory that

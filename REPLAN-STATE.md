@@ -13,7 +13,7 @@ Companion documents:
   Sessions 3, 1, 2.
 - `AGENTS.md` section 2c: the teaching standard; graphics route 0 for flow
   diagrams (`lu-flow`), the default for anything with arrows.
-- `GLOSSARY.md`: plain definitions for every term in Sessions 1 to 6 (215
+- `GLOSSARY.md`: plain definitions for every term in Sessions 1 to 6 (232
   terms). The slides link to it automatically (item 16).
 
 Rules that always hold: never mark a session done in `PROGRESS.md` without
@@ -24,7 +24,7 @@ Pages); never delete a file without asking; no
 dashes in prose; audit every deck you touch before you stop (item 15); every
 new term goes into `GLOSSARY.md` (item 16).
 
-**Where to continue:** **Session 1 first** (instructor, 2026-09-24: the course has not started and Session 1 is taught first). Next open items are **6 and 7**. Session 3 (item 2) resumes after Session 1 is closed.
+**Where to continue:** the Session 1 rebuild is built and waits for the instructor's review (items 6, 7); apply his changes, then item 2. **Session 1 first** (instructor, 2026-09-24: the course has not started and Session 1 is taught first). Next open items are **6 and 7**. Session 3 (item 2) resumes after Session 1 is closed.
 Items marked `[x]` are done; everything else is still open.
 
 ---
@@ -57,12 +57,12 @@ Items marked `[x]` are done; everything else is still open.
 
 ### B. Session 1
 
-6. [ ] **Decided yes (2026-09-24):** build a "Your project begins"
+6. [ ] **Built 2026-09-24, awaiting the instructor's review.** **Decided yes (2026-09-24):** build a "Your project begins"
    part in Session 1 (about 4 slides, 15 minutes, before the lab brief:
    what you build, topic menu, team rules and deadline, rubric and
    milestones), as DSCAI module 1 does. Today the capstone is one callout on
    the wrap slide. Build it as part of item 7.
-7. [ ] **Full rebuild: more slides, more depth, more visuals.** The current
+7. [ ] **Built 2026-09-24, awaiting the instructor's review** (45 slides, 185 minutes, audit clean at rest and revealed, glossary check clean; generator `scripts/deckgen-s1/`, numbers from `demos/session-01-environment-and-constraints/session1_facts.py`). **Full rebuild: more slides, more depth, more visuals.** The current
    deck audits clean since 2026-09-23 but is the old standard: 15 content
    slides, only 4 led by a picture, 112 minutes, no `lu-flow`. Target: about
    33 content slides, every concept slide led by a picture (`AGENTS.md` 2c),
@@ -383,3 +383,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-24: instructor decisions for Session 1: build it before finishing Session 3; tools rule revised (concept first, one slide per tool, no slide for trivial tools, video only for complex GUI tools), recorded in `AGENTS.md` 2c rule 5; project deadline stated as before Session 2.
 - 2026-09-24: session length corrected by the instructor: about 180 minutes (about 2 hours of slides, about 1 hour of lab), flexible per session; slide count is not the goal, time distribution is. Old Session 1 dry run: slides about 40 minutes, lab about 60. Time budget per part added to `COURSE-REPLAN.md` section 5; `AGENTS.md` 2c rule 7 updated.
 - 2026-09-24: animation rules settled for the rebuilds (both repos, `AGENTS.md` graphics route 0 and `design-system.html`): animate wherever an idea unfolds in steps, not one per session; before an ontology exists, neutral blocks and only states carry colour.
+- 2026-09-24: Session 1 rebuilt with a generator, `scripts/deckgen-s1/` (build.py plus four parts; rebuild with `cd scripts/deckgen-s1 && python3 build.py ../../lectures/kr-session-01.html`). 45 slides, 185 minutes: opening 11, data 25, meaning 20, architecture 15, profiling 30, project 15, lab 65, wrap 4. Thirteen lu-flow diagrams, eleven animated, neutral blocks, states only. Every number from a real run: `session1_facts.py` writes `reference-outputs/s1-facts.txt`. Real screenshots: `assets/img/s1-ydata-alerts.png` (ydata-profiling, Brunel OrderList) and `s1-openrefine-clusters.png` (OpenRefine 3.8.7, Order City, 3 clusters, all different cities). The old deck's plant and port example ("41 of 200 pairs, three transhipments") was not real and is replaced: 22 of 209 pairs, 0 exceptions. RDF against property graphs moved to Session 2 as planned. Glossary: 17 terms added (grain, order line, one to many, clustering, fingerprint, CRF, DTD, VMI, GTFS, OCDS...). `lu-flow.js` v1.2.1 in both repos: optional per diagram `flags` to rename a state badge, and wider badges so text is not clipped.

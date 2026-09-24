@@ -1,0 +1,1 @@
+OpenRefine 3.8.7, Order City, Key collision + Fingerprint: 3 clusters (Los Angeles/Los Ángeles, Vitória/Vitoria, Macon/Mâcon). Screenshot assets/img/s1-openrefine-clusters.png, 2026-09-24.

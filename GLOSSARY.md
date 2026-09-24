@@ -39,6 +39,23 @@ editing this file (it writes `assets/glossary.js`).
 | **Referential integrity** | Every reference points at something that exists, for example every order's plant code is a real plant. |
 | **Business rule** | A rule the business follows that the data should obey, for example "a plant only ships through ports it is linked to". |
 | **Constraint inventory** | The course's table of business rules found in the data, each with its evidence and source column. |
+| **Order line** | One product inside an order, with its quantity. DataCo stores one order line per row. |
+| **Grain** | What one row of a table stands for. The first thing to find out before counting anything. |
+| **One to many** | One thing on one side links to several on the other, for example seven plants that share one port. |
+| **Clustering (of values)** | Grouping values that look alike, such as two spellings, so a person can decide whether they mean the same thing. |
+| **Fingerprint** | A key made from a value by removing case, accents and punctuation and sorting its words. Values with the same key form a cluster. |
+| **ydata-profiling** | A Python library that measures every column of a table and writes a report of what looks odd. |
+| **OpenRefine** | A free desktop tool for exploring and cleaning messy tables, used here to cluster values. |
+| **VMI** | Vendor managed inventory: the supplier looks after stock at the customer's site. Brunel's VmiCustomers table lists such pairs without saying so. |
+| **CRF** | A service level code in Brunel's OrderList, used on 854 orders, all with carrier V44_3. The file never defines it. |
+| **DTD** | Another Brunel service level code, used on 2,143 orders and in FreightRates. The file never defines it. |
+| **Creative Commons (CC)** | A family of public licences. CC BY 4.0 lets anyone reuse a work if they credit its authors; CC0 gives it to the public domain. |
+| **DOI** | Digital Object Identifier: a permanent identifier for a published paper or dataset. |
+| **GTFS** | General Transit Feed Specification: the format transit agencies use to publish routes, stops and timetables. |
+| **OCDS** | Open Contracting Data Standard: a standard for publishing public procurement data. |
+| **EDM** | Europeana Data Model: the vocabulary Europeana uses to describe cultural heritage records. |
+| **BIBFRAME** | Bibliographic Framework: the Library of Congress vocabulary for library catalogue records. |
+| **USDA** | United States Department of Agriculture, which publishes the FoodData Central database. |
 | **Open world assumption** | If a fact is missing, it is unknown, not false. Previewed here, used from Session 3. |
 | **Closed world assumption** | If a fact is missing, it is false. How SQL databases behave. |
 | **WHERE clause** | The part of a SQL or SPARQL query that says which rows or triples to keep. |

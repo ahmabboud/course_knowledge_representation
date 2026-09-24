@@ -1,6 +1,6 @@
 /* ==========================================================================
    LU Teaching Slides, flow diagrams
-   lu-flow.js · v1.2 · no dependencies, works from file://
+   lu-flow.js · v1.2.1 · no dependencies, works from file://
    --------------------------------------------------------------------------
    Why it exists: in hand-drawn SVG, blocks and arrows are positioned
    separately, so they drift apart. Here every arrow names its two blocks and
@@ -25,6 +25,9 @@
      steps[]  show: ids to reveal, run: edge ids whose dots move,
               set: { nodeId: "idle" | "active" | "inferred" | "impossible" }
      legend   false to hide it, or { kind: "label" } to rename entries
+     flags    optional { state: "badge text" } to rename a state's badge for
+              this diagram, e.g. { "impossible": "no rate" } before an
+              ontology exists (Session 1). Colour still comes from the state.
    Steps accumulate. Colours live in lu.css (8d), never in this file.
    Nothing is measured from the DOM, so hidden slides, study mode and the
    printed handout all render; print shows the last step.
@@ -195,9 +198,9 @@
       if (p.type === 'edge') { p.g.setAttribute('data-run', run.indexOf(id) >= 0 ? 'true' : 'false'); return; }
       var st = state[id];
       p.g.setAttribute('data-state', st);
-      var text = FLAG_TEXT[st] || '';
+      var text = (spec.flags && spec.flags[st]) || FLAG_TEXT[st] || '';
       p.ftxt.textContent = text;
-      var w = text.length * 10.6 + 24, n = p.n;
+      var w = text.length * 12.4 + 26, n = p.n;
       p.fbox.setAttribute('width', w);
       p.fbox.setAttribute('x', n.flag === 'right' ? n.x + n.w / 2 + 10 : n.x + n.w / 2 - 10 - w);
     });
