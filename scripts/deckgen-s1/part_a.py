@@ -77,7 +77,7 @@ last quarter, and who did we ship them to?
     </div>
     <div class="lu-stack" data-build="1">
       ''' + callout("What is underneath it", "A model of what the data means, rules that refuse bad data, a mapping from live tables, a model that predicts the next late shipment, and a stack that starts with one command.", "concept") + '''
-      ''' + callout("And it is your team's own", "The lectures use one supply chain case. Your team builds the same pipeline on its own topic and its own data. Part 6 today explains how.", "neutral") + '''
+      ''' + callout("And it is your team's own", "The lectures use one supply chain case. Your team builds the same pipeline on its own topic and its own data. Part 6 today, the team project, explains how.", "neutral") + '''
     </div>
   </div>''', '''<p>Two minutes. Do not explain the query. If someone asks about the plus sign after <code>hasComponent</code>: "any depth of sub assembly, the question SQL is worst at." Move on.</p>'''))
 
@@ -91,7 +91,7 @@ SLIDES.append(slide("Today: objective and time plan", "Opening", 2,
     </div>
     ''' + table(["Part", "Minutes"], [
         ["1 · Opening", "10"], ["2 · The supply chain and the data", "25"], ["3 · Meaning is not in the schema", "20"],
-        ["4 · The architecture", "15"], ["5 · Profiling and hidden rules", "30"], ["6 · Your project begins", "15"],
+        ["4 · The architecture", "15"], ["5 · Profiling and hidden rules", "30"], ["6 · The team project", "15"],
         ["Lab, then wrap", "65 + 5"]], "About 185 minutes in all.") + '''
   </div>''', '''<p>Two minutes. Read the deliverable aloud. The word that matters is <b>evidence</b>: a rule without a count behind it is an opinion.</p>''', kind="tint"))
 

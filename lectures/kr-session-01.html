@@ -100,7 +100,7 @@ last quarter, and who did we ship them to?
     </div>
     <div class="lu-stack" data-build="1">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">What is underneath it</span><p class="lu-sub">A model of what the data means, rules that refuse bad data, a mapping from live tables, a model that predicts the next late shipment, and a stack that starts with one command.</p></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">And it is your team's own</span><p class="lu-sub">The lectures use one supply chain case. Your team builds the same pipeline on its own topic and its own data. Part 6 today explains how.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">And it is your team's own</span><p class="lu-sub">The lectures use one supply chain case. Your team builds the same pipeline on its own topic and its own data. Part 6 today, the team project, explains how.</p></div>
     </div>
   </div>
   <template data-notes><p>Two minutes. Do not explain the query. If someone asks about the plus sign after <code>hasComponent</code>: "any depth of sub assembly, the question SQL is worst at." Move on.</p></template>
@@ -114,7 +114,7 @@ last quarter, and who did we ship them to?
       <p class="lu-statement">By the end of today you have met two real supply chain datasets, measured them, and written down rules they obey that no schema states.</p>
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Deliverable, end of session</span><p class="lu-sub">A working environment, a profiling report for both datasets, and a constraint inventory: at least five rules, each with its evidence in the data. Sessions 3, 4 and 5 start from it.</p></div>
     </div>
-    <table class="lu-table"><thead><tr><th>Part</th><th>Minutes</th></tr></thead><tbody><tr><td>1 · Opening</td><td>10</td></tr><tr><td>2 · The supply chain and the data</td><td>25</td></tr><tr><td>3 · Meaning is not in the schema</td><td>20</td></tr><tr><td>4 · The architecture</td><td>15</td></tr><tr><td>5 · Profiling and hidden rules</td><td>30</td></tr><tr><td>6 · Your project begins</td><td>15</td></tr><tr><td>Lab, then wrap</td><td>65 + 5</td></tr></tbody><caption>About 185 minutes in all.</caption></table>
+    <table class="lu-table"><thead><tr><th>Part</th><th>Minutes</th></tr></thead><tbody><tr><td>1 · Opening</td><td>10</td></tr><tr><td>2 · The supply chain and the data</td><td>25</td></tr><tr><td>3 · Meaning is not in the schema</td><td>20</td></tr><tr><td>4 · The architecture</td><td>15</td></tr><tr><td>5 · Profiling and hidden rules</td><td>30</td></tr><tr><td>6 · The team project</td><td>15</td></tr><tr><td>Lab, then wrap</td><td>65 + 5</td></tr></tbody><caption>About 185 minutes in all.</caption></table>
   </div>
   <template data-notes><p>Two minutes. Read the deliverable aloud. The word that matters is <b>evidence</b>: a rule without a count behind it is an opinion.</p></template>
 </section>
@@ -519,17 +519,17 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
 </section>
 
 <!-- ==================================================================== 34 -->
-<section class="slide slide--night" data-chrome="none" data-label="Part 6 · Your project begins" data-section="Your project" data-minutes="1">
+<section class="slide slide--night" data-chrome="none" data-label="Part 6 · The team project" data-section="Team project" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 6 of 6 · about 15 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">The lectures use one supply chain. What does your team build?</h2>
-    <p class="lu-lead" style="max-width:46ch">The same pipeline, on a topic and a database your team chooses. Chosen before Session 2.</p>
+    <div class="lu-eyebrow">Part 6 of 6 · The team project · about 15 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Your team project: the system you build, with whom, and how it is graded.</h2>
+    <p class="lu-lead" style="max-width:46ch">Teams of 2 or 3. Your own topic and database. The same pipeline you see in the lectures. Team and topic locked before Session 2.</p>
   </div>
   <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
 </section>
 
 <!-- ==================================================================== 35 -->
-<section class="slide" data-label="What your team builds" data-section="Your project" data-minutes="4">
+<section class="slide" data-label="The team project: what you build" data-section="Team project" data-minutes="4">
   <div class="lu-eyebrow">One system, one layer per session</div>
   <h2 class="lu-h2" style="max-width:66ch">Every team builds the same pipeline. What differs is the domain and the data.</h2>
 <div class="lu-walk" data-label="The team project, session by session, with its milestones"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 300, "nodes": [{"id": "inv", "label": "Constraint\ninventory\nSession 1", "x": 105, "y": 150, "w": 190, "h": 120}, {"id": "ont", "label": "Ontology\nSession 3", "x": 310, "y": 150, "w": 180, "h": 120}, {"id": "shp", "label": "Shapes\nSession 4", "x": 510, "y": 150, "w": 180, "h": 120}, {"id": "map", "label": "Mapping and\nmatching\nSession 5", "x": 715, "y": 150, "w": 190, "h": 120}, {"id": "ml", "label": "Graph\nmodels\nSession 6", "x": 920, "y": 150, "w": 180, "h": 120}, {"id": "qa", "label": "Questions\nin English\nSession 7", "x": 1120, "y": 150, "w": 180, "h": 120}, {"id": "fin", "label": "Deployed\nsystem, report,\ndefense · S8", "x": 1335, "y": 150, "w": 210, "h": 120}], "edges": [{"id": "e0", "from": "inv", "to": "ont", "label": ""}, {"id": "e1", "from": "ont", "to": "shp", "label": ""}, {"id": "e2", "from": "shp", "to": "map", "label": ""}, {"id": "e3", "from": "map", "to": "ml", "label": ""}, {"id": "e4", "from": "ml", "to": "qa", "label": ""}, {"id": "e5", "from": "qa", "to": "fin", "label": ""}], "steps": [{"show": ["inv"], "set": {"inv": "active"}}, {"show": ["ont", "shp", "e0", "e1"], "run": ["e0", "e1"], "set": {"inv": "idle", "shp": "active"}}, {"show": ["map", "ml", "e2", "e3"], "run": ["e2", "e3"], "set": {"shp": "idle", "ml": "active"}}, {"show": ["qa", "fin", "e4", "e5"], "run": ["e4", "e5"], "set": {"ml": "idle", "fin": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="Start today" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Your team&#x27;s first piece: a constraint inventory on &lt;b&gt;your own&lt;/b&gt; data, the same method as today&#x27;s lab."></div><div data-walk-step="2" data-caption-short="Milestone 1 · 20 percent" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; End of Session 4: your ontology and your shapes. &lt;b&gt;Milestone 1&lt;/b&gt;, 20 percent of the grade."></div><div data-walk-step="3" data-caption-short="Milestone 2 · 20 percent" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; End of Session 6: your integrated graph and your prediction models. &lt;b&gt;Milestone 2&lt;/b&gt;, 20 percent."></div><div data-walk-step="4" data-caption-short="Final · 45 percent" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Session 8: the deployed system and report (35 percent), then the team defense (10 percent)."></div></div></div><div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Not a weekly checkpoint</span><p class="lu-sub">After each lab, repeat the technique on your own data. Nothing is graded week by week; the milestones and the final system are.</p></div>
@@ -538,7 +538,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
 </section>
 
 <!-- ==================================================================== 36 -->
-<section class="slide" data-label="The topic menu" data-section="Your project" data-minutes="3">
+<section class="slide" data-label="The topic menu" data-section="Team project" data-minutes="3">
   <div class="lu-eyebrow">Choose a topic area, then a database</div>
   <h2 class="lu-h2" style="max-width:66ch">Five areas, each checked for open data and a real vocabulary to reuse.</h2>
 <table class="lu-table"><thead><tr><th>Topic area</th><th>Example open databases</th><th>Vocabulary to reuse</th></tr></thead><tbody><tr><td>Transit and mobility</td><td>GTFS feeds from one transit agency</td><td>Linked GTFS</td></tr><tr><td>Bibliographic</td><td>OpenAlex, CrossRef</td><td>SemOpenAlex, BIBFRAME</td></tr><tr><td>Cultural heritage, music</td><td>MusicBrainz, Europeana</td><td>Music Ontology, EDM</td></tr><tr><td>Public procurement</td><td>OCDS releases from one government</td><td>OCDS ontology</td></tr><tr><td>Food products</td><td>Open Food Facts, USDA FoodData Central</td><td>FoodOn</td></tr></tbody><caption>Full menu and licences: PROJECT-REDESIGN.md.</caption></table>
@@ -547,7 +547,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
 </section>
 
 <!-- ==================================================================== 37 -->
-<section class="slide" data-label="Teams and the deadline" data-section="Your project" data-minutes="3">
+<section class="slide" data-label="Teams and the deadline" data-section="Team project" data-minutes="3">
   <div class="lu-eyebrow">The rules</div>
   <h2 class="lu-h2" style="max-width:66ch">Teams of 2 or 3, your choice, locked in before Session 2.</h2>
 <div class="lu-walk" data-label="Team formation timeline"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 350, "nodes": [{"id": "today", "label": "Today\nSession 1", "x": 170, "y": 110, "w": 240, "h": 96}, {"id": "form", "label": "Form a team of 2 or 3\nand pick a topic", "x": 620, "y": 110, "w": 400, "h": 96}, {"id": "dl", "label": "Before Session 2\nstarts: locked in", "x": 1100, "y": 110, "w": 320, "h": 96}, {"id": "late", "label": "No team by then:\nthe instructor places you", "x": 1100, "y": 290, "w": 400, "h": 96}], "edges": [{"id": "a", "from": "today", "to": "form", "label": ""}, {"id": "b", "from": "form", "to": "dl", "label": ""}, {"id": "c", "from": "dl", "to": "late", "label": "", "kind": "conflict"}], "steps": [{"show": ["today"], "set": {"today": "active"}}, {"show": ["form", "a"], "run": ["a"], "set": {"today": "idle", "form": "active"}}, {"show": ["dl", "b"], "run": ["b"], "set": {"form": "idle", "dl": "active"}}, {"show": ["late", "c"], "run": ["c"]}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="Today" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Today you meet the method on the shared case."></div><div data-walk-step="2" data-caption-short="Form a team" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Teams of &lt;b&gt;2 or 3&lt;/b&gt;, formed by you, any mix. Agree on a topic area and a database."></div><div data-walk-step="3" data-caption-short="The deadline" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Team and topic are locked in &lt;b&gt;before Session 2 starts&lt;/b&gt;."></div><div data-walk-step="4" data-caption-short="Nobody is left out" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Anyone without a team by then is placed by the instructor into a team with space."></div></div></div><p class="lu-sub">Graded as a team. In the Session 8 defense, <b>any teammate can be asked about any part</b>.</p>
@@ -555,7 +555,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
 </section>
 
 <!-- ==================================================================== 38 -->
-<section class="slide" data-label="How the project is graded" data-section="Your project" data-minutes="3">
+<section class="slide" data-label="How the project is graded" data-section="Team project" data-minutes="3">
   <div class="lu-eyebrow">Read this now, not in week 6</div>
   <h2 class="lu-h2" style="max-width:66ch">The milestones are judged against the same rubric as the final system.</h2>
 
@@ -567,7 +567,17 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
 </section>
 
 <!-- ==================================================================== 39 -->
-<section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
+<section class="slide slide--night" data-chrome="none" data-label="Lab · Profile the data, find the rules" data-section="Lab" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Hands-on lab · about 60 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Lab: measure DataCo and Brunel, and write down the rules nobody wrote.</h2>
+    <p class="lu-lead" style="max-width:46ch">Setup check, profiling, clustering in OpenRefine, then your constraint inventory. Each student on their own machine.</p>
+  </div>
+  <template data-notes><p>Ten seconds, then the brief. The lab clock starts on the next slide.</p></template>
+</section>
+
+<!-- ==================================================================== 40 -->
+<section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="2">
   <div class="lu-eyebrow">Hands-on lab · 60 minutes</div>
   <h2 class="lu-h1" style="max-width:34ch">Measure two real datasets and write down the rules nobody wrote.</h2>
 
@@ -592,7 +602,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     </ul></template>
 </section>
 
-<!-- ==================================================================== 40 -->
+<!-- ==================================================================== 41 -->
 <section class="slide slide--tint" data-label="Inside the lab: the method, in order" data-section="Lab" data-minutes="2">
   <div class="lu-eyebrow">Inside the lab · about 20 minutes in</div>
   <div class="lu-split lu-split--wide-left">
@@ -611,10 +621,10 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Two minutes, run as a pause once everyone has a profiling report open. Let them argue whether profiling comes before reading the names. It comes after: a guess first, then the numbers.</p></template>
 </section>
 
-<!-- ==================================================================== 41 -->
+<!-- ==================================================================== 42 -->
 <section class="slide slide--tint" data-label="Lab time" data-section="Lab" data-minutes="60">
   <div class="lu-eyebrow">Lab · 60 minutes</div>
-  <h2 class="lu-h2" style="max-width:66ch">Work in pairs. Checkpoints keep you on time.</h2>
+  <h2 class="lu-h2" style="max-width:66ch">Each student works on their own machine. Checkpoints keep you on time.</h2>
 
   <div class="lu-grid" style="margin-top:var(--lu-s3)">
     <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 15</span><p class="lu-sub">Smoke test passes. Data fetched. Brunel profiles written.</p></div>
@@ -625,7 +635,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Sixty minutes. Circulate. At minute 35, check that nobody has merged an OpenRefine cluster. At minute 50, warn that commits are due.</p></template>
 </section>
 
-<!-- ==================================================================== 42 -->
+<!-- ==================================================================== 43 -->
 <section class="slide" data-label="Failure gallery" data-section="Wrap" data-minutes="4">
   <div class="lu-eyebrow">Discussion · which stage broke?</div>
   <h2 class="lu-h2" style="max-width:66ch">Three failures. Name the stage of the architecture that broke.</h2>
@@ -638,11 +648,11 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <div class="lu-card lu-col-4"><span class="lu-card__label">Case C</span><p class="lu-sub">An assistant answered fluently about a supplier removed eight months before.</p>
       <div class="lu-reveal"><button class="lu-reveal__btn" type="button">Which stage</button><div class="lu-reveal__panel" hidden><p>The question layer. It could not say "stale" or "I do not know". Session 7 grades that.</p></div></div></div>
   </div>
-  <p class="lu-sub"><b>Then, in pairs:</b> compare inventories and count the rules only one of you found. That number is the argument for writing meaning down.</p>
+  <p class="lu-sub"><b>Then, as a room:</b> compare inventories and count the rules only one person found. That number is the argument for writing meaning down.</p>
   <template data-notes><p>Four minutes. The cases are teaching composites, not named companies. Take each as a show of hands before the reveal.</p></template>
 </section>
 
-<!-- ==================================================================== 43 -->
+<!-- ==================================================================== 44 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The words this session introduced.</h2>
@@ -650,7 +660,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>One minute, or skip in class: it is for revision. Every term here is also clickable on the slides, and in GLOSSARY.md.</p></template>
 </section>
 
-<!-- ==================================================================== 44 -->
+<!-- ==================================================================== 45 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
@@ -671,7 +681,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Two minutes. End on the statement, not the admin.</p></template>
 </section>
 
-<!-- ==================================================================== 45 -->
+<!-- ==================================================================== 46 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">

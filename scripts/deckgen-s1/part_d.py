@@ -4,10 +4,10 @@ from kit import slide, divider, head, defbox, callout, table, flow, node, edge
 SLIDES = []
 
 # ================================================================== Part 6
-SLIDES.append(divider("Part 6 · Your project begins", "Your project",
-    "Part 6 of 6 · about 15 minutes",
-    "The lectures use one supply chain. What does your team build?",
-    "The same pipeline, on a topic and a database your team chooses. Chosen before Session 2."))
+SLIDES.append(divider("Part 6 · The team project", "Team project",
+    "Part 6 of 6 · The team project · about 15 minutes",
+    "Your team project: the system you build, with whom, and how it is graded.",
+    "Teams of 2 or 3. Your own topic and database. The same pipeline you see in the lectures. Team and topic locked before Session 2."))
 
 p_nodes = [
     node("inv", "Constraint\ninventory\nSession 1", 105, 150, 190, 120),
@@ -32,7 +32,7 @@ p_caps = [
     ("Milestone 2 · 20 percent", "<b>Step 3.</b> End of Session 6: your integrated graph and your prediction models. <b>Milestone 2</b>, 20 percent."),
     ("Final · 45 percent", "<b>Step 4.</b> Session 8: the deployed system and report (35 percent), then the team defense (10 percent)."),
 ]
-SLIDES.append(slide("What your team builds", "Your project", 4,
+SLIDES.append(slide("The team project: what you build", "Team project", 4,
     head("One system, one layer per session", "Every team builds the same pipeline. What differs is the domain and the data.") +
     flow("The team project, session by session, with its milestones", 1448, 300, p_nodes, p_edges, p_steps, p_caps) +
     callout("Not a weekly checkpoint", "After each lab, repeat the technique on your own data. Nothing is graded week by week; the milestones and the final system are.", "neutral"),
@@ -40,7 +40,7 @@ SLIDES.append(slide("What your team builds", "Your project", 4,
     <ul><li>The remaining 15 percent is lab completion and participation, Sessions 1 to 7.</li></ul>'''))
 
 # ------------------------------------------------------------------ Topic menu
-SLIDES.append(slide("The topic menu", "Your project", 3,
+SLIDES.append(slide("The topic menu", "Team project", 3,
     head("Choose a topic area, then a database", "Five areas, each checked for open data and a real vocabulary to reuse.") +
     table(["Topic area", "Example open databases", "Vocabulary to reuse"], [
         ["Transit and mobility", "GTFS feeds from one transit agency", "Linked GTFS"],
@@ -72,14 +72,14 @@ t_caps = [
     ("The deadline", "<b>Step 3.</b> Team and topic are locked in <b>before Session 2 starts</b>."),
     ("Nobody is left out", "<b>Step 4.</b> Anyone without a team by then is placed by the instructor into a team with space."),
 ]
-SLIDES.append(slide("Teams and the deadline", "Your project", 3,
+SLIDES.append(slide("Teams and the deadline", "Team project", 3,
     head("The rules", "Teams of 2 or 3, your choice, locked in before Session 2.") +
     flow("Team formation timeline", 1448, 350, t_nodes, t_edges, t_steps, t_caps) +
     '<p class="lu-sub">Graded as a team. In the Session 8 defense, <b>any teammate can be asked about any part</b>.</p>',
     '''<p>Three minutes. Say the deadline twice. Ask them to post team and topic where you collect them (your usual channel).</p>'''))
 
 # ------------------------------------------------------------------ Grading
-SLIDES.append(slide("How the project is graded", "Your project", 3,
+SLIDES.append(slide("How the project is graded", "Team project", 3,
     head("Read this now, not in week 6", "The milestones are judged against the same rubric as the final system.") + '''
   <div class="lu-split" style="margin-top:var(--lu-s3)">
     ''' + table(["Course grade", "Percent", "When"], [
@@ -102,7 +102,13 @@ SLIDES.append(slide("How the project is graded", "Your project", 3,
     '''<p>Three minutes. Point at the bold line: 12 points for exactly what today's lab trains, done on their own data. It is the line nobody can copy from a classmate.</p>'''))
 
 # ================================================================== Lab
-SLIDES.append(slide("Lab brief", "Lab", 3,
+SLIDES.append(divider("Lab · Profile the data, find the rules", "Lab",
+    "Hands-on lab · about 60 minutes",
+    "Lab: measure DataCo and Brunel, and write down the rules nobody wrote.",
+    "Setup check, profiling, clustering in OpenRefine, then your constraint inventory. Each student on their own machine.",
+    notes="<p>Ten seconds, then the brief. The lab clock starts on the next slide.</p>"))
+
+SLIDES.append(slide("Lab brief", "Lab", 2,
     head("Hands-on lab · 60 minutes", "Measure two real datasets and write down the rules nobody wrote.", "h1", 34) + '''
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <ol class="lu-list lu-list--num">
@@ -141,7 +147,7 @@ SLIDES.append(slide("Inside the lab: the method, in order", "Lab", 2, '''  <div 
     '''<p>Two minutes, run as a pause once everyone has a profiling report open. Let them argue whether profiling comes before reading the names. It comes after: a guess first, then the numbers.</p>''', kind="tint"))
 
 SLIDES.append(slide("Lab time", "Lab", 60,
-    head("Lab · 60 minutes", "Work in pairs. Checkpoints keep you on time.") + '''
+    head("Lab · 60 minutes", "Each student works on their own machine. Checkpoints keep you on time.") + '''
   <div class="lu-grid" style="margin-top:var(--lu-s3)">
     <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 15</span><p class="lu-sub">Smoke test passes. Data fetched. Brunel profiles written.</p></div>
     <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 35</span><p class="lu-sub">DataCo profile read. Order City clustered and every cluster checked.</p></div>
@@ -161,7 +167,7 @@ SLIDES.append(slide("Failure gallery", "Wrap", 4,
     <div class="lu-card lu-col-4"><span class="lu-card__label">Case C</span><p class="lu-sub">An assistant answered fluently about a supplier removed eight months before.</p>
       <div class="lu-reveal"><button class="lu-reveal__btn" type="button">Which stage</button><div class="lu-reveal__panel" hidden><p>The question layer. It could not say "stale" or "I do not know". Session 7 grades that.</p></div></div></div>
   </div>
-  <p class="lu-sub"><b>Then, in pairs:</b> compare inventories and count the rules only one of you found. That number is the argument for writing meaning down.</p>''',
+  <p class="lu-sub"><b>Then, as a room:</b> compare inventories and count the rules only one person found. That number is the argument for writing meaning down.</p>''',
     '''<p>Four minutes. The cases are teaching composites, not named companies. Take each as a show of hands before the reveal.</p>'''))
 
 GLOSS = [

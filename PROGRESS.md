@@ -26,7 +26,7 @@ or lab-code progress, that is this file's job.
 
 | # | Module | Title | Lecture deck | Lab code |
 |---|---|---|---|---|
-| 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Rebuilt 2026-09-24 to the 2c standard (45 slides, 185 min, audit clean), awaiting the instructor's review (REPLAN-STATE 6, 7) | Built, verified working by the instructor 2026-09-23 |
+| 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Rebuilt 2026-09-24 to the 2c standard (46 slides, 185 min, audit clean), awaiting the instructor's review (REPLAN-STATE 6, 7) | Built, verified working by the instructor 2026-09-23 |
 | 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Built, old standard (93 min); two reveal overflows (slides 9, 20); full rebuild planned (REPLAN-STATE 8) | Built, notebook presented |
 | 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Old deck live; new deck in progress, parts 1 and 2 built by the generator, parts 3 to 6 next (REPLAN-STATE 2, 3) | Built and reasoner verified (v0 file with a real modelling error, reference fix, sample shipments, reference outputs); `closed_world_demo.py` and README rewrite still open (REPLAN-STATE 4, 5) |
 | 4 | 2 | Constraints, Quality, and Provenance: SHACL | Built (197 min), visual pass pending (REPLAN-STATE 9) | Not built: only README and `shapes_template.ttl` |
