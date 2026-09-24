@@ -1,0 +1,1264 @@
+@prefix : <https://ul.edu.lb/kr/scm#> .
+@prefix ul: <https://ul.edu.lb/kr/scm#> .
+@prefix gs1: <https://gs1.org/voc/> .
+@prefix ioc: <https://spec.industrialontologies.org/ontology/construct/> .
+@prefix iof: <https://spec.industrialontologies.org/ontology/core/Core/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@base <https://ul.edu.lb/kr/scm#> .
+
+<https://ul.edu.lb/kr/scm#> rdf:type owl:Ontology ;
+                             owl:imports <https://spec.industrialontologies.org/ontology/supplychain/SupplyChain/> ;
+                             rdfs:label "UL Knowledge Representation course: supply chain reference ontology" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  https://ul.edu.lb/kr/scm#answersCQ
+ul:answersCQ rdf:type owl:AnnotationProperty ;
+             rdfs:comment "The competency question (see competency_questions.md) this class exists to answer. A class with none has not earned its place, per the lecture's own rule." ;
+             rdfs:label "answers competency question" .
+
+
+###  https://ul.edu.lb/kr/scm#profile
+ul:profile rdf:type owl:AnnotationProperty ;
+           rdfs:comment "EL, DL or QL: which profile this axiom set was written for. Tagged here using this course's own working rule (see the lab brief's terminal check): a class stays EL as long as it only uses conjunction and someValuesFrom; allValuesFrom, cardinality, complementOf or inverseOf push it to DL." ;
+           rdfs:label "intended OWL profile" .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://ul.edu.lb/kr/scm#actuallyServed
+ul:actuallyServed rdf:type owl:ObjectProperty ;
+                  rdfs:domain ul:Plant ;
+                  rdfs:range ul:Port ;
+                  rdfs:comment "A plant having actually shipped through a port, an operational fact, independent of ul:PlantPortAuthorization, an authorized plant that has never shipped through that port has the authorization without this."@en ;
+                  rdfs:label "actually served"@en .
+
+
+###  https://ul.edu.lb/kr/scm#appliesToRoute
+ul:appliesToRoute rdf:type owl:ObjectProperty ;
+                  rdfs:domain ul:FreightRateBand ;
+                  rdfs:range ioc:ShippingRoute ;
+                  rdfs:label "applies to route"@en .
+
+
+###  https://ul.edu.lb/kr/scm#authorizes
+ul:authorizes rdf:type owl:ObjectProperty ;
+              rdfs:domain ul:PlantPortAuthorization ;
+              rdfs:range ul:Port ;
+              rdfs:label "authorizes"@en .
+
+
+###  https://ul.edu.lb/kr/scm#committedBefore
+ul:committedBefore rdf:type owl:ObjectProperty ;
+                   owl:inverseOf ul:deliveredAfter ;
+                   rdfs:label "committed before"@en .
+
+
+###  https://ul.edu.lb/kr/scm#deliveredAfter
+ul:deliveredAfter rdf:type owl:ObjectProperty ;
+                  rdfs:domain ul:LateShipment ;
+                  rdfs:label "delivered after"@en .
+
+
+###  https://ul.edu.lb/kr/scm#handledBy
+ul:handledBy rdf:type owl:ObjectProperty ;
+             rdfs:domain ioc:Shipment ;
+             rdfs:range ioc:Carrier ;
+             rdfs:label "handled by"@en .
+
+
+###  https://ul.edu.lb/kr/scm#handlesRoute
+ul:handlesRoute rdf:type owl:ObjectProperty ;
+                rdfs:domain ioc:Carrier ;
+                rdfs:range ioc:ShippingRoute ;
+                rdfs:label "handles route"@en .
+
+
+###  https://ul.edu.lb/kr/scm#hasComponent
+ul:hasComponent rdf:type owl:ObjectProperty ;
+                rdfs:domain ioc:MaterialProduct ;
+                rdfs:range ioc:MaterialComponent ;
+                rdfs:comment "A finished product has this material component as a physical part."@en ;
+                rdfs:label "has component"@en .
+
+
+###  https://ul.edu.lb/kr/scm#heldBy
+ul:heldBy rdf:type owl:ObjectProperty ;
+          rdfs:domain ul:PlantPortAuthorization ;
+          rdfs:range ul:Plant ;
+          rdfs:label "held by"@en .
+
+
+###  https://ul.edu.lb/kr/scm#ordersProduct
+ul:ordersProduct rdf:type owl:ObjectProperty ;
+                 rdfs:domain ioc:PurchaseOrder ;
+                 rdfs:range ioc:MaterialProduct ;
+                 rdfs:label "orders product"@en .
+
+
+###  https://ul.edu.lb/kr/scm#suppliedBy
+ul:suppliedBy rdf:type owl:ObjectProperty ;
+              rdfs:domain ioc:MaterialComponent ;
+              rdfs:range ioc:Supplier ;
+              rdfs:comment "A material component is bought from this supplier."@en ;
+              rdfs:label "supplied by"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://ul.edu.lb/kr/scm#maxWeightKg
+ul:maxWeightKg rdf:type owl:DatatypeProperty ;
+               rdfs:domain ul:FreightRateBand ;
+               rdfs:range xsd:decimal ;
+               rdfs:label "maximum weight, kg"@en .
+
+
+###  https://ul.edu.lb/kr/scm#minWeightKg
+ul:minWeightKg rdf:type owl:DatatypeProperty ;
+               rdfs:domain ul:FreightRateBand ;
+               rdfs:range xsd:decimal ;
+               rdfs:label "minimum weight, kg"@en .
+
+
+###  https://ul.edu.lb/kr/scm#sanctionsListStatus
+ul:sanctionsListStatus rdf:type owl:DatatypeProperty ;
+                       rdfs:domain ioc:Carrier ;
+                       rdfs:range xsd:string ;
+                       rdfs:comment "Asserted per carrier record from the sanctions-screening feed, not derived by the reasoner, screening is a lookup against an external list, not an entailment."@en ;
+                       rdfs:label "sanctions list status"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://purl.obolibrary.org/obo/BFO_0000001
+<http://purl.obolibrary.org/obo/BFO_0000001> rdfs:subClassOf owl:Thing .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000002
+<http://purl.obolibrary.org/obo/BFO_0000002> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000001> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000003
+<http://purl.obolibrary.org/obo/BFO_0000003> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000001> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000004
+<http://purl.obolibrary.org/obo/BFO_0000004> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000002> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000006
+<http://purl.obolibrary.org/obo/BFO_0000006> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000141> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000008
+<http://purl.obolibrary.org/obo/BFO_0000008> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000003> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000009
+<http://purl.obolibrary.org/obo/BFO_0000009> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000006> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000011
+<http://purl.obolibrary.org/obo/BFO_0000011> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000003> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000015
+<http://purl.obolibrary.org/obo/BFO_0000015> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000003> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000016
+<http://purl.obolibrary.org/obo/BFO_0000016> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000017> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000017
+<http://purl.obolibrary.org/obo/BFO_0000017> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000020> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000018
+<http://purl.obolibrary.org/obo/BFO_0000018> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000006> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000019
+<http://purl.obolibrary.org/obo/BFO_0000019> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000020> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000020
+<http://purl.obolibrary.org/obo/BFO_0000020> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000002> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000023
+<http://purl.obolibrary.org/obo/BFO_0000023> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000017> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000024
+<http://purl.obolibrary.org/obo/BFO_0000024> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000026
+<http://purl.obolibrary.org/obo/BFO_0000026> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000006> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000027
+<http://purl.obolibrary.org/obo/BFO_0000027> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000028
+<http://purl.obolibrary.org/obo/BFO_0000028> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000006> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000029
+<http://purl.obolibrary.org/obo/BFO_0000029> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000141> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000030
+<http://purl.obolibrary.org/obo/BFO_0000030> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000031
+<http://purl.obolibrary.org/obo/BFO_0000031> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000002> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000034
+<http://purl.obolibrary.org/obo/BFO_0000034> rdfs:subClassOf ioc:Capability .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000035
+<http://purl.obolibrary.org/obo/BFO_0000035> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000003> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000038
+<http://purl.obolibrary.org/obo/BFO_0000038> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000008> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000040
+<http://purl.obolibrary.org/obo/BFO_0000040> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000004> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000140
+<http://purl.obolibrary.org/obo/BFO_0000140> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000141> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000141
+<http://purl.obolibrary.org/obo/BFO_0000141> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000004> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000142
+<http://purl.obolibrary.org/obo/BFO_0000142> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000140> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000144
+<http://purl.obolibrary.org/obo/BFO_0000144> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000145
+<http://purl.obolibrary.org/obo/BFO_0000145> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000019> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000146
+<http://purl.obolibrary.org/obo/BFO_0000146> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000140> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000147
+<http://purl.obolibrary.org/obo/BFO_0000147> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000140> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000148
+<http://purl.obolibrary.org/obo/BFO_0000148> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000008> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000182
+<http://purl.obolibrary.org/obo/BFO_0000182> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000202
+<http://purl.obolibrary.org/obo/BFO_0000202> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000038> .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000203
+<http://purl.obolibrary.org/obo/BFO_0000203> rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000148> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ActionSpecification
+ioc:ActionSpecification rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/AdvanceShipmentNotice
+ioc:AdvanceShipmentNotice rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Agent
+ioc:Agent rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/AgentRole
+ioc:AgentRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Agreement
+ioc:Agreement rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Airway
+ioc:Airway rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000028> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Algorithm
+ioc:Algorithm rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/AppraisalProcess
+ioc:AppraisalProcess rdfs:subClassOf ioc:MeasurementProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ArrivalProcess
+ioc:ArrivalProcess rdfs:subClassOf ioc:MaterialLocationChangeProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Assembly
+ioc:Assembly rdfs:subClassOf ioc:MaterialArtifact .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/AssemblyProcess
+ioc:AssemblyProcess rdfs:subClassOf ioc:ManufacturingProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/BillOfLading
+ioc:BillOfLading rdfs:subClassOf ioc:CommercialServiceAgreement .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/BusinessFunction
+ioc:BusinessFunction rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000034> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/BusinessOrganization
+ioc:BusinessOrganization rdfs:subClassOf ioc:Organization .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/BusinessProcess
+ioc:BusinessProcess rdfs:subClassOf ioc:PlannedProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Buyer
+ioc:Buyer rdfs:subClassOf ioc:Agent .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/BuyerRole
+ioc:BuyerRole rdfs:subClassOf ioc:AgentRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/BuyingBusinessProcess
+ioc:BuyingBusinessProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Capability
+ioc:Capability rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000016> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Cargo
+ioc:Cargo rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/CargoRole
+ioc:CargoRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Carrier
+ioc:Carrier rdfs:subClassOf ioc:ServiceProvider .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Change
+ioc:Change rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Classifier
+ioc:Classifier rdfs:subClassOf ioc:Denoter .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/CommercialService
+ioc:CommercialService rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/CommercialServiceAgreement
+ioc:CommercialServiceAgreement rdfs:subClassOf ioc:Agreement .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/CommercialServiceSpecification
+ioc:CommercialServiceSpecification rdfs:subClassOf ioc:PlanSpecification .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ComplexMaterialState
+ioc:ComplexMaterialState rdfs:subClassOf ioc:MaterialState .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ComputingProcess
+ioc:ComputingProcess rdfs:subClassOf ioc:PlannedProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Consignee
+ioc:Consignee rdfs:subClassOf ioc:Agent .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ConsigneeRole
+ioc:ConsigneeRole rdfs:subClassOf ioc:AgentRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ConsigningProcess
+ioc:ConsigningProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ConsignorRole
+ioc:ConsignorRole rdfs:subClassOf ioc:AgentRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Consumable
+ioc:Consumable rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ConsumableRole
+ioc:ConsumableRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Container
+ioc:Container rdfs:subClassOf ioc:MaterialArtifact .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ContainerIdentifier
+ioc:ContainerIdentifier rdfs:subClassOf ioc:Identifier .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Customer
+ioc:Customer rdfs:subClassOf ioc:Agent .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/CustomerRole
+ioc:CustomerRole rdfs:subClassOf ioc:AgentRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Denoter
+ioc:Denoter rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/DepartureProcess
+ioc:DepartureProcess rdfs:subClassOf ioc:MaterialLocationChangeProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/DescriptiveInformationContentEntity
+ioc:DescriptiveInformationContentEntity rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/DesignSpecification
+ioc:DesignSpecification rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/DesignativeInformationContentEntity
+ioc:DesignativeInformationContentEntity rdfs:subClassOf ioc:Denoter .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/DesignedFunction
+ioc:DesignedFunction rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000034> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/DirectiveInformationContentEntity
+ioc:DirectiveInformationContentEntity rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/DistributionCenter
+ioc:DistributionCenter rdfs:subClassOf ioc:StorageFacility .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Distributor
+ioc:Distributor rdfs:subClassOf ioc:Agent .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/DistributorRole
+ioc:DistributorRole rdfs:subClassOf ioc:AgentRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/EncodedAlgorithm
+ioc:EncodedAlgorithm rdfs:subClassOf ioc:PlanSpecification .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/EngineeredSystem
+ioc:EngineeredSystem rdfs:subClassOf ioc:System .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/EquipmentRole
+ioc:EquipmentRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Event
+ioc:Event rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000003> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Facility
+ioc:Facility rdfs:subClassOf ioc:EngineeredSystem .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Factory
+ioc:Factory rdfs:subClassOf ioc:Facility .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/FreightContainer
+ioc:FreightContainer rdfs:subClassOf ioc:Container .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/FreightForwarder
+ioc:FreightForwarder rdfs:subClassOf ioc:Agent .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/FreightForwarderRole
+ioc:FreightForwarderRole rdfs:subClassOf ioc:LogisticsServiceProviderRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/FreightForwardingBusinessFunction
+ioc:FreightForwardingBusinessFunction rdfs:subClassOf ioc:BusinessFunction .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/FreightForwardingProcess
+ioc:FreightForwardingProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/FreightForwardingService
+ioc:FreightForwardingService rdfs:subClassOf ioc:LogisticsService .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/GainOfRole
+ioc:GainOfRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/GeospatialLocation
+ioc:GeospatialLocation rdfs:subClassOf ioc:GeospatialSite .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/GeospatialSite
+ioc:GeospatialSite rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000029> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/GlobalLocationNumber
+ioc:GlobalLocationNumber rdfs:subClassOf ioc:Identifier .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/GroupOfAgents
+ioc:GroupOfAgents rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000027> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/GroupOfPersons
+ioc:GroupOfPersons rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000027> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/GroupOfSuppliers
+ioc:GroupOfSuppliers rdfs:subClassOf ioc:OrganizedGroupOfAgents .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Identifier
+ioc:Identifier rdfs:subClassOf ioc:DesignativeInformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/IndustrialInventory
+ioc:IndustrialInventory rdfs:subClassOf ioc:MaterialResource .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/IndustrialInventoryRole
+ioc:IndustrialInventoryRole rdfs:subClassOf ioc:MaterialResourceRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Industry
+ioc:Industry rdfs:subClassOf ioc:GroupOfAgents .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/InformationContentEntity
+ioc:InformationContentEntity rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000031> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/InputSpecification
+ioc:InputSpecification rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/IntegratedCarrierBusinessOrganization
+ioc:IntegratedCarrierBusinessOrganization rdfs:subClassOf ioc:BusinessOrganization .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/InventoryManagementProcess
+ioc:InventoryManagementProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Load
+ioc:Load rdfs:subClassOf ioc:TraceableResourceUnit .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/LoadRole
+ioc:LoadRole rdfs:subClassOf ioc:TraceableResourceUnitRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/LocationIdentificationScheme
+ioc:LocationIdentificationScheme rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/LocationRole
+ioc:LocationRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/LogisticUnit
+ioc:LogisticUnit rdfs:subClassOf ioc:TraceableResourceUnit .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/LogisticUnitRole
+ioc:LogisticUnitRole rdfs:subClassOf ioc:TraceableResourceUnitRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/LogisticsProcess
+ioc:LogisticsProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/LogisticsService
+ioc:LogisticsService rdfs:subClassOf ioc:CommercialService .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/LogisticsServiceProviderRole
+ioc:LogisticsServiceProviderRole rdfs:subClassOf ioc:ServiceProviderRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/LossOfRole
+ioc:LossOfRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Lot
+ioc:Lot rdfs:subClassOf ioc:TraceableResourceUnit .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/LotIdentifier
+ioc:LotIdentifier rdfs:subClassOf ioc:Identifier .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/LotRole
+ioc:LotRole rdfs:subClassOf ioc:TraceableResourceUnitRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaintainableMaterialItem
+ioc:MaintainableMaterialItem rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaintainableMaterialItemRole
+ioc:MaintainableMaterialItemRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Make-To-OrderProductionCapability
+ioc:Make-To-OrderProductionCapability rdfs:subClassOf ioc:ProductionCapability .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Make-To-StockProductionCapability
+ioc:Make-To-StockProductionCapability rdfs:subClassOf ioc:ProductionCapability .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Manufacturer
+ioc:Manufacturer rdfs:subClassOf ioc:Agent ,
+                                 ioc:Organization .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ManufacturerRole
+ioc:ManufacturerRole rdfs:subClassOf ioc:AgentRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ManufacturingProcess
+ioc:ManufacturingProcess rdfs:subClassOf ioc:PlannedProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ManufacturingService
+ioc:ManufacturingService rdfs:subClassOf ioc:CommercialService .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ManufacturingServiceProviderRole
+ioc:ManufacturingServiceProviderRole rdfs:subClassOf ioc:ServiceProviderRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ManufacturingSupplyChain
+ioc:ManufacturingSupplyChain rdfs:subClassOf ioc:SupplyChainSystem .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialArtifact
+ioc:MaterialArtifact rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000030> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialComponent
+ioc:MaterialComponent rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialComponentRole
+ioc:MaterialComponentRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialContainmentCapability
+ioc:MaterialContainmentCapability rdfs:subClassOf ioc:Capability .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialContainmentFunction
+ioc:MaterialContainmentFunction rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000034> ,
+                                                ioc:MaterialContainmentCapability .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialLocationChangeProcess
+ioc:MaterialLocationChangeProcess rdfs:subClassOf ioc:PlannedProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialProduct
+ioc:MaterialProduct rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialProductRole
+ioc:MaterialProductRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialResource
+ioc:MaterialResource rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialResourceRole
+ioc:MaterialResourceRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialState
+ioc:MaterialState rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialStateConditionExpression
+ioc:MaterialStateConditionExpression rdfs:subClassOf ioc:ValueExpression .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialStateSpecification
+ioc:MaterialStateSpecification rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialTradeItem
+ioc:MaterialTradeItem rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaterialTradeItemRole
+ioc:MaterialTradeItemRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MaturityLevel
+ioc:MaturityLevel rdfs:subClassOf owl:Thing .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MeasuredValueExpression
+ioc:MeasuredValueExpression rdfs:subClassOf ioc:ValueExpression .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MeasurementCapability
+ioc:MeasurementCapability rdfs:subClassOf ioc:Capability .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MeasurementInformationContentEntity
+ioc:MeasurementInformationContentEntity rdfs:subClassOf ioc:DescriptiveInformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/MeasurementProcess
+ioc:MeasurementProcess rdfs:subClassOf ioc:PlannedProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ObjectiveSpecification
+ioc:ObjectiveSpecification rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Organization
+ioc:Organization rdfs:subClassOf ioc:OrganizedGroupOfAgents .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/OrganizationIdentifier
+ioc:OrganizationIdentifier rdfs:subClassOf ioc:Identifier .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/OrganizedGroupOfAgents
+ioc:OrganizedGroupOfAgents rdfs:subClassOf ioc:GroupOfAgents .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/OutputObjectiveSpecification
+ioc:OutputObjectiveSpecification rdfs:subClassOf ioc:ObjectiveSpecification .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/PackagingPlanSpecification
+ioc:PackagingPlanSpecification rdfs:subClassOf ioc:PlanSpecification .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/PackagingProcess
+ioc:PackagingProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/PackagingService
+ioc:PackagingService rdfs:subClassOf ioc:LogisticsService .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/PackagingServiceProviderRole
+ioc:PackagingServiceProviderRole rdfs:subClassOf ioc:LogisticsServiceProviderRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/PackingList
+ioc:PackingList rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Person
+ioc:Person rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000030> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/PhysicalLocationIdentifier
+ioc:PhysicalLocationIdentifier rdfs:subClassOf ioc:Identifier .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/PieceOfEquipment
+ioc:PieceOfEquipment rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/PieceofTransportEquipment
+ioc:PieceofTransportEquipment rdfs:subClassOf ioc:MaterialArtifact ,
+                                              ioc:PieceOfEquipment .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/PlanSpecification
+ioc:PlanSpecification rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/PlannedProcess
+ioc:PlannedProcess rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ProcessCharacteristic
+ioc:ProcessCharacteristic rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000002> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ProcuringBusinessProcess
+ioc:ProcuringBusinessProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ProductProductionProcess
+ioc:ProductProductionProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ProductionCapability
+ioc:ProductionCapability rdfs:subClassOf ioc:Capability .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/PurchaseOrder
+ioc:PurchaseOrder rdfs:subClassOf ioc:Agreement .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/RawMaterial
+ioc:RawMaterial rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/RawMaterialRole
+ioc:RawMaterialRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ReceivingProcess
+ioc:ReceivingProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/RequirementSpecification
+ioc:RequirementSpecification rdfs:subClassOf ioc:InformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Retailer
+ioc:Retailer rdfs:subClassOf ioc:Agent .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/RetailerRole
+ioc:RetailerRole rdfs:subClassOf ioc:AgentRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Seaway
+ioc:Seaway rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000028> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SellingBusinessProcess
+ioc:SellingBusinessProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ServiceConsumerRole
+ioc:ServiceConsumerRole rdfs:subClassOf ioc:CustomerRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ServiceProvider
+ioc:ServiceProvider rdfs:subClassOf ioc:Supplier .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ServiceProviderRole
+ioc:ServiceProviderRole rdfs:subClassOf ioc:SupplierRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ServiceSupplyChain
+ioc:ServiceSupplyChain rdfs:subClassOf ioc:SupplyChainSystem .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ShipFromLocation
+ioc:ShipFromLocation rdfs:subClassOf ioc:GeospatialLocation .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ShipFromLocationRole
+ioc:ShipFromLocationRole rdfs:subClassOf ioc:LocationRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ShipToLocation
+ioc:ShipToLocation rdfs:subClassOf ioc:GeospatialLocation .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ShipToLocationRole
+ioc:ShipToLocationRole rdfs:subClassOf ioc:LocationRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Shipment
+ioc:Shipment rdfs:subClassOf ioc:TraceableResourceUnit .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ShipmentPlanSpecification
+ioc:ShipmentPlanSpecification rdfs:subClassOf ioc:PlanSpecification .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ShipmentPreparationProcess
+ioc:ShipmentPreparationProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ShipmentRole
+ioc:ShipmentRole rdfs:subClassOf ioc:TraceableResourceUnitRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ShipmentState
+ioc:ShipmentState rdfs:subClassOf ioc:MaterialState .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Shipper
+ioc:Shipper rdfs:subClassOf ioc:Agent .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ShippingRoute
+ioc:ShippingRoute rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000028> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/StorageCapability
+ioc:StorageCapability rdfs:subClassOf ioc:Capability .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/StorageFacility
+ioc:StorageFacility rdfs:subClassOf ioc:Facility .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/StorageProcess
+ioc:StorageProcess rdfs:subClassOf ioc:PlannedProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/StorageService
+ioc:StorageService rdfs:subClassOf ioc:LogisticsService .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/StorageServiceProviderRole
+ioc:StorageServiceProviderRole rdfs:subClassOf ioc:LogisticsServiceProviderRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Sublot
+ioc:Sublot rdfs:subClassOf ioc:TraceableResourceUnit .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SublotRole
+ioc:SublotRole rdfs:subClassOf ioc:TraceableResourceUnitRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Supplier
+ioc:Supplier rdfs:subClassOf ioc:Agent .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SupplierEvaluationProcess
+ioc:SupplierEvaluationProcess rdfs:subClassOf ioc:AppraisalProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SupplierRole
+ioc:SupplierRole rdfs:subClassOf ioc:AgentRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SupplyChainAgent
+ioc:SupplyChainAgent rdfs:subClassOf ioc:Agent .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SupplyChainAgentRole
+ioc:SupplyChainAgentRole rdfs:subClassOf ioc:AgentRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SupplyChainNode
+ioc:SupplyChainNode rdfs:subClassOf ioc:GeospatialLocation .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SupplyChainNodeRole
+ioc:SupplyChainNodeRole rdfs:subClassOf ioc:LocationRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SupplyChainObjectiveSpecification
+ioc:SupplyChainObjectiveSpecification rdfs:subClassOf ioc:ObjectiveSpecification .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SupplyChainPlanSpecification
+ioc:SupplyChainPlanSpecification rdfs:subClassOf ioc:PlanSpecification .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SupplyChainProcess
+ioc:SupplyChainProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SupplyChainSystem
+ioc:SupplyChainSystem rdfs:subClassOf ioc:EngineeredSystem .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SupplyChainTransportProcess
+ioc:SupplyChainTransportProcess rdfs:subClassOf ioc:SupplyChainProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SupplyRelationship
+ioc:SupplyRelationship rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000020> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SupplyingBusinessProcess
+ioc:SupplyingBusinessProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/System
+ioc:System rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000027> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/SystemCapability
+ioc:SystemCapability rdfs:subClassOf ioc:Capability .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/TemporalDurationValueExpression
+ioc:TemporalDurationValueExpression rdfs:subClassOf ioc:ValueExpression .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/TemporalInstantValueExpression
+ioc:TemporalInstantValueExpression rdfs:subClassOf ioc:ValueExpression .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Traceability
+ioc:Traceability rdfs:subClassOf ioc:SystemCapability .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/TraceableResourceUnit
+ioc:TraceableResourceUnit rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/TraceableResourceUnitRole
+ioc:TraceableResourceUnitRole rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/TrackingEvent
+ioc:TrackingEvent rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> ,
+                                  ioc:Event .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Trailer
+ioc:Trailer rdfs:subClassOf ioc:Container .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/TranspoortEquipmentRole
+ioc:TranspoortEquipmentRole rdfs:subClassOf ioc:EquipmentRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/TransportProcess
+ioc:TransportProcess rdfs:subClassOf ioc:MaterialLocationChangeProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/TransportationBusinessFunction
+ioc:TransportationBusinessFunction rdfs:subClassOf ioc:BusinessFunction .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/TransportationService
+ioc:TransportationService rdfs:subClassOf ioc:LogisticsService .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/TransportationServiceProviderRole
+ioc:TransportationServiceProviderRole rdfs:subClassOf ioc:LogisticsServiceProviderRole .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/TravelProcess
+ioc:TravelProcess rdfs:subClassOf ioc:MaterialLocationChangeProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/ValueExpression
+ioc:ValueExpression rdfs:subClassOf ioc:DescriptiveInformationContentEntity .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Wagon
+ioc:Wagon rdfs:subClassOf ioc:Container .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/WarehousingPlanSpecification
+ioc:WarehousingPlanSpecification rdfs:subClassOf ioc:PlanSpecification .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/WarehousingProcess
+ioc:WarehousingProcess rdfs:subClassOf ioc:BusinessProcess .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/Wholesaler
+ioc:Wholesaler rdfs:subClassOf ioc:Agent .
+
+
+###  https://spec.industrialontologies.org/ontology/construct/WholesalerRole
+ioc:WholesalerRole rdfs:subClassOf ioc:AgentRole .
+
+
+###  https://ul.edu.lb/kr/scm#AtRiskShipment
+ul:AtRiskShipment rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( ioc:Shipment
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty ul:handledBy ;
+                                                               owl:someValuesFrom ul:SanctionedCarrier
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] ;
+                  rdfs:subClassOf ioc:Shipment ;
+                  rdfs:label "At-risk shipment"@en ;
+                  skos:definition "A shipment in transit, handled by a carrier already flagged as sanctioned."@en ;
+                  ul:answersCQ "Which in-flight shipments are at risk of missing their committed date?" ;
+                  ul:profile "EL" .
+
+
+###  https://ul.edu.lb/kr/scm#CancelledShipment
+ul:CancelledShipment rdf:type owl:Class ;
+                     rdfs:subClassOf ioc:Shipment ;
+                     owl:disjointWith ul:LateShipment ;
+                     rdfs:label "Cancelled shipment"@en ;
+                     skos:definition "A shipment withdrawn before delivery."@en ;
+                     ul:profile "EL" .
+
+
+###  https://ul.edu.lb/kr/scm#CommittedDate
+ul:CommittedDate rdf:type owl:Class ;
+                 rdfs:subClassOf owl:Thing ;
+                 rdfs:label "Committed date"@en ;
+                 skos:definition "The delivery date a carrier committed to at booking."@en ;
+                 ul:profile "EL" .
+
+
+###  https://ul.edu.lb/kr/scm#FreightRateBand
+ul:FreightRateBand rdf:type owl:Class ;
+                   rdfs:subClassOf owl:Thing ;
+                   rdfs:label "Freight rate band"@en ;
+                   skos:definition "A priced weight range for shipments on a given route."@en ;
+                   ul:answersCQ "Which freight rate band applies to a consignment of weight W on lane L?" ;
+                   ul:profile "QL" .
+
+
+###  https://ul.edu.lb/kr/scm#LateShipment
+ul:LateShipment rdf:type owl:Class ;
+                rdfs:subClassOf ioc:Shipment ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty ul:deliveredAfter ;
+                                  owl:someValuesFrom ul:CommittedDate
+                                ] ;
+                rdfs:label "Late shipment"@en ;
+                skos:definition "A transport whose actual delivery follows the committed delivery date."@en ;
+                ul:answersCQ "Which shipments arrived after their committed date last quarter, by carrier?" ;
+                ul:profile "EL" .
+
+
+###  https://ul.edu.lb/kr/scm#MultiRouteCarrier
+ul:MultiRouteCarrier rdf:type owl:Class ;
+                     rdfs:subClassOf ioc:Carrier ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty ul:handlesRoute ;
+                                       owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                                       owl:onClass ioc:ShippingRoute
+                                     ] ;
+                     rdfs:label "Multi-route carrier"@en ;
+                     skos:definition "A carrier that handles shipments on two or more distinct shipping routes."@en ;
+                     ul:answersCQ "Which carriers operate on more than one shipping route?" ;
+                     ul:profile "DL" .
+
+
+###  https://ul.edu.lb/kr/scm#OrderForSoleSourcedGood
+ul:OrderForSoleSourcedGood rdf:type owl:Class ;
+                           rdfs:subClassOf ioc:PurchaseOrder ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty ul:ordersProduct ;
+                                             owl:someValuesFrom [ owl:intersectionOf ( ioc:MaterialProduct
+                                                                                       [ rdf:type owl:Restriction ;
+                                                                                         owl:onProperty ul:hasComponent ;
+                                                                                         owl:someValuesFrom ul:SoleSourcedComponent
+                                                                                       ]
+                                                                                     ) ;
+                                                                  rdf:type owl:Class
+                                                                ]
+                                           ] ;
+                           rdfs:label "Order for a sole-sourced good"@en ;
+                           skos:definition "A purchase order for a finished good that itself depends on a sole-sourced component."@en ;
+                           ul:answersCQ "Which purchase orders are for a finished good that depends on a sole-sourced component?" ;
+                           ul:profile "EL" .
+
+
+###  https://ul.edu.lb/kr/scm#Plant
+ul:Plant rdf:type owl:Class ;
+         rdfs:subClassOf ioc:Facility ;
+         rdfs:label "Plant"@en ;
+         skos:definition "A manufacturing facility that ships finished goods."@en ;
+         ul:profile "EL" .
+
+
+###  https://ul.edu.lb/kr/scm#PlantPortAuthorization
+ul:PlantPortAuthorization rdf:type owl:Class ;
+                          rdfs:subClassOf owl:Thing ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty ul:authorizes ;
+                                            owl:someValuesFrom ul:Port
+                                          ] ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty ul:heldBy ;
+                                            owl:someValuesFrom ul:Plant
+                                          ] ;
+                          rdfs:label "Plant-port authorization"@en ;
+                          skos:definition "A record that a plant is legally certified to ship through a given port."@en ;
+                          ul:answersCQ "Which plants can legally serve port X, and which of those served it in practice?" ;
+                          ul:profile "EL" .
+
+
+###  https://ul.edu.lb/kr/scm#Port
+ul:Port rdf:type owl:Class ;
+        rdfs:subClassOf ioc:Facility ;
+        rdfs:label "Port"@en ;
+        skos:definition "A facility through which shipments enter or leave a country."@en ;
+        ul:profile "EL" .
+
+
+###  https://ul.edu.lb/kr/scm#SanctionedCarrier
+ul:SanctionedCarrier rdf:type owl:Class ;
+                     rdfs:subClassOf ioc:Carrier ;
+                     rdfs:label "Sanctioned carrier"@en ;
+                     skos:definition "A carrier with an active entry on a sanctions list."@en ;
+                     ul:answersCQ "Which sanctioned carriers were used on shipments in the last quarter?" ;
+                     ul:profile "EL" .
+
+
+###  https://ul.edu.lb/kr/scm#SoleSourcedComponent
+ul:SoleSourcedComponent rdf:type owl:Class ;
+                        rdfs:subClassOf ioc:MaterialComponent ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty ul:suppliedBy ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass ioc:Supplier
+                                        ] ;
+                        rdfs:label "Sole-sourced component"@en ;
+                        skos:definition "A material component with exactly one supplying relationship, so that supplier failing removes its only source."@en ;
+                        ul:answersCQ "If supplier S fails, which finished goods lose their only source of a component?" ;
+                        ul:profile "DL" .
+
+
+###  Generated by the OWL API (version 4.5.29) https://github.com/owlcs/owlapi
