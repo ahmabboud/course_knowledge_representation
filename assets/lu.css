@@ -647,6 +647,11 @@ strong, .lu-strong { font-weight: 600; }
   text-decoration: none;
 }
 .lu-term:hover { background: var(--lu-red-050); border-bottom-style: solid; }
+/* Links added by lu-glossary.js keep the surrounding type and take no extra
+   space: the "?" floats above the line, so linking can never reflow a slide. */
+.lu-term--auto { position: relative; padding: 0; }
+.lu-term--auto .lu-term-word { font-style: inherit; }
+.lu-term--auto::after { position: absolute; right: -.42em; top: -.5em; margin: 0; }
 .slide--night .lu-term { border-bottom-color: #FF9AA7; }
 .slide--night .lu-term:hover { background: var(--lu-night-2); }
 .lu-term[aria-expanded="true"] { background: var(--lu-red-100); border-bottom-style: solid; }

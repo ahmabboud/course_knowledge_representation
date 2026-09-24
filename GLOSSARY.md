@@ -3,7 +3,9 @@
 One plain sentence per term, and the session that first defines it on a
 slide. A deck may not use a term before the session listed here. When a
 new term is introduced anywhere, add it here in the same change.
-Sessions 1 to 3 are complete; later sessions are added as they are rebuilt.
+Sessions 1 to 6 are covered. The decks turn every term here into a clickable
+definition automatically: run `python3 scripts/build-glossary.py` after
+editing this file (it writes `assets/glossary.js`).
 
 ## Session 1 · The supply chain, the data, and why meaning gets lost
 
@@ -39,6 +41,21 @@ Sessions 1 to 3 are complete; later sessions are added as they are rebuilt.
 | **Constraint inventory** | The course's table of business rules found in the data, each with its evidence and source column. |
 | **Open world assumption** | If a fact is missing, it is unknown, not false. Previewed here, used from Session 3. |
 | **Closed world assumption** | If a fact is missing, it is false. How SQL databases behave. |
+| **WHERE clause** | The part of a SQL or SPARQL query that says which rows or triples to keep. |
+| **JOIN** | SQL's way to combine rows from two tables that share a key. |
+| **README** | The text file at the top of a project that explains what it is and how to run it. |
+| **JDK** | Java Development Kit: the Java runtime and tools that Protégé, Fuseki and ROBOT need. |
+| **ISBN** | International Standard Book Number: a stable identifier printed on every book, an example of an identifier the world already agrees on. |
+| **DHL** | A global logistics company; one of the carriers that appear in the course data. |
+| **XPO** | A freight logistics company; one of the carriers that appear in the course data. |
+| **SQL** | Structured Query Language: the language for asking questions of relational (table) databases. |
+| **Relational database** | Data kept in tables of rows and columns, linked by keys. |
+| **CSV** | Comma separated values: a plain text table, one row per line. |
+| **JSON** | JavaScript Object Notation: a plain text format for nested data, used by most web APIs. |
+| **W3C** | World Wide Web Consortium: the body that publishes web standards such as RDF, OWL, SPARQL and SHACL. |
+| **ISO** | International Organization for Standardization: publishes international standards, BFO among them. |
+| **Docker** | A tool that runs software in sealed containers, so the same setup starts the same way on every machine. |
+| **PostgreSQL** | A free, widely used relational database, used for the course's operational data. |
 
 ## Session 2 · Data as a graph: RDF and SPARQL
 
@@ -72,11 +89,23 @@ Sessions 1 to 3 are complete; later sessions are added as they are rebuilt.
 | **Aggregation** | Combining many matches into one number: COUNT, SUM, AVG, grouped by something. |
 | **Property path** | A query shortcut to follow a relationship one or more times (`+`), in sequence (`/`) or backwards (`^`). |
 | **Federation** | One SPARQL query that asks more than one endpoint at once. |
+| **SELECT** | The SPARQL (and SQL) query form that returns a table of values for the variables you name. |
+| **OPTIONAL** | SPARQL keyword: keep the result even when this part of the pattern has no match, leaving the variable empty. |
+| **FILTER** | SPARQL keyword: keep only the results where a condition is true, for example a date after 2024. |
+| **CONSTRUCT** | The SPARQL query form that returns new triples instead of a table. |
+| **ASK** | The SPARQL query form that answers only yes or no. |
+| **DESCRIBE** | The SPARQL query form that returns the triples a store holds about a resource. |
+| **GROUP BY** | Query clause that puts results into groups so counts or sums can be computed per group. |
+| **TDB2** | Apache Jena's on disk triple store, the storage Fuseki uses. |
 | **Endpoint** | A web address that answers SPARQL queries. |
 | **Triple store** | A database built to store and query triples. |
 | **Fuseki** | The Apache Jena triple store and SPARQL endpoint used in the lab. |
 | **Property graph** | A graph model where nodes and edges carry key value properties, used by Neo4j. |
 | **Cypher** | Neo4j's query language for property graphs. |
+| **Neo4j** | The best known property graph database, queried with Cypher. |
+| **EAV** | Entity, attribute, value: storing data as three column rows in a table, a relational imitation of triples. |
+| **CTE** | Common table expression: a named sub query in SQL; a recursive CTE is SQL's way to follow links step by step. |
+| **URI** | Uniform Resource Identifier: the older, ASCII only form of an IRI. |
 
 ## Session 3 · Ontologies, OWL and reasoning
 
@@ -123,6 +152,9 @@ Sessions 1 to 3 are complete; later sessions are added as they are rebuilt.
 | **Upper ontology** | A very general ontology of basic categories (things, happenings, qualities) that domain ontologies build on. |
 | **BFO** | Basic Formal Ontology, an ISO standard upper ontology. |
 | **IOF Core** | The Industrial Ontologies Foundry's middle layer, built on BFO: products, processes, agents. |
+| **OBO** | Open Biological and Biomedical Ontologies: a community of ontologies that share rules and build on BFO; BFO's files live at `purl.obolibrary.org/obo/`. |
+| **IOF** | Industrial Ontologies Foundry: the OBO idea applied to industry and manufacturing, also built on BFO. |
+| **GS1** | The standards body behind barcodes; publishes the GS1 Web Vocabulary for products and supply chain data. |
 | **SCRO** | IOF's Supply Chain Reference Ontology, built on IOF Core. The base our ontology extends. |
 | **Continuant** | A thing that persists through time, for example a truck or a warehouse. |
 | **Occurrent** | Something that happens and unfolds in time, for example a delivery. |
@@ -137,6 +169,10 @@ Sessions 1 to 3 are complete; later sessions are added as they are rebuilt.
 | **owl:sameAs** | States that two IRIs name exactly the same individual; the reasoner merges everything about them. |
 | **owl:equivalentClass** | States that two classes have exactly the same members. |
 | **Competency question** | A question the ontology must be able to answer; it decides what belongs in the ontology. |
+| **Description logic (DL)** | The family of logics OWL is built on: first order logic cut down so that a reasoner is guaranteed to finish. |
+| **First order logic (FOL)** | The general logic of "for all" and "there exists"; more expressive than OWL, but no program can always decide it. |
+| **PURL** | Persistent URL: a web address that is guaranteed to keep working, used for ontology IRIs such as `purl.obolibrary.org`. |
+| **ODC PDDL** | Open Data Commons Public Domain Dedication and License: a statement that a dataset is free for anyone to use. |
 | **OWL profile** | A restricted part of OWL chosen so reasoning stays fast: EL, QL or RL. |
 | **OWL 2 EL** | The profile built for large class trees; fast; no only, no counting, no not. |
 | **OWL 2 QL** | The profile built for querying data kept in a relational database. |
@@ -149,3 +185,69 @@ Sessions 1 to 3 are complete; later sessions are added as they are rebuilt.
 | **ROBOT** | A command line tool that reasons over an ontology, explains problems, and writes a quality report. |
 | **Catalog file** | `catalog-v001.xml`: tells Protégé and ROBOT where to find imported ontologies on disk, so they open offline. |
 | **Quality report** | ROBOT's list of findings about an ontology, each marked ERROR, WARN or INFO. |
+
+## Session 4 · Constraints, quality and provenance: SHACL
+
+| Term | Plain definition |
+|---|---|
+| **SHACL** | Shapes Constraint Language: the W3C standard for checking that graph data obeys rules, with a closed world view. |
+| **Shape** | A named set of rules that some nodes of the graph must obey. |
+| **Node shape** | A shape about a whole node, for example "every purchase order". |
+| **Property shape** | A shape about one property of a node, for example "has exactly one carrier". |
+| **Target** | Which nodes a shape checks, for example every member of a class (`sh:targetClass`). |
+| **Focus node** | The node being checked when a shape runs. |
+| **Validation report** | SHACL's output: conforms or not, and one result per broken rule, with the node and the message. |
+| **Severity** | How serious a broken rule is: Violation, Warning or Info. |
+| **SHACL-SPARQL** | A SHACL rule written as a SPARQL query, for checks the built in rules cannot express, such as comparing two dates. |
+| **pySHACL** | The Python library that runs SHACL validation, used in the lab. |
+| **Provenance** | The record of where data came from, who produced it, and how. |
+| **PROV-O** | The W3C ontology for writing provenance as triples. |
+| **EPCIS** | GS1's standard for recording supply chain events: what was seen, where, when and why. |
+| **PROV** | The W3C family of provenance standards; PROV-O is its ontology. |
+| **XSD** | XML Schema Datatypes: the standard names for value types, such as `xsd:date` and `xsd:integer`. |
+| **CI** | Continuous integration: checks that run automatically on every change, and fail the build when a rule breaks. |
+| **UML** | Unified Modeling Language: box and line diagrams for software designs. |
+
+## Session 5 · Integrating operational data
+
+| Term | Plain definition |
+|---|---|
+| **Mapping** | Rules that turn rows of a table or file into triples. |
+| **R2RML** | The W3C language for mappings from relational databases to RDF. |
+| **RML** | RDF Mapping Language: R2RML extended to CSV, JSON and XML sources. |
+| **Materialization** | Converting the data to triples once and storing them in a triple store. |
+| **Virtualization** | Leaving the data in its database and translating each SPARQL query into SQL when it is asked. |
+| **OBDA** | Ontology based data access: querying a relational database through an ontology, by virtualization. |
+| **Ontop** | The open source OBDA engine used in the lab. |
+| **Morph-KGC** | The open source tool that runs RML mappings to materialize a knowledge graph. |
+| **Knowledge graph construction** | Building a knowledge graph from existing sources through mappings. |
+| **Entity resolution** | Deciding which records in different sources describe the same real thing. |
+| **Blocking** | Only comparing records that share a cheap key, so entity resolution does not compare every pair. |
+| **Precision** | Of the matches we reported, the share that are correct. |
+| **Recall** | Of the true matches, the share we found. |
+| **F1** | One score that balances precision and recall (their harmonic mean). |
+| **XML** | Extensible Markup Language: a tagged text format for structured data. |
+| **CLI** | Command line interface: a program used by typing commands in a terminal. |
+
+## Session 6 · Learning over the graph
+
+| Term | Plain definition |
+|---|---|
+| **Embedding** | A list of numbers that stands for a node or a relation, learned so that similar things get similar numbers. |
+| **Knowledge graph embedding** | An embedding of every node and relation, trained so that true triples score higher than false ones. |
+| **KGE** | Short for knowledge graph embedding. |
+| **TransE** | A knowledge graph embedding model where a relation is a step: head plus relation should land near tail. |
+| **PyKEEN** | The Python library for training knowledge graph embeddings, used in the lab. |
+| **GNN** | Graph neural network: a model that learns from a node's neighbours by passing messages along edges. |
+| **Message passing** | Each node repeatedly collects information from its neighbours and updates its own numbers. |
+| **Heterogeneous graph** | A graph with several kinds of nodes and edges, such as orders, carriers and ports. |
+| **Node classification** | Predicting a label for a node, for example whether a shipment will be late. |
+| **Link prediction** | Predicting an edge that is missing or will appear, for example which carrier will handle an order. |
+| **Baseline** | A simple model to beat, such as a table model on the same data; a result only counts if it beats it. |
+| **Train/test split** | Keeping some data aside that the model never sees in training, to measure it honestly. |
+| **Temporal leakage** | Letting information from the future into training, which makes a model look better than it is. |
+| **MRR** | Mean reciprocal rank: for link prediction, how high the true answer ranks on average (1 is perfect). |
+| **XGBoost** | A strong, widely used table model, used as the baseline. |
+| **DGL** | Deep Graph Library: an older Python library for graph neural networks, no longer actively developed. |
+| **PyTorch Geometric** | The Python library for graph neural networks, used in the lab. |
+| **SLA** | Service level agreement: a promised delivery time or quality level. |

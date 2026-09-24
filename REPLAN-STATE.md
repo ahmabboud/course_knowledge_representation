@@ -3,7 +3,7 @@
 **Any new session or agent: read this file right after `PROGRESS.md`.**
 The checklist below is the single to-do list. Tick an item (`[x]`) and add a
 dated line to the log at the bottom in the same change as the work.
-Last updated: 2026-09-23.
+Last updated: 2026-09-24.
 
 Companion documents:
 
@@ -13,12 +13,17 @@ Companion documents:
   Sessions 3, 1, 2.
 - `AGENTS.md` section 2c: the teaching standard; graphics route 0 for flow
   diagrams (`lu-flow`), the default for anything with arrows.
-- `GLOSSARY.md`: plain definitions for every term in Sessions 1 to 3.
+- `GLOSSARY.md`: plain definitions for every term in Sessions 1 to 6 (215
+  terms). The slides link to it automatically (item 16).
 
 Rules that always hold: never mark a session done in `PROGRESS.md` without
 the instructor's explicit agreement; never `git push` (no credentials on the
 device, the instructor pushes); never delete a file without asking; no
-dashes in prose; audit every deck you touch before you stop (item 15).
+dashes in prose; audit every deck you touch before you stop (item 15); every
+new term goes into `GLOSSARY.md` (item 16).
+
+**Where to continue:** the next open item is **2** (Session 3 parts 3 to 6).
+Items marked `[x]` are done; everything else is still open.
 
 ---
 
@@ -79,7 +84,7 @@ dashes in prose; audit every deck you touch before you stop (item 15).
 13. [ ] DSCAI's design system is behind on purpose (instructor's choice,
     2026-09-23): no `lu-flow`, and missing two poll fixes
     (`.lu-poll__bars[hidden]`, timer hidden once bars show). Port when asked.
-14. [ ] Keep `assets/lu.css`, `assets/lu-flow.js` and `assets/lu-deck.js`
+14. [ ] Keep `assets/lu.css`, `assets/lu-flow.js`, `assets/lu-deck.js` and `assets/lu-glossary.js`
     identical between this repo and the template repo. They were identical
     on 2026-09-23. Change both, or note the drift here.
 15. [ ] Standing check, not a one-off: run `scripts/audit-deck.js` with
@@ -87,6 +92,27 @@ dashes in prose; audit every deck you touch before you stop (item 15).
     (`scripts/deckgen-s3/auditnew.py` does it). Two findings are known noise:
     `tinyText` on `<kbd>` (13px) and inline code (19.8px) from design-system
     defaults, and a U+2212 minus drawn by the pace timer.
+
+16. [x] **Automatic glossary (done 2026-09-24).** Instructor's goal: anyone can
+    understand any slide. `GLOSSARY.md` is the single source;
+    `scripts/build-glossary.py` turns it into `assets/glossary.js`;
+    `assets/lu-glossary.js` (loaded with `defer` BEFORE `lu-deck.js`) makes the
+    first use of each term on every slide a clickable definition (study mode S
+    shows them inline). Wired into Sessions 1 to 6 and `_template.html`, also
+    in the template repo (with a sample glossary). Link rules live at the top
+    of `build-glossary.py`: `SKIP` (plain English, never linked),
+    `ONCE_PER_DECK` (common words, once per deck from their session on),
+    `ALIASES`. A slide or element can opt out with `data-glossary="off"`.
+    Standing rule: after editing any deck run
+    `python3 scripts/check-glossary.py` (lists undefined acronyms; must print
+    nothing), then `python3 scripts/audit-all.py` (audits all six decks; serve
+    the repo root on port 8660 first). Audit on 2026-09-24: all clean except
+    two findings that predate the glossary and belong to item 8: Session 2
+    slides 9 and 20 overflow when their answers are revealed (99px and
+    184px). Known small miss: in Session 4 the first "edge" linked is the
+    plain English "edges of the spec".
+17. [ ] Future decks (Sessions 7 and 8): add their terms to `GLOSSARY.md` as a
+    `## Session N` table while building them.
 
 ### Not course material
 
@@ -320,3 +346,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
   the Protégé guide becomes the YouTube series plus one course-specific slide
   in the Session 3 lab (item 1); Session 1 gets a "Your project begins" part
   (item 6). Next: item 2, Session 3 parts 3 to 6.
+- 2026-09-24: automatic glossary built and wired into all decks (item 16); GLOSSARY.md extended to Sessions 4 to 6; lu.css v1.3.0 (auto term style) in both repos.

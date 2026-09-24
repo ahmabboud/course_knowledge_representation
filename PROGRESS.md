@@ -10,6 +10,12 @@ the single to-do list (Sessions 1 to 3 rebuild, the Protégé guide, the
 design system, housekeeping). The status table below was last reconciled on
 2026-09-19 and is stale for Sessions 4 to 6; see item 11 there.
 
+**Where to continue (2026-09-24):** REPLAN-STATE item 2, Session 3 parts 3 to 6.
+Done most recently: Session 1 overflow fixes and lab verified (2026-09-23),
+design system v1.2 flow diagrams (2026-09-23), automatic glossary on all six
+decks (2026-09-24, REPLAN-STATE item 16: every new term goes into
+`GLOSSARY.md`).
+
 **Read `PROJECT-REDESIGN.md` next.** It covers a separate decision, the
 capstone project's shape (teams of 2 to 3, own topic, own database,
 evaluated at the end), decided 2026-09-17 and fully shipped, all six items
