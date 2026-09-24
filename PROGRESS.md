@@ -78,7 +78,10 @@ had drifted into overflow after later edits (content cut off at the
 bottom, including reveals and answer rationales). All fixed, audit now
 reports no overflow, at rest or fully revealed. Slide 12's drag-to-compare
 widget, which hid half of each answer, became two side by side cards.
-The deck is still due for its full rebuild under `COURSE-REPLAN.md`.
+The deck is still due for its full rebuild (REPLAN-STATE item 7): from
+15 content slides to about 33, every concept slide led by a picture,
+diagrams in `lu-flow`, deeper coverage of the data and of profiling.
+Targets in `COURSE-REPLAN.md` section 5.
 
 ## Session 2, detail
 

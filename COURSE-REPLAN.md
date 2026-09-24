@@ -1,9 +1,15 @@
 # Course replan, Sessions 1 to 3
 
-**Status: proposed, pending approval (2026-09-22).** Nothing below is built yet.
-When approved, the authoring rules in section 2 move into `AGENTS.md`, and
-`PROGRESS.md` tracks the build. Do not mark any session done without the
-instructor's explicit agreement.
+**Status: approved 2026-09-22, build in progress.** The authoring rules in
+section 2 are now `AGENTS.md` section 2c. The live to-do list and progress
+are in `REPLAN-STATE.md` (items 2 to 9), not here. Do not mark any session
+done without the instructor's explicit agreement.
+
+Updated 2026-09-24: the Protégé guide deck was replaced by a YouTube series
+plus one slide (REPLAN-STATE item 1); the data is now fetched by
+`demos/data/fetch_data.py`, so "The data does not exist" below describes
+the state on 2026-09-22 only; Session 1 gains a "Your project begins" part
+(section 5).
 
 ---
 
@@ -226,6 +232,21 @@ against exception. Open world stays, as one simple picture ("missing is
 not false"); RDF against property graph moves to Session 2.
 **Lab guide** (3): the smoke test explained, running the notebook,
 filling the inventory.
+**Your project begins** (about 4, added 2026-09-24, placed before the lab
+guide): what you build, topic menu, team rules and deadline, rubric and
+milestones.
+
+**Session 1 targets, in one place (so nobody has to add them up):**
+
+| | Today (2026-09-24) | Target |
+|---|---|---|
+| Content slides | 15 (22 sections in the file, 112 minutes) | about 33 (29 in the outline above plus about 4 for the project part) |
+| Slides led by a picture | 4 of 15 | every concept slide (rule 1); bullets only for glossary and wrap |
+| Arrow diagrams | inline SVG, none with `lu-flow` | every diagram with arrows drawn with `lu-flow` (`AGENTS.md` graphics route 0) |
+| New depth | none | Part 2 (the supply chain and the two datasets, 7 new slides); Part 5 (cardinality, null, distribution, referential integrity, each on real data) |
+| Terms | 18 used before defined (section 1) | each defined on first use, in `GLOSSARY.md` |
+| Real screenshots | none | the ydata-profiling report and OpenRefine clusters, from real runs |
+| Session length | 112 minutes | **open, ask the instructor** (Session 3 was allowed about 230) |
 
 ## 6. Session 2, new outline
 

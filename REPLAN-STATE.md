@@ -60,8 +60,16 @@ Items marked `[x]` are done; everything else is still open.
    what you build, topic menu, team rules and deadline, rubric and
    milestones), as DSCAI module 1 does. Today the capstone is one callout on
    the wrap slide. Build it as part of item 7.
-7. [ ] Full rebuild to the 2c standard, per `COURSE-REPLAN.md`. (The current
-   deck audits clean since 2026-09-23 but is still the old standard.)
+7. [ ] **Full rebuild: more slides, more depth, more visuals.** The current
+   deck audits clean since 2026-09-23 but is the old standard: 15 content
+   slides, only 4 led by a picture, 112 minutes, no `lu-flow`. Target: about
+   33 content slides, every concept slide led by a picture (`AGENTS.md` 2c),
+   every arrow diagram in `lu-flow`, new Part 2 on the supply chain and the
+   two datasets, profiling concepts each shown on real data, real
+   ydata-profiling and OpenRefine screenshots. Full outline and the target
+   table: `COURSE-REPLAN.md` section 5. **Open, ask the instructor:** the
+   session length, and whether the Session 1 tools (Jupyter,
+   ydata-profiling, OpenRefine) get guides or videos, as Protégé did.
 
 ### C. Session 2
 
@@ -347,3 +355,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
   in the Session 3 lab (item 1); Session 1 gets a "Your project begins" part
   (item 6). Next: item 2, Session 3 parts 3 to 6.
 - 2026-09-24: automatic glossary built and wired into all decks (item 16); GLOSSARY.md extended to Sessions 4 to 6; lu.css v1.3.0 (auto term style) in both repos.
+- 2026-09-24: items 7 and `COURSE-REPLAN.md` made explicit about Session 1's planned growth (slide count, depth, visuals); the replan's stale "proposed" status corrected to approved.
