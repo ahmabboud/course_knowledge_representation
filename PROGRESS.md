@@ -177,9 +177,8 @@ Sessions 4 to 6, then Sessions 7 and 8 (deck and lab).
 - Real data, real containers, real sources. Session 3's ontologies and
   vocabulary are the real published files, not stubs, same rule as the
   Session 1/2 data.
-- Push discipline: this repository is worked on from a device bridge shell
-  that has no stored GitHub credentials, so commits land locally but do not
-  reach `origin/main` on their own. Check `git log origin/main..HEAD` at
-  the start of a session, if it is non-empty, the user still needs to push
-  from their own terminal or Git client before the remote reflects the
-  local work.
+- Push discipline: since 2026-09-24 Claude pushes to `main` at the end of
+  each work session, after a clean audit, using the token set up in
+  REPLAN-STATE item 10. Never force push. A push to `main` publishes the
+  course site through GitHub Pages. At the start of a session, check
+  `git log origin/main..HEAD`; anything listed is unpushed work.

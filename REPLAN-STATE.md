@@ -17,8 +17,10 @@ Companion documents:
   terms). The slides link to it automatically (item 16).
 
 Rules that always hold: never mark a session done in `PROGRESS.md` without
-the instructor's explicit agreement; never `git push` (no credentials on the
-device, the instructor pushes); never delete a file without asking; no
+the instructor's explicit agreement; push to `main` at the end of each work
+session, only after the audit is clean, never force push (Claude pushes
+since 2026-09-24, see item 10; a push publishes the site through GitHub
+Pages); never delete a file without asking; no
 dashes in prose; audit every deck you touch before you stop (item 15); every
 new term goes into `GLOSSARY.md` (item 16).
 
@@ -82,10 +84,17 @@ Items marked `[x]` are done; everything else is still open.
 
 ### E. Housekeeping
 
-10. [x] **Commits.** The instructor pushes. Commit again after each work
-    session. Checked against GitHub on 2026-09-24: KR is pushed through
-    `f489979`; the template repo's GitHub is at `0a91ad2`, so its three local
-    commits `39c8880`, `2e79678`, `a7e4bed` are **not pushed yet**.
+10. [x] **Commits and pushes.** Since 2026-09-24 Claude pushes both repos
+    (KR and the template) at the end of each work session, after a clean
+    audit. How: a GitHub token saved by the instructor at
+    `LebUniv/.github-token` (outside every repo, never committed), read by a
+    repo local credential helper (`git config credential.https://github.com.helper`).
+    Never force push. After pushing, confirm with
+    `git ls-remote origin refs/heads/main` that GitHub matches `HEAD`, then
+    delete leftover `.git/*.lock` and `tmp_obj_*` files. If the push fails
+    (token expired or revoked), tell the instructor; do not work around it.
+    2026-09-24: both repos pushed and confirmed (KR `9b61704`, template
+    `a7e4bed`).
 11. [x] `PROGRESS.md` status table reconciled with the repository
     (2026-09-24, at the instructor's request). Facts only, no session marked
     done.
@@ -232,7 +241,7 @@ choice and one drill.
    key demo referenced in the deck notes.
 4. **Rewrite `demos/session-03-ontology/README.md`**: honest steps that point
    at the guide, say which tab to look at and what to expect.
-5. **Audit** with Playwright, then one commit on the device, no push, and no
+5. **Audit** with Playwright, then one commit, pushed, and no
    change to `PROGRESS.md` status without asking.
 6. **Then Session 1, then Session 2**, per `COURSE-REPLAN.md`.
 
@@ -361,3 +370,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-24: automatic glossary built and wired into all decks (item 16); GLOSSARY.md extended to Sessions 4 to 6; lu.css v1.3.0 (auto term style) in both repos.
 - 2026-09-24: items 7 and `COURSE-REPLAN.md` made explicit about Session 1's planned growth (slide count, depth, visuals); the replan's stale "proposed" status corrected to approved.
 - 2026-09-24: back on track check against the repository and GitHub. PROGRESS status table and "What's next" rewritten from facts (item 11). Found: template repo has three unpushed commits (item 10); old Protégé guide plan marked superseded.
+- 2026-09-24: Claude now pushes (instructor's decision). Token at `LebUniv/.github-token`; credential helper set in both repos; template's three pending commits pushed; both repos confirmed equal to GitHub.
