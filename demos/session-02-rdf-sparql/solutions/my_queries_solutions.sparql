@@ -1,0 +1,23 @@
+# Instructor solutions for my_queries.sparql. Try first; the checker
+# accepts any query that returns the same answer, not only these.
+
+# --- Y1 · GROUP BY: how many orders does each plant ship? Return ?plant and ?orders, largest first. ---
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT ?plant (COUNT(?order) AS ?orders) WHERE {
+  ?order ul:fromPlant ?plant .
+} GROUP BY ?plant ORDER BY DESC(?orders)
+
+# --- Y2 · FILTER NOT EXISTS: which ports does some plant serve, but no order ever leaves from? Return ?port, each once. ---
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT DISTINCT ?port WHERE {
+  ?plant ul:servesPort ?port .
+  FILTER NOT EXISTS { ?order ul:shipsFrom ?port }
+} ORDER BY ?port
+
+# --- Y3 · HAVING: how many customers ordered from more than one plant? Return one number, ?customers. ---
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT (COUNT(?customer) AS ?customers) WHERE {
+  { SELECT ?customer WHERE {
+      ?order ul:orderedBy ?customer ; ul:fromPlant ?plant .
+    } GROUP BY ?customer HAVING (COUNT(DISTINCT ?plant) > 1) }
+}

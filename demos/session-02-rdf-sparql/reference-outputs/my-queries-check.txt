@@ -1,0 +1,6 @@
+Solutions from solutions/my_queries_solutions.sparql, checked with
+check_my_queries.py on Oxigraph, 2026-09-24:
+Y1: right (7 rows).   PLANT03 ships 8,541 of the 9,215 orders.
+Y2: right (8 rows).   8 of the 11 ports some plant serves never see an order leave.
+Y3: right (1 rows).   16 of the 46 customers ordered from more than one plant.
+A common wrong Y3, HAVING (COUNT(?plant) > 1) without DISTINCT, returns 44.

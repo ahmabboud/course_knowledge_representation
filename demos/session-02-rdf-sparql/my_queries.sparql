@@ -1,0 +1,21 @@
+# Session 2 lab, part B: write your own queries.
+#
+# Write each query yourself under its marker, replacing the TODO line.
+# Use queries.sparql and the slides as models. Then run:
+#     python check_my_queries.py            (Oxigraph, inside Python)
+#     python check_my_queries.py fuseki     (against your loaded Fuseki)
+# The checker tells you, per question, whether your answer is right.
+# Only open solutions/my_queries_solutions.sparql after you have tried.
+#
+# Every query needs this line at its top:
+#     PREFIX ul: <https://ul.edu.lb/kr/scm#>
+# Useful predicates: ul:fromPlant, ul:shipsFrom, ul:orderedBy, ul:servesPort.
+
+# --- Y1 · GROUP BY: how many orders does each plant ship? Return ?plant and ?orders, largest first. ---
+# TODO: write your query here.
+
+# --- Y2 · FILTER NOT EXISTS: which ports does some plant serve, but no order ever leaves from? Return ?port, each once. ---
+# TODO: write your query here.
+
+# --- Y3 · HAVING: how many customers ordered from more than one plant? Return one number, ?customers. ---
+# TODO: write your query here.

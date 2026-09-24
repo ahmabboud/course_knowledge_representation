@@ -27,7 +27,7 @@ or lab-code progress, that is this file's job.
 | # | Module | Title | Lecture deck | Lab code |
 |---|---|---|---|---|
 | 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | **Done**: rebuilt to the 2c standard and approved by the instructor 2026-09-24 (46 slides, 185 min) | Built, verified working by the instructor 2026-09-23 |
-| 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Rebuilt 2026-09-24 to the 2c standard (42 slides, 173 min, audit clean), awaiting the instructor's review (REPLAN-STATE 8) | Rebuilt 2026-09-24 and run end to end (Fuseki 5.5, Oxigraph, Neo4j 5.26); two linking bugs fixed |
+| 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Rebuilt 2026-09-24 to the 2c standard (42 slides, 173 min, audit clean), awaiting the instructor's review (REPLAN-STATE 8) | Rebuilt 2026-09-24 and run end to end (Fuseki 5.5, Oxigraph, Neo4j 5.26); two linking bugs fixed; brought to the lab standard (`AGENTS.md` 2e) with a write your own part and a checker |
 | 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Old deck live; new deck in progress, parts 1 and 2 built by the generator, parts 3 to 6 next (REPLAN-STATE 2, 3) | Built and reasoner verified (v0 file with a real modelling error, reference fix, sample shipments, reference outputs); `closed_world_demo.py` and README rewrite still open (REPLAN-STATE 4, 5) |
 | 4 | 2 | Constraints, Quality, and Provenance: SHACL | Built (197 min), visual pass pending (REPLAN-STATE 9) | Not built: only README and `shapes_template.ttl` |
 | 5 | 3 | Integrating Operational Data | Built as a draft (172 min), pending the instructor's confirmation; visual pass pending | Built as a draft, tested on Postgres; not yet confirmed with the real Ontop CLI (see its README Status) |

@@ -43,7 +43,9 @@ complex GUI tools); timing (2c rule 7: about 180 minutes, about 2 hours slides
 and 1 hour lab, **a guide, not a rule**; `data-minutes` realistic); animation
 (section 7 route 0: grey blocks, colour only for states, animate whatever
 unfolds in steps); labs are **individual**, the capstone is the **team
-project** and its divider says so; IRIs (2d); Fuseki runs from
+project** and its divider says so; **labs are not collected or graded**,
+they exist for understanding and the capstone, and follow the lab standard
+(`AGENTS.md` 2e, reference `demos/session-02-rdf-sparql/`); IRIs (2d); Fuseki runs from
 `demos/fuseki/Dockerfile` (Apache 5.5.0 release, no login, localhost only).
 
 **How the work was run (2026-09-24):** edits and git on the instructor's Mac
@@ -173,6 +175,12 @@ Items marked `[x]` are done; everything else is still open.
     still places RDF versus property graphs in Session 1 and gives the lab 85
     minutes. Ask the instructor whether to update it to match the rebuilt
     Sessions 1 and 2.
+19. [ ] **Bring every lab to the lab standard (`AGENTS.md` 2e).** Session 2
+    is done (2026-09-24). Session 1 is approved but its lab slides and
+    README still say "deliverable", "committed" and "due tonight": change
+    only with the instructor's agreement. Sessions 3 to 6: apply 2e when
+    each is rebuilt (items 2 and 9): parts A, B (write your own, with a
+    checker), C, and "take it to your team project".
 
 ### Not course material
 
@@ -422,3 +430,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-24: instructor accepted Session 2's timing and asked to fix the two open points. (1) IRI convention: written into `AGENTS.md` 2d; Session 5's mappings (`mapping_template.rml.ttl`, `mapping.obda`) now mint `https://ul.edu.lb/kr/id/carrier/erp/...` and `.../purchase-order/erp/...`; the RML path was re-run with Morph-KGC 2.10.0 on the same seed rows (SQLite in place of Postgres): 19 triples, po99 still fails the Session 4 shapes as before. The Ontop mapping was changed the same way but not re-run (no Ontop here). Still to convert when rebuilt: Session 3's `sample-shipments.ttl` individuals (`ul:carrier-dhl`...) in item 2, Session 4's slide examples in item 9. (2) Fuseki: `demos/docker-compose.yml` now builds `demos/fuseki/Dockerfile` (Apache's own Fuseki 5.5.0 release, SHA512 checked, Java 21, TDB2 dataset /kr, no login, published on 127.0.0.1 only) instead of the old `stain/jena-fuseki` image. The container command was verified outside Docker (load and all queries); the Docker build itself was not run here.
 
 - 2026-09-24: Handoff check. Both repos clean and in sync with GitHub; stale `.git` lock files removed; credential helper confirmed portable (relative path to `LebUniv/.github-token`). "Where to continue" rewritten with the settled decisions; item 18 added.
+- 2026-09-24: Session 2 lab gaps fixed, at the instructor's request. Instructor's decision: labs are individual, not collected, not graded; they are for understanding and the capstone. Added part B, "write your own": `my_queries.sparql` (three questions: GROUP BY, FILTER NOT EXISTS, HAVING), `check_my_queries.py` (right or not yet, with hints; Oxigraph or Fuseki), `solutions/`; run on Oxigraph: PLANT03 ships 8,541 of 9,215 orders; 8 of 11 served ports never ship; 16 of 46 customers order from more than one plant; the wrong Y3 without DISTINCT gives 44 (`reference-outputs/my-queries-check.txt`). README rewritten (why, expect at each step, parts A to C, understood if, take to your project, notebook tip, Windows Docker notes). Deck: no deliverable or due wording, IRI task is now test the course scheme and sketch one for your project, lab checkpoints 25/45/55; still 42 slides, 173 minutes, audit clean (known noise only), glossary check clean. `demos/README.md`: stale status lines replaced, Docker needs on Windows, JDK row clarified; Neo4j now published on 127.0.0.1 only. New `AGENTS.md` 2e (lab standard) and `PROMPT.md` aligned. Item 19 added.

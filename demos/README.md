@@ -35,20 +35,11 @@ session-07-access-layer/
 session-08-deploy-and-defend/
 ```
 
-Sessions 1 through 3 have working lab code, matching the lab briefs in
-their built lecture decks. Session 3 is a run-and-observe walkthrough,
-not a build-it-yourself lab: `fetch_ontologies.py`, a finished
-reference ontology, a competency-question reference doc, and the ROBOT
-wrapper are all built and verified, and the Protege and reasoner steps
-are run live in the room from those same finished files, nobody drafts
-a competency question or extends an ontology in this one, see its own
-README for why. Sessions 4 through 8 have a
-README each, accurate to the syllabus segment text and naming the real
-tools, but neither lab code nor a lecture deck yet (see
-`course_knowledge_representation/README.md`'s status table), and
-writing lab code ahead of the deck it serves risks locking in the
-wrong shape. Build each session's lab code once that session's deck
-exists, from its own README here.
+Each session folder has its own `README.md`: why the lab exists, the steps,
+what to expect at each step, and what to take to the team project. Labs are
+individual and nothing is handed in; they exist to make the concepts
+concrete and to prepare the capstone. Status per session is in
+`../PROGRESS.md`.
 
 ## Start here: the lab repository root
 
@@ -77,8 +68,8 @@ machine rather than guessing from an installer window.
 | Tool | macOS | Windows |
 | --- | --- | --- |
 | Python 3.12 | Install from [Python.org](https://www.python.org/downloads/) or run `brew install python@3.12`; verify with `python3.12 --version`. | Install Python 3.12 from [Python.org](https://www.python.org/downloads/windows/) or run `winget install Python.Python.3.12`; verify with `py -3.12 --version`. |
-| JDK 21 | Run `brew install openjdk@21`, then register it once: `sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk`. Verify with `java -version`. | Install the JDK 21 LTS release from [Eclipse Temurin](https://adoptium.net/temurin/releases/?version=21&package=jdk), or run `winget install EclipseAdoptium.Temurin.21.JDK`. Close and reopen PowerShell, then verify with `java -version`. |
-| Docker Desktop | Install [Docker Desktop for Mac](https://docs.docker.com/desktop/setup/install/mac-install/), open it, and wait until it reports that the engine is running. Verify with `docker info`. | Install [Docker Desktop for Windows](https://docs.docker.com/desktop/setup/install/windows-install/), completing its WSL 2 or virtualization prompts. Open it and verify with `docker info`. |
+| JDK 21 (checked by the Session 1 smoke test; first used in Session 3 for ROBOT) | Run `brew install openjdk@21`, then register it once: `sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk`. Verify with `java -version`. | Install the JDK 21 LTS release from [Eclipse Temurin](https://adoptium.net/temurin/releases/?version=21&package=jdk), or run `winget install EclipseAdoptium.Temurin.21.JDK`. Close and reopen PowerShell, then verify with `java -version`. |
+| Docker Desktop | Install [Docker Desktop for Mac](https://docs.docker.com/desktop/setup/install/mac-install/), open it, and wait until it reports that the engine is running. Verify with `docker info`. Give it at least 4 GB of memory (Settings, Resources). | Install [Docker Desktop for Windows](https://docs.docker.com/desktop/setup/install/windows-install/), completing its WSL 2 or virtualization prompts. Needs administrator rights once, and virtualization turned on in the BIOS (Task Manager, Performance, CPU shows "Virtualization: Enabled"). Open it and verify with `docker info`. If Docker cannot run on your laptop, tell the instructor in Session 1; Session 2 has a Python-only fallback (Oxigraph). |
 | Protégé Desktop | Download [Protégé Desktop](https://protege.stanford.edu/software/), move `Protégé.app` to `/Applications`, and open it once. | Download [Protégé Desktop](https://protege.stanford.edu/software/), use the Windows installer if offered, and open it once. If using a ZIP distribution, extract it under `%LOCALAPPDATA%\Programs\Protege-<version>` so the smoke test can locate it. |
 
 ## Setup, once
@@ -115,8 +106,8 @@ After activating the environment on either platform:
 2. Before Session 2, run `docker compose up -d`. The first time, it builds
    the Fuseki image from Apache's own 5.5.0 release (`fuseki/Dockerfile`,
    about a minute, needs internet). This starts Fuseki
-   (`localhost:3030`, no login, reachable from this computer only) and Neo4j (`localhost:7474` browser,
-   `localhost:7687` bolt). Individual sessions may add their own
+   (`localhost:3030`, no login) and Neo4j (`localhost:7474` browser,
+   `localhost:7687` bolt), both reachable from this computer only. Individual sessions may add their own
    `docker-compose.yml` for a service only that session needs (PostgreSQL in
    Session 5, for example); run that session's compose file in addition to
    this one, not instead of it.
@@ -141,9 +132,8 @@ their READMEs specify.
   it before the code.
 - Shared code that more than one session needs (the IRI scheme, data
   paths) lives in `common/`, imported, never copy-pasted between
-  session folders. The one exception is intentional: Session 2 fixes
-  the cohort's IRI convention as a discussion outcome, so it lands in
-  `common/iri.py` right after that session, not before.
+  session folders. The IRI convention is fixed in `common/iri.py`
+  (`AGENTS.md` 2d); Session 2 discusses it, it does not reinvent it.
 - Notebooks for anything meant to be read and run step by step in the
   room; a plain `.py` script for anything meant to run once as a batch
   step (loading a container, materializing a graph). Both are fine,

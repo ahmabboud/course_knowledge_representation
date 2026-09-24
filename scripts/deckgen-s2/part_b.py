@@ -29,7 +29,7 @@ SLIDES.append(slide("IRI design: our rules", "IRI design", 3,
     </ol>
     ''' + code("common/iri.py, the scheme the lab uses", "VOCAB = \"https://ul.edu.lb/kr/scm#\"\nDATA  = \"https://ul.edu.lb/kr/id/\"\n\ndef order_iri(source, key):\n    return f\"{DATA}order/{source}/{key}\"") + '''
   </div>''',
-    '''<p>Three minutes. The room agrees its own final convention in the closing discussion; this file is the default until then.</p>'''))
+    '''<p>Three minutes. This is the course convention (AGENTS 2d). The closing discussion tests it, and each student sketches the same kind of scheme for their own project data.</p>'''))
 
 # ================================================================== Part 3
 SLIDES.append(divider("Part 3 · RDFS, the first meaning", "RDFS",

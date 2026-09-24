@@ -77,11 +77,11 @@
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
       <p class="lu-statement">By the end you can turn a table into triples, design names that survive a second source, and ask a graph questions that follow links.</p>
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Deliverable, end of session</span><p class="lu-sub">A loaded SPARQL endpoint over Brunel, your IRI scheme in three lines, and the seven questions answered with timings.</p></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">What you leave with</span><p class="lu-sub">A graph of Brunel you can query, three queries you wrote yourself, and a naming scheme sketched for your own project. Nothing to hand in.</p></div>
     </div>
     <table class="lu-table"><thead><tr><th>Part</th><th>Minutes</th></tr></thead><tbody><tr><td>1 · From a table row to triples</td><td>30</td></tr><tr><td>2 · Naming things: IRI design</td><td>8</td></tr><tr><td>3 · RDFS, the first meaning</td><td>12</td></tr><tr><td>4 · Asking questions: SPARQL</td><td>34</td></tr><tr><td>5 · RDF against the property graph</td><td>10</td></tr><tr><td>Lab</td><td>60</td></tr><tr><td>Discussion and wrap</td><td>15</td></tr></tbody><caption>About 180 minutes in all.</caption></table>
   </div>
-  <template data-notes><p>Two minutes. The deliverable word that matters is <b>timings</b>: the lab asks where each query spends its time, and one query in the set is slow on purpose.</p></template>
+  <template data-notes><p>Two minutes. Say it plainly: the lab is not graded; it is where the concepts become real and where the team project starts. One query in the set is slow on purpose.</p></template>
 </section>
 
 <!-- ==================================================================== 04 -->
@@ -255,7 +255,7 @@ DATA  = &quot;https://ul.edu.lb/kr/id/&quot;
 def order_iri(source, key):
     return f&quot;{DATA}order/{source}/{key}&quot;</code></pre></div>
   </div>
-  <template data-notes><p>Three minutes. The room agrees its own final convention in the closing discussion; this file is the default until then.</p></template>
+  <template data-notes><p>Three minutes. This is the course convention (AGENTS 2d). The closing discussion tests it, and each student sketches the same kind of scheme for their own project data.</p></template>
 </section>
 
 <!-- ==================================================================== 17 -->
@@ -425,7 +425,7 @@ JOIN sub ON o.type = sub.cls;</code></pre></div>
     <table class="lu-table lu-table--mono"><thead><tr><th>Question</th><th>Fuseki</th><th>Oxigraph</th></tr></thead><tbody><tr><td>Q2 aggregation</td><td>47 ms</td><td>20 ms</td></tr><tr><td>Q4 ASK with path</td><td>84 ms</td><td>23 ms</td></tr><tr><td>Q5 subclass path</td><td>32 ms</td><td>14 ms</td></tr><tr><td>Q6 band gap</td><td>2,931 ms</td><td>2,313 ms</td></tr></tbody><caption>Fuseki timings include the web request.</caption></table>
   </div>
   <p class="lu-sub" data-build="1"><b>Why:</b> <code>NOT EXISTS</code> reran the band search for each of 8,361 orders. The rewrite joins once, then counts. Same answer, 75 times faster.</p>
-  <template data-notes><p>Three minutes. This is the "record where each query spends its time" part of the deliverable. Oxigraph runs inside Python, so it has no network cost; Fuseki answers over HTTP.</p></template>
+  <template data-notes><p>Three minutes. Students see these timings themselves in the lab. Oxigraph runs inside Python, so it has no network cost; Fuseki answers over HTTP.</p></template>
 </section>
 
 <!-- ==================================================================== 30 -->
@@ -548,18 +548,16 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <ol class="lu-list lu-list--num">
-      <li>From <code>demos/</code>: <code>docker compose up -d</code> (Fuseki and Neo4j).</li>
-      <li><code>python convert_to_rdf.py</code>: 135,841 triples in about 20 seconds.</li>
-      <li><code>python load_fuseki.py</code>, then query at localhost:3030.</li>
-      <li><code>python run_queries.py</code>: seven questions, with timings.</li>
-      <li><code>python neo4j_comparison.py</code>, then look at localhost:7474.</li>
+      <li><b>Build and query.</b> <code>docker compose up -d</code>, then <code>convert_to_rdf.py</code>, <code>load_fuseki.py</code>, <code>run_queries.py</code>, <code>neo4j_comparison.py</code>.</li>
+      <li><b>Write your own.</b> Three questions in <code>my_queries.sparql</code>; <code>check_my_queries.py</code> says right or not yet.</li>
+      <li><b>Think about names.</b> Test the course IRI scheme, then sketch one for your project's own data.</li>
     </ol>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Deliverable</span><p class="lu-sub">Loaded endpoint, your IRI scheme in three lines, and your timing table. Committed.</p></div>
-      <div class="lu-callout"><span class="lu-callout__label">If Java or Docker fails</span><p class="lu-sub">Do not debug in the room: <code>python run_queries.py oxigraph</code> runs everything inside Python.</p></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Nothing to hand in</span><p class="lu-sub">The lab is for understanding. The README says what to expect at each step and what to take to your project.</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">If Docker fails</span><p class="lu-sub">Do not debug in the room: <code>python run_queries.py oxigraph</code> runs everything inside Python.</p></div>
     </div>
   </div>
-  <template data-notes><p>Three minutes, then walk the room. Folder: <code>demos/session-02-rdf-sparql/</code>; its README has the same steps and the expected answers.</p>
+  <template data-notes><p>Three minutes, then walk the room. Folder: <code>demos/session-02-rdf-sparql/</code>; its README has the steps, the expected answers and the questions to think about. Not graded: say so.</p>
     <ul><li>Most common blocker: Docker Desktop not running. Second: port 3030 or 7474 already in use.</li></ul></template>
 </section>
 
@@ -579,26 +577,26 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints keep you on time.</h2>
 
   <div class="lu-grid" style="margin-top:var(--lu-s3)">
-    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 15</span><p class="lu-sub">Containers up. brunel.ttl written. Fuseki says 135,841 triples.</p></div>
-    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 40</span><p class="lu-sub">Seven questions answered, timings written down. Q6 run both ways if you have time.</p></div>
-    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 55</span><p class="lu-sub">Neo4j comparison done. Your IRI scheme in three lines. Committed.</p></div>
+    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 25</span><p class="lu-sub">Graph loaded (135,841 triples), seven questions run, Neo4j compared.</p></div>
+    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 45</span><p class="lu-sub">Your own three queries checked. Stuck? Try them in the Fuseki page first.</p></div>
+    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 55</span><p class="lu-sub">IRI scheme sketched for your own project data, ready for the discussion.</p></div>
   </div>
   <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">For your team project</span><p class="lu-sub">Sketch the IRI scheme for your own database now. The discussion next tests it against a second source.</p></div>
-  <template data-notes><p>Fifty five minutes. At minute 40, check that everyone has the timing table; that is the part of the deliverable most often skipped.</p></template>
+  <template data-notes><p>Fifty five minutes. At minute 25, anyone without a loaded graph switches to <code>run_queries.py oxigraph</code>. At minute 45, ask two students to read out their answer to the third question; the usual wrong one is 44 (no DISTINCT).</p></template>
 </section>
 
 <!-- ==================================================================== 39 -->
-<section class="slide" data-label="Discussion: agree the IRI convention" data-section="Wrap" data-minutes="8">
+<section class="slide" data-label="Discussion: test the IRI convention" data-section="Wrap" data-minutes="8">
   <div class="lu-eyebrow">Discussion · as a room</div>
   <h2 class="lu-h2" style="max-width:66ch">Which IRI schemes break when a second source arrives?</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <ol class="lu-list lu-list--num">
-      <li>Three volunteers show their scheme and its three lines.</li>
+      <li>Three volunteers show the scheme they sketched for their project data.</li>
       <li>The room attacks each one: a second source, a renamed supplier, two merged companies.</li>
-      <li>Vote on one convention for the course.</li>
+      <li>Compare each with the course convention in <code>common/iri.py</code>.</li>
     </ol>
-    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Outcome</span><p class="lu-sub">One IRI convention, written into <code>common/iri.py</code> before you leave. Session 3 onward models against it; Session 5 depends on it.</p></div>
+    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Outcome</span><p class="lu-sub">Each team leaves with a naming scheme for its own data that survives a second source. The course keeps <code>common/iri.py</code>; Session 5 depends on it.</p></div>
   </div>
   <template data-notes><p>Eight minutes. The usual weak spot: a scheme that puts a name or a country in the IRI. Ask what happens the day the supplier renames itself.</p></template>
 </section>
@@ -626,7 +624,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
         <h3 class="lu-h3">Session 3 · Ontology engineering: description logic, OWL, and reuse</h3>
         <p class="lu-sub">Say what an order <i>is</i>, precisely enough that a reasoner finds a real mistake in our own model.</p>
       </div>
-      <div class="lu-row"><span class="lu-tag lu-tag--red">Due tonight</span><span class="lu-caption" style="flex:1">Endpoint, IRI scheme, timing table, committed.</span></div>
+      <div class="lu-row"><span class="lu-tag lu-tag--green">For your team</span><span class="lu-caption" style="flex:1">Share your IRI sketch with your team and agree one scheme for your project.</span></div>
     </div>
   </div>
   <template data-notes><p>Two minutes. End on the sentence.</p></template>

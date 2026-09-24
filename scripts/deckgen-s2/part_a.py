@@ -71,7 +71,7 @@ SLIDES.append(slide("Today: objective and time plan", "Opening", 2, '''  <div cl
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
       <p class="lu-statement">By the end you can turn a table into triples, design names that survive a second source, and ask a graph questions that follow links.</p>
-      ''' + callout("Deliverable, end of session", "A loaded SPARQL endpoint over Brunel, your IRI scheme in three lines, and the seven questions answered with timings.", "concept") + '''
+      ''' + callout("What you leave with", "A graph of Brunel you can query, three queries you wrote yourself, and a naming scheme sketched for your own project. Nothing to hand in.", "concept") + '''
     </div>
     ''' + table(["Part", "Minutes"], [
         ["1 · From a table row to triples", "30"], ["2 · Naming things: IRI design", "8"],
@@ -79,7 +79,7 @@ SLIDES.append(slide("Today: objective and time plan", "Opening", 2, '''  <div cl
         ["5 · RDF against the property graph", "10"], ["Lab", "60"], ["Discussion and wrap", "15"]],
         "About 180 minutes in all.") + '''
   </div>''',
-    '''<p>Two minutes. The deliverable word that matters is <b>timings</b>: the lab asks where each query spends its time, and one query in the set is slow on purpose.</p>''', kind="tint"))
+    '''<p>Two minutes. Say it plainly: the lab is not graded; it is where the concepts become real and where the team project starts. One query in the set is slow on purpose.</p>''', kind="tint"))
 
 # ================================================================== Part 1
 SLIDES.append(divider("Part 1 · From a table row to triples", "The data model",

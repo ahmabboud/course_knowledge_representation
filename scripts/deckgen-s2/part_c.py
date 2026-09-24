@@ -155,7 +155,7 @@ SLIDES.append(slide("Where a query spends its time", "SPARQL", 3,
         ["Q6 band gap", "2,931 ms", "2,313 ms"]], "Fuseki timings include the web request.", cls="lu-table lu-table--mono") + '''
   </div>
   ''' + '<p class="lu-sub" data-build="1"><b>Why:</b> <code>NOT EXISTS</code> reran the band search for each of 8,361 orders. The rewrite joins once, then counts. Same answer, 75 times faster.</p>',
-    '''<p>Three minutes. This is the "record where each query spends its time" part of the deliverable. Oxigraph runs inside Python, so it has no network cost; Fuseki answers over HTTP.</p>'''))
+    '''<p>Three minutes. Students see these timings themselves in the lab. Oxigraph runs inside Python, so it has no network cost; Fuseki answers over HTTP.</p>'''))
 
 # ------------------------------------------------------------------ Sandbox
 SANDBOX_TTL = open(__file__.replace("part_c.py", "sandbox.ttl")).read()

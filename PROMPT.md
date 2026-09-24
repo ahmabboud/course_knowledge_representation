@@ -59,11 +59,11 @@ You have two syllabi in `uploads/LebUniv/`. They map onto slides directly:
 | Session `objective` | The title slide's lead sentence |
 | Session `segments` (name, minutes, text) | The section dividers and the `data-minutes` budget |
 | Segment text, sentence by sentence | Concept slides. One idea per slide; the prose becomes speaker notes |
-| Session `deliverable` | The deliverable callout on the lab-brief slide |
+| Session `deliverable` | What the lab builds. In Knowledge Representation labs are not graded (`AGENTS.md` 2e): it becomes the "What you leave with" callout, not a hand-in |
 | Session `reading` | The "Before next session" callout on the wrap slide |
 | `module` | The tag on the title slide and `data-section` values |
 | Misconceptions named in the text | Check questions. `syllabus-source.json` names them explicitly, "the single most expensive misunderstanding a database engineer brings" is a question, not a bullet |
-| `rubric` rows touching this session | What the lab-brief slide says is graded |
+| `rubric` rows touching this session | The lab's "Take it to your team project" list (only the team project is graded) |
 
 The Knowledge Representation syllabus is already structured JSON, so an agent can read `sessions[n]` and work straight down that table. The Conversational AI course has a `.docx` syllabus and a `CourseObjectives.txt`, the objectives file gives the arc; the docx has the session breakdown.
 

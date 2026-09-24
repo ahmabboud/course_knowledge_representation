@@ -64,18 +64,16 @@ SLIDES.append(slide("Lab brief", "Lab", 3,
     head("Hands-on lab · 60 minutes", "Tables to triples, triples to answers.", "h1", 34) + '''
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <ol class="lu-list lu-list--num">
-      <li>From <code>demos/</code>: <code>docker compose up -d</code> (Fuseki and Neo4j).</li>
-      <li><code>python convert_to_rdf.py</code>: 135,841 triples in about 20 seconds.</li>
-      <li><code>python load_fuseki.py</code>, then query at localhost:3030.</li>
-      <li><code>python run_queries.py</code>: seven questions, with timings.</li>
-      <li><code>python neo4j_comparison.py</code>, then look at localhost:7474.</li>
+      <li><b>Build and query.</b> <code>docker compose up -d</code>, then <code>convert_to_rdf.py</code>, <code>load_fuseki.py</code>, <code>run_queries.py</code>, <code>neo4j_comparison.py</code>.</li>
+      <li><b>Write your own.</b> Three questions in <code>my_queries.sparql</code>; <code>check_my_queries.py</code> says right or not yet.</li>
+      <li><b>Think about names.</b> Test the course IRI scheme, then sketch one for your project's own data.</li>
     </ol>
     <div class="lu-stack">
-      ''' + callout("Deliverable", "Loaded endpoint, your IRI scheme in three lines, and your timing table. Committed.", "concept") + '''
-      ''' + callout("If Java or Docker fails", "Do not debug in the room: <code>python run_queries.py oxigraph</code> runs everything inside Python.") + '''
+      ''' + callout("Nothing to hand in", "The lab is for understanding. The README says what to expect at each step and what to take to your project.", "concept") + '''
+      ''' + callout("If Docker fails", "Do not debug in the room: <code>python run_queries.py oxigraph</code> runs everything inside Python.") + '''
     </div>
   </div>''',
-    '''<p>Three minutes, then walk the room. Folder: <code>demos/session-02-rdf-sparql/</code>; its README has the same steps and the expected answers.</p>
+    '''<p>Three minutes, then walk the room. Folder: <code>demos/session-02-rdf-sparql/</code>; its README has the steps, the expected answers and the questions to think about. Not graded: say so.</p>
     <ul><li>Most common blocker: Docker Desktop not running. Second: port 3030 or 7474 already in use.</li></ul>'''))
 
 SLIDES.append(slide("The tool: the Fuseki query page", "Lab", 2,
@@ -88,23 +86,23 @@ SLIDES.append(slide("The tool: the Fuseki query page", "Lab", 2,
 SLIDES.append(slide("Lab time", "Lab", 55,
     head("Lab · 55 minutes", "Each student on their own machine. Checkpoints keep you on time.") + '''
   <div class="lu-grid" style="margin-top:var(--lu-s3)">
-    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 15</span><p class="lu-sub">Containers up. brunel.ttl written. Fuseki says 135,841 triples.</p></div>
-    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 40</span><p class="lu-sub">Seven questions answered, timings written down. Q6 run both ways if you have time.</p></div>
-    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 55</span><p class="lu-sub">Neo4j comparison done. Your IRI scheme in three lines. Committed.</p></div>
+    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 25</span><p class="lu-sub">Graph loaded (135,841 triples), seven questions run, Neo4j compared.</p></div>
+    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 45</span><p class="lu-sub">Your own three queries checked. Stuck? Try them in the Fuseki page first.</p></div>
+    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 55</span><p class="lu-sub">IRI scheme sketched for your own project data, ready for the discussion.</p></div>
   </div>
   ''' + callout("For your team project", "Sketch the IRI scheme for your own database now. The discussion next tests it against a second source.", "neutral"),
-    '''<p>Fifty five minutes. At minute 40, check that everyone has the timing table; that is the part of the deliverable most often skipped.</p>''', kind="tint"))
+    '''<p>Fifty five minutes. At minute 25, anyone without a loaded graph switches to <code>run_queries.py oxigraph</code>. At minute 45, ask two students to read out their answer to the third question; the usual wrong one is 44 (no DISTINCT).</p>''', kind="tint"))
 
 # ================================================================== Wrap
-SLIDES.append(slide("Discussion: agree the IRI convention", "Wrap", 8,
+SLIDES.append(slide("Discussion: test the IRI convention", "Wrap", 8,
     head("Discussion · as a room", "Which IRI schemes break when a second source arrives?") + '''
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <ol class="lu-list lu-list--num">
-      <li>Three volunteers show their scheme and its three lines.</li>
+      <li>Three volunteers show the scheme they sketched for their project data.</li>
       <li>The room attacks each one: a second source, a renamed supplier, two merged companies.</li>
-      <li>Vote on one convention for the course.</li>
+      <li>Compare each with the course convention in <code>common/iri.py</code>.</li>
     </ol>
-    ''' + callout("Outcome", "One IRI convention, written into <code>common/iri.py</code> before you leave. Session 3 onward models against it; Session 5 depends on it.", "concept") + '''
+    ''' + callout("Outcome", "Each team leaves with a naming scheme for its own data that survives a second source. The course keeps <code>common/iri.py</code>; Session 5 depends on it.", "concept") + '''
   </div>''',
     '''<p>Eight minutes. The usual weak spot: a scheme that puts a name or a country in the IRI. Ask what happens the day the supplier renames itself.</p>'''))
 
@@ -143,7 +141,7 @@ SLIDES.append(slide("Wrap and next session", "Wrap", 2, '''  <div class="lu-eyeb
         <h3 class="lu-h3">Session 3 · Ontology engineering: description logic, OWL, and reuse</h3>
         <p class="lu-sub">Say what an order <i>is</i>, precisely enough that a reasoner finds a real mistake in our own model.</p>
       </div>
-      <div class="lu-row"><span class="lu-tag lu-tag--red">Due tonight</span><span class="lu-caption" style="flex:1">Endpoint, IRI scheme, timing table, committed.</span></div>
+      <div class="lu-row"><span class="lu-tag lu-tag--green">For your team</span><span class="lu-caption" style="flex:1">Share your IRI sketch with your team and agree one scheme for your project.</span></div>
     </div>
   </div>''', '''<p>Two minutes. End on the sentence.</p>''', kind="tint"))
 

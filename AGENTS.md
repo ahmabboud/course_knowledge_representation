@@ -139,6 +139,63 @@ as the source writes it. Never a row number, never a name. Older examples of
 the form `ul:carrier-dhl` (Session 3 sample individuals, Session 4 slides) are
 converted when those sessions are rebuilt (REPLAN-STATE items 2 and 9).
 
+## 2e. Lab standard (instructor's decisions, 2026-09-24)
+
+**What a lab is for.** Labs are individual and are **not collected or
+graded**. They exist for two things only: to make the session's concepts
+concrete on the real data, and to prepare the team project (the capstone).
+Graded work is the team project and its milestones, nothing else. So a lab
+never says "deliverable", "hand in", "commit" or "due"; it says what the
+student should understand and what to take to the project.
+
+**Shape of every lab** (about 60 minutes, flexible, 2c rule 7):
+
+| Part | What the student does | Rule |
+|---|---|---|
+| A · Build and observe | Runs the real scripts, in order, on the real data. | Every step states **Expect** (the exact number or file) and, where the concept shows, **Look at** or **Notice** (what to see and why). |
+| B · Write your own | Writes 2 to 4 small things the lecture taught (a query, a shape, an axiom, a mapping), each practising one named concept. | A checker script says "right" or "not yet" with a hint. It compares answers, not code, so any correct solution passes. Solutions live in `solutions/`; the solutions and one common wrong answer are run through the checker and recorded in `reference-outputs/`. |
+| C · Think | Answers 2 or 3 questions; at least one applies the idea to the student's **own project data**. | Feeds the closing discussion. |
+
+Then two short lists: **"You understood this lab if you can say"** (3 or 4
+lines, one per concept) and **"Take it to your team project"** (which file
+is a template, which decision the team must make, what goes in the report).
+
+**The lab README** (`demos/session-NN-*/README.md`), sections in this order:
+why this lab exists; before you start (prerequisites, working directory,
+services running, the fallback); Part A; Part B; Part C; optional (notebook
+walkthrough, instructor demos); you understood this lab if; take it to your
+team project. Reference implementation: `demos/session-02-rdf-sparql/`.
+
+**Tools, Windows and macOS.**
+
+- `demos/README.md` is the one place for installs. A new tool gets a row
+  with the macOS and Windows commands and a way to verify it, and, if every
+  student needs it, a check in Session 1's `smoke_test.py`. Give both
+  commands wherever the platforms differ (PowerShell and a macOS shell).
+- Every step that needs a service (Docker, Java) has a documented
+  Python-only fallback, and the README says which concept the fallback
+  loses. A broken laptop never stops the lab.
+- Services publish on `127.0.0.1` only.
+- Presentation: terminal scripts are the main path; the tool's own web page
+  or app (Fuseki page, Neo4j Browser, Protégé) is for looking; an optional
+  `lab_walkthrough.py` with `# %%` cells serves the projector (VS Code: Run
+  Cell; JupyterLab: right-click, Open With, Notebook). No slide for trivial
+  tools (2c rule 5).
+- Concepts a lab needs are taught in the deck before the lab. A tool the
+  students have not met gets one slide (or a video plus one slide if it is a
+  complex GUI tool), per 2c rule 5.
+
+**In the deck** (section 4): lab divider; lab brief with the three parts in
+three lines, a "Nothing to hand in" callout and a fallback callout; at most
+one tool slide; lab time with three checkpoints (end of A, B, C); the
+closing discussion built on Part C. Speaker notes name the most common
+blocker and the most common wrong answer.
+
+**Before a lab counts as built:** every step run end to end, the checker run
+on the solutions and on one wrong answer, outputs recorded in
+`reference-outputs/` with the date, and anything that could not be run here
+(a Docker build, a desktop app) written into `REPLAN-STATE.md`.
+
 ---
 
 ## 3. Anatomy of a lecture file
@@ -177,12 +234,12 @@ Copy these from `kr-session-03.html` rather than composing from scratch.
 
 1. **Title**, night, no chrome. Lockup, eyebrow, `.lu-display`, lead, meta row.
 2. **Recap / where we are**, paper. `.lu-pipeline` showing the stage you are at, plus two callouts: what they brought, what is still missing.
-3. **Objective**, tint. `.lu-statement` with the deliverable, plus `.lu-layers` for the time budget.
+3. **Objective**, tint. `.lu-statement` with what students leave with (labs are not graded, 2e), plus `.lu-layers` for the time budget.
 4. **Section divider**, night, no chrome. One per part.
 5. **Concept**, paper. `.lu-split--wide-left`: argument left with term popovers, evidence right (code, diagram, reveal). This is most of the lecture.
 6. **Walkthrough**, paper. One per session, on the single hardest idea.
 7. **Check / drill**, tint. After each concept block.
-8. **Lab brief**, paper. Numbered steps, deliverable callout.
+8. **Lab brief**, paper. Parts A, B, C in three lines, "Nothing to hand in" callout, fallback callout (2e).
 9. **Wrap**, then **self-check**, tint, then paper. Always the last two slides.
 
 **Pacing: 3 to 4 minutes per content slide.** (For the depth target now in force, see section 2c, rule 7.) A three-hour session with 60
