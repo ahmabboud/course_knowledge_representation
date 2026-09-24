@@ -3,7 +3,8 @@
 **Any new session or agent: read this file right after `PROGRESS.md`.**
 The checklist below is the single to-do list. Tick an item (`[x]`) and add a
 dated line to the log at the bottom in the same change as the work.
-Last updated: 2026-09-24 (handoff checked; both repos clean and pushed).
+Last updated: 2026-09-24 (handoff checked; both repos clean and pushed;
+session protocol added to the top of `AGENTS.md`).
 
 Companion documents:
 
@@ -22,7 +23,10 @@ session, only after the audit is clean, never force push (Claude pushes
 since 2026-09-24, see item 10; a push publishes the site through GitHub
 Pages); never delete a file without asking; no
 dashes in prose; audit every deck you touch before you stop (item 15); every
-new term goes into `GLOSSARY.md` (item 16).
+new term goes into `GLOSSARY.md` (item 16); commit messages carry no
+`Co-Authored-By`, session link or other AI attribution (instructor's
+standing preference). The start, during and end steps of every work
+session are at the top of `AGENTS.md`.
 
 **Where to continue (2026-09-24, end of day):**
 
@@ -132,6 +136,10 @@ Items marked `[x]` are done; everything else is still open.
     `git ls-remote origin refs/heads/main` that GitHub matches `HEAD`, then
     delete leftover `.git/*.lock` and `tmp_obj_*` files. If the push fails
     (token expired or revoked), tell the instructor; do not work around it.
+    The helper only finds the token when `LebUniv/` itself is reachable. A
+    Cowork session given only the `Knowledge Representation` folder cannot
+    see it, so there the instructor pushes (or connects `LebUniv/`). Never
+    read, print or copy the token, and never put it in a remote URL.
     2026-09-24: both repos pushed and confirmed (KR `9b61704`, template
     `a7e4bed`).
 11. [x] `PROGRESS.md` status table reconciled with the repository
@@ -431,3 +439,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 
 - 2026-09-24: Handoff check. Both repos clean and in sync with GitHub; stale `.git` lock files removed; credential helper confirmed portable (relative path to `LebUniv/.github-token`). "Where to continue" rewritten with the settled decisions; item 18 added.
 - 2026-09-24: Session 2 lab gaps fixed, at the instructor's request. Instructor's decision: labs are individual, not collected, not graded; they are for understanding and the capstone. Added part B, "write your own": `my_queries.sparql` (three questions: GROUP BY, FILTER NOT EXISTS, HAVING), `check_my_queries.py` (right or not yet, with hints; Oxigraph or Fuseki), `solutions/`; run on Oxigraph: PLANT03 ships 8,541 of 9,215 orders; 8 of 11 served ports never ship; 16 of 46 customers order from more than one plant; the wrong Y3 without DISTINCT gives 44 (`reference-outputs/my-queries-check.txt`). README rewritten (why, expect at each step, parts A to C, understood if, take to your project, notebook tip, Windows Docker notes). Deck: no deliverable or due wording, IRI task is now test the course scheme and sketch one for your project, lab checkpoints 25/45/55; still 42 slides, 173 minutes, audit clean (known noise only), glossary check clean. `demos/README.md`: stale status lines replaced, Docker needs on Windows, JDK row clarified; Neo4j now published on 127.0.0.1 only. New `AGENTS.md` 2e (lab standard) and `PROMPT.md` aligned. Item 19 added.
+- 2026-09-24: session protocol written down, at the instructor's request, after a sync miss. A Cowork session reported its 2026-09-20 deck edits (commit `1147f0a`: two Session 2 diagrams, question-first part dividers in Sessions 1 to 3, bolded key claims) as lost. They were in history all along: the 2c generator rebuilds of Sessions 1 and 2 replaced those HTML files, and the edits had never been recorded here, so no later session knew of them. Their intent is already covered by `AGENTS.md` 2c (visual first, bold and define at first use, why then how). The old `kr-session-03.html` still carries them until item 3 replaces it. Added the start, during and end checklist to the top of `AGENTS.md`, the no AI attribution rule and the Cowork token note (item 10) here, and the same protocol to the instructor's `lu-lecture-builder` skill. No deck touched, so no audit run.

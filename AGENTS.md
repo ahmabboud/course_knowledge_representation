@@ -2,7 +2,11 @@
 
 You are writing an interactive teaching lecture as a **single static HTML file**. Read this whole file before you write anything. When it and your own instincts disagree, this file wins.
 
-**Before anything else:** read `PROGRESS.md` (what is built), then `REPLAN-STATE.md` (the open to-do list, decisions, and where every file lives). Update both in the same change as your work.
+**Every work session, on any device, starts and ends the same way.** Several sessions and computers work on this repository; these files are the only memory they share, and work not written into them is invisible to the next session.
+
+- **Start.** `git fetch origin`, then pull if GitHub is ahead. If the working tree has changes you did not make, stop and ask. Read `PROGRESS.md` (what is built), then `REPLAN-STATE.md` (the open to-do list, settled decisions, where every file lives), then the sections of this file they cite. Take the next task from "Where to continue". A deck with a generator (`scripts/deckgen-sN/`) is build output: edit the generator and rebuild, never the HTML. Before saying a commit is missing, check the whole history, not the last few lines of `git log`.
+- **During.** Tick the item and add a dated log line in the same commit as the work. An instructor decision that binds later sessions also goes into "Settled decisions", and a new teaching or layout rule into this file.
+- **End.** Audit and glossary check every deck you touched (REPLAN-STATE items 15 and 16). Update both files so "Where to continue" is right for a reader who has seen nothing else. Commit with no `Co-Authored-By`, session link or other AI attribution. Push as REPLAN-STATE item 10 says and confirm with `git ls-remote`; if the push cannot run, say so and stop.
 
 ---
 
