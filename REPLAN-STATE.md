@@ -189,6 +189,12 @@ Items marked `[x]` are done; everything else is still open.
     only with the instructor's agreement. Sessions 3 to 6: apply 2e when
     each is rebuilt (items 2 and 9): parts A, B (write your own, with a
     checker), C, and "take it to your team project".
+20. [ ] **Keep the lecture skill in step.** `.claude/skills/lu-lecture-builder/SKILL.md`
+    is a copy of the instructor's account skill of the same name, committed
+    so every session and device can use it (Claude Code loads it
+    automatically). When the skill changes, update both copies, or note the
+    drift in the log. It is course-agnostic, so it also belongs in the
+    template repo; copy it there when that repo is next touched.
 
 ### Not course material
 
@@ -440,3 +446,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-24: Handoff check. Both repos clean and in sync with GitHub; stale `.git` lock files removed; credential helper confirmed portable (relative path to `LebUniv/.github-token`). "Where to continue" rewritten with the settled decisions; item 18 added.
 - 2026-09-24: Session 2 lab gaps fixed, at the instructor's request. Instructor's decision: labs are individual, not collected, not graded; they are for understanding and the capstone. Added part B, "write your own": `my_queries.sparql` (three questions: GROUP BY, FILTER NOT EXISTS, HAVING), `check_my_queries.py` (right or not yet, with hints; Oxigraph or Fuseki), `solutions/`; run on Oxigraph: PLANT03 ships 8,541 of 9,215 orders; 8 of 11 served ports never ship; 16 of 46 customers order from more than one plant; the wrong Y3 without DISTINCT gives 44 (`reference-outputs/my-queries-check.txt`). README rewritten (why, expect at each step, parts A to C, understood if, take to your project, notebook tip, Windows Docker notes). Deck: no deliverable or due wording, IRI task is now test the course scheme and sketch one for your project, lab checkpoints 25/45/55; still 42 slides, 173 minutes, audit clean (known noise only), glossary check clean. `demos/README.md`: stale status lines replaced, Docker needs on Windows, JDK row clarified; Neo4j now published on 127.0.0.1 only. New `AGENTS.md` 2e (lab standard) and `PROMPT.md` aligned. Item 19 added.
 - 2026-09-24: session protocol written down, at the instructor's request, after a sync miss. A Cowork session reported its 2026-09-20 deck edits (commit `1147f0a`: two Session 2 diagrams, question-first part dividers in Sessions 1 to 3, bolded key claims) as lost. They were in history all along: the 2c generator rebuilds of Sessions 1 and 2 replaced those HTML files, and the edits had never been recorded here, so no later session knew of them. Their intent is already covered by `AGENTS.md` 2c (visual first, bold and define at first use, why then how). The old `kr-session-03.html` still carries them until item 3 replaces it. Added the start, during and end checklist to the top of `AGENTS.md`, the no AI attribution rule and the Cowork token note (item 10) here, and the same protocol to the instructor's `lu-lecture-builder` skill. No deck touched, so no audit run.
+- 2026-09-24: the `lu-lecture-builder` skill committed to the repo at `.claude/skills/lu-lecture-builder/SKILL.md`, identical to the account copy, so sessions on any device can use it; `AGENTS.md` start step points at it. Item 20 added to keep the two copies in step.
