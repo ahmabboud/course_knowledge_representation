@@ -112,8 +112,10 @@ After activating the environment on either platform:
 
 1. Start Docker Desktop and run `docker info`. Session 1's smoke test checks
    that Docker's engine is reachable; it does not start any course service.
-2. Before Session 2, run `docker compose up -d`. This starts Fuseki
-   (`localhost:3030`) and Neo4j (`localhost:7474` browser,
+2. Before Session 2, run `docker compose up -d`. The first time, it builds
+   the Fuseki image from Apache's own 5.5.0 release (`fuseki/Dockerfile`,
+   about a minute, needs internet). This starts Fuseki
+   (`localhost:3030`, no login, reachable from this computer only) and Neo4j (`localhost:7474` browser,
    `localhost:7687` bolt). Individual sessions may add their own
    `docker-compose.yml` for a service only that session needs (PostgreSQL in
    Session 5, for example); run that session's compose file in addition to

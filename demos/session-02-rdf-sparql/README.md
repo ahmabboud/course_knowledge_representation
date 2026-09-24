@@ -13,8 +13,8 @@ active. Step 1 runs from `demos/`; every other step runs from this folder,
 
 ## Run, in order (about 60 minutes)
 
-1. From `demos/`: `docker compose up -d`. Starts Fuseki (port 3030, user
-   `admin`, password `admin`) and Neo4j (port 7474, user `neo4j`, password
+1. From `demos/`: `docker compose up -d`. Starts Fuseki 5.5 (port 3030, no
+   login; the first run builds it from Apache's release) and Neo4j (port 7474, user `neo4j`, password
    `kr-labs-pw`).
 2. `python convert_to_rdf.py` (about 20 seconds). Converts OrderList,
    PlantPorts, ProductsPerPlant and FreightRates with rdflib and the IRI

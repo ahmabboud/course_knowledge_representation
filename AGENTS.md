@@ -124,6 +124,21 @@ Plain English on slides: short sentences, no idioms, and name every acronym
 the first time (ERP is "Enterprise Resource Planning, the system that holds
 purchase orders").
 
+## 2d. IRI convention (from Session 2, 2026-09-24)
+
+One convention for every lab, deck and team project. It lives in code in
+`demos/common/iri.py`; import it rather than writing IRIs by hand.
+
+| What | Namespace | Example |
+|---|---|---|
+| Words: classes and properties | `https://ul.edu.lb/kr/scm#` (prefix `ul:`) | `ul:Order`, `ul:carriedBy` |
+| Things: one IRI per real thing | `https://ul.edu.lb/kr/id/{kind}/{source}/{key}` | `.../kr/id/carrier/brunel/V44_3`, `.../kr/id/purchase-order/erp/po88` |
+
+The source system is always part of a thing's IRI, and the key is used exactly
+as the source writes it. Never a row number, never a name. Older examples of
+the form `ul:carrier-dhl` (Session 3 sample individuals, Session 4 slides) are
+converted when those sessions are rebuilt (REPLAN-STATE items 2 and 9).
+
 ---
 
 ## 3. Anatomy of a lecture file

@@ -26,7 +26,7 @@
     rml:referenceFormulation ql:CSV
   ] ;
   rr:subjectMap [
-    rr:template "https://ul.edu.lb/kr/scm#carrier-{carrier_code}" ;
+    rr:template "https://ul.edu.lb/kr/id/carrier/erp/{carrier_code}" ;
     rr:class ul:Carrier
   ] ;
   rr:predicateObjectMap [
@@ -40,7 +40,7 @@
     rml:referenceFormulation ql:CSV
   ] ;
   rr:subjectMap [
-    rr:template "https://ul.edu.lb/kr/scm#{po_id}" ;
+    rr:template "https://ul.edu.lb/kr/id/purchase-order/erp/{po_id}" ;
     rr:class ul:PurchaseOrder
   ] ;
   rr:predicateObjectMap [

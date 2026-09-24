@@ -4,8 +4,9 @@ endpoint answers.
 Uses HTTP PUT on the default graph, so running it twice replaces the data
 instead of loading every triple a second time.
 
-Start Fuseki first: `docker compose up -d` from demos/ (user admin, password
-admin), or without Docker:  fuseki-server --tdb2 --loc=tdb2 --update /kr
+Start Fuseki first: `docker compose up -d` from demos/ (Fuseki 5.5, no login),
+or without Docker, from Apache's Fuseki download:
+    java -jar fuseki-server.jar --tdb2 --loc=tdb2 --update /kr
 """
 
 import time
@@ -24,7 +25,6 @@ def load():
         f"{FUSEKI_BASE}/{DATASET}/data?default",
         data=TTL_PATH.read_bytes(),
         headers={"Content-Type": "text/turtle"},
-        auth=("admin", "admin"),
         timeout=600,
     )
     resp.raise_for_status()
