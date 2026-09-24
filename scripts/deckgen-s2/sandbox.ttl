@@ -1,0 +1,22 @@
+@prefix ul: <https://ul.edu.lb/kr/scm#> .
+@prefix order: <https://ul.edu.lb/kr/id/order/brunel/> .
+@prefix plant: <https://ul.edu.lb/kr/id/plant/brunel/> .
+@prefix port: <https://ul.edu.lb/kr/id/port/brunel/> .
+@prefix carrier: <https://ul.edu.lb/kr/id/carrier/brunel/> .
+
+order:1447296446.7 a ul:Order ; ul:fromPlant plant:PLANT16 ; ul:shipsFrom port:PORT09 ; ul:carriedBy carrier:V44_3 ; ul:serviceLevel "CRF" ; ul:weight 14.3 ; ul:lateDays 0 .
+order:1447158014.7 a ul:Order ; ul:fromPlant plant:PLANT16 ; ul:shipsFrom port:PORT09 ; ul:carriedBy carrier:V44_3 ; ul:serviceLevel "CRF" ; ul:weight 87.94 ; ul:lateDays 0 .
+order:1447288338.7 a ul:Order ; ul:fromPlant plant:PLANT03 ; ul:shipsFrom port:PORT04 ; ul:carriedBy carrier:V444_0 ; ul:serviceLevel "DTP" ; ul:weight 7.04 ; ul:lateDays 6 .
+order:1447298099.7 a ul:Order ; ul:fromPlant plant:PLANT03 ; ul:shipsFrom port:PORT04 ; ul:carriedBy carrier:V444_0 ; ul:serviceLevel "DTP" ; ul:weight 5.8 ; ul:lateDays 6 .
+order:1447385217.7 a ul:Order ; ul:fromPlant plant:PLANT16 ; ul:shipsFrom port:PORT09 ; ul:carriedBy carrier:V444_0 ; ul:serviceLevel "DTP" ; ul:weight 1.02 ; ul:lateDays 0 .
+order:1447337778.7 a ul:Order ; ul:fromPlant plant:PLANT16 ; ul:shipsFrom port:PORT09 ; ul:carriedBy carrier:V444_0 ; ul:serviceLevel "DTP" ; ul:weight 0.61 ; ul:lateDays 0 .
+order:1447311670.7 a ul:Order ; ul:fromPlant plant:PLANT12 ; ul:shipsFrom port:PORT04 ; ul:carriedBy carrier:V444_1 ; ul:serviceLevel "DTD" ; ul:weight 31.93 ; ul:lateDays 0 .
+order:1447291369.7 a ul:Order ; ul:fromPlant plant:PLANT12 ; ul:shipsFrom port:PORT04 ; ul:carriedBy carrier:V444_1 ; ul:serviceLevel "DTD" ; ul:weight 11.8 ; ul:lateDays 0 .
+order:1447390850.7 a ul:Order ; ul:fromPlant plant:PLANT04 ; ul:shipsFrom port:PORT05 ; ul:carriedBy carrier:V44_3 ; ul:serviceLevel "CRF" ; ul:weight 2.1 ; ul:lateDays 0 .
+plant:PLANT03 a ul:Plant ; ul:servesPort port:PORT04 .
+plant:PLANT04 a ul:Plant ; ul:servesPort port:PORT05 .
+plant:PLANT12 a ul:Plant ; ul:servesPort port:PORT04 .
+plant:PLANT16 a ul:Plant ; ul:servesPort port:PORT09 .
+carrier:V444_0 a ul:Carrier .
+carrier:V444_1 a ul:Carrier .
+carrier:V44_3 a ul:Carrier .

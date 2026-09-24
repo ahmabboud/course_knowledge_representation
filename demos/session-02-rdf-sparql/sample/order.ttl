@@ -1,0 +1,17 @@
+@prefix ul: <https://ul.edu.lb/kr/scm#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://ul.edu.lb/kr/id/order/brunel/1447296446.7> a ul:Order ;
+    ul:carriedBy <https://ul.edu.lb/kr/id/carrier/brunel/V44_3> ;
+    ul:fromPlant <https://ul.edu.lb/kr/id/plant/brunel/PLANT16> ;
+    ul:lateDays 0 ;
+    ul:ofProduct <https://ul.edu.lb/kr/id/product/brunel/1700106> ;
+    ul:orderDate "2013-05-26"^^xsd:date ;
+    ul:orderId "1447296446.7" ;
+    ul:orderedBy <https://ul.edu.lb/kr/id/customer/brunel/V55555_53> ;
+    ul:serviceLevel "CRF" ;
+    ul:shipsFrom <https://ul.edu.lb/kr/id/port/brunel/PORT09> ;
+    ul:shipsTo <https://ul.edu.lb/kr/id/port/brunel/PORT09> ;
+    ul:unitQuantity 808 ;
+    ul:weight 14.3 .
+

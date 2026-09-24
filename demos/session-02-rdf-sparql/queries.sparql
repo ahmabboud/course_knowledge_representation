@@ -1,30 +1,59 @@
-# The provided question set, single-hop through genuinely hard. Run
-# these with run_queries.py, which times each one.
+# Session 2 question set, from trivial to genuinely hard.
+# run_queries.py splits this file at each marker line below and times each query.
 
-# --- Q1: single-hop lookup ---
+# --- Q1 · single hop: which orders did carrier V44_3 carry? ---
 PREFIX ul: <https://ul.edu.lb/kr/scm#>
-SELECT ?order ?plant WHERE {
-  ?order a ul:Order ; ul:fromPlant ?plant .
-} LIMIT 20
+SELECT ?order ?service WHERE {
+  ?order ul:carriedBy <https://ul.edu.lb/kr/id/carrier/brunel/V44_3> ;
+         ul:serviceLevel ?service .
+} LIMIT 5
 
-# --- Q2: aggregation ---
+# --- Q2 · aggregation: orders and late orders per carrier ---
 PREFIX ul: <https://ul.edu.lb/kr/scm#>
-SELECT ?plant (COUNT(?order) AS ?n) WHERE {
-  ?order a ul:Order ; ul:fromPlant ?plant .
-} GROUP BY ?plant ORDER BY DESC(?n)
+SELECT ?carrier (COUNT(?order) AS ?orders) (SUM(IF(?late > 0, 1, 0)) AS ?lateOrders) WHERE {
+  ?order ul:carriedBy ?carrier ; ul:lateDays ?late .
+} GROUP BY ?carrier ORDER BY DESC(?orders)
 
-# --- Q3: the plant/port constraint from Session 1, as a query ---
+# --- Q3 · OPTIONAL: does every carrier have a freight rate? ---
 PREFIX ul: <https://ul.edu.lb/kr/scm#>
-SELECT ?order ?plant ?port WHERE {
-  ?order ul:fromPlant ?plant .
-  OPTIONAL { ?plant ul:servesPort ?port }
-  FILTER (!BOUND(?port))
+SELECT ?carrier (COUNT(?band) AS ?bands) WHERE {
+  ?carrier a ul:Carrier .
+  OPTIONAL { ?band ul:bandCarrier ?carrier }
+} GROUP BY ?carrier ORDER BY ?bands
+
+# --- Q4 · sequence path: the Session 1 plant and port rule, as a question ---
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+ASK {
+  ?order ul:shipsFrom ?port .
+  FILTER NOT EXISTS { ?order ul:fromPlant/ul:servesPort ?port }
 }
 
-# --- Q4: property path, the question SQL is awkward at ---
-# Fill in once a multi-hop relation (e.g. hasComponent) is in the slice;
-# see the Session 1 sanction-question framing on lecture slide 3.
+# --- Q5 · unbounded path: how many orders, counting every kind of order? ---
 PREFIX ul: <https://ul.edu.lb/kr/scm#>
-SELECT ?good ?part WHERE {
-  ?good ul:hasComponent+ ?part .
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT (COUNT(?order) AS ?plainType) (COUNT(?any) AS ?withSubclasses) WHERE {
+  { ?order a ul:Order }
+  UNION
+  { ?any a/rdfs:subClassOf* ul:Order }
+}
+
+# --- Q6 · hard: orders whose weight falls in no rate band of their lane ---
+# Join each order to every band of its lane once, then ask per order whether
+# any band covered it. (Written with FILTER NOT EXISTS instead, the same answer
+# took 172 seconds on Oxigraph: see reference-outputs.)
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT (COUNT(?order) AS ?ordersInAGap) WHERE {
+  { SELECT ?order (MAX(IF(?w >= ?lo && ?w <= ?hi, 1, 0)) AS ?covered) WHERE {
+      ?order ul:carriedBy ?c ; ul:shipsFrom ?from ; ul:shipsTo ?to ;
+             ul:serviceLevel ?svc ; ul:weight ?w .
+      ?band ul:bandCarrier ?c ; ul:bandFrom ?from ; ul:bandTo ?to ;
+            ul:bandService ?svc ; ul:minWeight ?lo ; ul:maxWeight ?hi .
+    } GROUP BY ?order }
+  FILTER (?covered = 0)
+}
+
+# --- Q7 · CONSTRUCT: a new graph of which carrier serves which plant ---
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+CONSTRUCT { ?carrier ul:servesPlant ?plant } WHERE {
+  ?order ul:carriedBy ?carrier ; ul:fromPlant ?plant .
 }

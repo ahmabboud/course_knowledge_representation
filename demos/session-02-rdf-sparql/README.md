@@ -1,59 +1,61 @@
-# Session 2 lab: RDF conversion, SPARQL, and a Neo4j comparison
+# Session 2 lab: from tables to a graph you can query
 
-Builds the syllabus deliverable: a loaded SPARQL endpoint over a supply
-chain data slice, a documented IRI scheme, and a query notebook
-answering the provided question set with timings, per
-`course_knowledge_representation/lectures/kr-session-02.html`'s lab
-brief slide.
+Builds the syllabus deliverable: a loaded SPARQL endpoint over the Brunel
+data, a documented IRI scheme, and the question set answered with timings.
+Every number in `lectures/kr-session-02.html` comes from the files in
+`reference-outputs/`, produced by the scripts below on 2026-09-24.
 
 ## Working directory
 
-Complete the shared environment setup from `demos/README.md` first. Run steps
-2 through 5 from `demos/session-02-rdf-sparql/`; only step 1 runs from
-`demos/`, the lab repository root. Keep the shared `demos/.venv` activated on
-either macOS/Linux or Windows.
+Finish the shared setup in `demos/README.md` first and keep `demos/.venv`
+active. Step 1 runs from `demos/`; every other step runs from this folder,
+`demos/session-02-rdf-sparql/`.
 
-## Run, in order
+## Run, in order (about 60 minutes)
 
-Two ways to run this lab: the individual scripts below, one stage at a
-time from a terminal; or `lab_walkthrough.py`, a `# %%`-cell notebook
-that imports and calls the same functions but shows each stage's
-result as a table or chart, open it in JupyterLab or VS Code to
-present the lab live instead of reading terminal output. Both stay in
-sync because the notebook calls into the scripts, it does not
-reimplement them.
+1. From `demos/`: `docker compose up -d`. Starts Fuseki (port 3030, user
+   `admin`, password `admin`) and Neo4j (port 7474, user `neo4j`, password
+   `kr-labs-pw`).
+2. `python convert_to_rdf.py` (about 20 seconds). Converts OrderList,
+   PlantPorts, ProductsPerPlant and FreightRates with rdflib and the IRI
+   scheme in `common/iri.py`. Writes `brunel.ttl` (135,841 triples),
+   `brunel.trig` (the same triples in 5 named graphs, one per table plus the
+   schema) and `sample/` (one order in Turtle, N-Triples and JSON-LD).
+3. `python load_fuseki.py`. Loads `brunel.ttl` into the `kr` dataset (TDB2)
+   and checks the endpoint answers: `135841 triples loaded`. Then open
+   <http://localhost:3030>, dataset `kr`, tab **query**, and paste any query
+   from `queries.sparql`.
+4. `python run_queries.py` (against Fuseki) or `python run_queries.py
+   oxigraph` (no Java, no Docker: pyoxigraph inside Python). Runs the seven
+   questions in `queries.sparql` and writes timings to `reference-outputs/`.
+   If Fuseki or Java fails in the room, use Oxigraph and keep going.
+5. `python neo4j_comparison.py`. Loads the same orders into Neo4j and asks
+   the same questions in Cypher. Then open <http://localhost:7474> and run
+   `MATCH (o:Order {id: '1447296446.7'})-[r]->(n) RETURN o, r, n`.
+6. Optional, instructor demo: `pip install owlrl`, then
+   `python rdfs_entailment_demo.py`. RDFS turns a careless triple into a new
+   "fact" instead of an error.
 
-1. From the repository root: `docker compose up -d` (Fuseki and Neo4j).
-2. `python convert_to_rdf.py` — converts a slice of the Brunel tables to
-   Turtle with rdflib, using `common/iri.py`'s scheme. Writes
-   `brunel_slice.ttl` next to this README.
-3. `python load_fuseki.py` — loads `brunel_slice.ttl` into the `kr`
-   dataset on the running Fuseki container and confirms the endpoint
-   answers a trivial query. If Fuseki or the JDK misbehaves, switch
-   `TRIPLESTORE = "oxigraph"` at the top of `run_queries.py` instead of
-   debugging Java live in the room, per the lecture's own fallback
-   guidance.
-4. `python run_queries.py` — works through `queries.sparql`'s question
-   set against the loaded endpoint, printing each result and its
-   timing.
-5. `python neo4j_comparison.py` — loads the same slice into the Neo4j
-   container and runs the equivalent multi-hop Cypher query, printed
-   next to the SPARQL version for the room to compare, not scored
-   against each other.
+`lab_walkthrough.py` runs stages 2 to 5 as notebook cells (JupyterLab or VS
+Code), with tables and a timing chart.
 
-## Real tools, matching the lecture
+## What the questions show (real answers)
 
-- **rdflib** for the conversion.
-- **Fuseki with TDB2** as the primary endpoint; **pyoxigraph** as the
-  documented fallback above roughly a million triples or when the JDK
-  setup fails.
-- **Neo4j Community** with the `neo4j` Python driver for the comparison
-  segment.
+| Question | Answer |
+|---|---|
+| Q2 orders and late orders per carrier | V444_0: 6,264 and 183 · V444_1: 2,097 and 9 · V44_3: 854 and 0 |
+| Q3 carriers with a freight rate | V44_3 has 0 rate bands |
+| Q4 any order leaving through a port its plant does not serve? | false |
+| Q5 orders typed Order, and with subclasses | 9,023, and 9,215 |
+| Q6 orders whose weight falls in no rate band | 1,370 |
+
+Q6 took 172 seconds written with `FILTER NOT EXISTS` and under 3 seconds
+rewritten as one join plus a group (both on Oxigraph, same answer). That is
+the "where does the time go" part of the deliverable.
 
 ## What "done" looks like
 
-A loaded endpoint that answers every question in `queries.sparql`, a
-documented IRI scheme (`common/iri.py`, updated once the cohort agrees
-its final form in the discussion block), and timings recorded for each
-query. This IRI scheme is what Session 3 onward imports, get it right,
-or at least get it written down, here.
+A loaded endpoint that answers all seven questions, your own IRI scheme
+written in three lines (what an IRI contains, why, and what happens when a
+second source arrives), and a table of your timings. The IRI scheme agreed by
+the room goes into `common/iri.py`; Session 3 onward imports it.

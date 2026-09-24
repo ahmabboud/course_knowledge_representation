@@ -1,0 +1,37 @@
+{
+  "@context": {
+    "ul": "https://ul.edu.lb/kr/scm#"
+  },
+  "@id": "https://ul.edu.lb/kr/id/order/brunel/1447296446.7",
+  "@type": "ul:Order",
+  "ul:carriedBy": {
+    "@id": "https://ul.edu.lb/kr/id/carrier/brunel/V44_3"
+  },
+  "ul:fromPlant": {
+    "@id": "https://ul.edu.lb/kr/id/plant/brunel/PLANT16"
+  },
+  "ul:lateDays": 0,
+  "ul:ofProduct": {
+    "@id": "https://ul.edu.lb/kr/id/product/brunel/1700106"
+  },
+  "ul:orderDate": {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2013-05-26"
+  },
+  "ul:orderId": "1447296446.7",
+  "ul:orderedBy": {
+    "@id": "https://ul.edu.lb/kr/id/customer/brunel/V55555_53"
+  },
+  "ul:serviceLevel": "CRF",
+  "ul:shipsFrom": {
+    "@id": "https://ul.edu.lb/kr/id/port/brunel/PORT09"
+  },
+  "ul:shipsTo": {
+    "@id": "https://ul.edu.lb/kr/id/port/brunel/PORT09"
+  },
+  "ul:unitQuantity": 808,
+  "ul:weight": {
+    "@type": "http://www.w3.org/2001/XMLSchema#decimal",
+    "@value": "14.3"
+  }
+}

@@ -1,34 +1,42 @@
-"""Load brunel_slice.ttl into the running Fuseki container's `kr`
-dataset, and confirm the endpoint answers.
+"""Load brunel.ttl into Fuseki's `kr` dataset (TDB2) and confirm the
+endpoint answers.
+
+Uses HTTP PUT on the default graph, so running it twice replaces the data
+instead of loading every triple a second time.
+
+Start Fuseki first: `docker compose up -d` from demos/ (user admin, password
+admin), or without Docker:  fuseki-server --tdb2 --loc=tdb2 --update /kr
 """
 
+import time
 from pathlib import Path
 
 import requests
 
 FUSEKI_BASE = "http://localhost:3030"
 DATASET = "kr"
-TTL_PATH = Path(__file__).resolve().parent / "brunel_slice.ttl"
+TTL_PATH = Path(__file__).resolve().parent / "brunel.ttl"
 
 
 def load():
-    data = TTL_PATH.read_bytes()
-    resp = requests.post(
-        f"{FUSEKI_BASE}/{DATASET}/data",
-        data=data,
+    start = time.perf_counter()
+    resp = requests.put(
+        f"{FUSEKI_BASE}/{DATASET}/data?default",
+        data=TTL_PATH.read_bytes(),
         headers={"Content-Type": "text/turtle"},
         auth=("admin", "admin"),
+        timeout=600,
     )
     resp.raise_for_status()
-    print(f"Loaded {TTL_PATH} into {FUSEKI_BASE}/{DATASET}")
+    print(f"Loaded {TTL_PATH.name} into {FUSEKI_BASE}/{DATASET} in {time.perf_counter() - start:.1f} s")
 
 
 def confirm():
-    query = "SELECT (COUNT(*) AS ?n) WHERE { ?s ?p ?o }"
     resp = requests.get(
         f"{FUSEKI_BASE}/{DATASET}/sparql",
-        params={"query": query},
+        params={"query": "SELECT (COUNT(*) AS ?n) WHERE { ?s ?p ?o }"},
         headers={"Accept": "application/sparql-results+json"},
+        timeout=60,
     )
     resp.raise_for_status()
     n = resp.json()["results"]["bindings"][0]["n"]["value"]

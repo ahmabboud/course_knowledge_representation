@@ -1,0 +1,2 @@
+[('https://ul.edu.lb/kr/scm#Order', 9023), ('https://ul.edu.lb/kr/scm#Product', 1540), ('https://ul.edu.lb/kr/scm#RateBand', 1540), ('https://ul.edu.lb/kr/scm#LateOrder', 192), ('https://ul.edu.lb/kr/scm#Customer', 46), ('https://ul.edu.lb/kr/scm#Plant', 19), ('https://ul.edu.lb/kr/scm#Port', 11), ('http://www.w3.org/2000/01/rdf-schema#Class', 8), ('http://www.w3.org/1999/02/22-rdf-syntax-ns#Property', 8), ('https://ul.edu.lb/kr/scm#Carrier', 3)]
+12391 subjects 26 predicates

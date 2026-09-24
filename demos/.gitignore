@@ -38,3 +38,8 @@ profiling_report_*.html
 .DS_Store
 .vscode/
 .idea/
+
+# Session 2: generated graphs, rebuilt by convert_to_rdf.py (6 MB each)
+session-02-rdf-sparql/brunel.ttl
+session-02-rdf-sparql/brunel.trig
+session-02-rdf-sparql/oxigraph_store/

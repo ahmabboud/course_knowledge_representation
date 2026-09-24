@@ -1,0 +1,7 @@
+[named graphs: triples per source table] 5 rows in 38.0 ms
+    https://ul.edu.lb/kr/id/graph/brunel/OrderList 119844
+    https://ul.edu.lb/kr/id/graph/brunel/FreightRates 12320
+    https://ul.edu.lb/kr/id/graph/brunel/ProductsPerPlant 3576
+    https://ul.edu.lb/kr/id/graph/brunel/PlantPorts 52
+    https://ul.edu.lb/kr/id/graph/brunel/schema 49
+   rate bands live in: https://ul.edu.lb/kr/id/graph/brunel/FreightRates

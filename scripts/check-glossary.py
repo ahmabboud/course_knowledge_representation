@@ -19,7 +19,7 @@ for e in entries:
     for part in re.findall(r"\(([^)]+)\)", e["term"]):
         known.add(part.lower())
 # Not jargon: units, course labels, file types students never have to understand.
-IGNORE = set("LU MSC ID OK PM AM UTC TODO HTML CSS JS PDF PNG URL API UI TL DR KR IT USA UK EU Q1 Q2 Q3 Q4 I II III IV WH BY EL QL RL DL FOL ODC PDDL EPCIS-SHACL AIR EE UU US PROJECT-REDESIGN".split())  # AIR, EE. UU.: real data values
+IGNORE = set("LU MSC ID OK PM AM UTC TODO HTML CSS JS PDF PNG URL API UI TL DR KR IT USA UK EU Q1 Q2 Q3 Q4 I II III IV WH BY EL QL RL DL FOL ODC PDDL EPCIS-SHACL AIR EE UU US PROJECT-REDESIGN Q5 Q6 Q7".split())  # AIR, EE. UU.: real data values
 
 decks = sorted(d for d in (ROOT / "lectures").glob("*.html") if not d.name.startswith(("_", "proto")))
 missing = {}

@@ -1,37 +1,66 @@
-"""The cohort's IRI scheme, agreed at the end of Session 2's discussion
-block. Import this from Session 3 onward instead of re-deciding the
-scheme per session.
+"""The cohort's IRI scheme, argued for on the Session 2 slides and agreed in
+its closing discussion. Import this from Session 3 onward instead of
+re-deciding the scheme per session.
 
-Fill in BASE and the minting functions once the cohort has actually
-agreed the convention (see Session 2's lab brief and discussion). This
-stub uses the scheme argued for on the Session 2 slides, the source
-system is part of the name, as the default so the file is usable
-before the room formally agrees one; overwrite it with whatever the
-room actually decides.
+Two namespaces, on purpose:
+
+* VOCAB, for the words: classes and properties (ul:Order, ul:fromPlant).
+  Ends in "#", because the vocabulary is one small document.
+* DATA, for the things: one IRI per real order, plant, port, carrier...
+  Ends in "/", so each thing can later get its own web page.
+
+A data IRI is  DATA + type + "/" + source system + "/" + the source key,
+for example  https://ul.edu.lb/kr/id/plant/brunel/PLANT16 .
+The source system is part of the name, so the same key arriving from a
+second system never collides (Session 5 decides, with evidence, when two
+IRIs are the same thing). The key is used exactly as the source gives it,
+never a row number and never a cleaned up guess.
+
+Overwrite this file with whatever the room actually agrees.
 """
 
-BASE = "https://ul.edu.lb/kr/scm#"
+VOCAB = "https://ul.edu.lb/kr/scm#"
+DATA = "https://ul.edu.lb/kr/id/"
+BASE = VOCAB  # kept for older imports: the vocabulary namespace
+
+
+def _mint(kind: str, source_system: str, source_key: str) -> str:
+    key = str(source_key).strip().replace(" ", "_")
+    return f"{DATA}{kind}/{source_system}/{key}"
 
 
 def supplier_iri(source_system: str, source_key: str) -> str:
     """One IRI per real thing, not per row. Two systems' idea of the
-    same supplier get two IRIs (a Session 5 entity-resolution decision),
+    same supplier get two IRIs (a Session 5 entity resolution decision),
     not a silent merge here.
     """
-    return f"{BASE}supplier/{source_system}/{source_key}"
+    return _mint("supplier", source_system, source_key)
 
 
 def plant_iri(source_system: str, source_key: str) -> str:
-    return f"{BASE}plant/{source_system}/{source_key}"
+    return _mint("plant", source_system, source_key)
 
 
 def port_iri(source_system: str, source_key: str) -> str:
-    return f"{BASE}port/{source_system}/{source_key}"
+    return _mint("port", source_system, source_key)
 
 
 def carrier_iri(source_system: str, source_key: str) -> str:
-    return f"{BASE}carrier/{source_system}/{source_key}"
+    return _mint("carrier", source_system, source_key)
+
+
+def customer_iri(source_system: str, source_key: str) -> str:
+    return _mint("customer", source_system, source_key)
+
+
+def product_iri(source_system: str, source_key: str) -> str:
+    return _mint("product", source_system, source_key)
 
 
 def order_iri(source_system: str, source_key: str) -> str:
-    return f"{BASE}order/{source_system}/{source_key}"
+    return _mint("order", source_system, source_key)
+
+
+def graph_iri(source_system: str, table: str) -> str:
+    """Name of the named graph that holds one source table's triples."""
+    return f"{DATA}graph/{source_system}/{table}"

@@ -49,6 +49,8 @@ editing this file (it writes `assets/glossary.js`).
 | **VMI** | Vendor managed inventory: the supplier looks after stock at the customer's site. Brunel's VmiCustomers table lists such pairs without saying so. |
 | **CRF** | A service level code in Brunel's OrderList, used on 854 orders, all with carrier V44_3. The file never defines it. |
 | **DTD** | Another Brunel service level code, used on 2,143 orders and in FreightRates. The file never defines it. |
+| **DTP** | A third Brunel service level code, used on 6,218 orders. The file never defines it. |
+| **HTTP** | Hypertext Transfer Protocol: how browsers and servers, including SPARQL endpoints, exchange requests. |
 | **Creative Commons (CC)** | A family of public licences. CC BY 4.0 lets anyone reuse a work if they credit its authors; CC0 gives it to the public domain. |
 | **DOI** | Digital Object Identifier: a permanent identifier for a published paper or dataset. |
 | **GTFS** | General Transit Feed Specification: the format transit agencies use to publish routes, stops and timetables. |

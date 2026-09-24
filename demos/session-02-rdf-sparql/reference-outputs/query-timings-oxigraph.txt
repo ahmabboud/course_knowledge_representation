@@ -1,0 +1,27 @@
+[Q1 · single hop: which orders did carrier V44_3 carry?] 5 rows in 0.3 ms
+    ('https://ul.edu.lb/kr/id/order/brunel/1447421843.7', 'CRF')
+    ('https://ul.edu.lb/kr/id/order/brunel/1447421254.7', 'CRF')
+    ('https://ul.edu.lb/kr/id/order/brunel/1447418500.7', 'CRF')
+    ('https://ul.edu.lb/kr/id/order/brunel/1447414290.7', 'CRF')
+    ('https://ul.edu.lb/kr/id/order/brunel/1447412852.7', 'CRF')
+[Q2 · aggregation: orders and late orders per carrier] 3 rows in 19.7 ms
+    ('https://ul.edu.lb/kr/id/carrier/brunel/V444_0', '6264', '183')
+    ('https://ul.edu.lb/kr/id/carrier/brunel/V444_1', '2097', '9')
+    ('https://ul.edu.lb/kr/id/carrier/brunel/V44_3', '854', '0')
+[Q3 · OPTIONAL: does every carrier have a freight rate?] 3 rows in 0.7 ms
+    ('https://ul.edu.lb/kr/id/carrier/brunel/V44_3', '0')
+    ('https://ul.edu.lb/kr/id/carrier/brunel/V444_0', '39')
+    ('https://ul.edu.lb/kr/id/carrier/brunel/V444_1', '292')
+[Q4 · sequence path: the Session 1 plant and port rule, as a question] 1 rows in 23.3 ms
+    False
+[Q5 · unbounded path: how many orders, counting every kind of order?] 1 rows in 13.8 ms
+    ('9023', '9215')
+[Q6 · hard: orders whose weight falls in no rate band of their lane] 1 rows in 2312.5 ms
+    ('1370',)
+[Q7 · CONSTRUCT: a new graph of which carrier serves which plant] 12 rows in 28.0 ms
+    <https://ul.edu.lb/kr/id/carrier/brunel/V444_1> <https://ul.edu.lb/kr/scm#servesPlant> <https://ul.edu.lb/kr/id/plant/brunel/PLANT03>
+    <https://ul.edu.lb/kr/id/carrier/brunel/V444_0> <https://ul.edu.lb/kr/scm#servesPlant> <https://ul.edu.lb/kr/id/plant/brunel/PLANT03>
+    <https://ul.edu.lb/kr/id/carrier/brunel/V444_0> <https://ul.edu.lb/kr/scm#servesPlant> <https://ul.edu.lb/kr/id/plant/brunel/PLANT09>
+    <https://ul.edu.lb/kr/id/carrier/brunel/V44_3> <https://ul.edu.lb/kr/scm#servesPlant> <https://ul.edu.lb/kr/id/plant/brunel/PLANT03>
+    <https://ul.edu.lb/kr/id/carrier/brunel/V444_0> <https://ul.edu.lb/kr/scm#servesPlant> <https://ul.edu.lb/kr/id/plant/brunel/PLANT08>
+    <https://ul.edu.lb/kr/id/carrier/brunel/V444_0> <https://ul.edu.lb/kr/scm#servesPlant> <https://ul.edu.lb/kr/id/plant/brunel/PLANT12>

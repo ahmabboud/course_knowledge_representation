@@ -24,7 +24,7 @@ Pages); never delete a file without asking; no
 dashes in prose; audit every deck you touch before you stop (item 15); every
 new term goes into `GLOSSARY.md` (item 16).
 
-**Where to continue:** Session 1 is closed (approved 2026-09-24). Next: **Session 2 rebuild, item 8** (instructor's order, 2026-09-24), then Session 3 (item 2). **Session 1 first** (instructor, 2026-09-24: the course has not started and Session 1 is taught first). Next open items are **6 and 7**. Session 3 (item 2) resumes after Session 1 is closed.
+**Where to continue:** Session 1 is closed. Session 2 is rebuilt and waits for the instructor's review (item 8); then Session 3 (item 2). **Session 1 first** (instructor, 2026-09-24: the course has not started and Session 1 is taught first). Next open items are **6 and 7**. Session 3 (item 2) resumes after Session 1 is closed.
 Items marked `[x]` are done; everything else is still open.
 
 ---
@@ -84,7 +84,7 @@ Items marked `[x]` are done; everything else is still open.
 
 ### C. Session 2
 
-8. [ ] Full rebuild to the 2c standard, per `COURSE-REPLAN.md`.
+8. [ ] **Built 2026-09-24, awaiting the instructor's review** (42 slides, 173 minutes: lecture about 98, lab 61, discussion and wrap 14; audit clean; generator `scripts/deckgen-s2/`, sharing `deckgen-s1/kit.py`). The lab was rebuilt too and run end to end: see the log.  Full rebuild to the 2c standard, per `COURSE-REPLAN.md`.
 
 ### D. Sessions 4 to 6
 
@@ -386,3 +386,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-24: Session 1 rebuilt with a generator, `scripts/deckgen-s1/` (build.py plus four parts; rebuild with `cd scripts/deckgen-s1 && python3 build.py ../../lectures/kr-session-01.html`). 46 slides, 185 minutes: opening 11, data 25, meaning 20, architecture 15, profiling 30, project 15, lab 65, wrap 4. Thirteen lu-flow diagrams, eleven animated, neutral blocks, states only. Every number from a real run: `session1_facts.py` writes `reference-outputs/s1-facts.txt`. Real screenshots: `assets/img/s1-ydata-alerts.png` (ydata-profiling, Brunel OrderList) and `s1-openrefine-clusters.png` (OpenRefine 3.8.7, Order City, 3 clusters, all different cities). The old deck's plant and port example ("41 of 200 pairs, three transhipments") was not real and is replaced: 22 of 209 pairs, 0 exceptions. RDF against property graphs moved to Session 2 as planned. Glossary: 17 terms added (grain, order line, one to many, clustering, fingerprint, CRF, DTD, VMI, GTFS, OCDS...). `lu-flow.js` v1.2.1 in both repos: optional per diagram `flags` to rename a state badge, and wider badges so text is not clipped.
 - 2026-09-24: instructor review, round 1: the project divider now says plainly it is the team project; a lab title slide added; the lab is individual work (no pairs), inventories compared as a room.
 - 2026-09-24: Session 1 approved and closed by the instructor. Next: Session 2 (item 8).
+- 2026-09-24: Session 2 rebuilt, deck and lab. Lab bugs found and fixed: `convert_to_rdf.py` linked each order to its Origin Port as if it were a plant, and `neo4j_comparison.py` did the same; the question set had no carrier or port links, so the syllabus's multi-hop question could not run. New lab: full OrderList plus PlantPorts, ProductsPerPlant and FreightRates (rate bands as blank nodes), 135,841 triples, 5 named graphs, a small RDFS schema; `common/iri.py` now separates words (`ul:`, #) from things (`https://ul.edu.lb/kr/id/`, /). Seven questions, all run for real on Fuseki 5.5 and Oxigraph; Neo4j 5.26 comparison; `rdfs_entailment_demo.py` (owlrl). Real findings on the slides: Q6 took 172 s with NOT EXISTS and 2.3 s rewritten; 9,023 orders by type against 9,215 with a subclass path, in both SPARQL and Cypher. Screenshots `s2-fuseki-query.png`, `s2-neo4j-browser.png`. Sandbox now uses nine real orders. Note for the instructor: `docker-compose.yml` uses the `stain/jena-fuseki` image, which is old and not maintained by Apache; the lab was verified with Fuseki 5.5 run directly.

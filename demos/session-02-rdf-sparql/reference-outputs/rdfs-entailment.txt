@@ -1,0 +1,4 @@
+Orders before RDFS reasoning: 9023
+Orders after RDFS reasoning:  9216  (2.6 s)
+Is carrier V444_0 now an Order?  True
+No error was raised. The domain of ul:carriedBy is ul:Order, so RDFS concluded it.
