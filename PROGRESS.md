@@ -10,7 +10,7 @@ the single to-do list. The status table below was reconciled against the
 repository on 2026-09-24 (REPLAN-STATE item 11). "Built" means the file
 exists and works; no session counts as done until the instructor says so.
 
-**Where to continue (2026-09-24):** REPLAN-STATE item 2, Session 3 parts 3 to 6.
+**Where to continue (2026-09-24):** Session 1 first, REPLAN-STATE items 6 and 7 (instructor's decision); then item 2, Session 3 parts 3 to 6.
 Done most recently: Session 1 overflow fixes and lab verified (2026-09-23),
 design system v1.2 flow diagrams (2026-09-23), automatic glossary on all six
 decks (2026-09-24, REPLAN-STATE item 16: every new term goes into
@@ -160,7 +160,7 @@ touched: match it to `ioc:Shipment` too, or leave it and say why.
 
 ## What's next
 
-See `REPLAN-STATE.md` "Where to continue" (item 2, Session 3 parts 3 to 6).
+See `REPLAN-STATE.md` "Where to continue" (Session 1, items 6 and 7, then Session 3 item 2).
 After the Sessions 1 to 3 rebuild: the Session 4 lab (only a template
 today), confirming the Session 5 lab on a live Ontop, a visual pass on
 Sessions 4 to 6, then Sessions 7 and 8 (deck and lab).

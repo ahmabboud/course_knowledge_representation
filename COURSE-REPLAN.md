@@ -231,7 +231,9 @@ with a filled real row; the plant and port worked example drawn; rule
 against exception. Open world stays, as one simple picture ("missing is
 not false"); RDF against property graph moves to Session 2.
 **Lab guide** (3): the smoke test explained, running the notebook,
-filling the inventory.
+filling the inventory. (2026-09-24: no Jupyter slide; one slide each for
+ydata-profiling and OpenRefine, placed right after their concept, per
+`AGENTS.md` 2c rule 5.)
 **Your project begins** (about 4, added 2026-09-24, placed before the lab
 guide): what you build, topic menu, team rules and deadline, rubric and
 milestones.
@@ -246,7 +248,7 @@ milestones.
 | New depth | none | Part 2 (the supply chain and the two datasets, 7 new slides); Part 5 (cardinality, null, distribution, referential integrity, each on real data) |
 | Terms | 18 used before defined (section 1) | each defined on first use, in `GLOSSARY.md` |
 | Real screenshots | none | the ydata-profiling report and OpenRefine clusters, from real runs |
-| Session length | 112 minutes | **open, ask the instructor** (Session 3 was allowed about 230) |
+| Session length | 112 minutes | about 230 minutes, lecture plus guided lab plus wrap (`AGENTS.md` 2c rule 7, approved) |
 
 ## 6. Session 2, new outline
 

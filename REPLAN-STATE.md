@@ -24,7 +24,7 @@ Pages); never delete a file without asking; no
 dashes in prose; audit every deck you touch before you stop (item 15); every
 new term goes into `GLOSSARY.md` (item 16).
 
-**Where to continue:** the next open item is **2** (Session 3 parts 3 to 6).
+**Where to continue:** **Session 1 first** (instructor, 2026-09-24: the course has not started and Session 1 is taught first). Next open items are **6 and 7**. Session 3 (item 2) resumes after Session 1 is closed.
 Items marked `[x]` are done; everything else is still open.
 
 ---
@@ -69,9 +69,16 @@ Items marked `[x]` are done; everything else is still open.
    every arrow diagram in `lu-flow`, new Part 2 on the supply chain and the
    two datasets, profiling concepts each shown on real data, real
    ydata-profiling and OpenRefine screenshots. Full outline and the target
-   table: `COURSE-REPLAN.md` section 5. **Open, ask the instructor:** the
-   session length, and whether the Session 1 tools (Jupyter,
-   ydata-profiling, OpenRefine) get guides or videos, as Protégé did.
+   table: `COURSE-REPLAN.md` section 5. Session length about 230 minutes
+   (`AGENTS.md` 2c rule 7). **Decided 2026-09-24:** Jupyter gets
+   no slide (trivial tool). Profiling is taught as a concept first, then
+   one slide introduces ydata-profiling; clustering is taught first, then
+   one slide introduces OpenRefine (`AGENTS.md` 2c rule 5, revised).
+   Animations and diagrams follow the settled `lu-flow` rules (graphics
+   route 0), no new diagram styles. Deadline on the project slides: teams
+   and topic locked **before Session 2 starts** (`PROJECT-REDESIGN.md`),
+   no date. Screenshots: Claude captures the ydata-profiling report and
+   the OpenRefine clusters from real runs on the instructor's Mac.
 
 ### C. Session 2
 
@@ -371,3 +378,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-24: items 7 and `COURSE-REPLAN.md` made explicit about Session 1's planned growth (slide count, depth, visuals); the replan's stale "proposed" status corrected to approved.
 - 2026-09-24: back on track check against the repository and GitHub. PROGRESS status table and "What's next" rewritten from facts (item 11). Found: template repo has three unpushed commits (item 10); old Protégé guide plan marked superseded.
 - 2026-09-24: Claude now pushes (instructor's decision). Token at `LebUniv/.github-token`; credential helper set in both repos; template's three pending commits pushed; both repos confirmed equal to GitHub.
+- 2026-09-24: instructor decisions for Session 1: build it before finishing Session 3; tools rule revised (concept first, one slide per tool, no slide for trivial tools, video only for complex GUI tools), recorded in `AGENTS.md` 2c rule 5; session length about 230 minutes; project deadline stated as before Session 2.
