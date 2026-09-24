@@ -13,6 +13,7 @@ Give the agent access to the repository, then paste this, filling the four brack
 > **Source material:** [path to the syllabus file, or paste the session's objective, segments, minutes, deliverable and reading]
 >
 > Before you write anything:
+> 0. If the repository has `PROGRESS.md` and an open-work file (`REPLAN-STATE.md`), read them first: they say what is built, what is pending, and what was decided.
 > 1. Read `AGENTS.md` in full. It is the authoring contract and it overrides your own instincts about slide design.
 > 2. Open `design-system.html` in a browser. Every component is live there with its markup.
 > 3. Read `lectures/kr-session-03.html`. It is the reference implementation, 21 slides, all nine layouts, all twelve components. Match its structure and its writing register.
@@ -23,7 +24,7 @@ Give the agent access to the repository, then paste this, filling the four brack
 > 6. Add a `<a class="lu-lecture-card">` for it in `index.html`.
 > 7. Open it and press `→` through every slide, then `?`, `O`, `/`, `S`, and print preview. Fix anything that throws in the console.
 >
-> Hard constraints: no `<style>` blocks and no new colours, fonts or sizes; nothing below 20px; every slide needs `data-label`, `data-section`, `data-minutes` and a `<template data-notes>`; every graded component needs a session-prefixed unique `data-qid`; every answer option needs a rationale; diagrams use the CSS primitives first, inline SVG second, a `.lu-figure__ph` placeholder third, never a hand-drawn screenshot.
+> Hard constraints: no `<style>` blocks and no new colours, fonts or sizes; nothing below 20px; every slide needs `data-label`, `data-section`, `data-minutes` and a `<template data-notes>`; every graded component needs a session-prefixed unique `data-qid`; every answer option needs a rationale; diagrams with blocks and arrows use the flow diagram (`.lu-flow` + `assets/lu-flow.js`, colours from `kind` and `state` only), CSS primitives for structures without arrows, a `.lu-figure__ph` placeholder when a real screenshot is still missing, never a hand-drawn screenshot. Before stopping, run `scripts/audit-deck.js` on the deck, at rest and fully revealed.
 >
 > Budget **3 to 4 minutes per content slide**, so a 180-minute session is about 24 to 28 slides. Aim for 5 to 8 beats per slide, a beat being one thing you can point at and talk to. A divider before every part, a check question after every concept block. End with the wrap slide and the self-check slide.
 

@@ -30,6 +30,17 @@
   --lu-green-100: #E1F1E8;
   --lu-green-050: #F1F8F4;
 
+  /* --- Diagram families (v1.2, 2026-09-23). ONLY for lu-flow diagrams.
+     Each hue names an ontology layer, so colour carries meaning:
+       blue = our own ontology, teal = a reused domain ontology,
+       plum = the BFO upper ontology, amber = inferred by the reasoner.
+     Green stays "individual", red stays "error / impossible".
+     Every 900 on its 050 is over 11:1, every 700 on white over 5.5:1. ---- */
+  --lu-blue-900: #14285E;  --lu-blue-700: #2447A0;  --lu-blue-100: #DCE4F6;  --lu-blue-050: #F1F4FC;
+  --lu-teal-900: #093B3E;  --lu-teal-700: #0F6A6F;  --lu-teal-100: #D7EEEE;  --lu-teal-050: #EEF7F7;
+  --lu-plum-900: #3A1D50;  --lu-plum-700: #6A3C8E;  --lu-plum-100: #EADFF3;  --lu-plum-050: #F6F1FA;
+  --lu-amber-900: #4F3300; --lu-amber-700: #8C5A00; --lu-amber-100: #FAEBC4; --lu-amber-050: #FFF8E6;
+
   /* --- Neutrals: warm paper, cool ink ----------------------------------- */
   --lu-ink:      #14171C;   /* headings, primary text */
   --lu-ink-2:    #3E4650;   /* secondary text — 9.1:1 on paper */
@@ -480,6 +491,76 @@ strong, .lu-strong { font-weight: 600; }
 .lu-figure__ph-note { font-size: var(--lu-t-caption); color: var(--lu-ink-3); max-width: 46ch; }
 .lu-figure figcaption { font-size: var(--lu-t-caption); color: var(--lu-ink-3); }
 .lu-figure figcaption b { color: var(--lu-ink-2); font-weight: 600; }
+
+/* 8d. Flow diagram (lu-flow.js, v1.2) ---------------------------------------
+   Blocks and arrows from one JSON spec. Arrows name their two blocks and are
+   computed from them, so they can never drift apart. Steps come from the
+   .lu-walk bar around it. Colour is meaning, never decoration:
+     node KIND  (what layer it belongs to)  -> fill, stroke, text
+     node STATE (what the reasoner did)     -> outline, ring, badge
+   Kinds:  ours · reused · upper · individual · literal · builtin
+   States: idle · active · inferred · impossible
+   Edge kinds: asserted (default) · inferred · conflict                    */
+.lu-flow { width: 100%; display: flex; flex-direction: column; gap: var(--lu-s3); }
+.lu-flow__node {
+  --n-fill: var(--lu-paper); --n-stroke: var(--lu-ink-3); --n-text: var(--lu-ink);
+  --n-ring: var(--lu-ink); --n-flag: var(--lu-ink-2);
+  transition: opacity var(--lu-dur-2) var(--lu-ease);
+}
+.lu-flow__node[data-kind="ours"]       { --n-fill: var(--lu-blue-050);  --n-stroke: var(--lu-blue-700);  --n-text: var(--lu-blue-900); }
+.lu-flow__node[data-kind="reused"]     { --n-fill: var(--lu-teal-050);  --n-stroke: var(--lu-teal-700);  --n-text: var(--lu-teal-900); }
+.lu-flow__node[data-kind="upper"]      { --n-fill: var(--lu-plum-050);  --n-stroke: var(--lu-plum-700);  --n-text: var(--lu-plum-900); }
+.lu-flow__node[data-kind="individual"] { --n-fill: var(--lu-green-050); --n-stroke: var(--lu-green-700); --n-text: var(--lu-green-900); }
+.lu-flow__node[data-kind="literal"]    { --n-fill: var(--lu-paper-2);   --n-stroke: var(--lu-ink-3);     --n-text: var(--lu-ink); }
+.lu-flow__node[data-kind="builtin"]    { --n-fill: var(--lu-paper);     --n-stroke: var(--lu-ink-3);     --n-text: var(--lu-ink-2); }
+.lu-flow__box {
+  fill: var(--n-fill); stroke: var(--n-stroke); stroke-width: 2;
+  transition: fill var(--lu-dur-2) var(--lu-ease), stroke var(--lu-dur-2) var(--lu-ease), stroke-width var(--lu-dur-2) var(--lu-ease);
+}
+.lu-svg .lu-flow__label { fill: var(--n-text); font-weight: 600; transition: fill var(--lu-dur-2) var(--lu-ease); }
+.lu-svg .lu-flow__node[data-kind="literal"] .lu-flow__label { font-family: var(--lu-mono); font-weight: 500; }
+.lu-flow__ring { fill: none; stroke: var(--n-ring); stroke-width: 5; opacity: 0; transition: opacity var(--lu-dur-2) var(--lu-ease); }
+.lu-flow__flag { opacity: 0; transition: opacity var(--lu-dur-2) var(--lu-ease); }
+.lu-flow__flag-box { fill: var(--lu-paper); stroke: var(--n-flag); stroke-width: 1.5; }
+.lu-svg .lu-flow__flag-text { fill: var(--n-flag); font-size: 20px; font-weight: 600; }
+/* States sit on top of the kind: the layer colour stays readable. */
+.lu-flow__node[data-state="active"] .lu-flow__ring { opacity: .26; }
+.lu-flow__node[data-state="inferred"] { --n-flag: var(--lu-amber-700); }
+.lu-flow__node[data-state="inferred"] .lu-flow__box { stroke: var(--lu-amber-700); stroke-width: 3; stroke-dasharray: 9 6; }
+.lu-flow__node[data-state="inferred"] .lu-flow__flag { opacity: 1; }
+/* Impossible overrides the kind on purpose: an error must win the eye. */
+.lu-flow__node[data-state="impossible"] { --n-fill: var(--lu-red-100); --n-stroke: var(--lu-red-700); --n-text: var(--lu-red-900); --n-ring: var(--lu-red-700); --n-flag: var(--lu-red-700); }
+.lu-flow__node[data-state="impossible"] .lu-flow__box { stroke-width: 3; }
+.lu-flow__node[data-state="impossible"] .lu-flow__ring { opacity: .22; }
+.lu-flow__node[data-state="impossible"] .lu-flow__flag { opacity: 1; }
+.lu-flow__node[data-shown="false"], .lu-flow__edge[data-shown="false"] { opacity: .14; }
+
+.lu-flow__edge { --e: var(--lu-ink-2); transition: opacity var(--lu-dur-2) var(--lu-ease); }
+.lu-flow__edge[data-kind="inferred"] { --e: var(--lu-amber-700); }
+.lu-flow__edge[data-kind="conflict"] { --e: var(--lu-red-700); }
+.lu-flow__edge[data-run="true"]:not([data-kind]) { --e: var(--lu-ink); }
+.lu-flow__line { fill: none; stroke: var(--e); stroke-width: 2.5; transition: stroke var(--lu-dur-2) var(--lu-ease), stroke-width var(--lu-dur-2) var(--lu-ease); }
+.lu-flow__edge[data-kind="inferred"] .lu-flow__line { stroke-dasharray: 9 6; }
+.lu-flow__edge[data-run="true"] .lu-flow__line { stroke-width: 3.5; }
+.lu-flow__head { fill: var(--e); }
+.lu-svg .lu-flow__elabel { font-family: var(--lu-mono); font-size: 20px; fill: var(--e); }
+/* The moving dots are the reasoner's attention: amber, red on a conflict. */
+.lu-flow__dot { fill: var(--lu-amber-700); }
+.lu-flow__dot[data-kind="conflict"] { fill: var(--lu-red-700); }
+
+/* Legend: built from the kinds and states the diagram actually uses. */
+.lu-flow__legend { display: flex; flex-wrap: wrap; gap: var(--lu-s2) var(--lu-s5); font-size: var(--lu-t-caption); color: var(--lu-ink-2); }
+.lu-flow__key { display: inline-flex; align-items: center; gap: var(--lu-s2); }
+.lu-flow__swatch { width: 26px; height: 18px; border-radius: 4px; border: 2px solid var(--n-stroke); background: var(--n-fill); flex: none; }
+.lu-flow__key[data-kind="ours"]       .lu-flow__swatch { --n-fill: var(--lu-blue-050);  --n-stroke: var(--lu-blue-700); }
+.lu-flow__key[data-kind="reused"]     .lu-flow__swatch { --n-fill: var(--lu-teal-050);  --n-stroke: var(--lu-teal-700); }
+.lu-flow__key[data-kind="upper"]      .lu-flow__swatch { --n-fill: var(--lu-plum-050);  --n-stroke: var(--lu-plum-700); }
+.lu-flow__key[data-kind="individual"] .lu-flow__swatch { --n-fill: var(--lu-green-050); --n-stroke: var(--lu-green-700); border-radius: 9px; }
+.lu-flow__key[data-kind="literal"]    .lu-flow__swatch { --n-fill: var(--lu-paper-2);   --n-stroke: var(--lu-ink-3); }
+.lu-flow__key[data-kind="builtin"]    .lu-flow__swatch { --n-fill: var(--lu-paper);     --n-stroke: var(--lu-ink-3); }
+.lu-flow__key[data-state="inferred"]   .lu-flow__swatch { --n-fill: var(--lu-paper); --n-stroke: var(--lu-amber-700); border-style: dashed; }
+.lu-flow__key[data-state="impossible"] .lu-flow__swatch { --n-fill: var(--lu-red-100); --n-stroke: var(--lu-red-700); }
+@media print { .lu-flow__dot { display: none; } }
 
 /* --------------------------------------------------------------------------
    9. CODE

@@ -15,6 +15,23 @@ Every file this lab opens is finished. If something looks broken, it
 almost always is not, see "Nothing here is broken" below before
 assuming otherwise.
 
+## Working directory
+
+Complete the shared environment setup from `demos/README.md` first. Run the
+two Python commands below from `demos/session-03-ontology/`, with the shared
+`demos/.venv` activated. Paths beginning with `workspace/` are relative to
+this Session 3 folder on both macOS/Linux and Windows.
+
+## Learn Protege first
+
+New to Protege? Before this lab, watch the short video series on Protege
+fundamentals the instructor recommends:
+<https://www.youtube.com/watch?v=CduRWyyL3q8&list=PLNohRKRAHaszTV3puqFM9yXDXnEqjS6Fd>
+(The AI & DS Channel; the playlist is titled "Big Data" on YouTube, the
+Protege videos are the ones to watch). Then read the course's own
+screen by screen guide, `lectures/guide-protege.html`, which uses this
+lab's exact files.
+
 ## Run, in order
 
 1. **`python fetch_ontologies.py`** — downloads the real ontologies

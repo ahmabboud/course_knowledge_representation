@@ -103,9 +103,7 @@ not committed.
 
 ```bash
 python3 -m venv .venv-s6 && source .venv-s6/bin/activate
-pip install torch --index-url https://download.pytorch.org/whl/cpu   # torch 2.14.0+cpu
-pip install torch_geometric                                           # 2.8.0.post1
-pip install pykeen scikit-learn xgboost pandas numpy scipy            # 1.11.1 / 1.9.1 / 3.2.0 / 3.0.6 / 2.4.6 / 1.17.1
+python -m pip install -r requirements.txt
 
 python3 build_heterodata.py
 python3 train_node_classification.py
@@ -117,9 +115,15 @@ python3 tabular_baseline.py
 ```
 
 A separate venv, not the repository's shared one, same reasoning as
-Session 5's Postgres path: CPU-only PyTorch and PyTorch Geometric are
-heavy, session-specific dependencies most other sessions never touch,
-per `requirements.txt`'s own top-of-file note.
+Session 5's materialization path: its pinned `requirements.txt` keeps the
+CPU-only PyTorch and PyTorch Geometric stack reproducible without forcing
+Sessions 1 through 4 to install it.
+
+Run these commands from `demos/session-06-learning/`. The macOS/Linux setup
+is above. For Windows PowerShell, create and activate the same environment
+with `py -3.12 -m venv .venv-s6` and
+`.\.venv-s6\Scripts\Activate.ps1`, then use `python` in place of `python3`
+for the remaining commands.
 
 ## Real, run-verified output
 

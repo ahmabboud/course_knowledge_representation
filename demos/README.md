@@ -17,7 +17,7 @@ each session.
 ## Structure
 
 ```
-requirements.txt     Shared Python dependencies, every session
+requirements.txt     Pinned shared Python dependencies, Sessions 1 to 4
 docker-compose.yml    Shared services: Fuseki (TDB2) and Neo4j
 .env.example          Copy to .env once Session 7 needs an LLM key
 common/                Shared code: IRI scheme, data paths, once
@@ -50,18 +50,86 @@ writing lab code ahead of the deck it serves risks locking in the
 wrong shape. Build each session's lab code once that session's deck
 exists, from its own README here.
 
+## Start here: the lab repository root
+
+This README lives in the lab repository root, referred to below as
+`DEMO_ROOT`. It is the folder containing `requirements.txt`,
+`docker-compose.yml`, `data/`, and all `session-*/` folders. Open a terminal
+in this folder before following the setup instructions. A quick check:
+
+```text
+DEMO_ROOT/
+  requirements.txt
+  docker-compose.yml
+  data/
+  session-01-environment-and-constraints/
+```
+
+Do not create the virtual environment inside a session folder.
+
+## Install prerequisites
+
+Install these once before creating the virtual environment. The supported
+Python range is 3.12 or 3.13; do not use Python 3.14 for this repository yet.
+After installing the four tools, run Session 1's `smoke_test.py` to verify the
+machine rather than guessing from an installer window.
+
+| Tool | macOS | Windows |
+| --- | --- | --- |
+| Python 3.12 | Install from [Python.org](https://www.python.org/downloads/) or run `brew install python@3.12`; verify with `python3.12 --version`. | Install Python 3.12 from [Python.org](https://www.python.org/downloads/windows/) or run `winget install Python.Python.3.12`; verify with `py -3.12 --version`. |
+| JDK 21 | Run `brew install openjdk@21`, then register it once: `sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk`. Verify with `java -version`. | Install the JDK 21 LTS release from [Eclipse Temurin](https://adoptium.net/temurin/releases/?version=21&package=jdk), or run `winget install EclipseAdoptium.Temurin.21.JDK`. Close and reopen PowerShell, then verify with `java -version`. |
+| Docker Desktop | Install [Docker Desktop for Mac](https://docs.docker.com/desktop/setup/install/mac-install/), open it, and wait until it reports that the engine is running. Verify with `docker info`. | Install [Docker Desktop for Windows](https://docs.docker.com/desktop/setup/install/windows-install/), completing its WSL 2 or virtualization prompts. Open it and verify with `docker info`. |
+| Protégé Desktop | Download [Protégé Desktop](https://protege.stanford.edu/software/), move `Protégé.app` to `/Applications`, and open it once. | Download [Protégé Desktop](https://protege.stanford.edu/software/), use the Windows installer if offered, and open it once. If using a ZIP distribution, extract it under `%LOCALAPPDATA%\Programs\Protege-<version>` so the smoke test can locate it. |
+
 ## Setup, once
 
-1. `python3 -m venv .venv && source .venv/bin/activate`
-2. `pip install -r requirements.txt`
-3. `docker compose up -d` — brings up Fuseki (`localhost:3030`) and
-   Neo4j (`localhost:7474` browser, `localhost:7687` bolt). Individual
-   sessions may add their own `docker-compose.yml` for a service only
-   that session needs (PostgreSQL in Session 5, for example); run that
-   session's compose file in addition to this one, not instead of it.
-4. Copy `.env.example` to `.env` once you reach Session 7. Not needed
+### macOS or Linux
+
+```sh
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+### Windows (PowerShell)
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
+
+Check `python3.12 --version` (macOS/Linux) or `py -3.12 --version`
+(Windows) before creating the environment. Python 3.14 is currently too new
+for the Session 1 profiling dependency.
+
+If PowerShell blocks activation, run
+`Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` in that terminal,
+then run the activation command again. This changes the policy only for the
+current terminal session.
+
+After activating the environment on either platform:
+
+1. Start Docker Desktop and run `docker info`. Session 1's smoke test checks
+   that Docker's engine is reachable; it does not start any course service.
+2. Before Session 2, run `docker compose up -d`. This starts Fuseki
+   (`localhost:3030`) and Neo4j (`localhost:7474` browser,
+   `localhost:7687` bolt). Individual sessions may add their own
+   `docker-compose.yml` for a service only that session needs (PostgreSQL in
+   Session 5, for example); run that session's compose file in addition to
+   this one, not instead of it.
+3. Copy `.env.example` to `.env` once you reach Session 7. Not needed
    before then.
-5. See `data/README.md` and run its fetch step before Session 1.
+4. See `data/README.md` and run its fetch step before Session 1.
+
+## Session-specific environments
+
+The root `requirements.txt` is intentionally installable as one shared
+environment for Sessions 1 through 4. Session 5's Morph-KGC materialization
+uses an incompatible `rdflib` range, and Session 6's graph-learning stack
+uses an incompatible pandas range. Their pinned requirements files live next
+to those labs and are installed only into their own virtual environments, as
+their READMEs specify.
 
 ## Conventions, so eight sessions of code still look like one thing
 

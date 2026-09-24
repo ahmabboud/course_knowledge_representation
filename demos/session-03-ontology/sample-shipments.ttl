@@ -1,0 +1,45 @@
+## sample-shipments.ttl
+##
+## A few individuals (ABox data) for the "let the reasoner classify it"
+## step of the Session 3 lab. Imports the fixed reference ontology; the
+## workspace catalog maps its IRI to the local file, so this opens
+## offline. Open it from the workspace/ folder, run ELK, then look at
+## the "At-risk shipment" class in the Individuals by class tab, or ask
+## DL Query for 'At-risk shipment'.
+##
+## What the reasoner should conclude (verified with ROBOT, 2026-09-22):
+##   ship-4471  handled by DHL (not sanctioned)       -> not at risk
+##   ship-4472  handled by Blackline (sanctioned)     -> At-risk shipment
+##   ship-4473  no type given at all, only "handled by Blackline"
+##              -> the domain of "handled by" makes it a Shipment,
+##                 then the definition makes it an At-risk shipment.
+##
+## Blackline Freight is a fictional company. Never label a real company
+## as sanctioned in teaching material.
+
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ioc:  <https://spec.industrialontologies.org/ontology/construct/> .
+@prefix ul:   <https://ul.edu.lb/kr/scm#> .
+
+<https://ul.edu.lb/kr/sample-shipments> a owl:Ontology ;
+    rdfs:label "UL Knowledge Representation course: sample shipments (ABox)" ;
+    owl:imports <https://ul.edu.lb/kr/scm#> .
+
+ul:carrier-dhl a owl:NamedIndividual , ioc:Carrier ;
+    rdfs:label "DHL" .
+
+ul:carrier-blackline a owl:NamedIndividual , ul:SanctionedCarrier ;
+    rdfs:label "Blackline Freight (fictional, sanctioned)" .
+
+ul:ship-4471 a owl:NamedIndividual , ioc:Shipment ;
+    rdfs:label "shipment 4471" ;
+    ul:handledBy ul:carrier-dhl .
+
+ul:ship-4472 a owl:NamedIndividual , ioc:Shipment ;
+    rdfs:label "shipment 4472" ;
+    ul:handledBy ul:carrier-blackline .
+
+ul:ship-4473 a owl:NamedIndividual ;
+    rdfs:label "shipment 4473" ;
+    ul:handledBy ul:carrier-blackline .

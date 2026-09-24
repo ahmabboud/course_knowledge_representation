@@ -5,14 +5,42 @@ report for both datasets, and a written constraint inventory with
 evidence for each entry, per `course_knowledge_representation/lectures/kr-session-01.html`'s
 lab brief slide.
 
+## Working directories
+
+Start in `DEMO_ROOT`, the folder containing `requirements.txt`, `data/`, and
+every `session-*/` folder. It is described in the shared `README.md` one
+level above this folder. Complete that setup first and keep `DEMO_ROOT/.venv`
+activated. The commands below work in macOS/Linux shells and Windows
+PowerShell because `cd` and `python` have the same use after activation.
+
 ## Run, in order
 
-1. `python smoke_test.py` — checks Python 3.12, JDK 21, Docker, and that
-   Protege is installed, in one pass. Matches the syllabus's own
-   smoke-test description; run it before assuming anything else works.
-2. `python data/fetch_data.py` from the repository root, if not already
-   done.
-3. `python profiling.py` — profiles both DataCo and Brunel with
+1. Starting from `DEMO_ROOT`, run:
+
+   ```text
+   cd session-01-environment-and-constraints
+   python smoke_test.py
+   ```
+
+   This checks Python 3.12, JDK 21, Docker, and that Protege is installed in
+   one pass. Run it before assuming anything else works.
+2. Return to `DEMO_ROOT` and fetch the data:
+
+   ```text
+   cd ..
+   python data/fetch_data.py
+   ```
+
+   This downloads the source datasets and exports Brunel's workbook sheets to
+   CSV. `openpyxl` comes from the shared `requirements.txt`.
+3. Return to this Session 1 folder and run:
+
+   ```text
+   cd session-01-environment-and-constraints
+   python profiling.py
+   ```
+
+   It profiles both DataCo and Brunel with
    ydata-profiling, writes an HTML report per dataset next to this
    README (gitignored, regenerate, do not commit). Cluster values in
    OpenRefine separately; OpenRefine is a GUI tool, not scripted here.

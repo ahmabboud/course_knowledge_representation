@@ -100,7 +100,7 @@
 <!-- ==================================================================== 03 -->
 <section class="slide" data-label="What you will have built by Session 8" data-section="Opening" data-minutes="4">
   <div class="lu-eyebrow">The promise</div>
-  <h2 class="lu-h1" style="max-width:34ch">In eight sessions you answer that question in one sentence of English.</h2>
+  <h2 class="lu-h2" style="max-width:66ch">In eight sessions you answer that question in one sentence of English.</h2>
 
   <div class="lu-split" style="margin-top:var(--lu-s4)">
     <div class="lu-stack">
@@ -177,35 +177,34 @@ last quarter, and who did we ship them to?
 <!-- ==================================================================== 06 -->
 <section class="slide" data-label="Storing data against representing meaning" data-section="Meaning and storage" data-minutes="7">
   <div class="lu-eyebrow">The distinction the course is built on</div>
-  <h2 class="lu-h1" style="max-width:36ch">A schema records shape. It does not record what anything means.</h2>
+  <h2 class="lu-h2" style="max-width:66ch">A schema records shape. It does not record what anything means.</h2>
 
-  <div class="lu-split" style="margin-top:var(--lu-s4)">
+  <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
-      <p class="lu-p">A column type says a value is a string of at most 20 characters. It does not say the string names a legal entity, or that two of them may be the same company.</p>
+      <p class="lu-p">A column type says a value is a string of at most 20 characters. It never says the string names a legal entity, or that two may be one company.</p>
       <ul class="lu-list">
         <li>Meaning lives in three places, <b>none machine-readable</b>: four people's heads, a stale wiki, and 300 report WHERE clauses.</li>
         <li>A <button class="lu-term" type="button" data-term="Semantic layer" data-kind="Architecture"><span class="lu-term-word">semantic layer</span><template>A <b>semantic layer</b> is an explicit, machine-readable model of what the organisation's data means, sitting above the systems that store it.<p>Explicit is the load-bearing word. The knowledge already exists; it is just distributed across people, documents and query code where no program can reach it. The work of this course is moving it somewhere a program can.</p></template></button> is that knowledge where a program can reach it.</li>
       </ul>
+      <div class="lu-reveal" data-build="2">
+        <button class="lu-reveal__btn" type="button">Those comments are the course</button>
+        <div class="lu-reveal__panel" hidden>
+          <p>Billing against plant: two properties, Session 3. Merged duplicate: a SHACL rule, Session 4. Vendor against manufacturer: entity resolution, Session 5.</p>
+        </div>
+      </div>
     </div>
 
     <div class="lu-stack" data-build="1">
-      <div class="lu-code lu-code--sm" data-name="what the schema tells you, and what it does not">
+      <div class="lu-code lu-code--sm" data-name="what the schema says, and does not">
 <pre><code><span class="tok-com">-- Everything the database knows:</span>
 <span class="tok-kw">CREATE TABLE</span> supplier (
   vendor_id <span class="tok-kw">VARCHAR</span>(20) <span class="tok-kw">PRIMARY KEY</span>,
   name <span class="tok-kw">VARCHAR</span>(120), country <span class="tok-kw">CHAR</span>(2),
   status <span class="tok-kw">CHAR</span>(1) );
-
 <span class="tok-com">-- What a human knows and it does not:</span>
-<span class="tok-com">--   'X' is a merged duplicate, not a deletion</span>
+<span class="tok-com">--   'X' = merged duplicate, not deleted</span>
 <span class="tok-com">--   country is billing, not the plant</span>
 <span class="tok-com">--   vendor and manufacturer both live here</span></code></pre>
-      </div>
-      <div class="lu-reveal" data-build="2">
-        <button class="lu-reveal__btn" type="button">Those comments are the course</button>
-        <div class="lu-reveal__panel" hidden>
-          <p>Billing against plant becomes two properties (Session 3). The merged-duplicate rule becomes a SHACL shape that fails a build (Session 4). Vendor against manufacturer becomes entity resolution with a reported error rate (Session 5). The course is taking those comments out of people's heads and making them execute.</p>
-        </div>
       </div>
     </div>
   </div>
@@ -221,7 +220,7 @@ last quarter, and who did we ship them to?
 <!-- ==================================================================== 07 -->
 <section class="slide" data-label="Where meaning leaks: the system boundary" data-section="Meaning and storage" data-minutes="7">
   <div class="lu-eyebrow">Why this gets worse, not better, with scale</div>
-  <h2 class="lu-h1" style="max-width:34ch">Each system is locally correct. The loss happens between them.</h2>
+  <h2 class="lu-h2" style="max-width:66ch">Each system is locally correct. The loss happens between them.</h2>
 
   <div class="lu-split" style="margin-top:var(--lu-s4)">
     <div class="lu-stack">
@@ -263,7 +262,7 @@ country     <span class="tok-str">'CZ'</span>   <span class="tok-com">-- manufac
 <!-- ==================================================================== 08 -->
 <section class="slide slide--tint" data-label="Check: what a working join proves" data-section="Meaning and storage" data-minutes="4">
   <div class="lu-eyebrow">Check question</div>
-  <div class="lu-split lu-split--wide-left">
+  <div class="lu-stack">
     <div class="lu-mcq"
          data-qid="s1-q1"
          data-answer="b"
@@ -271,7 +270,7 @@ country     <span class="tok-str">'CZ'</span>   <span class="tok-com">-- manufac
          data-fb-correct=" A join shows values coincide. Shared meaning is a separate claim."
          data-fb-wrong=" Values matching is about strings. Shared meaning is a modelling claim.">
       <p class="lu-mcq__q">Two systems store suppliers as <code>vendor_id</code> and <code>supplier_code</code>. An engineer maps them one to one and the join succeeds on 80 percent of rows. What has been established?</p>
-      <div class="lu-mcq__opts">
+      <div class="lu-mcq__opts" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr))">
         <button class="lu-mcq__opt" type="button" data-key="a">The two columns mean the same thing<span class="lu-mcq__why" hidden>A legal entity and a manufacturing plant overlap heavily and stay different things.</span></button>
         <button class="lu-mcq__opt" type="button" data-key="b">Only that 80 percent of the values coincide<span class="lu-mcq__why" hidden>Correct. Meaning must be argued and written down separately.</span></button>
         <button class="lu-mcq__opt" type="button" data-key="c">That the second system's schema is wrong<span class="lu-mcq__why" hidden>Neither is wrong. Both are locally correct, which is what hides the mismatch.</span></button>
@@ -279,7 +278,7 @@ country     <span class="tok-str">'CZ'</span>   <span class="tok-com">-- manufac
       </div>
       <div class="lu-mcq__fb" hidden></div>
     </div>
-    <div class="lu-stack">
+    <div>
       <div class="lu-callout lu-callout--concept">
         <span class="lu-callout__label">The habit this question is training</span>
         <p class="lu-sub"><b>Separate what the data shows from what you decided it means.</b> Every hour of this course lives on that line.</p>
@@ -376,32 +375,24 @@ country     <span class="tok-str">'CZ'</span>   <span class="tok-com">-- manufac
 <!-- ==================================================================== 12 -->
 <section class="slide" data-label="The open world assumption" data-section="Reference architecture" data-minutes="8">
   <div class="lu-eyebrow">The most expensive misunderstanding in this room</div>
-  <h2 class="lu-h1" style="max-width:34ch">Drag the seam. Same data, same question, two different truths.</h2>
-
-  <div class="lu-compare" data-a="SQL · closed world" data-b="RDF · open world" data-start="50" style="margin-top:var(--lu-s4)">
-    <div class="lu-compare__stage" style="min-height:250px">
-      <div class="lu-compare__pane lu-compare__pane--a">
-<pre class="lu-mono" style="font-size:22px;line-height:1.8;margin:0">Q: Does shipment 4471 have a carrier?
-
+  <h2 class="lu-h2" style="max-width:66ch">Same data, same question, two different truths.</h2>
+  <div class="lu-split" style="margin-top:var(--lu-s3)">
+    <div class="lu-card">
+      <span class="lu-card__label">SQL &middot; closed world</span>
+      <pre class="lu-mono" style="font-size:22px;line-height:1.5;margin:0">Q: Does shipment 4471 have a carrier?
 The table has no row for it.
-
-ANSWER: No. It has no carrier.
-
+<b>ANSWER: No. It has no carrier.</b>
 Absence of data means false.</pre>
-      </div>
-      <div class="lu-compare__pane lu-compare__pane--b">
-<pre class="lu-mono" style="font-size:22px;line-height:1.8;margin:0">Q: Does shipment 4471 have a carrier?
-
+    </div>
+    <div class="lu-card">
+      <span class="lu-card__label">RDF &middot; open world</span>
+      <pre class="lu-mono" style="font-size:22px;line-height:1.5;margin:0">Q: Does shipment 4471 have a carrier?
 The graph has no triple for it.
-
-ANSWER: Unknown. Nobody has said.
-
+<b>ANSWER: Unknown. Nobody has said.</b>
 Absence of data means unknown.</pre>
-      </div>
     </div>
   </div>
-
-  <div class="lu-split" style="margin-top:var(--lu-s5)" data-build="1">
+<div class="lu-split" style="margin-top:var(--lu-s5)" data-build="1">
     <div class="lu-stack lu-stack--tight">
       <span class="lu-tag lu-tag--green">Why open world is the right default here</span>
       <ul class="lu-list lu-list--tight lu-list--check">
@@ -417,7 +408,7 @@ Absence of data means unknown.</pre>
     </div>
   </div>
   <template data-notes>
-    <p>Eight minutes. Drag the seam slowly, twice, and let them read both panes before you say anything.</p>
+    <p>Eight minutes. Let them read both cards, left then right, before you say anything.</p>
     <ul>
       <li>This is the concept most likely to be quietly misunderstood all term, so check it now rather than discovering it at Milestone 1.</li>
       <li>Expected pushback: "then the graph is useless for anything operational." Answer: alone, nearly. That is precisely the gap SHACL closes, and it is why the course spends a whole session on it.</li>
@@ -466,9 +457,9 @@ Absence of data means unknown.</pre>
 <!-- ==================================================================== 15 -->
 <section class="slide" data-label="Where a semantic layer pays" data-section="Value and tooling" data-minutes="6">
   <div class="lu-eyebrow">The business case, stated in the terms a business states it in</div>
-  <h2 class="lu-h1" style="max-width:34ch">Four questions, each worth more than the project costs</h2>
+  <h2 class="lu-h2" style="max-width:66ch">Four questions, each worth more than the project costs</h2>
 
-  <div class="lu-grid" style="margin-top:var(--lu-s5)">
+  <div class="lu-grid" style="margin-top:var(--lu-s3)">
     <div class="lu-card lu-col-3" data-build="1">
       <span class="lu-card__label">01 · Traceability</span>
       <h3 class="lu-h3">Which products contain a part from this plant?</h3>
@@ -491,7 +482,7 @@ Absence of data means unknown.</pre>
     </div>
   </div>
 
-  <div class="lu-callout" style="margin-top:var(--lu-s4)" data-build="5">
+  <div class="lu-callout" data-build="5">
     <span class="lu-callout__label">Keep this framing</span>
     <p class="lu-sub">Nobody funds an ontology. <b>They fund question 1 with a deadline.</b></p>
   </div>
@@ -504,7 +495,7 @@ Absence of data means unknown.</pre>
 <!-- ==================================================================== 16 -->
 <section class="slide" data-label="The tooling landscape, honestly" data-section="Value and tooling" data-minutes="5">
   <div class="lu-eyebrow">Something a textbook cannot tell you</div>
-  <h2 class="lu-h1" style="max-width:36ch">Half the tools in the tutorials you will find are dead.</h2>
+  <h2 class="lu-h2" style="max-width:66ch">Half the tools in the tutorials you will find are dead.</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s4)">
     <table class="lu-table">
@@ -526,7 +517,7 @@ Absence of data means unknown.</pre>
       <div class="lu-reveal">
         <button class="lu-reveal__btn" type="button">The category that catches experienced engineers</button>
         <div class="lu-reveal__panel" hidden>
-          <p>A fresh version number on a frozen stack. AmpliGraph released in July 2026 and pins TensorFlow 2.15 and Python 3.11 or lower. It looks alive and will not install beside anything current, so you lose an hour and conclude you did something wrong. Licences hide the same way, and you meet one in Session 3.</p>
+          <p>A fresh version on a frozen stack. AmpliGraph shipped in July 2026 yet pins TensorFlow 2.15 and Python 3.11, so it will not install beside anything current.</p>
         </div>
       </div>
     </div>
@@ -545,7 +536,7 @@ Absence of data means unknown.</pre>
   <div class="lu-eyebrow">Room poll · 45 seconds</div>
   <div class="lu-poll" data-qid="s1-poll" data-seconds="45" data-answer="b" data-label="Which library would you build a 2026 course on?">
       <p class="lu-mcq__q">You are choosing a graph learning library for next year and have twenty minutes. Which evidence settles it?</p>
-      <div class="lu-mcq__opts">
+      <div class="lu-mcq__opts" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr))">
         <button class="lu-mcq__opt" type="button" data-key="a">The most tutorials and answers online<span class="lu-mcq__why" hidden>A lagging indicator: it measures popularity three years ago.</span></button>
         <button class="lu-mcq__opt" type="button" data-key="b">The last release date, and whether its pins install<span class="lu-mcq__why" hidden>Correct, and four minutes of work. It catches both failure modes.</span></button>
         <button class="lu-mcq__opt" type="button" data-key="c">The number of GitHub stars<span class="lu-mcq__why" hidden>Stars never go down. A project can be archived six years and keep every one.</span></button>
@@ -612,13 +603,12 @@ Absence of data means unknown.</pre>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept">
         <span class="lu-callout__label">A worked example, end to end</span>
-        <p class="lu-sub">Step 2 shows <code>plant_port</code> has 41 distinct pairs while plant times port would allow 200. Step 3: a plant only ships through ports it is linked to. Step 4: written down with the 41 against 200 as evidence. Step 5: three orders violate it, and they turn out to be transhipments, so the <em>rule</em> was wrong, not the rows.</p>
+        <p class="lu-sub">Step 2: <code>plant_port</code> has 41 pairs where 200 are possible. Step 3: a plant ships only through its linked ports. Step 4: write it down, 41 against 200 as evidence. Step 5: three orders break it. They are transhipments, so the <em>rule</em> was wrong, not the rows.</p>
       </div>
       <div class="lu-reveal">
-        <button class="lu-reveal__btn" type="button">Why step 5 is the one people skip, and why it is the graded one</button>
+        <button class="lu-reveal__btn" type="button">Why step 5 is the graded one</button>
         <div class="lu-reveal__panel" hidden>
-          <p>Because finding a rule feels like finishing, and hunting for a counter-example feels like undoing your own work. It is the opposite: a rule you have attacked and that survived is worth ten you merely observed.</p>
-          <p>It also decides where the rule goes later. A rule with no exceptions becomes a SHACL shape with severity Violation. A rule with real exceptions becomes a Warning, or a class distinction in the ontology. That decision starts here, in Session 1.</p>
+          <p>A rule that survived an attack is worth ten merely observed. The attack also decides its future: no exceptions becomes a SHACL Violation in Session 4, real exceptions become a Warning or a new class.</p>
         </div>
       </div>
     </div>
@@ -637,37 +627,34 @@ Absence of data means unknown.</pre>
   <div class="lu-eyebrow">Discussion · 9 minutes · which stage failed?</div>
   <h2 class="lu-h2">Three failures. For each one, name the stage of the architecture that broke.</h2>
 
-  <div class="lu-grid" style="margin-top:var(--lu-s5)">
+  <div class="lu-grid" style="margin-top:var(--lu-s3)">
     <div class="lu-card lu-col-4">
       <span class="lu-card__label">Case A</span>
-      <p class="lu-sub">A recall notice went to 400,000 customers because the only available query was "every product made in that quarter". The specific plant could not be traced through the bill of materials.</p>
+      <p class="lu-sub">A recall went to 400,000 customers. The one plant at fault could not be traced through the bill of materials.</p>
       <div class="lu-reveal">
         <button class="lu-reveal__btn" type="button">Which stage</button>
-        <div class="lu-reveal__panel" hidden><p>Mapping and integration. The bill of materials existed in PLM and was never connected to shipment records, so the multi-hop path did not exist to be walked.</p></div>
+        <div class="lu-reveal__panel" hidden><p>Integration. The bill of materials sat in PLM, never linked to shipments.</p></div>
       </div>
     </div>
     <div class="lu-card lu-col-4">
       <span class="lu-card__label">Case B</span>
-      <p class="lu-sub">A dashboard reported 12 percent of shipments as late. The operations team knew the real figure was closer to 30 percent. Both numbers were computed correctly.</p>
+      <p class="lu-sub">A dashboard said 12 percent of shipments were late. Operations knew it was nearer 30. Both were computed correctly.</p>
       <div class="lu-reveal">
         <button class="lu-reveal__btn" type="button">Which stage</button>
-        <div class="lu-reveal__panel" hidden><p>The ontology, or rather its absence. Two teams meant different things by "late": against the committed date, or against the customer's requested date. Neither definition was written anywhere, so neither was wrong.</p></div>
+        <div class="lu-reveal__panel" hidden><p>The ontology, by its absence. Two teams meant two different "late", and nobody wrote either down.</p></div>
       </div>
     </div>
     <div class="lu-card lu-col-4">
       <span class="lu-card__label">Case C</span>
-      <p class="lu-sub">An assistant answered a supplier question fluently and confidently. The supplier had been delisted eight months earlier. Nobody caught it for a week.</p>
+      <p class="lu-sub">An assistant answered fluently about a supplier delisted eight months earlier. Nobody noticed for a week.</p>
       <div class="lu-reveal">
         <button class="lu-reveal__btn" type="button">Which stage</button>
-        <div class="lu-reveal__panel" hidden><p>The access layer, and specifically the missing refusal path. The system had no way to say the data was stale or that it did not know, which is graded explicitly in Session 7.</p></div>
+        <div class="lu-reveal__panel" hidden><p>The access layer. It had no way to say "stale" or "I do not know". Session 7 grades that.</p></div>
       </div>
     </div>
   </div>
 
-  <div class="lu-callout" style="margin-top:var(--lu-s5)">
-    <span class="lu-callout__label">Then, for the remaining minutes</span>
-    <p class="lu-sub">Compare inventories in pairs. Count the rules only one of you found. That number is the argument for writing meaning down.</p>
-  </div>
+  <p class="lu-sub"><b>Then, in pairs:</b> compare inventories and count the rules only one of you found. That number is the argument for writing meaning down.</p>
   <template data-notes>
     <p>Nine minutes. Take each case as a show of hands before opening the reveal, and let them disagree.</p>
     <ul>
@@ -686,11 +673,11 @@ Absence of data means unknown.</pre>
       <p class="lu-statement">Integration does not fail because the data is dirty. It fails because two correct models of the world met and nobody wrote down how they differed.</p>
       <div class="lu-callout">
         <span class="lu-callout__label">Before Session 2</span>
-        <p class="lu-sub">Hogan et al. Chapter 1, Introduction, and Chapter 2, Data Graphs, free in full at kgbook.org. Sequeda and Lassila Chapter 1. Bring your constraint inventory; it is the input to Sessions 3, 4 and 5 and you will be asked for it in all three.</p>
+        <p class="lu-sub">Hogan et al., Chapters 1 and 2, free at kgbook.org. Sequeda and Lassila, Chapter 1. Bring your constraint inventory: Sessions 3, 4 and 5 all start from it.</p>
       </div>
-      <div class="lu-callout" data-build="1">
-        <span class="lu-callout__label">Team and topic, due before Session 2</span>
-        <p class="lu-sub">Form your team, 2 to 3, self-chosen. Pick a project topic and an open database from the menu, or propose your own. From here the course keeps teaching on today's supply chain case, but your team's own project is what gets evaluated at the end. Not on a team by then, you will be placed into one with space.</p>
+      <div class="lu-row">
+        <span class="lu-tag lu-tag--red">Deliverable due tonight</span>
+        <span class="lu-caption" style="flex:1">Push the profiling reports and the constraint inventory to your repository before you leave.</span>
       </div>
     </div>
 
@@ -698,11 +685,11 @@ Absence of data means unknown.</pre>
       <div class="lu-card">
         <span class="lu-card__label">Next session</span>
         <h3 class="lu-h3">Session 2 · RDF, SPARQL and the Graph as a Data Model</h3>
-        <p class="lu-sub">You design an IRI scheme and defend it, load a slice of today's data into a real endpoint, and write the multi-hop query that was awkward in SQL. By the end of next week the graph on slide 3 exists, in small.</p>
+        <p class="lu-sub">Design an IRI scheme, load today's data into a real endpoint, and write the multi-hop query SQL made awkward.</p>
       </div>
-      <div class="lu-row">
-        <span class="lu-tag lu-tag--red">Deliverable due tonight</span>
-        <span class="lu-caption" style="flex:1">Push the profiling reports and the constraint inventory to your repository before you leave.</span>
+      <div class="lu-callout" data-build="1">
+        <span class="lu-callout__label">Team and topic, due before Session 2</span>
+        <p class="lu-sub">Teams of 2 to 3, your choice. Pick a topic and an open database from the menu, or propose your own. Lectures stay on the supply chain case; <b>your team's project is what gets graded</b>. No team by then: you are placed in one.</p>
       </div>
     </div>
   </div>

@@ -164,11 +164,30 @@ def write_licences_note():
     print(f"Wrote {dst}")
 
 
+LAB_FILES = [
+    "scro-extension-v0.ttl",          # the lab's starting point, contains the errors the reasoner finds
+    "scro-extension-reference.ttl",   # the fixed version
+    "sample-shipments.ttl",           # a few individuals, imports the fixed version
+]
+COURSE_CATALOG_ENTRY = (
+    '    <uri id="Course reference ontology" name="https://ul.edu.lb/kr/scm#" '
+    'uri="./scro-extension-reference.ttl"/>\n'
+)
+
+
 def copy_reference():
-    src = HERE / "scro-extension-reference.ttl"
-    dst = WORKSPACE / "scro-extension-reference.ttl"
-    shutil.copy2(src, dst)
-    print(f"Copied {src.name} into workspace/")
+    """Copy the three lab files into workspace/ (Protege only finds the
+    offline catalog when the opened file sits next to it), and register
+    the course ontology in that catalog so sample-shipments.ttl can import
+    it offline."""
+    for name in LAB_FILES:
+        shutil.copy2(HERE / name, WORKSPACE / name)
+        print(f"Copied {name} into workspace/")
+    catalog = WORKSPACE / "catalog-v001.xml"
+    text = catalog.read_text()
+    if "https://ul.edu.lb/kr/scm#" not in text:
+        catalog.write_text(text.replace("</catalog>", COURSE_CATALOG_ENTRY + "</catalog>"))
+        print("Registered https://ul.edu.lb/kr/scm# in catalog-v001.xml")
 
 
 def verify_catalog():

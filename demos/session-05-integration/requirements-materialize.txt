@@ -1,0 +1,5 @@
+# Morph-KGC cannot share the root environment: it requires rdflib<7.3,
+# whereas the shared pySHACL environment requires rdflib>=7.3.
+morph-kgc==2.10.0
+psycopg2-binary==2.9.11
+rdflib==7.2.1

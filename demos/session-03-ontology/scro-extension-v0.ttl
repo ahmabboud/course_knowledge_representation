@@ -1,0 +1,339 @@
+## scro-extension-v0.ttl
+##
+## STARTING POINT for the Session 3 lab. Open this file in Protege from
+## the workspace/ folder (so every import resolves offline).
+##
+## This file contains real modelling errors, on purpose. They are the
+## errors the reasoner finds in the lab. Do not try to spot them by
+## reading: run the reasoner first, exactly as the Protege guide shows,
+## and let it tell you. The fixed version is scro-extension-reference.ttl;
+## open it only after you have fixed this one yourself.
+##
+## Ontology IRI differs from the reference file on purpose, so both can
+## be open in Protege at the same time without clashing.
+
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix iof:  <https://spec.industrialontologies.org/ontology/core/Core/> .
+@prefix ioc:  <https://spec.industrialontologies.org/ontology/construct/> .
+@prefix gs1:  <https://gs1.org/voc/> .
+@prefix ul:   <https://ul.edu.lb/kr/scm#> .
+
+<https://ul.edu.lb/kr/scm/v0> a owl:Ontology ;
+    rdfs:label "UL Knowledge Representation course: supply chain ontology, v0 (lab starting point)" ;
+    owl:imports <https://spec.industrialontologies.org/ontology/supplychain/SupplyChain/> .
+
+## Two annotation properties every class below uses. Declared here once
+## so the reasoner and ROBOT both recognise them as annotations, not as
+## undeclared punning.
+
+ul:answersCQ a owl:AnnotationProperty ;
+    rdfs:label "answers competency question" ;
+    rdfs:comment "The competency question (see competency_questions.md) this class exists to answer. A class with none has not earned its place, per the lecture's own rule." .
+
+ul:profile a owl:AnnotationProperty ;
+    rdfs:label "intended OWL profile" ;
+    rdfs:comment "EL, DL or QL: which profile this axiom set was written for. Tagged here using this course's own working rule (see the lab brief's terminal check): a class stays EL as long as it only uses conjunction and someValuesFrom; allValuesFrom, cardinality, complementOf or inverseOf push it to DL." .
+
+########################################################################
+## CQ 1. Which shipments arrived after their committed date last
+## quarter, by carrier?
+########################################################################
+
+ul:LateShipment a owl:Class ;
+    rdfs:subClassOf ioc:Shipment ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty ul:deliveredAfter ;
+        owl:someValuesFrom ul:CommittedDate
+    ] ;
+    rdfs:label "Late shipment"@en ;
+    skos:definition "A transport whose actual delivery follows the committed delivery date."@en ;
+    ul:profile "EL" ;
+    ul:answersCQ "Which shipments arrived after their committed date last quarter, by carrier?" .
+
+## CancelledShipment is deliberately left without a ul:answersCQ. Run
+## the "classes with no competency question" query from the lecture's
+## own lab brief slide against this file and this class is the one it
+## should find. Per the lecture's rule, that means: question whether it
+## earns its place. It stays in this reference file on purpose, as the
+## exercise, discuss it live rather than deleting it.
+ul:CancelledShipment a owl:Class ;
+    rdfs:subClassOf ioc:Shipment ;
+    rdfs:label "Cancelled shipment"@en ;
+    skos:definition "A shipment withdrawn before delivery."@en ;
+    ul:profile "EL" .
+
+ul:LateShipment owl:disjointWith ul:CancelledShipment .
+
+ul:deliveredAfter a owl:ObjectProperty ;
+    rdfs:label "delivered after"@en ;
+    rdfs:domain ul:LateShipment ;
+    owl:inverseOf ul:committedBefore .
+
+ul:committedBefore a owl:ObjectProperty ;
+    rdfs:label "committed before"@en .
+
+## CommittedDate also has no ul:answersCQ, but for the opposite reason
+## to CancelledShipment above: it is a support class, referenced only
+## inside ul:LateShipment's own restriction, not a business entity a
+## competency question would name directly. The same query will find
+## this one too; unlike CancelledShipment, that is expected, a support
+## class earns its place by being used inside a class that answers a
+## question, not by answering one itself.
+ul:CommittedDate a owl:Class ;
+    rdfs:label "Committed date"@en ;
+    skos:definition "The delivery date a carrier committed to at booking."@en ;
+    ul:profile "EL" .
+
+## handledBy and Carrier are shared by several classes below, declared
+## once here rather than beside the first class that needs them.
+
+ul:handledBy a owl:ObjectProperty ;
+    rdfs:label "handled by"@en ;
+    rdfs:domain ioc:Shipment ;
+    rdfs:range ioc:Carrier .
+
+########################################################################
+## CQ 2. Which plants can legally serve port X, and which of those
+## served it in practice?
+########################################################################
+
+## Plant and Port are support classes, the same category as
+## CommittedDate above, not business entities a competency question
+## names on their own, they exist to be the filler of
+## ul:PlantPortAuthorization's two restrictions below. The "classes
+## with no competency question" query finds both, expected, same
+## reasoning as CommittedDate.
+
+ul:Plant a owl:Class ;
+    rdfs:subClassOf ioc:Facility ;
+    rdfs:label "Plant"@en ;
+    skos:definition "A manufacturing facility that ships finished goods."@en ;
+    ul:profile "EL" .
+
+## "Port" is not a class SCRO or GS1 provides, checked against both.
+## Modelled as a Facility too, a simplification for course purposes: a
+## real customs or maritime ontology would separate a port authority
+## from the physical terminal, out of scope here.
+ul:Port a owl:Class ;
+    rdfs:subClassOf ioc:Facility ;
+    rdfs:label "Port"@en ;
+    skos:definition "A facility through which shipments enter or leave a country."@en ;
+    ul:profile "EL" .
+
+## The competency question has two parts, legally authorized and
+## actually used, so this needs two separate properties, not one:
+## authorization is a standing legal fact, actual use is an
+## operational one, and a plant can hold one without the other.
+
+ul:PlantPortAuthorization a owl:Class ;
+    rdfs:label "Plant-port authorization"@en ;
+    skos:definition "A record that a plant is legally certified to ship through a given port."@en ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty ul:heldBy ;
+        owl:someValuesFrom ul:Plant
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty ul:authorizes ;
+        owl:someValuesFrom ul:Port
+    ] ;
+    ul:profile "EL" ;
+    ul:answersCQ "Which plants can legally serve port X, and which of those served it in practice?" .
+
+ul:heldBy a owl:ObjectProperty ;
+    rdfs:label "held by"@en ;
+    rdfs:domain ul:PlantPortAuthorization ;
+    rdfs:range ul:Plant .
+
+ul:authorizes a owl:ObjectProperty ;
+    rdfs:label "authorizes"@en ;
+    rdfs:domain ul:PlantPortAuthorization ;
+    rdfs:range ul:Port .
+
+ul:actuallyServed a owl:ObjectProperty ;
+    rdfs:label "actually served"@en ;
+    rdfs:comment "A plant having actually shipped through a port, an operational fact, independent of ul:PlantPortAuthorization, an authorized plant that has never shipped through that port has the authorization without this."@en ;
+    rdfs:domain ul:Plant ;
+    rdfs:range ul:Port .
+
+########################################################################
+## CQ 3. If supplier S fails, which finished goods lose their only
+## source of a component?
+########################################################################
+
+## The real SCRO release already provides exactly the two properties
+## this needs, ioc:dependsOnProduct and ioc:dependsOnSupplier
+## (confirmed in the release's own SupplyChain.rdf). Reused directly,
+## nothing new needed for the relationship itself, only for "the only
+## one", which is a cardinality fact SCRO does not assert on your
+## behalf.
+
+ul:SoleSourcedComponent a owl:Class ;
+    rdfs:subClassOf ioc:MaterialComponent ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty ioc:dependsOnSupplier ;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass ioc:Supplier
+    ] ;
+    rdfs:label "Sole-sourced component"@en ;
+    skos:definition "A material component with exactly one supplying relationship, so that supplier failing removes its only source."@en ;
+    ul:profile "DL" ;
+    ul:answersCQ "If supplier S fails, which finished goods lose their only source of a component?" .
+
+########################################################################
+## CQ 4. Which freight rate band applies to a consignment of weight W
+## on lane L?
+########################################################################
+
+## "Lane" is what SCRO calls ioc:ShippingRoute, reused directly. "Rate
+## band" is not in SCRO or GS1, checked against both, a genuinely new
+## class. Kept deliberately simple, a named class plus plain datatype
+## properties, no restriction baked into the class definition itself,
+## the shape a query-answering (QL-style) view over this data wants.
+
+ul:FreightRateBand a owl:Class ;
+    rdfs:label "Freight rate band"@en ;
+    skos:definition "A priced weight range for shipments on a given route."@en ;
+    ul:profile "QL" ;
+    ul:answersCQ "Which freight rate band applies to a consignment of weight W on lane L?" .
+
+ul:appliesToRoute a owl:ObjectProperty ;
+    rdfs:label "applies to route"@en ;
+    rdfs:domain ul:FreightRateBand ;
+    rdfs:range ioc:ShippingRoute .
+
+ul:minWeightKg a owl:DatatypeProperty ;
+    rdfs:label "minimum weight, kg"@en ;
+    rdfs:domain ul:FreightRateBand ;
+    rdfs:range xsd:decimal .
+
+ul:maxWeightKg a owl:DatatypeProperty ;
+    rdfs:label "maximum weight, kg"@en ;
+    rdfs:domain ul:FreightRateBand ;
+    rdfs:range xsd:decimal .
+
+########################################################################
+## CQ 5. Which sanctioned carriers were used on shipments in the last
+## quarter?
+########################################################################
+
+ul:SanctionedCarrier a owl:Class ;
+    rdfs:subClassOf ioc:Carrier ;
+    rdfs:label "Sanctioned carrier"@en ;
+    skos:definition "A carrier with an active entry on a sanctions list."@en ;
+    ul:profile "EL" ;
+    ul:answersCQ "Which sanctioned carriers were used on shipments in the last quarter?" .
+
+ul:sanctionsListStatus a owl:DatatypeProperty ;
+    rdfs:label "sanctions list status"@en ;
+    rdfs:comment "Asserted per carrier record from the sanctions-screening feed, not derived by the reasoner, screening is a lookup against an external list, not an entailment."@en ;
+    rdfs:domain ioc:Carrier ;
+    rdfs:range xsd:string .
+
+########################################################################
+## CQ 6. Which in-flight shipments are at risk of missing their
+## committed date?
+########################################################################
+
+## Composes two classes already in this file: a shipment becomes
+## "at risk" the moment it is handled by a carrier this file already
+## calls sanctioned, worth pointing out live, this is what the lecture
+## meant by classes composing rather than duplicating one another.
+
+ul:AtRiskShipment a owl:Class ;
+    rdfs:subClassOf ioc:Shipment ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty ul:handledBy ;
+        owl:someValuesFrom ul:SanctionedCarrier
+    ] ;
+    rdfs:label "At-risk shipment"@en ;
+    skos:definition "A shipment in transit, handled by a carrier already flagged as sanctioned."@en ;
+    ul:profile "EL" ;
+    ul:answersCQ "Which in-flight shipments are at risk of missing their committed date?" .
+
+########################################################################
+## CQ 7. Which purchase orders are for a finished good that depends on
+## a sole-sourced component?
+########################################################################
+
+## Reuses ioc:PurchaseOrder and ioc:MaterialProduct directly, and
+## chains into CQ 3's ul:SoleSourcedComponent above rather than
+## redefining sole-sourcing a second time. Two nested someValuesFrom
+## restrictions, still EL by this course's own rule, worth showing
+## live that EL reaches further than people expect before you need DL.
+
+ul:OrderForSoleSourcedGood a owl:Class ;
+    rdfs:subClassOf ioc:PurchaseOrder ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty ul:ordersProduct ;
+        owl:someValuesFrom [
+            owl:intersectionOf (
+                ioc:MaterialProduct
+                [
+                    a owl:Restriction ;
+                    owl:onProperty ioc:dependsOnProduct ;
+                    owl:someValuesFrom ul:SoleSourcedComponent
+                ]
+            )
+        ]
+    ] ;
+    rdfs:label "Order for a sole-sourced good"@en ;
+    skos:definition "A purchase order for a finished good that itself depends on a sole-sourced component."@en ;
+    ul:profile "EL" ;
+    ul:answersCQ "Which purchase orders are for a finished good that depends on a sole-sourced component?" .
+
+ul:ordersProduct a owl:ObjectProperty ;
+    rdfs:label "orders product"@en ;
+    rdfs:domain ioc:PurchaseOrder ;
+    rdfs:range ioc:MaterialProduct .
+
+########################################################################
+## CQ 8. Which carriers operate on more than one shipping route?
+########################################################################
+
+## The "more than one" is a cardinality fact again, so this one is DL
+## for the same reason CQ 3 is: reuse covers the relationship
+## (ioc:ShippingRoute), the counting is this file's own addition.
+
+ul:MultiRouteCarrier a owl:Class ;
+    rdfs:subClassOf ioc:Carrier ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty ul:handlesRoute ;
+        owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+        owl:onClass ioc:ShippingRoute
+    ] ;
+    rdfs:label "Multi-route carrier"@en ;
+    skos:definition "A carrier that handles shipments on two or more distinct shipping routes."@en ;
+    ul:profile "DL" ;
+    ul:answersCQ "Which carriers operate on more than one shipping route?" .
+
+ul:handlesRoute a owl:ObjectProperty ;
+    rdfs:label "handles route"@en ;
+    rdfs:domain ioc:Carrier ;
+    rdfs:range ioc:ShippingRoute .
+
+########################################################################
+## Two properties declared for you, not used anywhere yet. You will
+## need them when you fix what the reasoner finds.
+########################################################################
+
+ul:hasComponent a owl:ObjectProperty ;
+    rdfs:label "has component"@en ;
+    rdfs:comment "A finished product has this material component as a physical part."@en ;
+    rdfs:domain ioc:MaterialProduct ;
+    rdfs:range ioc:MaterialComponent .
+
+ul:suppliedBy a owl:ObjectProperty ;
+    rdfs:label "supplied by"@en ;
+    rdfs:comment "A material component is bought from this supplier."@en ;
+    rdfs:domain ioc:MaterialComponent ;
+    rdfs:range ioc:Supplier .

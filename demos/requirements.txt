@@ -1,30 +1,30 @@
-# Shared across every session. A session's own README names anything
-# additional it needs on top of this (PyTorch Geometric in Session 6,
-# for example), install that inside that session's own work, not here,
-# so this file does not grow dependencies most sessions never use.
+# Shared environment for Sessions 1 through 4.
+#
+# Requires Python 3.12 or 3.13. Session 5's Morph-KGC stack and Session 6's
+# machine-learning stack each have their own requirements file because their
+# dependency constraints conflict with this shared environment.
 
-# Data handling and profiling — Session 1
-pandas
-ydata-profiling
+# ydata-profiling 4.18.4 still imports pkg_resources, supplied by setuptools.
+setuptools==80.9.0
 
-# RDF and SPARQL — Sessions 2 onward
-rdflib
-SPARQLWrapper
-pyoxigraph          # fallback triplestore when Fuseki/JDK misbehaves
+# Data download and profiling — Session 1
+pandas==2.3.3
+ydata-profiling==4.18.4
+openpyxl==3.1.5
+matplotlib==3.10.0
 
-# Graph database driver — Session 2 comparison, and later sessions
-neo4j
+# RDF, SPARQL, and containers — Sessions 2 onward
+requests==2.34.2
+rdflib==7.6.0
+SPARQLWrapper==2.0.0
+pyoxigraph==0.5.11
+neo4j==6.3.1
+pyshacl==0.40.1
 
-# Constraint validation — Session 4 onward
-pyshacl
-
-# Notebooks and presentation
-jupyterlab
-ipykernel
-jupytext    # opens the `# %%`-marked .py labs as real notebooks
-matplotlib  # quick-look charts (missingness, timings)
-networkx    # small inline graph drawings, Session 2 onward
-
-# Testing
-pytest
-python-dotenv
+# Notebooks and shared utilities
+jupyterlab==4.6.4
+ipykernel==7.3.0
+jupytext==1.19.5
+networkx==3.7
+pytest==9.1.1
+python-dotenv==1.2.3

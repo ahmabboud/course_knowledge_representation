@@ -1,0 +1,256 @@
+
+  <h3 style="margin-top:var(--lu-s7)">Route 0 · Flow diagram, for anything with blocks and arrows (v1.2)</h3>
+  <p class="ds-note">One JSON spec lists blocks, arrows and steps; <code>assets/lu-flow.js</code> draws it. Arrows name their two blocks, so they can never drift off them. Put it inside a <code>.lu-walk</code> and the step bar drives it: dots run along the current arrow, blocks change state. Colour is meaning, set by <code>kind</code> and <code>state</code>, never by a hex value. Load <code>lu-flow.js</code> after <code>lu-deck.js</code>. Full demo: <a href="lectures/proto-diagrams.html">lectures/proto-diagrams.html</a>.</p>
+  <table class="lu-table" style="margin-top:var(--lu-s4)">
+    <thead><tr><th>Node <code>kind</code></th><th>Colour</th><th>Use for</th></tr></thead>
+    <tbody>
+      <tr><td><code>ours</code></td><td>Blue</td><td>Classes and properties in our own ontology (<code>ul:</code>)</td></tr>
+      <tr><td><code>reused</code></td><td>Teal</td><td>A domain ontology we import (IOF, SCRO, GS1)</td></tr>
+      <tr><td><code>upper</code></td><td>Plum</td><td>BFO</td></tr>
+      <tr><td><code>individual</code></td><td>Green pill</td><td>One thing: a shipment, a carrier</td></tr>
+      <tr><td><code>literal</code> · <code>builtin</code></td><td>Grey</td><td>Values · owl:Thing, owl:Nothing</td></tr>
+      <tr><td>state <code>inferred</code></td><td>Amber dashed outline, badge</td><td>Computed by the reasoner (Protégé shows it yellow)</td></tr>
+      <tr><td>state <code>impossible</code></td><td>Red, overrides the kind</td><td>Unsatisfiable, equivalent to owl:Nothing</td></tr>
+      <tr><td>state <code>active</code></td><td>Ink ring</td><td>In play at this step</td></tr>
+      <tr><td>edge <code>kind</code></td><td>default · amber dashed · red</td><td>asserted · <code>inferred</code> · <code>conflict</code></td></tr>
+    </tbody>
+  </table>
+  <div class="ds-demo">
+    <div class="ds-demo__head"><b>Flow diagram</b><span>six steps, the reasoner's proof from Session 3</span><code>.lu-flow</code> <code>lu-flow.js</code></div>
+    <div class="ds-demo__stage">
+      <div class="lu-walk" data-label="Why the order class is impossible">
+        <div class="lu-walk__view">
+          <div class="lu-flow"><script type="application/json" class="lu-flow__spec">{
+ "width": 1448,
+ "height": 358,
+ "nodes": [
+  {
+   "id": "order",
+   "label": "Order for a\nsole-sourced good",
+   "kind": "ours",
+   "x": 125,
+   "y": 160,
+   "w": 230,
+   "h": 86
+  },
+  {
+   "id": "product",
+   "label": "its product",
+   "kind": "individual",
+   "x": 520,
+   "y": 160,
+   "w": 180,
+   "h": 60,
+   "flag": "right"
+  },
+  {
+   "id": "supply",
+   "label": "SupplyRelationship",
+   "kind": "reused",
+   "x": 880,
+   "y": 52,
+   "w": 250,
+   "h": 60
+  },
+  {
+   "id": "sdc",
+   "label": "specifically\ndependent continuant",
+   "kind": "upper",
+   "x": 1290,
+   "y": 52,
+   "w": 270,
+   "h": 86
+  },
+  {
+   "id": "matprod",
+   "label": "MaterialProduct",
+   "kind": "reused",
+   "x": 880,
+   "y": 262,
+   "w": 250,
+   "h": 60
+  },
+  {
+   "id": "ic",
+   "label": "independent\ncontinuant",
+   "kind": "upper",
+   "x": 1290,
+   "y": 262,
+   "w": 270,
+   "h": 86,
+   "flag": "bottom"
+  },
+  {
+   "id": "nothing",
+   "label": "owl:Nothing",
+   "kind": "builtin",
+   "x": 125,
+   "y": 325,
+   "w": 200,
+   "h": 56,
+   "flag": "right"
+  }
+ ],
+ "edges": [
+  {
+   "id": "e1",
+   "from": "order",
+   "to": "product",
+   "label": "orders some"
+  },
+  {
+   "id": "e2",
+   "from": "product",
+   "to": "supply",
+   "label": "domain",
+   "route": "elbow",
+   "sides": [
+    "top",
+    "left"
+   ],
+   "kind": "inferred"
+  },
+  {
+   "id": "e3",
+   "from": "supply",
+   "to": "sdc",
+   "label": "subclass"
+  },
+  {
+   "id": "e4",
+   "from": "product",
+   "to": "matprod",
+   "label": "is a",
+   "route": "elbow",
+   "sides": [
+    "bottom",
+    "left"
+   ]
+  },
+  {
+   "id": "e5",
+   "from": "matprod",
+   "to": "ic",
+   "label": "subclass"
+  },
+  {
+   "id": "e6",
+   "from": "sdc",
+   "to": "ic",
+   "label": "disjoint",
+   "both": true,
+   "kind": "conflict"
+  },
+  {
+   "id": "e7",
+   "from": "order",
+   "to": "nothing",
+   "label": "equivalent to",
+   "kind": "conflict"
+  }
+ ],
+ "steps": [
+  {
+   "show": [
+    "order",
+    "product",
+    "e1"
+   ],
+   "run": [
+    "e1"
+   ],
+   "set": {
+    "order": "active",
+    "product": "active"
+   }
+  },
+  {
+   "show": [
+    "supply",
+    "e2"
+   ],
+   "run": [
+    "e2"
+   ],
+   "set": {
+    "order": "idle",
+    "product": "active",
+    "supply": "inferred"
+   }
+  },
+  {
+   "show": [
+    "sdc",
+    "e3"
+   ],
+   "run": [
+    "e3"
+   ],
+   "set": {
+    "supply": "idle",
+    "sdc": "inferred"
+   }
+  },
+  {
+   "show": [
+    "matprod",
+    "ic",
+    "e4",
+    "e5"
+   ],
+   "run": [
+    "e4",
+    "e5"
+   ],
+   "set": {
+    "sdc": "idle",
+    "matprod": "active",
+    "ic": "inferred"
+   }
+  },
+  {
+   "show": [
+    "e6"
+   ],
+   "run": [
+    "e6"
+   ],
+   "set": {
+    "matprod": "idle",
+    "product": "impossible",
+    "sdc": "impossible",
+    "ic": "impossible"
+   }
+  },
+  {
+   "show": [
+    "nothing",
+    "e7"
+   ],
+   "run": [
+    "e7"
+   ],
+   "set": {
+    "order": "impossible",
+    "nothing": "impossible",
+    "product": "impossible"
+   }
+  }
+ ],
+ "legend": {
+  "ours": "Our ontology (ul:)",
+  "reused": "Reused, IOF supply chain (ioc:)",
+  "upper": "BFO upper ontology",
+  "builtin": "OWL built-in"
+ }
+}</script></div>
+            <div data-walk-step="1" data-caption="<b>Step 1.</b> Our class: an order for a sole-sourced good orders <b>some product</b>."></div>
+            <div data-walk-step="2" data-caption="<b>Step 2.</b> The <b>domain</b> rule makes the product a supply relationship: <b>inferred</b>."></div>
+            <div data-walk-step="3" data-caption="<b>Step 3.</b> In BFO that is a <b>specifically dependent continuant</b>."></div>
+            <div data-walk-step="4" data-caption="<b>Step 4.</b> But as a MaterialProduct it is an <b>independent continuant</b>."></div>
+            <div data-walk-step="5" data-caption="<b>Step 5.</b> The two are <b>disjoint</b>, so the product is impossible."></div>
+            <div data-walk-step="6" data-caption="<b>Step 6.</b> So the class is <b>equivalent to owl:Nothing</b>."></div>
+        </div>
+      </div>
+    </div>
+  </div>

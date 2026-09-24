@@ -6,6 +6,13 @@ answering the provided question set with timings, per
 `course_knowledge_representation/lectures/kr-session-02.html`'s lab
 brief slide.
 
+## Working directory
+
+Complete the shared environment setup from `demos/README.md` first. Run steps
+2 through 5 from `demos/session-02-rdf-sparql/`; only step 1 runs from
+`demos/`, the lab repository root. Keep the shared `demos/.venv` activated on
+either macOS/Linux or Windows.
+
 ## Run, in order
 
 Two ways to run this lab: the individual scripts below, one stage at a

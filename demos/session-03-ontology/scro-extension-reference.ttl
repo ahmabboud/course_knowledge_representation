@@ -1,28 +1,43 @@
 ## scro-extension-reference.ttl
 ##
-## The finished reference ontology this session runs live. Nothing in
-## this file is for you to edit. Open it in Protege, run ELK then
-## HermiT, run robot_report.py against it, and read what each step
-## produces, per demos/session-03-ontology/README.md. The skill of
-## drafting competency questions and extending an ontology from
-## scratch is real and you do need it, you practice it on your own
-## team's capstone topic (see PROJECT-REDESIGN.md), not on this file.
+## The FIXED reference ontology for the Session 3 lab. Open it from the
+## workspace/ folder in Protege, run ELK then HermiT: no class should
+## turn red. Compare it with scro-extension-v0.ttl, the lab's starting
+## point, which contains the errors fixed here.
 ##
-## One correction carried over from the lecture slide's own illustration:
-## the slide subclasses `iof:MaterialTransport`, a name chosen to teach
-## the pattern, not a class that exists in the real IOF Supply Chain
-## ontology (checked against Release_202603 while building this lab).
-## Every class below that claims to reuse SCRO subclasses a real class,
-## checked the same way, `ioc:Shipment`, `ioc:Facility`, `ioc:Carrier`,
-## `ioc:MaterialComponent`, `ioc:MaterialProduct`, `ioc:PurchaseOrder`,
-## `ioc:ShippingRoute` and the `ioc:dependsOnSupplier` /
-## `ioc:dependsOnProduct` properties all really exist in that release.
-## Two concepts this domain needs, "port" and "freight rate band", do
-## not exist in SCRO or in the GS1 Web Vocabulary either, checked the
-## same way, so those two are genuinely new classes, not missed reuse.
-## That is a real, honest outcome of reuse-first search, not every
-## concept is covered, and knowing when to stop searching and extend
-## is as much the point as knowing when to reuse.
+## What was wrong in v0, and why (verified with ROBOT 1.9.10 explain,
+## 2026-09-22):
+##
+## 1. ul:OrderForSoleSourcedGood used ioc:dependsOnProduct, and
+##    ul:SoleSourcedComponent used ioc:dependsOnSupplier, to mean "this
+##    product has this component" and "this component comes from this
+##    supplier". In SCRO both are sub properties of BFO's
+##    "specifically depends on", whose domain is "specifically dependent
+##    continuant": things like roles and qualities that exist only in a
+##    bearer. But a material product and a material component are
+##    physical things, "independent continuants", and BFO declares the
+##    two categories disjoint. So nothing could ever satisfy either
+##    definition: both classes were unsatisfiable (under owl:Nothing).
+##    ELK reported only OrderForSoleSourcedGood, because ELK ignores the
+##    "exactly 1" restriction on SoleSourcedComponent; HermiT reads it
+##    and reports both.
+##    Fix: use our own properties, ul:hasComponent and ul:suppliedBy,
+##    whose domain and range say exactly what we mean. Lesson: never
+##    reuse a property from its name alone; read its definition and
+##    its super properties first.
+##
+## 2. ul:AtRiskShipment was only a SubClassOf (a necessary condition),
+##    so a reasoner could never place a shipment in it by itself. It is
+##    now an EquivalentTo (a defined class): any shipment handled by a
+##    sanctioned carrier IS an at risk shipment, and the reasoner
+##    classifies it automatically. See sample-shipments.ttl.
+##
+## Every class that claims to reuse SCRO subclasses a real class,
+## checked against Release_202603: ioc:Shipment, ioc:Facility,
+## ioc:Carrier, ioc:MaterialComponent, ioc:MaterialProduct,
+## ioc:PurchaseOrder, ioc:ShippingRoute, ioc:Supplier. "Port" and
+## "freight rate band" exist in neither SCRO nor GS1, so those two are
+## genuinely new classes, not missed reuse.
 
 @prefix owl:  <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -178,18 +193,17 @@ ul:actuallyServed a owl:ObjectProperty ;
 ## source of a component?
 ########################################################################
 
-## The real SCRO release already provides exactly the two properties
-## this needs, ioc:dependsOnProduct and ioc:dependsOnSupplier
-## (confirmed in the release's own SupplyChain.rdf). Reused directly,
-## nothing new needed for the relationship itself, only for "the only
-## one", which is a cardinality fact SCRO does not assert on your
-## behalf.
+## SCRO has properties named ioc:dependsOnProduct and
+## ioc:dependsOnSupplier, which sound right but mean something else
+## (see the header: they are for dependent things, not physical parts).
+## So this file uses its own two properties, declared below. "The only
+## one" is a cardinality fact, which is why this class is DL, not EL.
 
 ul:SoleSourcedComponent a owl:Class ;
     rdfs:subClassOf ioc:MaterialComponent ;
     rdfs:subClassOf [
         a owl:Restriction ;
-        owl:onProperty ioc:dependsOnSupplier ;
+        owl:onProperty ul:suppliedBy ;
         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
         owl:onClass ioc:Supplier
     ] ;
@@ -253,17 +267,23 @@ ul:sanctionsListStatus a owl:DatatypeProperty ;
 ## committed date?
 ########################################################################
 
-## Composes two classes already in this file: a shipment becomes
-## "at risk" the moment it is handled by a carrier this file already
-## calls sanctioned, worth pointing out live, this is what the lecture
-## meant by classes composing rather than duplicating one another.
+## A DEFINED class (EquivalentTo), composed from two classes already in
+## this file: a shipment IS at risk exactly when it is handled by a
+## carrier this file calls sanctioned. Because it is EquivalentTo and not
+## just SubClassOf, the reasoner puts matching shipments into it by
+## itself; sample-shipments.ttl shows this happening.
 
 ul:AtRiskShipment a owl:Class ;
-    rdfs:subClassOf ioc:Shipment ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty ul:handledBy ;
-        owl:someValuesFrom ul:SanctionedCarrier
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            ioc:Shipment
+            [
+                a owl:Restriction ;
+                owl:onProperty ul:handledBy ;
+                owl:someValuesFrom ul:SanctionedCarrier
+            ]
+        )
     ] ;
     rdfs:label "At-risk shipment"@en ;
     skos:definition "A shipment in transit, handled by a carrier already flagged as sanctioned."@en ;
@@ -276,10 +296,10 @@ ul:AtRiskShipment a owl:Class ;
 ########################################################################
 
 ## Reuses ioc:PurchaseOrder and ioc:MaterialProduct directly, and
-## chains into CQ 3's ul:SoleSourcedComponent above rather than
-## redefining sole-sourcing a second time. Two nested someValuesFrom
-## restrictions, still EL by this course's own rule, worth showing
-## live that EL reaches further than people expect before you need DL.
+## chains into CQ 3's ul:SoleSourcedComponent above (through our own
+## ul:hasComponent) rather than redefining sole sourcing a second
+## time. Two nested someValuesFrom restrictions, still EL by this
+## course's own rule: EL reaches further than people expect.
 
 ul:OrderForSoleSourcedGood a owl:Class ;
     rdfs:subClassOf ioc:PurchaseOrder ;
@@ -291,7 +311,7 @@ ul:OrderForSoleSourcedGood a owl:Class ;
                 ioc:MaterialProduct
                 [
                     a owl:Restriction ;
-                    owl:onProperty ioc:dependsOnProduct ;
+                    owl:onProperty ul:hasComponent ;
                     owl:someValuesFrom ul:SoleSourcedComponent
                 ]
             )
@@ -333,20 +353,33 @@ ul:handlesRoute a owl:ObjectProperty ;
     rdfs:domain ioc:Carrier ;
     rdfs:range ioc:ShippingRoute .
 
-## Two traps, both worth naming live (per the lecture):
-##
+########################################################################
+## Our own two properties, replacing the misused SCRO ones (see header).
+########################################################################
+
+ul:hasComponent a owl:ObjectProperty ;
+    rdfs:label "has component"@en ;
+    rdfs:comment "A finished product has this material component as a physical part."@en ;
+    rdfs:domain ioc:MaterialProduct ;
+    rdfs:range ioc:MaterialComponent .
+
+ul:suppliedBy a owl:ObjectProperty ;
+    rdfs:label "supplied by"@en ;
+    rdfs:comment "A material component is bought from this supplier."@en ;
+    rdfs:domain ioc:MaterialComponent ;
+    rdfs:range ioc:Supplier .
+
+## Two traps, both named in the lecture:
 ## 1. Domain and range are not constraints, they are entailment rules.
 ##    Asserting one lets the reasoner classify anything you attach it
-##    to; it does not reject anything. Session 4 (SHACL) is where a
-##    real constraint, one that actually rejects bad data, gets built.
+##    to; it never rejects anything. Session 4 (SHACL) builds real
+##    constraints.
 ## 2. owl:sameAs is a logical identity the reasoner propagates in both
 ##    directions, forever. "These two supplier records probably match"
-##    is a similarity claim with a confidence, not owl:sameAs, and
-##    belongs in the Session 5 entity-resolution layer instead.
+##    is a similarity claim with a confidence, and belongs in the
+##    Session 5 entity resolution layer instead.
 ##
-## Eight ul:answersCQ annotations total, matching
-## competency_questions.md's eight questions exactly. Four classes have
-## no ul:answersCQ and will not: CommittedDate, Plant and Port are
-## support classes, that is expected of them; CancelledShipment is not,
-## it is the deliberate exercise, see the comment on each. This file is
-## finished as it stands, nothing here is missing or needs fixing.
+## Eight ul:answersCQ annotations, matching competency_questions.md.
+## Four classes have none: CommittedDate, Plant and Port are support
+## classes (expected); CancelledShipment is the deliberate "does this
+## class earn its place" exercise.

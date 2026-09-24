@@ -66,6 +66,15 @@ lab until that confirmation and a live run-through are both done.
   workload comparison and the clinic's decision get written down, live,
   during the lab.
 
+### Working directory and platform status
+
+Run the commands below from `demos/session-05-integration/`. The documented
+setup block is currently for macOS/Linux shells only: it uses `source`,
+`curl`, `unzip`, `chmod`, and Unix environment-variable syntax. This session
+has not yet been verified end to end on Windows, so it must not be presented
+as a Windows-ready lab until a PowerShell recipe and a Windows reference run
+are added.
+
 ### Setup
 
 ```bash
@@ -73,14 +82,14 @@ docker compose -f ../docker-compose.yml -f docker-compose.yml up -d
 
 # Load the seed data
 python3 -m venv .venv-pg && source .venv-pg/bin/activate
-pip install psycopg2-binary
+python -m pip install -r requirements-postgres.txt
 python3 load_postgres.py
 deactivate
 
 # Materialize path, its own venv (see load_postgres.py's docstring
 # for why morph-kgc and pyshacl cannot share one environment)
 python3 -m venv .venv-materialize && source .venv-materialize/bin/activate
-pip install morph-kgc psycopg2-binary
+python -m pip install -r requirements-materialize.txt
 python3 -m morph_kgc config_materialize.ini   # writes materialized.nt
 deactivate
 
@@ -99,7 +108,7 @@ ONTOP_LOG_LEVEL=debug ontop-cli/ontop query -m mapping.obda -t ontology.ttl \
 # Entity resolution
 cd entity_resolution
 python3 -m venv .venv-er && source .venv-er/bin/activate
-pip install splink pandas
+python -m pip install -r requirements.txt
 python3 run_splink.py
 ```
 

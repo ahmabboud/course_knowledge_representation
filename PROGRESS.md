@@ -5,6 +5,11 @@ that says what is built, what is in flight, and what a new session should
 pick up next. Update it in the same change as any work it describes, do
 not let it drift behind the actual state of the repository.
 
+**Open work lives in `REPLAN-STATE.md`: read it second.** Its checklist is
+the single to-do list (Sessions 1 to 3 rebuild, the Protégé guide, the
+design system, housekeeping). The status table below was last reconciled on
+2026-09-19 and is stale for Sessions 4 to 6; see item 11 there.
+
 **Read `PROJECT-REDESIGN.md` next.** It covers a separate decision, the
 capstone project's shape (teams of 2 to 3, own topic, own database,
 evaluated at the end), decided 2026-09-17 and fully shipped, all six items
@@ -15,7 +20,7 @@ or lab-code progress, that is this file's job.
 
 | # | Module | Title | Lecture deck | Lab code |
 |---|---|---|---|---|
-| 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Built | Built, notebook-presented |
+| 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Built, audit clean 2026-09-23 | Built, verified working by the instructor 2026-09-23 |
 | 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Built | Built, notebook-presented |
 | 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Built | Scriptable parts built, Protege/reasoner steps are manual by design |
 | 4 | 2 | Constraints, Quality, and Provenance: SHACL | Built | Not started |
@@ -59,6 +64,15 @@ ydata-profiling report rendered inline via `to_notebook_iframe()`, all
 guarded so the same file still runs cleanly as a plain script outside a
 notebook (`IN_NOTEBOOK = get_ipython() is not None`, `try/except
 NameError`). Nothing left to build here.
+
+**2026-09-23:** the instructor ran the lab end to end after his own
+repairs (working directory steps in the README, a broader `smoke_test.py`)
+and confirmed it works. Same day, the deck was re-audited: eleven slides
+had drifted into overflow after later edits (content cut off at the
+bottom, including reveals and answer rationales). All fixed, audit now
+reports no overflow, at rest or fully revealed. Slide 12's drag-to-compare
+widget, which hid half of each answer, became two side by side cards.
+The deck is still due for its full rebuild under `COURSE-REPLAN.md`.
 
 ## Session 2, detail
 

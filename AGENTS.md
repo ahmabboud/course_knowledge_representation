@@ -2,6 +2,8 @@
 
 You are writing an interactive teaching lecture as a **single static HTML file**. Read this whole file before you write anything. When it and your own instincts disagree, this file wins.
 
+**Before anything else:** read `PROGRESS.md` (what is built), then `REPLAN-STATE.md` (the open to-do list, decisions, and where every file lives). Update both in the same change as your work.
+
 ---
 
 ## 0. What this repository is
@@ -99,6 +101,31 @@ Two measurement rules that cost real time:
   the deck's `lu:` localStorage keys before measuring a baseline, and measure
   the revealed state separately. That is the state you teach in.
 
+## 2c. Teaching standard: visual first, every term defined (approved 2026-09-22)
+
+Written after an instructor review found Sessions 1 to 3 hard to follow:
+terms used before they were defined, mostly text slides, tools used in
+labs with no guide, and datasets never shown. The full audit and the new
+session outlines are in `COURSE-REPLAN.md`. These rules apply to every
+deck built or rebuilt from now on.
+
+| Rule | What it means in practice |
+|---|---|
+| **1. Visual first.** | Every concept slide leads with a picture that carries the idea: a diagram on the course's own entities (`.lu-board`, `.lu-pipeline`, `.lu-matrix`, inline SVG kit), an annotated **real** screenshot, or a real data table. The text explains the picture, never the reverse. A slide of bullets only is allowed for the glossary and the wrap, nowhere else. |
+| **2. Define at first use, visibly.** | The first time a term appears in the course it is **bolded** and defined on the slide in one plain sentence, in a visible definition box (`.lu-callout--concept` labelled "Definition", or `.lu-defs`). A popover alone is not a definition, a student reading a printout never sees it. Later uses of the term get a `.lu-term` popover. No term is used before its defining slide. Check against `GLOSSARY.md`. |
+| **3. Why, then how, then example.** | Each part opens with the problem the idea solves (why), then the mechanism (how), then a worked example on the course's teaching slice. |
+| **4. One cast of characters.** | The same small set of real entities from the course data appears on every slide of every session. Never invent a new order or carrier for one slide. |
+| **5. No tool before its guide.** | A lab never uses a tool until a guide with real annotated screenshots has shown it. Guides are decks too: `lectures/guide-<tool>.html`, one step per slide. |
+| **6. Glossary slide.** | Every deck ends (before the self-check) with a glossary slide listing the terms it introduced, matching `GLOSSARY.md`. |
+| **7. Depth.** | About 30 content slides per session (title, dividers, wrap and self-check not counted). Sessions run about 230 minutes, lecture plus guided lab plus wrap, approved by the instructor. This replaces the 24 to 28 slide guidance in section 4. |
+| **8. Real only.** | Every screenshot, number, error message and output comes from a real run, and the run is recorded under the lab's `reference-outputs/`. Screenshots live in `assets/img/`, named `s<N>-<what>.png`. Annotation marks (numbered circles, boxes) may be drawn onto a real capture; nothing else may be drawn. |
+
+Plain English on slides: short sentences, no idioms, and name every acronym
+the first time (ERP is "Enterprise Resource Planning, the system that holds
+purchase orders").
+
+---
+
 ## 3. Anatomy of a lecture file
 
 ```html
@@ -143,7 +170,7 @@ Copy these from `kr-session-03.html` rather than composing from scratch.
 8. **Lab brief**, paper. Numbered steps, deliverable callout.
 9. **Wrap**, then **self-check**, tint, then paper. Always the last two slides.
 
-**Pacing: 3 to 4 minutes per content slide.** A three-hour session with 60
+**Pacing: 3 to 4 minutes per content slide.** (For the depth target now in force, see section 2c, rule 7.) A three-hour session with 60
 minutes of lecture wants 15 to 20 lecture slides, not 11. Counting dividers and
 the wrap, a 180-minute session lands around 24 to 28 slides in total.
 
@@ -202,7 +229,8 @@ Do not restate the slide. If a note only repeats what is visible, delete it and 
 
 ## 7. Graphics: three routes, in order
 
-1. **CSS primitives** (`.lu-pipeline`, `.lu-layers`, `.lu-board`, `.lu-matrix`, `.lu-table`). Semantic, restyleable, highlightable by `data-state`. Try these first, every time.
+0. **Flow diagram** (`.lu-flow` + `assets/lu-flow.js`, design system v1.2, 2026-09-23). The default for anything with blocks and arrows, and for every step-animated explanation. Arrows name their blocks, so they cannot drift. Colour comes only from `kind` (`ours` blue, `reused` teal, `upper` plum, `individual` green, `literal`/`builtin` grey) and `state` (`inferred` amber, `impossible` red, `active` ring). Never pick a colour for looks: if two blocks share a colour, they share a layer. Reference: `design-system.html` section 7 and `lectures/proto-diagrams.html`. Do not hand-position new `.lu-board` diagrams.
+1. **CSS primitives** (`.lu-pipeline`, `.lu-layers`, `.lu-matrix`, `.lu-table`). Semantic, restyleable, highlightable by `data-state`. For structures without arrows.
 2. **Inline SVG using the kit classes** (`.lu-svg` with `.s-fill-red`, `.s-stroke`, `.s-hair`, `.s-label`, `.s-mono`). For genuinely geometric relationships. Never hardcode a hex value. Add `role="img"` + `<title>`, or `aria-hidden="true"` when a caption carries the meaning.
 3. **Image placeholder** (`.lu-figure__ph`). For anything photographic or captured. State the exact path (`assets/img/<slug>.png`), the size, and what must be visible in the shot.
 

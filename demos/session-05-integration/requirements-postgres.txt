@@ -1,0 +1,2 @@
+# PostgreSQL loader environment. Requires Python 3.12 or 3.13.
+psycopg2-binary==2.9.11

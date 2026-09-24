@@ -1,11 +1,15 @@
 """Environment check for Session 1. Run this first, before assuming
 anything else in the lab works. Matches the syllabus's own smoke-test
-description: Python 3.12, JDK 21, Docker, and Protege, in one pass.
+description: Python 3.12 or 3.13, JDK 21, Docker, and Protege, in one pass.
 """
 
+import os
+import platform
 import shutil
 import subprocess
 import sys
+import unicodedata
+from pathlib import Path
 
 
 def check(label, ok, hint=""):
@@ -15,8 +19,8 @@ def check(label, ok, hint=""):
 
 
 def check_python():
-    ok = sys.version_info >= (3, 12)
-    return check("Python 3.12 or newer", ok, f"found {sys.version.split()[0]}")
+    ok = (3, 12) <= sys.version_info[:2] < (3, 14)
+    return check("Python 3.12 or 3.13", ok, f"found {sys.version.split()[0]}")
 
 
 def check_jdk():
@@ -39,25 +43,41 @@ def check_docker():
 
 
 def check_protege():
-    # Protege has no reliable CLI entry point across platforms; check the
-    # common install locations instead of assuming a command exists.
-    import platform
-    from pathlib import Path
+    # Protégé has no consistent CLI entry point. Find its app or installation
+    # directory without pinning the check to one release number or spelling.
+    # Unicode normalization handles macOS's ``Protégé.app`` filename.
+    if shutil.which("protege"):
+        return check("Protege installed", True)
 
-    candidates = []
     system = platform.system()
     if system == "Darwin":
-        candidates.append(Path("/Applications/Protege.app"))
+        roots = [Path("/Applications"), Path.home() / "Applications"]
     elif system == "Windows":
-        candidates.append(Path("C:/Program Files/Protege-5.6.4"))
+        roots = [
+            Path(os.environ.get("ProgramFiles", "C:/Program Files")),
+            Path(os.environ.get("ProgramFiles(x86)", "C:/Program Files (x86)")),
+            Path(os.environ.get("LOCALAPPDATA", Path.home() / "AppData/Local")),
+        ]
     else:
-        candidates.append(Path.home() / "Protege-5.6.4")
+        roots = [Path("/opt"), Path.home()]
 
-    found = any(p.exists() for p in candidates)
+    def is_protege_install(path):
+        name = unicodedata.normalize("NFKD", path.name)
+        name = "".join(char for char in name if not unicodedata.combining(char))
+        return name.casefold().startswith("protege")
+
+    candidates = []
+    for root in roots:
+        try:
+            candidates.extend(path for path in root.iterdir() if is_protege_install(path))
+        except OSError:
+            continue
+
+    found = any(path.is_dir() for path in candidates)
     return check(
         "Protege installed",
         found,
-        f"expected one of {[str(c) for c in candidates]}; install from protege.stanford.edu if missing",
+        "looked in standard application locations; install from protege.stanford.edu if missing",
     )
 
 
