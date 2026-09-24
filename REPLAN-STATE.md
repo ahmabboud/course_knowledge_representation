@@ -26,11 +26,15 @@ dashes in prose; audit every deck you touch before you stop (item 15).
 
 ### A. Session 3 rebuild (in progress)
 
-1. [ ] **Protégé guide deck** `lectures/guide-protege.html`. Plan in section 5
-   below. Screens 1 to 9 exist in `scripts/deckgen-s3/guide1.py`; write
-   screens 10 to 24 as `guide2.py`, then a small builder with
-   `data-deck-id="kr-guide-protege"`. Link the recommended YouTube series on
-   the last screen too. Screenshots: `assets/img/s3-protege-*.png` (section 2).
+1. [x] ~~Protégé guide deck~~ **Replaced 2026-09-24 (instructor's decision):**
+   no standalone guide. Students learn the basics from the YouTube series
+   (<https://www.youtube.com/watch?v=CduRWyyL3q8&list=PLNohRKRAHaszTV3puqFM9yXDXnEqjS6Fd>),
+   and the Session 3 lab part gets **one slide**, "Protégé on our files: four
+   things the video does not show": (a) open the file inside `workspace/` so
+   imports resolve (screenshot 16), (b) the Asserted / Inferred dropdown shows
+   what the reasoner added (06, crops z-h and z-b), (c) the ? button explains a
+   red class (09b), (d) Save as a new file, never over v0. Fold this into
+   item 2. Section 5 below and `guide1.py` are kept only as source material.
 2. [ ] **Session 3 deck, parts 3 to 6** (reasoner, reuse and BFO, profiles,
    lab and wrap), outline in section 3. Draw every diagram with `lu-flow`
    (the reasoner proof already exists as a spec:
@@ -46,11 +50,11 @@ dashes in prose; audit every deck you touch before you stop (item 15).
 
 ### B. Session 1
 
-6. [ ] **Decision needed from the instructor:** add a "Your project begins"
-   part to Session 1 (about 4 slides, 15 minutes, before the lab brief:
+6. [ ] **Decided yes (2026-09-24):** build a "Your project begins"
+   part in Session 1 (about 4 slides, 15 minutes, before the lab brief:
    what you build, topic menu, team rules and deadline, rubric and
    milestones), as DSCAI module 1 does. Today the capstone is one callout on
-   the wrap slide. Recommended.
+   the wrap slide. Build it as part of item 7.
 7. [ ] Full rebuild to the 2c standard, per `COURSE-REPLAN.md`. (The current
    deck audits clean since 2026-09-23 but is still the old standard.)
 
@@ -65,9 +69,8 @@ dashes in prose; audit every deck you touch before you stop (item 15).
 
 ### E. Housekeeping
 
-10. [ ] **Commits.** Both repos hold uncommitted work (`git status`): this one
-    and `../../Interactive HTML teaching slides system`. The instructor
-    commits and pushes, or asks an agent to commit locally (never push).
+10. [x] **Commits** (local, 2026-09-24: KR `c572639`, template `2e79678`).
+    The instructor pushes. Commit again after each work session.
 11. [ ] `PROGRESS.md` status table is stale: decks for Sessions 5 and 6 exist,
     the Session 6 lab exists, the Session 4 lab is only a template. Ask the
     instructor before changing any status.
@@ -313,3 +316,7 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
   decks audit clean.
 - Same day: this file restructured into the open-items list above so any new
   session can pick up from it.
+- 2026-09-24: both repos committed locally (not pushed). Instructor decisions:
+  the Protégé guide becomes the YouTube series plus one course-specific slide
+  in the Session 3 lab (item 1); Session 1 gets a "Your project begins" part
+  (item 6). Next: item 2, Session 3 parts 3 to 6.
