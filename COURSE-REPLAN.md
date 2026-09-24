@@ -248,7 +248,26 @@ milestones.
 | New depth | none | Part 2 (the supply chain and the two datasets, 7 new slides); Part 5 (cardinality, null, distribution, referential integrity, each on real data) |
 | Terms | 18 used before defined (section 1) | each defined on first use, in `GLOSSARY.md` |
 | Real screenshots | none | the ydata-profiling report and OpenRefine clusters, from real runs |
-| Session length | 112 minutes | about 230 minutes, lecture plus guided lab plus wrap (`AGENTS.md` 2c rule 7, approved) |
+| Session length | planned 112 minutes, but a dry run delivered the slides in about 40, plus a lab of about 60 | about 180 minutes: about 120 of slides, about 60 of lab (instructor, 2026-09-24) |
+
+**Time budget for Session 1** (instructor's rule: content and time
+distribution matter, not the slide count; `data-minutes` must be
+realistic, not inflated):
+
+| Part | Slides | Minutes |
+|---|---|---|
+| 1 · The question and the course | 3 | 10 |
+| 2 · Meet the supply chain and the data | 7 | 25 |
+| 3 · Meaning is not in the schema | 5 | 20 |
+| 4 · The architecture | 4 | 15 |
+| 5 · Profiling and hidden rules (concept first, then one slide each for ydata-profiling and OpenRefine) | 7 | 30 |
+| Your project begins | 4 | 15 |
+| Lab guide, then the lab itself | 3 | 5 + 60 |
+| Wrap and self check | 2 | 5 |
+| **Total** | **about 35** | **about 185** |
+
+If a dry run of the new deck runs short or long, adjust the parts that
+fill knowledge gaps (2, 3, 5), not the lab.
 
 ## 6. Session 2, new outline
 

@@ -69,8 +69,10 @@ Items marked `[x]` are done; everything else is still open.
    every arrow diagram in `lu-flow`, new Part 2 on the supply chain and the
    two datasets, profiling concepts each shown on real data, real
    ydata-profiling and OpenRefine screenshots. Full outline and the target
-   table: `COURSE-REPLAN.md` section 5. Session length about 230 minutes
-   (`AGENTS.md` 2c rule 7). **Decided 2026-09-24:** Jupyter gets
+   table: `COURSE-REPLAN.md` section 5. Session about 180 minutes: about
+   120 of slides, about 60 of lab; time budget per part in `COURSE-REPLAN.md`
+   section 5. The old deck's planned 112 minutes ran about 40 in a dry run,
+   so `data-minutes` must be realistic. **Decided 2026-09-24:** Jupyter gets
    no slide (trivial tool). Profiling is taught as a concept first, then
    one slide introduces ydata-profiling; clustering is taught first, then
    one slide introduces OpenRefine (`AGENTS.md` 2c rule 5, revised).
@@ -378,4 +380,5 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-24: items 7 and `COURSE-REPLAN.md` made explicit about Session 1's planned growth (slide count, depth, visuals); the replan's stale "proposed" status corrected to approved.
 - 2026-09-24: back on track check against the repository and GitHub. PROGRESS status table and "What's next" rewritten from facts (item 11). Found: template repo has three unpushed commits (item 10); old Protégé guide plan marked superseded.
 - 2026-09-24: Claude now pushes (instructor's decision). Token at `LebUniv/.github-token`; credential helper set in both repos; template's three pending commits pushed; both repos confirmed equal to GitHub.
-- 2026-09-24: instructor decisions for Session 1: build it before finishing Session 3; tools rule revised (concept first, one slide per tool, no slide for trivial tools, video only for complex GUI tools), recorded in `AGENTS.md` 2c rule 5; session length about 230 minutes; project deadline stated as before Session 2.
+- 2026-09-24: instructor decisions for Session 1: build it before finishing Session 3; tools rule revised (concept first, one slide per tool, no slide for trivial tools, video only for complex GUI tools), recorded in `AGENTS.md` 2c rule 5; project deadline stated as before Session 2.
+- 2026-09-24: session length corrected by the instructor: about 180 minutes (about 2 hours of slides, about 1 hour of lab), flexible per session; slide count is not the goal, time distribution is. Old Session 1 dry run: slides about 40 minutes, lab about 60. Time budget per part added to `COURSE-REPLAN.md` section 5; `AGENTS.md` 2c rule 7 updated.
