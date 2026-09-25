@@ -1,13 +1,13 @@
-Loaded 9215 orders and 22 plant to port links in 27.2 s
-[Q2 · orders and late orders per carrier] 3 rows in 9.4 ms
+Loaded 9215 orders and 22 plant to port links in 10.5 s
+[Q2 · orders and late orders per carrier] 3 rows in 10.5 ms
     {'carrier': 'V444_0', 'orders': 6264, 'lateOrders': 183}
     {'carrier': 'V444_1', 'orders': 2097, 'lateOrders': 9}
     {'carrier': 'V44_3', 'orders': 854, 'lateOrders': 0}
-[Q4 · any order leaving through a port its plant does not serve?] 1 rows in 34.2 ms
+[Q4 · any order leaving through a port its plant does not serve?] 1 rows in 33.0 ms
     {'answer': False}
-[Q5a · MATCH (o:Order): the label alone] 1 rows in 4.6 ms
+[Q5a · MATCH (o:Order): the label alone] 1 rows in 2.1 ms
     {'orders': 9023}
-[Q5b · every kind of order: the hierarchy must be written into the query] 1 rows in 6.0 ms
+[Q5b · every kind of order: the hierarchy must be written into the query] 1 rows in 4.5 ms
     {'orders': 9215}
-[Path of any length, Cypher's counterpart to SPARQL's +] 1 rows in 3.4 ms
+[Path of any length, Cypher's counterpart to SPARQL's +] 1 rows in 2.6 ms
     {'reachable': 3}
