@@ -62,9 +62,8 @@ SLIDES.append(slide("Evidence adds up: match weights", "Entity resolution", 5, '
     <div class="lu-stack">
       ''' + defbox([("Match weight", "log2(m / u): m is how often the outcome happens for a true match, u for two different customers.")]) + '''
       ''' + callout("Read one row", "Same home plant: true matches share it 95% of the time, different customers 80%. Weak evidence: +0.2. An exact code: +9.2.", "neutral") + '''
-      ''' + callout("At scale", "These weights are stated in <code>er/match_customers.py</code>. Splink, the tool named in the syllabus, estimates them from the data, for the same model.", "neutral") + '''
     </div>
-  </div>''', '''<p>Five minutes. A pair's score is the sum of its weights. Exact code, same plant, same service: 9.2 + 0.2 + 1.2, about 10.6. A close code with both the same: 4.1 + 0.2 + 1.2 = 5.5.</p>'''))
+  </div>''', '''<p>Five minutes. The weights are stated in <code>er/match_customers.py</code>; Splink, the tool named in the syllabus, estimates them from the data, for the same model, at scale. A pair's score is the sum of its weights. Exact code, same plant, same service: 9.2 + 0.2 + 1.2, about 10.6. A close code with both the same: 4.1 + 0.2 + 1.2 = 5.5.</p>'''))
 
 rows = [("4", "49", "43", "0.878", "0.935"), ("8", "40", "40", "1.000", "0.870")]
 SLIDES.append(slide("One threshold, two kinds of error", "Entity resolution", 5, '''  <div class="lu-eyebrow">A real run on the teaching set</div>

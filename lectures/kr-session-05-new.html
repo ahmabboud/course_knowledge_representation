@@ -464,10 +464,9 @@
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Match weight</dt><dd>log2(m / u): m is how often the outcome happens for a true match, u for two different customers.</dd></dl></div>
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read one row</span><p class="lu-sub">Same home plant: true matches share it 95% of the time, different customers 80%. Weak evidence: +0.2. An exact code: +9.2.</p></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">At scale</span><p class="lu-sub">These weights are stated in <code>er/match_customers.py</code>. Splink, the tool named in the syllabus, estimates them from the data, for the same model.</p></div>
     </div>
   </div>
-  <template data-notes><p>Five minutes. A pair's score is the sum of its weights. Exact code, same plant, same service: 9.2 + 0.2 + 1.2, about 10.6. A close code with both the same: 4.1 + 0.2 + 1.2 = 5.5.</p></template>
+  <template data-notes><p>Five minutes. The weights are stated in <code>er/match_customers.py</code>; Splink, the tool named in the syllabus, estimates them from the data, for the same model, at scale. A pair's score is the sum of its weights. Exact code, same plant, same service: 9.2 + 0.2 + 1.2, about 10.6. A close code with both the same: 4.1 + 0.2 + 1.2 = 5.5.</p></template>
 </section>
 
 <!-- ==================================================================== 30 -->
