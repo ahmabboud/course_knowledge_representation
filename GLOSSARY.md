@@ -252,6 +252,11 @@ editing this file (it writes `assets/glossary.js`).
 | **F1** | One score that balances precision and recall (their harmonic mean). |
 | **XML** | Extensible Markup Language: a tagged text format for structured data. |
 | **CLI** | Command line interface: a program used by typing commands in a terminal. |
+| **Triples map** | One part of an R2RML mapping: one table or query, and the triples each of its rows becomes. |
+| **IRI template** | A pattern such as `.../order/brunel/{order_id}` that builds an IRI from a column value. |
+| **Logical view** | An SQL query used in place of a table in a mapping, to prepare or combine rows first. |
+| **RML-LV** | The RML module for logical views (Final Community Group Report, October 2025). |
+| **Match weight** | In entity resolution, the evidence one comparison adds for "same thing": log2(m / u). |
 
 ## Session 6 · Learning over the graph
 
