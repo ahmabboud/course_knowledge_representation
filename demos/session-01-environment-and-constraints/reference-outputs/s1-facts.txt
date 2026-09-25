@@ -71,4 +71,5 @@ plant to port links {'PLANT01': ['PORT01', 'PORT02'], 'PLANT02': ['PORT03'], 'PL
 orders per plant and origin port {('PLANT03', 'PORT04'): 8541, ('PLANT04', 'PORT05'): 1, ('PLANT08', 'PORT04'): 102, ('PLANT09', 'PORT04'): 12, ('PLANT12', 'PORT04'): 300, ('PLANT13', 'PORT04'): 86, ('PLANT16', 'PORT09'): 173}
 V444_1 PORT04 DTD orders 2097 with weight between 2.5 and 70.51 1364
 example weight in the gap [31.92753623188405, 11.8, 27.5]
+gap orders by lane {('V444_1', 'PORT04', 'DTD'): 1370} outside the 2.5 to 70.51 hole 6 their weights [0.5011, 0.5034, 0.5034, 0.5034, 1.0001, 1.0023]
 Ship Late Day count zeros 9023 Ship ahead day count zeros 4426

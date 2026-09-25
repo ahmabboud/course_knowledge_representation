@@ -92,4 +92,9 @@ print("orders per plant and origin port", o.groupby(["Plant Code", "Origin Port"
 g = o[(o["Carrier"] == "V444_1") & (o["Origin Port"] == "PORT04") & (o["Service Level"] == "DTD")]
 print("V444_1 PORT04 DTD orders", len(g), "with weight between 2.5 and 70.51", int(((g["Weight"] > 2.5) & (g["Weight"] < 70.51)).sum()))
 print("example weight in the gap", g[(g["Weight"] > 2.5) & (g["Weight"] < 70.51)]["Weight"].head(3).tolist())
+gap_ids = set(lane_orders) - set(inband)
+gap = o[o["Order ID"].isin(gap_ids)]
+lanes = gap.groupby(["Carrier", "Origin Port", "Service Level"]).size().to_dict()
+sliver = gap[~((gap["Weight"] > 2.5) & (gap["Weight"] < 70.51))]
+print("gap orders by lane", lanes, "outside the 2.5 to 70.51 hole", len(sliver), "their weights", sorted(sliver["Weight"].round(4).tolist()))
 print("Ship Late Day count zeros", int((o["Ship Late Day count"] == 0).sum()), "Ship ahead day count zeros", int((o["Ship ahead day count"] == 0).sum()))

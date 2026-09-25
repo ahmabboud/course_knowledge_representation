@@ -254,7 +254,7 @@ x_steps = [
 x_caps = [
     ("A rule", "<b>Step 1.</b> A rule from the syllabus: a freight rate band must cover the shipped weight."),
     ("Attack it", "<b>Step 2.</b> Take a real order and the real bands for its lane."),
-    ("It breaks", "<b>Step 3.</b> Weight 11.8 falls between 2.50 and 70.51. <b>1,370</b> orders fall in gaps like this; 1,364 of them on this one lane."),
+    ("It breaks", "<b>Step 3.</b> Weight 11.8 falls between 2.50 and 70.51. <b>1,370</b> orders fall in gaps, all on this lane: 1,364 in this one, 6 in 0.01 kg gaps between two bands."),
     ("Row or rule?", "<b>Step 4.</b> The weights are plausible, so the rows are not wrong. The rate table is missing bands. Record the rule <b>and</b> its exceptions."),
 ]
 SLIDES.append(slide("Rule or exception?", "Profiling and hidden rules", 3,
