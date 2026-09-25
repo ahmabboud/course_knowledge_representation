@@ -32,24 +32,18 @@ keep the main session's context clear (instructor's preference, 2026-09-24).
 **Where to continue (2026-09-25):**
 
 1. **Session 6 rebuild, in progress (item 9),** by the method in `AGENTS.md`
-   2f. Done so far: research, the three instructor decisions and the approved
-   outline (both in the log, 2026-09-25), feasibility runs with real numbers
-   (log), and the first two lab files, `demos/session-06-learning/learning_utils.py`
-   (the worked examples Part B mirrors: `split_random`, `split_by_customer`,
-   `precision_at_k`, `mrr`) and `build_graph.py` (Session 5's graph to
-   HeteroData, label removed; runs, 2.2 s). Next, in order: `baseline.py`
-   (three rows: lateDays kept, random split, split by customer over 5 seeds),
-   `gnn.py` (GraphSAGE through to_hetero, forward argument named edge_index),
-   `link_prediction.py` (PyKEEN TransE on 5 relations against popularity,
-   ranked among plants, filtered), Part B `my_learning.py` (Y1
-   `split_by_plant`, Y2 `recall_at_k`, Y3 `hits_at_k`) with
-   `check_my_learning.py` and `solutions/`, `OVERVIEW.md`, `README.md`,
-   the shared environment pins (torch 2.8.0, torch-geometric 2.8.0.post1,
-   pykeen 1.11.1, scikit-learn 1.7.2 in `demos/requirements.txt`), then
-   `scripts/deckgen-s6/`, audit, hand over. The old lab files
+   2f. Done: research, decisions, approved outline, and the whole lab in
+   `demos/session-06-learning/` (`learning_utils.py`, `build_graph.py`,
+   `baseline.py`, `gnn.py`, `link_prediction.py`, Part B `my_learning.py` +
+   `check_my_learning.py` + `solutions/`, `reference-outputs/`, `OVERVIEW.md`,
+   `README.md` to 2e), and the shared environment pins in
+   `demos/requirements.txt` (commit 292ecc8). Next: `scripts/deckgen-s6/`
+   writing `lectures/kr-session-06-new.html` per the approved outline, the new
+   glossary terms, live audit, hand over. The old lab files
    (`build_heterodata.py`, `train_*.py`, `leakage_demo.py`,
    `tabular_baseline.py`, the folder's own `requirements.txt`) are to be
-   deleted only after the instructor agrees.
+   deleted only after the instructor agrees. Mac check to ask for: the full
+   shared install on Python 3.12, then the four Part A scripts.
 2. **Mac runs still open for Session 5:** PostgreSQL and Ontop
    (`reference-outputs/ontop-q2.txt` is a placeholder until then).
 3. **Later:** Sessions 7 and 8 (not built), item 18 (syllabus alignment
@@ -520,4 +514,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-25: Session 6 decisions (instructor): (1) learn on the Brunel graph Session 5 materializes, the one cast; late order prediction with the real leakage lessons (the label is in the graph twice, as the ul:LateOrder type and ul:lateDays, and must be removed; a random split memorises 4 customers, a split by customer shows the truth); link prediction on which plant makes which product (2,036 real links); the temporal split is taught on a slide as the rule for data with dates (all Brunel orders share one date, 2013-05-26); (2) a simple core: one GNN (GraphSAGE through to_hetero), one link predictor (TransE in PyKEEN, filtered metrics), one baseline (logistic regression), the split comparison; RGCN, DistMult, ComplEx, RotatE and XGBoost on slides only; (3) the learning stack goes into the shared course environment. Facts checked for the rebuild: 192 of 9,215 orders late; only 4 customers have late orders; Brunel has no supplier table.
 - 2026-09-25: Session 6 feasibility, real runs in the Cowork workspace on Session 5's `brunel-mapped.nt` (torch 2.8.0 CPU, torch-geometric 2.8.0.post1, pykeen 1.11.1, scikit-learn 1.7.2, all next to the shared pins without new conflicts). Late orders, logistic regression: lateDays left in PR-AUC 1.000; random split PR-AUC 0.777 (ROC 0.988); split by customer PR-AUC 0.002 to 0.019 against a chance level of 0.021; accuracy 0.95 to 1.00 everywhere (majority 0.979). GraphSAGE through to_hetero: random split PR-AUC 0.936, split by customer 0.005 to 0.034. Plant makes product, TransE on 5 relations, ranked among plants, filtered: MRR 0.547 against popularity 0.632; 61 of 203 held-out links name a product seen nowhere else. A to_hetero gotcha found for real: the model's forward must name its argument edge_index, or every convolution fails with a misleading edge_index error.
 - 2026-09-25: at the instructor's request ("make sure any new session knows what is done and how we plan the labs and the sessions"): `AGENTS.md` 2e now states the three lab rules (slides stand on their own, every Part B task has a worked twin, keep labs simple) and the one shared environment rule; new `AGENTS.md` 2f writes down the rebuild method used for Sessions 3 to 6, step by step; new `scripts/audit-live.js` is the live check used since Session 4 (walks, footer, code width, table width, diagram labels and badges), so no session has to re-derive it. "Where to continue" now lists exactly what of Session 6 is built and what comes next.
-
+- 2026-09-25: **Session 6 lab built** (item 9) and pushed (292ecc8). Recorded runs in `reference-outputs/`: graph 9,215 orders, 46 customers, 3 carriers, 20 plants (PLANT01 to PLANT19 and CND9, which appears only in ProductsPerPlant; orders ship from 7), 11 ports, 1,540 products; logistic regression lateDays kept PR-AUC 1.000, random split 0.788 (accuracy 0.944), split by customer 0.002 to 0.019 and one seed with no late order in test; GraphSAGE random split 0.857 to 0.879 over three training seeds, split by customer 0.004 to 0.045; TransE MRR 0.573, 0.469, 0.543 against popularity 0.631, 0.597, 0.634 (61 to 77 held-out links left out, their product appears in no other link); Part B checker 0 of 3 blank, 3 of 3 solutions, three wrong answers recorded. The feasibility numbers in the entry above were from earlier settings and are superseded by these. Two em dashes in `demos/requirements.txt` comments replaced.
