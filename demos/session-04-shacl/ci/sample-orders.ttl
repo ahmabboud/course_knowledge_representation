@@ -80,7 +80,7 @@
     ul:weight 31.927536231884055 .
 
 <https://ul.edu.lb/kr/id/order/brunel/1447385217.7> a ul:Order ;
-    ul:carriedBy <https://ul.edu.lb/kr/id/carrier/brunel/V444_0> ;
+    ul:carriedBy <https://ul.edu.lb/kr/id/carrier/brunel/V444_O> ;
     ul:fromPlant <https://ul.edu.lb/kr/id/plant/brunel/PLANT16> ;
     ul:lateDays 0 ;
     ul:ofProduct <https://ul.edu.lb/kr/id/product/brunel/1692724> ;
