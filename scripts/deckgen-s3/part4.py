@@ -98,10 +98,12 @@ caps = [
     ("What that is in BFO", "<b>Step 3.</b> SCRO says a supply relationship is a <b>specifically dependent continuant</b>: something that exists only in a bearer."),
     ("What the product also is", "<b>Step 4.</b> But the product is a MaterialProduct, a material entity: an <b>independent continuant</b>."),
     ("The clash", "<b>Step 5.</b> BFO says the two are <b>disjoint</b>. No product can be both, so the product is impossible."),
-    ("The red class", "<b>Step 6.</b> So our class can never have a member: it is equivalent to <b>owl:Nothing</b>. That is the red class in Protégé."),
+    ("The red class", "<b>Step 6.</b> So our class can never have a member: it is equivalent to <b>owl:Nothing</b>. That is the red class in Protégé. <b>The fix:</b> do not reuse a property for its name; the reference file uses our own <code>ul:hasComponent</code> and <code>ul:suppliedBy</code>."),
 ]
 # owl:Nothing moves up to the bottom row, beside the order, so the whole
 # diagram fits above the step bar with the legend (the prototype was taller).
+# The fix sits in the step 6 caption, not in a callout under the walk: a
+# callout there squeezes the walk view and the flow overlaps the step bar.
 for nd in spec["nodes"]:
     if nd["id"] == "nothing":
         nd["y"] = 262
@@ -109,8 +111,7 @@ trap = flow("The reuse trap, drawn from the real explanation", spec["width"], 32
             spec["nodes"], spec["edges"], spec["steps"], caps, legend=spec["legend"])
 SLIDES.append(slide("The reuse trap: our real bug", "Reuse and BFO", 6, '''  <div class="lu-eyebrow">The lab's red class, explained</div>
   <h2 class="lu-h2">We borrowed a SCRO property for its name, and inherited a rule we did not know about</h2>
-  ''' + trap + '''
-  ''' + callout("The fix", "Do not reuse a property for its name. Use our own, <code>ul:hasComponent</code> and <code>ul:suppliedBy</code>, which say exactly what we mean. The reference file does; the lab applies it.", "concept"),
+  ''' + trap,
   '''<p>Six minutes, the most important slide of Part 4. Step through slowly; at step 5 ask the room why the product cannot be both, and let them use the previous slide.</p>
 <ul><li>The six steps are the six lines of Protégé's real explanation (the screenshot on "Reading an explanation"). ROBOT's explain finds a second, equally valid chain through BFO's <i>specifically depends on</i> (<code>reference-outputs/explain_v0_ELK.md</code>).</li>
 <li>In plain words: SCRO's "depends on product" means one dependent thing (a supply relationship) depends on a product. We used it to mean a product needs a component. The name fit; the meaning did not.</li></ul>'''))
