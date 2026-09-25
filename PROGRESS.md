@@ -10,7 +10,7 @@ the single to-do list. The status table below was reconciled against the
 repository on 2026-09-24 (REPLAN-STATE item 11). "Built" means the file
 exists and works; no session counts as done until the instructor says so.
 
-**Where to continue (2026-09-25):** Sessions 1, 2 and 3 are done. Session 4 is rebuilt as a draft and waits for the instructor's review (REPLAN-STATE item 9); then Sessions 5 and 6.
+**Where to continue (2026-09-25):** Sessions 1, 2 and 3 are done. Sessions 4 and 5 are rebuilt as drafts and wait for the instructor's review (REPLAN-STATE item 9); then Session 6.
 Done most recently (2026-09-24): Session 1 rebuilt and approved; Session 2
 deck and lab rebuilt and verified; IRI convention written into `AGENTS.md` 2d
 and applied to Session 5 mappings; Fuseki now built from Apache's release
@@ -30,7 +30,7 @@ or lab-code progress, that is this file's job.
 | 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | **Done**: rebuilt to the 2c standard and approved by the instructor 2026-09-24 (42 slides, 173 min) | Rebuilt 2026-09-24 and run end to end (Fuseki 5.5, Oxigraph, Neo4j 5.26); two linking bugs fixed; run again on the instructor's Mac 2026-09-24 (Docker build, Fuseki, Neo4j), every answer as in the README; brought to the lab standard (`AGENTS.md` 2e) with a write your own part and a checker |
 | 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | **Done**: rebuilt to the 2c standard and approved by the instructor 2026-09-25 (48 slides, 231 min; generator `scripts/deckgen-s3/`); also the template repo's worked example | Rebuilt to the lab standard (`AGENTS.md` 2e) and reasoner verified: v0 with the real reuse bug (ELK 1 red class, HermiT 2), fixed reference file, Brunel sample shipments classified by ELK on the instructor's Mac 2026-09-25, Part B `check_my_axioms.py` (3 of 3 on the solutions, five wrong answers recorded) |
 | 4 | 2 | Constraints, Quality, and Provenance: SHACL | Rebuilt as a draft, awaiting the instructor's review: `lectures/kr-session-04-new.html` (42 slides, 194 min, generator `scripts/deckgen-s4/`); old deck still live | Built 2026-09-25 to the lab standard and run end to end here on the real graph (pySHACL 0.40.1): draft and triaged shapes, triage, provenance, version IRI, Part B checker, CI gate green and red on GitHub; `fetch_epcis.py` still to run once where GS1 is reachable |
-| 5 | 3 | Integrating Operational Data | Built as a draft (172 min), pending the instructor's confirmation; visual pass pending | Built as a draft, tested on Postgres; not yet confirmed with the real Ontop CLI (see its README Status) |
+| 5 | 3 | Integrating Operational Data | Rebuilt as a draft, awaiting the instructor's review: `lectures/kr-session-05-new.html` (38 slides, 183 min, generator `scripts/deckgen-s5/`); old deck still live | Rebuilt 2026-09-25 to the lab standard on the real Brunel tables and run here on the SQLite path: mapping reproduces Session 2's graph (0 differences but the 7 newly typed carriers), Session 4 shapes on it, ER teaching set with precision and recall, Part B checker; PostgreSQL and Ontop still to run on the instructor's Mac |
 | 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | Built (159 min), visual pass pending | Built and run end to end on CPU (Milestone 2) |
 | 7 | 5 | The Agentic Query Layer, Deployment, and Open Problems | Not built | Not started (README only) |
 | 8 | 5 | Supervised Build, Deployment, and Defense | Not built (defense day, see `module-08-defense/`) | N/A, live supervised session |
