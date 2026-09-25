@@ -133,6 +133,5 @@ SLIDES.append(slide("Poll: which number do you report?", "Leakage", 3, '''  <div
     <div class="lu-mcq__opts">
       <button class="lu-mcq__opt" type="button" data-key="a">About 0.87 (random split)<span class="lu-mcq__why" hidden>It measures recognising known customers.</span></button>
       <button class="lu-mcq__opt" type="button" data-key="b">About 0.02 (split by customer)<span class="lu-mcq__why" hidden>Yes, for new customers: as good as guessing.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="c">About 0.45 (the average)<span class="lu-mcq__why" hidden>An average of two questions answers neither.</span></button>
     </div>
-  </div>''', '''<p>Forty five seconds, then discuss. Known customers would still see the random split's quality, so an honest report gives both numbers and says which question each answers.</p>''', kind="tint", extra_attr=' style="--lu-s5:12px"'))
+  </div>''', '''<p>Forty five seconds, then discuss. Known customers would still see the random split's quality, so an honest report gives both numbers and says which question each answers. If someone suggests averaging them: an average of two different questions answers neither.</p>''', kind="tint", extra_attr=' style="--lu-s5:12px"'))
