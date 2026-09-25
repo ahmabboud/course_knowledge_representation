@@ -269,14 +269,36 @@ editing this file (it writes `assets/glossary.js`).
 | **PyKEEN** | The Python library for training knowledge graph embeddings, used in the lab. |
 | **GNN** | Graph neural network: a model that learns from a node's neighbours by passing messages along edges. |
 | **Message passing** | Each node repeatedly collects information from its neighbours and updates its own numbers. |
+| **GraphSAGE** | A graph neural network layer: a node combines its own numbers with the average of its neighbours'. |
+| **to_hetero** | PyTorch Geometric's tool that copies a model once per kind of link, for a heterogeneous graph. |
+| **HeteroData** | PyTorch Geometric's object for a graph with several kinds of node and link. |
+| **RGCN** | Relational graph convolutional network: a layer with one weight matrix per kind of link. |
+| **Oversmoothing** | After many message passing layers every node has heard from the same crowd, so their numbers look alike. |
+| **Inductive** | Said of a model that can score new nodes, from their numbers and neighbours. |
+| **Transductive** | Said of a model that can only score the nodes it saw in training. |
 | **Heterogeneous graph** | A graph with several kinds of nodes and edges, such as orders, carriers and ports. |
-| **Node classification** | Predicting a label for a node, for example whether a shipment will be late. |
-| **Link prediction** | Predicting an edge that is missing or will appear, for example which carrier will handle an order. |
-| **Baseline** | A simple model to beat, such as a table model on the same data; a result only counts if it beats it. |
+| **Node classification** | Predicting a label for each node, for example whether an order will be late. |
+| **Link prediction** | Predicting an edge that is missing or will appear, for example which plant makes a product. |
+| **Baseline** | The simplest reasonable model, such as a table model on the same data; every new model is compared with it, and losing to it is a real, reportable result. |
 | **Train/test split** | Keeping some data aside that the model never sees in training, to measure it honestly. |
 | **Temporal leakage** | Letting information from the future into training, which makes a model look better than it is. |
-| **MRR** | Mean reciprocal rank: for link prediction, how high the true answer ranks on average (1 is perfect). |
-| **XGBoost** | A strong, widely used table model, used as the baseline. |
+| **Temporal split** | Training on everything before a cut date and testing on everything after it. |
+| **Random split** | Test examples drawn at random, so the same customers (or other groups) can be on both sides. |
+| **Split by group** | Keeping every example of a group, such as a customer, on the same side of the split, so the test groups are new. |
+| **Leakage** | When the test lets the model see the answer, or something that gives it away. |
+| **MRR** | Mean reciprocal rank: for link prediction, the average of 1 / rank of the right answer (1 is perfect). |
+| **Hits@k** | For link prediction, the share of right answers ranked k or better. |
+| **Filtered ranking** | Removing the other right answers before ranking the hidden one, so they do not count against the model. |
+| **Negative sampling** | Making up false triples by swapping the head or the tail, so a model learns to score them lower. |
+| **DistMult** | A knowledge graph embedding that multiplies head, relation and tail; it treats every relation as symmetric. |
+| **ComplEx** | DistMult with complex numbers, so a relation can go one way only. |
+| **RotatE** | A knowledge graph embedding where a relation rotates the head onto the tail. |
+| **Logistic regression** | A table model that weighs each column and adds the weights up into a probability. |
+| **PR-AUC** | Area under the precision and recall curve: how well the rare class is ranked above the rest; guessing scores its share. |
+| **Precision@k** | Of the k examples a model ranks highest, the share that are right. |
+| **XGBoost** | A strong, widely used table model; the usual next baseline after logistic regression. |
 | **DGL** | Deep Graph Library: an older Python library for graph neural networks, no longer actively developed. |
 | **PyTorch Geometric** | The Python library for graph neural networks, used in the lab. |
+| **CPU** | Central processing unit: a computer's ordinary processor. Every lab in this course runs on it. |
+| **GPU** | Graphics processing unit: a processor that speeds up training large models; not needed in this course. |
 | **SLA** | Service level agreement: a promised delivery time or quality level. |
