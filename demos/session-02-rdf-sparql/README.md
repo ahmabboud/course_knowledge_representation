@@ -6,6 +6,11 @@ will reuse for your team project. Nothing is handed in or graded. The lab
 works when you can explain what each step did and why the numbers came out
 as they did.
 
+**Read this first:** [What this lab is doing](OVERVIEW.md). It introduces the
+Brunel data, the business problem, how the tables become a graph, the purpose
+of each step, the role of each file, and the terms used below. Do not start
+Part A until the overall story is clear.
+
 Every number in `lectures/kr-session-02.html` comes from the files in
 `reference-outputs/`, produced by these scripts on 2026-09-24.
 
