@@ -1,0 +1,20 @@
+python materialize.py (PostgreSQL, 2026-09-25)
+brunel-mapping.ttl over PostgreSQL: 135,799 triples in 2.2 s -> brunel-mapped.nt
+
+python compare_with_session2.py
+Session 2 graph    135,841 triples  (49 schema triples left out)
+mapped graph       135,799 triples
+
+named triples in both          123,472
+only in Session 2's graph            0
+only in the mapped graph             7
+rate bands in both               1,540 of 1,540 and 1,540
+
+Only in the mapped graph:
+  carrier/brunel/V444_2  rdf:type  ul:Carrier
+  carrier/brunel/V444_4  rdf:type  ul:Carrier
+  carrier/brunel/V444_5  rdf:type  ul:Carrier
+  carrier/brunel/V444_6  rdf:type  ul:Carrier
+  carrier/brunel/V444_7  rdf:type  ul:Carrier
+  carrier/brunel/V444_8  rdf:type  ul:Carrier
+  carrier/brunel/V444_9  rdf:type  ul:Carrier
