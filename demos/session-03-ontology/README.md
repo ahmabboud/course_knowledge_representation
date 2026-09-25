@@ -7,6 +7,12 @@ your team project will extend. Nothing is handed in or graded. The lab
 works when you can explain why the reasoner turned a class red, and why the
 fixed file does not.
 
+**Read this first:** [What this lab is doing](OVERVIEW.md). It explains the
+ontology problem, the Brunel examples, the reasoner results, the role of every
+file, the essential terms, and the difference between source facts, course
+modelling choices, and teaching data. Do not start Part A until the overall
+story is clear.
+
 Every number in `lectures/kr-session-03.html` comes from the files in
 `reference-outputs/`, produced by these scripts on 2026-09-24.
 
