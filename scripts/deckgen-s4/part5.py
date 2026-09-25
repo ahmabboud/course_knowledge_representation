@@ -90,12 +90,12 @@ SLIDES.append(slide("The tool: shacl-play", "Reuse and the gate", 3, '''  <div c
 
 # ---------------------------------------------------------------- The gate
 n = [
-    node("c", "a push changes one value:\nV444_0 typed V444_O", 230, 60, 400, 70, kind="builtin"),
-    node("a", "GitHub Actions\nruns validate.py", 720, 60, 300, 70, kind="builtin"),
-    node("r", "1 Violation: Class\non carried by", 1170, 60, 330, 70, kind="builtin", flag="bottom"),
-    node("m", "red run: do not merge", 1170, 200, 330, 56, kind="builtin", flag="right"),
+    node("c", "a push changes one value:\nV444_0 typed V444_O", 200, 45, 360, 70, kind="builtin"),
+    node("a", "GitHub Actions\nruns validate.py", 580, 45, 290, 70, kind="builtin"),
+    node("r", "1 Violation: Class\non carried by", 930, 45, 300, 70, kind="builtin", flag="bottom"),
+    node("m", "exit code 1:\nred run, no merge", 1290, 45, 290, 70, kind="builtin", flag="bottom"),
 ]
-e = [edge("x", "c", "a", "triggers"), edge("y", "a", "r", "report"), edge("z", "r", "m", "exit code 1")]
+e = [edge("x", "c", "a", ""), edge("y", "a", "r", ""), edge("z", "r", "m", "")]
 steps = [
     {"show": ["c"], "set": {"c": "active"}},
     {"show": ["a", "x"], "run": ["x"], "set": {"c": "idle", "a": "active"}},
@@ -108,7 +108,7 @@ caps = [
     ("The report", "<b>Step 3.</b> V444_O is not a Carrier: one Violation, Class on <b>carried by</b>."),
     ("Blocked", "<b>Step 4.</b> The script exits with code 1, so GitHub marks the run red. A red pull request is not merged."),
 ]
-walk = flow("A bad commit, stopped", 1448, 240, n, e, steps, caps, flags={"impossible": "blocked"},
+walk = flow("A bad commit, stopped", 1448, 130, n, e, steps, caps, flags={"impossible": "blocked"},
             legend={"builtin": "Step of the gate", "impossible": "Blocked"})
 SLIDES.append(slide("The gate blocking a bad commit", "Reuse and the gate", 5, '''  <div class="lu-eyebrow">A real run on GitHub</div>
   <h2 class="lu-h2">Every push runs the shapes. One wrong character turns the run red.</h2>

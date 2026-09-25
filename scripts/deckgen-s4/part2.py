@@ -21,11 +21,11 @@ SLIDES.append(divider("Part 2 · Shapes on the real graph", "SHACL core",
 
 # ---------------------------------------------------------------- Shape, target, focus nodes, report
 n = [
-    node("sh", "Order shape", 130, 60, 220, 60, kind="builtin"),
-    node("t", "target:\nevery ul:Order", 440, 60, 250, 70, kind="builtin"),
-    node("f", "9,215 focus nodes\n(192 late orders too)", 790, 60, 320, 70, kind="individual"),
-    node("c", "7 property\nchecks each", 1110, 60, 210, 70, kind="builtin"),
-    node("r", "report:\n2 results", 1340, 60, 190, 70, kind="builtin", flag="bottom"),
+    node("sh", "Order shape", 130, 45, 220, 60, kind="builtin"),
+    node("t", "target:\nevery ul:Order", 440, 45, 250, 66, kind="builtin"),
+    node("f", "9,215 focus nodes\n(192 late orders too)", 790, 45, 320, 66, kind="individual"),
+    node("c", "7 property\nchecks each", 1110, 45, 210, 66, kind="builtin"),
+    node("r", "report:\n2 results", 1340, 45, 190, 66, kind="builtin", flag="bottom"),
 ]
 e = [edge("a", "sh", "t", ""), edge("b", "t", "f", "selects"), edge("c1", "f", "c", ""), edge("d", "c", "r", "")]
 steps = [
@@ -40,7 +40,7 @@ caps = [
     ("Checks", "<b>Step 3.</b> Each focus node is checked against the shape's rules: one carrier, one date, a weight above 0, and four more."),
     ("The report", "<b>Step 4.</b> One result per broken rule per node. On the real graph: 2 results, the two orders that weigh 0 kg. It took 2.6 seconds."),
 ]
-walk = flow("How one shape runs", 1448, 140, n, e, steps, caps, flags={"impossible": "2 violations"},
+walk = flow("How one shape runs", 1448, 112, n, e, steps, caps, flags={"impossible": "2 violations"},
             legend={"builtin": "SHACL", "individual": "Our data", "impossible": "Violation"})
 SLIDES.append(slide("A shape, a target, a report", "SHACL core", 5, '''  <div class="lu-eyebrow">How validation works</div>
   <h2 class="lu-h2">A shape picks its nodes, checks each one, and writes one line per broken rule</h2>

@@ -21,10 +21,10 @@ SLIDES.append(divider("Part 4 · Provenance and versions", "Provenance",
 
 # ---------------------------------------------------------------- PROV-O in three kinds of box
 n = [
-    node("g", "Entity · named graph OrderList\n119,844 triples", 290, 55, 470, 70, kind="individual"),
-    node("f", "Entity · file OrderList.csv", 290, 215, 470, 56, kind="individual"),
-    node("r", "Activity · conversion run\nended 2026-09-25 01:31 UTC", 900, 135, 420, 70, kind="individual"),
-    node("p", "Agent · program\nconvert_to_rdf.py", 1290, 135, 290, 70, kind="builtin"),
+    node("g", "Entity · named graph OrderList\n119,844 triples", 290, 40, 470, 70, kind="individual"),
+    node("f", "Entity · file OrderList.csv", 290, 158, 470, 56, kind="individual"),
+    node("r", "Activity · conversion run\nended 2026-09-25 01:31 UTC", 900, 100, 420, 70, kind="individual"),
+    node("p", "Agent · program\nconvert_to_rdf.py", 1290, 100, 290, 70, kind="builtin"),
 ]
 e = [
     edge("a", "g", "f", "was derived from"),
@@ -42,7 +42,7 @@ caps = [
     ("How and when", "<b>Step 2.</b> An <b>activity</b> is something that happened: a conversion run used the file and generated the graph."),
     ("Who", "<b>Step 3.</b> An <b>agent</b> is responsible: here a program, Session 2's convert_to_rdf.py, recorded with its checksum."),
 ]
-walk = flow("Provenance of the OrderList graph", 1448, 260, n, e, steps, caps,
+walk = flow("Provenance of the OrderList graph", 1448, 190, n, e, steps, caps,
             legend={"individual": "Recorded provenance", "builtin": "Program"})
 SLIDES.append(slide("PROV-O: entity, activity, agent", "Provenance", 5, '''  <div class="lu-eyebrow">Provenance, drawn</div>
   <h2 class="lu-h2">Three kinds of thing answer &ldquo;where from, how, and who&rdquo;</h2>
