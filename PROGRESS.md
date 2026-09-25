@@ -10,7 +10,7 @@ the single to-do list. The status table below was reconciled against the
 repository on 2026-09-24 (REPLAN-STATE item 11). "Built" means the file
 exists and works; no session counts as done until the instructor says so.
 
-**Where to continue (2026-09-25):** Sessions 1 to 5 are done. Session 6 is being rebuilt; `REPLAN-STATE.md` "Where to continue" lists what is built and what comes next. How a session is rebuilt: `AGENTS.md` 2f.
+**Where to continue (2026-09-25):** Sessions 1 to 5 are done. Session 6 is built and waiting for the instructor's review; `REPLAN-STATE.md` "Where to continue" lists what is built and what comes next. How a session is rebuilt: `AGENTS.md` 2f.
 Done most recently (2026-09-24): Session 1 rebuilt and approved; Session 2
 deck and lab rebuilt and verified; IRI convention written into `AGENTS.md` 2d
 and applied to Session 5 mappings; Fuseki now built from Apache's release
@@ -31,13 +31,13 @@ or lab-code progress, that is this file's job.
 | 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | **Done**: rebuilt to the 2c standard and approved by the instructor 2026-09-25 (48 slides, 231 min; generator `scripts/deckgen-s3/`); also the template repo's worked example | Rebuilt to the lab standard (`AGENTS.md` 2e) and reasoner verified: v0 with the real reuse bug (ELK 1 red class, HermiT 2), fixed reference file, Brunel sample shipments classified by ELK on the instructor's Mac 2026-09-25, Part B `check_my_axioms.py` (3 of 3 on the solutions, five wrong answers recorded) |
 | 4 | 2 | Constraints, Quality, and Provenance: SHACL | **Done**: rebuilt to the 2c standard and approved by the instructor 2026-09-25 (42 slides, 194 min; generator `scripts/deckgen-s4/`) | Built 2026-09-25 to the lab standard and run end to end here on the real graph (pySHACL 0.40.1): draft and triaged shapes, triage, provenance, version IRI, Part B checker, CI gate green and red on GitHub; `fetch_epcis.py` still to run once where GS1 is reachable |
 | 5 | 3 | Integrating Operational Data | **Done**: rebuilt to the 2c standard and approved by the instructor 2026-09-25 (38 slides, 183 min; generator `scripts/deckgen-s5/`) | Rebuilt 2026-09-25 to the lab standard on the real Brunel tables and run here on the SQLite path: mapping reproduces Session 2's graph (0 differences but the 7 newly typed carriers), Session 4 shapes on it, ER teaching set with precision and recall, Part B checker; PostgreSQL and Ontop still to run on the instructor's Mac |
-| 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | Being rebuilt (2026-09-25, AGENTS.md 2f): outline approved, deck not yet started; the old deck (159 min, invented cast) is still live | Being rebuilt on the Brunel graph from Session 5 (REPLAN-STATE "Where to continue"); `build_graph.py` and `learning_utils.py` written and run; the old synthetic lab files are still there |
+| 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | Draft waiting for the instructor's review (2026-09-25): `lectures/kr-session-06-new.html`, 42 slides, 185 minutes, `scripts/deckgen-s6/`; live audit and visual pass clean. The old deck `kr-session-06.html` stays live until approval | Rebuilt on Session 5's Brunel graph (`demos/session-06-learning/`, OVERVIEW and README to 2e, all runs in `reference-outputs/`); waiting on a Mac run of the shared install, and permission to delete the old synthetic lab files |
 | 7 | 5 | The Agentic Query Layer, Deployment, and Open Problems | Not built | Not started (README only) |
 | 8 | 5 | Supervised Build, Deployment, and Defense | Not built (defense day, see `module-08-defense/`) | N/A, live supervised session |
 
-All six built decks carry the automatic glossary (2026-09-24). Sessions 1 and 2 use
-`lu-flow` diagrams; Sessions 3 to 6 not yet. `index.html` has cards for Sessions 1 to 4 only
-(REPLAN-STATE 12).
+All built decks carry the automatic glossary. Sessions 1 to 5 and the Session 6 draft use
+`lu-flow` diagrams. `index.html` has cards for Sessions 1 to 5; Session 6's card is added
+when its deck is approved.
 
 Session 4 carries Milestone 1 (20%), due at end of that session. Session 6
 carries Milestone 2, due at end of that session. Both against each team's
@@ -163,9 +163,9 @@ touched: match it to `ioc:Shipment` too, or leave it and say why.
 
 ## What's next
 
-See `REPLAN-STATE.md` "Where to continue". Sessions 1 to 3 are rebuilt; next: the Session 4 lab (only a template
-today), confirming the Session 5 lab on a live Ontop, a visual pass on
-Sessions 4 to 6, then Sessions 7 and 8 (deck and lab).
+See `REPLAN-STATE.md` "Where to continue". Sessions 1 to 5 are rebuilt and approved; Session 6
+is waiting for review. Then: the Ontop run for Session 5 on the Mac, then Sessions 7 and 8
+(deck and lab), by the method in `AGENTS.md` 2f.
 
 ## Standing conventions
 
