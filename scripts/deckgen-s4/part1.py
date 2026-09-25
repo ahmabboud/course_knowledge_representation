@@ -91,7 +91,7 @@ n = [
     node("o", "order 1447291369.7", 230, 50, 300, 60, kind="individual"),
     node("u", "some carrier,\nname unknown", 760, 50, 260, 70, kind="builtin"),
     node("s", "rule: exactly one carrier", 230, 190, 330, 60, kind="builtin"),
-    node("r", "report: MinCount\non carried by", 760, 190, 280, 70, kind="builtin", flag="right"),
+    node("r", "report: MinCount\non carried by", 700, 190, 280, 70, kind="builtin", flag="right"),
 ]
 e = [
     edge("a", "o", "u", "carried by", kind="inferred"),

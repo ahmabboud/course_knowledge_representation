@@ -26,7 +26,6 @@ SLIDES.append(divider("Part 5 · Reuse and the gate", "Reuse and the gate",
 
 # ---------------------------------------------------------------- EPCIS as a reference
 nums = [("1,138", "lines"), ("30", "node shapes"), ("71", "property shapes"), ("0", "SPARQL rules"), ("0", "severities set")]
-numlist = "".join(f'<li><b>{v}</b> {t}</li>' for v, t in nums)
 ex = (f'''epcis:EventTimeShape {K}a{E} sh:PropertyShape ;
   sh:path epcis:eventTime ;
   sh:datatype xsd:dateTimeStamp ;
@@ -36,11 +35,9 @@ ex = (f'''epcis:EventTimeShape {K}a{E} sh:PropertyShape ;
     xsd:dateTimeStamp"{E} .''')
 SLIDES.append(slide("GS1's EPCIS shapes, an industrial example", "Reuse and the gate", 4,
     head("Reuse: read before you write", "GS1 publishes the shapes for EPCIS 2.0, its standard for supply chain events") + f'''
+  <p class="lu-sub" style="margin-top:var(--lu-s2)">The whole file: ''' + " · ".join(f"<b>{v}</b> {t}" for v, t in nums) + '''.</p>
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
-    <div class="lu-stack">
-      ''' + code("epcis-shacl.ttl · one of its 71 property shapes", ex) + f'''
-      <div class="lu-card"><span class="lu-card__label">The whole file, counted</span><ul class="lu-list" style="columns:2">{numlist}</ul></div>
-    </div>
+    ''' + code("epcis-shacl.ttl · one of its 71 property shapes", ex) + '''
     <div class="lu-stack">
       ''' + defbox([("EPCIS", "GS1's standard for recording supply chain events: what was seen, where, when and why.")]) + '''
       ''' + callout("Licence", "Its <code>LICENSE</code> file is GS1's intellectual property disclaimer, not an open source licence. Borrow the patterns; read GS1's policy before shipping the file.", "neutral") + '''
