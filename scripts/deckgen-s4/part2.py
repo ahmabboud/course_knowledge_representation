@@ -27,7 +27,7 @@ n = [
     node("c", "7 property\nchecks each", 1110, 45, 210, 66, kind="builtin"),
     node("r", "report:\n2 results", 1340, 45, 190, 66, kind="builtin", flag="bottom"),
 ]
-e = [edge("a", "sh", "t", ""), edge("b", "t", "f", "selects"), edge("c1", "f", "c", ""), edge("d", "c", "r", "")]
+e = [edge("a", "sh", "t", ""), edge("b", "t", "f", ""), edge("c1", "f", "c", ""), edge("d", "c", "r", "")]
 steps = [
     {"show": ["sh", "t", "a"], "run": ["a"], "set": {"t": "active"}},
     {"show": ["f", "b"], "run": ["b"], "set": {"t": "idle", "f": "active"}},

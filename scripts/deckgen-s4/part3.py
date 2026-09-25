@@ -73,15 +73,15 @@ n = [
     node("g1", "2,224 · weight in\nno rate band", 520, 73, 300, 70, kind="builtin"),
     node("g2", "1,209 · band carrier\nnot a Carrier", 520, 200, 300, 70, kind="builtin"),
     node("g3", "2 · weight 0 kg", 520, 298, 300, 56, kind="builtin"),
-    node("h1", "854 CRF orders, never priced:\nfix the shape, priced lanes only", 1135, 34, 570, 62, kind="builtin"),
-    node("h2", "1,370 in the rate table's gap:\nkeep, as a Warning", 1135, 112, 570, 62, kind="builtin", flag="right"),
-    node("k2", "typed only if it carries an order:\na Warning until Session 5", 1135, 200, 570, 62, kind="builtin", flag="right"),
-    node("k3", "361 units cannot weigh 0:\nstays a Violation", 1135, 298, 570, 56, kind="builtin", flag="right"),
+    node("h1", "854 CRF orders, never priced:\nfix the shape, priced lanes only", 1080, 34, 440, 62, kind="builtin"),
+    node("h2", "1,370 in the rate table's gap:\nkeep, as a Warning", 1080, 112, 440, 62, kind="builtin", flag="right"),
+    node("k2", "typed only if it carries an order:\na Warning until Session 5", 1080, 200, 440, 62, kind="builtin", flag="right"),
+    node("k3", "361 units cannot weigh 0:\nstays a Violation", 1080, 298, 440, 56, kind="builtin", flag="right"),
 ]
 e = [
     edge("e1", "d", "g1", "", route="elbow"), edge("e2", "d", "g2", ""), edge("e3", "d", "g3", "", route="elbow"),
-    edge("f1", "g1", "h1", "shape wrong", route="elbow"), edge("f2", "g1", "h2", "data wrong", route="elbow"),
-    edge("f3", "g2", "k2", "conversion"), edge("f4", "g3", "k3", "data wrong"),
+    edge("f1", "g1", "h1", "", route="elbow"), edge("f2", "g1", "h2", "", route="elbow"),
+    edge("f3", "g2", "k2", ""), edge("f4", "g3", "k3", ""),
 ]
 steps = [
     {"show": ["d", "g1", "g2", "g3", "e1", "e2", "e3"], "run": ["e1", "e2", "e3"],
