@@ -550,14 +550,14 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
 </section>
 
 <!-- ==================================================================== 33 -->
-<section class="slide slide--tint" data-label="Poll: which number do you report?" data-section="Leakage" data-minutes="3">
+<section class="slide slide--tint" data-label="Poll: which number do you report?" data-section="Leakage" data-minutes="3" style="--lu-s5:12px">
   <div class="lu-eyebrow">Room poll · 45 seconds</div>
   <div class="lu-poll" data-qid="s6-poll" data-seconds="45" data-answer="b" data-label="Which late order score to report to the company">
-    <p class="lu-mcq__q">The company will use the model on next month's orders, many from customers it has never served. Which PR-AUC should it expect?</p>
+    <p class="lu-mcq__q">Next month, many orders come from customers never served before. Which PR-AUC should the company expect?</p>
     <div class="lu-mcq__opts">
-      <button class="lu-mcq__opt" type="button" data-key="a">About 0.87, the random split<span class="lu-mcq__why" hidden>That measures recognising known customers, not the new ones.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="b">About 0.02, the split by customer<span class="lu-mcq__why" hidden>Yes, for new customers: the same as guessing. Say it, and say why.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="c">The average of the two, about 0.45<span class="lu-mcq__why" hidden>An average of two different questions answers neither.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="a">About 0.87 (random split)<span class="lu-mcq__why" hidden>It measures recognising known customers.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="b">About 0.02 (split by customer)<span class="lu-mcq__why" hidden>Yes, for new customers: as good as guessing.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="c">About 0.45 (the average)<span class="lu-mcq__why" hidden>An average of two questions answers neither.</span></button>
     </div>
   </div>
   <template data-notes><p>Forty five seconds, then discuss. Known customers would still see the random split's quality, so an honest report gives both numbers and says which question each answers.</p></template>
