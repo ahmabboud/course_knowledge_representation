@@ -19,10 +19,10 @@ SLIDES.append(divider("Part 3 · Message passing", "Message passing",
 
 # ---------------------------------------------------------------- one round, on a real order
 nb = [("c", "customer V555_15"), ("k", "carrier V444_0"), ("p", "PLANT08"), ("q", "PORT04"), ("d", "product 1681878")]
-n = [node(i, lab, 150 + 287 * j, 30, 262, 50, kind="individual") for j, (i, lab) in enumerate(nb)]
-n += [node("o", "order 1447135386.7", 724, 160, 330, 56, kind="individual"),
-      node("x", "own numbers:\n3.1 kg, 1,045 units, DTP", 220, 160, 360, 70, kind="literal"),
-      node("h", "new numbers\nfor the order (32)", 1230, 160, 300, 70, kind="literal")]
+n = [node(i, lab, 150 + 287 * j, 28, 262, 50, kind="individual") for j, (i, lab) in enumerate(nb)]
+n += [node("o", "order 1447135386.7", 724, 145, 330, 56, kind="individual"),
+      node("x", "own numbers:\n3.1 kg, 1,045 units, DTP", 220, 145, 360, 70, kind="literal"),
+      node("h", "new numbers\nfor the order (32)", 1230, 145, 300, 70, kind="literal")]
 e = [edge("m" + i, i, "o", "") for i, _ in nb] + [edge("u", "o", "h", "combine"), edge("v", "x", "o", "")]
 steps = [
     {"show": ["o", "x", "v"], "set": {"o": "active"}},
@@ -36,7 +36,7 @@ caps = [
     ("Messages", "<b>Step 3.</b> Each neighbour sends its numbers along its link. That is a <b>message</b>."),
     ("Update", "<b>Step 4.</b> The order averages the messages of each kind of link, weighs them and its own numbers with learned weights, and adds them up. One layer done."),
 ]
-walk = flow("One round of message passing", 1448, 200, n, e, steps, caps,
+walk = flow("One round of message passing", 1448, 184, n, e, steps, caps,
             flags={"inferred": "learned"},
             legend={"individual": "Thing in the graph", "literal": "Numbers", "inferred": "Computed by the layer"})
 SLIDES.append(slide("One round of message passing", "Message passing", 5, '''  <div class="lu-eyebrow">Walkthrough · the order from Part 1</div>
@@ -118,11 +118,10 @@ SLIDES.append(slide("to_hetero: one model, every kind of link", "Message passing
     ''' + code("gnn.py · the model, shortened", sg) + '''
     <div class="lu-stack">
       ''' + defbox([("to_hetero", "PyTorch Geometric's tool that copies a model once per kind of link.")]) + '''
-      ''' + callout("A real gotcha", "The argument must be called <code>edge_index</code>. We called it <code>ei</code> first: to_hetero failed with an error about edge_index that never said why.") + '''
-      ''' + callout("(-1, -1)", "Sizes are read from the data on the first pass, since each kind of node has a different number of columns.", "neutral") + '''
+      ''' + callout("A real gotcha", "The argument must be called <code>edge_index</code>. Named <code>ei</code>, to_hetero failed with an error that never said why.") + '''
     </div>
   </div>''', '''<p>Four minutes. 236,870 weights after conversion (<code>reference-outputs/gnn.txt</code>): each of the 14 kinds of link gets its own copy of each layer, and <code>aggr="sum"</code> adds up what an order receives from its different kinds.</p>
-<ul><li>to_hetero rewrites the forward function by reading its argument names, which is why the name matters. Found in our own feasibility run on 2026-09-25.</li></ul>'''))
+<ul><li><code>(-1, -1)</code>: the input sizes are read from the data on the first pass, since each kind of node has a different number of columns.</li><li>to_hetero rewrites the forward function by reading its argument names, which is why the name matters. Found in our own feasibility run on 2026-09-25.</li></ul>'''))
 
 # ---------------------------------------------------------------- RGCN on the slide only
 rows = [("How it is written", "a normal model, converted in one line", "wired by hand, relations as numbers"),

@@ -61,7 +61,7 @@ n = [
     node("h2", "PLANT07", 200, 172, 200, 52, kind="individual"),
     node("t", "product 1681878", 1150, 102, 300, 52, kind="individual"),
 ]
-e = [edge("a", "h0", "t", "makes"), edge("b", "h1", "t", "makes?"), edge("c", "h2", "t", "makes?")]
+e = [edge("a", "h0", "t", "makes"), edge("b", "h1", "t", ""), edge("c", "h2", "t", "")]
 steps = [
     {"show": ["h0", "t", "a"], "run": ["a"], "set": {"h0": "active"}},
     {"show": ["h1", "b"], "run": ["b"], "set": {"h0": "idle", "h1": "impossible"}},
