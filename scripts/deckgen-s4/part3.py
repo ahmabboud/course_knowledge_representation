@@ -164,8 +164,8 @@ SLIDES.append(slide("The cost of reaching for SPARQL too early", "Rules as shape
 # ---------------------------------------------------------------- Check
 SLIDES.append(slide("Check: which rule needs SPARQL?", "Rules as shapes", 3, '''  <div class="lu-eyebrow">Check question</div>
   <div class="lu-mcq" data-qid="s4-q2" data-answer="c" data-label="Which Brunel rule needs a SPARQL constraint"
-       data-fb-correct=" Correct. It compares the order with rate band nodes elsewhere in the graph."
-       data-fb-wrong=" Not quite. Ask whether the rule looks only at the order's own values, or at other nodes.">
+       data-fb-correct=" It compares the order with rate band nodes elsewhere in the graph."
+       data-fb-wrong=" Ask whether the rule looks only at the order's own values, or at other nodes.">
     <p class="lu-mcq__q">Which of these rules <b>needs</b> a SPARQL constraint?</p>
     <div class="lu-mcq__opts">
       <button class="lu-mcq__opt" type="button" data-key="a">Every order has exactly one carrier<span class="lu-mcq__why" hidden>Counting values: sh:minCount and sh:maxCount.</span></button>

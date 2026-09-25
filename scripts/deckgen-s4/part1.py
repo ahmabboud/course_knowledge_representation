@@ -184,13 +184,13 @@ SLIDES.append(slide("Four things a reasoner will never catch", "Why OWL cannot c
 # ---------------------------------------------------------------- Check
 SLIDES.append(slide("Check: what does the reasoner say?", "Why OWL cannot check", 3, '''  <div class="lu-eyebrow">Check question</div>
   <div class="lu-mcq" data-qid="s4-q1" data-answer="c" data-label="What a reasoner reports for a missing required value"
-       data-fb-correct=" Correct. Open world: a missing value is unknown, so the reasoner assumes a carrier it cannot name."
-       data-fb-wrong=" Not quite. Ask what the open world assumption says about a fact that is simply not there.">
-    <p class="lu-mcq__q">The ontology says every order is carried by <b>some</b> carrier. Order 1447291369.7 has no <b>carried by</b> value. What does HermiT report?</p>
+       data-fb-correct=" Open world: missing is unknown, so it assumes a carrier it cannot name."
+       data-fb-wrong=" Ask what the open world assumption says about a fact that is simply not there.">
+    <p class="lu-mcq__q">The ontology says every order is carried by <b>some</b> carrier. Order 1447291369.7 has none. What does HermiT report?</p>
     <div class="lu-mcq__opts">
-      <button class="lu-mcq__opt" type="button" data-key="a">The ontology is inconsistent<span class="lu-mcq__why" hidden>Nothing contradicts anything: a missing value is not a contradiction.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="b">The class Order is unsatisfiable<span class="lu-mcq__why" hidden>Orders can still exist; one order simply has an unnamed carrier.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="a">The ontology is inconsistent<span class="lu-mcq__why" hidden>A missing value contradicts nothing.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="b">The class Order is unsatisfiable<span class="lu-mcq__why" hidden>Orders can still exist; this one has an unnamed carrier.</span></button>
       <button class="lu-mcq__opt" type="button" data-key="c">Nothing: it assumes a carrier exists that it cannot name<span class="lu-mcq__why" hidden>Correct. That is the open world assumption at work.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="d">A MinCount Violation for that order<span class="lu-mcq__why" hidden>That is SHACL's answer, not a reasoner's. Reasoners do not produce reports of broken rules.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="d">A MinCount Violation for that order<span class="lu-mcq__why" hidden>That is SHACL's answer. A reasoner writes no report of broken rules.</span></button>
     </div>
   </div>''', '''<p>Three minutes. Answer d is the useful wrong answer: it shows the student already expects the tool of this session.</p>''', kind="tint"))

@@ -142,8 +142,8 @@ SLIDES.append(slide("Reading an explanation", "The reasoner", 5, '''  <div class
 # ---------------------------------------------------------------- Check
 SLIDES.append(slide("Check: which job finds which bug", "The reasoner", 3, '''  <div class="lu-eyebrow">Check question</div>
   <div class="lu-mcq" data-qid="s3-q2" data-answer="b" data-label="Which reasoning task surfaces an unintended subclass"
-       data-fb-correct=" Correct. Classification computes subsumption, so an unintended subclass link shows up in the inferred tree."
-       data-fb-wrong=" Not quite. Consistency only asks whether any model exists; a surprising subclass link is a tree question.">
+       data-fb-correct=" Classification computes subsumption, so an unintended subclass link shows up in the inferred tree."
+       data-fb-wrong=" Consistency only asks whether any model exists; a surprising subclass link is a tree question.">
     <p class="lu-mcq__q">After the reasoner runs, <b>Late shipment</b> appears under <b>At-risk shipment</b>, which nobody intended. Which job surfaced it?</p>
     <div class="lu-mcq__opts">
       <button class="lu-mcq__opt" type="button" data-key="a">Consistency checking<span class="lu-mcq__why" hidden>An ontology with a surprising subclass link can be perfectly consistent.</span></button>

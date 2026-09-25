@@ -225,8 +225,8 @@ SLIDES.append(slide("Two layers: rules and data", "What an ontology is", 4, f'''
 # ---------------------------------------------------------------- Check
 SLIDES.append(slide("Check: rules or data?", "What an ontology is", 3, '''  <div class="lu-eyebrow">Check question</div>
   <div class="lu-mcq" data-qid="s3-q1" data-answer="b" data-label="Which statement is an ABox axiom"
-       data-fb-correct=" Correct. It is about one particular shipment and one particular carrier, so it belongs to the data."
-       data-fb-wrong=" Not quite. Ask: is it about one particular thing, or about a whole kind of thing?">
+       data-fb-correct=" It is about one particular shipment and one particular carrier, so it belongs to the data."
+       data-fb-wrong=" Ask: is it about one particular thing, or about a whole kind of thing?">
     <p class="lu-mcq__q">Which of these is an <b>ABox</b> axiom, a fact about particular things?</p>
     <div class="lu-mcq__opts">
       <button class="lu-mcq__opt" type="button" data-key="a">Every late shipment is a shipment<span class="lu-mcq__why" hidden>A rule about a whole class: TBox.</span></button>
