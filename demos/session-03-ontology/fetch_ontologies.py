@@ -1,10 +1,9 @@
 """Fetch the real ontologies this lab runs against, into workspace/, so
 Protege opens with IOF SCRO already loaded and every import resolved
-offline. Also copies in the finished reference ontology
-(scro-extension-reference.ttl) this session's walkthrough opens,
-reasons over, and reports on. Nothing fetched or copied here is meant
-to be edited; this is a run-and-observe lab, not a build-it-yourself
-one, see README.md.
+offline. Also copies in this lab's own files: the starting file with
+the bug (scro-extension-v0.ttl), the fixed file
+(scro-extension-reference.ttl), the sample shipments and the domain
+mistake demo. Never save over v0; see README.md, Part A.
 
 Sources, verified before writing this script (see workspace/LICENCES.md
 for the full citations once this has run):
@@ -234,10 +233,10 @@ def main():
     fetch_gs1()
     verify_catalog()
     print()
-    print("Done. In Protege: Open File, browse to")
-    print(f"  {WORKSPACE / 'scro-extension-reference.ttl'}")
-    print("This file is finished, nothing to edit or Save As. Run ELK,")
-    print("then HermiT, and read the inferred hierarchy, per README.md.")
+    print("Done. In Protege: File, Open, and browse to the lab's starting file")
+    print(f"  {WORKSPACE / 'scro-extension-v0.ttl'}")
+    print("Always open files from workspace/ so the imports resolve offline.")
+    print("Then follow README.md, Part A step 2: run ELK and find the red class.")
 
 
 if __name__ == "__main__":

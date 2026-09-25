@@ -1,0 +1,15 @@
+ROBOT reason, ELK, inferred class assertions (direct types) for the sample shipments.
+
+At-risk shipment as EquivalentTo (as shipped):
+  carrier V444_0: carrier
+  carrier V444_1 (teaching flag: sanctioned): Sanctioned carrier
+  shipment of order 1447291369.7: At-risk shipment, shipment
+  shipment of order 1447311670.7: At-risk shipment
+  shipment of order 1447385217.7: shipment
+
+At-risk shipment as SubClassOf (primitive):
+  carrier V444_0: carrier
+  carrier V444_1 (teaching flag: sanctioned): Sanctioned carrier
+  shipment of order 1447291369.7: shipment
+  shipment of order 1447311670.7: shipment
+  shipment of order 1447385217.7: shipment

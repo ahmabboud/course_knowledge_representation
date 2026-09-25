@@ -62,7 +62,7 @@ ul:answersCQ a owl:AnnotationProperty ;
 
 ul:profile a owl:AnnotationProperty ;
     rdfs:label "intended OWL profile" ;
-    rdfs:comment "EL, DL or QL: which profile this axiom set was written for. Tagged here using this course's own working rule (see the lab brief's terminal check): a class stays EL as long as it only uses conjunction and someValuesFrom; allValuesFrom, cardinality, complementOf or inverseOf push it to DL." .
+    rdfs:comment "EL, DL or QL: which profile this axiom set was written for. Tagged here using this course's own working rule (see the lecture slide 'Speed against expressiveness'): a class stays EL as long as it only uses conjunction and someValuesFrom; allValuesFrom, cardinality, complementOf or inverseOf push it to DL." .
 
 ########################################################################
 ## CQ 1. Which shipments arrived after their committed date last
@@ -82,8 +82,8 @@ ul:LateShipment a owl:Class ;
     ul:answersCQ "Which shipments arrived after their committed date last quarter, by carrier?" .
 
 ## CancelledShipment is deliberately left without a ul:answersCQ. Run
-## the "classes with no competency question" query from the lecture's
-## own lab brief slide against this file and this class is the one it
+## the "classes with no competency question" query in
+## competency_questions.md against this file and this class is the one it
 ## should find. Per the lecture's rule, that means: question whether it
 ## earns its place. It stays in this reference file on purpose, as the
 ## exercise, discuss it live rather than deleting it.
