@@ -43,27 +43,23 @@ SLIDES.append(slide("TransE: a relation is a step", "Embeddings", 5, '''  <div c
 # ---------------------------------------------------------------- four scoring functions
 rows = [
     ("TransE, 2013", "h + r lands near t", "no", "yes", "yes", "yes"),
-    ("DistMult, 2015", "h, r, t multiplied, number by number", "yes", "no", "no", "no"),
-    ("ComplEx, 2016", "DistMult with complex numbers", "yes", "yes", "yes", "no"),
-    ("RotatE, 2019", "r rotates h onto t", "yes", "yes", "yes", "yes"),
+    ("DistMult, 2015", "h, r and t multiplied, number by number: every relation symmetric", "yes", "no", "no", "no"),
+    ("ComplEx, 2016", "DistMult with complex numbers: a relation can go one way", "yes", "yes", "yes", "no"),
+    ("RotatE, 2019", "r rotates h onto t, in complex numbers", "yes", "yes", "yes", "yes"),
 ]
 SLIDES.append(slide("Four ways to score a triple", "Embeddings", 5,
     head("The same idea, four scoring functions", "They differ in which patterns of relations they can represent") + '''
   ''' + table(["Model", "How a triple is scored", "Symmetric", "Antisymmetric", "Inverse", "Composition"], rows) + '''
-  <div class="lu-split">
-    ''' + defbox([("DistMult", "An embedding that multiplies h, r and t; it treats every relation as symmetric."),
-                  ("ComplEx", "DistMult with complex numbers, so a relation can go one way only."),
-                  ("RotatE", "An embedding where a relation rotates the head onto the tail.")]) + '''
-    ''' + callout("For Brunel", "Every relation links two different kinds (a plant makes a product; a product never makes a plant), so none is symmetric. TransE fits: it is the one the lab trains.", "neutral") + '''
-  </div>''', '''<p>Five minutes. The pattern table is the one in the RotatE paper (Sun and others, 2019). Symmetric: <i>married to</i>. Antisymmetric: <i>makes</i>. Inverse: <i>makes</i> and <i>made by</i>. Composition: an order <i>from</i> a plant that <i>serves</i> a port <i>ships from</i> that port.</p>
+  ''' + callout("For Brunel", "Every relation links two different kinds (a plant makes a product; a product never makes a plant), so none is symmetric. TransE fits: it is the one the lab trains.", "neutral"),
+    '''<p>Five minutes. The pattern table is the one in the RotatE paper (Sun and others, 2019). Symmetric: <i>married to</i>. Antisymmetric: <i>makes</i>. Inverse: <i>makes</i> and <i>made by</i>. Composition: an order <i>from</i> a plant that <i>serves</i> a port <i>ships from</i> that port.</p>
 <ul><li>All four are one word apart in PyKEEN: <code>model="DistMult"</code>. The lab README's optional task tries it.</li></ul>'''))
 
 # ---------------------------------------------------------------- negative sampling
 n = [
-    node("h0", "PLANT08", 200, 45, 200, 56, kind="individual"),
-    node("h1", "PLANT03", 200, 140, 200, 56, kind="individual"),
-    node("h2", "PLANT07", 200, 235, 200, 56, kind="individual"),
-    node("t", "product 1681878", 1150, 140, 300, 56, kind="individual"),
+    node("h0", "PLANT08", 200, 32, 200, 52, kind="individual"),
+    node("h1", "PLANT03", 200, 102, 200, 52, kind="individual"),
+    node("h2", "PLANT07", 200, 172, 200, 52, kind="individual"),
+    node("t", "product 1681878", 1150, 102, 300, 52, kind="individual"),
 ]
 e = [edge("a", "h0", "t", "makes"), edge("b", "h1", "t", "makes?"), edge("c", "h2", "t", "makes?")]
 steps = [
@@ -76,7 +72,7 @@ caps = [
     ("A made-up link", "<b>Step 2.</b> Swap the plant for a random one: PLANT03. The graph does not say PLANT03 makes it, so its score should go down."),
     ("A made-up link that is true", "<b>Step 3.</b> Another random swap: PLANT07. But PLANT07 <b>does</b> make 1681878. A random negative can be true; evaluation must allow for it."),
 ]
-walk = flow("Negative sampling", 1448, 270, n, e, steps, caps,
+walk = flow("Negative sampling", 1448, 205, n, e, steps, caps,
             flags={"impossible": "negative", "inferred": "also true"},
             legend={"individual": "Thing in the graph", "impossible": "Negative sample", "inferred": "Negative that is true"})
 SLIDES.append(slide("Negative sampling", "Embeddings", 4, '''  <div class="lu-eyebrow">Walkthrough · how training learns what is false</div>
@@ -88,24 +84,21 @@ SLIDES.append(slide("Negative sampling", "Embeddings", 4, '''  <div class="lu-ey
 
 # ---------------------------------------------------------------- filtered ranking
 rows = [
-    ("1", "PLANT03", "781", "1"),
-    ("2", "PLANT01", "220", "2"),
-    ("3 to 5", "PLANT13, 04, 05", "150 to 127", "3 to 5"),
-    ("6", "PLANT10", "121", "<i>removed: also makes it</i>"),
+    ("1 to 5", "PLANT03, 01, 13, 04, 05", "781 to 127", "1 to 5"),
+    ("6", "PLANT10", "121", "<i>removed: also right</i>"),
     ("7 to 10", "PLANT02, 16, 11, 12", "116 to 57", "6 to 9"),
-    ("11", "PLANT07", "29", "<i>removed: also makes it</i>"),
+    ("11", "PLANT07", "29", "<i>removed: also right</i>"),
     ("12", "PLANT06", "26", "10"),
-    ("<b>13</b>", "<b>PLANT08, the hidden answer</b>", "<b>20</b>", "<b>11</b>"),
+    ("<b>13</b>", "<b>PLANT08, hidden</b>", "<b>20</b>", "<b>11</b>: 1/11 = 0.09"),
 ]
 SLIDES.append(slide("Ranking, raw and filtered", "Embeddings", 5,
-    head("Hide PLANT08 makes 1681878. Rank every plant by how many products it makes.", "Two other right answers rank above the hidden one: they must not count against the model", width=72) + '''
+    head("Hide one link, then rank every plant by how many products it makes", "Hidden: PLANT08 makes 1681878. Two other right answers rank above it.", width=72) + '''
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s2)">
     ''' + table(["Raw rank", "Plant", "Products", "Filtered rank"], rows) + '''
     <div class="lu-stack">
       ''' + defbox([("Filtered ranking", "Removing the other right answers before ranking the hidden one."),
                     ("MRR", "The average of 1 / rank of the right answer."),
                     ("Hits@k", "The share of right answers ranked k or better.")]) + '''
-      ''' + callout("This link", "Filtered rank 11: reciprocal rank 1/11 = 0.09, and no hit at 10.", "neutral") + '''
     </div>
   </div>''', '''<p>Five minutes. This is the popularity model's real ranking for one link, counted over the other 2,035 makes links of <code>brunel-mapped.nt</code> (PLANT08 makes 21 products, 20 once this one is hidden; PLANT17 also makes 20 and ranks after it).</p>
 <ul><li>Filtered ranking: Bordes and others, 2013, the TransE paper. Every published link prediction score today is filtered.</li></ul>'''))

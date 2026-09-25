@@ -31,22 +31,20 @@ pb = (f'''def split_by_customer(customer, test_share=0.3,
     rng = np.random.RandomState(seed)
     groups = np.unique(customer)
     rng.shuffle(groups)
-    test_groups = groups[:int(round(
-        test_share * len(groups)))]
-    test = np.flatnonzero(
-        np.isin(customer, test_groups))
-    train = np.flatnonzero(
-        ~np.isin(customer, test_groups))
-    return train, test''')
-rows = [("Y1 · <code>split_by_plant</code>", "<code>split_by_customer</code>", "group by plant"),
-        ("Y2 · <code>recall_at_k</code>", "<code>precision_at_k</code>", "divide by all late orders, not by k"),
-        ("Y3 · <code>hits_at_k</code>", "<code>mrr</code>", "average &ldquo;rank at most k&rdquo;, not 1 / rank")]
+    n_test = int(round(test_share * len(groups)))
+    test_groups = groups[:n_test]
+    in_test = np.isin(customer, test_groups)
+    return (np.flatnonzero(~in_test),
+            np.flatnonzero(in_test))''')
+rows = [("Y1 <code>split_by_plant</code>", "<code>split_by_customer</code>, grouped by plant"),
+        ("Y2 <code>recall_at_k</code>", "<code>precision_at_k</code>, divided by all late orders"),
+        ("Y3 <code>hits_at_k</code>", "<code>mrr</code>, averaging &ldquo;rank &le; k&rdquo;")]
 SLIDES.append(slide("Part B: each task has a twin", "Lab", 2,
     head("Lab Part B · three functions", "Copy the twin, change one thing") + '''
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s2)">
-    ''' + code("learning_utils.py · the twin of Y1, in full", pb) + '''
+    ''' + code("learning_utils.py · the twin of Y1, shortened", pb) + '''
     <div class="lu-stack">
-      ''' + table(["Write", "Copy", "Change"], rows) + '''
+      ''' + table(["Write", "Copy, then change"], rows) + '''
       ''' + callout("Then run", "<code>python check_my_learning.py</code>. Expect <code>3 of 3 right</code>; each hint names what to change.", "neutral") + '''
     </div>
   </div>''', '''<p>Two minutes. The split by customer on this slide is the function behind the honest numbers of Part 4; Y1 is the same idea for plants. Most common wrong answer: Y3 with <code>&lt; k</code>; the checker says rank 10 is a hit at k = 10.</p>'''))

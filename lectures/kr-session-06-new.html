@@ -143,9 +143,9 @@
   <h2 class="lu-h2" style="max-width:66ch">A graph model is only interesting if it beats the simple one, on a fair test</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
-    <table class="lu-table"><thead><tr><th>Task</th><th>Model</th><th>What it sees</th></tr></thead><tbody><tr><td>Late orders</td><td>Logistic regression</td><td>the row: weight, quantity, service, and customer, carrier, plant as columns</td></tr><tr><td>Late orders</td><td>GraphSAGE</td><td>the same numbers, plus messages from the neighbours (Part 3)</td></tr><tr><td>Which plant</td><td>Popularity</td><td>nothing but how many products each plant makes</td></tr><tr><td>Which plant</td><td>TransE</td><td>every link except the hidden ones (Part 2)</td></tr></tbody></table>
+    <table class="lu-table"><thead><tr><th>Task</th><th>Model</th><th>What it sees</th></tr></thead><tbody><tr><td>Late orders</td><td>Logistic regression</td><td>the row, with customer, carrier, plant as columns</td></tr><tr><td>Late orders</td><td>GraphSAGE</td><td>the same, plus its neighbours (Part 3)</td></tr><tr><td>Which plant</td><td>Popularity</td><td>how many products each plant makes</td></tr><tr><td>Which plant</td><td>TransE</td><td>every link but the hidden ones (Part 2)</td></tr></tbody></table>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Baseline</dt><dd>The simplest reasonable model; every new model is compared with it.</dd><dt>Logistic regression</dt><dd>A table model that weighs each column and adds the weights up.</dd></dl></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Baseline</dt><dd>The simplest reasonable model; every new model is compared with it.</dd></dl></div>
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Losing is a result</span><p class="lu-sub">If the graph model does not beat the baseline, that is worth reporting: it says the graph's shape adds nothing for this task.</p></div>
     </div>
   </div>
@@ -182,11 +182,8 @@
   <div class="lu-eyebrow">The same idea, four scoring functions</div>
   <h2 class="lu-h2" style="max-width:66ch">They differ in which patterns of relations they can represent</h2>
 
-  <table class="lu-table"><thead><tr><th>Model</th><th>How a triple is scored</th><th>Symmetric</th><th>Antisymmetric</th><th>Inverse</th><th>Composition</th></tr></thead><tbody><tr><td>TransE, 2013</td><td>h + r lands near t</td><td>no</td><td>yes</td><td>yes</td><td>yes</td></tr><tr><td>DistMult, 2015</td><td>h, r, t multiplied, number by number</td><td>yes</td><td>no</td><td>no</td><td>no</td></tr><tr><td>ComplEx, 2016</td><td>DistMult with complex numbers</td><td>yes</td><td>yes</td><td>yes</td><td>no</td></tr><tr><td>RotatE, 2019</td><td>r rotates h onto t</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td></tr></tbody></table>
-  <div class="lu-split">
-    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>DistMult</dt><dd>An embedding that multiplies h, r and t; it treats every relation as symmetric.</dd><dt>ComplEx</dt><dd>DistMult with complex numbers, so a relation can go one way only.</dd><dt>RotatE</dt><dd>An embedding where a relation rotates the head onto the tail.</dd></dl></div>
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">For Brunel</span><p class="lu-sub">Every relation links two different kinds (a plant makes a product; a product never makes a plant), so none is symmetric. TransE fits: it is the one the lab trains.</p></div>
-  </div>
+  <table class="lu-table"><thead><tr><th>Model</th><th>How a triple is scored</th><th>Symmetric</th><th>Antisymmetric</th><th>Inverse</th><th>Composition</th></tr></thead><tbody><tr><td>TransE, 2013</td><td>h + r lands near t</td><td>no</td><td>yes</td><td>yes</td><td>yes</td></tr><tr><td>DistMult, 2015</td><td>h, r and t multiplied, number by number: every relation symmetric</td><td>yes</td><td>no</td><td>no</td><td>no</td></tr><tr><td>ComplEx, 2016</td><td>DistMult with complex numbers: a relation can go one way</td><td>yes</td><td>yes</td><td>yes</td><td>no</td></tr><tr><td>RotatE, 2019</td><td>r rotates h onto t, in complex numbers</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td></tr></tbody></table>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">For Brunel</span><p class="lu-sub">Every relation links two different kinds (a plant makes a product; a product never makes a plant), so none is symmetric. TransE fits: it is the one the lab trains.</p></div>
   <template data-notes><p>Five minutes. The pattern table is the one in the RotatE paper (Sun and others, 2019). Symmetric: <i>married to</i>. Antisymmetric: <i>makes</i>. Inverse: <i>makes</i> and <i>made by</i>. Composition: an order <i>from</i> a plant that <i>serves</i> a port <i>ships from</i> that port.</p>
 <ul><li>All four are one word apart in PyKEEN: <code>model="DistMult"</code>. The lab README's optional task tries it.</li></ul></template>
 </section>
@@ -195,7 +192,7 @@
 <section class="slide" data-label="Negative sampling" data-section="Embeddings" data-minutes="4">
   <div class="lu-eyebrow">Walkthrough · how training learns what is false</div>
   <h2 class="lu-h2">The graph holds only true links. Training makes up false ones to compare.</h2>
-  <div class="lu-walk" data-label="Negative sampling"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 270, "nodes": [{"id": "h0", "label": "PLANT08", "x": 200, "y": 45, "w": 200, "h": 56, "kind": "individual"}, {"id": "h1", "label": "PLANT03", "x": 200, "y": 140, "w": 200, "h": 56, "kind": "individual"}, {"id": "h2", "label": "PLANT07", "x": 200, "y": 235, "w": 200, "h": 56, "kind": "individual"}, {"id": "t", "label": "product 1681878", "x": 1150, "y": 140, "w": 300, "h": 56, "kind": "individual"}], "edges": [{"id": "a", "from": "h0", "to": "t", "label": "makes"}, {"id": "b", "from": "h1", "to": "t", "label": "makes?"}, {"id": "c", "from": "h2", "to": "t", "label": "makes?"}], "steps": [{"show": ["h0", "t", "a"], "run": ["a"], "set": {"h0": "active"}}, {"show": ["h1", "b"], "run": ["b"], "set": {"h0": "idle", "h1": "impossible"}}, {"show": ["h2", "c"], "run": ["c"], "set": {"h2": "inferred"}}], "legend": {"individual": "Thing in the graph", "impossible": "Negative sample", "inferred": "Negative that is true"}, "flags": {"impossible": "negative", "inferred": "also true"}}</script></div><div data-walk-step="1" data-caption-short="A true link" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Training shows the model a link from the graph. Its score should go up."></div><div data-walk-step="2" data-caption-short="A made-up link" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Swap the plant for a random one: PLANT03. The graph does not say PLANT03 makes it, so its score should go down."></div><div data-walk-step="3" data-caption-short="A made-up link that is true" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Another random swap: PLANT07. But PLANT07 &lt;b&gt;does&lt;/b&gt; make 1681878. A random negative can be true; evaluation must allow for it."></div></div></div>
+  <div class="lu-walk" data-label="Negative sampling"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 205, "nodes": [{"id": "h0", "label": "PLANT08", "x": 200, "y": 32, "w": 200, "h": 52, "kind": "individual"}, {"id": "h1", "label": "PLANT03", "x": 200, "y": 102, "w": 200, "h": 52, "kind": "individual"}, {"id": "h2", "label": "PLANT07", "x": 200, "y": 172, "w": 200, "h": 52, "kind": "individual"}, {"id": "t", "label": "product 1681878", "x": 1150, "y": 102, "w": 300, "h": 52, "kind": "individual"}], "edges": [{"id": "a", "from": "h0", "to": "t", "label": "makes"}, {"id": "b", "from": "h1", "to": "t", "label": "makes?"}, {"id": "c", "from": "h2", "to": "t", "label": "makes?"}], "steps": [{"show": ["h0", "t", "a"], "run": ["a"], "set": {"h0": "active"}}, {"show": ["h1", "b"], "run": ["b"], "set": {"h0": "idle", "h1": "impossible"}}, {"show": ["h2", "c"], "run": ["c"], "set": {"h2": "inferred"}}], "legend": {"individual": "Thing in the graph", "impossible": "Negative sample", "inferred": "Negative that is true"}, "flags": {"impossible": "negative", "inferred": "also true"}}</script></div><div data-walk-step="1" data-caption-short="A true link" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Training shows the model a link from the graph. Its score should go up."></div><div data-walk-step="2" data-caption-short="A made-up link" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Swap the plant for a random one: PLANT03. The graph does not say PLANT03 makes it, so its score should go down."></div><div data-walk-step="3" data-caption-short="A made-up link that is true" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Another random swap: PLANT07. But PLANT07 &lt;b&gt;does&lt;/b&gt; make 1681878. A random negative can be true; evaluation must allow for it."></div></div></div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Negative sampling</dt><dd>Making up false triples by swapping the head or the tail, so the model learns to score them lower.</dd></dl></div>
   <template data-notes><p>Four minutes. All three plants are real: PLANT07, PLANT08 and PLANT10 make 1681878 in <code>brunel-mapped.nt</code>; PLANT03 does not.</p>
 <ul><li>The graph is open world (Session 3): a missing link is unknown, not false. Negative sampling pretends it is false, and is sometimes wrong. That is the price of learning from positives only.</li></ul></template>
@@ -203,14 +200,13 @@
 
 <!-- ==================================================================== 12 -->
 <section class="slide" data-label="Ranking, raw and filtered" data-section="Embeddings" data-minutes="5">
-  <div class="lu-eyebrow">Hide PLANT08 makes 1681878. Rank every plant by how many products it makes.</div>
-  <h2 class="lu-h2" style="max-width:72ch">Two other right answers rank above the hidden one: they must not count against the model</h2>
+  <div class="lu-eyebrow">Hide one link, then rank every plant by how many products it makes</div>
+  <h2 class="lu-h2" style="max-width:72ch">Hidden: PLANT08 makes 1681878. Two other right answers rank above it.</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s2)">
-    <table class="lu-table"><thead><tr><th>Raw rank</th><th>Plant</th><th>Products</th><th>Filtered rank</th></tr></thead><tbody><tr><td>1</td><td>PLANT03</td><td>781</td><td>1</td></tr><tr><td>2</td><td>PLANT01</td><td>220</td><td>2</td></tr><tr><td>3 to 5</td><td>PLANT13, 04, 05</td><td>150 to 127</td><td>3 to 5</td></tr><tr><td>6</td><td>PLANT10</td><td>121</td><td><i>removed: also makes it</i></td></tr><tr><td>7 to 10</td><td>PLANT02, 16, 11, 12</td><td>116 to 57</td><td>6 to 9</td></tr><tr><td>11</td><td>PLANT07</td><td>29</td><td><i>removed: also makes it</i></td></tr><tr><td>12</td><td>PLANT06</td><td>26</td><td>10</td></tr><tr><td><b>13</b></td><td><b>PLANT08, the hidden answer</b></td><td><b>20</b></td><td><b>11</b></td></tr></tbody></table>
+    <table class="lu-table"><thead><tr><th>Raw rank</th><th>Plant</th><th>Products</th><th>Filtered rank</th></tr></thead><tbody><tr><td>1 to 5</td><td>PLANT03, 01, 13, 04, 05</td><td>781 to 127</td><td>1 to 5</td></tr><tr><td>6</td><td>PLANT10</td><td>121</td><td><i>removed: also right</i></td></tr><tr><td>7 to 10</td><td>PLANT02, 16, 11, 12</td><td>116 to 57</td><td>6 to 9</td></tr><tr><td>11</td><td>PLANT07</td><td>29</td><td><i>removed: also right</i></td></tr><tr><td>12</td><td>PLANT06</td><td>26</td><td>10</td></tr><tr><td><b>13</b></td><td><b>PLANT08, hidden</b></td><td><b>20</b></td><td><b>11</b>: 1/11 = 0.09</td></tr></tbody></table>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Filtered ranking</dt><dd>Removing the other right answers before ranking the hidden one.</dd><dt>MRR</dt><dd>The average of 1 / rank of the right answer.</dd><dt>Hits@k</dt><dd>The share of right answers ranked k or better.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">This link</span><p class="lu-sub">Filtered rank 11: reciprocal rank 1/11 = 0.09, and no hit at 10.</p></div>
     </div>
   </div>
   <template data-notes><p>Five minutes. This is the popularity model's real ranking for one link, counted over the other 2,035 makes links of <code>brunel-mapped.nt</code> (PLANT08 makes 21 products, 20 once this one is hidden; PLANT17 also makes 20 and ranks after it).</p>
@@ -285,8 +281,8 @@ scores = model.score_h(torch.tensor(
 <!-- ==================================================================== 17 -->
 <section class="slide" data-label="One round of message passing" data-section="Message passing" data-minutes="5">
   <div class="lu-eyebrow">Walkthrough · the order from Part 1</div>
-  <h2 class="lu-h2">A layer replaces each node's numbers with a mix of its own and its neighbours'</h2>
-  <div class="lu-walk" data-label="One round of message passing"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 330, "nodes": [{"id": "c", "label": "customer V555_15", "x": 210, "y": 40, "w": 320, "h": 50, "kind": "individual"}, {"id": "k", "label": "carrier V444_0", "x": 210, "y": 105, "w": 320, "h": 50, "kind": "individual"}, {"id": "p", "label": "PLANT08", "x": 210, "y": 170, "w": 320, "h": 50, "kind": "individual"}, {"id": "q", "label": "PORT04", "x": 210, "y": 235, "w": 320, "h": 50, "kind": "individual"}, {"id": "d", "label": "product 1681878", "x": 210, "y": 300, "w": 320, "h": 50, "kind": "individual"}, {"id": "o", "label": "order 1447135386.7", "x": 760, "y": 170, "w": 330, "h": 60, "kind": "individual"}, {"id": "x", "label": "own numbers:\n3.1 kg, 1,045 units, DTP", "x": 760, "y": 50, "w": 360, "h": 70, "kind": "literal"}, {"id": "h", "label": "new numbers\nfor the order (32)", "x": 1230, "y": 170, "w": 300, "h": 70, "kind": "literal"}], "edges": [{"id": "mc", "from": "c", "to": "o", "label": ""}, {"id": "mk", "from": "k", "to": "o", "label": ""}, {"id": "mp", "from": "p", "to": "o", "label": ""}, {"id": "mq", "from": "q", "to": "o", "label": ""}, {"id": "md", "from": "d", "to": "o", "label": ""}, {"id": "u", "from": "o", "to": "h", "label": "combine"}, {"id": "v", "from": "x", "to": "o", "label": ""}], "steps": [{"show": ["o", "x", "v"], "set": {"o": "active"}}, {"show": ["c", "k", "p", "q", "d"]}, {"show": ["mc", "mk", "mp", "mq", "md"], "run": ["mc", "mk", "mp", "mq", "md"]}, {"show": ["h", "u"], "run": ["u"], "set": {"o": "idle", "h": "inferred"}}], "legend": {"individual": "Thing in the graph", "literal": "Numbers", "inferred": "Computed by the layer"}, "flags": {"inferred": "learned"}}</script></div><div data-walk-step="1" data-caption-short="Before" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The order starts with its own three numbers."></div><div data-walk-step="2" data-caption-short="Neighbours" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Its five neighbours have numbers too. Here they only say which one each is: customer 23 of 46, say."></div><div data-walk-step="3" data-caption-short="Messages" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Each neighbour sends its numbers along its link. That is a &lt;b&gt;message&lt;/b&gt;."></div><div data-walk-step="4" data-caption-short="Update" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; The order averages the messages of each kind of link, weighs them and its own numbers with learned weights, and adds them up. One layer done."></div></div></div>
+  <h2 class="lu-h2">A layer mixes each node's own numbers with its neighbours'</h2>
+  <div class="lu-walk" data-label="One round of message passing"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 200, "nodes": [{"id": "c", "label": "customer V555_15", "x": 150, "y": 30, "w": 262, "h": 50, "kind": "individual"}, {"id": "k", "label": "carrier V444_0", "x": 437, "y": 30, "w": 262, "h": 50, "kind": "individual"}, {"id": "p", "label": "PLANT08", "x": 724, "y": 30, "w": 262, "h": 50, "kind": "individual"}, {"id": "q", "label": "PORT04", "x": 1011, "y": 30, "w": 262, "h": 50, "kind": "individual"}, {"id": "d", "label": "product 1681878", "x": 1298, "y": 30, "w": 262, "h": 50, "kind": "individual"}, {"id": "o", "label": "order 1447135386.7", "x": 724, "y": 160, "w": 330, "h": 56, "kind": "individual"}, {"id": "x", "label": "own numbers:\n3.1 kg, 1,045 units, DTP", "x": 220, "y": 160, "w": 360, "h": 70, "kind": "literal"}, {"id": "h", "label": "new numbers\nfor the order (32)", "x": 1230, "y": 160, "w": 300, "h": 70, "kind": "literal"}], "edges": [{"id": "mc", "from": "c", "to": "o", "label": ""}, {"id": "mk", "from": "k", "to": "o", "label": ""}, {"id": "mp", "from": "p", "to": "o", "label": ""}, {"id": "mq", "from": "q", "to": "o", "label": ""}, {"id": "md", "from": "d", "to": "o", "label": ""}, {"id": "u", "from": "o", "to": "h", "label": "combine"}, {"id": "v", "from": "x", "to": "o", "label": ""}], "steps": [{"show": ["o", "x", "v"], "set": {"o": "active"}}, {"show": ["c", "k", "p", "q", "d"]}, {"show": ["mc", "mk", "mp", "mq", "md"], "run": ["mc", "mk", "mp", "mq", "md"]}, {"show": ["h", "u"], "run": ["u"], "set": {"o": "idle", "h": "inferred"}}], "legend": {"individual": "Thing in the graph", "literal": "Numbers", "inferred": "Computed by the layer"}, "flags": {"inferred": "learned"}}</script></div><div data-walk-step="1" data-caption-short="Before" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The order starts with its own three numbers."></div><div data-walk-step="2" data-caption-short="Neighbours" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Its five neighbours have numbers too. Here they only say which one each is: customer 23 of 46, say."></div><div data-walk-step="3" data-caption-short="Messages" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Each neighbour sends its numbers along its link. That is a &lt;b&gt;message&lt;/b&gt;."></div><div data-walk-step="4" data-caption-short="Update" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; The order averages the messages of each kind of link, weighs them and its own numbers with learned weights, and adds them up. One layer done."></div></div></div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Message passing</dt><dd>Each node updates itself from what its neighbours send it, one round per layer.</dd><dt>GraphSAGE</dt><dd>A layer where a node combines its own numbers with the average of its neighbours'.</dd></dl></div>
   <template data-notes><p>Five minutes. Every node does this at the same time, so the customer also updates, from its 110 orders. That is the point of the next slide.</p>
 <ul><li>GraphSAGE: Hamilton, Ying and Leskovec, 2017. The weights are shared by every node of a kind, so the model learns a rule, not one answer per order.</li></ul></template>
@@ -318,13 +314,11 @@ scores = model.score_h(torch.tensor(
   <h2 class="lu-h2">One table of numbers per kind of node, one list of pairs per kind of link</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
-      <table class="lu-table"><thead><tr><th>Node kind</th><th>How many</th><th>Numbers per node</th></tr></thead><tbody><tr><td>order</td><td>9,215</td><td>weight, quantity, service level: 5 numbers</td></tr><tr><td>customer</td><td>46</td><td>which one it is: 46 numbers, one set to 1</td></tr><tr><td>carrier · plant · port</td><td>3 · 20 · 11</td><td>which one it is</td></tr><tr><td>product</td><td>1,540</td><td>which one it is</td></tr></tbody></table>
+      <table class="lu-table"><thead><tr><th>Node kind</th><th>How many</th><th>Numbers per node</th></tr></thead><tbody><tr><td>order</td><td>9,215</td><td>weight, quantity, service level: 5 numbers</td></tr><tr><td>customer</td><td>46</td><td>which one it is: 46 numbers, one set to 1</td></tr><tr><td>carrier · plant · port · product</td><td>3 · 20 · 11 · 1,540</td><td>which one it is</td></tr></tbody></table>
       <div class="lu-code lu-code--sm" data-name="build_graph.py and gnn.py · shortened"><pre><code>data = HeteroData()
 data[<span class="tok-str">"order"</span>].x = torch.tensor(x)  <span class="tok-com"># 9215 x 5</span>
-data[<span class="tok-str">"customer"</span>].x = torch.eye(46)
 data[<span class="tok-str">"order"</span>, <span class="tok-str">"orderedBy"</span>, <span class="tok-str">"customer"</span>
-     ].edge_index = pairs.T   <span class="tok-com"># 2 x 9215</span>
-data = T.ToUndirected()(data)</code></pre></div>
+     ].edge_index = pairs.T   <span class="tok-com"># 2 x 9215</span></code></pre></div>
     </div>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>HeteroData</dt><dd>PyTorch Geometric's object for a graph with several kinds of node and link.</dd></dl></div>
@@ -355,20 +349,17 @@ data = T.ToUndirected()(data)</code></pre></div>
   <div class="lu-eyebrow">What gnn.py trains</div>
   <h2 class="lu-h2">Write the model for one kind of link. to_hetero copies it for all fourteen.</h2>
   <div class="lu-split lu-split--wide-left">
-    <div class="lu-code lu-code--sm" data-name="gnn.py · the model"><pre><code>class SAGE(torch.nn.Module):
+    <div class="lu-code lu-code--sm" data-name="gnn.py · the model, shortened"><pre><code>class SAGE(torch.nn.Module):
     def __init__(self):
-        super().__init__()
         self.conv1 = SAGEConv((-1, -1), 32)
         self.conv2 = SAGEConv((-1, -1), 32)
         self.score = Linear(32, 1)
-
     def forward(self, x, edge_index):
         h = self.conv1(x, edge_index).relu()
         h = self.conv2(h, edge_index).relu()
         return self.score(h)
 
-model = to_hetero(SAGE(), data.metadata(),
-                  aggr=<span class="tok-str">"sum"</span>)</code></pre></div>
+model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</span>)</code></pre></div>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>to_hetero</dt><dd>PyTorch Geometric's tool that copies a model once per kind of link.</dd></dl></div>
       <div class="lu-callout"><span class="lu-callout__label">A real gotcha</span><p class="lu-sub">The argument must be called <code>edge_index</code>. We called it <code>ei</code> first: to_hetero failed with an error about edge_index that never said why.</p></div>
@@ -609,20 +600,18 @@ model = to_hetero(SAGE(), data.metadata(),
   <h2 class="lu-h2" style="max-width:66ch">Copy the twin, change one thing</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s2)">
-    <div class="lu-code lu-code--sm" data-name="learning_utils.py · the twin of Y1, in full"><pre><code>def split_by_customer(customer, test_share=0.3,
+    <div class="lu-code lu-code--sm" data-name="learning_utils.py · the twin of Y1, shortened"><pre><code>def split_by_customer(customer, test_share=0.3,
                       seed=0):
     rng = np.random.RandomState(seed)
     groups = np.unique(customer)
     rng.shuffle(groups)
-    test_groups = groups[:int(round(
-        test_share * len(groups)))]
-    test = np.flatnonzero(
-        np.isin(customer, test_groups))
-    train = np.flatnonzero(
-        ~np.isin(customer, test_groups))
-    return train, test</code></pre></div>
+    n_test = int(round(test_share * len(groups)))
+    test_groups = groups[:n_test]
+    in_test = np.isin(customer, test_groups)
+    return (np.flatnonzero(~in_test),
+            np.flatnonzero(in_test))</code></pre></div>
     <div class="lu-stack">
-      <table class="lu-table"><thead><tr><th>Write</th><th>Copy</th><th>Change</th></tr></thead><tbody><tr><td>Y1 · <code>split_by_plant</code></td><td><code>split_by_customer</code></td><td>group by plant</td></tr><tr><td>Y2 · <code>recall_at_k</code></td><td><code>precision_at_k</code></td><td>divide by all late orders, not by k</td></tr><tr><td>Y3 · <code>hits_at_k</code></td><td><code>mrr</code></td><td>average &ldquo;rank at most k&rdquo;, not 1 / rank</td></tr></tbody></table>
+      <table class="lu-table"><thead><tr><th>Write</th><th>Copy, then change</th></tr></thead><tbody><tr><td>Y1 <code>split_by_plant</code></td><td><code>split_by_customer</code>, grouped by plant</td></tr><tr><td>Y2 <code>recall_at_k</code></td><td><code>precision_at_k</code>, divided by all late orders</td></tr><tr><td>Y3 <code>hits_at_k</code></td><td><code>mrr</code>, averaging &ldquo;rank &le; k&rdquo;</td></tr></tbody></table>
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Then run</span><p class="lu-sub"><code>python check_my_learning.py</code>. Expect <code>3 of 3 right</code>; each hint names what to change.</p></div>
     </div>
   </div>

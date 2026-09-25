@@ -19,10 +19,10 @@ SLIDES.append(divider("Part 3 · Message passing", "Message passing",
 
 # ---------------------------------------------------------------- one round, on a real order
 nb = [("c", "customer V555_15"), ("k", "carrier V444_0"), ("p", "PLANT08"), ("q", "PORT04"), ("d", "product 1681878")]
-n = [node(i, lab, 210, 40 + 65 * j, 320, 50, kind="individual") for j, (i, lab) in enumerate(nb)]
-n += [node("o", "order 1447135386.7", 760, 170, 330, 60, kind="individual"),
-      node("x", "own numbers:\n3.1 kg, 1,045 units, DTP", 760, 50, 360, 70, kind="literal"),
-      node("h", "new numbers\nfor the order (32)", 1230, 170, 300, 70, kind="literal")]
+n = [node(i, lab, 150 + 287 * j, 30, 262, 50, kind="individual") for j, (i, lab) in enumerate(nb)]
+n += [node("o", "order 1447135386.7", 724, 160, 330, 56, kind="individual"),
+      node("x", "own numbers:\n3.1 kg, 1,045 units, DTP", 220, 160, 360, 70, kind="literal"),
+      node("h", "new numbers\nfor the order (32)", 1230, 160, 300, 70, kind="literal")]
 e = [edge("m" + i, i, "o", "") for i, _ in nb] + [edge("u", "o", "h", "combine"), edge("v", "x", "o", "")]
 steps = [
     {"show": ["o", "x", "v"], "set": {"o": "active"}},
@@ -36,11 +36,11 @@ caps = [
     ("Messages", "<b>Step 3.</b> Each neighbour sends its numbers along its link. That is a <b>message</b>."),
     ("Update", "<b>Step 4.</b> The order averages the messages of each kind of link, weighs them and its own numbers with learned weights, and adds them up. One layer done."),
 ]
-walk = flow("One round of message passing", 1448, 330, n, e, steps, caps,
+walk = flow("One round of message passing", 1448, 200, n, e, steps, caps,
             flags={"inferred": "learned"},
             legend={"individual": "Thing in the graph", "literal": "Numbers", "inferred": "Computed by the layer"})
 SLIDES.append(slide("One round of message passing", "Message passing", 5, '''  <div class="lu-eyebrow">Walkthrough · the order from Part 1</div>
-  <h2 class="lu-h2">A layer replaces each node's numbers with a mix of its own and its neighbours'</h2>
+  <h2 class="lu-h2">A layer mixes each node's own numbers with its neighbours'</h2>
   ''' + walk + '''
   ''' + defbox([("Message passing", "Each node updates itself from what its neighbours send it, one round per layer."),
                 ("GraphSAGE", "A layer where a node combines its own numbers with the average of its neighbours'.")]),
@@ -66,14 +66,11 @@ SLIDES.append(slide("Two layers reach almost everything", "Message passing", 4,
 # ---------------------------------------------------------------- HeteroData
 rows = [("order", "9,215", "weight, quantity, service level: 5 numbers"),
         ("customer", "46", "which one it is: 46 numbers, one set to 1"),
-        ("carrier · plant · port", "3 · 20 · 11", "which one it is"),
-        ("product", "1,540", "which one it is")]
+        ("carrier · plant · port · product", "3 · 20 · 11 · 1,540", "which one it is")]
 hd = (f'''data = HeteroData()
 data[{S}"order"{E}].x = torch.tensor(x)  {C}# 9215 x 5{E}
-data[{S}"customer"{E}].x = torch.eye(46)
 data[{S}"order"{E}, {S}"orderedBy"{E}, {S}"customer"{E}
-     ].edge_index = pairs.T   {C}# 2 x 9215{E}
-data = T.ToUndirected()(data)''')
+     ].edge_index = pairs.T   {C}# 2 x 9215{E}''')
 SLIDES.append(slide("The graph as PyTorch Geometric sees it", "Message passing", 4, '''  <div class="lu-eyebrow">What build_graph.py writes</div>
   <h2 class="lu-h2">One table of numbers per kind of node, one list of pairs per kind of link</h2>
   <div class="lu-split lu-split--wide-left">
@@ -106,22 +103,19 @@ SLIDES.append(slide("The ontology decides the kinds", "Message passing", 3,
 # ---------------------------------------------------------------- to_hetero and its gotcha
 sg = (f'''class SAGE(torch.nn.Module):
     def __init__(self):
-        super().__init__()
         self.conv1 = SAGEConv((-1, -1), 32)
         self.conv2 = SAGEConv((-1, -1), 32)
         self.score = Linear(32, 1)
-
     def forward(self, x, edge_index):
         h = self.conv1(x, edge_index).relu()
         h = self.conv2(h, edge_index).relu()
         return self.score(h)
 
-model = to_hetero(SAGE(), data.metadata(),
-                  aggr={S}"sum"{E})''')
+model = to_hetero(SAGE(), data.metadata(), aggr={S}"sum"{E})''')
 SLIDES.append(slide("to_hetero: one model, every kind of link", "Message passing", 4, '''  <div class="lu-eyebrow">What gnn.py trains</div>
   <h2 class="lu-h2">Write the model for one kind of link. to_hetero copies it for all fourteen.</h2>
   <div class="lu-split lu-split--wide-left">
-    ''' + code("gnn.py · the model", sg) + '''
+    ''' + code("gnn.py · the model, shortened", sg) + '''
     <div class="lu-stack">
       ''' + defbox([("to_hetero", "PyTorch Geometric's tool that copies a model once per kind of link.")]) + '''
       ''' + callout("A real gotcha", "The argument must be called <code>edge_index</code>. We called it <code>ei</code> first: to_hetero failed with an error about edge_index that never said why.") + '''

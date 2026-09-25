@@ -130,18 +130,17 @@ SLIDES.append(slide("Two questions for a model", "Why a graph", 5,
 
 # ---------------------------------------------------------------- baselines first
 rows = [
-    ("Late orders", "Logistic regression", "the row: weight, quantity, service, and customer, carrier, plant as columns"),
-    ("Late orders", "GraphSAGE", "the same numbers, plus messages from the neighbours (Part 3)"),
-    ("Which plant", "Popularity", "nothing but how many products each plant makes"),
-    ("Which plant", "TransE", "every link except the hidden ones (Part 2)"),
+    ("Late orders", "Logistic regression", "the row, with customer, carrier, plant as columns"),
+    ("Late orders", "GraphSAGE", "the same, plus its neighbours (Part 3)"),
+    ("Which plant", "Popularity", "how many products each plant makes"),
+    ("Which plant", "TransE", "every link but the hidden ones (Part 2)"),
 ]
 SLIDES.append(slide("The baseline comes first", "Why a graph", 5,
     head("Every model today has a simple rival", "A graph model is only interesting if it beats the simple one, on a fair test") + '''
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     ''' + table(["Task", "Model", "What it sees"], rows) + '''
     <div class="lu-stack">
-      ''' + defbox([("Baseline", "The simplest reasonable model; every new model is compared with it."),
-                    ("Logistic regression", "A table model that weighs each column and adds the weights up.")]) + '''
+      ''' + defbox([("Baseline", "The simplest reasonable model; every new model is compared with it.")]) + '''
       ''' + callout("Losing is a result", "If the graph model does not beat the baseline, that is worth reporting: it says the graph's shape adds nothing for this task.", "neutral") + '''
     </div>
   </div>''', '''<p>Five minutes. XGBoost is the usual stronger table baseline; for your project it is a good second one. Today logistic regression is enough, because it already ties the graph model.</p>'''))
