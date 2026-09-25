@@ -23,7 +23,7 @@ SLIDES.append(divider("Part 3 · The rules as shapes", "Rules as shapes",
 
 # ---------------------------------------------------------------- From the inventory to shapes
 rows = [
-    ("One carrier, one plant, one date, one service level per order", "core", "0"),
+    ("One carrier, plant, date and service level per order", "core", "0"),
     ("An order weighs more than 0 kg", "core", "<b style=\"color:var(--lu-red-700)\">2</b>"),
     ("A band's lower bound is not above its upper bound", "core, two values", "0"),
     ("A rate band belongs to a carrier", "core", "<b style=\"color:var(--lu-red-700)\">1,209</b>"),
@@ -33,28 +33,29 @@ rows = [
     ("CRF orders are carried by V44_3", "SPARQL", "you write it (Part B)"),
 ]
 SLIDES.append(slide("From the inventory to shapes", "Rules as shapes", 5,
-    head("Session 1's list, as a first draft", "Each business rule becomes one shape. Four need SPARQL: they compare an order with other nodes.") +
-    table(["Business rule (Session 1)", "Kind of shape", "First draft, results"], rows) + '''
-  <p class="lu-caption"><code>brunel-shapes-v0.ttl</code> on the Session 2 graph: <b>3,435 Violations</b> in 90 seconds. Every rule was written as a Violation.</p>''',
-    '''<p>Five minutes. The first draft is what anyone writes from the English list: every rule, all Violations. Real run, <code>reference-outputs/validate-v0.txt</code>.</p>
+    head("Session 1's list, as a first draft", "One shape per rule, all Violations. Four need SPARQL. First run: <b>3,435 Violations</b>.") +
+    table(["Business rule (Session 1)", "Kind of shape", "First draft, results"], rows),
+    '''<p>Five minutes. The first draft is what anyone writes from the English list: every rule, all Violations. Real run of <code>brunel-shapes-v0.ttl</code> on the Session 2 graph, 90 seconds (<code>reference-outputs/validate-v0.txt</code>).</p>
 <ul><li>The two SPARQL rules with 0 results confirm Session 1's evidence on all 9,215 orders: no order leaves through an unlinked port, none ships a product its plant does not make.</li>
 <li>The weight rule is new: Session 1 had no rule for it. Adding a rule you did not think of is normal; the gate keeps it from then on.</li></ul>'''))
 
 # ---------------------------------------------------------------- sh:sparql
 q = (f'''uls:LinkedPortShape {K}a{E} sh:NodeShape ;
-    sh:targetClass ul:Order ;
-    sh:sparql [
-        sh:message {S}"Order leaves through {{?port}}, which its plant does not ship through."{E} ;
-        sh:prefixes &lt;https://ul.edu.lb/kr/shapes&gt; ;
-        sh:select """
-            {K}SELECT{E} {V}$this{E} {V}?plant{E} {V}?port{E} {K}WHERE{E} {{
-                {V}$this{E} ul:fromPlant {V}?plant{E} ; ul:shipsFrom {V}?port{E} .
-                {K}FILTER NOT EXISTS{E} {{ {V}?plant{E} ul:servesPort {V}?port{E} }}
-            }}""" ] .''')
+  sh:targetClass ul:Order ;
+  sh:sparql [
+    sh:message {S}"{{?port}} is not a port of {{?plant}}."{E} ;
+    sh:prefixes &lt;https://ul.edu.lb/kr/shapes&gt; ;
+    sh:select """
+      {K}SELECT{E} {V}$this{E} {V}?plant{E} {V}?port{E} {K}WHERE{E} {{
+        {V}$this{E} ul:fromPlant {V}?plant{E} ;
+              ul:shipsFrom {V}?port{E} .
+        {K}FILTER NOT EXISTS{E} {{
+          {V}?plant{E} ul:servesPort {V}?port{E} }}
+      }}""" ] .''')
 SLIDES.append(slide("sh:sparql, the escape hatch", "Rules as shapes", 5, '''  <div class="lu-eyebrow">When core SHACL cannot say it</div>
   <h2 class="lu-h2">The rule compares the order's port with its plant's ports. That needs a query.</h2>
   <div class="lu-split lu-split--wide-left">
-    ''' + code("brunel-shapes.ttl · uls:LinkedPortShape", q, small=False) + '''
+    ''' + code("brunel-shapes.ttl · uls:LinkedPortShape, message shortened", q) + '''
     <div class="lu-stack">
       ''' + defbox([
         ("SHACL-SPARQL", "A SHACL rule written as a SPARQL query. Each row the query returns is one result."),
@@ -109,17 +110,19 @@ SLIDES.append(slide("Walkthrough: triage of the first report", "Rules as shapes"
 
 # ---------------------------------------------------------------- Recording the decision
 rec = (f'''sh:property [
-    sh:path ul:bandCarrier ; sh:class ul:Carrier ;
-    sh:severity sh:Warning ;
-    rdfs:comment {S}"TRIAGE: data incomplete, the conversion's fault.
-      The Session 2 converter types a carrier ul:Carrier only
-      when it carries an order, so the 7 carriers that appear
-      only in FreightRates are untyped, 1,209 bands. Fix it in
-      the mapping (Session 5); a Warning until then."{E} ] .''')
+  sh:path ul:bandCarrier ; sh:class ul:Carrier ;
+  sh:severity sh:Warning ;
+  rdfs:comment {S}"TRIAGE: data incomplete, the
+    conversion's fault. The Session 2 converter
+    types a carrier ul:Carrier only when it
+    carries an order, so the 7 carriers that
+    appear only in FreightRates are untyped,
+    1,209 bands. Fix it in the mapping
+    (Session 5); a Warning until then."{E} ] .''')
 SLIDES.append(slide("Triage: rule wrong, or data wrong?", "Rules as shapes", 4, '''  <div class="lu-eyebrow">Writing the decision down</div>
   <h2 class="lu-h2">Every triage decision lives next to its rule, with the evidence</h2>
   <div class="lu-split lu-split--wide-left">
-    ''' + code("brunel-shapes.ttl · the band carrier rule, after triage", rec, small=False) + '''
+    ''' + code("brunel-shapes.ttl · the band carrier rule, after triage", rec) + '''
     <div class="lu-stack">
       ''' + defbox([("Triage", "Going through a report result by result, and deciding for each whether the rule or the data is wrong, and what to do.")]) + '''
       ''' + callout("Three honest answers", "<b>Rule wrong:</b> change the rule. <b>Data wrong:</b> fix the source, keep the rule. <b>Known and accepted for now:</b> lower the severity, and say until when.") + '''

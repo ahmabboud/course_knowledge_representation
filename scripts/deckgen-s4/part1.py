@@ -130,27 +130,27 @@ g = ""
 W = FULL // 2 - 20
 for i, (x0, title, sub) in enumerate([(0, "Open world · OWL", "not in the graph: unknown"),
                                      (W + 40, "Closed world · SHACL", "not in the graph: false")]):
-    g += rect(x0, 4, W, 300, "var(--lu-paper)", LINE)
+    g += rect(x0, 4, W, 240, "var(--lu-paper)", LINE)
     g += text(x0 + 24, 34, title, anchor="start", color=INK2, weight=600)
     g += text(x0 + W - 24, 34, sub, "s-label", anchor="end", color=INK3)
     cx = x0 + W / 2
     if i == 0:
-        g += circle(cx, 175, 118, None, "muted", fill=False, dashed=True)
-        g += text(cx, 72, "what is true in the world", "s-label", color=INK3)
-        g += circle(cx - 30, 190, 70, None, "green")
-        g += text(cx - 30, 174, "what the", "s-label", color=GREEN)
-        g += text(cx - 30, 198, "graph says", "s-label", color=GREEN)
-        g += dot(cx + 72, 150, None, "ink")
-        g += text(cx + 88, 150, "a carrier?", "s-label", anchor="start", color=INK2)
-        g += text(cx + 88, 176, "maybe: unknown", "s-label", anchor="start", color=INK3)
+        g += circle(cx - 60, 140, 92, None, "muted", fill=False, dashed=True)
+        g += text(cx - 60, 72, "true in the world", "s-label", color=INK3)
+        g += circle(cx - 80, 158, 52, None, "green")
+        g += text(cx - 80, 146, "what the", "s-label", color=GREEN)
+        g += text(cx - 80, 170, "graph says", "s-label", color=GREEN)
+        g += dot(cx - 2, 112, None, "ink")
+        g += text(cx + 16, 112, "a carrier?", "s-label", anchor="start", color=INK2)
+        g += text(cx + 16, 138, "maybe: unknown", "s-label", anchor="start", color=INK3)
     else:
-        g += circle(cx, 175, 118, None, "green")
-        g += text(cx, 158, "what the graph says", "s-label", color=GREEN)
-        g += text(cx, 184, "is the whole world", "s-label", color=GREEN)
-        g += dot(cx + 150, 110, None, "red")
-        g += text(cx + 166, 110, "a carrier?", "s-label", anchor="start", color=RED)
-        g += text(cx + 166, 136, "not here: false", "s-label", anchor="start", color=RED)
-pic = svg(FULL, 310, g, "Open world: the graph is part of what is true. Closed world: the graph is all that is true.")
+        g += circle(cx - 60, 140, 92, None, "green")
+        g += text(cx - 60, 128, "what the graph says", "s-label", color=GREEN)
+        g += text(cx - 60, 152, "is the whole world", "s-label", color=GREEN)
+        g += dot(cx + 62, 88, None, "red")
+        g += text(cx + 80, 88, "a carrier?", "s-label", anchor="start", color=RED)
+        g += text(cx + 80, 114, "not here: false", "s-label", anchor="start", color=RED)
+pic = svg(FULL, 250, g, "Open world: the graph is part of what is true. Closed world: the graph is all that is true.")
 SLIDES.append(slide("Open world and closed world", "Why OWL cannot check", 5, f'''  <div class="lu-eyebrow">The one idea behind this session</div>
   <h2 class="lu-h2">OWL treats the graph as part of the truth. SHACL treats it as the whole truth.</h2>
   {pic}

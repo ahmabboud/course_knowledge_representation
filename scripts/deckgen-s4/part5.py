@@ -26,21 +26,24 @@ SLIDES.append(divider("Part 5 · Reuse and the gate", "Reuse and the gate",
 
 # ---------------------------------------------------------------- EPCIS as a reference
 nums = [("1,138", "lines"), ("30", "node shapes"), ("71", "property shapes"), ("0", "SPARQL rules"), ("0", "severities set")]
-cards = "".join(f'<div class="lu-card"><div class="lu-display" style="color:var(--lu-ink)">{v}</div><p class="lu-sub">{t}</p></div>' for v, t in nums)
+numlist = "".join(f'<li><b>{v}</b> {t}</li>' for v, t in nums)
 ex = (f'''epcis:EventTimeShape {K}a{E} sh:PropertyShape ;
-    sh:path epcis:eventTime ;
-    sh:datatype xsd:dateTimeStamp ;
-    sh:minCount {N}1{E} ; sh:maxCount {N}1{E} ;
-    sh:message {S}"In all EPCIS events, eventTime is mandatory,
-      single valued and an xsd:dateTimeStamp"{E} .''')
+  sh:path epcis:eventTime ;
+  sh:datatype xsd:dateTimeStamp ;
+  sh:minCount {N}1{E} ; sh:maxCount {N}1{E} ;
+  sh:message {S}"In all EPCIS events, eventTime is
+    mandatory, single valued and an
+    xsd:dateTimeStamp"{E} .''')
 SLIDES.append(slide("GS1's EPCIS shapes, an industrial example", "Reuse and the gate", 4,
     head("Reuse: read before you write", "GS1 publishes the shapes for EPCIS 2.0, its standard for supply chain events") + f'''
-  <div class="lu-cards" style="grid-template-columns:repeat(5,minmax(0,1fr))">{cards}</div>
-  <div class="lu-split lu-split--wide-left">
-    ''' + code("epcis-shacl.ttl · one of its 71 property shapes", ex, small=False) + '''
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-stack">
+      ''' + code("epcis-shacl.ttl · one of its 71 property shapes", ex) + f'''
+      <div class="lu-card"><span class="lu-card__label">The whole file, counted</span><ul class="lu-list" style="columns:2">{numlist}</ul></div>
+    </div>
     <div class="lu-stack">
       ''' + defbox([("EPCIS", "GS1's standard for recording supply chain events: what was seen, where, when and why.")]) + '''
-      ''' + callout("Licence", "The repository's <code>LICENSE</code> file is GS1's intellectual property disclaimer, not an open source licence. Borrow the patterns freely; read GS1's intellectual property policy before shipping the file.", "neutral") + '''
+      ''' + callout("Licence", "Its <code>LICENSE</code> file is GS1's intellectual property disclaimer, not an open source licence. Borrow the patterns; read GS1's policy before shipping the file.", "neutral") + '''
     </div>
   </div>''', '''<p>Four minutes. Counted on 2026-09-25 from <code>https://ref.gs1.org/standards/epcis/epcis-shacl.ttl</code> (the same file as <code>Ontology/EPCIS-SHACL.ttl</code> in github.com/gs1/EPCIS); <code>python fetch_epcis.py</code> downloads it and prints the same counts.</p>
 <ul><li>The two zeros are the lesson of Part 3 at industrial scale: a large, standard shapes file needs no SPARQL rule and uses only the default severity.</li>
@@ -48,14 +51,19 @@ SLIDES.append(slide("GS1's EPCIS shapes, an industrial example", "Reuse and the 
 
 # ---------------------------------------------------------------- Three patterns worth borrowing
 p1 = (f'''epcis:ObjectEventShape
-    sh:property epcis:EventTimeShape ;
+  sh:property
+    epcis:EventTimeShape ;
 epcis:AggregationEventShape
-    sh:property epcis:EventTimeShape ;''')
-p2 = (f'''epcis:ChildEPCsForbiddenShape
-    sh:path epcis:childEPCs ;
-    sh:maxCount {N}0{E} .''')
-p3 = (f'''sh:message {S}"childEPCs should not
-  appear within ObjectEvent,
+  sh:property
+    epcis:EventTimeShape ;''')
+p2 = (f'''epcis:
+ ChildEPCsForbiddenShape
+  sh:path epcis:childEPCs ;
+  sh:maxCount {N}0{E} .''')
+p3 = (f'''sh:message
+ {S}"childEPCs should not
+  appear within
+  ObjectEvent,
   TransactionEvent or
   TransformationEvent"{E}''')
 cells = [
@@ -122,8 +130,7 @@ SLIDES.append(slide("The gate blocking a bad commit", "Reuse and the gate", 5, '
 
 # ---------------------------------------------------------------- What the gate runs
 wf = (f'''{K}on{E}:
-  push:
-    paths: [ {S}"demos/session-04-shacl/**"{E} ]
+  push: {{ paths: [ {S}"demos/session-04-shacl/**"{E} ] }}
 {K}jobs{E}:
   validate:
     runs-on: ubuntu-latest
@@ -133,17 +140,18 @@ wf = (f'''{K}on{E}:
         with: {{ python-version: {S}"3.12"{E} }}
       - run: pip install pyshacl==0.40.1 rdflib==7.6.0
       - working-directory: demos/session-04-shacl
-        run: python validate.py --data ci/sample-orders.ttl''')
+        run: python validate.py
+               --data ci/sample-orders.ttl''')
 SLIDES.append(slide("What the gate runs", "Reuse and the gate", 3, '''  <div class="lu-eyebrow">The whole gate is one file</div>
   <h2 class="lu-h2">Four steps: get the code, get Python, install pySHACL, validate</h2>
   <div class="lu-split lu-split--wide-left">
-    ''' + code(".github/workflows/shacl-gate.yml · shortened", wf, small=False) + '''
+    ''' + code(".github/workflows/shacl-gate.yml · shortened", wf) + '''
     <div class="lu-stack">
       ''' + defbox([
-        ("CI", "Continuous integration: checks that run automatically on every change, and fail the build when a rule breaks."),
-        ("GitHub Actions", "GitHub's service that runs such checks on every push; a failed check marks the commit red."),
+        ("CI", "Continuous integration: checks that run on every change."),
+        ("GitHub Actions", "GitHub's service that runs them on every push; a failure marks the commit red."),
       ]) + '''
-      ''' + callout("For your team", "Copy this file into your repository and change two paths: your data and your shapes. Milestone 1 asks for a gate that blocks a bad commit.") + '''
+      ''' + callout("For your team", "Copy this file, change the data and shapes paths. Milestone 1 asks for a gate like this.") + '''
     </div>
   </div>''', '''<p>Three minutes. The real file is <code>.github/workflows/shacl-gate.yml</code> in the course repository; it also runs on pull requests.</p>
 <ul><li>Versions are pinned (pySHACL 0.40.1, rdflib 7.6.0) so the gate gives the same answer next month as today.</li></ul>'''))

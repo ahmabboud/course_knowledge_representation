@@ -58,19 +58,18 @@ SLIDES.append(slide("A shape, a target, a report", "SHACL core", 5, '''  <div cl
 
 # ---------------------------------------------------------------- Node shape and property shapes in Turtle
 ttl = (f'''uls:OrderShape {K}a{E} sh:NodeShape ;
-    sh:targetClass ul:Order ;
-    sh:property [
-        sh:path ul:carriedBy ; sh:minCount {N}1{E} ; sh:maxCount {N}1{E} ;
-        sh:class ul:Carrier ] ;
-    sh:property [
-        sh:path ul:serviceLevel ; sh:in ( {S}"CRF"{E} {S}"DTD"{E} {S}"DTP"{E} ) ] ;
-    sh:property [
-        sh:path ul:weight ; sh:datatype xsd:decimal ;
-        sh:minExclusive {N}0{E} ] .           {C}# four more in the file{E}''')
+  sh:targetClass ul:Order ;
+  sh:property [ sh:path ul:carriedBy ;
+    sh:minCount {N}1{E} ; sh:maxCount {N}1{E} ; sh:class ul:Carrier ] ;
+  sh:property [ sh:path ul:serviceLevel ;
+    sh:in ( {S}"CRF"{E} {S}"DTD"{E} {S}"DTP"{E} ) ] ;
+  sh:property [ sh:path ul:weight ;
+    sh:datatype xsd:decimal ; sh:minExclusive {N}0{E} ] .
+{C}# four more property shapes in the file{E}''')
 SLIDES.append(slide("Node shapes and property shapes", "SHACL core", 5, '''  <div class="lu-eyebrow">Writing a shape</div>
   <h2 class="lu-h2">One node shape for &ldquo;every order&rdquo;, one property shape per rule</h2>
   <div class="lu-split lu-split--wide-left">
-    ''' + code("brunel-shapes.ttl · uls:OrderShape, shortened", ttl, small=False) + '''
+    ''' + code("brunel-shapes.ttl · uls:OrderShape, shortened", ttl) + '''
     <div class="lu-stack">
       ''' + defbox([
         ("Node shape", "A shape about a whole node: every order."),
@@ -83,15 +82,18 @@ SLIDES.append(slide("Node shapes and property shapes", "SHACL core", 5, '''  <di
 <li>Standards status checked on w3.org on 2026-09-25: SHACL 1.2 Core is a Working Draft dated 3 August 2026.</li></ul>'''))
 
 # ---------------------------------------------------------------- The targeting trap
-out = (f'''$ python validate.py --shapes shapes_template.ttl
-  focus nodes      0  PurchaseOrderShape   {C}&lt;- targets nothing{E}
-validated in 0.6 s. conforms (SHACL): {K}True{E}
+out = (f'''$ python validate.py \\
+    --shapes shapes_template.ttl
+focus nodes 0  PurchaseOrderShape
+               {C}&lt;- targets nothing{E}
+validated in 0.6 s.
+conforms (SHACL): {K}True{E}
 GATE: PASS, no violations.''')
 SLIDES.append(slide("The targeting trap", "SHACL core", 4, '''  <div class="lu-eyebrow">The most common SHACL bug</div>
   <h2 class="lu-h2">A shape that targets nothing checks nothing, and the report still says &ldquo;conforms&rdquo;</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
-      ''' + code("a real run: the old Session 4 template on the Brunel graph", out, small=False) + '''
+      ''' + code("a real run: the old template on the Brunel graph", out) + '''
       <p class="lu-caption">The template targets <code>ul:PurchaseOrder</code>. Our graph has 9,215 <code>ul:Order</code> nodes and not one <code>ul:PurchaseOrder</code>.</p>
     </div>
     <div class="lu-stack">

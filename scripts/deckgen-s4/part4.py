@@ -56,21 +56,24 @@ SLIDES.append(slide("PROV-O: entity, activity, agent", "Provenance", 5, '''  <di
 
 # ---------------------------------------------------------------- Asking where a fact came from
 q = (f'''{K}SELECT{E} {V}?g{E} {V}?file{E} {V}?run{E} {V}?time{E} {K}WHERE{E} {{
-  {K}GRAPH{E} {V}?g{E} {{ order:1447296446.7 ul:carriedBy {V}?c{E} }}
-  {K}GRAPH{E} {V}?p{E} {{ {V}?g{E} prov:wasDerivedFrom {V}?f{E} ;
-                prov:wasGeneratedBy {V}?run{E} .
-             {V}?f{E} dcterms:title {V}?file{E} .
-             {V}?run{E} prov:endedAtTime {V}?time{E} }} }}''')
-out = (f'''named graph  .../kr/id/graph/brunel/OrderList
-file         OrderList.csv
-run          .../kr/id/run/brunel/convert-20260925T013112Z
-finished     2026-09-25T01:31:12+00:00''')
+  {K}GRAPH{E} {V}?g{E} {{
+    order:1447296446.7 ul:carriedBy {V}?c{E} }}
+  {K}GRAPH{E} {V}?p{E} {{
+    {V}?g{E} prov:wasDerivedFrom {V}?f{E} ;
+       prov:wasGeneratedBy {V}?run{E} .
+    {V}?f{E} dcterms:title {V}?file{E} .
+    {V}?run{E} prov:endedAtTime {V}?time{E} }} }}''')
+out = (f'''graph     graph/brunel/OrderList
+file      OrderList.csv
+run       run/brunel/
+            convert-20260925T013112Z
+finished  2026-09-25T01:31:12+00:00''')
 SLIDES.append(slide("Asking where a fact came from", "Provenance", 4, '''  <div class="lu-eyebrow">Provenance is queryable</div>
   <h2 class="lu-h2">One SPARQL query walks from a triple to its file, its run and its time</h2>
   <div class="lu-split">
-    ''' + code("add_provenance.py · the question", q, small=False) + '''
+    ''' + code("add_provenance.py · the question", q) + '''
     <div class="lu-stack">
-      ''' + code("the real answer", out, small=False) + '''
+      ''' + code("the real answer (IRIs after .../kr/id/)", out) + '''
       ''' + callout("Why it matters today", "When triage says &ldquo;data wrong&rdquo;, this is how you find which file to fix, and prove later which run fixed it.") + '''
     </div>
   </div>''', '''<p>Four minutes. Read the answer aloud as a sentence: the fact came from OrderList.csv, through this run, finished at this time.</p>
@@ -78,14 +81,14 @@ SLIDES.append(slide("Asking where a fact came from", "Provenance", 4, '''  <div 
 
 # ---------------------------------------------------------------- Versioning the ontology
 hdr = (f'''&lt;https://ul.edu.lb/kr/scm#&gt; {K}a{E} owl:Ontology ;
-    owl:versionIRI &lt;https://ul.edu.lb/kr/scm/1.0.0&gt; ;   {C}# new{E}
-    owl:versionInfo {S}"1.0.0"{E} ;                           {C}# new{E}
-    rdfs:label {S}"UL Knowledge Representation course: ..."{E} ;
-    owl:imports &lt;https://spec.industrialontologies.org/ontology/
-                 supplychain/SupplyChain/&gt; .''')
+  owl:versionIRI &lt;https://ul.edu.lb/kr/scm/1.0.0&gt; ; {C}# new{E}
+  owl:versionInfo {S}"1.0.0"{E} ;                       {C}# new{E}
+  rdfs:label {S}"UL Knowledge Representation ..."{E} ;
+  owl:imports &lt;https://spec.industrialontologies.org/
+      ontology/supplychain/SupplyChain/&gt; .''')
 SLIDES.append(slide("Versioning the ontology", "Provenance", 4, '''  <div class="lu-eyebrow">Release discipline</div>
   <h2 class="lu-h2">The ontology IRI names the ontology. A version IRI names one release of it.</h2>
-  ''' + code("python version_ontology.py · the Session 3 ontology, released as 1.0.0", hdr, small=False) + '''
+  ''' + code("python version_ontology.py · the Session 3 ontology, released as 1.0.0", hdr) + '''
   <div class="lu-split">
     ''' + defbox([("Version IRI", "The name of one release of an ontology (<code>owl:versionIRI</code>), next to the ontology IRI that names all its releases.")]) + '''
     ''' + callout("Why shapes need it", "Shapes are written against one release. Import the version IRI you validated against, and a later change to the ontology cannot silently break your checks.") + '''
