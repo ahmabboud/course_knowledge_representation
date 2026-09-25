@@ -1,6 +1,6 @@
 ## domain-mistake.ttl
 ##
-## The walkthrough on the slide "A domain mistake, found by the reasoner":
+## The walkthrough on the slide "Walkthrough: a domain mistake":
 ## one careless fact, a purchase order said to be handled by a carrier.
 ## Open it from workspace/ (fetch_ontologies.py copies it there) and run a
 ## reasoner, or: python local_reasoner.py workspace/domain-mistake.ttl

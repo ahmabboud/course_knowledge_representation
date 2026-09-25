@@ -20,9 +20,19 @@ against it.
 
 ## Four classes in the file have no competency question, on purpose
 
-Run the "classes with no competency question" query from the lecture's
-lab brief slide against `scro-extension-reference.ttl` (or just read
-`report.tsv` after `robot_report.py` runs) and four classes come back:
+Run this query against `scro-extension-reference.ttl` (in Protégé's
+SPARQL Query tab, or with rdflib) and four classes come back, the same
+four for `scro-extension-v0.ttl` (checked 2026-09-24):
+
+```sparql
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX ul:  <https://ul.edu.lb/kr/scm#>
+SELECT ?c WHERE {
+  ?c a owl:Class .
+  FILTER(isIRI(?c) && STRSTARTS(STR(?c), STR(ul:)))
+  FILTER NOT EXISTS { ?c ul:answersCQ ?q }
+} ORDER BY ?c
+```
 
 - **`ul:CancelledShipment`**, deliberately. This is the exercise: per
   the lecture's own rule, a class with no competency question has not
