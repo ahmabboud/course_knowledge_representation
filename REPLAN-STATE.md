@@ -48,7 +48,14 @@ and 1 hour lab, **a guide, not a rule**; `data-minutes` realistic); animation
 unfolds in steps); labs are **individual**, the capstone is the **team
 project** and its divider says so; **labs are not collected or graded**,
 they exist for understanding and the capstone, and follow the lab standard
-(`AGENTS.md` 2e, reference `demos/session-02-rdf-sparql/`); IRIs (2d); Fuseki runs from
+(`AGENTS.md` 2e, reference `demos/session-02-rdf-sparql/`); IRIs (2d); **Session 3
+rebuild (instructor, 2026-09-24):** one cast, so Session 3's individuals become the
+real Brunel orders and carriers of Sessions 1 and 2 (the "sanctioned carrier" is a
+clearly labelled teaching flag on one anonymised carrier code, never a real company
+name); lab Part B is 2 to 3 axioms the student writes, checked by a reasoner
+(HermiT through owlready2, on the JDK students already have); Parts 1 and 2 are
+converted (arrow diagrams to `lu-flow`, set pictures kept as SVG but in the layer
+colours, stale references fixed); Fuseki runs from
 `demos/fuseki/Dockerfile` (Apache 5.5.0 release, no login, localhost only).
 
 **How the work was run (2026-09-24):** edits and git on the instructor's Mac
@@ -468,3 +475,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-24: Session 2 on the instructor's Mac. `docker compose up -d --build fuseki` built `kr-fuseki:5.5.0` from Apache's release (checksum OK) and started it; Cowork's browser pane reaches it at localhost:3030. Then `convert_to_rdf.py`, `load_fuseki.py`, `run_queries.py` (all seven answers as in the README, Q6 1.2 s; `reference-outputs/query-timings-fuseki.txt` refreshed) and `check_my_queries.py fuseki` (blank file, 0 of 3, connection fine) all ran; `sample/order.nt` stayed unchanged, so the sorting fix holds. `neo4j_comparison.py` failed with Neo4j `AuthError`: the Neo4j on 7687 was a stopped container the instructor had restarted by hand, not the compose service (`docker compose ps` listed only Fuseki), so it does not use `kr-labs-pw`. Fixed: the script now prints one line for "not answering" and for "wrong password", and the README step 5 has an "If Neo4j refuses the password" note (stop the other container, or recreate the compose volume). Neo4j comparison still to run once on the Mac.
 - 2026-09-24: Neo4j comparison run on the Mac after stopping the hand-started container and starting the compose service (`docker compose up -d neo4j`, fresh `demos_neo4j-data` volume): 9,215 orders and 22 plant to port links loaded in 10.5 s; Q2, Q4, Q5a (9,023), Q5b (9,215) and the path query (3) all as expected; `reference-outputs/neo4j-comparison.txt` refreshed. Every step of the Session 2 lab has now run end to end on the instructor's Mac (Docker build, Fuseki, Neo4j) and on Oxigraph. The instructor has reviewed the Session 2 slides; item 8 stays open until he says Session 2 is approved.
 - 2026-09-24: Session 2 approved and closed by the instructor (item 8). Next: Session 3 parts 3 to 6 (item 2).
+- 2026-09-24: Session 3 rebuild started (item 2). Instructor decisions recorded under "Settled decisions": Brunel cast, reasoner-checked Part B, Parts 1 and 2 converted and recoloured. Known cost of the cast change: Protégé screenshots 16b, 17 and 18 show the old individuals (4472, 4473) and need recapturing on the Mac once the new sample file exists; placeholders until then.
