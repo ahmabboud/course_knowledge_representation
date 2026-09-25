@@ -20,13 +20,13 @@ SLIDES.append(divider("Part 2 · Embeddings", "Embeddings",
 g = rect(2, 2, WL - 4, 336, "var(--lu-paper)", LINE)
 g += text(24, 30, "32 numbers per thing in the lab; drawn here with 2", "s-label", anchor="start", color=INK3)
 g += dot(150, 270, None, "green") + text(150, 302, "PLANT08  (h)", "s-label", color=GREEN)
-g += arrow(158, 262, 452, 122, "+ makes  (r)", kind="strong", lx=250, ly=160, label_anchor="end")
+g += arrow(158, 262, 452, 122, "+ makes  (r)", kind="strong", lx=290, ly=172, label_anchor="end")
 g += circle(460, 115, 34, None, "muted", fill=False, dashed=True)
 g += text(460, 60, "h + r", "s-mono", color=INK2)
-g += dot(478, 128, None, "green") + text(496, 150, "1681878: made by PLANT08", "s-label", anchor="start", color=GREEN)
+g += dot(478, 128, None, "green") + text(504, 108, "1681878: made by PLANT08", "s-label", anchor="start", color=GREEN)
 g += dot(700, 280, None, "red") + text(690, 312, "a product it does not make", "s-label", anchor="end", color=RED)
-g += line(470, 140, 692, 272, RED, 2, dashed=True)
-g += text(640, 205, "far: low score", "s-label", anchor="start", color=RED)
+g += line(470, 148, 692, 272, RED, 2, dashed=True)
+g += text(620, 188, "far: low score", "s-label", anchor="start", color=RED)
 pic = svg(WL, 340, g, "TransE: the plant's position plus the step for makes lands near the products it makes, far from the others.")
 SLIDES.append(slide("TransE: a relation is a step", "Embeddings", 5, '''  <div class="lu-eyebrow">The idea behind knowledge graph embeddings</div>
   <h2 class="lu-h2">Every thing gets a position. A relation is a step. A true link is a short trip.</h2>

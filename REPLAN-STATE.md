@@ -31,19 +31,18 @@ keep the main session's context clear (instructor's preference, 2026-09-24).
 
 **Where to continue (2026-09-25):**
 
-1. **Session 6 rebuild, in progress (item 9),** by the method in `AGENTS.md`
-   2f. Done: research, decisions, approved outline, and the whole lab in
-   `demos/session-06-learning/` (`learning_utils.py`, `build_graph.py`,
-   `baseline.py`, `gnn.py`, `link_prediction.py`, Part B `my_learning.py` +
-   `check_my_learning.py` + `solutions/`, `reference-outputs/`, `OVERVIEW.md`,
-   `README.md` to 2e), and the shared environment pins in
-   `demos/requirements.txt` (commit 292ecc8). Next: `scripts/deckgen-s6/`
-   writing `lectures/kr-session-06-new.html` per the approved outline, the new
-   glossary terms, live audit, hand over. The old lab files
-   (`build_heterodata.py`, `train_*.py`, `leakage_demo.py`,
-   `tabular_baseline.py`, the folder's own `requirements.txt`) are to be
-   deleted only after the instructor agrees. Mac check to ask for: the full
-   shared install on Python 3.12, then the four Part A scripts.
+1. **Session 6 rebuild, waiting for the instructor's review (item 9).** Lab
+   done (`demos/session-06-learning/`, commit 292ecc8) and deck drafted
+   (`lectures/kr-session-06-new.html` from `scripts/deckgen-s6/`, 42 slides,
+   185 minutes; live audit clean, Sonnet visual pass clean). Waiting on:
+   the instructor's approval of the deck; permission to delete the old lab
+   files (`build_heterodata.py`, `train_node_classification.py`,
+   `train_link_prediction.py`, `train_pykeen.py`, `leakage_demo.py`,
+   `tabular_baseline.py`, the folder's own `requirements.txt`); a Mac run of
+   the full shared install on Python 3.12 and the four Part A scripts plus
+   `check_my_learning.py`. After approval: rename the deck over
+   `kr-session-06.html` (and make `build.py` write there), replace the
+   disabled Session 6 card in `index.html`, mark PROGRESS row 6 Done.
 2. **Mac runs still open for Session 5:** PostgreSQL and Ontop
    (`reference-outputs/ontop-q2.txt` is a placeholder until then).
 3. **Later:** Sessions 7 and 8 (not built), item 18 (syllabus alignment
@@ -516,3 +515,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-25: at the instructor's request ("make sure any new session knows what is done and how we plan the labs and the sessions"): `AGENTS.md` 2e now states the three lab rules (slides stand on their own, every Part B task has a worked twin, keep labs simple) and the one shared environment rule; new `AGENTS.md` 2f writes down the rebuild method used for Sessions 3 to 6, step by step; new `scripts/audit-live.js` is the live check used since Session 4 (walks, footer, code width, table width, diagram labels and badges), so no session has to re-derive it. "Where to continue" now lists exactly what of Session 6 is built and what comes next.
 - 2026-09-25: **Session 6 lab built** (item 9) and pushed (292ecc8). Recorded runs in `reference-outputs/`: graph 9,215 orders, 46 customers, 3 carriers, 20 plants (PLANT01 to PLANT19 and CND9, which appears only in ProductsPerPlant; orders ship from 7), 11 ports, 1,540 products; logistic regression lateDays kept PR-AUC 1.000, random split 0.788 (accuracy 0.944), split by customer 0.002 to 0.019 and one seed with no late order in test; GraphSAGE random split 0.857 to 0.879 over three training seeds, split by customer 0.004 to 0.045; TransE MRR 0.573, 0.469, 0.543 against popularity 0.631, 0.597, 0.634 (61 to 77 held-out links left out, their product appears in no other link); Part B checker 0 of 3 blank, 3 of 3 solutions, three wrong answers recorded. The feasibility numbers in the entry above were from earlier settings and are superseded by these. Two em dashes in `demos/requirements.txt` comments replaced.
 - 2026-09-25: **Session 6 deck drafted** with a new generator, `scripts/deckgen-s6/` (shares `deckgen-s1/kit.py`, `deckgen-s3/common.py` and `svgkit.py`): `lectures/kr-session-06-new.html`, 42 slides, 185 minutes (opening 8, why a graph 16, embeddings 32, message passing 33, leakage 26, lab 54, wrap 16), next to the old deck until approved. Every example is complete on the slide: one real late order (1447135386.7, customer V555_15, whose 110 orders are all late) carries Parts 1, 3 and 4; the real product 1681878 (made by PLANT07, 08 and 10) carries negative sampling and a real popularity ranking (raw rank 13, filtered 11). Added from counts on `brunel-mapped.nt`: the four customers with late orders (V555_15 110 of 110, V555555555555555_44 9 of 9, V555555555_27 69 of 521, V555555555_14 4 of 351), and the reach of message passing (two layers reach a median 9,074 of the other 9,214 orders, four reach all). Syllabus points covered on slides only: DistMult, ComplEx, RotatE (pattern table), RGCN and the weight count, the ontology deciding node and link kinds, the temporal split rule. Visuals: 3 flow walks, 3 SVG drawings (TransE, the 46 customers, a time split), 5 bar panels, tables, code, 2 MCQs, a blank drill, a poll. Glossary: Session 6 terms added (Hits@k, filtered ranking, negative sampling, DistMult, ComplEx, RotatE, logistic regression, PR-AUC, precision@k, GraphSAGE, to_hetero, HeteroData, RGCN, oversmoothing, inductive, transductive, leakage, random split, split by group, temporal split, CPU, GPU); Baseline no longer says a result only counts if it beats it; `check-glossary.py` ignores CND9 and the task labels Y1 to Y3; check clean. Live audit (audit-live.js, cache buster, state cleared): 10 slides fixed over three rounds, then clean; both MCQs answered right and wrong from a clean state, blanks filled, poll revealed: the revealed poll overflowed and now has two options. The Pages deploy of 8d6a0c5 failed (transient); this commit redeploys.
+- 2026-09-25: Session 6 draft, Sonnet visual pass over all 42 slides (walks stepped to the end, drill and poll answered): no defect. One label in the TransE drawing sat on its dashed line (seen by hand); moved. Handed to the instructor for review.
