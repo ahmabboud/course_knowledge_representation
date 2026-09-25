@@ -16,13 +16,13 @@ SLIDES.append(divider("Part 4 · Virtualize", "Virtualize",
     "Yes: translate each question into SQL, on the fly."))
 
 n = [
-    node("q", "SPARQL: orders and late\norders per carrier", 190, 55, 340, 70, kind="builtin"),
-    node("o", "Ontop reads\nbrunel-mapping.ttl", 620, 55, 320, 70, kind="builtin"),
-    node("s", "SQL on the orders table", 1070, 55, 380, 56, kind="builtin"),
-    node("db", "PostgreSQL: rows", 1070, 185, 300, 56, kind="builtin"),
-    node("a", "answers, as if from a graph", 620, 185, 400, 56, kind="builtin"),
+    node("q", "SPARQL: orders and late\norders per carrier", 190, 45, 340, 70, kind="builtin"),
+    node("o", "Ontop reads\nbrunel-mapping.ttl", 620, 45, 320, 70, kind="builtin"),
+    node("s", "SQL on the orders table", 1070, 45, 380, 56, kind="builtin"),
+    node("db", "PostgreSQL: rows", 1070, 170, 300, 56, kind="builtin"),
+    node("a", "answers, as if from a graph", 520, 170, 400, 56, kind="builtin"),
 ]
-e = [edge("x", "q", "o", ""), edge("y", "o", "s", "rewrite"), edge("z", "s", "db", "run"), edge("w", "db", "a", "rows to answers")]
+e = [edge("x", "q", "o", ""), edge("y", "o", "s", "rewrite"), edge("z", "s", "db", "run"), edge("w", "db", "a", "answers")]
 steps = [
     {"show": ["q"], "set": {"q": "active"}},
     {"show": ["o", "x"], "run": ["x"], "set": {"q": "idle", "o": "active"}},
@@ -35,7 +35,7 @@ caps = [
     ("SQL", "<b>Step 3.</b> It writes one SQL query that groups the orders table by carrier."),
     ("Answers", "<b>Step 4.</b> PostgreSQL returns rows; Ontop turns them back into SPARQL answers. No triple was ever stored."),
 ]
-walk = flow("How Ontop answers", 1448, 230, n, e, steps, caps, legend=False)
+walk = flow("How Ontop answers", 1448, 205, n, e, steps, caps, legend=False)
 SLIDES.append(slide("Ontop: SPARQL in, SQL out", "Virtualize", 5, '''  <div class="lu-eyebrow">Walkthrough</div>
   <h2 class="lu-h2">The same mapping, used the other way round</h2>
   ''' + walk + '''

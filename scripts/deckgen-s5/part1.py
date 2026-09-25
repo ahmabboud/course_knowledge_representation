@@ -108,11 +108,11 @@ SLIDES.append(slide("A converter is a program; a mapping is a set of rules", "In
 
 # ---------------------------------------------------------------- two routes
 n = [
-    node("map", "one mapping", 170, 125, 230, 56, kind="builtin"),
-    node("mk", "Morph-KGC", 520, 45, 240, 56, kind="builtin"),
-    node("file", "brunel-mapped.nt\n135,799 triples, stored", 950, 45, 380, 70, kind="builtin"),
-    node("on", "Ontop", 520, 205, 240, 56, kind="builtin"),
-    node("sql", "SPARQL in, SQL to the\ndatabase, answers out", 950, 205, 380, 70, kind="builtin"),
+    node("map", "one mapping", 150, 112, 230, 56, kind="builtin"),
+    node("mk", "Morph-KGC", 500, 45, 240, 56, kind="builtin"),
+    node("file", "brunel-mapped.nt\n135,799 triples, stored", 1020, 45, 380, 70, kind="builtin"),
+    node("on", "Ontop", 500, 180, 240, 56, kind="builtin"),
+    node("sql", "SPARQL in, SQL to the\ndatabase, answers out", 1020, 180, 380, 70, kind="builtin"),
 ]
 e = [edge("a", "map", "mk", "", route="elbow"), edge("b", "mk", "file", "materialize"),
      edge("c", "map", "on", "", route="elbow"), edge("d", "on", "sql", "virtualize")]
@@ -126,7 +126,7 @@ caps = [
     ("Materialize", "<b>Step 2.</b> Morph-KGC reads every table now and stores the whole graph in a file. Fast to query, but a snapshot: run it again when the data changes."),
     ("Virtualize", "<b>Step 3.</b> Ontop stores nothing. Each SPARQL question becomes SQL on the live database, so every answer is current."),
 ]
-walk = flow("Two routes from one mapping", 1448, 250, n, e, steps, caps, legend=False)
+walk = flow("Two routes from one mapping", 1448, 220, n, e, steps, caps, legend=False)
 SLIDES.append(slide("Two routes from one mapping", "Integration problem", 5, '''  <div class="lu-eyebrow">Materialize or virtualize</div>
   <h2 class="lu-h2">Store the graph, or translate every question. One mapping does both.</h2>
   ''' + walk + '''

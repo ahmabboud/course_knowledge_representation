@@ -40,16 +40,16 @@ SLIDES.append(slide("Clean first, then block", "Entity resolution", 4, '''  <div
   <div class="lu-split">
     <div class="lu-card">
       <span class="lu-card__label">1 · Clean both sides the same way</span>
-      <ul class="lu-list"><li>upper case, spaces off</li><li>dash to underscore</li><li>put the V back</li><li><code>_023</code> to <code>_23</code></li></ul>
+      <p class="lu-sub">Upper case, spaces off, dash to underscore, the V back, <code>_023</code> to <code>_23</code>.</p>
       <p class="lu-sub">4 of the 6 drifts above now match exactly. A lost 5 and swapped digits do not.</p>
     </div>
     <div class="lu-card">
       <span class="lu-card__label">2 · Block on the home plant</span>
+      <p class="lu-sub"><b>Blocking</b>: only comparing records that share a cheap key, here the home plant.</p>
       <div class="lu-stack" style="gap:var(--lu-s3)">''' + bar(2392, 2392, "2,392 pairs") + bar(1818, 2392, "1,818 pairs") + '''</div>
-      <p class="lu-sub">52 &times; 46 = 2,392 possible pairs; comparing only records with the same home plant leaves 1,818.</p>
+      <p class="lu-sub">52 &times; 46 = 2,392 possible pairs; 1,818 share a home plant.</p>
     </div>
-  </div>
-  ''' + defbox([("Blocking", "Only comparing records that share a cheap key, so the matcher does not compare every pair.")]),
+  </div>''',
     '''<p>Four minutes. Blocking saves little here, because 41 of the 46 customers have the same home plant, PLANT03. At DataCo's 180,519 order lines, comparing every pair is impossible without it.</p>'''))
 
 W = [("code, exact after cleaning", 0.60, 0.001), ("code, close (Jaro-Winkler &ge; 0.93)", 0.35, 0.02),

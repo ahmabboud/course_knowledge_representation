@@ -31,12 +31,12 @@ SLIDES.append(slide("R2RML and RML, where the standards stand", "R2RML", 4,
 n = [
     node("row", "row of orders: order_id 1447296446.7,\ncarrier V44_3, weight 14.3, ...", 300, 50, 560, 70, kind="literal"),
     node("s", "order 1447296446.7", 300, 200, 320, 56, kind="individual"),
-    node("c", "carrier V44_3", 900, 110, 260, 56, kind="individual"),
-    node("w", "14.3 (xsd:decimal)", 900, 200, 280, 56, kind="literal"),
-    node("id", '"1447296446.7"', 900, 290, 260, 56, kind="literal"),
+    node("c", "carrier V44_3", 960, 100, 260, 56, kind="individual"),
+    node("w", "14.3 (xsd:decimal)", 960, 200, 280, 56, kind="literal"),
+    node("id", '"1447296446.7"', 960, 300, 260, 56, kind="literal"),
 ]
-e = [edge("a", "row", "s", "subject template"), edge("b", "s", "c", "carriedBy", route="elbow", sides=["right", "left"]),
-     edge("c1", "s", "w", "weight"), edge("d", "s", "id", "orderId", route="elbow", sides=["right", "left"])]
+e = [edge("a", "row", "s", "subject template"), edge("b", "s", "c", "carriedBy"),
+     edge("c1", "s", "w", "weight"), edge("d", "s", "id", "orderId")]
 steps = [
     {"show": ["row"], "set": {"row": "active"}},
     {"show": ["s", "a"], "run": ["a"], "set": {"row": "idle", "s": "active"}},
