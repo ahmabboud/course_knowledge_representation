@@ -1,0 +1,2 @@
+python local_reasoner.py workspace/domain-mistake.ttl, HermiT (owlready2 0.51), 2026-09-24:
+The ontology is inconsistent: it contradicts itself, so every answer is worthless.

@@ -86,11 +86,12 @@ def edge(id, a, b, label="", **kw):
     return e
 
 
-def flow(label, width, height, nodes, edges, steps, captions=None, flags=None):
+def flow(label, width, height, nodes, edges, steps, captions=None, flags=None, legend=False):
     """An lu-flow diagram. With captions it sits in an .lu-walk and animates step by step;
-    without, it is a still picture showing every step at once."""
+    without, it is a still picture showing every step at once. legend: False, or
+    {kind: label} to name the colour layers (Session 3 onward)."""
     spec = {"width": width, "height": height, "nodes": nodes, "edges": edges,
-            "steps": steps, "legend": False}
+            "steps": steps, "legend": legend}
     if flags:
         spec["flags"] = flags
     js = json.dumps(spec, ensure_ascii=False)

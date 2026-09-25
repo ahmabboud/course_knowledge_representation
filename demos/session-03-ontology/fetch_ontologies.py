@@ -168,6 +168,7 @@ LAB_FILES = [
     "scro-extension-v0.ttl",          # the lab's starting point, contains the errors the reasoner finds
     "scro-extension-reference.ttl",   # the fixed version
     "sample-shipments.ttl",           # a few individuals, imports the fixed version
+    "domain-mistake.ttl",             # one careless fact: makes the ontology inconsistent
 ]
 COURSE_CATALOG_ENTRY = (
     '    <uri id="Course reference ontology" name="https://ul.edu.lb/kr/scm#" '
@@ -176,7 +177,7 @@ COURSE_CATALOG_ENTRY = (
 
 
 def copy_reference():
-    """Copy the three lab files into workspace/ (Protege only finds the
+    """Copy the lab files into workspace/ (Protege only finds the
     offline catalog when the opened file sits next to it), and register
     the course ontology in that catalog so sample-shipments.ttl can import
     it offline."""

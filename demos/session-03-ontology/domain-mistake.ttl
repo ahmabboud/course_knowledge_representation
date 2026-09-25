@@ -1,0 +1,26 @@
+## domain-mistake.ttl
+##
+## The walkthrough on the slide "A domain mistake, found by the reasoner":
+## one careless fact, a purchase order said to be handled by a carrier.
+## Open it from workspace/ (fetch_ontologies.py copies it there) and run a
+## reasoner, or: python local_reasoner.py workspace/domain-mistake.ttl
+##
+## What happens (HermiT, 2026-09-24): the domain of ul:handledBy makes po88
+## a Shipment; SCRO says a Shipment is a material entity (an independent
+## continuant) and a purchase order is an agreement (information, a
+## generically dependent continuant); BFO says nothing can be both. The
+## ontology is inconsistent, so the reasoner refuses to classify anything.
+## po88 is a purchase order from the Session 5 ERP seed data.
+
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ioc:  <https://spec.industrialontologies.org/ontology/construct/> .
+@prefix ul:   <https://ul.edu.lb/kr/scm#> .
+
+<https://ul.edu.lb/kr/domain-mistake> a owl:Ontology ;
+    rdfs:label "UL KR course: one careless fact, for the domain walkthrough" ;
+    owl:imports <https://ul.edu.lb/kr/scm#> .
+
+<https://ul.edu.lb/kr/id/purchase-order/erp/po88> a owl:NamedIndividual , ioc:PurchaseOrder ;
+    rdfs:label "purchase order po88" ;
+    ul:handledBy <https://ul.edu.lb/kr/id/carrier/brunel/V444_1> .

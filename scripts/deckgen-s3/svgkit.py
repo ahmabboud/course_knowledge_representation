@@ -4,7 +4,10 @@ Every diagram is drawn in a viewBox equal to the width it renders at on the
 1600x900 slide canvas, so the design system's 22px / 20px SVG text renders at
 true size (never below 20px). Arrowheads are drawn as polygons, not markers:
 markers defined inside a hidden slide or walkthrough step do not render.
-Colours come only from existing --lu-* tokens.
+Colours come only from existing --lu-* tokens, with the meaning lu-flow gives
+them (AGENTS.md section 7, route 0): blue is our ontology, green an
+individual, amber something the reasoner inferred, red only something
+impossible or refused. Never pick a colour for looks.
 """
 import math
 from html import escape
@@ -25,6 +28,12 @@ GREEN_BG = "var(--lu-green-050)"
 GREEN_BG2 = "var(--lu-green-100)"
 PAPER2 = "var(--lu-paper-2)"
 LINE = "var(--lu-line-2)"
+BLUE = "var(--lu-blue-700)"
+BLUE_BG = "var(--lu-blue-050)"
+BLUE_TXT = "var(--lu-blue-900)"
+AMBER = "var(--lu-amber-700)"
+TEAL = "var(--lu-teal-700)"
+TEAL_BG = "var(--lu-teal-050)"
 
 
 def svg(w, h, body, label):
@@ -49,11 +58,11 @@ def text(x, y, s, cls="", anchor="middle", color=None, weight=None, italic=False
 
 
 def box(cx, cy, w, h, label, kind="class", sub=None):
-    """A node. kind: class (red, square corners), ind (green pill), lit (grey mono),
-    note (dashed grey), bad (red fill), muted."""
+    """A node. kind: class (blue, our ontology), ind (green pill), lit (grey mono),
+    note (dashed grey), bad (red fill: impossible), muted, plain."""
     rx = {"class": 8, "ind": h / 2, "lit": 6, "note": 6, "bad": 8, "muted": 8, "plain": 8}[kind]
     fill, stroke, dash, tcol = {
-        "class": (RED_BG, RED, None, "var(--lu-red-900)"),
+        "class": (BLUE_BG, BLUE, None, BLUE_TXT),
         "ind": (GREEN_BG, GREEN, None, "var(--lu-green-900)"),
         "lit": (PAPER2, INK3, None, INK),
         "note": ("var(--lu-paper)", INK3, "6 5", INK2),
@@ -74,8 +83,8 @@ def box(cx, cy, w, h, label, kind="class", sub=None):
 
 
 def arrow(x1, y1, x2, y2, label=None, kind="strong", lx=None, ly=None, both=False, label_anchor="middle"):
-    """Line with a polygon head at (x2, y2). kind: strong, infer (dashed green), red, muted."""
-    col = {"strong": INK2, "infer": GREEN, "red": RED, "muted": LINE, "green": GREEN}[kind]
+    """Line with a polygon head at (x2, y2). kind: strong, infer (dashed amber), red, muted."""
+    col = {"strong": INK2, "infer": AMBER, "red": RED, "muted": LINE, "green": GREEN}[kind]
     dash = ' stroke-dasharray="8 6"' if kind == "infer" else ""
     out = f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" style="stroke:{col};stroke-width:2.5"{dash}/>'
 
@@ -98,7 +107,7 @@ def arrow(x1, y1, x2, y2, label=None, kind="strong", lx=None, ly=None, both=Fals
 
 
 def circle(cx, cy, r, label=None, color="red", lx=None, ly=None, fill=True, dashed=False, anchor="middle"):
-    stroke, bg = {"red": (RED, RED_BG), "green": (GREEN, GREEN_BG), "ink": (INK2, PAPER2),
+    stroke, bg = {"ours": (BLUE, BLUE_BG), "reused": (TEAL, TEAL_BG), "red": (RED, RED_BG), "green": (GREEN, GREEN_BG), "ink": (INK2, PAPER2),
                   "muted": (LINE, "var(--lu-paper)")}[color]
     f = bg if fill else "none"
     d = ' stroke-dasharray="8 6"' if dashed else ""
@@ -110,7 +119,7 @@ def circle(cx, cy, r, label=None, color="red", lx=None, ly=None, fill=True, dash
 
 
 def dot(cx, cy, label=None, color="green", lx=None, ly=None, anchor="start"):
-    col = {"green": GREEN, "red": RED, "ink": INK2}[color]
+    col = {"green": GREEN, "red": RED, "ink": INK2, "ours": BLUE, "reused": TEAL}[color]
     out = f'<circle cx="{cx}" cy="{cy}" r="9" style="fill:{col}"/>'
     if label:
         out += text(lx if lx is not None else cx + 16, ly if ly is not None else cy, label,

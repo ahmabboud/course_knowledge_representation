@@ -191,6 +191,7 @@ editing this file (it writes `assets/glossary.js`).
 | **Description logic (DL)** | The family of logics OWL is built on: first order logic cut down so that a reasoner is guaranteed to finish. |
 | **First order logic (FOL)** | The general logic of "for all" and "there exists"; more expressive than OWL, but no program can always decide it. |
 | **PURL** | Persistent URL: a web address that is guaranteed to keep working, used for ontology IRIs such as `purl.obolibrary.org`. |
+| **MIT licence (MIT)** | A short, permissive open source licence: anyone may use, change and share the work if they keep the copyright notice. IOF SCRO and IOF Core use it. |
 | **ODC PDDL** | Open Data Commons Public Domain Dedication and License: a statement that a dataset is free for anyone to use. |
 | **OWL profile** | A restricted part of OWL chosen so reasoning stays fast: EL, QL or RL. |
 | **OWL 2 EL** | The profile built for large class trees; fast; no only, no counting, no not. |
