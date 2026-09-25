@@ -1,121 +1,112 @@
-# Session 5 lab: RML mapping, materialize versus virtualize, entity resolution
+# Session 5 lab: from a live database to the graph
 
-## What the syllabus commits to
+**Read this first:** [What this lab is doing](OVERVIEW.md). It explains the
+data, why each step exists, and the role of every file.
 
-Load DataCo into a provided **PostgreSQL** container, a genuine
-relational source rather than a CSV pretending to be one. Write an RML
-mapping from that schema to the Session 3 ontology and materialize the
-graph with **Morph-KGC** (drafting in the browser-based RML Playground
-first if the local toolchain misbehaves). Configure **Ontop** over the
-same database and ontology, answer the same SPARQL questions by
-virtualization, and inspect the SQL Ontop generates. Compare the two on
-freshness, latency, and which queries each handles badly. Run the
-Session 4 shapes against the result. A 10-minute team clinic: each team
-states which integration architecture its own project will use and
-why.
+**Why this lab exists:** to make the lecture concrete (R2RML mappings,
+materializing against virtualizing, entity resolution) on the same Brunel
+data as Sessions 1 to 4, and to give you the mapping pattern your team
+project will use for its own database. Nothing is handed in or graded.
 
-## Real tools
+Every number in `lectures/kr-session-05.html` comes from the files in
+`reference-outputs/`, produced by these scripts on 2026-09-25 (SQLite path;
+the PostgreSQL and Ontop runs are recorded separately, see their files).
 
-PostgreSQL (own container, additive to the shared `docker-compose.yml`
-at the repository root), RML / Morph-KGC 2.10.0, Ontop 5.5.0, Splink
-4.0.
+## Before you start
 
-## Status
+- The shared course environment `demos/.venv`, active, **installed with both
+  lines** of `demos/README.md` (the second adds Morph-KGC). Already set up
+  earlier? Run both install lines again now.
+- Session 2's graph exists (`demos/session-02-rdf-sparql/brunel.ttl`): the
+  comparison in step 4 needs it. If not, run `python convert_to_rdf.py`
+  there first.
+- Docker Desktop running, and Java (the JDK 21 from Session 1) for Ontop.
+- Run every command from this folder, `demos/session-05-integration/`.
+- **No Docker?** Use `--sqlite` in steps 2 and 3 (a database file instead of
+  PostgreSQL; the same tables and the same mapping), skip step 6 and read
+  `reference-outputs/ontop-q2.txt` instead. You lose only virtualization.
 
-Built and tested against a real Postgres container (schema, both
-mapping paths, and the entity resolution script all produce the
-numbers documented below); **not yet confirmed against the real Ontop
-CLI on a live database from this machine**, that step needs a
-container runtime this environment cannot use, see the note under
-Ontop below. Do not treat this folder as the finished Milestone-2
-lab until that confirmation and a live run-through are both done.
+## Part A · build and observe (about 30 minutes)
 
-### What's here
+1. `docker compose up -d`. Starts PostgreSQL 16 on this computer
+   (127.0.0.1:5432). **Expect:** `Container ... Started`.
+2. `python load_database.py` (or `--sqlite`). **Expect:** orders 9,215 rows,
+   plant_ports 22, products_per_plant 2,036, freight_rates 1,540.
+3. `python materialize.py` (or `--sqlite`). Morph-KGC runs
+   `brunel-mapping.ttl`. **Expect:** `135,799 triples` in a few seconds,
+   written to `brunel-mapped.nt`. **Look at:** `brunel-mapping.ttl`, the
+   `<#Orders>` map: a template for the subject, a column for a plain value,
+   a column with a datatype, a template for a link.
+4. `python compare_with_session2.py`. **Expect:** `only in Session 2's graph
+   0`, `only in the mapped graph 7`, `rate bands in both 1,540`. The 7 are
+   carriers V444_2 and V444_4 to V444_9, now typed `ul:Carrier`: the
+   mapping's `<#Carriers>` view reads both tables. **Notice:** Session 2's
+   graph has 49 more triples, its vocabulary; a mapping makes data only.
+5. `python ../session-04-shacl/validate.py --data brunel-mapped.nt --data vocabulary.ttl`
+   (about 2 minutes). **Expect:** focus nodes 9,215, then `2 Violation,
+   1,370 Warning`, and no band carrier line: Session 4's 1,209 warnings are
+   gone. **Notice:** run it once without `--data vocabulary.ttl`: focus
+   nodes drop to 9,023, because nothing then says a late order is an order
+   (`reference-outputs/validate-mapped-without-vocabulary.txt`).
+6. `python ontop/setup_ontop.py` once (downloads about 90 MB), then
+   `python ontop/run_ontop.py`. Ontop answers Session 2's Q2 from the
+   database. **Expect:** V444_0 6,264 orders and 183 late, V444_1 2,097 and
+   9, V44_3 854 and 0, then the SQL Ontop sent to PostgreSQL.
+7. `python er/match_customers.py`. **Expect:** 2,392 possible pairs, 1,818
+   after blocking; at threshold 4 precision 0.878 and recall 0.935, at
+   threshold 8 precision 1.000 and recall 0.870. **Look at:** the wrong
+   matches and the misses it lists, and why each happened.
 
-- `docker-compose.yml` — the PostgreSQL service, run alongside the
-  repository root's `docker-compose.yml`, not instead of it.
-- `load_postgres.py` — loads a small, hand-built purchase-order and
-  carrier seed (real DataCo/Brunel data was not available while
-  building this, see its own docstring for why and how to swap in the
-  real fetched CSVs later).
-- `mapping_template.rml.ttl` + `config_materialize.ini` — the RML
-  mapping and Morph-KGC config for the materialize path. Real,
-  verified output: with `po99`'s carrier code absent from the
-  `carriers` table, materializing produces every triple for `po99`
-  except `ul:hasCarrier`, silently, no error.
-- `ontology.ttl`, `mapping.obda`, `ontop.properties`, `query.sparql` —
-  the Ontop virtualize path over the same Postgres source, verified
-  for real (CLI flags and mapping syntax checked against the actual
-  downloaded 5.5.0 distribution) but **not yet run against a live
-  database**: this repository's own tooling cannot start a Postgres
-  container to test it end to end (see Status). Run it yourself with
-  `ONTOP_LOG_LEVEL=debug` and paste the generated SQL into
-  `compare_materialize_vs_virtualize.md` the first time you do.
-- `validate_materialized.py` — runs Session 4's shapes against
-  `materialized.nt`. Not a plain `pyshacl` CLI call, its own docstring
-  explains why (a real, confirmed prefix-resolution gotcha, not a
-  maybe).
-- `entity_resolution/` — Splink over two synthetic supplier lists
-  (DataCo-style and Brunel-style) describing five of the same real
-  suppliers under different names and IDs. Real, run output:
-  `threshold_match_probability=0.5` gives precision 0.556 / recall
-  1.000 (4 false positives, all same-country pairs); raising it to 0.8
-  gives 1.000 / 1.000. Swap in your own team's two sources and labeled
-  sample once you have one.
-- `compare_materialize_vs_virtualize.md` — where the freshness/latency/
-  workload comparison and the clinic's decision get written down, live,
-  during the lab.
+## Part B · extend a mapping (about 15 minutes)
 
-### Working directory and platform status
+Open `my_mapping.ttl`. It maps orders (id, weight, carrier) and carriers.
+Three rules are missing, and each is a copy of a rule already in the file
+with one thing changed: Y1 a map for customers (copy `<#Carriers>`), Y2
+`ul:ofProduct` (copy `ul:carriedBy`), Y3 `ul:unitQuantity` as an integer
+(copy `ul:weight`). Then:
 
-Run the commands below from `demos/session-05-integration/`. The documented
-setup block is currently for macOS/Linux shells only: it uses `source`,
-`curl`, `unzip`, `chmod`, and Unix environment-variable syntax. This session
-has not yet been verified end to end on Windows, so it must not be presented
-as a Windows-ready lab until a PowerShell recipe and a Windows reference run
-are added.
-
-### Setup
-
-```bash
-docker compose -f ../docker-compose.yml -f docker-compose.yml up -d
-
-# Load the seed data
-python3 -m venv .venv-pg && source .venv-pg/bin/activate
-python -m pip install -r requirements-postgres.txt
-python3 load_postgres.py
-deactivate
-
-# Materialize path, its own venv (see load_postgres.py's docstring
-# for why morph-kgc and pyshacl cannot share one environment)
-python3 -m venv .venv-materialize && source .venv-materialize/bin/activate
-python -m pip install -r requirements-materialize.txt
-python3 -m morph_kgc config_materialize.ini   # writes materialized.nt
-deactivate
-
-# Validate with Session 4's shapes, the repository's shared venv
-source ../.venv/bin/activate
-python3 validate_materialized.py
-
-# Virtualize path
-curl -sSL -o ontop-cli.zip https://github.com/ontop/ontop/releases/download/ontop-5.5.0/ontop-cli-5.5.0.zip
-unzip -q ontop-cli.zip -d ontop-cli
-curl -sSL -o ontop-cli/jdbc/postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.7.4.jar
-chmod +x ontop-cli/ontop
-ONTOP_LOG_LEVEL=debug ontop-cli/ontop query -m mapping.obda -t ontology.ttl \
-  -p ontop.properties -q query.sparql -o ontop_results.csv
-
-# Entity resolution
-cd entity_resolution
-python3 -m venv .venv-er && source .venv-er/bin/activate
-python -m pip install -r requirements.txt
-python3 run_splink.py
+```sh
+python check_my_mapping.py
 ```
 
-## What "done" looks like
+It runs your mapping on the database (PostgreSQL if running, otherwise
+`brunel.db`) and compares the triples each rule makes with the ones it
+should make. **Expect** when all three are right: `3 of 3 right.` Stuck?
+`solutions/my_mapping_solutions.ttl`. The common wrong answers and their
+hints are in `reference-outputs/my-mapping-check.txt`.
 
-A correct RML mapping, both paths working over the same data, an
-entity resolution layer reporting precision and recall (not a single
-accuracy figure) if the topic combines two sources, per the Session 5
-deliverable, plus a live Ontop run confirmed on this machine and the
-comparison doc filled in from that real run, not left as placeholders.
+## Part C · think (about 10 minutes)
+
+1. Materialize or virtualize: which would you choose if the orders change
+   every minute, and which if you must run SHACL on every change?
+2. The matcher at threshold 4 matched a customer that is not in Brunel.
+   What would that error cost a real company, compared with a miss?
+3. For **your team project's own database**: which table becomes which
+   class, which column is the key in your IRI template, and which table has
+   no key at all?
+
+## Optional
+
+- `python ontop/run_ontop.py --query my-question.sparql` with any Session 2
+  query that uses no `*` or `+` path (Ontop does not support those).
+- `python er/match_customers.py --threshold 6` to see the trade-off move.
+- Read `er/make_teaching_set.py` to see exactly how the teaching data was
+  made.
+
+## You understood this lab if you can say
+
+- what a triples map, a template and a logical view each do;
+- why the mapping needs no join to link an order to its carrier;
+- why a rate band is a blank node;
+- what materializing and virtualizing each give up;
+- why precision and recall move in opposite directions with the threshold.
+
+## Take it to your team project
+
+- `brunel-mapping.ttl` is the model for your own mapping: one triples map
+  per table, templates from your IRI rule (Session 2, part C).
+- Validate what the mapping produces with your Session 4 shapes, together
+  with your vocabulary.
+- Decide and write down: materialize or virtualize, and why.
+- If your project has two sources for the same things, record how you
+  matched them and your precision and recall.

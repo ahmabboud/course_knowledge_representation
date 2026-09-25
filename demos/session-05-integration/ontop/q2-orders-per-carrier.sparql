@@ -1,0 +1,7 @@
+# Session 2's Q2, unchanged: orders and late orders per carrier.
+# In Session 2 it ran over a stored graph; here Ontop answers it straight
+# from the PostgreSQL tables, through brunel-mapping.ttl.
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT ?carrier (COUNT(?order) AS ?orders) (SUM(IF(?late > 0, 1, 0)) AS ?lateOrders) WHERE {
+  ?order ul:carriedBy ?carrier ; ul:lateDays ?late .
+} GROUP BY ?carrier ORDER BY DESC(?orders)

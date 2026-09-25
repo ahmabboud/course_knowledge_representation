@@ -1,0 +1,36 @@
+## Solutions to part B (my_mapping.ttl). Each new rule is its twin with one
+## thing changed. Other spellings can be right too: the checker compares the
+## triples a rule produces, not how it is written.
+
+@prefix rr:  <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ul:  <https://ul.edu.lb/kr/scm#> .
+
+<#Orders>
+    rr:logicalTable [ rr:tableName "orders" ] ;
+    rr:subjectMap [ rr:template "https://ul.edu.lb/kr/id/order/brunel/{order_id}" ] ;
+    rr:predicateObjectMap [ rr:predicate ul:orderId ;
+        rr:objectMap [ rr:column "order_id" ] ] ;
+    rr:predicateObjectMap [ rr:predicate ul:weight ;
+        rr:objectMap [ rr:column "weight" ; rr:datatype xsd:decimal ] ] ;
+    rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
+        rr:objectMap [ rr:template "https://ul.edu.lb/kr/id/carrier/brunel/{carrier}" ] ] ;
+
+    # Y2 · the twin of ul:carriedBy: a template, so the object is a link, not text.
+    rr:predicateObjectMap [ rr:predicate ul:ofProduct ;
+        rr:objectMap [ rr:template "https://ul.edu.lb/kr/id/product/brunel/{product_id}" ] ] ;
+
+    # Y3 · the twin of ul:weight: same shape, another column and datatype.
+    rr:predicateObjectMap [ rr:predicate ul:unitQuantity ;
+        rr:objectMap [ rr:column "unit_quantity" ; rr:datatype xsd:integer ] ] .
+
+<#Carriers>
+    rr:logicalTable [ rr:sqlQuery """SELECT DISTINCT carrier FROM orders""" ] ;
+    rr:subjectMap [ rr:template "https://ul.edu.lb/kr/id/carrier/brunel/{carrier}" ;
+                    rr:class ul:Carrier ] .
+
+# Y1 · the twin of <#Carriers>: another column, another kind in the IRI, another class.
+<#Customers>
+    rr:logicalTable [ rr:sqlQuery """SELECT DISTINCT customer FROM orders""" ] ;
+    rr:subjectMap [ rr:template "https://ul.edu.lb/kr/id/customer/brunel/{customer}" ;
+                    rr:class ul:Customer ] .

@@ -1,0 +1,12 @@
+NOT RECORDED YET (2026-09-25).
+
+This file will hold a real run of `python ontop/run_ontop.py` on the
+instructor's Mac: the answers to Session 2's Q2 through Ontop 5.5.0 over
+PostgreSQL, and the SQL Ontop sent. It could not be run where the lab was
+built (no Docker, and the Ontop download is blocked there).
+
+Expected answers, from Session 2's own run of the same query
+(demos/session-02-rdf-sparql/reference-outputs/query-timings-oxigraph.txt):
+  carrier V444_0  6,264 orders, 183 late
+  carrier V444_1  2,097 orders,   9 late
+  carrier V44_3     854 orders,   0 late

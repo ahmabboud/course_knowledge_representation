@@ -1,0 +1,15 @@
+python ../session-04-shacl/validate.py --data brunel-mapped.nt --data vocabulary.ttl   (pySHACL 0.40.1, 2026-09-25; the mapped graph, SQLite source)
+data: 135,848 triples from brunel-mapped.nt, vocabulary.ttl
+shapes: brunel-shapes.ttl
+  focus nodes  9,215  An order leaves through a port its plant is linked to
+  focus nodes  9,215  An order's plant makes the product
+  focus nodes  9,215  An order's weight falls in a rate band of its lane
+  focus nodes  1,540  Every freight rate band
+  focus nodes  9,215  Every order
+
+validated in 115.2 s. conforms (SHACL): False. 2 Violation, 1,370 Warning, 0 Info
+  Violation      2  Every order · MinExclusive on weight   e.g. order/brunel/1447215484.7, order/brunel/1447336276.7
+  Warning    1,370  An order's weight falls in a rate band of its lane · SPARQL   e.g. order/brunel/1447137127.7, order/brunel/1447137128.7, order/brunel/1447137142.7
+
+GATE: FAIL, 2 violations. Exit code 1.
+exit code 1

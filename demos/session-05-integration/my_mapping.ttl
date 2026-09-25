@@ -1,0 +1,54 @@
+## Session 5 lab, part B: extend a mapping.
+##
+## This small mapping already works: it maps orders (id, weight, carrier)
+## and carriers. Three rules are missing. Each one is a copy of a rule that
+## is already here, with one thing changed:
+##
+##   Y1  a triples map for customers      copy <#Carriers>, change it to customers
+##   Y2  "of product" on each order        copy the ul:carriedBy rule, change it to products
+##   Y3  "unit quantity" as an integer     copy the ul:weight rule, change it to unit_quantity
+##
+## Columns of the orders table: order_id, order_date, origin_port, carrier,
+## service_level, ship_late_day_count, customer, product_id, plant_code,
+## destination_port, unit_quantity, weight.
+##
+## Then run, from demos/session-05-integration/:
+##     python check_my_mapping.py
+## The checker runs your mapping on the database and compares the triples
+## each new rule makes with the triples it should make. Only open
+## solutions/my_mapping_solutions.ttl after you have tried.
+
+@prefix rr:  <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ul:  <https://ul.edu.lb/kr/scm#> .
+
+<#Orders>
+    rr:logicalTable [ rr:tableName "orders" ] ;
+    rr:subjectMap [ rr:template "https://ul.edu.lb/kr/id/order/brunel/{order_id}" ] ;
+
+    # A plain value: copy the column.
+    rr:predicateObjectMap [ rr:predicate ul:orderId ;
+        rr:objectMap [ rr:column "order_id" ] ] ;
+
+    # A value with a datatype.
+    rr:predicateObjectMap [ rr:predicate ul:weight ;
+        rr:objectMap [ rr:column "weight" ; rr:datatype xsd:decimal ] ] ;
+
+    # A link to another thing: build that thing's IRI from the key.
+    rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
+        rr:objectMap [ rr:template "https://ul.edu.lb/kr/id/carrier/brunel/{carrier}" ] ] ;
+
+    # ---- Y2: ul:ofProduct, a link to the product (column product_id) ----
+    # TODO
+
+    # ---- Y3: ul:unitQuantity, an xsd:integer (column unit_quantity) ----
+    # TODO
+    .
+
+<#Carriers>
+    rr:logicalTable [ rr:sqlQuery """SELECT DISTINCT carrier FROM orders""" ] ;
+    rr:subjectMap [ rr:template "https://ul.edu.lb/kr/id/carrier/brunel/{carrier}" ;
+                    rr:class ul:Carrier ] .
+
+# ---- Y1: <#Customers>, every customer of an order typed ul:Customer ----
+# TODO

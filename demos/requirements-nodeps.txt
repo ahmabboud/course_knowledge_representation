@@ -1,0 +1,6 @@
+# Installed without dependencies, after requirements.txt:
+#   python -m pip install --no-deps -r requirements-nodeps.txt
+# Morph-KGC declares rdflib < 7.3 and pyoxigraph < 0.4; it runs on the
+# course's rdflib 7.6.0 and pyoxigraph 0.5.11 (see requirements.txt). Its real
+# dependencies are pinned in requirements.txt, Session 5 block.
+morph-kgc==2.10.0

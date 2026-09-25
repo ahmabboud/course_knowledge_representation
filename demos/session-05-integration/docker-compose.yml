@@ -1,22 +1,24 @@
-# Session 5's own service, additive to the repository root's docker-compose.yml
-# (which brings up Fuseki and Neo4j). Run both together, from this folder:
-#   docker compose -f ../docker-compose.yml -f docker-compose.yml up -d
+# Session 5: the "live operational database", an empty PostgreSQL 16.
+# From this folder:
+#   docker compose up -d
+# Then python load_database.py creates the four Brunel tables and loads them.
+# The database answers on this computer only (127.0.0.1), user kr,
+# password kr-labs-pw, database brunel.
 #
-# load_postgres.py creates the schema and loads the seed data; this file
-# only brings up an empty Postgres, on purpose, so the loader stays the
-# one place that defines what "loaded" means (see load_postgres.py's
-# own docstring for why it is not a docker-entrypoint-initdb.d script).
+# The volume name is new on purpose (2026-09-25): an older course volume
+# holds a database called dataco, and PostgreSQL only creates POSTGRES_DB
+# the first time a volume is used.
 services:
   postgres:
     image: postgres:16-alpine
     environment:
       - POSTGRES_USER=kr
       - POSTGRES_PASSWORD=kr-labs-pw
-      - POSTGRES_DB=dataco
+      - POSTGRES_DB=brunel
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres-brunel:/var/lib/postgresql/data
 
 volumes:
-  postgres-data:
+  postgres-brunel:

@@ -1,0 +1,21 @@
+python er/match_customers.py   (2026-09-25; teaching set from er/make_teaching_set.py)
+52 TMS records, 46 Brunel customers: 2,392 possible pairs, 1,818 after blocking on home plant
+
+threshold 4: 49 matches, 43 right. precision 0.878, recall 0.935
+  wrong match  TMS-008 'V5555555555555_8'           -> V555555555555555_23  (truth: V55555555555555_8)
+  wrong match  TMS-028 'V55555_34'                  -> V555555_24  (truth: V555555_34)
+  wrong match  TMS-040 'V5555_83'                   -> V5555_33  (truth: V5555_38)
+  wrong match  TMS-049 'V555555555555555555_18'     -> V555555555555555_29  (truth: not in Brunel)
+  wrong match  TMS-050 'V55555_21'                  -> V5555_20  (truth: not in Brunel)
+  wrong match  TMS-051 'V555555555_43'              -> V555555555_14  (truth: not in Brunel)
+  missed       TMS-008 'V5555555555555_8'              (truth: V55555555555555_8; best score 5.5: code close, plant same, service same)
+  missed       TMS-028 'V55555_34'                     (truth: V555555_34; best score 5.5: code close, plant same, service same)
+  missed       TMS-040 'V5555_83'                      (truth: V5555_38; best score 5.5: code close, plant same, service same)
+
+threshold 8: 40 matches, 40 right. precision 1.000, recall 0.870
+  missed       TMS-008 'V5555555555555_8'              (truth: V55555555555555_8; best score 5.5: code close, plant same, service same)
+  missed       TMS-010 'V555555555555_13'              (truth: V555555555555_31; best score 5.5: code close, plant same, service same)
+  missed       TMS-018 'V5555555_32'                   (truth: V55555555_32; best score 5.5: code close, plant same, service same)
+  missed       TMS-028 'V55555_34'                     (truth: V555555_34; best score 5.5: code close, plant same, service same)
+  missed       TMS-038 'V555_33'                       (truth: V5555_33; best score 5.5: code close, plant same, service same)
+  missed       TMS-040 'V5555_83'                      (truth: V5555_38; best score 5.5: code close, plant same, service same)

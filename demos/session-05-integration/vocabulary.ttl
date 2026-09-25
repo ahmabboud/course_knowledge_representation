@@ -1,0 +1,81 @@
+## vocabulary.ttl
+##
+## The course vocabulary the Brunel data uses: its classes and properties,
+## their labels, domains and ranges, and one rule, ul:LateOrder rdfs:subClassOf
+## ul:Order. These are the 49 schema triples Session 2's convert_to_rdf.py
+## writes into its "schema" graph, extracted unchanged (2026-09-25).
+##
+## A mapping produces data only. Validate the data together with this file:
+##   python ../session-04-shacl/validate.py --data brunel-mapped.nt --data vocabulary.ttl
+## Without it, the shapes for ul:Order do not reach the 192 late orders
+## (typed ul:LateOrder only): 9,023 focus nodes instead of 9,215.
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ul: <https://ul.edu.lb/kr/scm#> .
+
+ul:Carrier a rdfs:Class ;
+    rdfs:label "Carrier"@en .
+
+ul:Customer a rdfs:Class ;
+    rdfs:label "Customer"@en .
+
+ul:LateOrder a rdfs:Class ;
+    rdfs:label "Late order"@en ;
+    rdfs:subClassOf ul:Order .
+
+ul:Order a rdfs:Class ;
+    rdfs:label "Order"@en .
+
+ul:Plant a rdfs:Class ;
+    rdfs:label "Plant"@en .
+
+ul:Port a rdfs:Class ;
+    rdfs:label "Port"@en .
+
+ul:Product a rdfs:Class ;
+    rdfs:label "Product"@en .
+
+ul:RateBand a rdfs:Class ;
+    rdfs:label "Freight rate band"@en .
+
+ul:carriedBy a rdf:Property ;
+    rdfs:label "carried by"@en ;
+    rdfs:domain ul:Order ;
+    rdfs:range ul:Carrier .
+
+ul:fromPlant a rdf:Property ;
+    rdfs:label "made at plant"@en ;
+    rdfs:domain ul:Order ;
+    rdfs:range ul:Plant .
+
+ul:makes a rdf:Property ;
+    rdfs:label "makes product"@en ;
+    rdfs:domain ul:Plant ;
+    rdfs:range ul:Product .
+
+ul:ofProduct a rdf:Property ;
+    rdfs:label "of product"@en ;
+    rdfs:domain ul:Order ;
+    rdfs:range ul:Product .
+
+ul:orderedBy a rdf:Property ;
+    rdfs:label "ordered by"@en ;
+    rdfs:domain ul:Order ;
+    rdfs:range ul:Customer .
+
+ul:servesPort a rdf:Property ;
+    rdfs:label "ships through port"@en ;
+    rdfs:domain ul:Plant ;
+    rdfs:range ul:Port .
+
+ul:shipsFrom a rdf:Property ;
+    rdfs:label "leaves from port"@en ;
+    rdfs:domain ul:Order ;
+    rdfs:range ul:Port .
+
+ul:shipsTo a rdf:Property ;
+    rdfs:label "arrives at port"@en ;
+    rdfs:domain ul:Order ;
+    rdfs:range ul:Port .
+

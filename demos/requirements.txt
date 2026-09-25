@@ -1,8 +1,14 @@
-# Shared environment for Sessions 1 through 4.
+# Shared environment for Sessions 1 through 5.
 #
-# Requires Python 3.12 or 3.13. Session 5's Morph-KGC stack and Session 6's
-# machine-learning stack each have their own requirements file because their
-# dependency constraints conflict with this shared environment.
+# Requires Python 3.12 or 3.13. Install in two commands (demos/README.md):
+#   python -m pip install -r requirements.txt
+#   python -m pip install --no-deps -r requirements-nodeps.txt
+# The second file holds Morph-KGC (Session 5). Its package metadata asks for
+# rdflib < 7.3 and pyoxigraph < 0.4, but it runs unchanged on the versions
+# below (tested 2026-09-25: the same triples from the command line, as an
+# rdflib graph and in Oxigraph), so it is installed without its declared
+# dependencies; its real dependencies are pinned in the Session 5 block here.
+# Session 6's machine-learning stack keeps its own requirements file.
 
 # ydata-profiling 4.18.4 still imports pkg_resources, supplied by setuptools.
 setuptools==80.9.0
@@ -31,3 +37,12 @@ jupytext==1.19.5
 networkx==3.7
 pytest==9.1.1
 python-dotenv==1.2.3
+
+# Session 5: relational source and mappings
+SQLAlchemy==2.0.54
+psycopg2-binary==2.9.13
+duckdb==1.5.5
+elementpath==4.8.0
+falcon==4.1.0
+jsonpath-python==1.0.6
+ruamel.yaml==0.18.16

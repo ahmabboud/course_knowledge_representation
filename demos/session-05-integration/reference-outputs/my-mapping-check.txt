@@ -1,0 +1,26 @@
+python check_my_mapping.py, Morph-KGC 2.10.0 over brunel.db, 2026-09-25.
+
+Blank my_mapping.ttl:
+  Y1  not yet: no triples from this rule. Copy <#Carriers>: SELECT DISTINCT customer, the template .../id/customer/brunel/{customer}, and rr:class ul:Customer.
+  Y2  not yet: no triples from this rule. Copy the ul:carriedBy rule: rr:template .../id/product/brunel/{product_id}. A template makes a link; rr:column would make text.
+  Y3  not yet: no triples from this rule. Copy the ul:weight rule: rr:column "unit_quantity" with rr:datatype xsd:integer.
+  
+  0 of 3 right.
+
+Solutions:
+  Y1  right: 46 triples, exactly the expected ones.
+  Y2  right: 9,215 triples, exactly the expected ones.
+  Y3  right: 9,215 triples, exactly the expected ones.
+  
+  3 of 3 right.
+
+Common wrong answers:
+  Y2 with rr:column instead of rr:template
+    Y2  not yet: 0 of 9,215 expected triples, 9,215 unexpected. For example you made: <order/brunel/1447191719.7> <ul:ofProduct> "1689548". Copy the ul:carriedBy rule: rr:template .../id/product/brunel/{product_id}. A template makes a link; rr:column would make text.
+  Y3 without rr:datatype
+    Y3  not yet: 0 of 9,215 expected triples, 9,215 unexpected. For example you made: <order/brunel/1447215490.7> <ul:unitQuantity> "343". Copy the ul:weight rule: rr:column "unit_quantity" with rr:datatype xsd:integer.
+  Y1 with the source name missing from the IRI
+    Y1  not yet: 0 of 46 expected triples, 46 unexpected. For example you made: <customer/V555555555555555_44> <rdf:type> <ul:Customer>. Copy <#Carriers>: SELECT DISTINCT customer, the template .../id/customer/brunel/{customer}, and rr:class ul:Customer.
+  Y1 with the final dot missing
+    Your mapping does not run yet: at line 37 of <>:
+    Check the Turtle: every [ ] and every ; in the right place, a . at the end of each map.

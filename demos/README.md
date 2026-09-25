@@ -17,7 +17,8 @@ each session.
 ## Structure
 
 ```
-requirements.txt     Pinned shared Python dependencies, Sessions 1 to 4
+requirements.txt     Pinned shared Python dependencies, Sessions 1 to 5
+requirements-nodeps.txt  Morph-KGC (Session 5), installed with --no-deps
 docker-compose.yml    Shared services: Fuseki (TDB2) and Neo4j
 .env.example          Copy to .env once Session 7 needs an LLM key
 common/                Shared code: IRI scheme, data paths, once
@@ -80,6 +81,7 @@ machine rather than guessing from an installer window.
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
+python -m pip install --no-deps -r requirements-nodeps.txt
 ```
 
 ### Windows (PowerShell)
@@ -88,6 +90,7 @@ python -m pip install -r requirements.txt
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
+python -m pip install --no-deps -r requirements-nodeps.txt
 ```
 
 Check `python3.12 --version` (macOS/Linux) or `py -3.12 --version`
@@ -117,12 +120,16 @@ After activating the environment on either platform:
 
 ## Session-specific environments
 
-The root `requirements.txt` is intentionally installable as one shared
-environment for Sessions 1 through 4. Session 5's Morph-KGC materialization
-uses an incompatible `rdflib` range, and Session 6's graph-learning stack
-uses an incompatible pandas range. Their pinned requirements files live next
-to those labs and are installed only into their own virtual environments, as
-their READMEs specify.
+The root `requirements.txt` is one shared environment for Sessions 1
+through 5. The second install line adds Morph-KGC (Session 5) without its
+declared dependencies: its package asks for `rdflib` below 7.3 and
+`pyoxigraph` below 0.4, but it runs unchanged on the course's 7.6.0 and
+0.5.11 (tested 2026-09-25), and its real dependencies are pinned in
+`requirements.txt`. `pip check` therefore reports two Morph-KGC lines; that
+is expected. Already set up before Session 5? Run both install lines again
+in the active environment. Session 6's graph-learning stack uses an
+incompatible pandas range and keeps its own requirements file, as its
+README specifies.
 
 ## Conventions, so eight sessions of code still look like one thing
 
