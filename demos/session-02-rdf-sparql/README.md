@@ -25,8 +25,8 @@ Every number in `lectures/kr-session-02.html` comes from the files in
 
 1. From `demos/`: `docker compose up -d`. Starts Fuseki 5.5 (port 3030, no
    login; the first run builds it from Apache's release, about a minute) and
-   Neo4j (port 7474, user `neo4j`, password `kr-labs-pw`). Both answer on
-   this computer only.
+   Neo4j (port 7474, user `neo4j`, password `kr-labs-pw`). Both run locally
+   in Docker on your computer only.
 2. `python convert_to_rdf.py` (about 20 seconds). Converts OrderList,
    PlantPorts, ProductsPerPlant and FreightRates with rdflib and the IRI
    scheme in `common/iri.py`. **Expect:** `brunel.ttl` (135,841 triples),
