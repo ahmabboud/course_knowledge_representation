@@ -1,0 +1,10 @@
+python gnn.py   (torch 2.8.0 CPU, torch-geometric 2.8.0.post1, 2026-09-25; about 30 s)
+random split, training seed 0      late in test  58  PR-AUC 0.857  ROC-AUC 0.989  precision@100 0.52  accuracy 0.992
+random split, training seed 1      late in test  58  PR-AUC 0.860  ROC-AUC 0.990  precision@100 0.52  accuracy 0.992
+random split, training seed 2      late in test  58  PR-AUC 0.879  ROC-AUC 0.989  precision@100 0.52  accuracy 0.992
+  (236,870 parameters)
+split by customer, seed 0          late in test  69  PR-AUC 0.045  ROC-AUC 0.646  precision@100 0.06  accuracy 0.926
+split by customer, seed 1          late in test  13  PR-AUC 0.004  ROC-AUC 0.238  precision@100 0.00  accuracy 0.878
+split by customer, seed 2          late in test   4  PR-AUC 0.005  ROC-AUC 0.799  precision@100 0.00  accuracy 0.907
+split by customer, seed 3          late in test  78  PR-AUC 0.017  ROC-AUC 0.490  precision@100 0.00  accuracy 0.908
+split by customer, seed 4          late in test   0  no late order in the test set: nothing to measure

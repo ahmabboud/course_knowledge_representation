@@ -1,0 +1,11 @@
+python link_prediction.py   (pykeen 1.11.1, torch 2.8.0 CPU, 2026-09-25; about 45 s)
+2,036 makes links (19 plants), 3,474 other links
+seed 0: 142 hidden links scored (61 left out: their product appears in no other link)
+  TransE      MRR 0.573  Hits@1 0.401
+  popularity  MRR 0.631  Hits@1 0.542
+seed 1: 142 hidden links scored (61 left out: their product appears in no other link)
+  TransE      MRR 0.469  Hits@1 0.268
+  popularity  MRR 0.597  Hits@1 0.514
+seed 2: 126 hidden links scored (77 left out: their product appears in no other link)
+  TransE      MRR 0.543  Hits@1 0.381
+  popularity  MRR 0.634  Hits@1 0.548

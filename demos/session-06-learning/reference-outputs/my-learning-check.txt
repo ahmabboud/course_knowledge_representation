@@ -1,0 +1,23 @@
+python check_my_learning.py, 2026-09-25 (a few seconds).
+
+Blank my_learning.py:
+  Y1  not yet: not written yet (the TODO is still there).
+  Y2  not yet: not written yet (the TODO is still there).
+  Y3  not yet: not written yet (the TODO is still there).
+  
+  0 of 3 right.
+
+Solutions:
+  Y1  right.
+  Y2  right.
+  Y3  right.
+  
+  3 of 3 right.
+
+Common wrong answers:
+  Y1 split order by order (split_random's way), not by plant
+    Y1  not yet: 6 plants have orders on both sides. Group by plant, as split_by_customer groups by customer.
+  Y2 divided by k (that is precision)
+    Y2  not yet: that is precision (2 of the top 3 are late). Recall divides by ALL late orders: 2 of 4.
+  Y3 with rank < k instead of <= k
+    Y3  not yet: rank 10 is a hit at k = 10: use <= k, not < k.

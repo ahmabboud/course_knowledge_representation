@@ -1,4 +1,4 @@
-# Shared environment for Sessions 1 through 5.
+# Shared environment for Sessions 1 through 6.
 #
 # Requires Python 3.12 or 3.13. Install in two commands (demos/README.md):
 #   python -m pip install -r requirements.txt
@@ -8,18 +8,19 @@
 # below (tested 2026-09-25: the same triples from the command line, as an
 # rdflib graph and in Oxigraph), so it is installed without its declared
 # dependencies; its real dependencies are pinned in the Session 5 block here.
-# Session 6's machine-learning stack keeps its own requirements file.
+# Session 6's learning stack is pinned below; on Linux, install PyTorch's CPU
+# build first (demos/README.md) or pip downloads about 2 GB of GPU libraries.
 
 # ydata-profiling 4.18.4 still imports pkg_resources, supplied by setuptools.
 setuptools==80.9.0
 
-# Data download and profiling — Session 1
+# Data download and profiling (Session 1)
 pandas==2.3.3
 ydata-profiling==4.18.4
 openpyxl==3.1.5
 matplotlib==3.10.0
 
-# RDF, SPARQL, and containers — Sessions 2 onward
+# RDF, SPARQL, and containers (Sessions 2 onward)
 requests==2.34.2
 rdflib==7.6.0
 SPARQLWrapper==2.0.0
@@ -46,3 +47,9 @@ elementpath==4.8.0
 falcon==4.1.0
 jsonpath-python==1.0.6
 ruamel.yaml==0.18.16
+
+# Session 6: learning over the graph (CPU is enough; tested next to the pins above)
+torch==2.8.0
+torch-geometric==2.8.0.post1
+pykeen==1.11.1
+scikit-learn==1.7.2

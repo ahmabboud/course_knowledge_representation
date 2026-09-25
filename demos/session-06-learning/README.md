@@ -1,333 +1,119 @@
-# Session 6 lab: graph neural networks, Milestone 2
+# Session 6 lab: learning over the graph
 
-## What the syllabus commits to
+**Read this first:** [What this lab is doing](OVERVIEW.md). It explains the
+data, why each step exists, and the role of every file.
 
-Construct a **PyTorch Geometric** `HeteroData` object from the
-integrated graph (supplier, product, order, plant, port, carrier node
-types), using a provided conversion utility so class time is not spent
-on plumbing. Train a late-delivery node classification model: first
-`to_hetero` over a GraphSAGE backbone in one line, then an explicitly
-wired `RGCNConv` model, compared. Train a link prediction model with
-`torch_geometric.nn.kge` (TransE), reading the roughly sixty lines of
-the implementation rather than treating it as a black box. A 15-minute
-team clinic reviewing each team's own Milestone 2 evaluation design,
-focused on whether the split leaks.
+**Why this lab exists:** to make the lecture concrete (embeddings, message
+passing, leakage) on the Brunel graph Session 5 built, and to give you the
+evaluation pattern Milestone 2 asks for on your own project. Nothing is
+handed in or graded.
 
-This is **Milestone 2**: a trained heterogeneous node classification
-model and a link prediction model, a leakage-free temporal split, a
-tabular baseline, and a written evaluation of the limits, worth 20
-percent of the grade.
+Every number in `lectures/kr-session-06.html` that comes from a run comes
+from the files in `reference-outputs/`, produced by these scripts on
+2026-09-25 (CPU only, no GPU needed).
 
-## Real tools
+## Before you start
 
-PyTorch Geometric (`to_hetero`, `RGCNConv`, `torch_geometric.nn.kge`),
-PyKEEN (filtered ranking metrics), XGBoost (the tabular baseline).
+- The shared course environment `demos/.venv`, active, **installed with both
+  lines** of `demos/README.md`. Session 6 adds PyTorch, PyTorch Geometric,
+  PyKEEN and scikit-learn (about 400 MB). Already set up earlier? Run both
+  install lines again now. **On Linux**, install the CPU build of PyTorch
+  first (the command is in `demos/README.md`).
+- Session 5's graph exists (`demos/session-05-integration/brunel-mapped.nt`,
+  from its `materialize.py`). If not, `build_graph.py` uses Session 2's
+  `brunel.ttl` instead: the same orders.
+- Run every command from this folder, `demos/session-06-learning/`.
 
-## Status
+## Part A · build and observe (about 30 minutes)
 
-Built and run end to end for real, CPU only, every script below
-produces the numbers quoted in this README from an actual run, not
-placeholders. No GPU is used or needed; the whole pipeline (all six
-scripts) runs in well under a minute on a laptop CPU.
+1. `python build_graph.py`. Turns the RDF graph into a PyTorch Geometric
+   graph. **Expect:** `nodes: order 9,215, customer 46, carrier 3, plant 20,
+   port 11, product 1,540`, then `label: 192 late orders of 9,215 (2.1%),
+   taken out of the features`. **Look at:** the `edges` loop in the script: one
+   list of (source, target) pairs per kind of link, and `x`, the only three
+   things the model knows about an order.
+2. `python baseline.py`. Logistic regression on each order's row, three
+   ways. **Expect:** line 1 (lateDays kept) `PR-AUC 1.000`; line 2 (random
+   split) `PR-AUC 0.788` and `accuracy 0.944`; the split by customer between
+   `0.002` and `0.019`, and seed 4 `nothing to measure`. **Notice:** guessing
+   scores 0.021. A perfect score is a leak, and the split by customer is
+   at the level of guessing.
+3. `python gnn.py` (about 30 seconds). GraphSAGE, made heterogeneous with
+   `to_hetero`, on the same splits. **Expect:** random split `PR-AUC` 0.857,
+   0.860 and 0.879 over three training seeds; split by customer between
+   `0.004` and `0.045`. **Look at:** `class SAGE`: two layers, so each order
+   hears from nodes two links away. **Notice:** the argument is named
+   `edge_index`; `to_hetero` fails with a confusing error under any other
+   name.
+4. `python link_prediction.py` (under a minute). TransE ranks the 19 plants
+   for hidden "plant makes product" links. **Expect** for seed 0: `TransE
+   MRR 0.573`, `popularity MRR 0.631`; on all three seeds the count wins.
+   **Notice:** `61 left out`: a product that appears in no other link gives
+   the model nothing to learn from.
 
-### On the data: honestly synthetic, not real operational data
+Your numbers may differ in the last digit on another computer (PyTorch
+training is not bit-for-bit the same everywhere). The pattern must not:
+leak near 1.0, random split high, split by customer near 0.02, popularity
+ahead of TransE.
 
-Real DataCo/Brunel operational data could not be fetched from this
-repository's own tooling for this session either (Kaggle needs a
-personal token, Brunel's direct Figshare download has been
-unreliable -- the same problem `session-05-integration/README.md`
-documents), and neither dataset has a graph shape to begin with.
-`build_heterodata.py` is a **documented synthetic generator**, not a
-disguised real dataset. It reuses the course's real running case study
-rather than inventing a new one -- ontology namespace
-`https://ul.edu.lb/kr/scm#` (`common/iri.py`), purchase orders
-po88/po99/po101/po104 (po99's dispatch/delivery dates are still
-backwards, the same broken row as Sessions 4 and 5), carriers
-dhl/aramex, and the six real suppliers from Session 5's
-entity-resolution exercise (Acme Logistics, Brunel Freight Group,
-Mediterranean Shipping Co, Northline Carriers, Cedars Cargo, Atlas
-Overland) -- and invents the rest (products, plants, ports, four extra
-suppliers, a third carrier, 360 orders) to give the graph enough scale
-to train on and to make the temporal-leakage demo (`leakage_demo.py`)
-reproduce a real, visible gap. A genuine regime change is injected:
-Port of Hamburg suffers a congestion event starting 2026-01-01 (late
-rate jumps from 41.7% to 100% for Hamburg-routed orders, see the real
-numbers below), independent of any node feature, so a model can only
-find out about it by having trained on orders from that period.
+## Part B · three small functions (about 15 minutes)
 
-### What's here
+Open `my_learning.py` next to `learning_utils.py`. Each function is a copy
+of one in `learning_utils.py` with one thing changed:
 
-- `build_heterodata.py` -- the provided conversion utility. Builds the
-  360-order synthetic graph (6 node types, 9 relation types) and
-  caches it to `data/dataset.pkl` + `data/full_graph.pt`. Every other
-  script here calls its `load_or_build()`, which loads that cache if
-  present (fully deterministic, module-level `seed=42`, so a cached
-  copy and a fresh rebuild are byte-identical) or builds and saves it
-  on first run. Pass `--force-rebuild` to ignore the cache.
-- `train_node_classification.py` -- late-delivery node classification,
-  `to_hetero(GraphSAGE)` vs. explicit `RGCNConv`, same random
-  70/15/15 split, same early-stopping protocol, compared. Two real,
-  load-bearing gotchas fixed in code and documented inline, see
-  "Real gotchas hit while adapting this lab" below.
-- `train_link_prediction.py` -- supplier/product link prediction with
-  `torch_geometric.nn.kge.TransE`, using the real, verified ~60-line
-  API (`model.loader()`, `model.loss()`, `model.test()`) rather than
-  treating it as a black box.
-- `train_pykeen.py` -- the same link-prediction task through PyKEEN,
-  for **filtered** MRR/Hits@k, on the identical 115 triples and the
-  same 80/20 split protocol as `train_link_prediction.py`, so the two
-  scripts' numbers are an honest side-by-side comparison of filtered
-  vs. unfiltered ranking metrics on the same data (see below).
-- `leakage_demo.py` -- the graded evaluation core. Builds a random
-  split and a temporal split of the same order nodes, trains
-  **inductively** on each (the train-time graph excludes the test
-  period's orders and edges entirely, not just their labels -- an
-  honest, deployment-realistic protocol, not a relabeling of a
-  transductive split), and reports the honest random-vs-temporal
-  comparison. `python3 leakage_demo.py --seeds 0 1 2 3 4` reruns it
-  across five seeds (same fixed dataset, only model-init/training
-  stochasticity varies) for the robustness check a single run cannot
-  give you.
-- `tabular_baseline.py` -- XGBoost on the flattened join (one row per
-  order, denormalized supplier/product/plant/port/carrier fields),
-  same random split and seed as `train_node_classification.py`, for
-  the honest 3-way graph-vs-tabular comparison the syllabus and deck
-  both call for.
+| Task | Write | Copy | Change |
+|---|---|---|---|
+| Y1 | `split_by_plant` | `split_by_customer` | group by plant |
+| Y2 | `recall_at_k` | `precision_at_k` | divide by all late orders, not by k |
+| Y3 | `hits_at_k` | `mrr` | average "rank at most k", not 1/rank |
 
-Generated files (`data/*.pkl`, `data/*.pt`, `data/*_results.json`) are
-gitignored (`demos/.gitignore`'s `data/*` rule), matching this
-repository's convention that generated artifacts regenerate, they are
-not committed.
+Then:
 
-### Setup
-
-```bash
-python3 -m venv .venv-s6 && source .venv-s6/bin/activate
-python -m pip install -r requirements.txt
-
-python3 build_heterodata.py
-python3 train_node_classification.py
-python3 train_link_prediction.py
-python3 train_pykeen.py
-python3 leakage_demo.py                    # single seed, ~2s
-python3 leakage_demo.py --seeds 0 1 2 3 4  # 5-seed robustness check, ~10s
-python3 tabular_baseline.py
+```sh
+python check_my_learning.py
 ```
 
-A separate venv, not the repository's shared one, same reasoning as
-Session 5's materialization path: its pinned `requirements.txt` keeps the
-CPU-only PyTorch and PyTorch Geometric stack reproducible without forcing
-Sessions 1 through 4 to install it.
+It tests each function on small cases with known answers, and Y1 also on
+the real plant of every order. **Expect** when all three are right: `3 of 3
+right.` Stuck? `solutions/my_learning_solutions.py`. The common wrong
+answers and their hints are in `reference-outputs/my-learning-check.txt`.
 
-Run these commands from `demos/session-06-learning/`. The macOS/Linux setup
-is above. For Windows PowerShell, create and activate the same environment
-with `py -3.12 -m venv .venv-s6` and
-`.\.venv-s6\Scripts\Activate.ps1`, then use `python` in place of `python3`
-for the remaining commands.
+## Part C · think (about 10 minutes)
 
-## Real, run-verified output
+1. The random split scored PR-AUC 0.788 and the split by customer 0.019.
+   Which number would you report to the company, and why?
+2. Every Brunel order has the same date, so a split by time is impossible
+   here. In **your team project's data**, which field is the date, and what
+   would "train on the past, test on the future" look like?
+3. Popularity beat TransE. When is losing to a baseline still a result
+   worth reporting?
 
-### Step 1 -- the graph (`build_heterodata.py`)
+## Optional
 
-```
-HeteroData(
-  supplier={ x=[10, 4] },
-  product={ x=[12, 6] },
-  plant={ x=[4, 4] },
-  port={ x=[4, 5] },
-  carrier={ x=[3, 2] },
-  order={ x=[360, 3], y=[360], po_id=[360], dispatch_ordinal=[360] },
-  (order, ordered_from, supplier)={ edge_index=[2, 360] },
-  (order, contains, product)={ edge_index=[2, 360] },
-  (order, shipped_via, carrier)={ edge_index=[2, 360] },
-  (order, departs_from, port)={ edge_index=[2, 360] },
-  (order, destined_to, plant)={ edge_index=[2, 360] },
-  (supplier, ships_from, port)={ edge_index=[2, 10] },
-  (plant, served_by, port)={ edge_index=[2, 4] },
-  (carrier, operates_at, port)={ edge_index=[2, 12] },
-  (supplier, supplies, product)={ edge_index=[2, 115] }
-)
-```
+- In `gnn.py`, set `EPOCHS` to 20 or `HIDDEN` to 8 and compare the random
+  split.
+- In `link_prediction.py`, try `model="DistMult"` in the `pipeline(...)`
+  call.
 
-360 orders, 170 late (47.2%). Port of Hamburg late rate **before**
-2026-01-01: 41.7% (n=36); **after**: 100.0% (n=42). All other ports,
-overall late rate: 40.1% (n=282).
+## You understood this lab if you can say
 
-### Step 2 -- node classification (random 70/15/15 split, train=251 val=54 test=55)
+- how an RDF graph becomes node features and edge lists, one per kind;
+- why the label must leave the features, and where it was hiding twice;
+- why accuracy is useless when 2% of orders are late;
+- why a random split flatters and what a split by group tests instead;
+- what MRR and Hits@k measure, and why "filtered" matters;
+- why a simple count can beat an embedding.
 
-Majority-class ("always predict on-time") baseline accuracy: **0.528**.
+## Take it to your team project
 
-| | `to_hetero(GraphSAGE)` | explicit `RGCNConv` |
-|---|---|---|
-| best epoch (early-stopped) | 7 | 17 |
-| test accuracy / F1 | **0.600** / 0.421 | 0.582 / 0.378 |
-| test precision / recall | 0.571 / 0.333 | 0.538 / 0.292 |
-| trainable parameters | 3,748 | 2,450 |
-| num_relations (RGCN homogeneous graph) | -- | 18 (9 relations x 2 directions) |
+Milestone 2 (due at the end of this session, on your own topic) asks for a
+node classification model, a link prediction model, a tabular baseline, a
+split that does not leak, and a written evaluation of the limits. This lab
+is the pattern:
 
-Both clear the baseline; `to_hetero`/GraphSAGE is slightly ahead here.
-RGCNConv has fewer parameters because `SAGEConv` under `to_hetero()`
-gets a *separate* weight matrix per (relation, direction) pair copied
-from the same 2-layer template, while `RGCNConv` (`num_bases=None`)
-uses one full `in x out` matrix per relation id in a single shared
-layer -- the "parameter explosion" trade-off `num_bases`/`num_blocks`
-exist to tame.
-
-### Step 3 -- TransE link prediction (`torch_geometric.nn.kge`)
-
-115 (supplier, supplies, product) triples, 22-node unified entity
-space (10 suppliers + 12 products), 80/20 split (92 train / 23 test):
-
-```
-TransE(22, num_relations=1, hidden_channels=32)
-[torch_geometric.nn.kge.TransE, UNFILTERED] test mean_rank=8.00  MRR=0.1325  Hits@10=0.6087
-```
-
-### Step 4 -- PyKEEN filtered ranking metrics
-
-Same 115 triples, same 80/20 split protocol:
-
-```
-[PyKEEN TransE, FILTERED, both-directions 'realistic']
-  MRR=0.7681  MR=1.63  Hits@1=0.6087  Hits@3=0.9565  Hits@10=1.0000
-```
-
-**Unfiltered `torch_geometric.nn.kge` MRR = 0.1325 vs. filtered PyKEEN
-MRR = 0.7681** on essentially the same triples. This is not one
-implementation being "better" -- `KGEModel.test()` (the method every
-`torch_geometric.nn.kge` model inherits) ranks the true tail against
-*every* other node in the graph, including other known-true triples
-for the same (head, relation) pair; it does not filter known positives
-the way the standard KGE evaluation protocol (and PyKEEN) does. This
-is exactly why "evaluated with filtered mean reciprocal rank" is its
-own line in the syllabus, not an afterthought, and it is a real,
-reproducible, teachable number for a slide.
-
-### Step 5 -- random split vs. temporal split (the headline finding)
-
-Same architecture, same hyperparameters, same seed, same protocol
-(inductive: train-time graph excludes the test period's orders/edges
-entirely), n_test=108 in both arms.
-
-| | RANDOM split | TEMPORAL split |
-|---|---|---|
-| test late-rate | 0.463 | 0.574 |
-| majority-class baseline | 0.537 | 0.574 |
-| **GNN test accuracy** | **0.6296** | **0.4630** |
-| **GNN test F1** | **0.4595** | **0.2368** |
-
-**Accuracy gap (random − temporal): +0.1667.** The random split's test
-accuracy beats its own baseline; the temporal split's is *worse than
-just guessing "on time" or "late" every time* -- a model that only
-ever saw the pre-congestion regime is actively harmful once deployed
-into the post-congestion period, and only the temporal split reveals
-this.
-
-**5-seed robustness check** (`python3 leakage_demo.py --seeds 0 1 2 3
-4`, same fixed dataset, only model-init/training stochasticity
-varied):
-
-```
-Mean gap: +0.0852   Range: [-0.0278, +0.2130]
-Gap positive (random > temporal) in 4/5 seeds
-Temporal test acc <= its own majority baseline in 5/5 seeds
-Random test acc <= its own majority baseline in 1/5 seeds
-```
-
-Honest caveat: on a 108-example test set and a small graph, the exact
-*magnitude* of the gap is noisy (seed 4 even shows a small negative
-gap). What is fully reproducible across every seed is the qualitative
-story: the temporally-split model **never** beats its own trivial
-majority-class baseline, while the randomly-split model usually does.
-That asymmetry -- not any single run's accuracy number -- is the real,
-teachable finding, and `temporal accuracy <= temporal baseline in 5/5
-seeds` is the most defensible single statistic to put on a slide.
-
-What had to be engineered to make the gap show up at all: a transductive
-GNN sees every node's features regardless of train/test label masking,
-so temporal-vs-random *labeling* of a static graph does not by itself
-withhold anything; and without an injected regime change, there is no
-real distribution shift to leak. Two changes were required together --
-a genuine temporal regime change in the data-generating process, and
-an inductive evaluation protocol (the train-time graph structurally
-excludes the test period, not just its labels).
-
-### Step 6 -- tabular baseline (XGBoost) vs. the graph models
-
-Same random 70/15/15 split, same seed, as step 2. Flattened join: 360
-rows x 41 one-hot-encoded feature columns.
-
-```
-[XGBoost baseline] train: accuracy=0.928 f1=0.929 precision=0.944 recall=0.915
-[XGBoost baseline] val:   accuracy=0.685 f1=0.541 precision=0.500 recall=0.588
-[XGBoost baseline] test:  accuracy=0.564 f1=0.556 precision=0.500 recall=0.625
-```
-
-Top feature importances (real, from `clf.feature_importances_`): the
-two Hamburg-related one-hot columns (`port_name_Port of Hamburg`,
-`port_region_Hamburg`) are the #1 and #2 most important features --
-XGBoost finds the injected congestion signal on its own from the flat
-table, no message passing required.
-
-| Model | test accuracy | test F1 |
-|---|---|---|
-| `to_hetero(GraphSAGE)` | **0.600** | 0.421 |
-| `RGCNConv` | 0.582 | 0.378 |
-| **XGBoost (flattened join)** | 0.564 | **0.556** |
-
-A genuinely mixed, non-cherry-picked result: both graph models edge
-out XGBoost on raw accuracy, but XGBoost has the best F1 (better
-precision/recall balance on the minority "late" class). On this small,
-mostly-tabular-friendly task, where the strongest signal (Hamburg
-congestion) is a single categorical column away, a well-tuned
-gradient-boosted tree is competitive with -- and by one metric better
-than -- both graph neural network variants. That is exactly the
-syllabus's own framing realized directly: a genuine split decision
-depending on which metric matters, not a clean win for either side.
-
-## Real gotchas hit while adapting this lab
-
-Adapting a verified prototype into this repo's structure surfaced two
-real issues the prototype itself had not hit or had not fully resolved
-(besides the `to_hetero`/`ToUndirected()` and overfitting/early-stopping
-fixes already documented inline in `train_node_classification.py`):
-
-1. **`torch.load` weights-only default breaks loading a saved
-   `HeteroData`.** `build_heterodata.py`'s cache (`data/full_graph.pt`)
-   is written with a plain `torch.save`, but PyTorch >= 2.6 defaults
-   `torch.load(..., weights_only=True)`, which rejects PyG's
-   `HeteroData`/`BaseStorage` classes outright:
-   `_pickle.UnpicklingError: Weights only load failed ... Unsupported
-   global: GLOBAL torch_geometric.data.storage.BaseStorage`. Fixed by
-   loading with `weights_only=False` in `load_or_build()` -- safe here
-   because the file is always the script's own, freshly written, local
-   output, never an untrusted download.
-2. **A dataset-consistency issue in the split between scripts.** The
-   version of this generator this lab is adapted from had its own
-   `leakage_demo.py` reseed `numpy`'s global RNG at import time
-   (`np.random.seed(0)`), *after* `build_heterodata`'s own import-time
-   seeding (`seed=42`) but *before* that script's own call to
-   `build_dataset()`. That silently produced a different synthetic
-   dataset (different order "late" labels; dispatch dates, which come
-   from Python's own `random` module, were unaffected) than
-   `build_heterodata.py`'s own saved output -- invisible within that
-   one script's self-consistent run, but a real inconsistency across
-   the pipeline: a student who inspected `data/dataset.pkl` would not
-   be looking at what `leakage_demo.py` actually trained and evaluated
-   on. This version fixes it structurally: every script here shares
-   one cached dataset via `build_heterodata.load_or_build()`, and none
-   of them reseed `numpy` at import time, so all six scripts provably
-   train and evaluate on the exact same 360-order graph. This also
-   means the exact leakage-demo numbers in this README (gap +0.1667 at
-   seed 0, mean +0.0852 over 5 seeds) differ slightly in magnitude from
-   an earlier, pre-adaptation verification pass of this same design,
-   while reproducing the identical qualitative finding (temporal
-   accuracy at or below its own baseline in every seed).
-
-## What "done" looks like
-
-Models train, the split is leakage-free and temporal where time
-matters, a tabular baseline is reported, and a graph model that loses
-to it, reported honestly with an explanation, scores full marks on this
-line, per the rubric -- all satisfied above, from a real run, not a
-projection of what a run would show.
+- Convert your graph as `build_graph.py` does, and list what you removed
+  from the features and why.
+- Split by time if your data has dates; if not, split by group, as here,
+  and say why. Never report only a random split.
+- Report the baseline next to every model, and the score guessing gets.
+- Run more than one seed and report the spread, not the best run.

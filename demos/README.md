@@ -17,7 +17,7 @@ each session.
 ## Structure
 
 ```
-requirements.txt     Pinned shared Python dependencies, Sessions 1 to 5
+requirements.txt     Pinned shared Python dependencies, Sessions 1 to 6
 requirements-nodeps.txt  Morph-KGC (Session 5), installed with --no-deps
 docker-compose.yml    Shared services: Fuseki (TDB2) and Neo4j
 .env.example          Copy to .env once Session 7 needs an LLM key
@@ -121,15 +121,18 @@ After activating the environment on either platform:
 ## Session-specific environments
 
 The root `requirements.txt` is one shared environment for Sessions 1
-through 5. The second install line adds Morph-KGC (Session 5) without its
+through 6. The second install line adds Morph-KGC (Session 5) without its
 declared dependencies: its package asks for `rdflib` below 7.3 and
 `pyoxigraph` below 0.4, but it runs unchanged on the course's 7.6.0 and
 0.5.11 (tested 2026-09-25), and its real dependencies are pinned in
 `requirements.txt`. `pip check` therefore reports two Morph-KGC lines; that
 is expected. Already set up before Session 5? Run both install lines again
-in the active environment. Session 6's graph-learning stack uses an
-incompatible pandas range and keeps its own requirements file, as its
-README specifies.
+in the active environment. Session 6 adds PyTorch (CPU), PyTorch Geometric,
+PyKEEN and scikit-learn, about 400 MB. On macOS and Windows the normal
+install gets the CPU build. **On Linux**, install the CPU build first, or pip
+downloads about 2 GB of GPU libraries:
+`python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu`,
+then the two install lines.
 
 ## Conventions, so eight sessions of code still look like one thing
 

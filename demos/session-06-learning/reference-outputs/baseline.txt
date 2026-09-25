@@ -1,0 +1,12 @@
+python baseline.py   (scikit-learn 1.7.2, torch 2.8.0, 2026-09-25; graph: Session 5's brunel-mapped.nt)
+9,215 orders, 192 late (2.1%). Guessing scores PR-AUC 0.021; "never late" scores accuracy 0.979.
+
+1 · random split, lateDays kept    late in test  58  PR-AUC 1.000  ROC-AUC 1.000  precision@100 0.58  accuracy 1.000
+2 · random split                   late in test  58  PR-AUC 0.788  ROC-AUC 0.990  precision@100 0.48  accuracy 0.944
+3 · split by customer, seed 0      late in test  69  PR-AUC 0.019  ROC-AUC 0.310  precision@100 0.00  accuracy 0.972
+3 · split by customer, seed 1      late in test  13  PR-AUC 0.004  ROC-AUC 0.255  precision@100 0.00  accuracy 0.994
+3 · split by customer, seed 2      late in test   4  PR-AUC 0.002  ROC-AUC 0.521  precision@100 0.00  accuracy 0.999
+3 · split by customer, seed 3      late in test  78  PR-AUC 0.015  ROC-AUC 0.432  precision@100 0.01  accuracy 0.982
+3 · split by customer, seed 4      late in test   0  no late order in the test set: nothing to measure
+
+Only 4 of 46 customers ever have a late order. A split by customer puts 0, 1 or 2 of them in the test set.
