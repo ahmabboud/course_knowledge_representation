@@ -41,7 +41,7 @@ No framework. No bundler. No npm. No CDN at runtime except the two webfonts. A l
 ## 1. The workflow
 
 1. **Read `design-system.html`** in a browser. It has every component live, with the markup.
-2. **Read `lectures/kr-session-03.html`.** It is 48 slides, built by `scripts/deckgen-s3/`, and uses all nine layouts and the range of visuals in 2c rule 9. Imitate its structure. It does not use click to reveal, progressive build, compare wipe or the query sandbox: see those live in `design-system.html` (Session 1 uses reveal and build, Session 2 the sandbox).
+2. **Read `lectures/kr-session-03.html`** (and 2f, if you are rebuilding a whole session). It is 48 slides, built by `scripts/deckgen-s3/`, and uses all nine layouts and the range of visuals in 2c rule 9. Imitate its structure. It does not use click to reveal, progressive build, compare wipe or the query sandbox: see those live in `design-system.html` (Session 1 uses reveal and build, Session 2 the sandbox).
 3. **Copy `lectures/_template.html`** to `lectures/<course-slug>-session-NN.html`.
 4. Fill in `<title>`, the `<meta name="description">`, and the `<body data-*>` attributes.
 5. Write the slides. Delete template slides you do not need; never delete the deck frame (`.deck > .deck__stage > .slide`).
@@ -153,6 +153,25 @@ Graded work is the team project and its milestones, nothing else. So a lab
 never says "deliverable", "hand in", "commit" or "due"; it says what the
 student should understand and what to take to the project.
 
+**Three rules for every lab and its slides (instructor, 2026-09-25):**
+
+1. **Slides stand on their own.** A slide never depends on a student having
+   run the lab. Every example is complete on the slide (the real numbers
+   come from `reference-outputs/`, recorded when the lab was built); the lab
+   repeats it.
+2. **Every Part B task has a worked twin.** Each thing a student writes is a
+   copy of one already shown in full (on a slide, in Part A, or earlier in the
+   same file) with one thing changed. Never ask for a kind of thing they have
+   not seen done.
+3. **Keep labs simple.** Few steps, one script per step, one expected result
+   per step. Cut optional machinery before adding explanation.
+
+**One shared environment.** `demos/.venv`, from `demos/requirements.txt` plus
+`demos/requirements-nodeps.txt` (installed with `--no-deps`, for packages
+whose declared limits are stricter than what they need, tested; Morph-KGC
+today). A new lab adds its pins there, tested next to the existing ones,
+rather than creating a second environment.
+
 **Shape of every lab** (about 60 minutes, flexible, 2c rule 7):
 
 | Part | What the student does | Rule |
@@ -209,6 +228,46 @@ on the solutions and on one wrong answer, outputs recorded in
 (a Docker build, a desktop app) written into `REPLAN-STATE.md`.
 
 ---
+
+## 2f. How a session is rebuilt (the method used for Sessions 3 to 6)
+
+One session at a time; the instructor approves each before the next starts.
+
+1. **Research, read only.** A sub-agent reads the syllabus entry
+   (`../syllabus-source.json`), the current deck and lab, what earlier and
+   later sessions depend on, and what can run in this environment, and
+   reports a brief with gaps and risks. Check the data claims yourself
+   before relying on them.
+2. **Decisions.** Ask the instructor only what changes the build (which data,
+   how much scope, which tools), with a recommended option. Record each answer
+   in `REPLAN-STATE.md` (log and, if it binds later sessions, Settled
+   decisions).
+3. **Feasibility on the real data.** Run the key steps in a scratch folder
+   first and get the real numbers. Design the story from them, never from
+   what the syllabus hoped for (Session 6: the graph model loses to a
+   baseline, and that is the lesson).
+4. **Outline for approval.** Parts with minutes, the lab's Part A steps with
+   their expected results, and Part B's twins. Build only after approval.
+5. **Lab first.** Scripts, checker, solutions, `OVERVIEW.md`, `README.md`
+   (2e); run every step, the checker on the solutions and on wrong answers;
+   record outputs in `reference-outputs/`; list what could not run here.
+6. **Deck from a generator,** `scripts/deckgen-sN/` (shares
+   `deckgen-s1/kit.py`, `deckgen-s3/common.py`, `svgkit.py`), written to
+   `lectures/<slug>-session-NN-new.html` beside the old deck. Numbers only
+   from `reference-outputs/`. Code lines sized to their column (20 px code:
+   about 56 characters in a wide column, 50 in a half, 26 in a card).
+   Glossary terms added to `GLOSSARY.md`, `python3 scripts/check-glossary.py`
+   prints nothing.
+7. **Audit live** on GitHub Pages with the built-in browser (cache buster,
+   `lu:` state cleared): `scripts/audit-live.js` until it reports nothing,
+   answered MCQs, filled blanks and revealed polls re-checked, then a
+   Sonnet sub-agent's slide-by-slide visual pass.
+8. **Hand over.** Log, push, tell the instructor what is left for their Mac
+   (anything needing Docker, a desktop app or a blocked download) and which
+   old files are no longer used (delete only with their agreement).
+9. **After approval,** rename the `-new` deck over the old one, point the
+   generator's default output at it, update its `index.html` card, mark the
+   session **Done** in `PROGRESS.md`, and set "Where to continue".
 
 ## 3. Anatomy of a lecture file
 

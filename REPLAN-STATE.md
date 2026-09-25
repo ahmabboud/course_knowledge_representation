@@ -31,13 +31,29 @@ keep the main session's context clear (instructor's preference, 2026-09-24).
 
 **Where to continue (2026-09-25):**
 
-1. **Session 6 rebuild (item 9),** the last of the three. Sessions 1 to 5 are
-   approved and closed. Session 6's code and deck still use the invented
-   cast (po88, po99, dhl, aramex, fedex, invented suppliers); the rebuild
-   moves them to the Brunel graph that Session 5 materializes.
+1. **Session 6 rebuild, in progress (item 9),** by the method in `AGENTS.md`
+   2f. Done so far: research, the three instructor decisions and the approved
+   outline (both in the log, 2026-09-25), feasibility runs with real numbers
+   (log), and the first two lab files, `demos/session-06-learning/learning_utils.py`
+   (the worked examples Part B mirrors: `split_random`, `split_by_customer`,
+   `precision_at_k`, `mrr`) and `build_graph.py` (Session 5's graph to
+   HeteroData, label removed; runs, 2.2 s). Next, in order: `baseline.py`
+   (three rows: lateDays kept, random split, split by customer over 5 seeds),
+   `gnn.py` (GraphSAGE through to_hetero, forward argument named edge_index),
+   `link_prediction.py` (PyKEEN TransE on 5 relations against popularity,
+   ranked among plants, filtered), Part B `my_learning.py` (Y1
+   `split_by_plant`, Y2 `recall_at_k`, Y3 `hits_at_k`) with
+   `check_my_learning.py` and `solutions/`, `OVERVIEW.md`, `README.md`,
+   the shared environment pins (torch 2.8.0, torch-geometric 2.8.0.post1,
+   pykeen 1.11.1, scikit-learn 1.7.2 in `demos/requirements.txt`), then
+   `scripts/deckgen-s6/`, audit, hand over. The old lab files
+   (`build_heterodata.py`, `train_*.py`, `leakage_demo.py`,
+   `tabular_baseline.py`, the folder's own `requirements.txt`) are to be
+   deleted only after the instructor agrees.
 2. **Mac runs still open for Session 5:** PostgreSQL and Ontop
    (`reference-outputs/ontop-q2.txt` is a placeholder until then).
-3. **Later:** item 18 (syllabus alignment question), items 12 and 19.
+3. **Later:** Sessions 7 and 8 (not built), item 18 (syllabus alignment
+   question), items 12 and 19.
 
 **Settled decisions a new session must not reopen:** lab simplicity (instructor, 2026-09-25): slides never depend on the lab or its results, every slide example is complete on the slide; every Part B task mirrors a worked example of the same kind already shown on a slide or done in Part A, changing one thing; labs stay short and simple, one script per step with one expected result (to be added to `AGENTS.md` 2e once the coding agent's current edit of that file is pushed); visual variety (instructor, 2026-09-25, on approving Session 3: mix picture types across a deck, `AGENTS.md` 2c rule 9); tool rule (2c rule 5:
 concept first, one slide per tool, no slide for trivial tools, video only for
@@ -501,4 +517,7 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-25: **Session 5 deck drafted** with a new generator, `scripts/deckgen-s5/` (shares `deckgen-s1/kit.py`, `deckgen-s3/common.py`): `lectures/kr-session-05-new.html`, 38 slides, 183 minutes (lecture about 115, lab 54, wrap 14), next to the old deck until approved. Built to the new rule: every slide example is complete on the slide, and Part B's three tasks each copy a rule shown in full. Five flow walks, tables, code, a pair-count bar, 2 MCQs, a blank drill, a poll, self-check. The Ontop slide shows Session 2's answers and a hand-written SQL, labelled so; the SQL Ontop generates is recorded only after the Mac run. Glossary: Triples map, IRI template, Logical view, Match weight, RML-LV added; check clean. Live audit (built-in browser, Pages, cache buster, state cleared, the stronger check from Session 4 plus table width): 3 label collisions, 2 walks touching the bar and 2 slides too tall fixed; answered MCQs, filled blanks, revealed poll and self-check all fit.
 - 2026-09-25: Session 5 PostgreSQL run on the instructor's Mac: `load_database.py` loaded 9,215 orders, 22 plant ports, 2,036 products per plant, and 1,540 freight rates. `materialize.py` produced 135,799 triples; comparison found 0 only in Session 2 and 7 newly typed rate only carriers in the mapped graph, recorded in `reference-outputs/materialize-and-compare-postgres.txt`. Part B solutions pass 3 of 3. Ontop 5.5.0 setup succeeded, but its query stopped before execution because the property file path contains a space in `Library/Mobile Documents`, recorded in `ontop/last-run.log`; the mapping and prior `ontop-q2.txt` were left unchanged.
 - 2026-09-25: **Sessions 4 and 5 approved by the instructor.** `lectures/kr-session-04-new.html` and `kr-session-05-new.html` renamed over the old decks (generators now write there by default and rebuild them unchanged); `index.html` Session 4 card corrected (5 questions, triage walkthrough) and a real Session 5 card replaces the "Not yet built" placeholder. With the instructor's agreement the old Session 5 draft files were deleted (`load_postgres.py`, `mapping_template.rml.ttl`, `config_materialize.ini`, `validate_materialized.py`, `ontology.ttl`, `mapping.obda`, `ontop.properties`, `query.sparql`, `compare_materialize_vs_virtualize.md`, `requirements-materialize.txt`, `requirements-postgres.txt`, `entity_resolution/`). Session 4's `shapes_template.ttl` is no longer read by Session 5; its README and OVERVIEW now keep it only as the targeting trap example. Session 6 rebuild started.
+- 2026-09-25: Session 6 decisions (instructor): (1) learn on the Brunel graph Session 5 materializes, the one cast; late order prediction with the real leakage lessons (the label is in the graph twice, as the ul:LateOrder type and ul:lateDays, and must be removed; a random split memorises 4 customers, a split by customer shows the truth); link prediction on which plant makes which product (2,036 real links); the temporal split is taught on a slide as the rule for data with dates (all Brunel orders share one date, 2013-05-26); (2) a simple core: one GNN (GraphSAGE through to_hetero), one link predictor (TransE in PyKEEN, filtered metrics), one baseline (logistic regression), the split comparison; RGCN, DistMult, ComplEx, RotatE and XGBoost on slides only; (3) the learning stack goes into the shared course environment. Facts checked for the rebuild: 192 of 9,215 orders late; only 4 customers have late orders; Brunel has no supplier table.
+- 2026-09-25: Session 6 feasibility, real runs in the Cowork workspace on Session 5's `brunel-mapped.nt` (torch 2.8.0 CPU, torch-geometric 2.8.0.post1, pykeen 1.11.1, scikit-learn 1.7.2, all next to the shared pins without new conflicts). Late orders, logistic regression: lateDays left in PR-AUC 1.000; random split PR-AUC 0.777 (ROC 0.988); split by customer PR-AUC 0.002 to 0.019 against a chance level of 0.021; accuracy 0.95 to 1.00 everywhere (majority 0.979). GraphSAGE through to_hetero: random split PR-AUC 0.936, split by customer 0.005 to 0.034. Plant makes product, TransE on 5 relations, ranked among plants, filtered: MRR 0.547 against popularity 0.632; 61 of 203 held-out links name a product seen nowhere else. A to_hetero gotcha found for real: the model's forward must name its argument edge_index, or every convolution fails with a misleading edge_index error.
+- 2026-09-25: at the instructor's request ("make sure any new session knows what is done and how we plan the labs and the sessions"): `AGENTS.md` 2e now states the three lab rules (slides stand on their own, every Part B task has a worked twin, keep labs simple) and the one shared environment rule; new `AGENTS.md` 2f writes down the rebuild method used for Sessions 3 to 6, step by step; new `scripts/audit-live.js` is the live check used since Session 4 (walks, footer, code width, table width, diagram labels and badges), so no session has to re-derive it. "Where to continue" now lists exactly what of Session 6 is built and what comes next.
 
