@@ -665,9 +665,16 @@
       </ol>
       <div class="lu-callout"><span class="lu-callout__label">Why it is here</span><p class="lu-sub">It is one reason this course builds on IOF SCRO (MIT licence), not SCORVoc. An ambiguous licence is itself the finding.</p></div>
     </div>
-    <figure class="lu-figure" style="margin:0"><div class="lu-figure__ph"><span class="lu-figure__ph-title">Screenshot: the two contradictory licence statements, side by side</span><span class="lu-figure__ph-note">Capture both notices from the same repository at the same commit, crop to the licence text, and save as <code>assets/img/s3-licence-conflict.png</code>. Date the capture in the caption: this may be fixed upstream.</span></div><figcaption>Same repository, same commit, two incompatible claims.</figcaption></figure>
+    <div class="lu-stack">
+      <div class="lu-code lu-code--sm" data-name="scor.ttl · line 22"><pre><code><span class="tok-kw">dct:license</span>
+  &lt;http://www.opendatacommons.org/licenses/pddl/1.0/&gt; ;</code></pre></div>
+      <div class="lu-code lu-code--sm" data-name="README.md · line 40"><pre><code><span class="tok-com">© APICS 2015. APICS, CCOR, CPIM, CSCP, DCOR, SCOR,
+and SCORmark are all registered trademarks of APICS.
+All rights reserved.</span></code></pre></div>
+      <p class="lu-caption">Same repository, same commit (<code>d12544b</code>, 12 January 2018, still the latest), two incompatible claims. PDDL puts the file in the public domain. Checked 25 September 2026.</p>
+    </div>
   </div>
-  <template data-notes><p>Ten minutes, run as a whole-room pause. Do it live if the network holds. Check upstream before teaching: if the conflict has been resolved, the exercise still works but the caption must say so.</p>
+  <template data-notes><p>Ten minutes, run as a whole-room pause. Do it live if the network holds; the two panels are the real lines, so the slide also works offline. Check upstream before teaching (<code>github.com/vocol/scor</code>, latest commit): if the conflict has been resolved, the exercise still works but the caption must say so.</p>
 <p>Say the full version: every third-party ontology, vocabulary and dataset in the team's final report must be listed with its licence. <code>workspace/LICENCES.md</code> records the licences for what this lab reuses.</p></template>
 </section>
 
