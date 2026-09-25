@@ -50,6 +50,14 @@ Every number in `lectures/kr-session-02.html` comes from the files in
    **Notice:** Q5 needs the order hierarchy written into the Cypher query;
    in RDF it is data (`rdfs:subClassOf`).
 
+   **If Neo4j refuses the password** ("unauthorized"): the Neo4j answering
+   on port 7687 is not the course's. Either another Neo4j container is
+   running (`docker ps`; stop it with `docker stop <name>`), or the course's
+   data volume was first created with a different password (Neo4j only reads
+   `NEO4J_AUTH` the first time). From `demos/`: `docker compose rm -sf neo4j`,
+   `docker volume rm demos_neo4j-data`, then `docker compose up -d neo4j`,
+   and wait about 20 seconds before running the step again.
+
 | Question | Expected answer |
 |---|---|
 | Q1 orders carried by V44_3 | 5 rows (the query stops at 5), every one service level CRF; which 5 depends on the store |

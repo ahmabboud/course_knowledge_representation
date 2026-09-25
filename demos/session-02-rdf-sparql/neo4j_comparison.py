@@ -89,4 +89,13 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    from neo4j.exceptions import AuthError, ServiceUnavailable
+    try:
+        main()
+    except ServiceUnavailable:
+        raise SystemExit("Neo4j is not answering on localhost:7687. Start it from demos/ with "
+                         "`docker compose up -d`. This step is optional: every other step works without it.")
+    except AuthError:
+        raise SystemExit("Neo4j refused the course password (neo4j / kr-labs-pw). The Neo4j on port 7687 "
+                         "is not the course's container, or its data volume was created with another "
+                         "password. See the README, 'If Neo4j refuses the password'.")
