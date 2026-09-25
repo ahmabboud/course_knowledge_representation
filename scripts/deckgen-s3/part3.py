@@ -34,23 +34,23 @@ SLIDES.append(slide("Nobody checks 4,819 axioms by hand", "The reasoner", 4, '''
 # ---------------------------------------------------------------- Three jobs
 def job(kind):
     if kind == "consistency":
-        n = [node("a", "Late shipment", 110, 40, 200, 52, kind="ours"),
-             node("b", "Cancelled shipment", 350, 40, 230, 52, kind="ours"),
-             node("x", "one shipment in both", 230, 150, 260, 52, kind="individual", flag="right")]
+        n = [node("a", "Late shipment", 110, 30, 200, 48, kind="ours"),
+             node("b", "Cancelled shipment", 350, 30, 230, 48, kind="ours"),
+             node("x", "one shipment in both", 230, 118, 260, 48, kind="individual", flag="right")]
         e = [edge("d", "a", "b", "disjoint", both=True, kind="conflict"),
              edge("p", "x", "a", "is a"), edge("q", "x", "b", "is a")]
         s = {"x": "impossible"}
     elif kind == "classification":
-        n = [node("a", "At-risk shipment", 230, 150, 240, 52, kind="ours", flag="right"),
-             node("b", "Shipment", 230, 40, 200, 52, kind="reused")]
+        n = [node("a", "At-risk shipment", 230, 118, 240, 48, kind="ours", flag="right"),
+             node("b", "Shipment", 230, 30, 200, 48, kind="reused")]
         e = [edge("p", "a", "b", "subclass of (inferred)", kind="inferred")]
         s = {"a": "inferred"}
     else:
-        n = [node("a", "shipment of order\n1447291369.7", 230, 150, 280, 72, kind="individual", flag="right"),
-             node("b", "At-risk shipment", 230, 40, 240, 52, kind="ours")]
+        n = [node("a", "shipment 1447291369.7", 230, 118, 280, 48, kind="individual", flag="right"),
+             node("b", "At-risk shipment", 230, 30, 240, 48, kind="ours")]
         e = [edge("p", "a", "b", "is a (inferred)", kind="inferred")]
         s = {"a": "inferred"}
-    return flow(kind, 460, 200, n, e, [{"show": [x["id"] for x in n] + [x["id"] for x in e], "set": s}])
+    return flow(kind, 460, 150, n, e, [{"show": [x["id"] for x in n] + [x["id"] for x in e], "set": s}])
 
 
 jobs = [("consistency", "Consistency", "Can this ontology have any model at all? One thing in two disjoint classes: no."),
@@ -62,17 +62,17 @@ SLIDES.append(slide("Three jobs", "The reasoner", 5, '''  <div class="lu-eyebrow
   <h2 class="lu-h2">Three jobs, each finding a different kind of mistake</h2>
   <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr))">''' + cells + '''</div>
   ''' + defbox([
-      ("Subsumption", "The &ldquo;is a subclass of&rdquo; relation, stated or inferred. Classification computes all of it."),
-      ("Consistency check", "The test that the ontology does not contradict itself. If it does, every answer is worthless."),
+      ("Subsumption", "The &ldquo;is a subclass of&rdquo; relation, stated or inferred."),
+      ("Consistency check", "The test that the ontology does not contradict itself."),
   ]), '''<p>Five minutes. Walk the three cards left to right. The middle one is real: At-risk shipment is defined as "Shipment and handled by some Sanctioned carrier", so the reasoner concludes it is a subclass of Shipment although nobody wrote that line. The right one is the lab's realization result (<code>reference-outputs/realized-sample.txt</code>).</p>
 <ul><li>Amber means inferred: Protégé shows the same thing with a yellow background. Red means impossible.</li></ul>'''))
 
 # ---------------------------------------------------------------- The red class
 SLIDES.append(slide("The red class", "The reasoner", 4, '''  <div class="lu-eyebrow">What an error looks like</div>
-  <h2 class="lu-h2">When a class can never have a member, Protégé moves it under owl:Nothing and turns it red</h2>
+  <h2 class="lu-h2">A class that can never have a member turns red, under owl:Nothing</h2>
   <div class="lu-split lu-split--wide-left">
     ''' + figure(IMG + "s3-protege-08-red-class-selected.png", "Protégé inferred class tree with Order for a sole-sourced good in red, equivalent to owl:Nothing",
-                 "Real capture: ELK on <code>scro-extension-v0.ttl</code>. The class <b>Order for a sole-sourced good</b> is red and equivalent to owl:Nothing.") + '''
+                 "Real capture: ELK on <code>scro-extension-v0.ttl</code>. <b>Order for a sole-sourced good</b> is red.") + '''
     <div class="lu-stack">
       ''' + defnote([
           ("Satisfiable class", "a class that could have at least one member without contradiction."),
@@ -86,12 +86,12 @@ SLIDES.append(slide("The red class", "The reasoner", 4, '''  <div class="lu-eyeb
 
 # ---------------------------------------------------------------- Walkthrough: a domain mistake
 n = [
-    node("po", "purchase order\npo88", 220, 70, 240, 76, kind="individual", flag="bottom"),
-    node("c", "carrier V444_1", 700, 70, 250, 60, kind="individual"),
-    node("ship", "Shipment", 220, 250, 220, 60, kind="reused", flag="right"),
-    node("ic", "independent\ncontinuant", 220, 400, 250, 76, kind="upper"),
-    node("pord", "Purchase order", 700, 250, 240, 60, kind="reused"),
-    node("gdc", "generically dependent\ncontinuant", 700, 400, 300, 76, kind="upper"),
+    node("po", "purchase order po88", 220, 40, 280, 56, kind="individual", flag="bottom"),
+    node("c", "carrier V444_1", 720, 40, 250, 56, kind="individual"),
+    node("ship", "Shipment", 220, 165, 220, 56, kind="reused", flag="right"),
+    node("ic", "independent\ncontinuant", 220, 290, 250, 68, kind="upper"),
+    node("pord", "Purchase order", 720, 165, 240, 56, kind="reused"),
+    node("gdc", "generically dependent\ncontinuant", 720, 290, 300, 68, kind="upper"),
 ]
 e = [
     edge("a", "po", "c", "handled by"),
@@ -113,7 +113,7 @@ caps = [
     ("What SCRO already says", "<b>Step 3.</b> In SCRO a Shipment is a physical thing (an independent continuant) and a purchase order is information (a generically dependent continuant)."),
     ("Inconsistent", "<b>Step 4.</b> BFO says nothing can be both. So the whole ontology is <b>inconsistent</b>, and the reasoner refuses to answer anything."),
 ]
-walk = flow("A domain mistake, found by the reasoner", 1000, 470, n, e, steps, caps, legend={
+walk = flow("A domain mistake, found by the reasoner", 1000, 330, n, e, steps, caps, legend={
     "reused": "Reused, IOF SCRO", "upper": "BFO, upper ontology", "individual": "Individual"})
 SLIDES.append(slide("Walkthrough: a domain mistake", "The reasoner", 5, '''  <div class="lu-eyebrow">Diagnostic walkthrough</div>
   <h2 class="lu-h2">One careless fact, four steps, and the reasoner stops everything</h2>

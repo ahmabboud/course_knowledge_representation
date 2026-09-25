@@ -19,38 +19,39 @@ SLIDES.append(divider("Part 4 · Reuse, and BFO in plain words", "Reuse and BFO"
 
 # ---------------------------------------------------------------- The stack
 n = [
-    node("bfo", "BFO 2020\nthings, happenings, qualities", 724, 400, 420, 76, kind="upper"),
-    node("core", "IOF Core\nproducts, processes, agents", 724, 280, 420, 76, kind="reused"),
-    node("scro", "IOF SCRO\nshipments, carriers, orders", 724, 160, 420, 76, kind="reused"),
-    node("ul", "ul: our extension\nonly what our questions need", 724, 40, 420, 70, kind="ours"),
-    node("gs1", "GS1 Web Vocabulary", 1240, 160, 300, 60, kind="builtin"),
+    node("bfo", "BFO 2020\nthings, happenings, qualities", 250, 345, 420, 68, kind="upper"),
+    node("core", "IOF Core\nproducts, processes, agents", 250, 240, 420, 68, kind="reused"),
+    node("scro", "IOF SCRO\nshipments, carriers, orders", 250, 135, 420, 68, kind="reused"),
+    node("ul", "ul: our extension\nonly what our questions need", 250, 35, 420, 64, kind="ours"),
+    node("gs1", "GS1 Web\nVocabulary", 700, 135, 200, 68, kind="builtin"),
 ]
 e = [edge("a", "ul", "scro", "builds on"), edge("b", "scro", "core", "builds on"),
      edge("c", "core", "bfo", "builds on"), edge("d", "scro", "gs1", "aligned with", both=True)]
-stack = flow("The ontology stack our file sits on", 1448, 450, n, e,
+stack = flow("The ontology stack our file sits on", 820, 385, n, e,
              [{"show": [x["id"] for x in n] + [x["id"] for x in e]}],
              legend={"ours": "Our ontology (ul:)", "reused": "Reused, IOF", "upper": "BFO, upper ontology"})
 SLIDES.append(slide("Why reuse: the stack", "Reuse and BFO", 4, '''  <div class="lu-eyebrow">Where our classes attach</div>
   <h2 class="lu-h2">Three published layers under us. We only write what they do not already say.</h2>
-  ''' + stack + '''
-  ''' + defbox([
-      ("Upper ontology", "A very general ontology of basic categories that domain ontologies build on. <b>BFO</b> is an ISO standard one."),
-      ("IOF · SCRO", "The Industrial Ontologies Foundry's core layer, and its Supply Chain Reference Ontology, the base we extend."),
-      ("Alignment", "Linking our classes to classes in another ontology."),
-  ]), '''<p>Four minutes. Build the stack from the bottom in words: BFO says what kinds of thing exist at all; IOF Core adds industry; SCRO adds supply chain; we add only what our competency questions need.</p>
+  <div class="lu-split lu-split--wide-left">
+  ''' + stack + defnote([
+      ("Upper ontology", "a very general ontology of basic categories that domain ontologies build on. <b>BFO</b> is an ISO standard one."),
+      ("IOF · SCRO", "the Industrial Ontologies Foundry's core layer, and its Supply Chain Reference Ontology, the base we extend."),
+      ("Alignment", "linking our classes to classes in another ontology."),
+  ]) + '''
+  </div>''', '''<p>Four minutes. Build the stack from the bottom in words: BFO says what kinds of thing exist at all; IOF Core adds industry; SCRO adds supply chain; we add only what our competency questions need.</p>
 <ul><li>Why reuse: someone else's shipment is then the same shipment as ours, and their tools and data work with our file. The GS1 check found no term for "port" or "freight rate band", an honest result of reuse first.</li>
 <li>All three are real downloads in <code>workspace/</code> (IOF release 202603, MIT licence).</li></ul>'''))
 
 # ---------------------------------------------------------------- Things and happenings
 n = [
-    node("cont", "continuant\npersists through time", 300, 50, 300, 76, kind="upper"),
-    node("occ", "occurrent\nunfolds in time", 1000, 50, 300, 76, kind="upper"),
-    node("truck", "a truck of carrier V444_1", 300, 200, 320, 60, kind="individual"),
-    node("del", "the delivery of order\n1447291369.7", 1000, 200, 320, 76, kind="individual"),
+    node("cont", "continuant: persists through time", 300, 35, 400, 56, kind="upper"),
+    node("occ", "occurrent: unfolds in time", 1000, 35, 360, 56, kind="upper"),
+    node("truck", "a truck of carrier V444_1", 300, 150, 320, 56, kind="individual"),
+    node("del", "the delivery of order 1447291369.7", 1000, 150, 420, 56, kind="individual"),
 ]
 e = [edge("a", "truck", "cont", "is a"), edge("b", "del", "occ", "is a"),
      edge("c", "truck", "del", "participates in")]
-pic = flow("Things and happenings", 1300, 250, n, e, [{"show": [x["id"] for x in n] + [x["id"] for x in e]}])
+pic = flow("Things and happenings", 1300, 190, n, e, [{"show": [x["id"] for x in n] + [x["id"] for x in e]}])
 SLIDES.append(slide("Things and happenings", "Reuse and BFO", 4, '''  <div class="lu-eyebrow">BFO's first split</div>
   <h2 class="lu-h2">Everything is either a thing that lasts, or something that happens</h2>
   ''' + pic + '''
@@ -63,28 +64,28 @@ SLIDES.append(slide("Things and happenings", "Reuse and BFO", 4, '''  <div class
 
 # ---------------------------------------------------------------- A truck, its colour, its role, its paperwork
 n = [
-    node("truck", "the truck\nmaterial entity", 260, 190, 270, 76, kind="individual"),
-    node("colour", "its colour\nquality", 700, 60, 240, 76, kind="individual"),
-    node("role", "its role as carrier\nrole", 700, 190, 280, 76, kind="individual"),
-    node("po", "the purchase order text\ninformation", 700, 320, 330, 76, kind="individual"),
-    node("ic", "independent\ncontinuant", 260, 60, 250, 76, kind="upper"),
-    node("sdc", "specifically dependent\ncontinuant", 1150, 125, 320, 76, kind="upper"),
-    node("gdc", "generically dependent\ncontinuant", 1150, 320, 320, 76, kind="upper"),
+    node("truck", "the truck\nmaterial entity", 260, 150, 270, 68, kind="individual"),
+    node("colour", "its colour\nquality", 700, 40, 240, 68, kind="individual"),
+    node("role", "its role as carrier\nrole", 700, 150, 280, 68, kind="individual"),
+    node("po", "the purchase order text\ninformation", 700, 260, 330, 68, kind="individual"),
+    node("ic", "independent\ncontinuant", 260, 40, 250, 68, kind="upper"),
+    node("sdc", "specifically dependent\ncontinuant", 1150, 95, 320, 68, kind="upper"),
+    node("gdc", "generically dependent\ncontinuant", 1150, 260, 320, 68, kind="upper"),
 ]
 e = [edge("a", "colour", "truck", "inheres in"), edge("b", "role", "truck", "inheres in"),
      edge("c", "truck", "ic", "is a"), edge("d", "colour", "sdc", "is a"), edge("f", "role", "sdc", "is a"),
      edge("g", "po", "gdc", "is a")]
-pic = flow("A truck, its colour, its role, its paperwork", 1448, 380, n, e,
+pic = flow("A truck, its colour, its role, its paperwork", 1448, 300, n, e,
            [{"show": [x["id"] for x in n] + [x["id"] for x in e]}])
 SLIDES.append(slide("A truck, its colour, its role, its paperwork", "Reuse and BFO", 5, '''  <div class="lu-eyebrow">Three kinds of continuant</div>
   <h2 class="lu-h2">Some things stand on their own. Some exist only in one bearer. Some can be copied.</h2>
   ''' + pic + '''
   <div class="lu-split">
   ''' + defnote([
-      ("Independent continuant", "exists on its own. A <b>material entity</b> is one made of matter: the truck."),
-      ("Specifically dependent continuant", "exists only in one bearer: a <b>quality</b> (its colour), a <b>role</b> (being a carrier)."),
+      ("Independent continuant", "exists on its own; a <b>material entity</b> is made of matter."),
+      ("Specifically dependent continuant", "exists only in one bearer: a <b>quality</b>, a <b>role</b>."),
   ]) + defnote([
-      ("Generically dependent continuant", "information that can be copied between bearers: the text of a purchase order."),
+      ("Generically dependent continuant", "information that can be copied between bearers."),
   ], label="Also defined here") + '''
   </div>''', '''<p>Five minutes. The one rule that matters for the lab: <b>BFO says these three kinds share no member</b>. A physical thing is never a role, and never a document. Remember this for the next slide.</p>
 <ul><li>Walk the two arrows "inheres in": the colour and the role cannot exist without the truck. Destroy the truck and both are gone; the purchase order text survives in its copies.</li></ul>'''))
@@ -132,11 +133,11 @@ SLIDES.append(slide("Competency questions decide scope", "Reuse and BFO", 5, '''
 # ---------------------------------------------------------------- Poll
 SLIDES.append(slide("Poll: does this class earn its place?", "Reuse and BFO", 4, '''  <div class="lu-eyebrow">Room poll · 45 seconds</div>
   <div class="lu-poll" data-qid="s3-poll" data-seconds="45" data-answer="b" data-label="Does a class per service level earn its place?">
-    <p class="lu-mcq__q">Brunel's OrderList has a column <code>Service Level</code> (CRF, DTD, DTP). Someone adds a class <code>ul:DTPShipment</code> for it. Keep it?</p>
+    <p class="lu-mcq__q">Someone adds a class <code>ul:DTPShipment</code> for Brunel's <code>Service Level</code> column. Keep it?</p>
     <div class="lu-mcq__opts">
-      <button class="lu-mcq__opt" type="button" data-key="a">Keep it: the data has the column, so the model needs the class<span class="lu-mcq__why" hidden>The source schema is not an argument. Half of any schema is there for reasons no question depends on.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="b">Delete it unless a competency question needs the distinction<span class="lu-mcq__why" hidden>Correct. Scope is set by the questions, not the columns. A plain value can carry the service level.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="c">Replace it with a GS1 term regardless<span class="lu-mcq__why" hidden>Reuse is right in general, but reusing a term you do not need is still an unearned class.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="a">Keep it: the data has the column<span class="lu-mcq__why" hidden>The source schema is not an argument for a class.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="b">Delete it unless a competency question needs it<span class="lu-mcq__why" hidden>Correct. Questions set the scope, not columns. A plain value can carry the level.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="c">Replace it with a GS1 term<span class="lu-mcq__why" hidden>Reusing a term you do not need is still an unearned class.</span></button>
     </div>
   </div>''', '''<p>Forty-five seconds, then reveal and tally with the plus buttons. Spend the rest on whoever picked a: the schema-first instinct this course exists to dislodge.</p>
 <p>Session 1 found that CRF orders are exactly the V44_3 orders and have no freight rate: that <i>is</i> a question worth asking, and it could earn a class. Ask the room to name the question first.</p>''', kind="tint"))

@@ -103,12 +103,12 @@ SLIDES.append(slide("One word, three numbers", "What an ontology is", 4, '''  <d
 
 # ---------------------------------------------------------------- An ontology in one picture
 n = [
-    node("ship", "Shipment", 300, 50, 240, 60, kind="reused"),
-    node("atrisk", "At-risk shipment", 300, 160, 260, 60, kind="ours"),
-    node("carrier", "Carrier", 1130, 50, 240, 60, kind="reused"),
-    node("sanct", "Sanctioned carrier", 1130, 160, 280, 60, kind="ours"),
-    node("s1", "shipment of order\n1447291369.7", 520, 290, 290, 76, kind="individual"),
-    node("c1", "carrier V444_1", 930, 290, 250, 60, kind="individual"),
+    node("ship", "Shipment", 300, 35, 240, 56, kind="reused"),
+    node("atrisk", "At-risk shipment", 300, 125, 260, 56, kind="ours"),
+    node("carrier", "Carrier", 1130, 35, 240, 56, kind="reused"),
+    node("sanct", "Sanctioned carrier", 1130, 125, 280, 56, kind="ours"),
+    node("s1", "shipment of order 1447291369.7", 470, 225, 400, 56, kind="individual"),
+    node("c1", "carrier V444_1", 960, 225, 250, 56, kind="individual"),
 ]
 e = [
     edge("a", "atrisk", "ship", "subclass of"),
@@ -117,20 +117,17 @@ e = [
     edge("d", "c1", "sanct", "is a", route="elbow", sides=["top", "left"]),
     edge("f", "s1", "c1", "handled by"),
 ]
-pic = flow("An ontology in one picture", FULL, 340, n, e,
+pic = flow("An ontology in one picture", FULL, 260, n, e,
            [{"show": [x["id"] for x in n] + [x["id"] for x in e]}], legend=LEGEND)
 SLIDES.append(slide("An ontology in one picture", "What an ontology is", 5, f'''  <div class="lu-eyebrow">The idea, drawn</div>
   <h2 class="lu-h2">An ontology names the kinds of things, and how things connect</h2>
   {pic}
-  <div class="lu-split">
   ''' + defbox([
-    ("Ontology", "A precise, machine readable description of the kinds of things in a domain and how they relate."),
+    ("Ontology", "A machine readable description of the kinds of things in a domain and how they relate."),
     ("Class", "A named kind of thing, a square box: <b>Shipment</b>."),
-  ]) + defbox([
     ("Individual", "One particular thing, a green pill: <b>carrier V444_1</b>."),
     ("Property", "A named connection, an arrow: <b>handled by</b>."),
-  ], label="Also defined here") + '''
-  </div>''', '''<p>Five minutes. Walk the picture in plain words: "this shipment is a shipment; it is handled by carrier V444_1; V444_1 is a sanctioned carrier; every sanctioned carrier is a carrier".</p>
+  ]), '''<p>Five minutes. Walk the picture in plain words: "this shipment is a shipment; it is handled by carrier V444_1; V444_1 is a sanctioned carrier; every sanctioned carrier is a carrier".</p>
 <ul><li>These are the real Brunel order and carrier from Sessions 1 and 2. <b>Sanctioned is a teaching flag</b>: nothing in the data says so, and V444_1 is an anonymised code, not a company. Say it out loud once.</li>
 <li>Colour is meaning: blue is ours, teal is reused from IOF SCRO (Part 4 explains), green is one thing. The lab file <code>sample-shipments.ttl</code> holds exactly these individuals.</li></ul>'''))
 
@@ -173,25 +170,25 @@ SLIDES.append(slide("The class tree", "What an ontology is", 4, f'''  <div class
 
 # ---------------------------------------------------------------- Two kinds of arrow
 n = [
-    node("s1", "shipment of order\n1447291369.7", 560, 150, 290, 76, kind="individual"),
-    node("c1", "carrier V444_1", 1180, 50, 250, 60, kind="individual"),
-    node("w", "11.8", 1180, 250, 150, 56, kind="literal"),
-    node("lab", '"shipment of order 1447291369.7"', 190, 150, 330, 56, kind="builtin"),
+    node("s1", "shipment of order\n1447291369.7", 600, 110, 290, 72, kind="individual"),
+    node("c1", "carrier V444_1", 1200, 35, 250, 56, kind="individual"),
+    node("w", "11.8", 1200, 185, 150, 56, kind="literal"),
+    node("lab", '"shipment of order 1447291369.7"', 180, 110, 330, 56, kind="builtin"),
 ]
 e = [
     edge("a", "s1", "c1", "handled by (to a thing)"),
     edge("b", "s1", "w", "weight in kg (to a value)"),
     edge("c", "s1", "lab", "label (a note)"),
 ]
-pic = flow("Two kinds of arrow, plus notes", FULL, 300, n, e,
+pic = flow("Two kinds of arrow, plus notes", FULL, 220, n, e,
            [{"show": [x["id"] for x in n] + [x["id"] for x in e]}])
 SLIDES.append(slide("Two kinds of arrow, plus notes", "What an ontology is", 4, f'''  <div class="lu-eyebrow">Properties</div>
   <h2 class="lu-h2">An arrow points to a thing, or to a value. Notes are for humans only.</h2>
   {pic}
   ''' + defbox([
-    ("Object property", "Connects a thing to another thing: <b>handled by</b>."),
-    ("Datatype property", "Connects a thing to a value (number, date, text): <b>weight in kg</b>."),
-    ("Annotation property", "A note for humans (label, definition, comment). The reasoner ignores it."),
+    ("Object property", "Links a thing to a thing: <b>handled by</b>."),
+    ("Datatype property", "Links a thing to a value (number, date, text): <b>weight in kg</b>."),
+    ("Annotation property", "A note for humans. The reasoner ignores it."),
   ]), '''<p>Four minutes. The practical reason this matters: in Protégé, object and datatype properties live in two different tabs, and a value cannot be the start of another arrow.</p>
 <ul><li>11.8 kg is this order's real weight in Brunel's OrderList (Session 2 stored it as <code>ul:weight</code>). Session 1 met the same order in the rate band gap.</li>
 <li>Annotation properties in our file: <code>rdfs:label</code>, <code>skos:definition</code>, and the course's own <code>ul:answersCQ</code>.</li></ul>'''))

@@ -137,24 +137,23 @@ SLIDES.append(slide("and, or, not, disjoint", "Writing rules", 5, f'''  <div cla
 
 # ---------------------------------------------------------------- counting
 n = [
-    node("comp", "Sole-sourced component", 250, 60, 320, 60, kind="ours"),
-    node("sup", "Supplier", 700, 60, 200, 60, kind="reused"),
-    node("mrc", "Multi-route carrier", 250, 200, 300, 60, kind="ours"),
-    node("route", "Shipping route", 700, 200, 240, 60, kind="reused"),
+    node("comp", "Sole-sourced component", 200, 45, 320, 56, kind="ours"),
+    node("sup", "Supplier", 740, 45, 200, 56, kind="reused"),
+    node("mrc", "Multi-route carrier", 200, 170, 300, 56, kind="ours"),
+    node("route", "Shipping route", 740, 170, 240, 56, kind="reused"),
 ]
 e = [edge("a", "comp", "sup", "supplied by · exactly 1"),
      edge("b", "mrc", "route", "handles route · min 2")]
-pic = still("Two counting rules in our ontology", 900, 250, n, e)
+pic = still("Two counting rules in our ontology", 900, 230, n, e)
 SLIDES.append(slide("Counting: exactly, min, max", "Writing rules", 4, f'''  <div class="lu-eyebrow">Rules that count</div>
   <h2 class="lu-h2">Some questions need a number: exactly one supplier, at least two routes</h2>
   <div class="lu-split lu-split--wide-left">
-    {pic}
-    <div class="lu-stack">''' + defbox([("Cardinality restriction", "A rule that counts links: exactly 1, min 2 (at least), max 3 (at most).")]) +
-    callout("In the Brunel data", "V444_0 ships on 2 lanes, V44_3 on 3, V444_1 on 1. Two of the three carriers would count as multi-route.", "neutral") + '''
+    <div class="lu-stack">{pic}
+    ''' + callout("In the Brunel data", "V444_0 ships on 2 lanes, V44_3 on 3, V444_1 on 1. Two of the three carriers would count as multi-route.", "neutral") + '''</div>
+    <div class="lu-stack">''' + defbox([("Cardinality restriction", "A rule that counts links: exactly 1, min 2, max 3.")]) +
+    callout("Remember this for Part 5", "The fast reasoner used first in the lab, ELK, <b>ignores</b> counting rules. That is why it misses one of the lab's two errors.") + '''
     </div>
-  </div>
-  ''' + callout("Remember this for Part 5", "Counting is slow to reason about. The fast reasoner used first in the lab, ELK, <b>ignores</b> these rules. That is why it misses one of the two errors in the lab.") + '''
-  ''', '''<p>Four minutes. Both classes are real in <code>scro-extension-reference.ttl</code>: <code>ul:SoleSourcedComponent</code> (<code>'supplied by' exactly 1 Supplier</code>) and <code>ul:MultiRouteCarrier</code> (<code>'handles route' min 2 'Shipping route'</code>).</p>
+  </div>''', '''<p>Four minutes. Both classes are real in <code>scro-extension-reference.ttl</code>: <code>ul:SoleSourcedComponent</code> (<code>'supplied by' exactly 1 Supplier</code>) and <code>ul:MultiRouteCarrier</code> (<code>'handles route' min 2 'Shipping route'</code>).</p>
 <ul><li>Lane counts are from Brunel's OrderList (origin and destination port per order): V444_0 PORT04 and PORT09 to PORT09; V444_1 PORT04 to PORT09 only; V44_3 PORT04, PORT05 and PORT09 to PORT09.</li>
 <li>If asked: a reasoner cannot conclude "min 2" from two port names alone, because OWL does not assume two names are two things. That is the open world again; Session 4 is where counting is checked.</li></ul>'''))
 
@@ -170,8 +169,8 @@ steps = [{"show": ["s", "c", "a"], "run": ["a"], "set": {"s": "active"}},
          {"show": ["S", "b"], "run": ["b"], "set": {"s": "idle", "S": "inferred"}}]
 caps = [("What the file says", f"<b>Step 1.</b> The file only says the shipment of {SHIP_C} is handled by carrier V444_1. It gives the shipment no type at all."),
         ("What OWL concludes", "<b>Step 2.</b> The domain of <b>handled by</b> is Shipment, so the reasoner concludes it is a Shipment. Nothing is refused.")]
-owl_pic = flow("OWL infers the type", HALF + 140, 270, n, e, steps, caps)
-sql = code("SQLite 3.37.2 · real run, closed_world_demo.py", f'''<span class="tok-kw">INSERT INTO</span> handled_by
+owl_pic = flow("OWL infers the type", 820, 270, n, e, steps, caps)
+sql = code("Database · SQLite 3.37.2, real run of closed_world_demo.py", f'''<span class="tok-kw">INSERT INTO</span> handled_by
   <span class="tok-kw">VALUES</span> (<span class="tok-str">'{SHIP_C}'</span>, <span class="tok-str">'V444_1'</span>);
 
 <span class="tok-com">IntegrityError: FOREIGN KEY constraint failed</span>''')
@@ -179,27 +178,24 @@ SLIDES.append(slide("Domain and range infer, they do not reject", "Writing rules
   <h2 class="lu-h2">The same fact: a database rejects it, OWL learns from it</h2>
   <div class="lu-split">
     <div class="lu-stack">
-      <p class="lu-sub"><b>Database:</b> the shipment is not in the shipment table, so the row is refused.</p>
       {sql}
       ''' + defbox([
         ("Domain", "Class every <b>subject</b> of a property is inferred to be in."),
-        ("Range", "Class every <b>object</b> of a property is inferred to be in."),
+        ("Range", "Class every <b>object</b> is inferred to be in."),
+        ("Entailment", "A fact that follows from stated facts and rules, though nobody wrote it."),
       ]) + f'''
     </div>
-    <div class="lu-stack">
-      {owl_pic}
-      ''' + defbox([("Entailment", "A fact that follows from stated facts and rules, though nobody wrote it.")], label="Also defined here") + '''
-    </div>
-  </div>''', '''<p>Five minutes. Both sides are real runs. The database error: <code>demos/session-03-ontology/closed_world_demo.py</code> (output in <code>reference-outputs/closed-world-demo.txt</code>). The OWL side is the lab file <code>sample-shipments.ttl</code>, reasoned with ELK in the lab.</p>
+    {owl_pic}
+  </div>''', '''<p>Five minutes. Left, the database: the shipment is not in the shipment table, so the row is refused. Right, OWL: nothing is refused, the reasoner concludes a type. Both sides are real. The database error: <code>demos/session-03-ontology/closed_world_demo.py</code> (output in <code>reference-outputs/closed-world-demo.txt</code>). The OWL side is the lab file <code>sample-shipments.ttl</code>, reasoned with ELK in the lab.</p>
 <ul><li>For <code>handled by</code>: domain Shipment, range Carrier.</li><li>Say the sentence: <b>OWL infers rather than complains.</b> Session 4 (SHACL) is the tool that complains.</li></ul>'''))
 
 
 # ---------------------------------------------------------------- SubClassOf vs EquivalentTo
 def door(two_way):
-    n = [node("c", "At-risk shipment", 300, 45, 280, 56, kind="ours"),
-         node("x", "Shipment and handled by some Sanctioned carrier", 300, 160, 560, 56, kind="builtin")]
+    n = [node("c", "At-risk shipment", 300, 32, 280, 52, kind="ours"),
+         node("x", "Shipment and handled by some Sanctioned carrier", 300, 118, 560, 52, kind="builtin")]
     e = [edge("a", "c", "x", "both ways" if two_way else "one way only", both=two_way)]
-    return still("EquivalentTo, two way" if two_way else "SubClassOf, one way", 600, 200, n, e)
+    return still("EquivalentTo, two way" if two_way else "SubClassOf, one way", 600, 150, n, e)
 
 
 table = f'''<table class="lu-table">
@@ -229,11 +225,11 @@ SLIDES.append(slide("SubClassOf and EquivalentTo", "Writing rules", 6, f'''  <di
 # ---------------------------------------------------------------- property characteristics
 def pc(kind):
     if kind == "transitive":
-        n = [node("a", "bolt", 70, 45, 110, 50, kind="individual"),
-             node("b", "wheel", 240, 45, 120, 50, kind="individual"),
-             node("c", "truck", 410, 45, 120, 50, kind="individual")]
+        n = [node("a", "bolt", 70, 140, 110, 50, kind="individual"),
+             node("b", "wheel", 235, 40, 120, 50, kind="individual"),
+             node("c", "truck", 400, 140, 120, 50, kind="individual")]
         e = [edge("x", "a", "b", "part of"), edge("y", "b", "c", "part of"),
-             edge("z", "a", "c", "part of", kind="inferred", route="elbow", sides=["bottom", "bottom"])]
+             edge("z", "a", "c", "part of (inferred)", kind="inferred")]
     elif kind == "functional":
         n = [node("o", "order\n1447291369.7", 110, 90, 200, 70, kind="individual"),
              node("d1", "2013-05-26", 380, 35, 160, 50, kind="literal"),
