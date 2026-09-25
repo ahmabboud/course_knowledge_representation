@@ -141,7 +141,11 @@ Items marked `[x]` are done; everything else is still open.
     see it: request access to `LebUniv/`, then run git from the repo path
     under that mount (`.../mnt/LebUniv/Knowledge Representation/course_knowledge_representation`),
     where the helper's relative path resolves (confirmed 2026-09-24). Never
-    read, print or copy the token, and never put it in a remote URL.
+    read, print or copy the token, and never put it in a remote URL. On the
+    iCloud mount `rm` of a lock file is refused: move it aside instead, and
+    move a lock found under `.git/refs/` out to `.git/stale-locks/`, because
+    a renamed file left inside `refs/` reads as a bogus ref and breaks the
+    next fetch ("did not send all necessary objects").
     2026-09-24: both repos pushed and confirmed (KR `9b61704`, template
     `a7e4bed`).
 11. [x] `PROGRESS.md` status table reconciled with the repository
