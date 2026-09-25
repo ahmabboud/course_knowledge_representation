@@ -19,7 +19,7 @@ from run_queries import FUSEKI_DOWN, fuseki, oxigraph, oxigraph_store
 
 HERE = Path(__file__).resolve().parent
 
-# The real answers (2026-09-24 run). IRIs are compared by their last part,
+# The reference answers (2026-09-24 run). IRIs are compared by their last part,
 # so PLANT03 stands for https://ul.edu.lb/kr/id/plant/brunel/PLANT03.
 EXPECTED = {
     "Y1": [("PLANT03", "8541"), ("PLANT12", "300"), ("PLANT16", "173"), ("PLANT08", "102"),
@@ -29,6 +29,7 @@ EXPECTED = {
     "Y3": [("16",)],
 }
 ORDERED = {"Y1"}  # the question asks for largest first
+WORKED = {"Y1"}  # shown in full before the student writes Y2 and Y3
 HINTS = {
     "Y1": "One pattern, ?order ul:fromPlant ?plant, then GROUP BY ?plant and ORDER BY DESC.",
     "Y2": "Start from ?plant ul:servesPort ?port; drop ports that appear in ?order ul:shipsFrom ?port. "
@@ -59,6 +60,7 @@ def main():
     target = sys.argv[1] if len(sys.argv) > 1 else "oxigraph"
     store = oxigraph_store() if target == "oxigraph" else None
     right = 0
+    practice_total = len(EXPECTED) - len(WORKED)
     for key, query in student_queries().items():
         if not query:
             print(f"{key}: not written yet.")
@@ -77,12 +79,15 @@ def main():
         want = [tuple(sorted(row)) for row in EXPECTED[key]]
         ok = got == want if key in ORDERED else sorted(got) == sorted(want)
         if ok:
-            right += 1
-            print(f"{key}: right ({len(got)} rows).")
+            if key in WORKED:
+                print(f"{key}: worked example confirmed ({len(got)} rows).")
+            else:
+                right += 1
+                print(f"{key}: right ({len(got)} rows).")
         else:
             print(f"{key}: not yet. You returned {len(got)} rows, first ones: {got[:3]}")
             print(f"    Hint: {HINTS[key]}")
-    print(f"\n{right} of {len(EXPECTED)} right.")
+    print(f"\n{right} of {practice_total} practice queries right.")
 
 
 if __name__ == "__main__":

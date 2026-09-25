@@ -105,7 +105,7 @@ one.
 | 3 | `load_fuseki.py` | Replaces the contents of Fuseki's `/kr` dataset with `brunel.ttl`. | A Turtle file can be loaded into an RDF database and queried over HTTP. |
 | 4 | `run_queries.py` | Runs seven SPARQL questions and records their results. | SPARQL can follow links, count groups, test absence, traverse a class hierarchy, and construct new facts. |
 | 5 | `neo4j_comparison.py` | Loads a smaller comparison graph into Neo4j and runs related Cypher questions. | RDF/RDFS keeps the order hierarchy as data; this Neo4j example writes that hierarchy into the query. |
-| B | `my_queries.sparql` and `check_my_queries.py` | You write three queries; the checker compares their answers with the reference answers. | A query is correct because it returns the right result, not because it copies a particular solution. |
+| B | `my_queries.sparql` and `check_my_queries.py` | You study one complete query, then write two similar queries with step-by-step hints; the checker compares their answers with the reference answers. | A query is correct because it returns the right result, not because it copies a particular solution. |
 | C | `common/iri.py` | You inspect the naming rule and design one for your project. | A stable identifier needs a kind, source system, and source key. |
 
 ## The files and their roles
@@ -120,8 +120,8 @@ one.
 | `load_fuseki.py` | Uploads `brunel.ttl` to the local Fuseki `/kr` dataset and counts the loaded triples. | Run it in step 3. |
 | `queries.sparql` | The seven course SPARQL examples. | Read and run; use them as models. |
 | `run_queries.py` | Sends the course queries to Fuseki, or runs them with the Docker-free Oxigraph fallback. | Run it in step 4. |
-| `my_queries.sparql` | Three unfinished questions for you to write. | Yes, this is your work area. |
-| `check_my_queries.py` | Checks the answers returned by your queries and gives hints. | Run it; do not change its expected answers. |
+| `my_queries.sparql` | One worked query and two guided questions for you to write. | Yes, this is your work area. |
+| `check_my_queries.py` | Confirms the worked query, then checks your two answers and gives hints. | Run it; do not change its expected answers. |
 | `neo4j_comparison.py` | A deliberately smaller property-graph comparison. | Run it in step 5 if Docker is available. |
 | `reference-outputs/` | Recorded results from a real course run. | Use it to check a surprising result; do not treat it as data to edit. |
 

@@ -1,21 +1,62 @@
-# Session 2 lab, part B: write your own queries.
+# Session 2 lab, part B: learn from one worked query, then write two.
 #
-# Write each query yourself under its marker, replacing the TODO line.
-# Use queries.sparql and the slides as models. Then run:
+# Read Y1 slowly before doing anything. It is a complete example: it counts
+# orders per plant. Y2 and Y3 use the same pattern of (1) start with the
+# facts, (2) add the condition, and (3) choose what the answer should show.
+#
+# Write Y2 and Y3 under their markers, replacing the TODO line. Then run:
 #     python check_my_queries.py            (Oxigraph, inside Python)
 #     python check_my_queries.py fuseki     (against your loaded Fuseki)
-# The checker tells you, per question, whether your answer is right.
+# The checker tells you whether the worked example and your two answers are right.
 # Only open solutions/my_queries_solutions.sparql after you have tried.
 #
 # Every query needs this line at its top:
 #     PREFIX ul: <https://ul.edu.lb/kr/scm#>
 # Useful predicates: ul:fromPlant, ul:shipsFrom, ul:orderedBy, ul:servesPort.
 
-# --- Y1 · GROUP BY: how many orders does each plant ship? Return ?plant and ?orders, largest first. ---
+# --- Y1 · worked example: GROUP BY counts orders per plant ---
+# Question: how many orders does each plant ship? Show ?plant and ?orders,
+# largest first.
+#
+# 1. Start with the fact in every order row: an order has a from-plant.
+#        ?order ul:fromPlant ?plant
+# 2. COUNT counts the orders that share each value of ?plant.
+# 3. GROUP BY makes one result row per plant.
+# 4. DESC puts the largest count first.
+#
+# Expect: PLANT03 is first with 8,541 orders. Run the checker now if you want
+# to see the result before trying Y2.
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT ?plant (COUNT(?order) AS ?orders) WHERE {
+  ?order ul:fromPlant ?plant .
+} GROUP BY ?plant ORDER BY DESC(?orders)
+
+# --- Y2 · your turn: FILTER NOT EXISTS finds a missing relationship ---
+# Question: which ports does at least one plant serve, but no order ever leave
+# from? Return each ?port once.
+#
+# Build it in this order:
+# 1. Start with a permitted link: ?plant ul:servesPort ?port .
+# 2. Add FILTER NOT EXISTS { ... } to reject a port when an order uses it.
+#    Inside the braces, use: ?order ul:shipsFrom ?port .
+# 3. More than one plant may serve the same port. Use SELECT DISTINCT so it
+#    appears once in your answer.
+#
+# Expect: 8 ports. The first two, in any order, include PORT01 and PORT02.
 # TODO: write your query here.
 
-# --- Y2 · FILTER NOT EXISTS: which ports does some plant serve, but no order ever leaves from? Return ?port, each once. ---
-# TODO: write your query here.
-
-# --- Y3 · HAVING: how many customers ordered from more than one plant? Return one number, ?customers. ---
+# --- Y3 · your turn: HAVING filters groups, then an outer query counts them ---
+# Question: how many customers ordered from more than one distinct plant?
+# Return one number named ?customers.
+#
+# Build it in two queries:
+# 1. Inner SELECT: make one group per ?customer from
+#    ?order ul:orderedBy ?customer ; ul:fromPlant ?plant .
+#    Count DISTINCT ?plant and retain only groups whose count is greater than 1
+#    with HAVING.
+# 2. Outer SELECT: count the customer rows from that inner result. Give this
+#    final count the name ?customers.
+#
+# Expect: 16 customers. If you get a much larger number, you probably counted
+# orders rather than distinct plants.
 # TODO: write your query here.

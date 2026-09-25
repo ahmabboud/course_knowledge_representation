@@ -81,20 +81,27 @@ Which 854 orders did it add, and why does Session 1 say they have no rate?
 
 ## Part B · write your own queries (about 20 minutes)
 
-Open `my_queries.sparql`. It asks three questions, each practising one idea
-from the lecture: Y1 grouping, Y2 absence (`FILTER NOT EXISTS`), Y3 a
-condition on a group (`HAVING`). `DISTINCT`, `HAVING` and a `SELECT`
-inside a `SELECT` work in SPARQL exactly as in SQL. For models, Q4 in
-`queries.sparql` uses `FILTER NOT EXISTS` and Q6 puts a `SELECT` inside a
-`SELECT`. Write each query under its marker, then:
+Open `my_queries.sparql` and begin with Y1. It is a complete worked example:
+one fact pattern becomes a `GROUP BY`, a count, and a descending result. Run
+the checker once and confirm that `PLANT03` has 8,541 orders. Then write Y2
+and Y3 yourself. Each has a plain-language plan, the exact predicates to
+start with, and the expected result, so the task is to connect familiar pieces
+rather than guess a solution.
+
+Y2 practises absence (`FILTER NOT EXISTS`); Y3 practises a condition on a
+group (`HAVING`). `DISTINCT`, `HAVING` and a `SELECT` inside a `SELECT` work
+in SPARQL exactly as in SQL. For additional models, Q4 in `queries.sparql`
+uses `FILTER NOT EXISTS` and Q6 puts a `SELECT` inside a `SELECT`. After each
+attempt, run:
 
 ```sh
 python check_my_queries.py            # Oxigraph, no Docker needed
 python check_my_queries.py fuseki     # or against your Fuseki
 ```
 
-The checker says, per question, right or not yet, with a hint. Any query
-that returns the right answer counts. Stuck after trying?
+The checker confirms the worked Y1 example, then reports how many of your two
+practice queries are right and gives a hint when one is not yet correct. Any
+query that returns the right answer counts. Stuck after trying?
 `solutions/my_queries_solutions.sparql`. Test your queries in the Fuseki
 page first if you like: the error messages there are clearer.
 
