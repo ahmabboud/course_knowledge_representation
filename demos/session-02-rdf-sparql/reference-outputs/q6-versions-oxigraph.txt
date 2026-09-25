@@ -1,0 +1,13 @@
+Q6, three ways, pyoxigraph 0.5.11 on brunel.ttl (135,841 triples), 2026-09-24.
+Run in the Linux cloud workspace, so the times are not the Mac's (172 s there
+for version 2); the answers are the same.
+
+Version 1, one join plus a group (queries.sparql Q6)       1370   0.6 s
+Version 2, FILTER EXISTS + FILTER NOT EXISTS (commented)   1370  49 s
+Version 2 without its FILTER EXISTS line                   2224  33 s
+
+2224 = 1370 + the 854 CRF orders (carrier V44_3), whose lane has no rate
+band at all. Of the 1370, all are V444_1 / DTD / PORT04 to PORT09: 1364
+weigh between 2.50 and 70.51 kg, where that lane has no band, and 6 fall in
+0.01 kg slivers between two bands (for example 0.5034 kg, between a band
+ending at 0.50 and one starting at 0.51).

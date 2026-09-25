@@ -4,8 +4,9 @@
     python check_my_queries.py fuseki     # your Fuseki, loaded by load_fuseki.py
 
 Your query is right when it returns the same answer as the real data,
-whatever way you wrote it. Only values are compared: column names and,
-where the question does not ask for an order, row order do not matter.
+whatever way you wrote it. Only values are compared: column names, column
+order and, where the question does not ask for an order, row order do not
+matter.
 Run from demos/session-02-rdf-sparql/, after convert_to_rdf.py.
 """
 
@@ -65,8 +66,10 @@ def main():
         except Exception as err:  # a syntax error is the most common first result
             print(f"{key}: the query did not run: {err}")
             continue
-        got = [tuple(short(v) for v in row) for row in rows]
-        want = EXPECTED[key]
+        # Each row is compared as a set of values, so ?orders ?plant is as
+        # right as ?plant ?orders.
+        got = [tuple(sorted(short(v) for v in row)) for row in rows]
+        want = [tuple(sorted(row)) for row in EXPECTED[key]]
         ok = got == want if key in ORDERED else sorted(got) == sorted(want)
         if ok:
             right += 1

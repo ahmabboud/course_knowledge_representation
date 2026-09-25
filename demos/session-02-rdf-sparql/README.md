@@ -32,7 +32,12 @@ Every number in `lectures/kr-session-02.html` comes from the files in
    scheme in `common/iri.py`. **Expect:** `brunel.ttl` (135,841 triples),
    `brunel.trig` (5 named graphs, one per table plus the schema), `sample/`
    (one order in Turtle, N-Triples and JSON-LD). **Look at:**
-   `sample/order.ttl`, and find the row you met in Session 1.
+   `sample/order.ttl`, and find the row you met in Session 1. Then
+   `python named_graphs.py`. **Expect:** five named graphs with their triple
+   counts (OrderList 119,844, FreightRates 12,320, ProductsPerPlant 3,576,
+   PlantPorts 52, schema 49), the table on the named graphs slide.
+   **Notice:** the rate bands, which are blank nodes, all live in the
+   FreightRates graph, so each triple still says which table it came from.
 3. `python load_fuseki.py`. **Expect:** `135841 triples loaded`. Then open
    <http://localhost:3030>, dataset `kr`, tab **query**, paste Q2 from
    `queries.sparql`, press the run arrow.
@@ -47,21 +52,28 @@ Every number in `lectures/kr-session-02.html` comes from the files in
 
 | Question | Expected answer |
 |---|---|
+| Q1 orders carried by V44_3 | 5 rows (the query stops at 5), every one service level CRF; which 5 depends on the store |
 | Q2 orders and late orders per carrier | V444_0: 6,264 and 183 · V444_1: 2,097 and 9 · V44_3: 854 and 0 |
 | Q3 carriers with a freight rate | V44_3 has 0 rate bands |
 | Q4 any order leaving through a port its plant does not serve? | false |
 | Q5 orders typed Order, and with subclasses | 9,023, and 9,215 |
-| Q6 orders whose weight falls in no rate band | 1,370 |
+| Q6 orders on a priced lane whose weight falls in no rate band | 1,370 (of 8,361), as in Session 1 |
+| Q7 CONSTRUCT carrier serves plant | 12 new triples |
 
 Q6 took 172 seconds written with `FILTER NOT EXISTS` and under 3 seconds
 rewritten as one join plus a group (both on Oxigraph, same answer). Read
-both versions in `queries.sparql` and say why.
+both versions in `queries.sparql` and say why. Then think about the
+warning under version 2: without its `FILTER EXISTS` line it answers 2,224.
+Which 854 orders did it add, and why does Session 1 say they have no rate?
 
 ## Part B · write your own queries (about 20 minutes)
 
 Open `my_queries.sparql`. It asks three questions, each practising one idea
 from the lecture: Y1 grouping, Y2 absence (`FILTER NOT EXISTS`), Y3 a
-condition on a group (`HAVING`). Write each query under its marker, then:
+condition on a group (`HAVING`). `DISTINCT`, `HAVING` and a `SELECT`
+inside a `SELECT` work in SPARQL exactly as in SQL. For models, Q4 in
+`queries.sparql` uses `FILTER NOT EXISTS` and Q6 puts a `SELECT` inside a
+`SELECT`. Write each query under its marker, then:
 
 ```sh
 python check_my_queries.py            # Oxigraph, no Docker needed

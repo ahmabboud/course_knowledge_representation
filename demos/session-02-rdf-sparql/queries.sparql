@@ -38,9 +38,30 @@ SELECT (COUNT(?order) AS ?plainType) (COUNT(?any) AS ?withSubclasses) WHERE {
 }
 
 # --- Q6 · hard: orders whose weight falls in no rate band of their lane ---
-# Join each order to every band of its lane once, then ask per order whether
-# any band covered it. (Written with FILTER NOT EXISTS instead, the same answer
-# took 172 seconds on Oxigraph: see reference-outputs.)
+# Only orders whose lane has rate bands count: 8,361 of them. The other 854
+# are the CRF orders (all carrier V44_3), which Session 1 found are not priced
+# in FreightRates at all. Session 1's answer for this question: 1,370.
+#
+# Version 1, below: join each order to every band of its lane once, then ask
+# per order whether any band covered it. Under 3 seconds.
+#
+# Version 2, the same question with FILTER NOT EXISTS (commented out so that
+# run_queries.py does not wait for it). Same answer, 1,370, but 172 seconds on
+# Oxigraph: the band search runs again for every single order.
+#
+#   SELECT (COUNT(?order) AS ?ordersInAGap) WHERE {
+#     ?order ul:carriedBy ?c ; ul:shipsFrom ?from ; ul:shipsTo ?to ;
+#            ul:serviceLevel ?svc ; ul:weight ?w .
+#     FILTER EXISTS { ?b ul:bandCarrier ?c ; ul:bandFrom ?from ;
+#                     ul:bandTo ?to ; ul:bandService ?svc }
+#     FILTER NOT EXISTS { ?band ul:bandCarrier ?c ; ul:bandFrom ?from ;
+#                         ul:bandTo ?to ; ul:bandService ?svc ;
+#                         ul:minWeight ?lo ; ul:maxWeight ?hi .
+#                         FILTER (?w >= ?lo && ?w <= ?hi) }
+#   }
+#
+# Drop version 2's FILTER EXISTS line and it answers 2,224: it now also
+# counts the 854 unpriced CRF orders, a different question.
 PREFIX ul: <https://ul.edu.lb/kr/scm#>
 SELECT (COUNT(?order) AS ?ordersInAGap) WHERE {
   { SELECT ?order (MAX(IF(?w >= ?lo && ?w <= ?hi, 1, 0)) AS ?covered) WHERE {
