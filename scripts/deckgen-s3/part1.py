@@ -103,12 +103,12 @@ SLIDES.append(slide("One word, three numbers", "What an ontology is", 4, '''  <d
 
 # ---------------------------------------------------------------- An ontology in one picture
 n = [
-    node("ship", "Shipment", 300, 30, 240, 52, kind="reused"),
-    node("atrisk", "At-risk shipment", 300, 110, 260, 52, kind="ours"),
-    node("carrier", "Carrier", 1130, 30, 240, 52, kind="reused"),
-    node("sanct", "Sanctioned carrier", 1130, 110, 280, 52, kind="ours"),
-    node("s1", "shipment of order 1447291369.7", 470, 200, 400, 52, kind="individual"),
-    node("c1", "carrier V444_1", 960, 200, 250, 52, kind="individual"),
+    node("ship", "Shipment", 300, 27, 240, 50, kind="reused"),
+    node("atrisk", "At-risk shipment", 300, 102, 260, 50, kind="ours"),
+    node("carrier", "Carrier", 1130, 27, 240, 50, kind="reused"),
+    node("sanct", "Sanctioned carrier", 1130, 102, 280, 50, kind="ours"),
+    node("s1", "shipment of order 1447291369.7", 470, 187, 400, 50, kind="individual"),
+    node("c1", "carrier V444_1", 960, 187, 250, 50, kind="individual"),
 ]
 e = [
     edge("a", "atrisk", "ship", "subclass of"),
@@ -117,7 +117,7 @@ e = [
     edge("d", "c1", "sanct", "is a", route="elbow", sides=["top", "left"]),
     edge("f", "s1", "c1", "handled by"),
 ]
-pic = flow("An ontology in one picture", FULL, 230, n, e,
+pic = flow("An ontology in one picture", FULL, 214, n, e,
            [{"show": [x["id"] for x in n] + [x["id"] for x in e]}], legend=LEGEND)
 SLIDES.append(slide("An ontology in one picture", "What an ontology is", 5, f'''  <div class="lu-eyebrow">The idea, drawn</div>
   <h2 class="lu-h2">An ontology names the kinds of things, and how things connect</h2>
