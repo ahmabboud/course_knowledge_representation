@@ -44,5 +44,10 @@ def confirm():
 
 
 if __name__ == "__main__":
-    load()
-    confirm()
+    try:
+        load()
+        confirm()
+    except requests.ConnectionError:
+        raise SystemExit("Fuseki is not answering on http://localhost:3030. Start it from demos/ "
+                         "with `docker compose up -d`, or skip this step and use Oxigraph: "
+                         "python run_queries.py oxigraph")

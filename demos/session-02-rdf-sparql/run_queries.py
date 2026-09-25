@@ -17,6 +17,9 @@ import requests
 HERE = Path(__file__).resolve().parent
 FUSEKI_QUERY = "http://localhost:3030/kr/sparql"
 QUERIES_PATH = HERE / "queries.sparql"
+FUSEKI_DOWN = ("Fuseki is not answering on http://localhost:3030. Start it from demos/ with "
+               "`docker compose up -d` (then python load_fuseki.py), or use Oxigraph instead, "
+               "no Docker needed: python run_queries.py oxigraph")
 
 
 def load_queries():
@@ -51,7 +54,7 @@ def oxigraph_store():
 
 
 def oxigraph(store, query):
-    import pyoxigraph
+    """Run one query on an Oxigraph store; rows as tuples, like fuseki()."""
     res = store.query(query)
     if isinstance(res, bool) or type(res).__name__ == "QueryBoolean":
         return [bool(res)]
@@ -67,7 +70,10 @@ def main():
     lines = []
     for label, query in load_queries():
         start = time.perf_counter()
-        rows = oxigraph(store, query) if store is not None else fuseki(query)
+        try:
+            rows = oxigraph(store, query) if store is not None else fuseki(query)
+        except requests.ConnectionError:
+            sys.exit(FUSEKI_DOWN)
         ms = (time.perf_counter() - start) * 1000
         lines.append(f"[{label}] {len(rows)} rows in {ms:.1f} ms")
         for row in rows[:6]:

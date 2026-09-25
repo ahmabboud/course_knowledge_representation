@@ -136,7 +136,10 @@ def write(ds: Dataset) -> None:
     for t in union.triples((first, None, None)):
         one.add(t)
     one.serialize(sample / "order.ttl", format="turtle")
-    one.serialize(sample / "order.nt", format="nt", encoding="utf-8")
+    # N-Triples has no fixed order; sort the lines so every run writes the
+    # same file and git does not report a change that is not one.
+    nt = one.serialize(format="nt")
+    (sample / "order.nt").write_text("".join(sorted(nt.splitlines(keepends=True))), encoding="utf-8")
     one.serialize(sample / "order.jsonld", format="json-ld", context={"ul": VOCAB}, indent=2)
     named = [g for g in ds.graphs() if g.identifier != ds.default_graph.identifier]
     print(f"brunel.ttl: {len(union)} triples · brunel.trig: {len(named)} named graphs "

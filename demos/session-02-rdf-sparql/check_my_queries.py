@@ -13,7 +13,9 @@ Run from demos/session-02-rdf-sparql/, after convert_to_rdf.py.
 import sys
 from pathlib import Path
 
-from run_queries import fuseki, oxigraph, oxigraph_store
+import requests
+
+from run_queries import FUSEKI_DOWN, fuseki, oxigraph, oxigraph_store
 
 HERE = Path(__file__).resolve().parent
 
@@ -63,6 +65,9 @@ def main():
             continue
         try:
             rows = oxigraph(store, query) if store is not None else fuseki(query)
+        except requests.ConnectionError:
+            # Not the student's query: the server is not there.
+            sys.exit(FUSEKI_DOWN.replace("run_queries.py oxigraph", "check_my_queries.py"))
         except Exception as err:  # a syntax error is the most common first result
             print(f"{key}: the query did not run: {err}")
             continue
