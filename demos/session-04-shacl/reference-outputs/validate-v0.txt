@@ -1,0 +1,16 @@
+python validate.py --shapes brunel-shapes-v0.ttl   (pySHACL 0.40.1, rdflib 7.6.0, 2026-09-25)
+data: 135,841 triples from brunel.ttl
+shapes: brunel-shapes-v0.ttl
+  focus nodes  9,215  An order leaves through a port its plant is linked to
+  focus nodes  9,215  An order's plant makes the product
+  focus nodes  9,215  An order's weight falls in a rate band of its lane
+  focus nodes  1,540  Every freight rate band
+  focus nodes  9,215  Every order
+
+validated in 90.2 s. conforms (SHACL): False. 3,435 Violation, 0 Warning, 0 Info
+  Violation  2,224  An order's weight falls in a rate band of its lane · SPARQL   e.g. order/brunel/1447137127.7, order/brunel/1447137128.7, order/brunel/1447137142.7
+  Violation  1,209  Every freight rate band · Class on bandCarrier   e.g. band V444_4 PORT02 PORT09 DTD, band V444_8 PORT03 PORT09 DTD, band V444_4 PORT06 PORT09 DTP
+  Violation      2  Every order · MinExclusive on weight   e.g. order/brunel/1447215484.7, order/brunel/1447336276.7
+
+GATE: FAIL, 3,435 violations. Exit code 1.
+exit code 1

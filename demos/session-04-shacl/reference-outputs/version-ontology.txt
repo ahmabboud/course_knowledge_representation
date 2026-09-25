@@ -1,0 +1,10 @@
+python version_ontology.py   (rdflib 7.6.0, 2026-09-25)
+scro-extension-reference.ttl: 176 triples, version IRI: None
+workspace/scro-extension-1.0.0.ttl: 178 triples, version IRI: https://ul.edu.lb/kr/scm/1.0.0, version info: 1.0.0
+
+The new header:
+<https://ul.edu.lb/kr/scm#> a owl:Ontology ;
+    owl:versionIRI <https://ul.edu.lb/kr/scm/1.0.0> ;
+    owl:versionInfo "1.0.0" ;
+    rdfs:label "UL Knowledge Representation course: supply chain reference ontology" ;
+    owl:imports <https://spec.industrialontologies.org/ontology/supplychain/SupplyChain/> .

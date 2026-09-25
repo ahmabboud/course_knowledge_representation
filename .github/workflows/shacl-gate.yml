@@ -1,0 +1,39 @@
+# SHACL gate, Session 4. On every push or pull request that touches the
+# Session 4 lab, GitHub runs pySHACL on the committed sample of real Brunel
+# orders against the triaged shapes. Any Violation fails the run (red), and a
+# pull request with a red run should not be merged. Warnings are printed but
+# pass. The branch demo/broken-carrier-code changes one carrier code in the
+# sample on purpose, so its run is red: open it from the Actions tab.
+#
+# Team projects: copy this file into your own repository's
+# .github/workflows/, and change the two paths below to your data and shapes.
+
+name: SHACL gate
+
+on:
+  push:
+    paths:
+      - "demos/session-04-shacl/**"
+      - ".github/workflows/shacl-gate.yml"
+  pull_request:
+    paths:
+      - "demos/session-04-shacl/**"
+      - ".github/workflows/shacl-gate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pySHACL
+        run: pip install pyshacl==0.40.1 rdflib==7.6.0
+      - name: Validate the sample orders against the Brunel shapes
+        working-directory: demos/session-04-shacl
+        run: python validate.py --data ci/sample-orders.ttl --shapes brunel-shapes.ttl

@@ -1,0 +1,50 @@
+## Session 4 lab, part B: write your own shapes.
+##
+## Three rules from the Brunel data, each practising one idea from the
+## lecture. Complete each shape under its marker (replace the TODO line).
+## Then run, from demos/session-04-shacl/:
+##     python check_my_shapes.py
+## The checker validates part-b/test-orders.ttl (real orders with four
+## planted faults, listed at the top of that file) against each of your
+## shapes and compares WHICH ORDERS your shape flags with the orders it
+## should flag. Any shape that flags exactly the right orders passes.
+## Only open solutions/my_shapes_solutions.ttl after you have tried.
+##
+## Y1 · cardinality     Every order has exactly one customer (ul:orderedBy).
+## Y2 · value range     Every order date falls in 2013 (ul:orderDate, an xsd:date).
+## Y3 · SPARQL          An order with service level "CRF" is carried by
+##                      carrier V44_3 (Session 1: all 854 CRF orders are).
+##
+## Words you need are all on the slides: sh:minCount, sh:maxCount,
+## sh:minInclusive, sh:maxInclusive, sh:sparql, sh:select, $this.
+
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix ul:   <https://ul.edu.lb/kr/scm#> .
+@prefix my:   <https://ul.edu.lb/kr/shapes/my#> .
+
+## Prefixes for your SPARQL (Y3): point sh:prefixes at this node.
+<https://ul.edu.lb/kr/shapes/my> a owl:Ontology ;
+    sh:declare [ sh:prefix "ul" ; sh:namespace "https://ul.edu.lb/kr/scm#"^^xsd:anyURI ] .
+
+# ---- Y1 ------------------------------------------------------------------
+my:Y1Shape a sh:NodeShape ;
+    sh:targetClass ul:Order ;
+    # TODO: one sh:property [ ... ] on ul:orderedBy that says "exactly one"
+    .
+
+# ---- Y2 ------------------------------------------------------------------
+my:Y2Shape a sh:NodeShape ;
+    sh:targetClass ul:Order ;
+    # TODO: one sh:property [ ... ] on ul:orderDate: from 2013-01-01 to 2013-12-31
+    .
+
+# ---- Y3 ------------------------------------------------------------------
+my:Y3Shape a sh:NodeShape ;
+    sh:targetClass ul:Order ;
+    # TODO: an sh:sparql [ ... ] whose query returns $this for a CRF order
+    #       carried by any carrier other than
+    #       <https://ul.edu.lb/kr/id/carrier/brunel/V44_3>
+    .

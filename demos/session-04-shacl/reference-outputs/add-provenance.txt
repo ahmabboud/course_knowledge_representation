@@ -1,0 +1,12 @@
+python add_provenance.py   (rdflib 7.6.0, 2026-09-25; times are the brunel.trig file time on this machine)
+provenance.ttl: 43 triples about 4 named graphs, 1 run, 1 program
+  graph OrderList         119,844 triples  derived from OrderList.csv
+  graph PlantPorts             52 triples  derived from PlantPorts.csv
+  graph ProductsPerPlant    3,576 triples  derived from ProductsPerPlant.csv
+  graph FreightRates       12,320 triples  derived from FreightRates.csv
+
+Where does 'order 1447296446.7 carried by V44_3' come from?
+  named graph https://ul.edu.lb/kr/id/graph/brunel/OrderList
+  file        OrderList.csv
+  run         https://ul.edu.lb/kr/id/run/brunel/convert-20260925T013112Z
+  finished    2026-09-25T01:31:12+00:00

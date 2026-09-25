@@ -1,0 +1,14 @@
+python shape_timings.py, each node shape alone on the Session 2 graph (135,841 triples),
+pySHACL 0.40.1, rdflib 7.6.0, Cowork Linux workspace, 2026-09-25:
+
+OrderShape               core      2.6 s   2 results       (7 property checks on 9,215 orders)
+RateBandShape            core      1.2 s   1,209 results   (2 property checks on 1,540 bands)
+LinkedPortShape          SPARQL   15.8 s   0 results
+PlantMakesProductShape   SPARQL   16.1 s   0 results
+WeightInBandShape        SPARQL   73.1 s   1,370 results   (triaged: priced lanes only, Warning)
+
+First draft of the same shape (brunel-shapes-v0.ttl, no priced-lane filter):
+WeightInBandShape        SPARQL   58.8 s   2,224 results
+
+pySHACL runs a SPARQL constraint once per focus node (9,215 small queries).
+Session 2's Q6 asks the weight in band question as one query: under 3 s on Oxigraph.

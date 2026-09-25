@@ -1,0 +1,9 @@
+python validate.py --shapes shapes_template.ttl   (the old Session 4 template, pySHACL 0.40.1, 2026-09-25)
+data: 135,841 triples from brunel.ttl
+shapes: shapes_template.ttl
+  focus nodes      0  PurchaseOrderShape   <- targets nothing: this shape checks nothing
+
+validated in 0.6 s. conforms (SHACL): True. 0 Violation, 0 Warning, 0 Info
+
+GATE: PASS, no violations.
+exit code 0

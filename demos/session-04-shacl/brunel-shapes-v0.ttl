@@ -1,0 +1,134 @@
+## brunel-shapes-v0.ttl
+##
+## FIRST DRAFT, written straight from the Session 1 constraint inventory,
+## before anyone looked at a validation report. Every rule is a Violation.
+## Run it (python validate.py --shapes brunel-shapes-v0.ttl) and read the
+## report: it is a work queue, and some of its lines are the shape's fault,
+## not the data's. brunel-shapes.ttl is the version after triage.
+##
+## Targets the Session 2 graph (demos/session-02-rdf-sparql/brunel.ttl):
+## classes and properties from demos/common/iri.py and convert_to_rdf.py.
+## SHACL 1.0 (W3C Recommendation, 2017).
+
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix ul:   <https://ul.edu.lb/kr/scm#> .
+@prefix uls:  <https://ul.edu.lb/kr/shapes#> .
+
+## The prefixes the SPARQL constraints below use, declared the standard way
+## (sh:declare on an ontology node), so any SHACL engine accepts them.
+<https://ul.edu.lb/kr/shapes> a owl:Ontology ;
+    rdfs:label "Brunel shapes, first draft (before triage)" ;
+    sh:declare [ sh:prefix "ul" ; sh:namespace "https://ul.edu.lb/kr/scm#"^^xsd:anyURI ] .
+
+########################################################################
+## Core constraints: one shape, every order (ul:Order, and ul:LateOrder
+## through rdfs:subClassOf in the data graph).
+########################################################################
+
+uls:OrderShape a sh:NodeShape ;
+    rdfs:label "Every order" ;
+    sh:targetClass ul:Order ;
+    sh:property [
+        sh:path ul:orderId ; sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:string ; sh:pattern "^[0-9]+\\.[0-9]$" ;
+        sh:name "order id" ; sh:message "An order has exactly one id, digits, a dot, one digit (Brunel writes 1447296446.7)."
+    ] ;
+    sh:property [
+        sh:path ul:orderDate ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ;
+        sh:name "order date"
+    ] ;
+    sh:property [
+        sh:path ul:carriedBy ; sh:minCount 1 ; sh:maxCount 1 ; sh:class ul:Carrier ;
+        sh:name "carrier" ; sh:message "An order has exactly one carrier, and it is a Carrier."
+    ] ;
+    sh:property [
+        sh:path ul:fromPlant ; sh:minCount 1 ; sh:maxCount 1 ; sh:class ul:Plant ;
+        sh:name "plant"
+    ] ;
+    sh:property [
+        sh:path ul:serviceLevel ; sh:minCount 1 ; sh:maxCount 1 ;
+        sh:in ( "CRF" "DTD" "DTP" ) ;
+        sh:name "service level" ; sh:message "Service level is one of CRF, DTD, DTP."
+    ] ;
+    sh:property [
+        sh:path ul:weight ; sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:decimal ; sh:minExclusive 0 ;
+        sh:name "weight" ; sh:message "An order has one weight, above 0 kg."
+    ] ;
+    sh:property [
+        sh:path ul:unitQuantity ; sh:datatype xsd:integer ; sh:minInclusive 1 ;
+        sh:name "unit quantity"
+    ] .
+
+## A rate band's lower bound is not above its upper bound: two values of the
+## same node compared, still core SHACL (a property pair constraint).
+uls:RateBandShape a sh:NodeShape ;
+    rdfs:label "Every freight rate band" ;
+    sh:targetClass ul:RateBand ;
+    sh:property [
+        sh:path ul:minWeight ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:decimal ;
+        sh:lessThanOrEquals ul:maxWeight ;
+        sh:name "lower weight bound"
+    ] ;
+    sh:property [
+        sh:path ul:bandCarrier ; sh:minCount 1 ; sh:maxCount 1 ; sh:class ul:Carrier ;
+        sh:name "band carrier" ; sh:message "A rate band belongs to one carrier, and it is a Carrier."
+    ] .
+
+########################################################################
+## SPARQL constraints: rules that compare one order with other nodes of
+## the graph. Core SHACL cannot say them. The query returns one row per
+## problem; $this is the order being checked.
+########################################################################
+
+uls:LinkedPortShape a sh:NodeShape ;
+    rdfs:label "An order leaves through a port its plant is linked to" ;
+    sh:targetClass ul:Order ;
+    sh:sparql [
+        sh:message "Order leaves through {?port}, which its plant {?plant} does not ship through." ;
+        sh:prefixes <https://ul.edu.lb/kr/shapes> ;
+        sh:select """
+            SELECT $this ?plant ?port WHERE {
+                $this ul:fromPlant ?plant ; ul:shipsFrom ?port .
+                FILTER NOT EXISTS { ?plant ul:servesPort ?port }
+            }"""
+    ] .
+
+uls:PlantMakesProductShape a sh:NodeShape ;
+    rdfs:label "An order's plant makes the product" ;
+    sh:targetClass ul:Order ;
+    sh:sparql [
+        sh:message "Plant {?plant} does not make product {?product}." ;
+        sh:prefixes <https://ul.edu.lb/kr/shapes> ;
+        sh:select """
+            SELECT $this ?plant ?product WHERE {
+                $this ul:fromPlant ?plant ; ul:ofProduct ?product .
+                FILTER NOT EXISTS { ?plant ul:makes ?product }
+            }"""
+    ] .
+
+## The weight falls in a rate band of the order's lane (same carrier, ports
+## and service level). pySHACL note: it refuses any query containing the
+## text "Service" followed by a space (it takes it for a federated SERVICE
+## call), so ul:bandService is written in brackets, a valid one step path.
+uls:WeightInBandShape a sh:NodeShape ;
+    rdfs:label "An order's weight falls in a rate band of its lane" ;
+    sh:targetClass ul:Order ;
+    sh:sparql [
+        sh:message "Weight {?w} kg falls in no rate band of this order's lane." ;
+        sh:prefixes <https://ul.edu.lb/kr/shapes> ;
+        sh:select """
+            SELECT $this ?w WHERE {
+                $this ul:carriedBy ?c ; ul:shipsFrom ?from ; ul:shipsTo ?to ;
+                      ul:serviceLevel ?svc ; ul:weight ?w .
+                FILTER NOT EXISTS {
+                    ?band ul:bandCarrier ?c ; ul:bandFrom ?from ; ul:bandTo ?to ;
+                          (ul:bandService) ?svc ;
+                          ul:minWeight ?lo ; ul:maxWeight ?hi .
+                    FILTER (?w >= ?lo && ?w <= ?hi)
+                }
+            }"""
+    ] .

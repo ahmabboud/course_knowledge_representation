@@ -1,0 +1,151 @@
+## brunel-shapes.ttl
+##
+## The Brunel shapes AFTER TRIAGE. Same rules as brunel-shapes-v0.ttl; each
+## change is marked TRIAGE with the decision and the evidence behind it:
+## was the shape wrong, or the data?
+##
+##   first draft  3,435 violations (2,224 weight in band, 1,209 band carrier, 2 weight)
+##   after triage     2 violations, 2,579 warnings (1,370 weight in band, 1,209 band carrier)
+##
+## Targets the Session 2 graph (demos/session-02-rdf-sparql/brunel.ttl):
+## classes and properties from demos/common/iri.py and convert_to_rdf.py.
+## SHACL 1.0 (W3C Recommendation, 2017).
+
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix ul:   <https://ul.edu.lb/kr/scm#> .
+@prefix uls:  <https://ul.edu.lb/kr/shapes#> .
+
+## The prefixes the SPARQL constraints below use, declared the standard way
+## (sh:declare on an ontology node), so any SHACL engine accepts them.
+<https://ul.edu.lb/kr/shapes> a owl:Ontology ;
+    rdfs:label "Brunel shapes, after triage" ;
+    sh:declare [ sh:prefix "ul" ; sh:namespace "https://ul.edu.lb/kr/scm#"^^xsd:anyURI ] .
+
+########################################################################
+## Core constraints: one shape, every order (ul:Order, and ul:LateOrder
+## through rdfs:subClassOf in the data graph).
+########################################################################
+
+uls:OrderShape a sh:NodeShape ;
+    rdfs:label "Every order" ;
+    sh:targetClass ul:Order ;
+    sh:property [
+        sh:path ul:orderId ; sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:string ; sh:pattern "^[0-9]+\\.[0-9]$" ;
+        sh:name "order id" ; sh:message "An order has exactly one id, digits, a dot, one digit (Brunel writes 1447296446.7)."
+    ] ;
+    sh:property [
+        sh:path ul:orderDate ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ;
+        sh:name "order date"
+    ] ;
+    sh:property [
+        sh:path ul:carriedBy ; sh:minCount 1 ; sh:maxCount 1 ; sh:class ul:Carrier ;
+        sh:name "carrier" ; sh:message "An order has exactly one carrier, and it is a Carrier."
+    ] ;
+    sh:property [
+        sh:path ul:fromPlant ; sh:minCount 1 ; sh:maxCount 1 ; sh:class ul:Plant ;
+        sh:name "plant"
+    ] ;
+    sh:property [
+        sh:path ul:serviceLevel ; sh:minCount 1 ; sh:maxCount 1 ;
+        sh:in ( "CRF" "DTD" "DTP" ) ;
+        sh:name "service level" ; sh:message "Service level is one of CRF, DTD, DTP."
+    ] ;
+    sh:property [
+        sh:path ul:weight ; sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:decimal ; sh:minExclusive 0 ;
+        sh:name "weight" ; sh:message "An order has one weight, above 0 kg." ;
+        rdfs:comment "TRIAGE: data wrong. Orders 1447336276.7 (361 units) and 1447215484.7 (348 units) weigh 0 kg. The rule is right; the two rows are reported to the data owner and stay Violations until the source is fixed."
+    ] ;
+    sh:property [
+        sh:path ul:unitQuantity ; sh:datatype xsd:integer ; sh:minInclusive 1 ;
+        sh:name "unit quantity"
+    ] .
+
+## A rate band's lower bound is not above its upper bound: two values of the
+## same node compared, still core SHACL (a property pair constraint).
+uls:RateBandShape a sh:NodeShape ;
+    rdfs:label "Every freight rate band" ;
+    sh:targetClass ul:RateBand ;
+    sh:property [
+        sh:path ul:minWeight ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:decimal ;
+        sh:lessThanOrEquals ul:maxWeight ;
+        sh:name "lower weight bound"
+    ] ;
+    sh:property [
+        sh:path ul:bandCarrier ; sh:minCount 1 ; sh:maxCount 1 ; sh:class ul:Carrier ;
+        sh:severity sh:Warning ;
+        sh:name "band carrier" ; sh:message "A rate band belongs to one carrier, and it is a Carrier." ;
+        rdfs:comment "TRIAGE: data incomplete, the conversion's fault. The Session 2 converter types a carrier ul:Carrier only when it carries an order, so the 7 carriers that appear only in FreightRates (V444_2, V444_4 to V444_9) are untyped, 1,209 bands. Fix it in the mapping (Session 5); a Warning until then."
+    ] .
+
+########################################################################
+## SPARQL constraints: rules that compare one order with other nodes of
+## the graph. Core SHACL cannot say them. The query returns one row per
+## problem; $this is the order being checked.
+########################################################################
+
+uls:LinkedPortShape a sh:NodeShape ;
+    rdfs:label "An order leaves through a port its plant is linked to" ;
+    sh:targetClass ul:Order ;
+    sh:sparql [
+        sh:message "Order leaves through {?port}, which its plant {?plant} does not ship through." ;
+        sh:prefixes <https://ul.edu.lb/kr/shapes> ;
+        sh:select """
+            SELECT $this ?plant ?port WHERE {
+                $this ul:fromPlant ?plant ; ul:shipsFrom ?port .
+                FILTER NOT EXISTS { ?plant ul:servesPort ?port }
+            }"""
+    ] .
+
+uls:PlantMakesProductShape a sh:NodeShape ;
+    rdfs:label "An order's plant makes the product" ;
+    sh:targetClass ul:Order ;
+    sh:sparql [
+        sh:message "Plant {?plant} does not make product {?product}." ;
+        sh:prefixes <https://ul.edu.lb/kr/shapes> ;
+        sh:select """
+            SELECT $this ?plant ?product WHERE {
+                $this ul:fromPlant ?plant ; ul:ofProduct ?product .
+                FILTER NOT EXISTS { ?plant ul:makes ?product }
+            }"""
+    ] .
+
+## The weight falls in a rate band of the order's lane (same carrier, ports
+## and service level).
+## TRIAGE, two decisions, both from Session 1's evidence:
+##   854 results: shape wrong. They are the CRF orders, all carrier V44_3,
+##       and CRF is not priced in FreightRates at all. The rule only means
+##       something on a priced lane, so the query now checks priced lanes only
+##       (the FILTER EXISTS line).
+##   1,370 results: data wrong, but in the rate table, not in the orders.
+##       All are on V444_1 · PORT04 · DTD, 1,364 in the band table's hole
+##       between 2.5 and 70.51 kg. The orders are fine; the table has a gap.
+##       Kept, as a Warning, until the rate table is completed. pySHACL note: it refuses any query containing the
+## text "Service" followed by a space (it takes it for a federated SERVICE
+## call), so ul:bandService is written in brackets, a valid one step path.
+uls:WeightInBandShape a sh:NodeShape ;
+    rdfs:label "An order's weight falls in a rate band of its lane" ;
+    sh:targetClass ul:Order ;
+    sh:severity sh:Warning ;
+    sh:sparql [
+        sh:severity sh:Warning ;
+        sh:message "Weight {?w} kg falls in no rate band of this order's lane." ;
+        sh:prefixes <https://ul.edu.lb/kr/shapes> ;
+        sh:select """
+            SELECT $this ?w WHERE {
+                $this ul:carriedBy ?c ; ul:shipsFrom ?from ; ul:shipsTo ?to ;
+                      ul:serviceLevel ?svc ; ul:weight ?w .
+                FILTER EXISTS { ?b ul:bandCarrier ?c ; ul:bandFrom ?from ;
+                                   ul:bandTo ?to ; (ul:bandService) ?svc }
+                FILTER NOT EXISTS {
+                    ?band ul:bandCarrier ?c ; ul:bandFrom ?from ; ul:bandTo ?to ;
+                          (ul:bandService) ?svc ;
+                          ul:minWeight ?lo ; ul:maxWeight ?hi .
+                    FILTER (?w >= ?lo && ?w <= ?hi)
+                }
+            }"""
+    ] .

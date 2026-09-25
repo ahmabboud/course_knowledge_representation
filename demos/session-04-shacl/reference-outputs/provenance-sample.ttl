@@ -1,0 +1,59 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://ul.edu.lb/kr/id/graph/brunel/FreightRates> a prov:Entity ;
+    void:triples 12320 ;
+    prov:generatedAtTime "2026-09-25T01:31:12+00:00"^^xsd:dateTime ;
+    prov:wasDerivedFrom <https://ul.edu.lb/kr/id/file/brunel/FreightRates.csv> ;
+    prov:wasGeneratedBy <https://ul.edu.lb/kr/id/run/brunel/convert-20260925T013112Z> .
+
+<https://ul.edu.lb/kr/id/graph/brunel/OrderList> a prov:Entity ;
+    void:triples 119844 ;
+    prov:generatedAtTime "2026-09-25T01:31:12+00:00"^^xsd:dateTime ;
+    prov:wasDerivedFrom <https://ul.edu.lb/kr/id/file/brunel/OrderList.csv> ;
+    prov:wasGeneratedBy <https://ul.edu.lb/kr/id/run/brunel/convert-20260925T013112Z> .
+
+<https://ul.edu.lb/kr/id/graph/brunel/PlantPorts> a prov:Entity ;
+    void:triples 52 ;
+    prov:generatedAtTime "2026-09-25T01:31:12+00:00"^^xsd:dateTime ;
+    prov:wasDerivedFrom <https://ul.edu.lb/kr/id/file/brunel/PlantPorts.csv> ;
+    prov:wasGeneratedBy <https://ul.edu.lb/kr/id/run/brunel/convert-20260925T013112Z> .
+
+<https://ul.edu.lb/kr/id/graph/brunel/ProductsPerPlant> a prov:Entity ;
+    void:triples 3576 ;
+    prov:generatedAtTime "2026-09-25T01:31:12+00:00"^^xsd:dateTime ;
+    prov:wasDerivedFrom <https://ul.edu.lb/kr/id/file/brunel/ProductsPerPlant.csv> ;
+    prov:wasGeneratedBy <https://ul.edu.lb/kr/id/run/brunel/convert-20260925T013112Z> .
+
+<https://ul.edu.lb/kr/id/software/course/convert_to_rdf.py> a prov:SoftwareAgent ;
+    rdfs:label "convert_to_rdf.py (Session 2)" ;
+    dcterms:identifier "sha256:23365ee025e91d76996c8fa3e43bf9761f67e35d5a67c003e55b1aaafe204c60" .
+
+<https://ul.edu.lb/kr/id/file/brunel/FreightRates.csv> a prov:Entity ;
+    dcterms:identifier "sha256:1ddf75f021f64628d135a7fcc5ee4254745f8ed7b8b3e13bc922e8bef2d4a5b1" ;
+    dcterms:title "FreightRates.csv" .
+
+<https://ul.edu.lb/kr/id/file/brunel/OrderList.csv> a prov:Entity ;
+    dcterms:identifier "sha256:158787e9707a052643be83fec0e7f477a9d780994bc28df364ff4b712b8c5d32" ;
+    dcterms:title "OrderList.csv" .
+
+<https://ul.edu.lb/kr/id/file/brunel/PlantPorts.csv> a prov:Entity ;
+    dcterms:identifier "sha256:ca99b6b6921620246a2a10566511660421386c18d31893be4f6fea843f55384d" ;
+    dcterms:title "PlantPorts.csv" .
+
+<https://ul.edu.lb/kr/id/file/brunel/ProductsPerPlant.csv> a prov:Entity ;
+    dcterms:identifier "sha256:92a0a5837e4b5c7a0e0b67ca012bf877c54afb9c07af909bdb36484512f41617" ;
+    dcterms:title "ProductsPerPlant.csv" .
+
+<https://ul.edu.lb/kr/id/run/brunel/convert-20260925T013112Z> a prov:Activity ;
+    rdfs:label "Session 2 conversion of the Brunel tables to RDF" ;
+    prov:endedAtTime "2026-09-25T01:31:12+00:00"^^xsd:dateTime ;
+    prov:used <https://ul.edu.lb/kr/id/file/brunel/FreightRates.csv>,
+        <https://ul.edu.lb/kr/id/file/brunel/OrderList.csv>,
+        <https://ul.edu.lb/kr/id/file/brunel/PlantPorts.csv>,
+        <https://ul.edu.lb/kr/id/file/brunel/ProductsPerPlant.csv> ;
+    prov:wasAssociatedWith <https://ul.edu.lb/kr/id/software/course/convert_to_rdf.py> .
+

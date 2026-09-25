@@ -1,0 +1,41 @@
+## Solutions to part B (my_shapes.ttl). Other shapes can be right too: the
+## checker compares which orders a shape flags, not how it is written.
+
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix ul:   <https://ul.edu.lb/kr/scm#> .
+@prefix my:   <https://ul.edu.lb/kr/shapes/my#> .
+
+<https://ul.edu.lb/kr/shapes/my> a owl:Ontology ;
+    sh:declare [ sh:prefix "ul" ; sh:namespace "https://ul.edu.lb/kr/scm#"^^xsd:anyURI ] .
+
+## Y1 · both bounds: minCount alone misses the order with two customers,
+## maxCount alone misses the order with none.
+my:Y1Shape a sh:NodeShape ;
+    sh:targetClass ul:Order ;
+    sh:property [ sh:path ul:orderedBy ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+## Y2 · the bounds are dates, so write them as dates (^^xsd:date). A plain
+## string "2013-01-01" cannot be compared with a date, so every order fails.
+my:Y2Shape a sh:NodeShape ;
+    sh:targetClass ul:Order ;
+    sh:property [
+        sh:path ul:orderDate ;
+        sh:minInclusive "2013-01-01"^^xsd:date ;
+        sh:maxInclusive "2013-12-31"^^xsd:date
+    ] .
+
+## Y3 · compare the carrier with the carrier's IRI, not with the text "V44_3".
+my:Y3Shape a sh:NodeShape ;
+    sh:targetClass ul:Order ;
+    sh:sparql [
+        sh:message "A CRF order carried by {?c}, not V44_3." ;
+        sh:prefixes <https://ul.edu.lb/kr/shapes/my> ;
+        sh:select """
+            SELECT $this ?c WHERE {
+                $this ul:serviceLevel "CRF" ; ul:carriedBy ?c .
+                FILTER (?c != <https://ul.edu.lb/kr/id/carrier/brunel/V44_3>)
+            }"""
+    ] .
