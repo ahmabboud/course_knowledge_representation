@@ -97,9 +97,12 @@ Names differ by course; the roles do not. Look for these at the repo root.
    credential helper reading a token the instructor keeps outside every repo.
    Run a plain `git push`. Never read, print, copy or paste the token, never
    put it in a remote URL, never force push. If the helper cannot find the
-   token from your environment (a Cowork session given only the course folder
-   cannot see a file one level above it) or the push is refused, stop and tell
-   the user; do not work around it.
+   token, your session is missing the folder that holds it: a Cowork session
+   given only the course folder cannot see a file one level above it. Do not
+   conclude that you cannot push. Request access to the parent folder (for
+   KR, `LebUniv/`), then run git from the repo's path under that new mount,
+   where the helper's relative path resolves. Only if the push is still
+   refused, stop and tell the user; do not work around it.
 5. **Confirm** with `git ls-remote origin refs/heads/main` that GitHub matches
    `HEAD`. Then clear leftover `.git/*.lock` and `tmp_obj_*` files: on an
    iCloud mount `rm` may be refused while `mv` to a stale name works.
@@ -508,6 +511,7 @@ deck done, walk every slide and exercise whatever is actually on it:
 | Hand-editing a deck that a generator builds | The next `build.py` run replaces the HTML wholesale and the edit disappears with no conflict and no warning. Check `scripts/deckgen-sN/` before touching `lectures/*.html`; edit the part file and rebuild. |
 | Reporting the repo's state from memory, or from `git log -5` | A session told the instructor its own pushed commit was lost; it was in history, overwritten by a later rebuild. Fetch first, read the metafiles, and check ancestry (`git merge-base --is-ancestor`) before saying anything is missing. |
 | AI attribution in commit messages | Another session's commits carried `Co-Authored-By` and session-link trailers against the instructor's standing preference. Never add them. |
+| Concluding "I cannot push from here" because the token file is not visible | A Cowork session told the instructor it could not push, when it only lacked the parent folder that holds the token. Request access to that folder, run git from the repo's path under the new mount, and push. The instructor has pushed from Cowork this way before. |
 | A class rule setting `display` beats the UA `[hidden]` rule, so hidden things keep their space or stack | Never set `display` on something the runtime hides. If you must, ship a `[hidden]{display:none}` companion in the same commit. Shipped four times now (`.lu-reveal__panel`, `.lu-mcq__why`, `[data-walk-step]`, and later `.lu-poll__bars`), the second and later times as a regression while fixing something else. Given this history, treat it as a class of bug: whenever you add or touch any revealable/hideable component, proactively grep its CSS for a bare `{ display: ... }` rule with no matching `[hidden]{display:none}` companion, rather than waiting for it to show up as an overflow symptom. |
 | A grid child with no `grid-column` lands in the narrow first column and renders one word per line | Any child of a narrow-first-column grid gets an explicit `grid-column`. |
 | Study mode's inline definition note (`.lu-inline-def`) is inserted as a bare `<div>` sibling inside a `.lu-defs` dt/dd grid | A plain div consumes one grid cell and throws every dt/dd pair after it out of alignment, and blows the label column width out to fit a full sentence. Only visible with study mode on, and easy to miss because it looks fine with study mode off. Fixed upstream in `lu-deck.js`'s `Term.inline()` by forcing the note onto its own full-width row (`grid-column:1/-1`) whenever its host is a `<dd>`. If you see a definition list overlap in print or study mode, check this first. |
