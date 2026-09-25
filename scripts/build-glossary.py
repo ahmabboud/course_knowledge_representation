@@ -78,7 +78,7 @@ ALIASES = {
 PROPER = {
     "DataCo", "Brunel", "Turtle", "Fuseki", "Cypher", "Neo4j", "Docker",
     "Protégé", "Protege", "Ontop", "Manchester syntax", "TransE", "XGBoost",
-    "PyKEEN", "PyTorch Geometric", "HermiT", "Morph-KGC", "PostgreSQL",
+    "PyKEEN", "PyTorch Geometric", "HermiT", "Morph-KGC", "PostgreSQL", "GitHub Actions",
 }
 
 ROW = re.compile(r"^\|\s*\*\*(.+?)\*\*\s*\|\s*(.+?)\s*\|\s*$")

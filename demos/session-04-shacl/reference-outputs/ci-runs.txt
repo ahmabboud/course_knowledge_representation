@@ -1,0 +1,19 @@
+The SHACL gate on GitHub Actions (.github/workflows/shacl-gate.yml), 2026-09-25.
+Both runs are public: open them from the repository's Actions tab.
+
+GREEN  main, commit fbd9c73 (ci/sample-orders.ttl as generated)
+       https://github.com/ahmabboud/course_knowledge_representation/actions/runs/36143273457
+       conclusion: success
+
+RED    branch demo/broken-carrier-code, commit d867ef5
+       one line changed in ci/sample-orders.ttl: order 1447385217.7
+       ul:carriedBy .../carrier/brunel/V444_O  (letter O) instead of V444_0 (zero)
+       https://github.com/ahmabboud/course_knowledge_representation/actions/runs/36143360459
+       steps: Set up job, checkout, setup-python, Install pySHACL: success;
+              "Validate the sample orders against the Brunel shapes": failure
+       The step prints the same report as a local run on that file:
+         Violation      1  Every order · Class on carriedBy   e.g. order/brunel/1447385217.7
+         Warning        3  An order's weight falls in a rate band of its lane · SPARQL
+         GATE: FAIL, 1 violations. Exit code 1.
+
+Keep the branch: slides and README link to its run. Never merge it.

@@ -1,0 +1,30 @@
+python validate.py --data ci/sample-orders.ttl   (pySHACL 0.40.1, 2026-09-25)
+data: 515 triples from sample-orders.ttl
+shapes: brunel-shapes.ttl
+  focus nodes      6  An order leaves through a port its plant is linked to
+  focus nodes      6  An order's plant makes the product
+  focus nodes      6  An order's weight falls in a rate band of its lane
+  focus nodes     51  Every freight rate band
+  focus nodes      6  Every order
+
+validated in 0.1 s. conforms (SHACL): False. 0 Violation, 3 Warning, 0 Info
+  Warning        3  An order's weight falls in a rate band of its lane · SPARQL   e.g. order/brunel/1447137127.7, order/brunel/1447291369.7, order/brunel/1447311670.7
+
+GATE: PASS, no violations (warnings are listed above).
+exit code 0
+
+python validate.py --data ci/sample-orders-broken.ttl
+data: 515 triples from sample-orders-broken.ttl
+shapes: brunel-shapes.ttl
+  focus nodes      6  An order leaves through a port its plant is linked to
+  focus nodes      6  An order's plant makes the product
+  focus nodes      6  An order's weight falls in a rate band of its lane
+  focus nodes     51  Every freight rate band
+  focus nodes      6  Every order
+
+validated in 0.1 s. conforms (SHACL): False. 1 Violation, 3 Warning, 0 Info
+  Violation      1  Every order · Class on carriedBy   e.g. order/brunel/1447385217.7
+  Warning        3  An order's weight falls in a rate band of its lane · SPARQL   e.g. order/brunel/1447137127.7, order/brunel/1447291369.7, order/brunel/1447311670.7
+
+GATE: FAIL, 1 violations. Exit code 1.
+exit code 1
