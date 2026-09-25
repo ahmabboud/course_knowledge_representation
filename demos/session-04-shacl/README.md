@@ -135,9 +135,8 @@ Answer for yourself, then in the closing discussion:
   with a version IRI, shapes covering your rule list, a triaged report,
   provenance, and a gate that blocks a bad commit.
 
-## Files that stay for Session 5
+## The old template, kept on purpose
 
 `shapes_template.ttl` is the old Session 4 template. It targets
-`ul:PurchaseOrder`, which the Session 2 graph does not have (the targeting
-trap above), and Session 5's current code still reads it. It stays until
-Session 5 is rebuilt.
+`ul:PurchaseOrder`, which the Session 2 graph does not have, so it is kept
+as the real example of the targeting trap (Part A step 1). Do not build on it.

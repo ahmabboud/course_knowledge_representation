@@ -123,7 +123,7 @@ never merged.
 | `add_provenance.py` | Builds provenance for the source graphs. | Run it. |
 | `version_ontology.py` | Demonstrates a version IRI without changing Session 3. | Run it. |
 | `fetch_epcis.py` | Downloads and counts GS1 EPCIS SHACL patterns. | Run it when the network is available. |
-| `shapes_template.ttl` | Old template targeting `PurchaseOrder`. | Do not use it for this lab. It remains only because Session 5 still reads it. |
+| `shapes_template.ttl` | Old template targeting `PurchaseOrder`: the real example of the targeting trap (Part A step 1). | No; run it once to see a shape that checks nothing. |
 | `reference-outputs/` | Recorded validation, provenance, checker, and CI results. | Read only. |
 
 ## Terms you need first

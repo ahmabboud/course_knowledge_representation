@@ -3,9 +3,7 @@ common.py and svgkit.py (deckgen-s3).
 
     cd scripts/deckgen-s5 && python3 build.py
 
-Writes lectures/kr-session-05-new.html next to the old deck until the
-instructor approves it (REPLAN-STATE item 9); then it replaces
-lectures/kr-session-05.html. Edit the parts and rebuild; never hand-edit
+Writes lectures/kr-session-05.html (approved by the instructor 2026-09-25). Edit the parts and rebuild; never hand-edit
 the HTML. Every number on a slide comes from
 demos/session-05-integration/reference-outputs/.
 """
@@ -19,7 +17,7 @@ sys.path.insert(1, str(HERE.parent / "deckgen-s3"))
 sys.path.insert(2, str(HERE.parent / "deckgen-s1"))
 import part1, part2, part3, part4, part5, part6  # noqa: E402
 
-out = sys.argv[1] if len(sys.argv) > 1 else "../../lectures/kr-session-05-new.html"
+out = sys.argv[1] if len(sys.argv) > 1 else "../../lectures/kr-session-05.html"
 slides = part1.SLIDES + part2.SLIDES + part3.SLIDES + part4.SLIDES + part5.SLIDES + part6.SLIDES
 total = sum(int(re.search(r'data-minutes="(\d+)"', s).group(1)) for s in slides)
 
