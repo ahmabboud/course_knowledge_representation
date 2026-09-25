@@ -32,15 +32,12 @@ keep the main session's context clear (instructor's preference, 2026-09-24).
 
 **Where to continue (2026-09-24, end of day):**
 
-1. **Session 2 (item 8):** built, audited and pushed; waits for the instructor's
-   review. Ask for it first. If changes are asked, edit
-   `scripts/deckgen-s2/part_*.py`, run `python3 scripts/deckgen-s2/build.py`,
-   audit (item 15), glossary check (item 16), push (item 10).
-2. **Then Session 3, parts 3 to 6 (item 2),** with items 3 to 5. Reuse the
-   Session 1 and 2 generator pattern (`scripts/deckgen-s1/kit.py`). Convert
+1. **Session 3, parts 3 to 6 (item 2),** with items 3 to 5. Sessions 1 and 2
+   are approved and closed. Reuse the Session 1 and 2 generator pattern
+   (`scripts/deckgen-s1/kit.py`). Convert
    `demos/session-03-ontology/sample-shipments.ttl` individuals to the IRI
    convention (`AGENTS.md` 2d) while there.
-3. **Later:** item 9 (Sessions 4 to 6 visual pass; Session 4 examples move to
+2. **Later:** item 9 (Sessions 4 to 6 visual pass; Session 4 examples move to
    the 2d IRIs), item 18 (syllabus alignment question).
 
 **Settled decisions a new session must not reopen:** tool rule (2c rule 5:
@@ -120,7 +117,7 @@ Items marked `[x]` are done; everything else is still open.
 
 ### C. Session 2
 
-8. [ ] **Built 2026-09-24, awaiting the instructor's review** (42 slides, 173 minutes: lecture about 98, lab 61, discussion and wrap 14; audit clean; generator `scripts/deckgen-s2/`, sharing `deckgen-s1/kit.py`). The lab was rebuilt too and run end to end: see the log.  Full rebuild to the 2c standard, per `COURSE-REPLAN.md`.
+8. [x] **Done 2026-09-24, approved by the instructor** (slides reviewed, lab run end to end on his Mac and on Oxigraph). **Built 2026-09-24** (42 slides, 173 minutes: lecture about 98, lab 61, discussion and wrap 14; audit clean; generator `scripts/deckgen-s2/`, sharing `deckgen-s1/kit.py`). The lab was rebuilt too and run end to end: see the log.  Full rebuild to the 2c standard, per `COURSE-REPLAN.md`.
 
 ### D. Sessions 4 to 6
 
@@ -470,3 +467,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-24: Session 2 lab code run end to end on a clean copy, fresh virtual environment with the pinned lab packages (pandas 2.3.3, rdflib 7.6.0, pyoxigraph 0.5.11, requests 2.34.2, neo4j 6.3.1, matplotlib 3.10.0, owlrl 7.6.2), after the instructor approved the slides. Ran: `convert_to_rdf.py` (135,841 triples, 5 named graphs, 13 sample triples, 6 s), `named_graphs.py`, `run_queries.py oxigraph` (all seven answers as in the README), `check_my_queries.py` (blank 0 of 3, solutions 3 of 3), `rdfs_entailment_demo.py` (9,023 then 9,216), `lab_walkthrough.py` (falls back to Oxigraph, skips Neo4j cleanly). Fixed: (1) `convert_to_rdf.py` wrote `sample/order.nt` in a different line order each run, so git showed a changed file after every conversion; the lines are now sorted (same 13 triples). (2) With Fuseki not running, `run_queries.py` and `load_fuseki.py` stopped with a raw traceback and `check_my_queries.py fuseki` told the student "the query did not run" three times, as if their queries were wrong; all three now print one line saying Fuseki is not answering and how to start it or use Oxigraph. (3) An unused import in `run_queries.py`. Not run here: Fuseki, Neo4j and the Docker build (the Cowork workspace has only Java 11 and cannot download Fuseki, Neo4j or Python 3.12), and the full `requirements.txt` install (needs Python 3.12; `networkx==3.7` does not install on 3.10). Those need one run on the instructor's Mac.
 - 2026-09-24: Session 2 on the instructor's Mac. `docker compose up -d --build fuseki` built `kr-fuseki:5.5.0` from Apache's release (checksum OK) and started it; Cowork's browser pane reaches it at localhost:3030. Then `convert_to_rdf.py`, `load_fuseki.py`, `run_queries.py` (all seven answers as in the README, Q6 1.2 s; `reference-outputs/query-timings-fuseki.txt` refreshed) and `check_my_queries.py fuseki` (blank file, 0 of 3, connection fine) all ran; `sample/order.nt` stayed unchanged, so the sorting fix holds. `neo4j_comparison.py` failed with Neo4j `AuthError`: the Neo4j on 7687 was a stopped container the instructor had restarted by hand, not the compose service (`docker compose ps` listed only Fuseki), so it does not use `kr-labs-pw`. Fixed: the script now prints one line for "not answering" and for "wrong password", and the README step 5 has an "If Neo4j refuses the password" note (stop the other container, or recreate the compose volume). Neo4j comparison still to run once on the Mac.
 - 2026-09-24: Neo4j comparison run on the Mac after stopping the hand-started container and starting the compose service (`docker compose up -d neo4j`, fresh `demos_neo4j-data` volume): 9,215 orders and 22 plant to port links loaded in 10.5 s; Q2, Q4, Q5a (9,023), Q5b (9,215) and the path query (3) all as expected; `reference-outputs/neo4j-comparison.txt` refreshed. Every step of the Session 2 lab has now run end to end on the instructor's Mac (Docker build, Fuseki, Neo4j) and on Oxigraph. The instructor has reviewed the Session 2 slides; item 8 stays open until he says Session 2 is approved.
+- 2026-09-24: Session 2 approved and closed by the instructor (item 8). Next: Session 3 parts 3 to 6 (item 2).
