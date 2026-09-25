@@ -10,7 +10,7 @@ the single to-do list. The status table below was reconciled against the
 repository on 2026-09-24 (REPLAN-STATE item 11). "Built" means the file
 exists and works; no session counts as done until the instructor says so.
 
-**Where to continue (2026-09-24):** Sessions 1 and 2 are done. Next: Session 3 parts 3 to 6 (REPLAN-STATE item 2).
+**Where to continue (2026-09-25):** Sessions 1, 2 and 3 are done. Next: the Sessions 4 to 6 visual pass (REPLAN-STATE item 9).
 Done most recently (2026-09-24): Session 1 rebuilt and approved; Session 2
 deck and lab rebuilt and verified; IRI convention written into `AGENTS.md` 2d
 and applied to Session 5 mappings; Fuseki now built from Apache's release
@@ -28,7 +28,7 @@ or lab-code progress, that is this file's job.
 |---|---|---|---|---|
 | 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | **Done**: rebuilt to the 2c standard and approved by the instructor 2026-09-24 (46 slides, 185 min) | Built, verified working by the instructor 2026-09-23 |
 | 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | **Done**: rebuilt to the 2c standard and approved by the instructor 2026-09-24 (42 slides, 173 min) | Rebuilt 2026-09-24 and run end to end (Fuseki 5.5, Oxigraph, Neo4j 5.26); two linking bugs fixed; run again on the instructor's Mac 2026-09-24 (Docker build, Fuseki, Neo4j), every answer as in the README; brought to the lab standard (`AGENTS.md` 2e) with a write your own part and a checker |
-| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Old deck live; new deck in progress, parts 1 and 2 built by the generator, parts 3 to 6 next (REPLAN-STATE 2, 3) | Built and reasoner verified (v0 file with a real modelling error, reference fix, sample shipments, reference outputs); `closed_world_demo.py` and README rewrite still open (REPLAN-STATE 4, 5) |
+| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | **Done**: rebuilt to the 2c standard and approved by the instructor 2026-09-25 (48 slides, 231 min; generator `scripts/deckgen-s3/`); also the template repo's worked example | Rebuilt to the lab standard (`AGENTS.md` 2e) and reasoner verified: v0 with the real reuse bug (ELK 1 red class, HermiT 2), fixed reference file, Brunel sample shipments classified by ELK on the instructor's Mac 2026-09-25, Part B `check_my_axioms.py` (3 of 3 on the solutions, five wrong answers recorded) |
 | 4 | 2 | Constraints, Quality, and Provenance: SHACL | Built (197 min), visual pass pending (REPLAN-STATE 9) | Not built: only README and `shapes_template.ttl` |
 | 5 | 3 | Integrating Operational Data | Built as a draft (172 min), pending the instructor's confirmation; visual pass pending | Built as a draft, tested on Postgres; not yet confirmed with the real Ontop CLI (see its README Status) |
 | 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | Built (159 min), visual pass pending | Built and run end to end on CPU (Milestone 2) |
@@ -100,6 +100,9 @@ with a plain import). Nothing left to build here.
 
 ## Session 3, detail
 
+Historical (before the 2026-09-24 rebuild). The current lab is described in
+`demos/session-03-ontology/README.md`; this section is kept as a record.
+
 Deck built. Lab is smaller by design, Protege is a GUI application, so only
 its scriptable parts are built:
 
@@ -160,8 +163,7 @@ touched: match it to `ioc:Shipment` too, or leave it and say why.
 
 ## What's next
 
-See `REPLAN-STATE.md` "Where to continue" (Session 3 item 2).
-After the Sessions 1 to 3 rebuild: the Session 4 lab (only a template
+See `REPLAN-STATE.md` "Where to continue". Sessions 1 to 3 are rebuilt; next: the Session 4 lab (only a template
 today), confirming the Session 5 lab on a live Ontop, a visual pass on
 Sessions 4 to 6, then Sessions 7 and 8 (deck and lab).
 

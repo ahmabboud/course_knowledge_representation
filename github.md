@@ -151,7 +151,7 @@ Handout on. Run `scripts/audit-deck.js`.
 |---|---|
 | `index.html` | template, narrowed to this course |
 | `lectures/kr-session-01.html` | `Knowledge Representation - Syllabus.docx`, Session 1 |
-| `lectures/kr-session-03.html` | template worked example, same syllabus, Session 3 |
+| `lectures/kr-session-03.html` | `scripts/deckgen-s3/` (rebuilt to 2c, approved 2026-09-25); also copied to the template repo as its worked example |
 | `lectures/_template.html`, `design-system.html`, `assets/*` | template, unchanged |
 | `AGENTS.md`, `PROMPT.md` | template, unchanged |
 

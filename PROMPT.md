@@ -16,7 +16,7 @@ Give the agent access to the repository, then paste this, filling the four brack
 > 0. If the repository has `PROGRESS.md` and an open-work file (`REPLAN-STATE.md`), read them first: they say what is built, what is pending, and what was decided.
 > 1. Read `AGENTS.md` in full. It is the authoring contract and it overrides your own instincts about slide design.
 > 2. Open `design-system.html` in a browser. Every component is live there with its markup.
-> 3. Read `lectures/kr-session-03.html`. It is the reference implementation, 21 slides, all nine layouts, all twelve components. Match its structure and its writing register.
+> 3. Read `lectures/kr-session-03.html`. It is the reference implementation, 48 slides, all nine layouts and a mix of visual types (flow walks, set pictures, cards, tables, code, screenshots, interactive checks). Match its structure and its writing register. Components it does not use (reveal, progressive build, compare wipe, query sandbox) are live in `design-system.html`.
 >
 > Then:
 > 4. Copy `lectures/_template.html` to `lectures/[slug]-session-[NN].html`.

@@ -3,8 +3,7 @@
 **Any new session or agent: read this file right after `PROGRESS.md`.**
 The checklist below is the single to-do list. Tick an item (`[x]`) and add a
 dated line to the log at the bottom in the same change as the work.
-Last updated: 2026-09-24 (handoff checked; both repos clean and pushed;
-session protocol added to the top of `AGENTS.md`).
+Last updated: 2026-09-25 (Session 3 approved and in place in both repos).
 
 Companion documents:
 
@@ -30,17 +29,15 @@ session are at the top of `AGENTS.md`. Running a lab end to end goes to a
 Sonnet sub-agent with a self-contained brief and a short report back, to
 keep the main session's context clear (instructor's preference, 2026-09-24).
 
-**Where to continue (2026-09-24, end of day):**
+**Where to continue (2026-09-25):**
 
-1. **Session 3, parts 3 to 6 (item 2),** with items 3 to 5. Sessions 1 and 2
-   are approved and closed. Reuse the Session 1 and 2 generator pattern
-   (`scripts/deckgen-s1/kit.py`). Convert
-   `demos/session-03-ontology/sample-shipments.ttl` individuals to the IRI
-   convention (`AGENTS.md` 2d) while there.
-2. **Later:** item 9 (Sessions 4 to 6 visual pass; Session 4 examples move to
-   the 2d IRIs), item 18 (syllabus alignment question).
+1. **Sessions 4 to 6 visual pass (item 9).** Sessions 1 to 3 are approved
+   and closed. Reuse the generator pattern (`scripts/deckgen-s1/kit.py`,
+   `scripts/deckgen-s3/` for a deck with flow walks and set pictures);
+   Session 4 examples move to the 2d IRIs and the Brunel cast.
+2. **Later:** item 18 (syllabus alignment question), items 12 and 19.
 
-**Settled decisions a new session must not reopen:** tool rule (2c rule 5:
+**Settled decisions a new session must not reopen:** visual variety (instructor, 2026-09-25, on approving Session 3: mix picture types across a deck, `AGENTS.md` 2c rule 9); tool rule (2c rule 5:
 concept first, one slide per tool, no slide for trivial tools, video only for
 complex GUI tools); timing (2c rule 7: about 180 minutes, about 2 hours slides
 and 1 hour lab, **a guide, not a rule**; `data-minutes` realistic); animation
@@ -82,12 +79,12 @@ Items marked `[x]` are done; everything else is still open.
    what the reasoner added (06, crops z-h and z-b), (c) the ? button explains a
    red class (09b), (d) Save as a new file, never over v0. Fold this into
    item 2. Section 5 below and `guide1.py` are kept only as source material.
-2. [ ] **Session 3 deck, parts 3 to 6** (reasoner, reuse and BFO, profiles,
+2. [x] **Done 2026-09-25, approved by the instructor** (48 slides, 231 minutes, audit clean, generator `scripts/deckgen-s3/`). **Session 3 deck, parts 3 to 6** (reasoner, reuse and BFO, profiles,
    lab and wrap), outline in section 3. Draw every diagram with `lu-flow`
    (the reasoner proof already exists as a spec:
    `scripts/proto-diagrams/spec.json`). Parts 1 and 2 were built before
    lu-flow existed: convert their arrow diagrams too.
-3. [ ] Replace `lectures/kr-session-03.html` with the new deck, then copy it to
+3. [x] **Done 2026-09-25.** Replace `lectures/kr-session-03.html` with the new deck, then copy it to
    the template repo's `lectures/kr-session-03.html` (it is the reference
    deck there).
 4. [x] **Done 2026-09-24.** `demos/session-03-ontology/closed_world_demo.py` (the SQLite foreign
@@ -484,4 +481,5 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-24: item 5 done. Lab README rewritten to 2e: before you start (workspace/ rule, `local_reasoner.py` fallback), Part A six steps with Expect (ELK: Order for a sole-sourced good; HermiT adds Sole-sourced component; reference file none; At-risk shipment: shipments of 1447291369.7 and 1447311670.7), Part B `check_my_axioms.py` (3 of 3), Part C the three discussion questions, optional (ROBOT, `realize_sample.py`, instructor demos, licensing), understood if, take to your project. Stale pointers fixed in the lab files (comments only, every file still parses): `scro-extension-v0.ttl` no longer points at the Protégé guide; both ontologies and `competency_questions.md` pointed at a "lab brief" query that no longer exists, so the query now lives in `competency_questions.md` (run with rdflib: CancelledShipment, CommittedDate, Plant, Port in both files); `domain-mistake.ttl` names the real slide. Still to run on the Mac: `fetch_ontologies.py`, `realize_sample.py --jar ~/tools/robot.jar` (the ELK table and Part A step 6), and the Protégé screenshots 16b, 17, 18.
 - 2026-09-25: `realize_sample.py` run on the instructor's Mac (ROBOT 1.9.10 at `~/tools/robot.jar`, ELK): as shipped, the shipments of 1447291369.7 and 1447311670.7 are At-risk shipments and 1447385217.7 is not; with the axiom as SubClassOf, none is. Matches the table on "SubClassOf and EquivalentTo" and README Part A step 6; recorded in `reference-outputs/realized-sample.txt`. `fetch_ontologies.py` rerun there too (catalog check passes); its closing message and docstring now send students to `workspace/scro-extension-v0.ttl`, not the finished file. Protégé screenshots 16b, 17 and 18 are not used by the new deck (the ELK table replaced them), so no recapture is needed. The old `realized_sample_shipments_ELK.ttl` and `_primitive_ELK.ttl` (22 Sept, old individuals) are superseded; kept until the instructor agrees to remove them.
 - 2026-09-25: instructor agreed: the two superseded `realized_sample_shipments_*.ttl` files removed. The last placeholder in the Session 3 draft (licensing exercise) replaced with the two real lines as code panels, `scor.ttl` line 22 (`dct:license` ODC PDDL) and `README.md` line 40 ("All rights reserved"), both at `vocol/scor` commit `d12544b` (12 January 2018, still the latest), checked live 2026-09-25. Code panels instead of a screenshot: the browser pane cannot save an image file, and text projects more legibly. The draft now has no placeholders.
+- 2026-09-25: **Session 3 approved by the instructor** (items 2 and 3), who named the variety of visualisation, not always one type, as what worked; written into `AGENTS.md` as 2c rule 9 and into the settled decisions. `lectures/kr-session-03-new.html` renamed to `lectures/kr-session-03.html` (the old 22 slide deck replaced; `build.py` now writes there by default and rebuilds it byte for byte). `index.html` cards corrected for all three rebuilt sessions (they still showed the old slide and question counts); its intro no longer says labs extend a graded system. `AGENTS.md` and `PROMPT.md` no longer call the worked example "21 slides, all twelve components": it uses all nine layouts but not reveal, build, compare wipe or the query sandbox, which `design-system.html` shows. Template repo: the deck copied as its worked example with its five screenshots (`assets/img/s3-*.png`) and this course's glossary data as `lectures/kr-session-03-glossary.js` (the template's own `assets/glossary.js` is a two-term sample, so the example's term links would otherwise vanish); its README, AGENTS, PROMPT, index card and `github.md` updated to match.
 

@@ -1,10 +1,9 @@
 """Build the Session 3 deck from its six parts. Shares kit.py with deckgen-s1.
 
-    cd scripts/deckgen-s3 && python3 build.py ../../lectures/kr-session-03-new.html
+    cd scripts/deckgen-s3 && python3 build.py
 
-Until the instructor approves it (REPLAN-STATE item 3) the new deck is built
-next to the old one, as kr-session-03-new.html; then it replaces
-lectures/kr-session-03.html.
+Writes lectures/kr-session-03.html (approved by the instructor 2026-09-25).
+Edit the parts and rebuild; never hand-edit the HTML.
 """
 import re
 import sys
@@ -14,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(1, str(Path(__file__).resolve().parent.parent / "deckgen-s1"))
 import part1, part2, part3, part4, part5, part6  # noqa: E402
 
-out = sys.argv[1] if len(sys.argv) > 1 else "../../lectures/kr-session-03-new.html"
+out = sys.argv[1] if len(sys.argv) > 1 else "../../lectures/kr-session-03.html"
 slides = part1.SLIDES + part2.SLIDES + part3.SLIDES + part4.SLIDES + part5.SLIDES + part6.SLIDES
 total = sum(int(re.search(r'data-minutes="(\d+)"', s).group(1)) for s in slides)
 
