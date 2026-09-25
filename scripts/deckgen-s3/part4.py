@@ -100,7 +100,8 @@ caps = [
     ("The clash", "<b>Step 5.</b> BFO says the two are <b>disjoint</b>. No product can be both, so the product is impossible."),
     ("The red class", "<b>Step 6.</b> So our class can never have a member: it is equivalent to <b>owl:Nothing</b>. That is the red class in Protégé."),
 ]
-trap = flow("The reuse trap, drawn from the real explanation", spec["width"], spec["height"],
+# Taller than the prototype so the badges of the bottom row clear the step bar.
+trap = flow("The reuse trap, drawn from the real explanation", spec["width"], spec["height"] + 40,
             spec["nodes"], spec["edges"], spec["steps"], caps, legend=spec["legend"])
 SLIDES.append(slide("The reuse trap: our real bug", "Reuse and BFO", 6, '''  <div class="lu-eyebrow">The lab's red class, explained</div>
   <h2 class="lu-h2">We borrowed a SCRO property for its name, and inherited a rule we did not know about</h2>

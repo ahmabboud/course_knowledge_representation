@@ -173,15 +173,15 @@ SLIDES.append(slide("The class tree", "What an ontology is", 4, f'''  <div class
 
 # ---------------------------------------------------------------- Two kinds of arrow
 n = [
-    node("s1", "shipment of order\n1447291369.7", 600, 110, 290, 72, kind="individual"),
+    node("s1", "shipment of order\n1447291369.7", 680, 110, 290, 72, kind="individual"),
     node("c1", "carrier V444_1", 1200, 35, 250, 56, kind="individual"),
     node("w", "11.8", 1200, 185, 150, 56, kind="literal"),
-    node("lab", '"shipment of order 1447291369.7"', 180, 110, 330, 56, kind="builtin"),
+    node("lab", '"shipment of order 1447291369.7"', 170, 110, 330, 56, kind="builtin"),
 ]
 e = [
     edge("a", "s1", "c1", "handled by (to a thing)"),
     edge("b", "s1", "w", "weight in kg (to a value)"),
-    edge("c", "s1", "lab", "label (a note)"),
+    edge("c", "s1", "lab", "label"),
 ]
 pic = flow("Two kinds of arrow, plus notes", FULL, 220, n, e,
            [{"show": [x["id"] for x in n] + [x["id"] for x in e]}])
