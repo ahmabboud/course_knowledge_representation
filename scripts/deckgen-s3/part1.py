@@ -103,12 +103,12 @@ SLIDES.append(slide("One word, three numbers", "What an ontology is", 4, '''  <d
 
 # ---------------------------------------------------------------- An ontology in one picture
 n = [
-    node("ship", "Shipment", 300, 35, 240, 56, kind="reused"),
-    node("atrisk", "At-risk shipment", 300, 125, 260, 56, kind="ours"),
-    node("carrier", "Carrier", 1130, 35, 240, 56, kind="reused"),
-    node("sanct", "Sanctioned carrier", 1130, 125, 280, 56, kind="ours"),
-    node("s1", "shipment of order 1447291369.7", 470, 225, 400, 56, kind="individual"),
-    node("c1", "carrier V444_1", 960, 225, 250, 56, kind="individual"),
+    node("ship", "Shipment", 300, 30, 240, 52, kind="reused"),
+    node("atrisk", "At-risk shipment", 300, 110, 260, 52, kind="ours"),
+    node("carrier", "Carrier", 1130, 30, 240, 52, kind="reused"),
+    node("sanct", "Sanctioned carrier", 1130, 110, 280, 52, kind="ours"),
+    node("s1", "shipment of order 1447291369.7", 470, 200, 400, 52, kind="individual"),
+    node("c1", "carrier V444_1", 960, 200, 250, 52, kind="individual"),
 ]
 e = [
     edge("a", "atrisk", "ship", "subclass of"),
@@ -117,17 +117,20 @@ e = [
     edge("d", "c1", "sanct", "is a", route="elbow", sides=["top", "left"]),
     edge("f", "s1", "c1", "handled by"),
 ]
-pic = flow("An ontology in one picture", FULL, 260, n, e,
+pic = flow("An ontology in one picture", FULL, 230, n, e,
            [{"show": [x["id"] for x in n] + [x["id"] for x in e]}], legend=LEGEND)
 SLIDES.append(slide("An ontology in one picture", "What an ontology is", 5, f'''  <div class="lu-eyebrow">The idea, drawn</div>
   <h2 class="lu-h2">An ontology names the kinds of things, and how things connect</h2>
   {pic}
+  <div class="lu-split">
   ''' + defbox([
-    ("Ontology", "A machine readable description of the kinds of things in a domain and how they relate."),
-    ("Class", "A named kind of thing, a square box: <b>Shipment</b>."),
-    ("Individual", "One particular thing, a green pill: <b>carrier V444_1</b>."),
+    ("Ontology", "A machine readable description of kinds of things and how they relate."),
+    ("Class", "A named kind of thing, a box: <b>Shipment</b>."),
+  ]) + defbox([
+    ("Individual", "One particular thing, a pill: <b>carrier V444_1</b>."),
     ("Property", "A named connection, an arrow: <b>handled by</b>."),
-  ]), '''<p>Five minutes. Walk the picture in plain words: "this shipment is a shipment; it is handled by carrier V444_1; V444_1 is a sanctioned carrier; every sanctioned carrier is a carrier".</p>
+  ], label="Also defined here") + '''
+  </div>''', '''<p>Five minutes. Walk the picture in plain words: "this shipment is a shipment; it is handled by carrier V444_1; V444_1 is a sanctioned carrier; every sanctioned carrier is a carrier".</p>
 <ul><li>These are the real Brunel order and carrier from Sessions 1 and 2. <b>Sanctioned is a teaching flag</b>: nothing in the data says so, and V444_1 is an anonymised code, not a company. Say it out loud once.</li>
 <li>Colour is meaning: blue is ours, teal is reused from IOF SCRO (Part 4 explains), green is one thing. The lab file <code>sample-shipments.ttl</code> holds exactly these individuals.</li></ul>'''))
 

@@ -141,4 +141,5 @@ SLIDES.append(slide("Self-check", "Wrap", 1, '''  <div class="lu-eyebrow">Self-c
       ''' + callout("Studying alone?", "Press <kbd>S</kbd> for study mode: every definition shows inline, every reveal opens, every diagram shows its last step.", "concept") + '''
       <p class="lu-caption"><kbd>O</kbd> contents · <kbd>/</kbd> search · <kbd>?</kbd> all shortcuts. Answers are stored in this browser only.</p>
     </div>
-  </div>''', '''<p>Close here so students know where the self study tools are.</p>'''))
+  </div>''', '''<p>Close here so students know where the self study tools are. Six graded items is more than the score list fits at its usual spacing, so this slide tightens three spacing tokens for itself only.</p>''',
+    extra_attr=' style="--lu-s3:4px;--lu-s2:2px;--lu-s5:14px"'))

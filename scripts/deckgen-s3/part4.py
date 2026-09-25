@@ -64,18 +64,18 @@ SLIDES.append(slide("Things and happenings", "Reuse and BFO", 4, '''  <div class
 
 # ---------------------------------------------------------------- A truck, its colour, its role, its paperwork
 n = [
-    node("truck", "the truck\nmaterial entity", 260, 150, 270, 68, kind="individual"),
-    node("colour", "its colour\nquality", 700, 40, 240, 68, kind="individual"),
-    node("role", "its role as carrier\nrole", 700, 150, 280, 68, kind="individual"),
-    node("po", "the purchase order text\ninformation", 700, 260, 330, 68, kind="individual"),
-    node("ic", "independent\ncontinuant", 260, 40, 250, 68, kind="upper"),
-    node("sdc", "specifically dependent\ncontinuant", 1150, 95, 320, 68, kind="upper"),
-    node("gdc", "generically dependent\ncontinuant", 1150, 260, 320, 68, kind="upper"),
+    node("truck", "the truck\nmaterial entity", 260, 135, 270, 64, kind="individual"),
+    node("colour", "its colour\nquality", 700, 36, 240, 64, kind="individual"),
+    node("role", "its role as carrier\nrole", 700, 135, 280, 64, kind="individual"),
+    node("po", "the purchase order text\ninformation", 700, 234, 330, 64, kind="individual"),
+    node("ic", "independent\ncontinuant", 260, 36, 250, 64, kind="upper"),
+    node("sdc", "specifically dependent\ncontinuant", 1150, 85, 320, 64, kind="upper"),
+    node("gdc", "generically dependent\ncontinuant", 1150, 234, 320, 64, kind="upper"),
 ]
 e = [edge("a", "colour", "truck", "inheres in"), edge("b", "role", "truck", "inheres in"),
      edge("c", "truck", "ic", "is a"), edge("d", "colour", "sdc", "is a"), edge("f", "role", "sdc", "is a"),
      edge("g", "po", "gdc", "is a")]
-pic = flow("A truck, its colour, its role, its paperwork", 1448, 300, n, e,
+pic = flow("A truck, its colour, its role, its paperwork", 1448, 270, n, e,
            [{"show": [x["id"] for x in n] + [x["id"] for x in e]}])
 SLIDES.append(slide("A truck, its colour, its role, its paperwork", "Reuse and BFO", 5, '''  <div class="lu-eyebrow">Three kinds of continuant</div>
   <h2 class="lu-h2">Some things stand on their own. Some exist only in one bearer. Some can be copied.</h2>
@@ -139,8 +139,8 @@ SLIDES.append(slide("Poll: does this class earn its place?", "Reuse and BFO", 4,
       <button class="lu-mcq__opt" type="button" data-key="b">Delete it unless a competency question needs it<span class="lu-mcq__why" hidden>Correct. Questions set the scope, not columns. A plain value can carry the level.</span></button>
       <button class="lu-mcq__opt" type="button" data-key="c">Replace it with a GS1 term<span class="lu-mcq__why" hidden>Reusing a term you do not need is still an unearned class.</span></button>
     </div>
-  </div>''', '''<p>Forty-five seconds, then reveal and tally with the plus buttons. Spend the rest on whoever picked a: the schema-first instinct this course exists to dislodge.</p>
-<p>Session 1 found that CRF orders are exactly the V44_3 orders and have no freight rate: that <i>is</i> a question worth asking, and it could earn a class. Ask the room to name the question first.</p>''', kind="tint"))
+  </div>''', '''<p>Forty five seconds, then reveal and tally with the plus buttons. Spend the rest on whoever picked a: the schema first instinct this course exists to dislodge.</p>
+<p>Session 1 found that CRF orders are exactly the V44_3 orders and have no freight rate: that <i>is</i> a question worth asking, and it could earn a class. Ask the room to name the question first.</p>''', kind="tint", extra_attr=' style="--lu-s5:12px"'))
 
 # ---------------------------------------------------------------- Alignment hazards
 n = [

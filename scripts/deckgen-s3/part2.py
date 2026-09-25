@@ -180,9 +180,9 @@ SLIDES.append(slide("Domain and range infer, they do not reject", "Writing rules
     <div class="lu-stack">
       {sql}
       ''' + defbox([
-        ("Domain", "Class every <b>subject</b> of a property is inferred to be in."),
-        ("Range", "Class every <b>object</b> is inferred to be in."),
-        ("Entailment", "A fact that follows from stated facts and rules, though nobody wrote it."),
+        ("Domain", "The class every <b>subject</b> is inferred to be in."),
+        ("Range", "The class every <b>object</b> is inferred to be in."),
+        ("Entailment", "A fact that follows, though nobody wrote it."),
       ]) + f'''
     </div>
     {owl_pic}
@@ -192,10 +192,10 @@ SLIDES.append(slide("Domain and range infer, they do not reject", "Writing rules
 
 # ---------------------------------------------------------------- SubClassOf vs EquivalentTo
 def door(two_way):
-    n = [node("c", "At-risk shipment", 300, 32, 280, 52, kind="ours"),
-         node("x", "Shipment and handled by some Sanctioned carrier", 300, 118, 560, 52, kind="builtin")]
+    n = [node("c", "At-risk shipment", 300, 28, 280, 48, kind="ours"),
+         node("x", "Shipment and handled by some Sanctioned carrier", 300, 102, 560, 48, kind="builtin")]
     e = [edge("a", "c", "x", "both ways" if two_way else "one way only", both=two_way)]
-    return still("EquivalentTo, two way" if two_way else "SubClassOf, one way", 600, 150, n, e)
+    return still("EquivalentTo, two way" if two_way else "SubClassOf, one way", 600, 130, n, e)
 
 
 table = f'''<table class="lu-table">
