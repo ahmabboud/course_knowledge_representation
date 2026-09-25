@@ -1,0 +1,36 @@
+## Instructor solutions for my_axioms.ttl. Try first; the checker accepts
+## any axiom with the same meaning, not only these.
+
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ioc:  <https://spec.industrialontologies.org/ontology/construct/> .
+@prefix ul:   <https://ul.edu.lb/kr/scm#> .
+
+<https://ul.edu.lb/kr/my-axioms> a owl:Ontology ;
+    rdfs:label "My Session 3 axioms" ;
+    owl:imports <https://ul.edu.lb/kr/scm#> .
+
+ul:LateAtRiskShipment a owl:Class ;
+    rdfs:label "Late at-risk shipment"@en .
+
+ul:SanctionedOnlyShipment a owl:Class ;
+    rdfs:label "Sanctioned-only shipment"@en .
+
+# --- Y1 · disjoint: nothing can be both a Plant (ul:Plant) and a Port (ul:Port). ---
+ul:Plant owl:disjointWith ul:Port .
+
+# --- Y2 · defined class with and: ul:LateAtRiskShipment is exactly the shipments that are both late (ul:LateShipment) and at risk (ul:AtRiskShipment). ---
+ul:LateAtRiskShipment owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf ( ul:LateShipment ul:AtRiskShipment )
+] .
+
+# --- Y3 · some and only: ul:SanctionedOnlyShipment is exactly the shipments (ioc:Shipment) handled by at least one carrier, and only by sanctioned carriers (ul:SanctionedCarrier). ---
+ul:SanctionedOnlyShipment owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        ioc:Shipment
+        [ a owl:Restriction ; owl:onProperty ul:handledBy ; owl:someValuesFrom ul:SanctionedCarrier ]
+        [ a owl:Restriction ; owl:onProperty ul:handledBy ; owl:allValuesFrom ul:SanctionedCarrier ]
+    )
+] .

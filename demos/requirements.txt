@@ -20,6 +20,9 @@ SPARQLWrapper==2.0.0
 pyoxigraph==0.5.11
 neo4j==6.3.1
 pyshacl==0.40.1
+# Session 3 lab: local_reasoner.py and check_my_axioms.py run HermiT, which
+# owlready2 bundles; it needs the JDK from the Session 1 setup.
+owlready2==0.51
 
 # Notebooks and shared utilities
 jupyterlab==4.6.4

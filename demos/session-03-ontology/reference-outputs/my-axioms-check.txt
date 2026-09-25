@@ -1,0 +1,14 @@
+check_my_axioms.py, HermiT through owlready2 0.51, 2026-09-24 (about 20 s per run).
+
+Solutions (solutions/my_axioms_solutions.ttl): Y1 right, Y2 right, Y3 right. 3 of 3.
+
+Common wrong answers, each run through the checker:
+Y1 left out                        -> "not written yet."
+Y2 with rdfs:subClassOf            -> "You wrote a one way door (SubClassOf) ... Use owl:equivalentClass."
+Y2 with owl:unionOf                -> "Your class lets in shipments the question does not ask for."
+Y3 without the someValuesFrom part -> "only never says a carrier exists ... Add the someValuesFrom part."
+Y3 without the allValuesFrom part  -> "some lets in a shipment that also has a carrier that is not sanctioned ..."
+
+Same tool, Part A files (python local_reasoner.py ...):
+scro-extension-v0.ttl         impossible: Order for a sole-sourced good, Sole-sourced component (13 s)
+scro-extension-reference.ttl  impossible: none (19 s)

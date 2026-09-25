@@ -7,39 +7,47 @@
 ## the "At-risk shipment" class in the Individuals by class tab, or ask
 ## DL Query for 'At-risk shipment'.
 ##
-## What the reasoner should conclude (verified with ROBOT, 2026-09-22):
-##   ship-4471  handled by DHL (not sanctioned)       -> not at risk
-##   ship-4472  handled by Blackline (sanctioned)     -> At-risk shipment
-##   ship-4473  no type given at all, only "handled by Blackline"
+## The course's one cast (AGENTS.md 2c rule 4): three real Brunel orders
+## and two real Brunel carriers from Sessions 1 and 2, one shipment per
+## order. IRIs follow AGENTS.md 2d: .../kr/id/{kind}/brunel/{key}, the key
+## exactly as Brunel writes it.
+##
+##   shipment of order 1447385217.7  carrier V444_0             -> not at risk
+##   shipment of order 1447291369.7  carrier V444_1             -> At-risk shipment
+##   shipment of order 1447311670.7  no type, only "handled by V444_1"
 ##              -> the domain of "handled by" makes it a Shipment,
 ##                 then the definition makes it an At-risk shipment.
 ##
-## Blackline Freight is a fictional company. Never label a real company
-## as sanctioned in teaching material.
+## TEACHING FLAG: nothing in the Brunel data says any carrier is sanctioned.
+## For this session only, carrier V444_1 (an anonymised code, not a company)
+## is typed Sanctioned carrier so the definition has something to catch.
 
 @prefix owl:  <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ioc:  <https://spec.industrialontologies.org/ontology/construct/> .
 @prefix ul:   <https://ul.edu.lb/kr/scm#> .
+@prefix carrier:  <https://ul.edu.lb/kr/id/carrier/brunel/> .
+@prefix shipment: <https://ul.edu.lb/kr/id/shipment/brunel/> .
 
 <https://ul.edu.lb/kr/sample-shipments> a owl:Ontology ;
     rdfs:label "UL Knowledge Representation course: sample shipments (ABox)" ;
     owl:imports <https://ul.edu.lb/kr/scm#> .
 
-ul:carrier-dhl a owl:NamedIndividual , ioc:Carrier ;
-    rdfs:label "DHL" .
+carrier:V444_0 a owl:NamedIndividual , ioc:Carrier ;
+    rdfs:label "carrier V444_0" .
 
-ul:carrier-blackline a owl:NamedIndividual , ul:SanctionedCarrier ;
-    rdfs:label "Blackline Freight (fictional, sanctioned)" .
+carrier:V444_1 a owl:NamedIndividual , ul:SanctionedCarrier ;
+    rdfs:label "carrier V444_1 (teaching flag: sanctioned)" ;
+    rdfs:comment "Not a real sanction. Brunel's carrier codes are anonymised; this one is flagged for Session 3 only." .
 
-ul:ship-4471 a owl:NamedIndividual , ioc:Shipment ;
-    rdfs:label "shipment 4471" ;
-    ul:handledBy ul:carrier-dhl .
+<https://ul.edu.lb/kr/id/shipment/brunel/1447385217.7> a owl:NamedIndividual , ioc:Shipment ;
+    rdfs:label "shipment of order 1447385217.7" ;
+    ul:handledBy carrier:V444_0 .
 
-ul:ship-4472 a owl:NamedIndividual , ioc:Shipment ;
-    rdfs:label "shipment 4472" ;
-    ul:handledBy ul:carrier-blackline .
+<https://ul.edu.lb/kr/id/shipment/brunel/1447291369.7> a owl:NamedIndividual , ioc:Shipment ;
+    rdfs:label "shipment of order 1447291369.7" ;
+    ul:handledBy carrier:V444_1 .
 
-ul:ship-4473 a owl:NamedIndividual ;
-    rdfs:label "shipment 4473" ;
-    ul:handledBy ul:carrier-blackline .
+<https://ul.edu.lb/kr/id/shipment/brunel/1447311670.7> a owl:NamedIndividual ;
+    rdfs:label "shipment of order 1447311670.7" ;
+    ul:handledBy carrier:V444_1 .
