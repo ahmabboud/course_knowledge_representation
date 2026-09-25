@@ -26,7 +26,9 @@ dashes in prose; audit every deck you touch before you stop (item 15); every
 new term goes into `GLOSSARY.md` (item 16); commit messages carry no
 `Co-Authored-By`, session link or other AI attribution (instructor's
 standing preference). The start, during and end steps of every work
-session are at the top of `AGENTS.md`.
+session are at the top of `AGENTS.md`. Running a lab end to end goes to a
+Sonnet sub-agent with a self-contained brief and a short report back, to
+keep the main session's context clear (instructor's preference, 2026-09-24).
 
 **Where to continue (2026-09-24, end of day):**
 
