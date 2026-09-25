@@ -78,10 +78,9 @@ the work elsewhere.
 For one order, the converter creates facts like these:
 
 ```text
-order 1447296446.7  --fromPlant-->  PLANT03
-order 1447296446.7  --shipsFrom--> port
-order 1447296446.7  --carriedBy--> carrier V44_3
-PLANT03             --servesPort--> port
+order 1447296446.7  --fromPlant-->  PLANT16
+order 1447296446.7  --shipsFrom-->  PORT09
+order 1447296446.7  --carriedBy-->  carrier V44_3
 ```
 
 The same real thing receives the same IRI whenever it appears. For example,
@@ -129,8 +128,8 @@ one.
 
 | Term | Plain definition |
 |---|---|
-| **RDF** | A standard way to express facts as subject–relationship–object triples. |
-| **triple** | One RDF fact, such as `an order — carried by — a carrier`. |
+| **RDF** | A standard way to express facts as subject, relationship, object triples. |
+| **triple** | One RDF fact, such as `an order, carried by, a carrier`. |
 | **graph** | A set of linked triples. |
 | **IRI** | A globally unique identifier written like a web address. It identifies a thing even if opening it in a browser shows nothing. |
 | **Turtle (`.ttl`)** | A readable text format for RDF. |

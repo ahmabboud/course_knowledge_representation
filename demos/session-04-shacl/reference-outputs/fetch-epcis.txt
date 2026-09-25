@@ -1,0 +1,15 @@
+command: ../.venv/bin/python fetch_epcis.py (rdflib 7.6.0, 2026-09-25)
+workspace/epcis-shacl.ttl: 1,137 lines, 887 triples
+  node shapes     30
+  property shapes 71
+  SPARQL constraints 0, severities set 0   (all core, all the default severity, Violation)
+
+Pattern 1 · write a property shape once, reuse it by name.
+  27 named property shapes are used by more than one node shape, e.g. RecordTimeShape (5 shapes), ReadPointShape (5 shapes), EventTimeZoneOffsetShape (5 shapes)
+
+Pattern 2 · say what must NOT be there: sh:maxCount 0.
+  13 'forbidden' shapes, e.g. ActionForbiddenShape, ChildEPCsForbiddenShape, ChildQuantityElementForbiddenShape
+
+Pattern 3 · a message a person can act on, on every rule.
+  77 shapes carry an sh:message, e.g.
+  In all EPCIS events, eventTime is mandatory, single valued and an xsd:dateTimeStamp

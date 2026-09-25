@@ -5,6 +5,11 @@ report for both datasets, and a written constraint inventory with
 evidence for each entry, per `course_knowledge_representation/lectures/kr-session-01.html`'s
 lab brief slide.
 
+**Read this first:** [What this lab is doing](OVERVIEW.md). It explains the
+two datasets, what profiling and clustering can show, the purpose of the
+constraint inventory, file roles, terms, and how evidence supports a rule.
+Do not begin the commands until the overall story is clear.
+
 ## Working directories
 
 Start in `DEMO_ROOT`, the folder containing `requirements.txt`, `data/`, and

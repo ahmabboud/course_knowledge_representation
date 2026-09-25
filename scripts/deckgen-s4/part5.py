@@ -25,7 +25,7 @@ SLIDES.append(divider("Part 5 · Reuse and the gate", "Reuse and the gate",
     "Not a person. A check that runs on every change."))
 
 # ---------------------------------------------------------------- EPCIS as a reference
-nums = [("1,138", "lines"), ("30", "node shapes"), ("71", "property shapes"), ("0", "SPARQL rules"), ("0", "severities set")]
+nums = [("1,137", "lines"), ("30", "node shapes"), ("71", "property shapes"), ("0", "SPARQL rules"), ("0", "severities set")]
 ex = (f'''epcis:EventTimeShape {K}a{E} sh:PropertyShape ;
   sh:path epcis:eventTime ;
   sh:datatype xsd:dateTimeStamp ;

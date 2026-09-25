@@ -7,6 +7,11 @@ pipeline Milestone 1 of your team project asks for. Nothing is handed in or
 graded. The lab works when you can explain why the first report has 3,435
 Violations and only 2 of them are the orders' fault.
 
+**Read this first:** [What this lab is doing](OVERVIEW.md). It explains the
+Session 2 graph, why SHACL is a data check rather than an OWL axiom, triage,
+the CI sample and gate, file roles, terms, and how to separate facts from
+validation decisions. Do not start Part A until the overall story is clear.
+
 Every number in `lectures/kr-session-04.html` comes from the files in
 `reference-outputs/`, produced by these scripts on 2026-09-25.
 
@@ -61,7 +66,7 @@ Every number in `lectures/kr-session-04.html` comes from the files in
    (links in `reference-outputs/ci-runs.txt`).
 6. `python fetch_epcis.py` (needs the network once). Downloads GS1's EPCIS
    2.0 shapes into `workspace/` and prints what they are made of.
-   **Expect:** 1,138 lines, 30 node shapes, 71 property shapes, 0 SPARQL
+   **Expect:** 1,137 lines, 30 node shapes, 71 property shapes, 0 SPARQL
    constraints, 0 severities set; 27 property shapes reused by more than
    one node shape, 13 "forbidden" shapes (`sh:maxCount 0`), 77 shapes with
    an `sh:message`. These are the three patterns worth borrowing.

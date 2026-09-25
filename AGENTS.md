@@ -166,10 +166,17 @@ lines, one per concept) and **"Take it to your team project"** (which file
 is a template, which decision the team must make, what goes in the report).
 
 **The lab README** (`demos/session-NN-*/README.md`), sections in this order:
-why this lab exists; before you start (prerequisites, working directory,
+first, a link to the lab's `OVERVIEW.md`; why this lab exists; before you start (prerequisites, working directory,
 services running, the fallback); Part A; Part B; Part C; optional (notebook
 walkthrough, instructor demos); you understood this lab if; take it to your
 team project. Reference implementation: `demos/session-02-rdf-sparql/`.
+
+**Lab overview.** Every lab has an `OVERVIEW.md`, linked first from its
+README with a "Read this first" line. It explains the question the lab asks,
+the short story, the data used (source file, what one row means, and why the
+lab needs it), how the items relate, what each step proves, file roles with
+whether students edit them, terms needed first, and how to distinguish source
+facts, modelling decisions, and results. Session 2 is the reference.
 
 **Tools, Windows and macOS.**
 
