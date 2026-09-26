@@ -140,9 +140,8 @@ SLIDES.append(slide("The rubric", "Build and defense", 5,
     ''' + table(["Line", "Points", ""], rows) + '''
     <div class="lu-stack">
       ''' + callout("Full marks for losing", "A graph model that loses to the baseline, reported as such with an explanation, scores full marks on prediction.") + '''
-      ''' + callout("Graded by running it", "The system is graded by cloning it fresh and running it. What does not come up cannot score.", "neutral") + '''
     </div>
-  </div>''', '''<p>Five minutes. The rubric is the syllabus's (<code>syllabus-source.json</code>, capstone rubric, 100 points); the assessment table gives it 35 percent of the grade, the defense 10.</p>'''))
+  </div>''', '''<p>Five minutes. The rubric is the syllabus's (<code>syllabus-source.json</code>, capstone rubric, 100 points); the assessment table gives it 35 percent of the grade, the defense 10. The system is graded by cloning it fresh and running it: what does not come up cannot score.</p>'''))
 
 rows = [("Length", "At most 16 pages, the open problem included"),
         ("What it documents", "What was deployed, not what was planned"),
