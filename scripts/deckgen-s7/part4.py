@@ -17,11 +17,22 @@ S, C, E = '<span class="tok-str">', '<span class="tok-com">', '</span>'
 EVAL = Path(__file__).resolve().parents[2] / "demos" / "session-07-access-layer" / "reference-outputs" / "evaluate.txt"
 
 
+def rules_id():
+    """The same fingerprint of the prompt rules as access_layer.RULES_ID."""
+    import hashlib
+    src = (EVAL.parents[1] / "access_layer.py").read_text()
+    rules = re.search(r'RULES = """(.*?)"""', src, re.S).group(1)
+    return hashlib.sha256(rules.encode()).hexdigest()[:8]
+
+
 def recorded():
-    """{setting: (f1, refused_right, refused_wrong, repaired)} and the header line, or None."""
+    """{setting: (f1, refused_right, refused_wrong, repaired)} and the header line, or None.
+    A recording made with other prompt rules than today's is ignored: its numbers are stale."""
     if not EVAL.exists():
         return None, None
     txt = EVAL.read_text()
+    if f"rules {rules_id()}" not in txt.splitlines()[0]:
+        return None, None
     out = {}
     for m in re.finditer(r"^(\w+)\s+mean F1 ([\d.]+) on \d+ answerable questions; refused (\d+) of \d+ it should; "
                          r"refused (\d+) it should not; (\d+) answered after a repair", txt, re.M):

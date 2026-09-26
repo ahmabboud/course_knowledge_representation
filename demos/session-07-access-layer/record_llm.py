@@ -13,6 +13,8 @@ import sys
 from datetime import date
 from pathlib import Path
 
+from access_layer import RULES_ID
+
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "reference-outputs"
 RUNS = [
@@ -32,7 +34,8 @@ def main():
         r = subprocess.run([sys.executable, *args], cwd=HERE, env=env, capture_output=True, text=True)
         if r.returncode:
             sys.exit(f"{name} failed:\n{r.stderr[-2000:]}")
-        head = f"python {' '.join(args)}   (recorded {date.today()}, model {os.environ.get('LLM_MODEL', 'gemini-3.5-flash-lite')})\n"
+        head = (f"python {' '.join(args)}   (recorded {date.today()}, model "
+                f"{os.environ.get('LLM_MODEL', 'gemini-3.5-flash-lite')}, rules {RULES_ID})\n")
         (OUT / name).write_text(head + r.stdout)
         print(r.stdout.splitlines()[-1] if r.stdout else "", flush=True)
     print("done: reference-outputs/llm-cache.json and the four outputs. Commit them.")

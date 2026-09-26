@@ -1,11 +1,14 @@
-python show_prompt.py "How many orders did carrier V44_3 carry?"   (2026-09-25)
+python show_prompt.py "How many orders did carrier V44_3 carry?"   (2026-09-25, rules revised after the first recorded run)
 You write one SPARQL 1.1 query for the Brunel supply chain graph.
 Use only the classes and properties listed in the schema; the prefix ul: is <https://ul.edu.lb/kr/scm#>.
 Things are named by codes, not names: carrier <https://ul.edu.lb/kr/id/carrier/brunel/V44_3>,
 plant <https://ul.edu.lb/kr/id/plant/brunel/PLANT03>, port <https://ul.edu.lb/kr/id/port/brunel/PORT04>,
 customer <https://ul.edu.lb/kr/id/customer/brunel/V555_15>, product <https://ul.edu.lb/kr/id/product/brunel/1681878>.
+Every code in a question (V44_3, V444_0, PLANT03, PORT09, V555_15, ...) is a thing in the graph: write it as an IRI like these.
 A late order is typed ul:LateOrder only, and ul:LateOrder is a subclass of ul:Order.
-If the schema cannot answer the question, reply exactly: REFUSE: <what the graph is missing>
+All of SPARQL 1.1 is allowed: COUNT, SUM, GROUP BY, ORDER BY, LIMIT, DISTINCT, OPTIONAL, UNION, FILTER.
+Refuse only if the question needs a kind of fact the schema does not list at all (for example a person's name).
+Then reply exactly: REFUSE: <the kind of fact the graph is missing>
 Otherwise reply with the query only.
 
 Schema (the classes, then: class property target):
@@ -76,4 +79,4 @@ Question: How many orders did carrier V44_3 carry?
 
 ------------------------------------------------------------
 examples picked: 1, 2, 4  (Which orders did carrier V44_3 carry, with their service level?, How many orders and how many late orders does each carrier have?, How many orders are there in total, late ones included?)
-prompt: 2,920 characters, 74 lines
+prompt: 3,239 characters, 77 lines

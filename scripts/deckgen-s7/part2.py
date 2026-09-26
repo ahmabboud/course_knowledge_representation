@@ -2,7 +2,7 @@
 
 Numbers: reference-outputs/make-void.txt and show-prompt.txt (2026-09-25);
 the prompt's parts measured with access_layer.build_prompt on the same day
-(rules 702 characters, schema 1,317, examples 796, question 50, headings 55).
+(rules 1,021 characters, schema 1,317, examples 796, question 50, headings 55).
 """
 from common import slide, divider, defbox, callout, code
 from kit import head, table
@@ -84,7 +84,7 @@ SLIDES.append(slide("Picking the closest examples", "Grounding", 3,
     '''<p>Three minutes. Real output of <code>show_prompt.py</code>: <code>examples picked: 1, 2, 4</code>. Example 1 is almost the question itself, which is why test questions and examples must never be the same (next slide).</p>'''))
 
 # ---------------------------------------------------------------- prompt anatomy, drawn
-parts = [("rules", 702, PAPER2, INK2), ("schema", 1372, BLUE_BG, BLUE_TXT), ("3 examples", 796, GREEN_BG, "var(--lu-green-900)"), ("question", 50, "var(--lu-amber-050)", AMBER)]
+parts = [("rules", 1021, PAPER2, INK2), ("schema", 1372, BLUE_BG, BLUE_TXT), ("3 examples", 796, GREEN_BG, "var(--lu-green-900)"), ("question", 50, "var(--lu-amber-050)", AMBER)]
 total = sum(p[1] for p in parts)
 g, x = "", 0.0
 W = FULL - 4
@@ -98,15 +98,15 @@ for name, n, fill, col in parts:
         g += text(lx, 75, name, color=col, weight=600)
         g += text(lx, 142, f"{n:,} characters", "s-label", color=INK3)
     x += w
-g += text(2, 18, "2,920 characters in all, about a page", "s-label", anchor="start", color=INK2)
-pic = svg(FULL, 160, g, "The prompt: rules 702 characters, schema 1,372, three examples 796, the question 50.")
+g += text(2, 18, "3,239 characters in all, about a page", "s-label", anchor="start", color=INK2)
+pic = svg(FULL, 160, g, "The prompt: rules 1,021 characters, schema 1,372, three examples 796, the question 50.")
 SLIDES.append(slide("What the model is sent", "Grounding", 3,
     head("The whole prompt for one question", "Nothing hidden: python show_prompt.py prints every character") + '''
   ''' + pic + '''
   <div class="lu-split" style="margin-top:var(--lu-s3)">
     ''' + defbox([("Prompt", "Everything the model is given in one call: rules, schema, examples, question.")]) + '''
     ''' + callout("Grounding", "Giving the model the facts it must use, here the schema and examples, instead of relying on what it remembers.", "neutral") + '''
-  </div>''', '''<p>Three minutes. Measured with <code>build_prompt</code>: rules 702, schema 1,317 plus 55 of headings, examples 796, question 50; 2,920 in all (<code>reference-outputs/show-prompt.txt</code>). The Session 3 ontology would be many times this, and would still not say what is actually in the data.</p>'''))
+  </div>''', '''<p>Three minutes. Measured with <code>build_prompt</code>: rules 1,021, schema 1,317 plus 55 of headings, examples 796, question 50; 3,239 in all (<code>reference-outputs/show-prompt.txt</code>). The Session 3 ontology would be many times this, and would still not say what is actually in the data.</p>'''))
 
 SLIDES.append(slide("Check: examples and tests", "Grounding", 2, '''  <div class="lu-eyebrow">Check question</div>
   <div class="lu-mcq" data-qid="s7-q1" data-answer="b" data-label="Why no test question may also be an example"

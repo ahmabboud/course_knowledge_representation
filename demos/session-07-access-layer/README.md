@@ -36,7 +36,7 @@ everything else from runs of these scripts on 2026-09-25.
    189 triples`. **Look at:** `void.ttl`, one class partition: the class,
    its count, and for each property the class it points to.
 2. `python show_prompt.py "How many orders did carrier V44_3 carry?"`. No
-   model call. **Expect:** `examples picked: 1, 2, 4` and about 2,900
+   model call. **Expect:** `examples picked: 1, 2, 4` and about 3,200
    characters. **Notice:** the whole prompt fits on two screens: rules,
    schema, three examples, the question.
 3. `python ask.py "How many orders did carrier V44_3 carry?"`. One live
