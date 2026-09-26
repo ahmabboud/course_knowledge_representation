@@ -79,7 +79,7 @@ nodes = [node("c", "git clone", 130, 50, 200, 56, kind="builtin"),
          node("u", "docker compose up --build", 830, 50, 380, 56, kind="builtin"),
          node("p", "pipeline: map, gate,\nVoID, load", 830, 170, 330, 70, kind="builtin"),
          node("a", "access layer answers\non 127.0.0.1:8000", 1250, 170, 330, 70, kind="builtin"),
-         node("x", "stops: a Violation,\na missing file, a path", 430, 170, 360, 70, kind="builtin")]
+         node("x", "stops: a Violation,\na missing file, a path", 350, 170, 360, 70, kind="builtin")]
 edges = [edge("a1", "c", "e", ""), edge("a2", "e", "u", ""), edge("a3", "u", "p", ""),
          edge("a4", "p", "a", "passes"), edge("a5", "p", "x", "fails")]
 steps = [{"show": ["c", "e", "a1"], "run": ["a1"], "set": {"c": "active"}},
@@ -167,7 +167,7 @@ n = [node("src", "Sources\nSession 1", 130, 200, 200, 84, kind="builtin"),
      node("map", "Mapping\nSession 5", 420, 330, 220, 84, kind="builtin"),
      node("ont", "Ontology\nSession 3", 720, 70, 220, 84, kind="builtin"),
      node("shp", "Shapes\nSession 4", 720, 200, 220, 84, kind="builtin"),
-     node("kg", "Knowledge graph\nSessions 2 and 5", 1030, 200, 250, 84, kind="builtin"),
+     node("kg", "Knowledge graph\nSessions 2 and 5", 1050, 200, 250, 84, kind="builtin"),
      node("learn", "Learning\nSession 6", 1325, 90, 200, 84, kind="builtin"),
      node("ask", "Questions\nSession 7", 1325, 310, 200, 84, kind="builtin")]
 e = [edge("e1", "src", "prof"), edge("e2", "src", "map"), edge("e3", "prof", "ont", "rules"), edge("e4", "prof", "shp"),
