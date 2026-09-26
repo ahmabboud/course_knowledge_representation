@@ -8,10 +8,8 @@ Five small parts, each a function you can read on its own:
   check_query     is the query valid SPARQL, and does it use only real terms?
   answer          the whole loop: ask, check, repair up to 2 times, or refuse
 
-The model is reached through Gemini's OpenAI compatible address, with the key
-GOOGLE_API_KEY from demos/.env. LLM_MODEL picks the model; LLM_BASE_URL and
-LLM_API_KEY point it at any other OpenAI compatible server (Ollama:
-http://localhost:11434/v1). LLM_MODE=replay reads the instructor's recorded
+The model is Gemini, with the key GOOGLE_API_KEY from demos/.env; LLM_MODEL
+picks which Gemini model. LLM_MODE=replay reads the instructor's recorded
 answers instead (reference-outputs/llm-cache.json): the fallback when a key
 does not work.
 """
@@ -42,6 +40,7 @@ VOID = Namespace("http://rdfs.org/ns/void#")
 VEXT = Namespace("http://ldf.fi/void-ext#")
 SH = Namespace("http://www.w3.org/ns/shacl#")
 RDFS = Namespace("http://www.w3.org/2000/01/rdf-schema#")
+GEMINI = "https://generativelanguage.googleapis.com/v1beta/openai"  # Gemini's OpenAI style address
 PREFIXES = "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
 
 
@@ -179,20 +178,19 @@ def ask_model(prompt, mode=None):
             raise SystemExit(f"No recorded answer for this prompt (key {key}). Replay works only for the "
                              "lab's own questions and files, unchanged; run live for anything else.")
         return cache[key]["reply"]
-    base = os.environ.get("LLM_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai")
-    api_key = os.environ.get("LLM_API_KEY") or os.environ.get("GOOGLE_API_KEY")
-    if not api_key and "localhost" not in base:
+    base = GEMINI
+    api_key = os.environ.get("GOOGLE_API_KEY")
+    if not api_key:
         raise SystemExit("No key: put GOOGLE_API_KEY in demos/.env (see demos/.env.example), "
                          "or run with LLM_MODE=replay.")
     # A free tier limits requests per minute, tokens per minute and requests per
     # day, per project. Wait between calls (4 s keeps under 15 a minute), and
     # on "too many requests" (429) wait longer and try again.
-    local = "localhost" in base or "127.0.0.1" in base
-    time.sleep(float(os.environ.get("LLM_DELAY", "0" if local else "4")))
+    time.sleep(float(os.environ.get("LLM_DELAY", "4")))
     for attempt in range(4):
         try:
             r = requests.post(f"{base}/chat/completions", timeout=90,
-                              headers={"Authorization": f"Bearer {api_key or 'none'}"},
+                              headers={"Authorization": f"Bearer {api_key}"},
                               json={"model": model_name(), "temperature": 0,
                                     "messages": [{"role": "user", "content": prompt}]})
         except requests.ConnectionError:
@@ -201,8 +199,8 @@ def ask_model(prompt, mode=None):
             break
         if "PerDay" in r.text or "per day" in r.text.lower():
             raise SystemExit("The free tier's daily limit is used up for this project (it resets at midnight "
-                             "Pacific time, 10:00 in Beirut). Run with LLM_MODE=replay, or use another model "
-                             "(LLM_MODEL), or Ollama.")
+                             "Pacific time, 10:00 in Beirut). Run with LLM_MODE=replay, or use another "
+                             "Gemini model (LLM_MODEL).")
         wait = 20 * (attempt + 1)
         print(f"  (too many requests a minute: waiting {wait} s, then trying again)", flush=True)
         time.sleep(wait)

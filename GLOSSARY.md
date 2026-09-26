@@ -311,7 +311,6 @@ editing this file (it writes `assets/glossary.js`).
 | **Large language model** | A model trained on huge amounts of text that writes text, and code, one piece at a time. |
 | **LLM** | Short for large language model. |
 | **Gemini** | Google's family of large language models, used live in the lab through a free key. |
-| **Ollama** | A program that runs open language models on your own computer, with no key. |
 | **VoID** | Vocabulary of Interlinked Datasets: a small RDF description of a graph's classes, properties and counts. |
 | **SIB** | The Swiss Institute of Bioinformatics, whose endpoints and tools (void-generator, sparql-llm) lead in text to SPARQL. |
 | **void-generator** | SIB's Java tool that writes a VoID description from a live SPARQL endpoint. |

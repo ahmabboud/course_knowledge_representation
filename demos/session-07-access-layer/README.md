@@ -100,8 +100,6 @@ python evaluate.py --setting repair --add-class-check --questions my_questions.y
 - Point the lab at your running Session 2 endpoint instead of the file:
   `SPARQL_ENDPOINT=http://127.0.0.1:3030/kr/sparql python ask.py "..."`
   (Session 2's Fuseki, its `kr` dataset, started from `demos/` with `docker compose up -d`).
-- **Ollama, no key:** `ollama pull qwen2.5-coder:7b` (4.7 GB), then
-  `LLM_BASE_URL=http://localhost:11434/v1 LLM_MODEL=qwen2.5-coder:7b python evaluate.py`.
 - **void-generator** (SIB, Java 17 or later, needs a running endpoint)
   writes the same kind of VoID file from any endpoint:
   `java -jar void-generator-0.19-uber.jar -r <endpoint> -p <endpoint> --void-file void.ttl --iri-of-void https://ul.edu.lb/kr/brunel/void`.

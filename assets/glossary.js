@@ -270,7 +270,6 @@ window.LU_GLOSSARY = [
 {"term": "Large language model", "def": "A model trained on huge amounts of text that writes text, and code, one piece at a time.", "session": 7, "forms": [{"text": "Large language model", "fixed": false}]},
 {"term": "LLM", "def": "Short for large language model.", "session": 7, "forms": [{"text": "LLM", "fixed": true}]},
 {"term": "Gemini", "def": "Google's family of large language models, used live in the lab through a free key.", "session": 7, "forms": [{"text": "Gemini", "fixed": false}]},
-{"term": "Ollama", "def": "A program that runs open language models on your own computer, with no key.", "session": 7, "forms": [{"text": "Ollama", "fixed": false}]},
 {"term": "VoID", "def": "Vocabulary of Interlinked Datasets: a small RDF description of a graph's classes, properties and counts.", "session": 7, "forms": [{"text": "VoID", "fixed": true}]},
 {"term": "SIB", "def": "The Swiss Institute of Bioinformatics, whose endpoints and tools (void-generator, sparql-llm) lead in text to SPARQL.", "session": 7, "forms": [{"text": "SIB", "fixed": true}]},
 {"term": "void-generator", "def": "SIB's Java tool that writes a VoID description from a live SPARQL endpoint.", "session": 7, "forms": [{"text": "void-generator", "fixed": false}]},
