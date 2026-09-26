@@ -695,6 +695,14 @@ strong, .lu-strong { font-weight: 600; }
   border-left: 3px solid var(--lu-red-700); padding: var(--lu-s2) var(--lu-s4);
   background: var(--lu-red-050); font-size: var(--lu-t-small); color: var(--lu-ink-2);
 }
+/* A slide can carry several glossary terms; study mode inlines a definition
+   after every one of them at once, which can add more height than the fixed
+   canvas holds (unlike the single-term case this component was sized for).
+   Rather than clip that content invisibly with no way to reach it, let the
+   body scroll in study mode only. The projected view (study mode off) and
+   print (which already forces height:auto, see the print block below) are
+   both unaffected. */
+.lu-selfstudy .slide__body { overflow-y: auto; }
 
 /* 11.2 Click-to-reveal ---------------------------------------------------- */
 .lu-reveal { border: 1px solid var(--lu-line); border-radius: var(--lu-r3); overflow: hidden; background: var(--lu-paper); }

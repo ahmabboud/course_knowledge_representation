@@ -15,12 +15,26 @@
      badge / node outside canvas, label over a node, labels overlap
    It does not replace scripts/audit-deck.js, and it does not click MCQs:
    answer them by hand (or by script) from a clean state and re-check that slide.
+
+   Study mode (S): the body scrolls in this mode instead of clipping content
+   with no way to reach it (assets/lu.css, 2026-09-26), so the "overflow" and
+   "into footer" checks are skipped while study mode is on; every other
+   check still runs. Run this script once with study mode off (the baseline)
+   and once with it on (AGENTS.md 2f).
 */
 (async () => {
   window.__qa = ['running'];
   const sc = (() => { const m = getComputedStyle(document.querySelector('.deck__stage')).transform.match(/matrix\(([\d.]+)/); return m ? parseFloat(m[1]) : 1; })();
   const S = [...document.querySelectorAll('.slide')];
   const res = [];
+  // Study mode inlines a definition after every glossary term a slide uses,
+  // which can add more height than the fixed canvas holds; .slide__body
+  // scrolls in that mode instead of clipping the content with no way to
+  // reach it (assets/lu.css). A slide whose body is legitimately scrollable
+  // is not a defect, so the two content-height checks below (raw overflow,
+  // and content running into the footer) are skipped for it; every other
+  // check (code width, table width, diagram geometry) still runs.
+  const selfstudy = document.body.classList.contains('lu-selfstudy');
   const inter = (a, b, pad = 0) => a.left < b.right - pad && b.left < a.right - pad && a.top < b.bottom - pad && b.top < a.bottom - pad;
   const visible = el => getComputedStyle(el).opacity !== '0' && (!el.closest('g') || getComputedStyle(el.closest('g')).opacity !== '0');
   for (let n = 1; n <= S.length; n++) {
@@ -36,11 +50,11 @@
       if (f && bar && f.getBoundingClientRect().bottom > bar.getBoundingClientRect().top + 1)
         res.push(`${tag} walk overlaps bar by ${Math.round((f.getBoundingClientRect().bottom - bar.getBoundingClientRect().top) / sc)}px`);
     }
-    if (s.scrollHeight > s.clientHeight) res.push(`${tag} overflow ${s.scrollHeight - s.clientHeight}px`);
+    if (!selfstudy && s.scrollHeight > s.clientHeight) res.push(`${tag} overflow ${s.scrollHeight - s.clientHeight}px`);
     for (const c of s.querySelectorAll('.lu-code pre')) if (c.scrollWidth > c.clientWidth + 1) res.push(`${tag} code over ${c.scrollWidth - c.clientWidth}px`);
     for (const t of s.querySelectorAll('table')) if (t.scrollWidth > t.parentElement.clientWidth + 1) res.push(`${tag} table wider by ${t.scrollWidth - t.parentElement.clientWidth}px`);
     const foot = s.querySelector('.slide__foot'), body = s.querySelector('.slide__body');
-    if (foot && body) {
+    if (!selfstudy && foot && body) {
       let mb = 0;
       for (const k of body.querySelectorAll('*')) { const r = k.getBoundingClientRect(); if (r.height > 0 && r.width > 0) mb = Math.max(mb, r.bottom); }
       if (mb > foot.getBoundingClientRect().top + 1) res.push(`${tag} into footer by ${Math.round((mb - foot.getBoundingClientRect().top) / sc)}px`);

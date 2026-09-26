@@ -264,6 +264,9 @@ One session at a time; the instructor approves each before the next starts.
    prints nothing.
 7. **Audit live** on GitHub Pages with the built-in browser (cache buster,
    `lu:` state cleared): `scripts/audit-live.js` until it reports nothing,
+   with study mode off, then again with it on (S; `.slide__body` scrolls in
+   this mode instead of clipping, so the script skips its overflow and
+   into-footer checks while study mode is on, per its own header comment),
    answered MCQs, filled blanks and revealed polls re-checked, then a
    Sonnet sub-agent's slide-by-slide visual pass.
 8. **Hand over.** Log, push, tell the instructor what is left for their Mac
