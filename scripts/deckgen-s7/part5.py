@@ -14,18 +14,18 @@ SLIDES.append(divider("Part 5 · Deployment and governance", "Deployment",
     "One command to start it, signals that tell you when it breaks, and rules on who may ask what."))
 
 nodes = [
-    node("db", "operational database", 160, 45, 280, 56, kind="builtin"),
-    node("mk", "mapping job\n(Morph-KGC)", 520, 45, 280, 70, kind="builtin"),
-    node("sh", "SHACL gate\n(pyshacl)", 880, 45, 260, 70, kind="builtin"),
-    node("fu", "SPARQL endpoint\n(Fuseki)", 880, 185, 280, 70, kind="builtin"),
-    node("al", "access layer\n(serve.py)", 520, 185, 280, 70, kind="builtin"),
-    node("u", "a manager's question", 160, 185, 280, 56, kind="literal"),
-    node("llm", "model API (outside the stack)", 520, 315, 380, 56, kind="literal"),
+    node("db", "operational database", 160, 40, 280, 56, kind="builtin"),
+    node("mk", "mapping job\n(Morph-KGC)", 520, 40, 280, 70, kind="builtin"),
+    node("sh", "SHACL gate\n(pyshacl)", 880, 40, 260, 70, kind="builtin"),
+    node("fu", "SPARQL endpoint\n(Fuseki)", 880, 150, 280, 70, kind="builtin"),
+    node("al", "access layer\n(serve.py)", 520, 150, 280, 70, kind="builtin"),
+    node("u", "a manager's question", 160, 150, 280, 56, kind="literal"),
+    node("llm", "model API (outside the stack)", 520, 258, 380, 56, kind="literal"),
 ]
 edges = [edge("a", "db", "mk", "rows"), edge("b", "mk", "sh", "triples"), edge("c", "sh", "fu", "if valid"),
          edge("d", "u", "al", ""), edge("e", "al", "fu", "query"),
          edge("f", "al", "llm", "prompt")]
-pic = flow("The Session 8 stack", 1448, 350, nodes, edges, [{"show": [n["id"] for n in nodes] + [e["id"] for e in edges]}],
+pic = flow("The Session 8 stack", 1448, 290, nodes, edges, [{"show": [n["id"] for n in nodes] + [e["id"] for e in edges]}],
            legend={"builtin": "A container in the stack", "literal": "Outside it"})
 SLIDES.append(slide("The stack, one command", "Deployment", 4,
     head("Everything from Sessions 2 to 7, as containers in one Compose file", "docker compose up starts it all; only the model is outside") + '''

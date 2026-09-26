@@ -30,11 +30,10 @@ SLIDES.append(slide("VoID: the graph describes itself", "Grounding", 5, '''  <di
     ''' + code("void.ttl · the Plant partition, shortened", vd) + '''
     <div class="lu-stack">
       ''' + defbox([("VoID", "Vocabulary of Interlinked Datasets: a small RDF description of a graph's classes, properties and counts.")]) + '''
-      ''' + callout("Small on purpose", "<b>189 triples</b> describe all 135,841. One SPARQL CONSTRUCT writes them, in 0.3 seconds.") + '''
-      ''' + callout("The real tool", "SIB's void-generator writes the same layout from any live endpoint (Java 17). sparql-llm reads it.", "neutral") + '''
+      ''' + callout("Small on purpose", "<b>189 triples</b> describe all 135,841. One SPARQL CONSTRUCT writes them, in 0.3 seconds, in the layout of SIB's void-generator.") + '''
     </div>
   </div>''', '''<p>Five minutes. Real run: <code>reference-outputs/make-void.txt</code>. The 2,035 makes links are those whose plant is typed <code>ul:Plant</code>: CND9 makes one product and is typed nothing in Session 2's graph.</p>
-<ul><li>Why not the ontology? It says what could be true (Session 3's classes and axioms); VoID says what is actually there, with counts. The model needs the second.</li></ul>'''))
+<ul><li>SIB's void-generator (Java 17) writes the same layout from any live endpoint, and sparql-llm reads it; the lab's README has the command.</li><li>Why not the ontology? It says what could be true (Session 3's classes and axioms); VoID says what is actually there, with counts. The model needs the second.</li></ul>'''))
 
 sc = '''ul:Order (9,023 things)
 ul:Product (1,540 things)

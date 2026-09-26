@@ -89,8 +89,7 @@ SLIDES.append(slide("The question and the query", "Why it is hard", 4, '''  <div
       ''' + code("the query that answers it · 854", q) + '''
     </div>
     <div class="lu-stack">
-      ''' + defbox([("Text to SPARQL", "Turning a question in plain language into a SPARQL query."),
-                    ("Large language model", "A model trained on huge amounts of text that writes text, and code, one piece at a time.")]) + '''
+      ''' + defbox([("Text to SPARQL", "Turning a question in plain language into a SPARQL query, here by a large language model.")]) + '''
       ''' + callout("What the writer must know", "The property is <code>ul:carriedBy</code>, not &ldquo;carry&rdquo;. The carrier is an IRI built from its code. Neither is in the question.", "neutral") + '''
     </div>
   </div>''', '''<p>Four minutes. 854 is the real answer (Session 2's Q1; test question 4 of the lab). Ask the room: what does a writer need to know that the question does not say? The vocabulary, and the naming rule.</p>'''))
