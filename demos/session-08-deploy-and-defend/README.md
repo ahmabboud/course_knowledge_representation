@@ -9,7 +9,9 @@ materials:
   one `docker compose up --build` for the whole stack, the SHACL gate in CI,
   and a report outline mapped to the rubric. It comes up on a tiny real
   Brunel example; teams replace the example with their own data, layer by
-  layer. Its pipeline has run on the instructor's Mac, and its CI is green.
+  layer. Verified end to end on the instructor's Mac with Docker (2026-09-26): the
+  pipeline loaded Fuseki and the access layer answered through Gemini; its
+  CI is green.
 - `module-08-defense/DEFENSE-DAY.md`: the instructor's run of show.
 - `module-08-defense/scoring-sheet.html`: one printable page per team.
 - `lectures/kr-session-08.html`: the short day deck (plan, standup,
