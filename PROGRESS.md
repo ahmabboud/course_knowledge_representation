@@ -10,7 +10,7 @@ the single to-do list. The status table below was reconciled against the
 repository on 2026-09-24 (REPLAN-STATE item 11). "Built" means the file
 exists and works; no session counts as done until the instructor says so.
 
-**Where to continue (2026-09-26):** All eight sessions are done. Session 8 was approved by the instructor 2026-09-26; `REPLAN-STATE.md` "Where to continue" lists what remains (the study-mode overflow bug, and the Word syllabus doc, now updated). How a session is rebuilt: `AGENTS.md` 2f.
+**Where to continue (2026-09-26):** All eight sessions are done, the Word syllabus is updated, and the study-mode overflow bug is fixed (`assets/lu.css` v1.3.2, verified live on all eight decks both modes). `REPLAN-STATE.md` "Where to continue" lists what remains: a small, pre-existing, unrelated Session 2 finding ("The triple", walk overlaps bar by about 11px, study mode off only) that surfaced during that verification and still needs a decision. How a session is rebuilt: `AGENTS.md` 2f.
 Done most recently (2026-09-24): Session 1 rebuilt and approved; Session 2
 deck and lab rebuilt and verified; IRI convention written into `AGENTS.md` 2d
 and applied to Session 5 mappings; Fuseki now built from Apache's release

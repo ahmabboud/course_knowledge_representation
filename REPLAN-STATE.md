@@ -42,18 +42,31 @@ keep the main session's context clear (instructor's preference, 2026-09-24).
    grading on 2026-09-26 (rubric table, assessment table, Session 8 section,
    milestone wording, policy bullets); the pre-redesign backup was left
    untouched.
-2. **To fix next (instructor, 2026-09-26): content overflowing the slide in
-   study mode.** The instructor saw Session 7 overflow at the bottom and the
-   right. Cause found: study mode (key S, remembered in the browser), which
-   writes every glossary definition inline into the slide. With study mode on,
-   audit-live.js reports 30 findings on Session 7 (up to 808 px into the
-   footer) and 31 on Session 5, so it is every rebuilt deck, not Session 7
-   alone; with study mode off all decks are clean. The fix belongs in the
-   design system (`assets/lu-deck.js` / `lu.css`), not in each deck: for
-   example let a study mode slide scroll, or collect the definitions into one
-   list under the slide instead of inline. Then run audit-live.js with study
-   mode on as a standard step of AGENTS.md 2f.
-3. **Later:** item 18 (syllabus alignment question), items 12 and 19.
+2. **Fixed (2026-09-26): content overflowing the slide in study mode.**
+   Two distinct causes, both in `assets/lu.css`, neither in any deck:
+   (a) study mode inlines a definition after every glossary term a slide
+   uses, which can add far more height than the fixed canvas holds (up to
+   832 px on one Session 7 slide, confirmed live); fixed by letting
+   `.slide__body` scroll in study mode instead of clipping the extra content
+   with no way to reach it (`.lu-selfstudy .slide__body { overflow-y: auto }`).
+   (b) A `.lu-walk` walkthrough is the one flexible item in its column, so
+   the extra height above it squeezed it; `.lu-walk__view` could shrink to 0
+   while its own diagram (sized from its SVG viewBox, not its box) kept
+   painting at full height, spilling into `.lu-walk__bar` right after it,
+   confirmed on two Session 5 slides. Fixed by keeping the walkthrough at
+   its natural size in study mode (`flex-shrink: 0`) so any excess becomes
+   part of the scroll instead of a squeeze. `scripts/audit-live.js` updated
+   to skip its overflow and into-footer checks while study mode is on (the
+   scroll makes them expected, not defects); `AGENTS.md` 2f now says to run
+   it once with study mode off and once with it on. `lu.css` bumped to
+   v1.3.2 (every HTML file's query string updated, every deck rebuilt).
+   Verified live on all eight decks, both modes: Sessions 1, 4, 6, 8 fully
+   clean; Sessions 2, 3, 7 show only pre-existing, unrelated findings
+   (diagram label/badge positions, a "code over" width on two Session 2
+   slides) present identically in both modes, so not a regression from this
+   fix. One separate, small, pre-existing item surfaced while re-verifying
+   Session 2, logged as item 21 below.
+3. **Later:** item 18 (syllabus alignment question), items 12, 19, 20, and 21.
 
 **Settled decisions a new session must not reopen:** grading (instructor, 2026-09-26): attendance and lab run 15, team project 55 scored once offline 48 hours before Session 8 (one mark per layer: works, partly, missing), individual defense 30 (one mark 0 to 3 per student from 2 or 3 questions, not a check of every topic); milestones are ungraded feedback checkpoints; Session 8 is defense only, no build; Session 7 uses Gemini only, no Ollama or other provider (instructor, 2026-09-25); lab simplicity (instructor, 2026-09-25): slides never depend on the lab or its results, every slide example is complete on the slide; every Part B task mirrors a worked example of the same kind already shown on a slide or done in Part A, changing one thing; labs stay short and simple, one script per step with one expected result (to be added to `AGENTS.md` 2e once the coding agent's current edit of that file is pushed); visual variety (instructor, 2026-09-25, on approving Session 3: mix picture types across a deck, `AGENTS.md` 2c rule 9); tool rule (2c rule 5:
 concept first, one slide per tool, no slide for trivial tools, video only for
@@ -229,6 +242,17 @@ Items marked `[x]` are done; everything else is still open.
     automatically). When the skill changes, update both copies, or note the
     drift in the log. It is course-agnostic, so it also belongs in the
     template repo; copy it there when that repo is next touched.
+21. [ ] **Session 2, "The triple": walk overlaps bar by about 11px, study
+    mode OFF only (found 2026-09-26 while verifying item 2's fix).** Disappears
+    with study mode on, so it is not the bug just fixed and not a regression
+    from it. Diagnosed partially: `.lu-walk__view`'s own box (offsetHeight
+    193) is comfortably taller than its diagram's rendered height (147.67),
+    yet the diagram's bottom edge still lands about 7.6 screen px (about
+    11 canvas px) past the step bar's top, a small geometry mismatch, not a
+    shrink-to-0 collapse. Contradicts the older note (item 16) that "with
+    study mode off all decks are clean"; that note is now wrong and should
+    not be relied on. Needs a decision: fix now, or leave logged here until
+    the instructor asks for it.
 21. [x] **Done 2026-09-24, with the instructor's agreement.** **Session 1 rate band sentence, precision.**
     Session 1's rate band walkthrough says "1,370 orders fall in gaps like
     this; 1,364 of them on this one lane". All 1,370 are on that lane
