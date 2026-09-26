@@ -55,9 +55,11 @@ def main():
     for o in orders:
         for prop, kind in ORDER_LINKS:
             edges.setdefault(("order", str(prop).split("#")[1], kind), []).append((ids["order"][o], node(kind, g.value(o, prop))))
-    for plant, product in g.subject_objects(UL.makes):
+    # rdflib does not guarantee graph iteration order.  Stable node IDs and
+    # edge order make the fixed training seeds reproducible across machines.
+    for plant, product in sorted(g.subject_objects(UL.makes), key=lambda pair: tuple(map(str, pair))):
         edges.setdefault(("plant", "makes", "product"), []).append((node("plant", plant), node("product", product)))
-    for plant, port in g.subject_objects(UL.servesPort):
+    for plant, port in sorted(g.subject_objects(UL.servesPort), key=lambda pair: tuple(map(str, pair))):
         edges.setdefault(("plant", "servesPort", "port"), []).append((node("plant", plant), node("port", port)))
 
     # What the model may see about an order: weight, quantity, service level.

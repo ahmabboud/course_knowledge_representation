@@ -17,16 +17,23 @@ one of them is also a "makes" link, so they would give the answer away.
 """
 
 import collections
+import os
 from pathlib import Path
 
 import numpy as np
 import torch
+
+HERE = Path(__file__).resolve().parent
+# PyKEEN uses PyStow for its cache.  Keep that cache with the generated lab
+# data instead of assuming every student can write to a home-directory default
+# such as ~/.data (often false on managed lab computers).
+os.environ.setdefault("PYSTOW_HOME", str(HERE / "data" / "pystow"))
+
 from pykeen.pipeline import pipeline
 from pykeen.triples import TriplesFactory
 
 from learning_utils import mrr
 
-HERE = Path(__file__).resolve().parent
 SEEDS = range(3)
 
 
