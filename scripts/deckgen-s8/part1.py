@@ -133,11 +133,11 @@ SLIDES.append(slide("Questions to expect", "Build and defense", 5,
 pts = [("Ontology quality", 18), ("Constraint validation with SHACL", 15), ("Prediction and evaluation honesty", 13),
        ("Data understanding and constraint discovery", 12), ("Operational data integration", 12),
        ("Access layer", 9), ("Deployment and reproducibility", 9), ("Problem framing and scope", 7), ("Literature and open problem", 5)]
-bars = "".join(f'<div class="lu-stack" style="gap:2px"><span class="lu-caption">{n}</span>' + bar(v, 18, f"{v}", "red" if v >= 15 else "ink") + '</div>' for n, v in pts)
+rows = [(n, f"<b>{v}</b>", '<span style="display:block;min-width:200px">' + bar(v, 18, "", "red" if v >= 15 else "ink") + '</span>') for n, v in pts]
 SLIDES.append(slide("The rubric", "Build and defense", 5,
     head("100 points for the system and the report", "Plus the defense: a separate 10 percent of the grade") + '''
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s2)">
-    <div class="lu-stack" style="gap:var(--lu-s2)">''' + bars + '''</div>
+    ''' + table(["Line", "Points", ""], rows) + '''
     <div class="lu-stack">
       ''' + callout("Full marks for losing", "A graph model that loses to the baseline, reported as such with an explanation, scores full marks on prediction.") + '''
       ''' + callout("Graded by running it", "The system is graded by cloning it fresh and running it. What does not come up cannot score.", "neutral") + '''
