@@ -1,0 +1,126 @@
+{
+ "087018bce1bfd9a7": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "```sparql\nPREFIX ul: <https://ul.edu.lb/kr/scm#>\n\nSELECT DISTINCT ?serviceLevel\nWHERE {\n  ?order a ul:Order ;\n         ul:serviceLevel ?serviceLevel .\n}\n```"
+ },
+ "09a6da742dc8f805": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nSELECT ?plant WHERE {\n  ?plant ul:servesPort <https://ul.edu.lb/kr/id/port/brunel/PORT04> .\n}"
+ },
+ "0c177f6e5bdb50be": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "REFUSE: customer location address or city"
+ },
+ "0ed16fcb11d1bea0": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "```sparql\nPREFIX ul: <https://ul.edu.lb/kr/scm#>\n\nSELECT DISTINCT ?plant WHERE {\n  ?order a ul:Order ;\n         ul:fromPlant ?plant ;\n         ul:shipsFrom <https://ul.edu.lb/kr/id/port/brunel/PORT04> .\n}\n```"
+ },
+ "1aca4da3ea5a93a8": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT (COUNT(DISTINCT ?order) AS ?orders) WHERE {\n  ?order a/rdfs:subClassOf* ul:Order .\n}"
+ },
+ "2002fcd0f2cf4da7": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "REFUSE: order cancellation status"
+ },
+ "37e71700e6541ed5": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "```sparql\nPREFIX ul: <https://ul.edu.lb/kr/scm#>\n\nSELECT (COUNT(DISTINCT ?product) AS ?count)\nWHERE {\n  <https://ul.edu.lb/kr/id/plant/brunel/PLANT03> ul:makes ?product .\n}\n```"
+ },
+ "48e1d6fcf07d2a9b": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nSELECT ?plant WHERE {\n  ?plant ul:makes ?product .\n}\nGROUP BY ?plant\nORDER BY DESC(COUNT(?product))\nLIMIT 1"
+ },
+ "5fbb895c3ce0bfad": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "```sparql\nPREFIX ul: <https://ul.edu.lb/kr/scm#>\n\nSELECT ?plant (COUNT(?product) AS ?productCount)\nWHERE {\n  ?plant a ul:Plant ;\n         ul:makes ?product .\n}\nGROUP BY ?plant\nORDER BY DESC(?productCount)\nLIMIT 1\n```"
+ },
+ "6ba4ebaae062cb46": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT (COUNT(DISTINCT ?order) AS ?count) WHERE {\n  ?order a/rdfs:subClassOf* ul:Order ;\n         ul:shipsFrom <https://ul.edu.lb/kr/id/port/brunel/PORT09> .\n}"
+ },
+ "6dcb853489b2651b": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "```sparql\nPREFIX ul: <https://ul.edu.lb/kr/scm#>\n\nSELECT (COUNT(?order) AS ?totalOrders)\nWHERE {\n  {\n    ?order a ul:Order .\n  }\n  UNION\n  {\n    ?order a ul:LateOrder .\n  }\n}\n```"
+ },
+ "7b95611092339bb5": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "```sparql\nPREFIX ul: <https://ul.edu.lb/kr/scm#>\n\nSELECT (COUNT(?order) AS ?count)\nWHERE {\n  ?order a ul:Order ;\n         ul:orderedBy <https://ul.edu.lb/kr/id/customer/brunel/V555_15> .\n}\n```"
+ },
+ "7e442fb6f98d72bf": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "REFUSE: customer location"
+ },
+ "81df2a91ca422ad8": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nSELECT (COUNT(?rateBand) AS ?count) WHERE {\n  ?rateBand ul:bandCarrier <https://ul.edu.lb/kr/id/carrier/brunel/V444_0> .\n}"
+ },
+ "82695d9656bf76ac": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "REFUSE: customer email address"
+ },
+ "8b80d116a8cb5e0d": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nSELECT (COUNT(?order) AS ?orders) WHERE {\n  ?order ul:orderedBy <https://ul.edu.lb/kr/id/customer/brunel/V555_15> .\n}"
+ },
+ "9b60dd92114f00bc": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "```sparql\nPREFIX ul: <https://ul.edu.lb/kr/scm#>\n\nSELECT (COUNT(?order) as ?count)\nWHERE {\n  ?order ul:carriedBy <https://ul.edu.lb/kr/id/carrier/brunel/V44_3> .\n}\n```"
+ },
+ "9fd74bd5290544a4": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "```sparql\nPREFIX ul: <https://ul.edu.lb/kr/scm#>\n\nSELECT (COUNT(?order) AS ?count)\nWHERE {\n  ?order a ul:Order ;\n         ul:shipsTo <https://ul.edu.lb/kr/id/port/brunel/PORT09> .\n}\n```"
+ },
+ "aefe25baf3370692": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nSELECT (COUNT(?order) AS ?lateOrders) WHERE {\n  ?order a ul:LateOrder .\n}"
+ },
+ "affad38b35335914": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nSELECT DISTINCT ?customer WHERE {\n  ?order a ul:LateOrder ;\n         ul:orderedBy ?customer .\n}"
+ },
+ "b254baec8faf16af": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nSELECT (COUNT(?product) AS ?count) WHERE {\n  <https://ul.edu.lb/kr/id/plant/brunel/PLANT08> ul:makes ?product .\n}"
+ },
+ "c73bf2862da57015": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nSELECT DISTINCT ?carrier WHERE {\n  ?order ul:carriedBy ?carrier .\n}"
+ },
+ "cc70ed034a2c5a5d": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nSELECT (COUNT(?product) AS ?count) WHERE {\n  <https://ul.edu.lb/kr/id/plant/brunel/PLANT03> ul:makes ?product .\n}"
+ },
+ "ccb9f718f1aaeb49": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "REFUSE: customer email address"
+ },
+ "cfdd01d87d6995ad": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "```sparql\nPREFIX ul: <https://ul.edu.lb/kr/scm#>\n\nSELECT DISTINCT ?customer\nWHERE {\n  ?order a ul:LateOrder ;\n         ul:orderedBy ?customer .\n}\n```"
+ },
+ "d637cf0345635deb": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "```sparql\nPREFIX ul: <https://ul.edu.lb/kr/scm#>\n\nSELECT (COUNT(?order) AS ?count)\nWHERE {\n  ?order a ul:LateOrder .\n}\n```"
+ },
+ "e2efecdf7bba57c0": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nSELECT DISTINCT ?service WHERE {\n  ?order ul:serviceLevel ?service .\n}"
+ },
+ "ed148a0109490922": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\nSELECT (COUNT(?order) AS ?count) WHERE {\n  ?order ul:carriedBy <https://ul.edu.lb/kr/id/carrier/brunel/V44_3> .\n}"
+ },
+ "f29d0de0cf15503b": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "PREFIX ul: <https://ul.edu.lb/kr/scm#>\n\nSELECT (COUNT(?rateBand) AS ?count)\nWHERE {\n  ?rateBand ul:bandCarrier <https://ul.edu.lb/kr/id/carrier/brunel/V444_0> .\n}"
+ },
+ "f60e76b8a96c9c9f": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "REFUSE: order cancellation status"
+ },
+ "fa258b89c8ec6362": {
+  "model": "gemini-3.5-flash-lite",
+  "reply": "```sparql\nPREFIX ul: <https://ul.edu.lb/kr/scm#>\n\nSELECT DISTINCT ?carrier\nWHERE {\n  ?order ul:carriedBy ?carrier .\n}\n```"
+ }
+}

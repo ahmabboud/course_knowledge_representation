@@ -431,11 +431,11 @@ answer: 1 row
 <!-- ==================================================================== 26 -->
 <section class="slide" data-label="Three settings, one test set" data-section="Measuring" data-minutes="4">
   <div class="lu-eyebrow">15 questions: 12 answerable, 3 to refuse; mean F1 on the 12</div>
-  <h2 class="lu-h2" style="max-width:66ch">The instructor's recorded run (record_llm.py) fills this table.</h2>
+  <h2 class="lu-h2" style="max-width:66ch">Recorded run: 2026-09-25, model gemini-3.5-flash-lite, rules ccb41f71. Your live run may differ.</h2>
 
-  <table class="lu-table"><thead><tr><th>Setting</th><th>What the model gets</th><th>Mean F1</th><th>Refused rightly</th><th>Refused wrongly</th><th>Repaired</th></tr></thead><tbody><tr><td>schema</td><td>the schema only</td><td>recorded run pending</td><td></td><td></td><td></td></tr><tr><td>examples</td><td>plus 3 examples</td><td>recorded run pending</td><td></td><td></td><td></td></tr><tr><td>repair</td><td>plus check and repair</td><td>recorded run pending</td><td></td><td></td><td></td></tr></tbody></table>
+  <table class="lu-table"><thead><tr><th>Setting</th><th>What the model gets</th><th>Mean F1</th><th>Refused rightly</th><th>Refused wrongly</th><th>Repaired</th></tr></thead><tbody><tr><td>schema</td><td>the schema only</td><td>0.792</td><td>3 of 3</td><td>0</td><td>0</td></tr><tr><td>examples</td><td>plus 3 examples</td><td>1.000</td><td>3 of 3</td><td>0</td><td>0</td></tr><tr><td><b>repair</b></td><td>plus check and repair</td><td>1.000</td><td>3 of 3</td><td>0</td><td>0</td></tr></tbody></table>
   <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read it as Session 6 taught</span><p class="lu-sub">One run, 15 questions: a difference of one question is 0.08 of F1. State what changed, by how much, and whether it survives a second run.</p></div>
-  <template data-notes><p>Four minutes. <b>Not recorded yet:</b> run <code>python record_llm.py</code> on the Mac, then rebuild this deck; the table reads <code>reference-outputs/evaluate.txt</code>.</p></template>
+  <template data-notes><p>Four minutes. <code>reference-outputs/evaluate.txt</code>, 2026-09-25, model gemini-3.5-flash-lite, rules ccb41f71. Ask: is the gain from one setting to the next bigger than the difference between two students' runs? Compare two laptops in the room.</p></template>
 </section>
 
 <!-- ==================================================================== 27 -->

@@ -36,18 +36,19 @@ keep the main session's context clear (instructor's preference, 2026-09-24).
    (`build_heterodata.py`, `train_node_classification.py`,
    `train_link_prediction.py`, `train_pykeen.py`, `leakage_demo.py`,
    `tabular_baseline.py`, the folder's own `requirements.txt`).
-2. **Session 7 rebuild, waiting on one Mac run, then review (item 9).** Lab
-   built (`demos/session-07-access-layer/`, commit e5a9389) and deck drafted
+2. **Session 7 rebuild, waiting for the instructor's review (item 9).** Lab
+   built (`demos/session-07-access-layer/`, commit e5a9389) and deck rebuilt
    (`lectures/kr-session-07-new.html` from `scripts/deckgen-s7/`, 47 slides,
-   179 minutes; live audit clean in default, wrong-answer and right-answer
-   states; Sonnet visual pass clean). No model call was possible in the
-   cloud workspace, so: run `python record_llm.py` on the Mac (key
-   `GOOGLE_API_KEY` in `demos/.env`), commit `reference-outputs/llm-cache.json`
-   and the four recorded outputs, then rebuild the deck (`cd scripts/deckgen-s7
-   && python3 build.py`): the "Three settings" slide reads
-   `reference-outputs/evaluate.txt`. Also build `deploy/Dockerfile` once.
-   After approval: rename over `kr-session-07.html`, add its `index.html`
-   card, mark PROGRESS row 7 Done.
+   179 minutes) with the real recorded numbers on the "Three settings" slide.
+   `record_llm.py` run again on the Mac 2026-09-25 against the revised prompt
+   rules (rules `ccb41f71`, model gemini-3.5-flash-lite): mean F1 0.792
+   (schema), 1.000 (examples), 1.000 (repair) on 12 answerable questions; all
+   three unanswerable questions refused correctly in every setting, no
+   answerable question refused; two answerable questions were wrong in the
+   schema-only setting, both fixed once examples were added. Live audit
+   clean, glossary check clean, Docker image built. After approval: rename
+   over `kr-session-07.html`, add its `index.html` card, mark PROGRESS row 7
+   Done.
 3. **Later:** Session 8 (defense day, no deck; `module-08-defense/`), item 18 (syllabus alignment
    question), items 12 and 19.
 
@@ -530,3 +531,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-25: **First Session 7 recording (Mac, gemini-3.5-flash-lite) showed over-refusal:** mean F1 0.500 (schema), 0.417 (examples), 0.417 (repair); all 3 unanswerable questions refused, but also 4, 7 and 7 answerable ones, with reasons such as "the schema does not support aggregation functions like COUNT" and "REFUSE: carrier V444_0"; the repair loop never ran, because a refusal skips the check. So the prompt rules were revised: every code in a question is a thing in the graph; all of SPARQL 1.1 (COUNT, GROUP BY, ORDER BY, ...) is allowed; refuse only for a kind of fact the schema does not list, with a person's name as the example (not one of the three test refusals, to avoid a leak). The prompt is now 3,239 characters (rules 1,021). Recorded outputs now carry a fingerprint of the rules (`RULES_ID`, today `ccb41f71`), and the deck ignores a recording made with other rules, so the first recording (left uncommitted in `reference-outputs/`, made with the old rules) must be recorded again before the deck shows numbers. Keep the first run's numbers for the discussion: they are a real example of a refusal rule that is too strong.
 - 2026-09-25: Session 7 free tier limits (instructor's question; Gemini rate limits page, 2026-09-02: RPM, TPM and RPD per project, RPD resets at midnight Pacific, actual numbers only in AI Studio): every live call now waits 4 s by default (0 for a local server), retries a 429 three times after 20, 40, 60 s, and stops with a plain message on a daily limit ("PerDay" in the error) or after four tries. Tested here against a fake server returning 429 (per minute, then success) and a daily-limit 429. README "Before you start" says so; the lab makes about 60 calls.
 - 2026-09-25: **Instructor rule: Gemini only.** No Ollama or any other model provider anywhere in Session 7 (lab, README, code, glossary, slides). Removed: the README's Ollama option, the Ollama glossary term, the `LLM_BASE_URL` and `LLM_API_KEY` settings in `access_layer.py` (the address is Gemini's, the key is `GOOGLE_API_KEY`), and Ollama in the daily-limit message. The fallback when a key fails stays `LLM_MODE=replay`.
+- 2026-09-25: **Session 7 recorded again on the Mac, against the revised prompt rules (rules `ccb41f71`, model gemini-3.5-flash-lite).** `make_void.py` wrote 189 triples; `check_my_access.py solutions` gave 3 of 3 right; `record_llm.py` made its recorded run and wrote `reference-outputs/llm-cache.json` plus the four output files, all opening with "rules ccb41f71)". `evaluate.py --quiet` gave: schema mean F1 0.792, examples mean F1 1.000, repair mean F1 1.000, each on 12 answerable questions; every setting refused all 3 unanswerable questions and refused none of the answerable ones. Two answerable questions were wrong in the schema-only setting, both right once examples were added: "How many orders did customer V555_15 place?" (the model wrote `?order a ul:Order ; ul:orderedBy <...V555_15>`, which requires the explicit class and returns count 0, instead of dropping that clause) and "How many orders leave from port PORT09?" (the model used `ul:shipsTo` instead of `ul:shipsFrom`, counting arrivals, 9,023, instead of departures). `LLM_MODE=replay python ask.py` and `LLM_MODE=replay python evaluate.py --quiet` reproduced the same answer and the same three summary lines with no network use. The deck was rebuilt (`cd scripts/deckgen-s7 && python3 build.py`): the "Three settings" slide now reads these real numbers. `python3 scripts/check-glossary.py` printed nothing. Docker Desktop was running, so `docker build -f deploy/Dockerfile -t access-layer .` was also run (image built, not run). Session 6 rerun on this Mac for comparison, without overwriting its reference outputs: `build_graph.py` reproduced its own printed numbers; `gnn.py` matched the Linux reference (`reference-outputs/gnn.txt`) on every line except training seed 1, where PR-AUC read 0.863 against 0.864 and precision@100 read 0.52 against 0.54; `link_prediction.py` matched every popularity-baseline line and every hidden-link count exactly, with TransE's MRR differing in the third decimal on all three seeds (0.550, 0.494, 0.520 against 0.555, 0.495, 0.519) and Hits@1 differing only on seed 0 (0.351 against 0.359); the story (TransE never beats the popularity baseline) is unchanged. Session 7 waits for the instructor's review.
