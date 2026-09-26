@@ -79,7 +79,7 @@ SLIDES.append(slide("Today: objective and time plan", "Opening", 2, '''  <div cl
         ["5 · RDF against the property graph", "10"], ["Lab", "60"], ["Discussion and wrap", "15"]],
         "About 180 minutes in all.") + '''
   </div>''',
-    '''<p>Two minutes. Say it plainly: the lab is not graded; it is where the concepts become real and where the team project starts. One query in the set is slow on purpose.</p>''', kind="tint"))
+    '''<p>Two minutes. Say it plainly: the lab is not collected or marked, only running it in class counts (attendance and lab run, 15 percent); it is where the concepts become real and where the team project starts. One query in the set is slow on purpose.</p>''', kind="tint"))
 
 # ================================================================== Part 1
 SLIDES.append(divider("Part 1 · From a table row to triples", "The data model",

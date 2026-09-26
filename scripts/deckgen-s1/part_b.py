@@ -175,7 +175,7 @@ a_caps = [
     ("Meaning and checks", "<b>Step 3, Sessions 3 and 4.</b> The rules become two things. The <b>ontology</b> says what things are. The <b>shapes</b> say what data must look like. One adds facts, the other refuses bad data."),
     ("Build the graph", "<b>Step 4, Sessions 2 and 5.</b> A mapping turns the tables into a <b>knowledge graph</b>, given meaning by the ontology and checked by the shapes."),
     ("Predict", "<b>Step 5, Session 6.</b> A model learns from the graph, for example which shipment will be late next."),
-    ("Ask in English", "<b>Step 6, Session 7.</b> You ask a question in English; the system writes the query, checks it, and answers or says it does not know. Session 8 ships it all."),
+    ("Ask in English", "<b>Step 6, Session 7.</b> You ask a question in English; the system writes the query, checks it, and answers or says it does not know. Before Session 8 your team hands it all in, and in Session 8 you defend it."),
 ]
 SLIDES.append(slide("The architecture, stage by stage", "Reference architecture", 7,
     head("The spine of the course", "From disconnected systems to a question answered in English, in six moves.") +

@@ -16,7 +16,7 @@ p_nodes = [
     node("map", "Mapping and\nmatching\nSession 5", 715, 150, 190, 120),
     node("ml", "Graph\nmodels\nSession 6", 920, 150, 180, 120),
     node("qa", "Questions\nin English\nSession 7", 1120, 150, 180, 120),
-    node("fin", "Deployed\nsystem, report,\ndefense · S8", 1335, 150, 210, 120),
+    node("fin", "Hand-in, then\nyour defense\nSession 8", 1335, 150, 210, 120),
 ]
 p_edges = [edge(f"e{i}", a, b) for i, (a, b) in enumerate(
     [("inv", "ont"), ("ont", "shp"), ("shp", "map"), ("map", "ml"), ("ml", "qa"), ("qa", "fin")])]
@@ -75,7 +75,7 @@ t_caps = [
 SLIDES.append(slide("Teams and the deadline", "Team project", 3,
     head("The rules", "Teams of 2 or 3, your choice, locked in before Session 2.") +
     flow("Team formation timeline", 1448, 350, t_nodes, t_edges, t_steps, t_caps) +
-    '<p class="lu-sub">Graded as a team. In the Session 8 defense, <b>any teammate can be asked about any part</b>.</p>',
+    '<p class="lu-sub">The project is graded as a team; the defense is yours alone, and <b>any of you can be asked about any part</b>.</p>',
     '''<p>Three minutes. Say the deadline twice. Ask them to post team and topic where you collect them (your usual channel).</p>'''))
 
 # ------------------------------------------------------------------ Grading
