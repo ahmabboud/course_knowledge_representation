@@ -96,7 +96,7 @@ SLIDES.append(slide("The question and the query", "Why it is hard", 4, '''  <div
 
 cards = [
     ("It invents a property", "<code>ul:shippedBy</code> sounds right. The graph says <code>ul:carriedBy</code>. The query runs and answers nothing."),
-    ("It misses a subclass", "<code>?o a ul:Order</code> finds 9,023 orders. The graph has 9,215: 192 are typed <code>ul:LateOrder</code> only."),
+    ("It misses a subclass", "Asked how many orders customer V555_15 placed, it wrote <code>?order a ul:Order</code>: 0. All 110 are typed <code>ul:LateOrder</code> only."),
     ("It answers the unanswerable", "&ldquo;Which customers are in Beirut?&rdquo; The graph has no places at all, but a query can still be written."),
 ]
 grid = "".join(f'<div class="lu-card"><span class="lu-card__label">{t}</span><p class="lu-sub">{d}</p></div>' for t, d in cards)
@@ -106,7 +106,7 @@ SLIDES.append(slide("Three ways a model goes wrong", "Why it is hard", 5,
   <div class="lu-split" style="margin-top:var(--lu-s3)">
     <div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">Orders found by <code>?o a ul:Order</code></span>''' + bar(9023, 9215, "9,023", "red") + '''<span class="lu-card__label">All orders</span>''' + bar(9215, 9215, "9,215") + '''</div>
     ''' + defbox([("Hallucination", "A model stating something fluent that is not true: here, a property or an answer the graph does not have.")]) + '''
-  </div>''', '''<p>Five minutes. The counts are Session 2's (Q5: 9,023 with the plain type, 9,215 with subclasses). The invented property is the lab's <code>broken.sparql</code>; the Beirut question is test question 13.</p>
+  </div>''', '''<p>Five minutes. The V555_15 query is real: the recorded run's <code>schema</code> setting, test question 7 (<code>reference-outputs/evaluate.txt</code>). The bars are Session 2's Q5: 9,023 with the plain type, 9,215 with subclasses. The invented property is the lab's <code>broken.sparql</code>; the Beirut question is test question 13.</p>
 <ul><li>The dangerous one is the second: a wrong number that looks right. Keep it in mind; Part 3 shows the check cannot catch it.</li></ul>'''))
 
 nodes = [

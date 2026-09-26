@@ -55,8 +55,8 @@ everything else from runs of these scripts on 2026-09-25.
    summary lines, `schema`, `examples`, `repair`, each with a mean F1 and
    the refusals. The recorded run is in `reference-outputs/evaluate.txt`;
    **your numbers may differ**, because the model does not always write the
-   same query. **Look at:** question 1 in the `schema` setting: 9,023 or
-   9,215?
+   same query. **Look at:** questions 7 and 10 in the `schema` setting: a
+   valid query and a wrong number.
 6. `python serve.py`, then open
    `http://127.0.0.1:8000/?question=How%20many%20late%20orders%20are%20there%3F&dataset=https://ul.edu.lb/kr/brunel/`
    in a browser. **Expect:** JSON with `dataset`, `question` and `query`: the

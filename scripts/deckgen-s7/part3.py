@@ -68,20 +68,20 @@ SLIDES.append(slide("The repair loop", "Check and repair", 5, '''  <div class="l
   <h2 class="lu-h2">A problem the model can read becomes a second, better try</h2>
   ''' + walk + '''
   ''' + defbox([("Repair loop", "Sending the check's problems back to the model and asking again, a fixed number of times.")]),
-    '''<p>Five minutes. The walk draws the repair of <code>broken.sparql</code> as an illustration: the queries are real, the model's two tries are drawn. What the recorded model actually did, question by question, is in <code>reference-outputs/evaluate.txt</code> (the "tries" column).</p>
+    '''<p>Five minutes. The walk draws the repair of <code>broken.sparql</code> as an illustration: the queries are real, the model's two tries are drawn. In the recorded run no question needed a repair: every query passed the check at the first try. The loop is insurance; Part 4 says what that means for its measured value.</p>
 <ul><li>This loop is the design decision the syllabus calls the one that separates working systems from demonstrations: sparql-llm and SIB's endpoints do exactly this.</li></ul>'''))
 
 rows = [("Not SPARQL at all", "yes", "the parser"),
         ("A property the graph lacks (ul:shippedBy)", "yes", "unknown_properties"),
         ("A class the graph lacks (ul:Shipment)", "after Part B", "unknown_classes, Y2"),
-        ("<b>Only ul:Order: 9,023 instead of 9,215</b>", "<b>no</b>", "every term exists"),
-        ("The right terms, the wrong question", "no", "only a test set can tell")]
+        ("<b>Only ul:Order: V555_15 gets 0 orders, not 110</b>", "<b>no</b>", "every term exists"),
+        ("<b>ul:shipsTo for &ldquo;leave from&rdquo; PORT09: 9,023, not 173</b>", "<b>no</b>", "only a test set can tell")]
 SLIDES.append(slide("What the check cannot catch", "Check and repair", 3,
     head("A valid query can still be the wrong query", "The check knows the graph's words, not the manager's meaning") + '''
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     ''' + table(["Mistake", "Caught?", "By"], rows) + '''
     ''' + callout("So: measure", "The subclass mistake passes every check and returns a number that looks fine. Only comparing with the right answer, on a test set, shows it. That is Part 4.") + '''
-  </div>''', '''<p>Three minutes. Test question 1 of the lab is exactly this case; look at it in the <code>schema</code> setting of the recorded run.</p>'''))
+  </div>''', '''<p>Three minutes. Both bold rows are real: the recorded run's <code>schema</code> setting wrote these queries for test questions 7 and 10, and both passed the check. With the three examples in the prompt, both came out right.</p>'''))
 
 rows = [("Which customers are located in Beirut?", "no places at all"),
         ("What is the email address of customer V555_15?", "no contact details"),

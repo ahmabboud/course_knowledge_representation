@@ -81,7 +81,7 @@ SLIDES.append(slide("Check: one number", "Measuring", 3, '''  <div class="lu-eye
   <div class="lu-mcq" data-qid="s7-q2" data-answer="b" data-label="F1 of a count that is slightly wrong"
        data-fb-correct=" A count is a set of one value: it is right or it is not."
        data-fb-wrong=" Write both answers as sets and count what they share.">
-    <p class="lu-mcq__q">Test question 1's right answer is the single value 9,215. The model's query returns 9,023. What F1 does it score?</p>
+    <p class="lu-mcq__q">Test question 1's right answer is the single value 9,215. Suppose a model's query returns 9,023. What F1 does it score?</p>
     <div class="lu-mcq__opts">
       <button class="lu-mcq__opt" type="button" data-key="a">0.98, it is close<span class="lu-mcq__why" hidden>Sets do not measure closeness: 9,023 is not 9,215.</span></button>
       <button class="lu-mcq__opt" type="button" data-key="b">0<span class="lu-mcq__why" hidden>Right: {9023} and {9215} share nothing.</span></button>
@@ -95,7 +95,7 @@ if rec:
             for s, d in (("schema", "the schema only"), ("examples", "plus 3 examples"), ("repair", "plus check and repair")) if s in rec]
     note = header.split("(recorded ", 1)[-1].rstrip(")")
     cap = f"Recorded run: {note}. Your live run may differ."
-    notes = f'''<p>Four minutes. <code>reference-outputs/evaluate.txt</code>, {note}. Ask: is the gain from one setting to the next bigger than the difference between two students' runs? Compare two laptops in the room.</p>'''
+    notes = f'''<p>Four minutes. <code>reference-outputs/evaluate.txt</code>, {note}. Ask: is the gain from one setting to the next bigger than the difference between two students' runs? Compare two laptops in the room.</p><ul><li>In this run the examples did all the work (questions 7 and 10 went from 0 to 1) and the repair loop added nothing: no query failed the check. That is a real result: the loop is insurance against a failure this model did not make here, and a room of live runs may show it.</li></ul>'''
 else:
     rows = [(s, d, "recorded run pending", "", "", "") for s, d in (("schema", "the schema only"), ("examples", "plus 3 examples"), ("repair", "plus check and repair"))]
     cap = "The instructor's recorded run (record_llm.py) fills this table."
