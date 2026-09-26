@@ -2,7 +2,7 @@
 
 Sources: module-08-defense/DEFENSE-DAY.md (run of show), syllabus-source.json
 (sessions[7], the rubric, the policies), the Session 7 checklist, and
-kr-team-template/ (the pipeline's five steps; on its example: 1,185 triples,
+the kr-team-template repository, https://github.com/ahmabboud/kr-team-template (the pipeline's five steps; on its example: 1,185 triples,
 0 Violation, 189 VoID triples).
 """
 from common import slide, divider, defbox, callout, code

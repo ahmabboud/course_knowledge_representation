@@ -31,14 +31,12 @@ keep the main session's context clear (instructor's preference, 2026-09-24).
 
 **Where to continue (2026-09-25):**
 
-1. **Session 8, waiting for the instructor's review.** Built: `kr-team-template/`
-   (the starter repository; publish it on GitHub as a template repository
-   for the teams), `module-08-defense/scoring-sheet.html` (one printed A4 page
+1. **Session 8, waiting for the instructor's review.** Built: the starter repository, now its own GitHub template repository
+   https://github.com/ahmabboud/kr-team-template (local copy in
+   `../kr-team-template/`; its pipeline ran on the Mac and its CI is green), `module-08-defense/scoring-sheet.html` (one printed A4 page
    per team), and the day deck `lectures/kr-session-08-new.html` from
    `scripts/deckgen-s8/` (13 slides, 180 minutes; audit and visual pass
-   clean). Mac check to ask for: `docker compose up --build` in a clean copy
-   of `kr-team-template/` (with a key in its `.env`), the five pipeline steps
-   and the access layer answering. After approval: rename the deck over
+   clean). After approval: rename the deck over
    `kr-session-08.html`, replace the disabled Session 8 card in `index.html`,
    mark PROGRESS row 8 Done.
 2. **To fix next (instructor, 2026-09-26): content overflowing the slide in
@@ -539,3 +537,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-25: Session 8 decisions (instructor): (1) **a short day deck** (about 12 slides: plan of the day, standup, the Session 8 checklist, how the defense works, the rubric, the report, a 10 minute course close); (2) **no stack check script**, the checklist stays manual; (3) **a printable scoring sheet** per team (the 9 rubric lines, the defense line, who answered which question); (4) **build a starter template** for the team repositories: `kr-team-template` did not exist on GitHub (checked: 404), so it is built as a folder the instructor publishes as a template repository. Found while reading: `demos/session-08-deploy-and-defend/README.md` calls the syllabus Session 8 text stale, but `syllabus-source.json` already uses the team format; that README note is out of date.
 - 2026-09-26: **Session 8 built.** `kr-team-template/`: one folder per layer (data, ontology, shapes, mapping, pipeline, model, access-layer, report), `docker-compose.yml` (Fuseki; a one-shot pipeline service: map with Morph-KGC, SHACL gate that stops the stack on any Violation, VoID, load; the Session 7 access layer, Gemini only, on 127.0.0.1:8000, started only after the pipeline succeeds), the SHACL gate in CI, `.env.example`, `report/REPORT.md` with one section per rubric line, and a real Brunel example (60 orders, 20 late from V555_15). Tested here without Docker: the pipeline makes 1,185 triples, 0 Violation, 189 VoID triples; two planted defects (a weight of 0, a missing carrier) give 2 Violations and exit 1; loading and querying work against a small fake Fuseki (ping, graph store PUT and POST, SPARQL). Not tested here: the Docker build and `docker compose up` (no Docker in the cloud workspace). Scoring sheet: 9 rubric lines, the checklist, six defense rows (question, line, who answered, a 0 to 2 mark); the 0 to 2 mark is a proposal, the instructor may change it; measured to fit one A4 page (1,010 of about 1,047 px). Day deck: 13 slides (plan, standup, clean checkout walk, checklist, defense, questions, rubric, report, build time, the Session 1 architecture with every stage lit, further study, close); Sonnet pass found two edge labels touching boxes (fixed, measured clear). Glossary: Session 8 section (clean checkout, template repository, defense).
 - 2026-09-26: Session 1's architecture walk: the knowledge graph node moved 20 px right so the "checks" label no longer touches the boxes (same fix as Session 8's copy). Study mode overflow found and logged in "Where to continue". Note: `kr-team-template/` was moved out of this repository to `../kr-team-template/` (outside git, with a `build/` folder, so it was run there); the deletion is not committed here until the instructor says where the template lives.
+- 2026-09-26: the team template moved out of this repository to its own GitHub template repository, https://github.com/ahmabboud/kr-team-template (instructor; is_template true, SHACL gate run green on its first commit; local clone `../kr-team-template/` with the same repo-local credential helper). This repository's copy removed; references in `demos/README.md`, the Session 8 README and the deck generator point to the new repository. Template README gained "Start your team's repository" (Use this template).

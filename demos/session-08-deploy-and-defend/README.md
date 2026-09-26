@@ -4,12 +4,12 @@ No lab of its own: the day is each team's own build, in parallel, with the
 instructor rotating for a 10 to 12 minute defense visit per team. The
 materials:
 
-- `kr-team-template/` (repository root): the starter repository every team
-  builds its project in, one folder per layer, one `docker compose up
-  --build` for the whole stack, the SHACL gate in CI, and a report outline
-  mapped to the rubric. It comes up on a tiny real Brunel example; teams
-  replace the example with their own data, layer by layer. The instructor
-  publishes it as a GitHub template repository for the teams.
+- `kr-team-template` (https://github.com/ahmabboud/kr-team-template), a GitHub template repository: each
+  team presses "Use this template" to create its own. One folder per layer,
+  one `docker compose up --build` for the whole stack, the SHACL gate in CI,
+  and a report outline mapped to the rubric. It comes up on a tiny real
+  Brunel example; teams replace the example with their own data, layer by
+  layer. Its pipeline has run on the instructor's Mac, and its CI is green.
 - `module-08-defense/DEFENSE-DAY.md`: the instructor's run of show.
 - `module-08-defense/scoring-sheet.html`: one printable page per team.
 - `lectures/kr-session-08.html`: the short day deck (plan, standup,
