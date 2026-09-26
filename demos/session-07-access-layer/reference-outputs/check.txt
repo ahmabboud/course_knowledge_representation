@@ -1,0 +1,3 @@
+python check.py broken.sparql   (2026-09-25)
+broken.sparql: 1 problem
+  - ul:shippedBy is not a property of this graph. The properties are: ul:bandCarrier, ul:bandFrom, ul:bandService, ul:bandTo, ul:carriedBy, ul:fromPlant, ul:lateDays, ul:makes, ul:maxWeight, ul:minWeight, ul:ofProduct, ul:orderDate, ul:orderId, ul:orderedBy, ul:rate, ul:servesPort, ul:serviceLevel, ul:shipsFrom, ul:shipsTo, ul:unitQuantity, ul:weight

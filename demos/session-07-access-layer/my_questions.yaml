@@ -1,0 +1,14 @@
+# Session 7 lab, part B, task Y3: add one question to the test set.
+#
+# Copy question 5 of questions.yaml (how many products a plant makes) and
+# change it into: "How many products does plant PLANT08 make?". Give it id
+# 101 and its gold query. It must not be one of the example questions: a
+# test question the model has seen as an example measures nothing (the
+# Session 6 leak, again). Then:  python check_my_access.py
+# And score it:  python evaluate.py --setting repair --questions my_questions.yaml
+
+dataset:
+  id: https://ul.edu.lb/kr/brunel/
+  prefix: "PREFIX ul: <https://ul.edu.lb/kr/scm#>"
+
+questions: []   # TODO: replace [] with your question, in the layout of questions.yaml

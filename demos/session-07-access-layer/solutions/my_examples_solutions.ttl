@@ -1,0 +1,11 @@
+# Solution to part B, Y1: ex:3 with the property and the question changed.
+@prefix ex: <https://ul.edu.lb/kr/brunel/examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:101 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    rdfs:comment "Which ports does plant PLANT08 ship through?" ;
+    sh:select """PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT ?port WHERE {
+  <https://ul.edu.lb/kr/id/plant/brunel/PLANT08> ul:servesPort ?port .
+}""" .

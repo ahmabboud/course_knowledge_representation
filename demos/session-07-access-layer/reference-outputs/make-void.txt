@@ -1,0 +1,2 @@
+python make_void.py   (2026-09-25; Session 2's brunel.ttl)
+read 135,841 triples; wrote void.ttl: 189 triples in 0.3 s

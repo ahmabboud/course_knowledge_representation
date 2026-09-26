@@ -1,0 +1,79 @@
+python show_prompt.py "How many orders did carrier V44_3 carry?"   (2026-09-25)
+You write one SPARQL 1.1 query for the Brunel supply chain graph.
+Use only the classes and properties listed in the schema; the prefix ul: is <https://ul.edu.lb/kr/scm#>.
+Things are named by codes, not names: carrier <https://ul.edu.lb/kr/id/carrier/brunel/V44_3>,
+plant <https://ul.edu.lb/kr/id/plant/brunel/PLANT03>, port <https://ul.edu.lb/kr/id/port/brunel/PORT04>,
+customer <https://ul.edu.lb/kr/id/customer/brunel/V555_15>, product <https://ul.edu.lb/kr/id/product/brunel/1681878>.
+A late order is typed ul:LateOrder only, and ul:LateOrder is a subclass of ul:Order.
+If the schema cannot answer the question, reply exactly: REFUSE: <what the graph is missing>
+Otherwise reply with the query only.
+
+Schema (the classes, then: class property target):
+ul:Order (9,023 things)
+ul:Product (1,540 things)
+ul:RateBand (1,540 things)
+ul:LateOrder (192 things)
+ul:Customer (46 things)
+ul:Plant (19 things)
+ul:Port (11 things)
+ul:Carrier (3 things)
+ul:RateBand ul:bandCarrier ul:Carrier
+ul:RateBand ul:bandFrom ul:Port
+ul:RateBand ul:bandService xsd:string
+ul:RateBand ul:bandTo ul:Port
+ul:LateOrder ul:carriedBy ul:Carrier
+ul:Order ul:carriedBy ul:Carrier
+ul:LateOrder ul:fromPlant ul:Plant
+ul:Order ul:fromPlant ul:Plant
+ul:LateOrder ul:lateDays xsd:integer
+ul:Order ul:lateDays xsd:integer
+ul:Plant ul:makes ul:Product
+ul:RateBand ul:maxWeight xsd:decimal
+ul:RateBand ul:minWeight xsd:decimal
+ul:LateOrder ul:ofProduct ul:Product
+ul:Order ul:ofProduct ul:Product
+ul:LateOrder ul:orderDate xsd:date
+ul:Order ul:orderDate xsd:date
+ul:LateOrder ul:orderId xsd:string
+ul:Order ul:orderId xsd:string
+ul:LateOrder ul:orderedBy ul:Customer
+ul:Order ul:orderedBy ul:Customer
+ul:RateBand ul:rate xsd:decimal
+ul:Plant ul:servesPort ul:Port
+ul:LateOrder ul:serviceLevel xsd:string
+ul:Order ul:serviceLevel xsd:string
+ul:LateOrder ul:shipsFrom ul:Port
+ul:Order ul:shipsFrom ul:Port
+ul:LateOrder ul:shipsTo ul:Port
+ul:Order ul:shipsTo ul:Port
+ul:LateOrder ul:unitQuantity xsd:integer
+ul:Order ul:unitQuantity xsd:integer
+ul:LateOrder ul:weight xsd:decimal
+ul:Order ul:weight xsd:decimal
+
+Examples:
+Question: Which orders did carrier V44_3 carry, with their service level?
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT ?order ?service WHERE {
+  ?order ul:carriedBy <https://ul.edu.lb/kr/id/carrier/brunel/V44_3> ;
+         ul:serviceLevel ?service .
+}
+
+Question: How many orders and how many late orders does each carrier have?
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+SELECT ?carrier (COUNT(?order) AS ?orders) (SUM(IF(?late > 0, 1, 0)) AS ?lateOrders) WHERE {
+  ?order ul:carriedBy ?carrier ; ul:lateDays ?late .
+} GROUP BY ?carrier
+
+Question: How many orders are there in total, late ones included?
+PREFIX ul: <https://ul.edu.lb/kr/scm#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT (COUNT(DISTINCT ?order) AS ?orders) WHERE {
+  ?order a/rdfs:subClassOf* ul:Order .
+}
+
+Question: How many orders did carrier V44_3 carry?
+
+------------------------------------------------------------
+examples picked: 1, 2, 4  (Which orders did carrier V44_3 carry, with their service level?, How many orders and how many late orders does each carrier have?, How many orders are there in total, late ones included?)
+prompt: 2,920 characters, 74 lines

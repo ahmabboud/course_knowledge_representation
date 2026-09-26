@@ -1,0 +1,12 @@
+# Session 7 lab, part B, task Y1: write one example query for the model.
+#
+# Copy ex:3 from examples.ttl (a plant and the products it makes) and change
+# it into: "Which ports does plant PLANT08 ship through?" (ul:servesPort).
+# Keep the three parts: a new IRI (ex:101), the question in rdfs:comment,
+# the query in sh:select. Then:  python check_my_access.py
+
+@prefix ex: <https://ul.edu.lb/kr/brunel/examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+# TODO: your example here

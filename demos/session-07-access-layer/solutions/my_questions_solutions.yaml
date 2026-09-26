@@ -1,0 +1,10 @@
+# Solution to part B, Y3: question 5 with the plant changed.
+dataset:
+  id: https://ul.edu.lb/kr/brunel/
+  prefix: "PREFIX ul: <https://ul.edu.lb/kr/scm#>"
+
+questions:
+  - id: 101
+    question: {en: "How many products does plant PLANT08 make?"}
+    gold: |
+      SELECT (COUNT(?p) AS ?n) WHERE { <https://ul.edu.lb/kr/id/plant/brunel/PLANT08> ul:makes ?p }

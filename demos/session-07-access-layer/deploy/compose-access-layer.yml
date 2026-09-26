@@ -1,0 +1,17 @@
+# Add this service to your team's docker-compose.yml for Session 8.
+# It needs your SPARQL endpoint's service (here called "fuseki", dataset "kr" as in Session 2)
+# and your model key in demos/.env (GOOGLE_API_KEY), never written in this file.
+services:
+  access-layer:
+    build:
+      context: ./demos/session-07-access-layer      # adjust to where your copy lives
+      dockerfile: deploy/Dockerfile
+    environment:
+      SPARQL_ENDPOINT: http://fuseki:3030/kr/sparql
+      LLM_MODEL: gemini-3.5-flash-lite
+    env_file: ./demos/.env
+    ports:
+      - "127.0.0.1:8000:8000"                       # this computer only
+    depends_on:
+      - fuseki
+    restart: unless-stopped

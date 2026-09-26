@@ -1,0 +1,22 @@
+python check_my_access.py, 2026-09-25 (no model call; a few seconds).
+
+Blank files:
+  Y1  not yet: no example yet. Copy ex:3 from examples.ttl (a new IRI, rdfs:comment, sh:select).
+  Y2  not yet: not written yet (the TODO is still there).
+  Y3  not yet: no question yet. Copy question 5 of questions.yaml (id, question: {en: ...}, gold).
+  
+  0 of 3 right.
+
+Solutions (python check_my_access.py solutions):
+  Y1  right.
+  Y2  right.
+  Y3  right.
+  
+  3 of 3 right.
+
+Common wrong answers (Y1 a question already in examples.ttl; Y2 islower() kept from unknown_properties; Y3 a question already in questions.yaml):
+  Y1  not yet: 'Which products does plant PLANT08 make?' is already a question of examples.ttl or questions.yaml.
+  Y2  not yet: it reports ul:shippedBy, a property. Keep only names that start with a capital (t[0].isupper()).
+  Y3  not yet: 'How many orders did carrier V44_3 carry?' is already in examples.ttl or questions.yaml: a test question must be new.
+  
+  0 of 3 right.
