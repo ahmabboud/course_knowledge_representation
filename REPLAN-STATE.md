@@ -31,26 +31,10 @@ keep the main session's context clear (instructor's preference, 2026-09-24).
 
 **Where to continue (2026-09-25):**
 
-1. **Session 6: done** (approved by the instructor 2026-09-25). One thing
-   left: ask before deleting its old synthetic lab files
-   (`build_heterodata.py`, `train_node_classification.py`,
-   `train_link_prediction.py`, `train_pykeen.py`, `leakage_demo.py`,
-   `tabular_baseline.py`, the folder's own `requirements.txt`).
-2. **Session 7 rebuild, waiting for the instructor's review (item 9).** Lab
-   built (`demos/session-07-access-layer/`, commit e5a9389) and deck rebuilt
-   (`lectures/kr-session-07-new.html` from `scripts/deckgen-s7/`, 47 slides,
-   179 minutes) with the real recorded numbers on the "Three settings" slide.
-   `record_llm.py` run again on the Mac 2026-09-25 against the revised prompt
-   rules (rules `ccb41f71`, model gemini-3.5-flash-lite): mean F1 0.792
-   (schema), 1.000 (examples), 1.000 (repair) on 12 answerable questions; all
-   three unanswerable questions refused correctly in every setting, no
-   answerable question refused; two answerable questions were wrong in the
-   schema-only setting, both fixed once examples were added. Live audit
-   clean, glossary check clean, Docker image built. After approval: rename
-   over `kr-session-07.html`, add its `index.html` card, mark PROGRESS row 7
-   Done.
-3. **Later:** Session 8 (defense day, no deck; `module-08-defense/`), item 18 (syllabus alignment
-   question), items 12 and 19.
+1. **Session 8, in progress (item 9 method, AGENTS.md 2f):** the defense day.
+   `module-08-defense/DEFENSE-DAY.md` is the run of show; the syllabus and
+   the approved Session 7 checklist decide what the day needs.
+2. **Later:** item 18 (syllabus alignment question), items 12 and 19.
 
 **Settled decisions a new session must not reopen:** Session 7 uses Gemini only, no Ollama or other provider (instructor, 2026-09-25); lab simplicity (instructor, 2026-09-25): slides never depend on the lab or its results, every slide example is complete on the slide; every Part B task mirrors a worked example of the same kind already shown on a slide or done in Part A, changing one thing; labs stay short and simple, one script per step with one expected result (to be added to `AGENTS.md` 2e once the coding agent's current edit of that file is pushed); visual variety (instructor, 2026-09-25, on approving Session 3: mix picture types across a deck, `AGENTS.md` 2c rule 9); tool rule (2c rule 5:
 concept first, one slide per tool, no slide for trivial tools, video only for
@@ -533,3 +517,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-25: **Instructor rule: Gemini only.** No Ollama or any other model provider anywhere in Session 7 (lab, README, code, glossary, slides). Removed: the README's Ollama option, the Ollama glossary term, the `LLM_BASE_URL` and `LLM_API_KEY` settings in `access_layer.py` (the address is Gemini's, the key is `GOOGLE_API_KEY`), and Ollama in the daily-limit message. The fallback when a key fails stays `LLM_MODE=replay`.
 - 2026-09-25: **Session 7 recorded again on the Mac, against the revised prompt rules (rules `ccb41f71`, model gemini-3.5-flash-lite).** `make_void.py` wrote 189 triples; `check_my_access.py solutions` gave 3 of 3 right; `record_llm.py` made its recorded run and wrote `reference-outputs/llm-cache.json` plus the four output files, all opening with "rules ccb41f71)". `evaluate.py --quiet` gave: schema mean F1 0.792, examples mean F1 1.000, repair mean F1 1.000, each on 12 answerable questions; every setting refused all 3 unanswerable questions and refused none of the answerable ones. Two answerable questions were wrong in the schema-only setting, both right once examples were added: "How many orders did customer V555_15 place?" (the model wrote `?order a ul:Order ; ul:orderedBy <...V555_15>`, which requires the explicit class and returns count 0, instead of dropping that clause) and "How many orders leave from port PORT09?" (the model used `ul:shipsTo` instead of `ul:shipsFrom`, counting arrivals, 9,023, instead of departures). `LLM_MODE=replay python ask.py` and `LLM_MODE=replay python evaluate.py --quiet` reproduced the same answer and the same three summary lines with no network use. The deck was rebuilt (`cd scripts/deckgen-s7 && python3 build.py`): the "Three settings" slide now reads these real numbers. `python3 scripts/check-glossary.py` printed nothing. Docker Desktop was running, so `docker build -f deploy/Dockerfile -t access-layer .` was also run (image built, not run). Session 6 rerun on this Mac for comparison, without overwriting its reference outputs: `build_graph.py` reproduced its own printed numbers; `gnn.py` matched the Linux reference (`reference-outputs/gnn.txt`) on every line except training seed 1, where PR-AUC read 0.863 against 0.864 and precision@100 read 0.52 against 0.54; `link_prediction.py` matched every popularity-baseline line and every hidden-link count exactly, with TransE's MRR differing in the third decimal on all three seeds (0.550, 0.494, 0.520 against 0.555, 0.495, 0.519) and Hits@1 differing only on seed 0 (0.351 against 0.359); the story (TransE never beats the popularity baseline) is unchanged. Session 7 waits for the instructor's review.
 - 2026-09-25: Session 7 slides and README now use the recorded run's real mistakes: in the `schema` setting the model wrote `?order a ul:Order` for customer V555_15 (0 instead of 110: all 110 are typed `ul:LateOrder` only) and `ul:shipsTo` for "leave from" PORT09 (9,023 instead of 173); both passed the check, both were fixed by the examples; no question needed a repair (the notes say so: the loop is insurance). Session 6 on the Mac differs from the Linux reference only in the third decimal (GNN seed 1 0.863 against 0.864; TransE MRR 0.550, 0.494, 0.520 against 0.555, 0.495, 0.519; popularity identical): the reference stays, and the README already says the last digit may differ.
+- 2026-09-25: **Session 7 approved by the instructor**; `kr-session-07-new.html` renamed over `kr-session-07.html` (the generator writes there), `index.html` Session 7 card live, PROGRESS row 7 Done. **Old Session 6 lab files deleted with the instructor's permission:** `build_heterodata.py`, `train_node_classification.py`, `train_link_prediction.py`, `train_pykeen.py`, `leakage_demo.py`, `tabular_baseline.py`, the folder's own `requirements.txt`. Session 8 started.
