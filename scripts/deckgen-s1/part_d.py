@@ -28,14 +28,14 @@ p_steps = [
 ]
 p_caps = [
     ("Start today", "<b>Step 1.</b> Your team's first piece: a constraint inventory on <b>your own</b> data, the same method as today's lab."),
-    ("Milestone 1 · a checkpoint", "<b>Step 2.</b> End of Session 4: your ontology and your shapes. <b>Milestone 1</b>, a checkpoint for feedback, not graded."),
+    ("Milestone 1 · a checkpoint", "<b>Step 2.</b> End of Session 4: your ontology and shapes. <b>Milestone 1</b>, feedback, not graded."),
     ("Milestone 2 · a checkpoint", "<b>Step 3.</b> End of Session 6: your integrated graph and your prediction models. <b>Milestone 2</b>, a checkpoint, not graded."),
-    ("Final · 85 percent", "<b>Step 4.</b> 48 hours before Session 8: the system and report (55 percent). Session 8: your individual defense (30 percent)."),
+    ("Final · 85 percent", "<b>Step 4.</b> Before Session 8: system and report, 55 percent. Session 8: your defense, 30."),
 ]
 SLIDES.append(slide("The team project: what you build", "Team project", 4,
     head("One system, one layer per session", "Every team builds the same pipeline. What differs is the domain and the data.") +
     flow("The team project, session by session, with its milestones", 1448, 300, p_nodes, p_edges, p_steps, p_caps) +
-    callout("Graded once, at the end", "After each lab, repeat the technique on your own data. Nothing is graded week by week, and the milestones are feedback: the final system is graded once.", "neutral"),
+    callout("Graded once, at the end", "After each lab, repeat it on your own data. The milestones are feedback; the final system is graded once.", "neutral"),
     '''<p>Four minutes. The message: every lab is a rehearsal on the shared case, and the real work is repeating it on your own topic.</p>
     <ul><li>The remaining 15 percent is attendance and running the lab in class, Sessions 1 to 7.</li></ul>'''))
 
