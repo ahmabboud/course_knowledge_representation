@@ -1,4 +1,4 @@
-"""Session 8: the defense day. A short deck for the room, not a lecture.
+"""Session 8: the defense day (instructor, 2026-09-26: defense only, no build). A short deck for the room.
 
 Sources: module-08-defense/DEFENSE-DAY.md (run of show), syllabus-source.json
 (sessions[7], the rubric, the policies), the Session 7 checklist, and
@@ -11,7 +11,7 @@ from svgkit import svg, text, rect, FULL, INK2, INK3, RED, RED_BG, BLUE, BLUE_BG
 
 SLIDES = []
 
-SLIDES.append('''<section class="slide slide--night" data-chrome="none" data-label="Title" data-section="Standup" data-minutes="2">
+SLIDES.append('''<section class="slide slide--night" data-chrome="none" data-label="Title" data-section="Opening" data-minutes="2">
   <div class="slide__body" style="justify-content:space-between">
     <div class="lu-row" style="justify-content:space-between;align-items:flex-start">
       <div class="lu-lockup">
@@ -25,141 +25,78 @@ SLIDES.append('''<section class="slide slide--night" data-chrome="none" data-lab
     </div>
     <div class="lu-stack">
       <div class="lu-eyebrow">Knowledge Representation · Session 8 of 8</div>
-      <h1 class="lu-display" style="max-width:24ch">Build, Deploy, Defend</h1>
-      <p class="lu-lead" style="max-width:50ch">No lecture today. Every team brings its whole system up from a clean checkout with one command, and every teammate answers for every part of it.</p>
+      <h1 class="lu-display" style="max-width:24ch">The Defense</h1>
+      <p class="lu-lead" style="max-width:50ch">No lecture and no build today. Each team shows its system running, and each student answers for it, including the parts they did not build.</p>
     </div>
     <div class="lu-row" style="justify-content:space-between;font-size:var(--lu-t-caption);color:var(--lu-on-night-2)">
-      <span>About 180 minutes · standup, build and defense, course close</span>
+      <span>About 180 minutes · team defenses, course close</span>
       <span>Press <kbd>&rarr;</kbd> to begin · <kbd>?</kbd> for shortcuts</span>
     </div>
   </div>
   <template data-notes>
-    <p>Before the block: every team's repository is pushed; the scoring sheets (<code>module-08-defense/scoring-sheet.html</code>, one printed page per team) are on the desk; <code>DEFENSE-DAY.md</code> is the run of show. This deck is for the room: leave slide 8 (build time) up during the block.</p>
+    <p>Before the day: every team handed in 48 hours ago, and Part 1 of each scoring sheet (<code>module-08-defense/scoring-sheet.html</code>) is filled in, with 3 or 4 questions per team. <code>DEFENSE-DAY.md</code> is the run of show. Leave the Defenses slide up during the slots.</p>
   </template>
 </section>
 ''')
 
 # ---------------------------------------------------------------- the day, drawn
-parts = [("Standup", 20, PAPER2, INK2), ("Build and defense, in parallel", 150, BLUE_BG, BLUE_TXT), ("Close", 10, GREEN_BG, "var(--lu-green-900)")]
+parts = [("Opening", 10, PAPER2, INK2), ("Team defenses, one team at a time", 160, BLUE_BG, BLUE_TXT), ("Close", 10, GREEN_BG, "var(--lu-green-900)")]
 g, x, W = "", 2.0, FULL - 4
 for name, m, fill, col in parts:
     w = W * m / 180
     g += rect(x, 30, w, 90, fill, LINE, rx=6)
-    g += text(x + w / 2, 66, name, color=col, weight=600)
-    g += text(x + w / 2, 96, f"{m} min", "s-label", color=INK3)
+    if m > 20:
+        g += text(x + w / 2, 66, name, color=col, weight=600)
+        g += text(x + w / 2, 96, f"{m} min", "s-label", color=INK3)
+    else:
+        g += text(x + w / 2, 142, f"{name} · {m}", "s-label", color=INK3)
     x += w
-pic = svg(FULL, 140, g, "The day: 20 minutes standup, 150 minutes build and defense in parallel, 10 minutes course close.")
-SLIDES.append(slide("The day", "Standup", 3,
-    head("One room, every team building at once", "The instructor moves from team to team; nobody waits for a turn") + '''
+pic = svg(FULL, 160, g, "The day: 10 minutes opening, 160 minutes of team defenses, 10 minutes course close.")
+SLIDES.append(slide("The day", "Opening", 3,
+    head("Today is the defense, nothing else", "Your system and report were handed in 48 hours ago, and already scored") + '''
   ''' + pic + '''
   <div class="lu-split" style="margin-top:var(--lu-s3)">
-    ''' + callout("While you build", "The instructor visits each team for 10 to 12 minutes: that is your defense. Between visits, ask for help like any lab.") + '''
-    ''' + callout("Also today", "Finish the technical report in the same block: it documents what is deployed, so write it from what comes up, not from the plan.", "neutral") + '''
-  </div>''', '''<p>Three minutes. At 4 to 12 teams, the defense visits take 40 to 144 minutes of the 150; up to one extra hour is available if the team count needs it (<code>DEFENSE-DAY.md</code>).</p>'''))
+    ''' + callout("One team at a time", "About 15 minutes each, in the order on the board. Teams not on may leave and come back for their slot.") + '''
+    ''' + callout("Nothing to build", "The stack you handed in is what you show. Start it before your slot, so it is running when you are called.", "neutral") + '''
+  </div>''', '''<p>Three minutes. 160 minutes for 8 to 12 teams: 13 to 20 minutes a slot. Up to one extra hour is available if the count needs it, rather than cutting a team short (<code>DEFENSE-DAY.md</code>).</p>'''))
 
-SLIDES.append(slide("Standup: one minute per team", "Standup", 15, '''  <div class="lu-eyebrow">Standup · 20 minutes</div>
-  <div class="lu-split lu-split--wide-left">
-    <div class="lu-stack">
-      <h2 class="lu-h2">Each team, in under a minute</h2>
-      <ol class="lu-list lu-list--num">
-        <li>What is deployed and comes up.</li>
-        <li>What is not.</li>
-        <li>Your single largest blocker.</li>
-      </ol>
-    </div>
-    <div class="lu-card">
-      <span class="lu-card__label">Then, out loud</span>
-      <p class="lu-sub">The blockers are put in the order the instructor will reach them, so each team knows whether to work around its blocker or wait.</p>
-    </div>
-  </div>''', '''<p>Fifteen minutes for the round, then the triage. Write the blocker order on the board next to the visit order.</p>''', kind="tint"))
+nodes = [node("d1", "demo: it answers\nyour question", 170, 60, 290, 70, kind="builtin"),
+         node("d2", "demo: it refuses\none it cannot answer", 540, 60, 310, 70, kind="builtin"),
+         node("q", "2 or 3 questions\nper student", 920, 60, 280, 70, kind="builtin"),
+         node("m", "one mark\nper student, 0 to 3", 1270, 60, 290, 70, kind="builtin")]
+edges = [edge("a1", "d1", "d2", ""), edge("a2", "d2", "q", ""), edge("a3", "q", "m", "")]
+steps = [{"show": ["d1"], "set": {"d1": "active"}},
+         {"show": ["d2", "a1"], "run": ["a1"], "set": {"d1": "idle", "d2": "active"}},
+         {"show": ["q", "a2"], "run": ["a2"], "set": {"d2": "idle", "q": "active"}},
+         {"show": ["m", "a3"], "run": ["a3"], "set": {"q": "idle", "m": "inferred"}}]
+caps = [("Demo, 3 minutes", "<b>Step 1.</b> Your running stack answers one question the instructor chooses."),
+        ("The refusal", "<b>Step 2.</b> Then a question your graph cannot answer: it must refuse, with a reason. This confirms the offline score; it is not marked again."),
+        ("Questions", "<b>Step 3.</b> Each of you answers 2 or 3 questions about a part of the system you did not build."),
+        ("The mark", "<b>Step 4.</b> One overall mark per student, from all the answers together, not question by question.")]
+walk = flow("One team's slot", 1448, 130, nodes, edges, steps, caps, flags={"inferred": "yours"},
+            legend={"builtin": "A step", "inferred": "Your own mark"})
+SLIDES.append(slide("One team's slot", "Opening", 3, '''  <div class="lu-eyebrow">Walkthrough · about 15 minutes</div>
+  <h2 class="lu-h2">Show it running, then answer for it, each of you</h2>
+  ''' + walk, '''<p>Three minutes. The questions come from the offline scoring: the weakest layer, a decision that looks borrowed, a number that could not be traced.</p>'''))
 
-# ---------------------------------------------------------------- the clean checkout
-nodes = [node("c", "git clone", 130, 50, 200, 56, kind="builtin"),
-         node("e", "cp .env.example .env\n(your key)", 430, 50, 300, 70, kind="builtin"),
-         node("u", "docker compose up --build", 830, 50, 380, 56, kind="builtin"),
-         node("p", "pipeline: map, gate,\nVoID, load", 830, 170, 330, 70, kind="builtin"),
-         node("a", "access layer answers\non 127.0.0.1:8000", 1250, 170, 330, 70, kind="builtin"),
-         node("x", "stops: a Violation,\na missing file, a path", 350, 170, 360, 70, kind="builtin")]
-edges = [edge("a1", "c", "e", ""), edge("a2", "e", "u", ""), edge("a3", "u", "p", ""),
-         edge("a4", "p", "a", "passes"), edge("a5", "p", "x", "fails")]
-steps = [{"show": ["c", "e", "a1"], "run": ["a1"], "set": {"c": "active"}},
-         {"show": ["u", "a2"], "run": ["a2"], "set": {"c": "idle", "u": "active"}},
-         {"show": ["p", "a3"], "run": ["a3"], "set": {"u": "idle", "p": "active"}},
-         {"show": ["x", "a5"], "run": ["a5"], "set": {"x": "impossible"}},
-         {"show": ["a", "a4"], "run": ["a4"], "set": {"p": "idle", "a": "inferred"}}]
-caps = [("Fresh", "<b>Step 1.</b> A new folder, as the instructor will: clone, then only the <code>.env</code> file, which is never committed."),
-        ("One command", "<b>Step 2.</b> Nothing typed by hand after this. No manual step survives a clean checkout."),
-        ("The pipeline", "<b>Step 3.</b> Map the source, run the SHACL gate, describe with VoID, load the endpoint."),
-        ("Where it breaks", "<b>Step 4.</b> This is where most of the day goes: a package not declared, a path that exists only on one laptop, data that fails the gate."),
-        ("Up", "<b>Step 5.</b> The access layer answers. Try it from the browser, then try the unanswerable question.")]
-walk = flow("A clean checkout", 1448, 230, nodes, edges, steps, caps,
-            flags={"impossible": "stops", "inferred": "up"},
-            legend={"builtin": "A step", "impossible": "It stops", "inferred": "It is up"})
-SLIDES.append(slide("The clean checkout", "Build and defense", 5, '''  <div class="lu-eyebrow">Walkthrough · the test your stack must pass</div>
-  <h2 class="lu-h2">Clone it into an empty folder and run one command, as the instructor will</h2>
-  ''' + walk, '''<p>Five minutes. The template's pipeline prints its five steps; on its own example: 1,185 triples, 0 Violation, 189 VoID triples, then the endpoint is loaded. A team that has never tried a clean checkout will find its first undeclared dependency today, not later.</p>'''))
-
-rows = [("One command starts the whole stack from a clean checkout", "2 to 7"),
-        ("Every service listens on 127.0.0.1 only; keys only in <code>.env</code>", "2, 7"),
-        ("The SHACL gate runs before data reaches the endpoint, and in CI", "4"),
-        ("The test set's score is recorded, with the model and the date", "7"),
-        ("A real unanswerable question is refused, with a reason", "7")]
-SLIDES.append(slide("The Session 8 checklist", "Build and defense", 5,
-    head("The checklist agreed in Session 7", "The defense tries each item on your machine, from a clean checkout") + '''
+rows = [("0", "cannot explain the team's system, even the parts asked about"),
+        ("1", "says what the parts do, not why"),
+        ("2", "explains why the team decided as it did"),
+        ("3", "defends the decisions against an alternative, or a failure in your own system")]
+SLIDES.append(slide("How you are marked", "Opening", 2,
+    head("Attendance and lab run 15 · team project 55 · your defense 30", "The defense is the one mark that is yours alone") + '''
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
-    ''' + table(["Item", "Session"], rows) + '''
-    ''' + callout("Check it yourself first", "Run the five items now, in this order, before the instructor reaches your team. The template's README lists them too.", "neutral") + '''
-  </div>''', '''<p>Five minutes. These are the five items the room agreed at the end of Session 7; if the room changed any of them then, edit this slide's generator to match.</p>'''))
+    ''' + table(["Mark", "You"], rows) + '''
+    ''' + callout("Not a quiz of every topic", "Two or three questions sample how well you understand the whole system, including what a teammate or a language model wrote. Defense points: mark &times; 10.", "neutral") + '''
+  </div>''', '''<p>Two minutes. The syllabus policy still applies: an ontology the team cannot defend loses its ontology points in the project mark.</p>'''))
 
-SLIDES.append(slide("How the defense works", "Build and defense", 5,
-    head("10 to 12 minutes per team, at your table", "Any teammate can be asked about any part: the data, the ontology, the shapes, the mapping, the model, the access layer") + '''
-  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)">
-    <div class="lu-card"><span class="lu-card__label">One question per rubric line</span><p class="lu-sub">Enough to cover the system in a visit; the artifact itself is graded separately, by cloning and running it.</p></div>
-    <div class="lu-card"><span class="lu-card__label">Spread across the team</span><p class="lu-sub">Each teammate answers about a part they did not build. Who answered what is recorded.</p></div>
-    <div class="lu-card"><span class="lu-card__label">Decisions, not just code</span><p class="lu-sub">Explain why, including a choice a language model suggested. An ontology the team cannot defend scores zero on that line.</p></div>
-  </div>''', '''<p>Five minutes. The scoring sheet has a row per question: the question, the rubric line, who answered, and a mark from 0 to 2. The defense is its own 10 percent of the grade, outside the 100-point rubric.</p>'''))
-
-rows = [("Why does this class exist? Which competency question needs it?", "Ontology"),
-        ("This constraint: why a SHACL shape and not an OWL axiom, or the reverse?", "SHACL"),
-        ("Materialized or virtualized in your deployed system, and why?", "Integration"),
-        ("Does your split leak? What did the baseline score?", "Prediction"),
-        ("What does the system do when it does not know?", "Access layer"),
-        ("This step fails on a clean checkout: what happens?", "Deployment")]
-SLIDES.append(slide("Questions to expect", "Build and defense", 5,
-    head("The kind of question each line gets", "Short to ask, impossible to answer without having done the work") + '''
-  ''' + table(["Question", "Rubric line"], rows),
-    '''<p>Five minutes. Drawn from <code>DEFENSE-DAY.md</code> and the syllabus. Add one on full-scale validation for any part a smoke test stood in for.</p>'''))
-
-pts = [("Ontology quality", 18), ("Validation with SHACL", 15), ("Evaluation honesty", 13),
-       ("Data and constraints", 12), ("Data integration", 12),
-       ("Access layer", 9), ("Deployment", 9), ("Framing and scope", 7), ("Open problem", 5)]
-rows = [(n, f"<b>{v}</b>", '<span style="display:block;min-width:140px">' + bar(v, 18, "", "red" if v >= 15 else "ink") + '</span>') for n, v in pts]
-SLIDES.append(slide("The rubric", "Build and defense", 5,
-    head("100 points for the system and the report", "Plus the defense: a separate 10 percent of the grade") + '''
-  <div class="lu-split" style="margin-top:var(--lu-s2)">
-    ''' + table(["Line", "Points", ""], rows[:5]) + '''
-    ''' + table(["Line", "Points", ""], rows[5:]) + '''
-  </div>
-  ''' + callout("Full marks for losing", "A graph model that loses to the baseline, reported as such with an explanation, scores full marks on evaluation honesty."),
-    '''<p>Five minutes. The rubric is the syllabus's (<code>syllabus-source.json</code>, capstone rubric, 100 points); the assessment table gives it 35 percent of the grade, the defense 10. The system is graded by cloning it fresh and running it: what does not come up cannot score.</p>'''))
-
-rows = [("Length", "At most 16 pages, the open problem included"),
-        ("What it documents", "What was deployed, not what was planned"),
-        ("Numbers", "Only numbers a file in your repository holds"),
-        ("Open problem", "At most 2 pages: a question, your own position, at least 3 primary sources"),
-        ("Licences", "Every ontology, vocabulary and dataset, with its licence")]
-SLIDES.append(slide("The technical report", "Build and defense", 5,
-    head("Finish it today, from what comes up", "report/REPORT.md in the template has one section per rubric line") + '''
-  ''' + table(["", "The rule"], rows),
-    '''<p>Five minutes. The report is read, not presented: the defense refers to it.</p>'''))
-
-SLIDES.append(slide("Build time", "Build and defense", 120, '''  <div class="lu-eyebrow">Build and defense · leave this slide up</div>
-  <h2 class="lu-h1" style="max-width:30ch">Clean checkout first. Then the checklist. Then the report.</h2>
+SLIDES.append(slide("Defenses", "Team defenses", 160, '''  <div class="lu-eyebrow">Team defenses · leave this slide up</div>
+  <h2 class="lu-h1" style="max-width:30ch">When your team is called: stack running, one question, one refusal, then your questions.</h2>
   <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s5)">
-    <div class="lu-card"><span class="lu-card__label">1 · Comes up</span><p class="lu-sub">An empty folder, clone, <code>.env</code>, <code>docker compose up --build</code>.</p></div>
-    <div class="lu-card"><span class="lu-card__label">2 · The five items</span><p class="lu-sub">Gate, ports, keys, recorded score, a real refusal.</p></div>
-    <div class="lu-card"><span class="lu-card__label">3 · Written down</span><p class="lu-sub">The report says what came up, with the numbers your files hold.</p></div>
-  </div>''', '''<p>The block: 150 minutes in all, of which the slides before this one take about 30. Visit teams in the triage order; score each right after its visit.</p>''', kind="tint"))
+    <div class="lu-card"><span class="lu-card__label">Why does it exist?</span><p class="lu-sub">A class, a property: which competency question needs it?</p></div>
+    <div class="lu-card"><span class="lu-card__label">Why there?</span><p class="lu-sub">This rule: a SHACL shape or an OWL axiom, and why?</p></div>
+    <div class="lu-card"><span class="lu-card__label">How do you know?</span><p class="lu-sub">Does your split leak? What does the system do when it does not know?</p></div>
+  </div>''', '''<p>160 minutes. Score each student right after the slot, on the scoring sheet (Part 2). Record the questions asked.</p>''', kind="tint"))
 
 # ---------------------------------------------------------------- course close
 n = [node("src", "Sources\nSession 1", 130, 200, 200, 84, kind="builtin"),

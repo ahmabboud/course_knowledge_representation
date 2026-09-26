@@ -31,14 +31,16 @@ keep the main session's context clear (instructor's preference, 2026-09-24).
 
 **Where to continue (2026-09-25):**
 
-1. **Session 8, waiting for the instructor's review.** Built: the starter repository, now its own GitHub template repository
-   https://github.com/ahmabboud/kr-team-template (local copy in
-   `../kr-team-template/`; verified end to end with Docker on the Mac, CI green), `module-08-defense/scoring-sheet.html` (one printed A4 page
-   per team), and the day deck `lectures/kr-session-08-new.html` from
-   `scripts/deckgen-s8/` (13 slides, 180 minutes; audit and visual pass
-   clean). After approval: rename the deck over
-   `kr-session-08.html`, replace the disabled Session 8 card in `index.html`,
-   mark PROGRESS row 8 Done.
+1. **Session 8, waiting for the instructor's review:** the defense day
+   (no build) after the grading was replanned on 2026-09-26. Deck
+   `lectures/kr-session-08-new.html` (8 slides, 180 minutes, `scripts/deckgen-s8/`),
+   `module-08-defense/DEFENSE-DAY.md`, `scoring-sheet.html` (Part 1 project
+   before the day, Part 2 defense per student), and the template repository
+   https://github.com/ahmabboud/kr-team-template (README "How it is graded").
+   `Knowledge Representation - Syllabus.docx` still shows the old grading:
+   `syllabus-source.json` is updated, the .docx must be regenerated or edited.
+   After approval: rename the deck over `kr-session-08.html`, replace the
+   disabled Session 8 card in `index.html`, mark PROGRESS row 8 Done.
 2. **To fix next (instructor, 2026-09-26): content overflowing the slide in
    study mode.** The instructor saw Session 7 overflow at the bottom and the
    right. Cause found: study mode (key S, remembered in the browser), which
@@ -52,7 +54,7 @@ keep the main session's context clear (instructor's preference, 2026-09-24).
    mode on as a standard step of AGENTS.md 2f.
 3. **Later:** item 18 (syllabus alignment question), items 12 and 19.
 
-**Settled decisions a new session must not reopen:** Session 7 uses Gemini only, no Ollama or other provider (instructor, 2026-09-25); lab simplicity (instructor, 2026-09-25): slides never depend on the lab or its results, every slide example is complete on the slide; every Part B task mirrors a worked example of the same kind already shown on a slide or done in Part A, changing one thing; labs stay short and simple, one script per step with one expected result (to be added to `AGENTS.md` 2e once the coding agent's current edit of that file is pushed); visual variety (instructor, 2026-09-25, on approving Session 3: mix picture types across a deck, `AGENTS.md` 2c rule 9); tool rule (2c rule 5:
+**Settled decisions a new session must not reopen:** grading (instructor, 2026-09-26): attendance and lab run 15, team project 55 scored once offline 48 hours before Session 8 (one mark per layer: works, partly, missing), individual defense 30 (one mark 0 to 3 per student from 2 or 3 questions, not a check of every topic); milestones are ungraded feedback checkpoints; Session 8 is defense only, no build; Session 7 uses Gemini only, no Ollama or other provider (instructor, 2026-09-25); lab simplicity (instructor, 2026-09-25): slides never depend on the lab or its results, every slide example is complete on the slide; every Part B task mirrors a worked example of the same kind already shown on a slide or done in Part A, changing one thing; labs stay short and simple, one script per step with one expected result (to be added to `AGENTS.md` 2e once the coding agent's current edit of that file is pushed); visual variety (instructor, 2026-09-25, on approving Session 3: mix picture types across a deck, `AGENTS.md` 2c rule 9); tool rule (2c rule 5:
 concept first, one slide per tool, no slide for trivial tools, video only for
 complex GUI tools); timing (2c rule 7: about 180 minutes, about 2 hours slides
 and 1 hour lab, **a guide, not a rule**; `data-minutes` realistic); animation
@@ -539,3 +541,4 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-26: Session 1's architecture walk: the knowledge graph node moved 20 px right so the "checks" label no longer touches the boxes (same fix as Session 8's copy). Study mode overflow found and logged in "Where to continue". Note: `kr-team-template/` was moved out of this repository to `../kr-team-template/` (outside git, with a `build/` folder, so it was run there); the deletion is not committed here until the instructor says where the template lives.
 - 2026-09-26: the team template moved out of this repository to its own GitHub template repository, https://github.com/ahmabboud/kr-team-template (instructor; is_template true, SHACL gate run green on its first commit; local clone `../kr-team-template/` with the same repo-local credential helper). This repository's copy removed; references in `demos/README.md`, the Session 8 README and the deck generator point to the new repository. Template README gained "Start your team's repository" (Use this template).
 - 2026-09-26: **kr-team-template verified end to end on the instructor's Mac with Docker:** Fuseki held the example graph (its default query returned late order 1447170386.7), and the access layer answered "How many late orders are there?" through Gemini with `SELECT (COUNT(DISTINCT ?order) AS ?lateOrders) WHERE { ?order a ul:LateOrder }`, which gives 20 on the example (checked here), the right answer.
+- 2026-09-26: **Grading replanned (instructor).** The old weights (labs 15, Milestone 1 20, Milestone 2 20, system and report 35 on a 100 point rubric, defense 10) asked for evaluating each team three times and a defense rubric that 2 or 3 questions cannot cover. New: attendance and lab run 15; team project 55, scored once, offline, from the hand-in 48 hours before Session 8 (one mark per layer, works / partly / missing: ontology 10, shapes and validation 10, mapping and integration 9, learning 9, access layer 9, report and open problem 8; a layer not shown working from a clean checkout is at most partly); individual defense 30 (one overall mark 0 to 3 per student, times 10). Milestones: feedback checkpoints, not graded. Session 8: defense only, one team at a time, about 15 minutes (3 minute demo, one question answered and one refused, then 2 or 3 questions per student). Updated: `syllabus-source.json` (assessment, rubric, Sessions 4, 6, 8, note), `DEFENSE-DAY.md` (rewritten), the scoring sheet, the Session 1 grading slides, the Session 4 and 6 milestone slides, the Session 8 deck (13 slides to 8, no build block), the template's README and report outline, `AGENTS.md` 2e, `PROGRESS.md`, `README.md`, `PROJECT-REDESIGN.md` (marked superseded), the Session 8 README.

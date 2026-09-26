@@ -12,14 +12,16 @@ One enterprise problem, a supply chain, carried from raw operational data throug
 
 | # | Module | Title | Status |
 |---|---|---|---|
-| 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Built |
-| 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Built |
-| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Built, verified 0px overflow live across all 22 slides (interactive click-through and print preview still owed, see `PROGRESS.md`) |
-| 4 | 2 | Constraints, Quality, and Provenance: SHACL | To build · Milestone 1 |
-| 5 | 3 | Integrating Operational Data | To build |
-| 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | To build · Milestone 2 |
-| 7 | 5 | The Agentic Query Layer, Deployment, and Open Problems | To build |
-| 8 | 5 | Supervised Build, Deployment, and Defense | To build |
+| 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Done |
+| 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Done |
+| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Done |
+| 4 | 2 | Constraints, Quality, and Provenance: SHACL | Done · Milestone 1 (checkpoint) |
+| 5 | 3 | Integrating Operational Data | Done |
+| 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | Done · Milestone 2 (checkpoint) |
+| 7 | 5 | The Agentic Query Layer, Deployment, and Open Problems | Done |
+| 8 | 5 | The Defense | Draft, waiting for review |
+
+Status detail: `PROGRESS.md`.
 
 ## Repository
 

@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Session 8 scoring sheet · Knowledge Representation</title>
+<title>Project and defense scoring sheet · Knowledge Representation</title>
 <!-- One printed page per team. Print it (A4, portrait), one copy per team,
      and fill it in during or right after the team's defense visit.
-     Rubric: PROJECT-REDESIGN.md and syllabus-source.json (100 points);
-     the defense is a separate 10 percent line (DEFENSE-DAY.md). -->
+     Grade (instructor, 2026-09-26): attendance and lab run 15, team project
+     55 (scored once, offline, before the day), individual defense 30.
+     See DEFENSE-DAY.md. -->
 <style>
   :root { --red: #96122B; --ink: #1d1d1f; --line: #bdbdc2; --soft: #f4f1ee; }
   * { box-sizing: border-box; }
@@ -32,50 +33,38 @@
 </head>
 <body>
 <div class="page">
-  <div class="noprint">Print this page (A4, portrait), one copy per team. Everything fits on one sheet.</div>
-  <h1>Session 8 · Defense and scoring</h1>
-  <p class="sub">Knowledge Representation, MSc, Lebanese University. Score right after the visit, while it is fresh.</p>
+  <div class="noprint">Print this page (A4, portrait), one copy per team. Part 1 before the day, Part 2 on the day.</div>
+  <h1>Team project and defense</h1>
+  <p class="sub">Knowledge Representation, MSc, Lebanese University. Grade: attendance and lab run 15 · team project 55 · individual defense 30.</p>
 
   <div class="fields">
-    <div class="field">Team and members</div>
+    <div class="field">Team</div>
     <div class="field">Topic and data</div>
-    <div class="field">Date · visit time</div>
+    <div class="field">Date</div>
   </div>
 
-  <h2>Clean checkout (the Session 8 checklist)</h2>
+  <h2>Part 1 · Team project, scored once before the day (55)</h2>
+  <p class="note" style="margin:0 0 2mm">Clean checkout: <span class="box"></span>comes up with one command. Works = full points, partly = half, missing = none; a layer not shown working from the clean checkout is at most partly.</p>
   <table>
-    <tr><td><span class="box"></span>One command starts the whole stack from a clean checkout</td><td><span class="box"></span>Services on 127.0.0.1 only; keys only in <code>.env</code></td></tr>
-    <tr><td><span class="box"></span>SHACL gate runs before the endpoint, and in CI</td><td><span class="box"></span>Test set score recorded, with model and date</td></tr>
-    <tr><td colspan="2"><span class="box"></span>A real unanswerable question is refused, with a reason</td></tr>
+    <tr><th>Layer</th><th class="n">Max</th><th class="n">Works</th><th class="n">Partly</th><th class="n">Missing</th><th class="n">Points</th><th>Note, and a question to ask</th></tr>
+    <tr><td>Ontology</td><td class="n">10</td><td class="n"><span class="box"></span></td><td class="n"><span class="box"></span></td><td class="n"><span class="box"></span></td><td class="n"></td><td></td></tr>
+    <tr><td>Shapes and validation</td><td class="n">10</td><td class="n"><span class="box"></span></td><td class="n"><span class="box"></span></td><td class="n"><span class="box"></span></td><td class="n"></td><td></td></tr>
+    <tr><td>Mapping and integration</td><td class="n">9</td><td class="n"><span class="box"></span></td><td class="n"><span class="box"></span></td><td class="n"><span class="box"></span></td><td class="n"></td><td></td></tr>
+    <tr><td>Learning over the graph</td><td class="n">9</td><td class="n"><span class="box"></span></td><td class="n"><span class="box"></span></td><td class="n"><span class="box"></span></td><td class="n"></td><td></td></tr>
+    <tr><td>Access layer</td><td class="n">9</td><td class="n"><span class="box"></span></td><td class="n"><span class="box"></span></td><td class="n"><span class="box"></span></td><td class="n"></td><td></td></tr>
+    <tr><td>Report and open problem</td><td class="n">8</td><td class="n"><span class="box"></span></td><td class="n"><span class="box"></span></td><td class="n"><span class="box"></span></td><td class="n"></td><td></td></tr>
+    <tr class="total"><td>Team project</td><td class="n">55</td><td colspan="3"></td><td class="n"></td><td></td></tr>
   </table>
 
-  <h2>Rubric · final system and report (100)</h2>
+  <h2>Part 2 · Defense on the day (30 per student)</h2>
+  <p class="note" style="margin:0 0 2mm">Demonstration: <span class="box"></span>answers the question you chose <span class="box"></span>refuses one it cannot answer (confirms Part 1; not marked again).</p>
   <table>
-    <tr><th>Line</th><th class="n">Max</th><th class="n">Score</th><th>Evidence and notes</th></tr>
-    <tr><td>Problem framing and scope</td><td class="n">7</td><td class="n"></td><td></td></tr>
-    <tr><td>Data understanding and constraint discovery</td><td class="n">12</td><td class="n"></td><td></td></tr>
-    <tr><td>Ontology quality</td><td class="n">18</td><td class="n"></td><td></td></tr>
-    <tr><td>Constraint validation with SHACL</td><td class="n">15</td><td class="n"></td><td></td></tr>
-    <tr><td>Operational data integration</td><td class="n">12</td><td class="n"></td><td></td></tr>
-    <tr><td>Prediction and evaluation honesty</td><td class="n">13</td><td class="n"></td><td></td></tr>
-    <tr><td>Access layer</td><td class="n">9</td><td class="n"></td><td></td></tr>
-    <tr><td>Deployment and reproducibility</td><td class="n">9</td><td class="n"></td><td></td></tr>
-    <tr><td>Literature and open problem</td><td class="n">5</td><td class="n"></td><td></td></tr>
-    <tr class="total"><td>Total</td><td class="n">100</td><td class="n"></td><td></td></tr>
+    <tr><th style="width:36mm">Student</th><th>Questions asked (2 or 3), on parts they did not build</th><th class="n">Mark 0 to 3</th><th class="n">&times; 10</th></tr>
+    <tr><td class="w" style="height:16mm"></td><td></td><td class="n"></td><td class="n"></td></tr>
+    <tr><td class="w" style="height:16mm"></td><td></td><td class="n"></td><td class="n"></td></tr>
+    <tr><td class="w" style="height:16mm"></td><td></td><td class="n"></td><td class="n"></td></tr>
   </table>
-
-  <h2>Defense · who answered what (10 percent of the grade)</h2>
-  <table>
-    <tr><th>Question asked</th><th style="width:34mm">Rubric line</th><th style="width:32mm">Answered by</th><th class="n">0 · 1 · 2</th></tr>
-    <tr><td class="w"></td><td></td><td></td><td class="n"></td></tr>
-    <tr><td class="w"></td><td></td><td></td><td class="n"></td></tr>
-    <tr><td class="w"></td><td></td><td></td><td class="n"></td></tr>
-    <tr><td class="w"></td><td></td><td></td><td class="n"></td></tr>
-    <tr><td class="w"></td><td></td><td></td><td class="n"></td></tr>
-    <tr><td class="w"></td><td></td><td></td><td class="n"></td></tr>
-    <tr class="total"><td colspan="3">Defense mark (out of 10)</td><td class="n"></td></tr>
-  </table>
-  <p class="note">Ask each teammate at least one question, about a part they did not build. 0: cannot explain it · 1: explains what, not why · 2: explains and justifies the decision, including one a model suggested. An ontology the team cannot defend scores zero on that line, whatever its quality.</p>
+  <p class="note">One overall mark per student, from all their answers together. 0: cannot explain the team's system · 1: says what the parts do, not why · 2: explains why the team decided as it did · 3: defends the decisions against an alternative or a failure in their own system. An ontology the team cannot defend loses its ontology points in Part 1.</p>
 </div>
 </body>
 </html>

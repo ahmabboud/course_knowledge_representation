@@ -28,16 +28,16 @@ p_steps = [
 ]
 p_caps = [
     ("Start today", "<b>Step 1.</b> Your team's first piece: a constraint inventory on <b>your own</b> data, the same method as today's lab."),
-    ("Milestone 1 · 20 percent", "<b>Step 2.</b> End of Session 4: your ontology and your shapes. <b>Milestone 1</b>, 20 percent of the grade."),
-    ("Milestone 2 · 20 percent", "<b>Step 3.</b> End of Session 6: your integrated graph and your prediction models. <b>Milestone 2</b>, 20 percent."),
-    ("Final · 45 percent", "<b>Step 4.</b> Session 8: the deployed system and report (35 percent), then the team defense (10 percent)."),
+    ("Milestone 1 · a checkpoint", "<b>Step 2.</b> End of Session 4: your ontology and your shapes. <b>Milestone 1</b>, a checkpoint for feedback, not graded."),
+    ("Milestone 2 · a checkpoint", "<b>Step 3.</b> End of Session 6: your integrated graph and your prediction models. <b>Milestone 2</b>, a checkpoint, not graded."),
+    ("Final · 85 percent", "<b>Step 4.</b> 48 hours before Session 8: the system and report (55 percent). Session 8: your individual defense (30 percent)."),
 ]
 SLIDES.append(slide("The team project: what you build", "Team project", 4,
     head("One system, one layer per session", "Every team builds the same pipeline. What differs is the domain and the data.") +
     flow("The team project, session by session, with its milestones", 1448, 300, p_nodes, p_edges, p_steps, p_caps) +
-    callout("Not a weekly checkpoint", "After each lab, repeat the technique on your own data. Nothing is graded week by week; the milestones and the final system are.", "neutral"),
+    callout("Graded once, at the end", "After each lab, repeat the technique on your own data. Nothing is graded week by week, and the milestones are feedback: the final system is graded once.", "neutral"),
     '''<p>Four minutes. The message: every lab is a rehearsal on the shared case, and the real work is repeating it on your own topic.</p>
-    <ul><li>The remaining 15 percent is lab completion and participation, Sessions 1 to 7.</li></ul>'''))
+    <ul><li>The remaining 15 percent is attendance and running the lab in class, Sessions 1 to 7.</li></ul>'''))
 
 # ------------------------------------------------------------------ Topic menu
 SLIDES.append(slide("The topic menu", "Team project", 3,
@@ -80,26 +80,23 @@ SLIDES.append(slide("Teams and the deadline", "Team project", 3,
 
 # ------------------------------------------------------------------ Grading
 SLIDES.append(slide("How the project is graded", "Team project", 3,
-    head("Read this now, not in week 6", "The milestones are judged against the same rubric as the final system.") + '''
+    head("Read this now, not in week 6", "The project is graded once, at the end; the defense is yours alone.") + '''
   <div class="lu-split" style="margin-top:var(--lu-s3)">
     ''' + table(["Course grade", "Percent", "When"], [
-        ["Lab completion and participation", "15", "Sessions 1 to 7"],
-        ["Milestone 1: ontology and shapes", "20", "End of Session 4"],
-        ["Milestone 2: graph and prediction", "20", "End of Session 6"],
-        ["Final system and technical report", "35", "Session 8"],
-        ["Team demonstration and defense", "10", "Session 8"],
+        ["Attendance and lab run", "15", "Sessions 1 to 7"],
+        ["Team project: system and report", "55", "48 hours before Session 8"],
+        ["Individual defense", "30", "Session 8"],
       ]) + '''
-    ''' + table(["Project rubric, out of 100", "Points"], [
-        ["Problem framing and scope", "7"],
-        ["<b>Data understanding and constraint discovery</b>", "<b>12</b>"],
-        ["Ontology quality", "18"],
-        ["Constraint validation with shapes", "15"],
-        ["Operational data integration", "12"],
-        ["Prediction and evaluation honesty", "13"],
-        ["Question layer · Deployment · Literature", "9 · 9 · 5"],
+    ''' + table(["Team project, one mark per layer", "Points"], [
+        ["Ontology", "10"],
+        ["Shapes and validation", "10"],
+        ["Mapping and integration", "9"],
+        ["Learning over the graph", "9"],
+        ["Access layer", "9"],
+        ["Report and open problem", "8"],
       ], build="1") + '''
   </div>''',
-    '''<p>Three minutes. Point at the bold line: 12 points for exactly what today's lab trains, done on their own data. It is the line nobody can copy from a classmate.</p>'''))
+    '''<p>Three minutes. Each layer gets one mark: works (full points), partly (half), missing (none), judged from a clean checkout of the team's repository. The milestones at the end of Sessions 4 and 6 are feedback, not grades. The defense is individual: 2 or 3 questions each in Session 8, one overall mark from 0 to 3.</p>'''))
 
 # ================================================================== Lab
 SLIDES.append(divider("Lab · Profile the data, find the rules", "Lab",

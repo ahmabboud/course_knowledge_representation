@@ -1,8 +1,10 @@
-# Session 8: supervised build, deployment, and defense
+# Session 8: the defense
 
-No lab of its own: the day is each team's own build, in parallel, with the
-instructor rotating for a 10 to 12 minute defense visit per team. The
-materials:
+No lab and no build (instructor, 2026-09-26): teams hand in the system and
+the report 48 hours before; the instructor scores the project once,
+offline; the day is one team at a time, about 15 minutes each (a 3 minute
+demonstration, then 2 or 3 questions per student, one mark per student).
+The materials:
 
 - `kr-team-template` (https://github.com/ahmabboud/kr-team-template), a GitHub template repository: each
   team presses "Use this template" to create its own. One folder per layer,
@@ -14,10 +16,11 @@ materials:
   CI is green.
 - `module-08-defense/DEFENSE-DAY.md`: the instructor's run of show.
 - `module-08-defense/scoring-sheet.html`: one printable page per team.
-- `lectures/kr-session-08.html`: the short day deck (plan, standup,
-  checklist, defense, rubric, report, course close).
+- `lectures/kr-session-08.html`: the short day deck (the plan, one team's
+  slot, how students are marked, the defenses, the course close).
 
-The Session 8 checklist (agreed in Session 7) is in the template's README:
+The checklist agreed in Session 7 is in the template's README, as the
+things to check before handing in:
 one command from a clean checkout; ports on 127.0.0.1 and keys only in
 `.env`; the SHACL gate before the endpoint and in CI; the test set's score
 recorded with model and date; a real unanswerable question refused.

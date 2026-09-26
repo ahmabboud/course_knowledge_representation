@@ -1,97 +1,85 @@
 # Session 8, the defense day
 
-Session 8 has no lecture deck. It is a fully supervised 150-minute build,
-deployment, and defense block, per `PROJECT-REDESIGN.md`. This document
-is the instructor's own run-of-show for that day.
+Session 8 is the defense and nothing else: no build, no lecture. The system
+and the report were handed in 48 hours before, and scored then. This is the
+instructor's run of show.
 
-## The format is parallel, not sequential
+## The grade (instructor, 2026-09-26)
 
-This is not DSCAI's model (one team presents to the whole room, then the
-next). All teams work on their own deployment at the same time, the way
-a lab session already works. The instructor rotates between teams for a
-focused defense visit, while every other team keeps building. That is
-what makes the math work: the constraint is the instructor's own time
-per team, not the whole room's attention.
+| Part | Weight | When and how |
+|---|---|---|
+| Attendance and lab run | 15 | Sessions 1 to 7: present, and the lab run in class |
+| Final team project, system and report | 55 | Scored once, offline, from the hand-in 48 hours before Session 8 |
+| Individual defense | 30 | Session 8: one overall mark per student |
 
-At teams of 2 to 3 and a cohort of 12 to 24, that is **4 to 12 teams**.
-Budget **10 to 12 minutes of dedicated instructor time per team** for the
-defense visit itself (separate from ambient walk-around help with
-deployment issues). That is 40 to 144 minutes across the full team range,
-comfortably inside the 150-minute block even at the top of the range,
-with room left over for troubleshooting. If the actual team count runs
-past what fits, use up to 1 extra hour, the same buffer DSCAI's own
-Module 6 keeps, rather than compressing any team's defense time.
+The milestones at the end of Sessions 4 and 6 are checkpoints for feedback,
+not graded.
 
-## Before this day
+## Before the day: score the project once
 
-Confirm, per team, before the block starts:
+Teams push the final repository and report 48 hours before Session 8. For
+each team, at your desk:
 
-- The repository is pushed and the stack is expected to come up from a
-  clean checkout with one command, per the "Code and artifacts" policy.
-  Session 8 is where it gets graded by actually doing that, it should
-  not be the first time the team has tried it.
-- Milestone 2 was submitted at the end of Session 6, so Session 7's own
-  contact and out-of-class time was available to finish the access layer
-  and harden deployment. A team arriving at Session 8 with the access
-  layer unstarted has not used that time, and the schedule has no slack
-  to build it from zero here.
-- The technical report is close to final, referenced during the defense
-  visit rather than read live.
+1. Clone it into an empty folder, add a `.env` with your key, run
+   `docker compose up --build`.
+2. Give each of the six layers one mark: **works** (full points), **partly**
+   (half), **missing** (none). A layer that cannot be shown working from the
+   clean checkout is at most partly.
 
-## Running the block
+| Layer | Points |
+|---|---|
+| Ontology: a reused published vocabulary, competency questions, a clean reasoner run | 10 |
+| Shapes and validation: the inventory covered, failures triaged, the gate in CI | 10 |
+| Mapping and integration: the team's own source mapped; entity resolution with precision and recall | 9 |
+| Learning over the graph: baseline, a split that does not leak | 9 |
+| Access layer: answers checked and repaired, a real refusal, the score recorded | 9 |
+| Report and open problem: what was deployed, one open problem with three sources | 8 |
+| **Total** | **55** |
 
-**1. Standup and blocker triage, 20 minutes.** Each team states in under
-a minute what is deployed, what is not, and their single largest
-blocker. Triage blockers into the order you will actually get to them,
-out loud, so teams know whether to keep working around a blocker or wait
-for you.
+3. Write 3 or 4 questions for the team from what you saw: the weakest layer,
+   a decision that looks borrowed, a number you could not trace.
 
-**2. Supervised build and rotating defense, 150 minutes.** Teams work in
-parallel on their own deployment. Move through teams for their defense
-visit, roughly 10 to 12 minutes each. **Any of the 2 to 3 teammates can
-be asked about any part**, the data, the ontology, the SHACL shapes, the
-integration, the model, the access layer, or the code, not only the part
-they personally wrote, per the "Team work" policy. Spread questions
-across teammates deliberately, do not let one person answer everything.
+## On the day (180 minutes, 24 students, 8 to 12 teams)
 
-One question per rubric line is enough to keep a visit inside 10 to 12
-minutes without turning it into a full re-grade of the artifact, the
-artifact is already being graded separately by cloning and running it.
-Good questions to have ready, drawn from the rubric in `PROJECT-REDESIGN.md`:
+**Opening, 10 minutes.** The order of the teams on the board, and how the
+defense is marked.
 
-- Ask one teammate to name the real published vocabulary the ontology
-  reuses, and why it fits the team's chosen topic, without looking at
-  the report.
-- Ask another to point at one constraint in the inventory and explain
-  why it became a SHACL shape rather than an OWL restriction, or the
-  reverse.
-- Ask a third what the tabular baseline scored against the graph model,
-  and whether losing to it would have been reported honestly.
-- Pick one deployment step and ask what happens if it fails on a clean
-  checkout, has anyone actually tried that.
-- Ask what full-scale validation would require, for any part of the
-  system a smoke test stood in for.
+**Team defenses, about 15 minutes each.** One team at the front at a time;
+the other teams may leave and come back for their slot.
 
-Between defense visits, use the remaining time in the block for ambient
-troubleshooting help, the same way any lab session runs.
+- **Demonstration, 3 minutes (team).** The stack is already running: it
+  answers one question you choose and refuses one it cannot answer. This
+  confirms the offline score; it is not marked again.
+- **Questions, 2 or 3 per student.** Each student is asked about a part of
+  the system they did not build, from your prepared questions. Do not try to
+  cover every topic: the questions sample understanding.
 
-**3. Course close, 10 minutes.** Consolidate the reference architecture
-from Session 1 against what teams actually built, and point to further
-study paths.
+**Course close, 10 minutes.** The Session 1 reference architecture against
+what the teams built, and further study.
 
-## Scoring
+At 12 teams the slots are 13 minutes; at 8 teams, 20. If the count needs
+more time, use up to one extra hour rather than cutting a team short.
 
-Score each team right after its defense visit, while it is fresh,
-against the 100-point rubric in `PROJECT-REDESIGN.md` plus the separate
-10 percent defense line from the Assessment table. Record which
-teammate answered which question, that record is what "individual
-accountability" in a team grade actually rests on if a mark is ever
-questioned later.
+## The defense mark: one per student, 0 to 3
 
-## After this day
+Judge the answers together, not question by question:
 
-What this document protects is that every team gets a real, focused
-defense inside one session, extended by up to an hour if the actual team
-count needs it, rather than a rushed or uneven one. It does not fix
-grading turnaround, that is governed by the Assessment section of the
-syllabus.
+| Mark | The student |
+|---|---|
+| 0 | cannot explain the team's system, even the parts they are asked about |
+| 1 | says what the parts do, not why |
+| 2 | explains why the team decided as it did |
+| 3 | defends the decisions against an alternative or a failure in their own system |
+
+Defense points = mark × 10 (out of 30). The syllabus policy still holds: an
+ontology the team cannot defend loses its ontology points.
+
+Good questions to have ready:
+
+- Why does this class exist? Which competency question needs it?
+- Why is this constraint a SHACL shape and not an OWL axiom, or the reverse?
+- Does your split leak? What did the baseline score?
+- What does your system do when it does not know?
+
+Record which question each student answered and the mark, on the scoring
+sheet (`scoring-sheet.html`), right after the slot.

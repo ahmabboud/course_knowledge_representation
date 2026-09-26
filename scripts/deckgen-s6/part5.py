@@ -78,7 +78,7 @@ rows = [("Node classification", "a heterogeneous GNN on your own graph, for your
         ("A split that does not leak", "by time if your data has dates; by group otherwise, and say why"),
         ("The limits", "several seeds, the spread, and what the numbers do not show")]
 SLIDES.append(slide("Milestone 2 and the project clinic", "Wrap", 5,
-    head("Milestone 2 · due at the end of this session · 20% · on your team's own topic", "Today's lab is the pattern. The clinic checks one thing: does your split leak?", width=72) + '''
+    head("Milestone 2 · a checkpoint, not graded · on your team's own topic", "Today's lab is the pattern. The clinic checks one thing: does your split leak?", width=72) + '''
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     ''' + table(["Part", "What it must show"], rows) + '''
     <div class="lu-card">
@@ -86,7 +86,7 @@ SLIDES.append(slide("Milestone 2 and the project clinic", "Wrap", 5,
       <p class="lu-sub">Say your label, your split, and the one thing that could leak across it. The room names one more.</p>
       <p class="lu-caption">Removed features go in the report too, with the reason: the label hides in more places than one.</p>
     </div>
-  </div>''', '''<p>Five minutes here; the full clinic runs in the discussion time if the lab finished early. The syllabus deliverable: a trained heterogeneous node classification model and a link prediction model over the integrated graph, a leakage-free temporal split, a tabular baseline, and a written evaluation of the limits. Scored against the project rubric criteria that apply now.</p>'''))
+  </div>''', '''<p>Five minutes here; the full clinic runs in the discussion time if the lab finished early. The syllabus deliverable: a trained heterogeneous node classification model and a link prediction model over the integrated graph, a leakage-free temporal split, a tabular baseline, and a written evaluation of the limits. A checkpoint for feedback, not graded: the team project is scored once, before Session 8.</p>'''))
 
 GLOSS = [
     ("Node classification", "A label for each node."),

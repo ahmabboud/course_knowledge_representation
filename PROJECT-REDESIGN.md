@@ -134,6 +134,13 @@ ontology is listed in the report with its licence).
 
 ### Rubric, rebalanced
 
+> **Superseded 2026-09-26 (instructor).** The grade is now attendance and lab
+> run 15, team project 55 (scored once, offline, one mark per layer: ontology
+> 10, shapes 10, mapping 9, learning 9, access layer 9, report 8), individual
+> defense 30; the milestones are ungraded checkpoints. See
+> `module-08-defense/DEFENSE-DAY.md` and `syllabus-source.json`. The table
+> below is kept as history.
+
 The 100-point capstone rubric (scores the "final deployed system and
 technical report" line, and the two milestones, per the existing
 Assessment table) is rebalanced away from anything tied to one fixed

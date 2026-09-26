@@ -26,8 +26,8 @@ HEAD = f'''<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Build, Deploy, Defend · Knowledge Representation, Session 8</title>
-<meta name="description" content="Session 8 of Knowledge Representation, MSc, Lebanese University. The defense day: standup, the clean checkout, the Session 8 checklist, how the defense works, the rubric, the report, and the course close.">
+<title>The Defense · Knowledge Representation, Session 8</title>
+<meta name="description" content="Session 8 of Knowledge Representation, MSc, Lebanese University. The defense day: the order of the day, one team's slot, how students are marked, the defenses, and the course close.">
 <meta name="theme-color" content="#96122B">
 <link rel="manifest" href="../manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -149,7 +149,10 @@ converted when those sessions are rebuilt (REPLAN-STATE items 2 and 9).
 **What a lab is for.** Labs are individual and are **not collected or
 graded**. They exist for two things only: to make the session's concepts
 concrete on the real data, and to prepare the team project (the capstone).
-Graded work is the team project and its milestones, nothing else. So a lab
+Graded work (instructor, 2026-09-26): attendance and lab run 15, the team
+project 55 (scored once, offline, 48 hours before Session 8, one mark per
+layer), the individual defense 30. The milestones are feedback checkpoints,
+not graded. So a lab
 never says "deliverable", "hand in", "commit" or "due"; it says what the
 student should understand and what to take to the project.
 

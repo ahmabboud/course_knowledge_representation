@@ -50,7 +50,7 @@ SLIDES.append(slide("Discussion and Milestone 1", "Wrap", 10, '''  <div class="l
       </ol>
     </div>
     <div class="lu-card">
-      <span class="lu-card__label">Milestone 1 · team project · due at the end of this session</span>
+      <span class="lu-card__label">Milestone 1 · a checkpoint, not graded · push at the end of this session</span>
       <ul class="lu-list">
         <li>Your ontology, with a version IRI</li>
         <li>A shapes file covering your rule list</li>
@@ -58,10 +58,10 @@ SLIDES.append(slide("Discussion and Milestone 1", "Wrap", 10, '''  <div class="l
         <li>Provenance for your data</li>
         <li>A gate that blocks a bad commit</li>
       </ul>
-      <p class="lu-caption">Graded against the project rubric; 20% of the course grade. Read before you submit: Allemang, Hendler and Gandon on RDFS and SHACL, and on good and bad modeling practices; Hogan et al., Chapter 7.</p>
+      <p class="lu-caption">For feedback only: the project is graded once, at the end. Read before you push: Allemang, Hendler and Gandon on RDFS and SHACL, and on good and bad modeling practices; Hogan et al., Chapter 7.</p>
     </div>
   </div>''', '''<p>Ten minutes: five on the questions, five on Milestone 1. Question 1 has no single answer: a rule that must hold for reasoning (a domain) belongs in OWL; a rule about what the data must contain belongs in the shapes. Many teams will say both, and should say why.</p>
-<ul><li>Milestone 1 is team project work, graded; the lab was not. Point teams at <code>.github/workflows/shacl-gate.yml</code> and <code>validate.py</code> as templates.</li></ul>'''))
+<ul><li>Milestone 1 is a checkpoint for feedback, not graded (instructor, 2026-09-26): the team project is scored once, before Session 8. Point teams at <code>.github/workflows/shacl-gate.yml</code> and <code>validate.py</code> as templates.</li></ul>'''))
 
 # ---------------------------------------------------------------- Glossary
 GLOSS = [
