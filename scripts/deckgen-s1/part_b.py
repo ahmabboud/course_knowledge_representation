@@ -149,7 +149,7 @@ a_nodes = [
     node("map", "Mapping\nSession 5", 420, 330, 220, 84),
     node("ont", "Ontology\nSession 3", 720, 70, 220, 84),
     node("shp", "Shapes\nSession 4", 720, 200, 220, 84),
-    node("kg", "Knowledge graph\nSessions 2 and 5", 1030, 200, 250, 84),
+    node("kg", "Knowledge graph\nSessions 2 and 5", 1050, 200, 250, 84),
     node("learn", "Learning\nSession 6", 1325, 90, 200, 84),
     node("ask", "Questions\nSession 7", 1325, 310, 200, 84),
 ]
