@@ -3,7 +3,7 @@ common.py and svgkit.py (deckgen-s3).
 
     cd scripts/deckgen-s8 && python3 build.py
 
-Writes lectures/kr-session-08-new.html until the instructor approves it. Edit the parts and rebuild; never hand-edit
+Writes lectures/kr-session-08.html (instructor-approved 2026-09-26). Edit the parts and rebuild; never hand-edit
 the HTML. The day follows module-08-defense/DEFENSE-DAY.md and the
 syllabus; the checklist is the one agreed in Session 7.
 """
@@ -17,7 +17,7 @@ sys.path.insert(1, str(HERE.parent / "deckgen-s3"))
 sys.path.insert(2, str(HERE.parent / "deckgen-s1"))
 import part1  # noqa: E402
 
-out = sys.argv[1] if len(sys.argv) > 1 else "../../lectures/kr-session-08-new.html"
+out = sys.argv[1] if len(sys.argv) > 1 else "../../lectures/kr-session-08.html"
 slides = part1.SLIDES
 total = sum(int(re.search(r'data-minutes="(\d+)"', s).group(1)) for s in slides)
 

@@ -29,18 +29,19 @@ session are at the top of `AGENTS.md`. Running a lab end to end goes to a
 Sonnet sub-agent with a self-contained brief and a short report back, to
 keep the main session's context clear (instructor's preference, 2026-09-24).
 
-**Where to continue (2026-09-25):**
+**Where to continue (2026-09-26):**
 
-1. **Session 8, waiting for the instructor's review:** the defense day
-   (no build) after the grading was replanned on 2026-09-26. Deck
-   `lectures/kr-session-08-new.html` (8 slides, 180 minutes, `scripts/deckgen-s8/`),
-   `module-08-defense/DEFENSE-DAY.md`, `scoring-sheet.html` (Part 1 project
-   before the day, Part 2 defense per student), and the template repository
+1. **All eight sessions are done.** Session 8, the defense day (no build),
+   was approved by the instructor 2026-09-26: deck `lectures/kr-session-08.html`
+   (8 slides, 180 minutes, `scripts/deckgen-s8/`), `module-08-defense/DEFENSE-DAY.md`,
+   `scoring-sheet.html` (Part 1 project before the day, Part 2 defense per
+   student), and the template repository
    https://github.com/ahmabboud/kr-team-template (README "How it is graded").
-   `Knowledge Representation - Syllabus.docx` still shows the old grading:
-   `syllabus-source.json` is updated, the .docx must be regenerated or edited.
-   After approval: rename the deck over `kr-session-08.html`, replace the
-   disabled Session 8 card in `index.html`, mark PROGRESS row 8 Done.
+   `index.html`'s Session 8 card now links to the deck, and PROGRESS row 8 is
+   Done. `Knowledge Representation - Syllabus.docx` was rewritten to the new
+   grading on 2026-09-26 (rubric table, assessment table, Session 8 section,
+   milestone wording, policy bullets); the pre-redesign backup was left
+   untouched.
 2. **To fix next (instructor, 2026-09-26): content overflowing the slide in
    study mode.** The instructor saw Session 7 overflow at the bottom and the
    right. Cause found: study mode (key S, remembered in the browser), which
