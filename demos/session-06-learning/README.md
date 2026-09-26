@@ -106,10 +106,10 @@ answers and their hints are in `reference-outputs/my-learning-check.txt`.
 
 ## Take it to your team project
 
-Milestone 2 (due at the end of this session, on your own topic) asks for a
-node classification model, a link prediction model, a tabular baseline, a
-split that does not leak, and a written evaluation of the limits. This lab
-is the pattern:
+Milestone 2 (a checkpoint for feedback, not graded, pushed at the end of
+this session, on your own topic) asks for a node classification model, a
+link prediction model, a tabular baseline, a split that does not leak, and
+a written evaluation of the limits. This lab is the pattern:
 
 - Convert your graph as `build_graph.py` does, and list what you removed
   from the features and why.

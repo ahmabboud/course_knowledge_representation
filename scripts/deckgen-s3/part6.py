@@ -130,7 +130,7 @@ SLIDES.append(slide("Wrap and next session", "Wrap", 2, '''  <div class="lu-eyeb
       </div>
       <div class="lu-row"><span class="lu-tag lu-tag--green">For your team</span><span class="lu-caption" style="flex:1">Pick the published ontology your project will extend, and check its licence.</span></div>
     </div>
-  </div>''', '''<p>Two minutes. End on the sentence. Milestone 1 is due at the end of Session 4.</p>''', kind="tint"))
+  </div>''', '''<p>Two minutes. End on the sentence. Milestone 1 (a checkpoint, not graded) is pushed at the end of Session 4.</p>''', kind="tint"))
 
 # ---------------------------------------------------------------- Self-check
 SLIDES.append(slide("Self-check", "Wrap", 1, '''  <div class="lu-eyebrow">Self-check</div>

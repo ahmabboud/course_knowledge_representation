@@ -107,8 +107,8 @@ SLIDES.append(slide("Wrap and next session", "Wrap", 2, '''  <div class="lu-eyeb
     <div class="lu-stack">
       <div class="lu-card">
         <span class="lu-card__label">Next session</span>
-        <h3 class="lu-h3">Session 8 · Build, deploy, defend</h3>
-        <p class="lu-sub">No lecture. Each team's stack comes up from a clean checkout, with this layer in front, and every teammate answers for every part.</p>
+        <h3 class="lu-h3">Session 8 · The defense</h3>
+        <p class="lu-sub">No lecture, no build: your team hands in the stack 48 hours before, with this layer in front, and every teammate answers for every part.</p>
       </div>
       <div class="lu-row"><span class="lu-tag lu-tag--green">For your team</span><span class="lu-caption" style="flex:1">Put the access layer in your stack, and write up your open problem.</span></div>
     </div>

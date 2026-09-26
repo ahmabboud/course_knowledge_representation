@@ -131,7 +131,7 @@ Answer for yourself, then in the closing discussion:
   business rule, and a TRIAGE comment on every rule you changed.
 - `add_provenance.py` and `version_ontology.py` show the provenance and the
   version IRI Milestone 1 asks for.
-- Milestone 1 (team project, graded, end of this session): your ontology
+- Milestone 1 (a checkpoint for feedback, not graded, end of this session): your ontology
   with a version IRI, shapes covering your rule list, a triaged report,
   provenance, and a gate that blocks a bad commit.
 
