@@ -130,9 +130,9 @@ SLIDES.append(slide("Questions to expect", "Build and defense", 5,
   ''' + table(["Question", "Rubric line"], rows),
     '''<p>Five minutes. Drawn from <code>DEFENSE-DAY.md</code> and the syllabus. Add one on full-scale validation for any part a smoke test stood in for.</p>'''))
 
-pts = [("Ontology quality", 18), ("Constraint validation with SHACL", 15), ("Prediction and evaluation honesty", 13),
-       ("Data understanding and constraint discovery", 12), ("Operational data integration", 12),
-       ("Access layer", 9), ("Deployment and reproducibility", 9), ("Problem framing and scope", 7), ("Literature and open problem", 5)]
+pts = [("Ontology quality", 18), ("Validation with SHACL", 15), ("Evaluation honesty", 13),
+       ("Data and constraints", 12), ("Data integration", 12),
+       ("Access layer", 9), ("Deployment", 9), ("Framing and scope", 7), ("Open problem", 5)]
 rows = [(n, f"<b>{v}</b>", '<span style="display:block;min-width:200px">' + bar(v, 18, "", "red" if v >= 15 else "ink") + '</span>') for n, v in pts]
 SLIDES.append(slide("The rubric", "Build and defense", 5,
     head("100 points for the system and the report", "Plus the defense: a separate 10 percent of the grade") + '''
