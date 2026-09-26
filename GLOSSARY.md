@@ -3,7 +3,7 @@
 One plain sentence per term, and the session that first defines it on a
 slide. A deck may not use a term before the session listed here. When a
 new term is introduced anywhere, add it here in the same change.
-Sessions 1 to 6 are covered. The decks turn every term here into a clickable
+Sessions 1 to 7 are covered. The decks turn every term here into a clickable
 definition automatically: run `python3 scripts/build-glossary.py` after
 editing this file (it writes `assets/glossary.js`).
 
@@ -302,3 +302,36 @@ editing this file (it writes `assets/glossary.js`).
 | **CPU** | Central processing unit: a computer's ordinary processor. Every lab in this course runs on it. |
 | **GPU** | Graphics processing unit: a processor that speeds up training large models; not needed in this course. |
 | **SLA** | Service level agreement: a promised delivery time or quality level. |
+
+## Session 7 · The access layer, deployment, and open problems
+
+| Term | Plain definition |
+|---|---|
+| **Text to SPARQL** | Turning a question in plain language into a SPARQL query. |
+| **Large language model** | A model trained on huge amounts of text that writes text, and code, one piece at a time. |
+| **LLM** | Short for large language model. |
+| **Gemini** | Google's family of large language models, used live in the lab through a free key. |
+| **Ollama** | A program that runs open language models on your own computer, with no key. |
+| **VoID** | Vocabulary of Interlinked Datasets: a small RDF description of a graph's classes, properties and counts. |
+| **SIB** | The Swiss Institute of Bioinformatics, whose endpoints and tools (void-generator, sparql-llm) lead in text to SPARQL. |
+| **void-generator** | SIB's Java tool that writes a VoID description from a live SPARQL endpoint. |
+| **sparql-llm** | SIB's Python library for text to SPARQL: VoID, retrieved examples, validation and repair. |
+| **Prompt** | Everything a language model is given in one call: rules, schema, examples, question. |
+| **Grounding** | Giving a model the facts it must use, such as the schema and examples, instead of relying on what it remembers. |
+| **Few-shot examples** | Worked question and query pairs placed in the prompt for the model to imitate. |
+| **Hallucination** | A model stating something fluent that is not true, such as a property or an answer the graph does not have. |
+| **Validation** | Checking a generated query against the endpoint's description before it runs. |
+| **Repair loop** | Sending the check's problems back to the model and asking again, a fixed number of times. |
+| **Refusal** | Saying the graph cannot answer, and why, instead of guessing. |
+| **Execution accuracy** | Judging a query by the answer it returns, not by its text. |
+| **TEXT2SPARQL** | A yearly benchmark for text to SPARQL systems, with a fixed contract and scorer. |
+| **API key** | A secret string that identifies you to an online service; it lives in `.env` and is never committed. |
+| **Rate limit** | The most requests a service accepts in a given time; a free tier's is low. |
+| **Container topology** | Which parts of a system run in which containers, and which one talks to which. |
+| **Docker Compose** | Docker's tool for starting several containers together from one file. |
+| **Data drift** | The data changing over time until what was true of it no longer is. |
+| **Access control** | Rules on who may read or change which data. |
+| **Working Draft** | A W3C document still being written; it may change before it becomes a Recommendation. |
+| **Ontology learning** | Building an ontology, or parts of it, automatically from text or data. |
+| **Neurosymbolic** | Combining learned models with logic and rules, so each covers the other's weakness. |
+| **Benchmark contamination** | When a model has seen a benchmark's questions or answers in training, so its score overstates its skill. |
