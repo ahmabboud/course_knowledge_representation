@@ -790,8 +790,20 @@ strong, .lu-strong { font-weight: 600; }
 
 /* 11.4 Diagram walkthrough ------------------------------------------------ */
 .lu-walk { display: flex; flex-direction: column; gap: var(--lu-s4); min-height: 0; flex: 1 1 auto; }
-.lu-walk__view { flex: 1 1 auto; min-height: 0; display: grid; place-items: center; }
+.lu-walk__view { flex: 1 1 auto; min-height: 0; display: grid; place-items: center; overflow: hidden; }
 .lu-walk__view > * { width: 100%; }
+/* A .lu-flow's SVG is width:100% + height:auto (from its viewBox aspect
+   ratio, see 8d below), so like .lu-board it can derive a height taller
+   than the track this shrinkable flex item was squeezed to, and without
+   this overflow:hidden it would spill past .lu-walk__view into
+   .lu-walk__bar right below (seen on Session 2's "The triple", about
+   11px, only when the walk is free to shrink, i.e. study mode off).
+   Unlike .lu-board's diagrams, a flow diagram's own authored viewBox
+   already carries real margin around its nodes (a walkthrough highlights
+   one node at a time, so every node sits well inside the canvas with
+   room to spare), so a few clipped pixels of that margin at top and
+   bottom is the safe trade here, instead of a fixed height that would
+   distort every flow diagram's authored aspect ratio. */
 /* A .lu-board is width:100% + aspect-ratio, so inside a height-constrained
    walkthrough it derives a height taller than the space available and overlaps
    the caption bar. The stage is a fixed 1600x900 canvas, so a fixed height is
