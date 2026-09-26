@@ -36,6 +36,20 @@ data/brunel-graph.pt (PyTorch Geometric HeteroData)
         \_________ same splits: random, and by customer _________/
 ```
 
+## The tools in this lab
+
+| Tool | What it does here | What it does not decide |
+|---|---|---|
+| `rdflib` | Reads the Session 5 RDF graph. | Which facts a model is allowed to use. |
+| PyTorch Geometric | Stores the graph as node features and typed edge lists, then runs GraphSAGE. | Whether the evaluation split leaks information. |
+| scikit-learn | Runs the logistic-regression baseline over the order row. | Whether a high score is useful for a future customer. |
+| PyKEEN | Trains TransE and scores hidden plant-to-product links. | Whether TransE is better than the simpler popularity baseline. |
+
+These are Python libraries in the shared course environment, not separate
+services or desktop applications. The scripts choose the data slice, remove
+the late-order label, and report the comparison; the libraries perform the
+calculation.
+
 ## The data you are using
 
 The graph Session 5's mapping built from four Brunel tables (Brunel
@@ -58,6 +72,15 @@ which plant makes which product (2,036), which plant serves which port (22).
 **The label:** is the order late? 192 of 9,215 are (2.1%). In the graph it
 appears twice, as the class `ul:LateOrder` and as the value `ul:lateDays`.
 `build_graph.py` removes both from what the model sees.
+
+### One order, made visible
+
+For a Brunel order, the graph builder keeps the order's weight, unit quantity,
+and one-hot service level as its own features. It also links that order to its
+customer, carrier, plant, port, and product. It deliberately leaves out both
+`ul:LateOrder` and `ul:lateDays`: either one would reveal the answer the model
+is supposed to predict. The baseline's first run leaves `lateDays` in on
+purpose, so its near-perfect score makes the leak visible.
 
 ## Facts about the data that decide everything
 

@@ -16,6 +16,21 @@ later sessions.
 real datasets -> profiling and clustering -> evidence -> constraint inventory
 ```
 
+## The tools in this lab
+
+These tools answer different parts of the same question. They do not decide
+which rules are true for you.
+
+| Tool | What it does here | What it cannot decide |
+|---|---|---|
+| Python and `pandas` | Read the CSV files and count, group, and compare their values. | Whether an unusual value is an error or a legitimate exception. |
+| ydata-profiling | Produces a first report of nulls, value ranges, duplicates, and distributions. | Whether a pattern should become a business rule. |
+| OpenRefine | Groups near-identical spellings, such as codes with a space, dash, or typo. | Which spelling is the authoritative one. |
+| Constraint inventory | Records the evidence, source, proposed rule, and open question. | Nothing automatically: it makes the modelling decision reviewable. |
+
+The smoke test checks Python, Java, Docker, and Protégé because later labs use
+them. It is an environment check, not part of the data analysis.
+
 ## The data you are using
 
 | Source file | One row means | Why this lab needs it |
@@ -23,6 +38,14 @@ real datasets -> profiling and clustering -> evidence -> constraint inventory
 | `DataCoSupplyChainDataset.csv` | one order line | A wide operational dataset for profiling nulls, values, and near duplicates. |
 | `OrderList.csv` | one Brunel order | A compact supply chain event used throughout later sessions. |
 | Other Brunel CSV sheets | a plant, rate, product, or port relationship | They show why rules often span tables rather than one column. |
+
+## How the items relate
+
+For example, a profile may show that an order has a carrier code, a plant,
+and a port. The `PlantPorts.csv` table can then show whether that plant is
+permitted to use that port. The first observation is a value in one row; the
+second is a relationship across tables. The constraint inventory must name
+which kind of evidence supports a proposed rule.
 
 ## What each step proves
 

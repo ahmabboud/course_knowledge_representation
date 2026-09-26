@@ -73,6 +73,18 @@ ci/sample-orders.ttl              -> 3 Warnings, gate passes
 ci/sample-orders-broken.ttl       -> 1 Violation, gate fails
 ```
 
+## The tools in this lab
+
+| Tool | What it does here | What it does not do |
+|---|---|---|
+| `rdflib` | Reads the Brunel graph and the Turtle shape files. | Decide whether a shape is a sensible business rule. |
+| pySHACL | Applies the shapes to the graph and returns a report. | Repair the data or choose a severity for the team. |
+| `validate.py` | Presents pySHACL's report as a small work queue and makes Violations fail the command. | Turn every warning into an error. |
+| GitHub Actions | Runs the small validation gate on a shared repository change. | Replace validation of the full graph or an instructor's judgement. |
+
+The lab uses Python libraries and a repository workflow, not a separate
+desktop application or a service students must keep running.
+
 The CI sample contains six real Brunel orders and the related carriers,
 plants, ports, products, plant links, and rate bands, 515 triples in all. It
 is small so GitHub can check it in about a second. The broken sample changes
@@ -140,6 +152,8 @@ never merged.
 | **provenance** | Information that traces a graph or result to its source and process. |
 | **version IRI** | A stable identifier for one released ontology version. |
 | **validation gate** | An automated check that must pass before a change is accepted. |
+| **pySHACL** | The Python library that checks the graph against SHACL shapes in this lab. |
+| **GitHub Actions** | GitHub's automation service, used here to run the small validation gate after a repository change. |
 
 ## How to judge an assertion
 
