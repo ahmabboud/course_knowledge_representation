@@ -27,8 +27,13 @@ everything else from runs of these scripts on 2026-09-25.
   command (PowerShell: `$env:LLM_MODE="replay"` first). It replays the
   instructor's recorded answers for the lab's own questions. You lose only
   your own live run.
-- **Too many requests** (error 429, free tier): the scripts wait and retry;
-  if it keeps happening, set `LLM_DELAY=4` (seconds between calls).
+- **The free tier has limits** per project: requests a minute, tokens a
+  minute and requests a day (yours are on AI Studio's rate limit page). The
+  scripts wait 4 seconds between calls and, on "too many requests" (error
+  429), wait longer and try again; set `LLM_DELAY=8` if it keeps happening.
+  The daily limit resets at midnight Pacific time (10:00 in Beirut): if it is
+  used up, the script says so; use `LLM_MODE=replay`. The whole lab makes
+  about 60 calls.
 
 ## Part A · build and observe (about 30 minutes)
 
@@ -45,7 +50,8 @@ everything else from runs of these scripts on 2026-09-25.
 4. `python check.py broken.sparql`. **Expect:** `1 problem`: `ul:shippedBy
    is not a property of this graph`, followed by the real properties.
    **Notice:** that list is the hint the repair loop sends back.
-5. `python evaluate.py` (about 50 calls, a few minutes). **Expect:** three
+5. `python evaluate.py` (about 50 calls, 4 to 5 minutes: start it, then read
+   `access_layer.py` while it runs). **Expect:** three
    summary lines, `schema`, `examples`, `repair`, each with a mean F1 and
    the refusals. The recorded run is in `reference-outputs/evaluate.txt`;
    **your numbers may differ**, because the model does not always write the

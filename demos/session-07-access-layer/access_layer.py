@@ -184,7 +184,11 @@ def ask_model(prompt, mode=None):
     if not api_key and "localhost" not in base:
         raise SystemExit("No key: put GOOGLE_API_KEY in demos/.env (see demos/.env.example), "
                          "or run with LLM_MODE=replay.")
-    time.sleep(float(os.environ.get("LLM_DELAY", "0")))  # stay under a free tier's requests a minute
+    # A free tier limits requests per minute, tokens per minute and requests per
+    # day, per project. Wait between calls (4 s keeps under 15 a minute), and
+    # on "too many requests" (429) wait longer and try again.
+    local = "localhost" in base or "127.0.0.1" in base
+    time.sleep(float(os.environ.get("LLM_DELAY", "0" if local else "4")))
     for attempt in range(4):
         try:
             r = requests.post(f"{base}/chat/completions", timeout=90,
@@ -195,7 +199,16 @@ def ask_model(prompt, mode=None):
             raise SystemExit(f"Cannot reach the model at {base}. Check the connection, or run with LLM_MODE=replay.")
         if r.status_code != 429:
             break
-        time.sleep(15 * (attempt + 1))  # free tier: too many requests a minute, wait and retry
+        if "PerDay" in r.text or "per day" in r.text.lower():
+            raise SystemExit("The free tier's daily limit is used up for this project (it resets at midnight "
+                             "Pacific time, 10:00 in Beirut). Run with LLM_MODE=replay, or use another model "
+                             "(LLM_MODEL), or Ollama.")
+        wait = 20 * (attempt + 1)
+        print(f"  (too many requests a minute: waiting {wait} s, then trying again)", flush=True)
+        time.sleep(wait)
+    if r.status_code == 429:
+        raise SystemExit("Still too many requests after four tries. Wait a minute, set LLM_DELAY=8, "
+                         "or run with LLM_MODE=replay.")
     if r.status_code in (400, 401, 403):
         raise SystemExit(f"The model refused the key or the request ({r.status_code}): {r.text[:200]}\n"
                          "Check GOOGLE_API_KEY in demos/.env, or run with LLM_MODE=replay.")
