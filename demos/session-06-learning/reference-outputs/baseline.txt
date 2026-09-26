@@ -1,4 +1,4 @@
-python baseline.py   (scikit-learn 1.7.2, torch 2.8.0, 2026-09-25; graph: Session 5's brunel-mapped.nt)
+python baseline.py   (scikit-learn 1.7.2, torch 2.8.0, 2026-09-25; graph: Session 5's brunel-mapped.nt; unchanged after d27e4ee)
 9,215 orders, 192 late (2.1%). Guessing scores PR-AUC 0.021; "never late" scores accuracy 0.979.
 
 1 · random split, lateDays kept    late in test  58  PR-AUC 1.000  ROC-AUC 1.000  precision@100 0.58  accuracy 1.000

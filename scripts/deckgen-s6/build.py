@@ -3,7 +3,7 @@ common.py and svgkit.py (deckgen-s3).
 
     cd scripts/deckgen-s6 && python3 build.py
 
-Writes lectures/kr-session-06-new.html until the instructor approves it. Edit the parts and rebuild; never hand-edit
+Writes lectures/kr-session-06.html (approved by the instructor 2026-09-25). Edit the parts and rebuild; never hand-edit
 the HTML. Every number on a slide comes from
 demos/session-06-learning/reference-outputs/, or is a count on Session 5's
 brunel-mapped.nt that the slide's notes state.
@@ -18,7 +18,7 @@ sys.path.insert(1, str(HERE.parent / "deckgen-s3"))
 sys.path.insert(2, str(HERE.parent / "deckgen-s1"))
 import part1, part2, part3, part4, part5  # noqa: E402
 
-out = sys.argv[1] if len(sys.argv) > 1 else "../../lectures/kr-session-06-new.html"
+out = sys.argv[1] if len(sys.argv) > 1 else "../../lectures/kr-session-06.html"
 slides = part1.SLIDES + part2.SLIDES + part3.SLIDES + part4.SLIDES + part5.SLIDES
 total = sum(int(re.search(r'data-minutes="(\d+)"', s).group(1)) for s in slides)
 

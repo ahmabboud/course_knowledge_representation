@@ -137,7 +137,7 @@ SLIDES.append(slide("TransE in PyKEEN", "Embeddings", 4, '''  <div class="lu-eye
   </div>''', '''<p>Four minutes. The lab trains on five kinds of link: makes, plus four from the orders (a customer orders a product, a carrier ships it, it leaves from a port, a plant serves a port). The pair "this plant shipped this product" is left out on purpose: every one of them is also a makes link, so it would give the answer away.</p>'''))
 
 # ---------------------------------------------------------------- TransE against popularity
-runs = [("seed 0", 0.573, 0.631), ("seed 1", 0.469, 0.597), ("seed 2", 0.543, 0.634)]
+runs = [("seed 0", 0.555, 0.608), ("seed 1", 0.495, 0.562), ("seed 2", 0.519, 0.570)]
 bars = "".join(
     f'<div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">{s}</span>'
     + bar(a, 1, f"TransE {a:.3f}") + bar(b, 1, f"count {b:.3f}", "red") + '</div>'
@@ -148,7 +148,7 @@ SLIDES.append(slide("TransE against a count", "Embeddings", 5,
     <div class="lu-stack" style="gap:var(--lu-s4)">''' + bars + '''</div>
     <div class="lu-stack">
       ''' + callout("Why the count wins", "PLANT03 makes 781 of the 2,036 links, and 1,271 of the 1,540 products are made by one plant only. There is little shape to learn, and one big answer.") + '''
-      ''' + callout("And some links cannot be scored", "In seed 0, 61 of the 203 hidden links name a product that appears in no other link. The model has no position for it, so the lab leaves them out.", "neutral") + '''
+      ''' + callout("And some links cannot be scored", "In seed 0, 72 of the 203 hidden links name a product that appears in no other link. The model has no position for it, so the lab leaves them out.", "neutral") + '''
     </div>
-  </div>''', '''<p>Five minutes. <code>reference-outputs/link-prediction.txt</code>: TransE MRR 0.573, 0.469, 0.543; popularity 0.631, 0.597, 0.634; 142, 142 and 126 links scored. Counts of plants and products from <code>brunel-mapped.nt</code>.</p>
+  </div>''', '''<p>Five minutes. <code>reference-outputs/link-prediction.txt</code>: TransE MRR 0.555, 0.495, 0.519; popularity 0.608, 0.562, 0.570; 131, 133 and 141 links scored. Counts of plants and products from <code>brunel-mapped.nt</code>.</p>
 <ul><li>Ask: is this a failure? No. It is a finding: on Brunel's product catalogue, the graph's shape tells you less than one count. On a graph with richer structure, the order can flip; the only way to know is this comparison.</li></ul>'''))

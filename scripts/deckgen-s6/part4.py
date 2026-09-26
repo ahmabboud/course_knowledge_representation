@@ -12,7 +12,7 @@ S, C, E = '<span class="tok-str">', '<span class="tok-com">', '</span>'
 
 SLIDES.append(divider("Part 4 · Leakage", "Leakage",
     "Part 4 of 4 · about 25 minutes",
-    "The model scores 0.88. Did it learn about late orders, or about the test?",
+    "The model scores 0.87. Did it learn about late orders, or about the test?",
     "Three ways a test can let the model cheat, all found in this graph."))
 
 # ---------------------------------------------------------------- the label, twice
@@ -55,14 +55,14 @@ SLIDES.append(slide("Accuracy is the wrong score", "Leakage", 3,
 rows = [
     ("Guessing", "0.021", "about 0.02"),
     ("Logistic regression", "0.788", "0.002 to 0.019"),
-    ("GraphSAGE", "<b>0.857 to 0.879</b>", "<b>0.004 to 0.045</b>"),
+    ("GraphSAGE", "<b>0.859 to 0.875</b>", "<b>0.004 to 0.046</b>"),
 ]
 SLIDES.append(slide("Random split against split by customer", "Leakage", 5, '''  <div class="lu-eyebrow">Leak 2 · the same customer on both sides</div>
   <h2 class="lu-h2">The graph model wins the random split, and both fall to guessing on new customers</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
       ''' + table(["PR-AUC on late orders", "Random split", "Split by customer"], rows) + '''
-      <div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">GraphSAGE, seed 0</span>''' + bar(0.857, 1, "0.857 random", "red") + bar(0.045, 1, "0.045 by customer", "red") + '''</div>
+      <div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">GraphSAGE, seed 0</span>''' + bar(0.859, 1, "0.859 random", "red") + bar(0.046, 1, "0.046 by customer", "red") + '''</div>
     </div>
     <div class="lu-stack">
       ''' + defbox([("Random split", "Test orders drawn at random, so the same customers are in training too."),
@@ -95,7 +95,7 @@ SLIDES.append(slide("Why the random split flatters", "Leakage", 3,
   </div>''', '''<p>Three minutes. Counted on <code>brunel-mapped.nt</code>: late orders per customer. The dots' order is arbitrary; the counts are real. 30% of 46 customers is 14 (<code>split_by_customer</code> in <code>learning_utils.py</code>).</p>'''))
 
 # ---------------------------------------------------------------- seeds
-rows = [("0", "69", "0.019", "0.045"), ("1", "13", "0.004", "0.004"), ("2", "4", "0.002", "0.005"),
+rows = [("0", "69", "0.019", "0.046"), ("1", "13", "0.004", "0.004"), ("2", "4", "0.002", "0.005"),
         ("3", "78", "0.015", "0.017"), ("4", "0", "<i>nothing to measure</i>", "<i>nothing to measure</i>")]
 SLIDES.append(slide("One split is not evidence", "Leakage", 3,
     head("Five splits by customer, five different tests", "Which customers land in the test decides the number") + '''

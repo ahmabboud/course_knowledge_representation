@@ -39,16 +39,16 @@ from the files in `reference-outputs/`, produced by these scripts on
    scores 0.021. A perfect score is a leak, and the split by customer is
    at the level of guessing.
 3. `python gnn.py` (about 30 seconds). GraphSAGE, made heterogeneous with
-   `to_hetero`, on the same splits. **Expect:** random split `PR-AUC` 0.857,
-   0.860 and 0.879 over three training seeds; split by customer between
-   `0.004` and `0.045`. **Look at:** `class SAGE`: two layers, so each order
+   `to_hetero`, on the same splits. **Expect:** random split `PR-AUC` 0.859,
+   0.864 and 0.875 over three training seeds; split by customer between
+   `0.004` and `0.046`. **Look at:** `class SAGE`: two layers, so each order
    hears from nodes two links away. **Notice:** the argument is named
    `edge_index`; `to_hetero` fails with a confusing error under any other
    name.
 4. `python link_prediction.py` (under a minute). TransE ranks the 19 plants
    for hidden "plant makes product" links. **Expect** for seed 0: `TransE
-   MRR 0.573`, `popularity MRR 0.631`; on all three seeds the count wins.
-   **Notice:** `61 left out`: a product that appears in no other link gives
+   MRR 0.555`, `popularity MRR 0.608`; on all three seeds the count wins.
+   **Notice:** `72 left out`: a product that appears in no other link gives
    the model nothing to learn from.
 
 Your numbers may differ in the last digit on another computer (PyTorch

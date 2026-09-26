@@ -1,5 +1,5 @@
-python build_graph.py   (rdflib 7.6.0, torch-geometric 2.8.0.post1, 2026-09-25)
-read brunel-mapped.nt: 135,799 triples in 2.3 s
+python build_graph.py   (rdflib 7.6.0, torch-geometric 2.8.0.post1, 2026-09-25, rerun after d27e4ee)
+read brunel-mapped.nt: 135,799 triples in 2.8 s
 nodes: order 9,215, customer 46, carrier 3, plant 20, port 11, product 1,540
 edges: orderedBy 9,215, carriedBy 9,215, fromPlant 9,215, shipsFrom 9,215, ofProduct 9,215, makes 2,036, servesPort 22
 label: 192 late orders of 9,215 (2.1%), taken out of the features (the ul:LateOrder class and ul:lateDays)
