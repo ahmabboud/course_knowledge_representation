@@ -292,5 +292,8 @@ window.LU_GLOSSARY = [
 {"term": "Working Draft", "def": "A W3C document still being written; it may change before it becomes a Recommendation.", "session": 7, "forms": [{"text": "Working Draft", "fixed": true}]},
 {"term": "Ontology learning", "def": "Building an ontology, or parts of it, automatically from text or data.", "session": 7, "forms": [{"text": "Ontology learning", "fixed": false}]},
 {"term": "Neurosymbolic", "def": "Combining learned models with logic and rules, so each covers the other's weakness.", "session": 7, "forms": [{"text": "Neurosymbolic", "fixed": false}]},
-{"term": "Benchmark contamination", "def": "When a model has seen a benchmark's questions or answers in training, so its score overstates its skill.", "session": 7, "forms": [{"text": "Benchmark contamination", "fixed": false}]}
+{"term": "Benchmark contamination", "def": "When a model has seen a benchmark's questions or answers in training, so its score overstates its skill.", "session": 7, "forms": [{"text": "Benchmark contamination", "fixed": false}]},
+{"term": "Clean checkout", "def": "A fresh copy of a repository in an empty folder, with nothing added by hand except the secrets file.", "session": 8, "forms": [{"text": "Clean checkout", "fixed": false}]},
+{"term": "Template repository", "def": "A repository teams copy to start their own, with the folders and files already laid out.", "session": 8, "forms": [{"text": "Template repository", "fixed": false}]},
+{"term": "Defense", "def": "The instructor's visit at which each teammate explains and justifies any part of the team's system.", "session": 8, "forms": [{"text": "Defense", "fixed": false}]}
 ];

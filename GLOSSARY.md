@@ -3,7 +3,7 @@
 One plain sentence per term, and the session that first defines it on a
 slide. A deck may not use a term before the session listed here. When a
 new term is introduced anywhere, add it here in the same change.
-Sessions 1 to 7 are covered. The decks turn every term here into a clickable
+Sessions 1 to 8 are covered. The decks turn every term here into a clickable
 definition automatically: run `python3 scripts/build-glossary.py` after
 editing this file (it writes `assets/glossary.js`).
 
@@ -334,3 +334,11 @@ editing this file (it writes `assets/glossary.js`).
 | **Ontology learning** | Building an ontology, or parts of it, automatically from text or data. |
 | **Neurosymbolic** | Combining learned models with logic and rules, so each covers the other's weakness. |
 | **Benchmark contamination** | When a model has seen a benchmark's questions or answers in training, so its score overstates its skill. |
+
+## Session 8 · Build, deploy, defend
+
+| Term | Plain definition |
+|---|---|
+| **Clean checkout** | A fresh copy of a repository in an empty folder, with nothing added by hand except the secrets file. |
+| **Template repository** | A repository teams copy to start their own, with the folders and files already laid out. |
+| **Defense** | The instructor's visit at which each teammate explains and justifies any part of the team's system. |
