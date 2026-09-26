@@ -703,6 +703,15 @@ strong, .lu-strong { font-weight: 600; }
    print (which already forces height:auto, see the print block below) are
    both unaffected. */
 .lu-selfstudy .slide__body { overflow-y: auto; }
+/* A walkthrough's diagram (.lu-walk__view, flex:1 1 auto; min-height:0) is
+   the only flexible item in its column, so when the extra study-mode height
+   above it squeezes .lu-walk, this is the item that gives: it can shrink to
+   0 while its own content (an SVG sized from its viewBox, not its box) keeps
+   painting at full height, spilling into .lu-walk__bar right after it. Once
+   the slide body scrolls (above), nothing needs to shrink to fit: keep the
+   walkthrough at its natural size in study mode and let any excess become
+   part of the scroll instead of a squeeze. */
+.lu-selfstudy .lu-walk, .lu-selfstudy .lu-walk__view { flex-shrink: 0; min-height: auto; }
 
 /* 11.2 Click-to-reveal ---------------------------------------------------- */
 .lu-reveal { border: 1px solid var(--lu-line); border-radius: var(--lu-r3); overflow: hidden; background: var(--lu-paper); }
