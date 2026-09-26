@@ -9,8 +9,8 @@ data as Sessions 1 to 4, and to give you the mapping pattern your team
 project will use for its own database. Nothing is handed in or graded.
 
 Every number in `lectures/kr-session-05.html` comes from the files in
-`reference-outputs/`, produced by these scripts on 2026-09-25 (SQLite path;
-the PostgreSQL and Ontop runs are recorded separately, see their files).
+`reference-outputs/`, produced by these scripts on 2026-09-25 (SQLite,
+PostgreSQL and Ontop paths; see their files).
 
 ## Before you start
 

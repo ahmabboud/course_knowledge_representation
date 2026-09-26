@@ -1,12 +1,30 @@
-NOT RECORDED YET (2026-09-25).
+Session 5 PostgreSQL and Ontop 5.5.0 run, 2026-09-25 (macOS, JDK 21).
 
-This file will hold a real run of `python ontop/run_ontop.py` on the
-instructor's Mac: the answers to Session 2's Q2 through Ontop 5.5.0 over
-PostgreSQL, and the SQL Ontop sent. It could not be run where the lab was
-built (no Docker, and the Ontop download is blocked there).
+Command:
+  python ontop/run_ontop.py
 
-Expected answers, from Session 2's own run of the same query
-(demos/session-02-rdf-sparql/reference-outputs/query-timings-oxigraph.txt):
-  carrier V444_0  6,264 orders, 183 late
-  carrier V444_1  2,097 orders,   9 late
-  carrier V44_3     854 orders,   0 late
+Answers (CSV):
+  carrier,orders,lateOrders
+  https://ul.edu.lb/kr/id/carrier/brunel/V444_0,6264,183
+  https://ul.edu.lb/kr/id/carrier/brunel/V444_1,2097,9
+  https://ul.edu.lb/kr/id/carrier/brunel/V44_3,854,0
+
+The results match Session 2's Q2. Ontop sent PostgreSQL this SQL:
+  SELECT v4."carrier1m4" AS "carrier1m4",
+         SUM(CAST(CASE WHEN (v4."ship_late_day_count1m27" > 0)
+                  THEN '1' ELSE '0' END AS BIGINT)) AS "sum1",
+         COUNT(*) AS "v1"
+  FROM (SELECT DISTINCT v1."carrier" AS "carrier1m4",
+                        v1."order_id" AS "order_id1m4",
+                        v2."ship_late_day_count" AS "ship_late_day_count1m27"
+        FROM "orders" v1, "orders" v2
+        WHERE (v1."carrier" IS NOT NULL
+               AND v2."ship_late_day_count" IS NOT NULL
+               AND v1."order_id" = v2."order_id")) v4
+  GROUP BY v4."carrier1m4"
+  ORDER BY COUNT(*) DESC NULLS LAST
+
+Two runner defects found during this first run were fixed in
+`ontop/run_ontop.py`: pass local files relative to the lab so Ontop handles
+the spaces in the course path, and write results to a temporary CSV so debug
+logging cannot be mistaken for query answers.
