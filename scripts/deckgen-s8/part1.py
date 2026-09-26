@@ -133,15 +133,15 @@ SLIDES.append(slide("Questions to expect", "Build and defense", 5,
 pts = [("Ontology quality", 18), ("Validation with SHACL", 15), ("Evaluation honesty", 13),
        ("Data and constraints", 12), ("Data integration", 12),
        ("Access layer", 9), ("Deployment", 9), ("Framing and scope", 7), ("Open problem", 5)]
-rows = [(n, f"<b>{v}</b>", '<span style="display:block;min-width:200px">' + bar(v, 18, "", "red" if v >= 15 else "ink") + '</span>') for n, v in pts]
+rows = [(n, f"<b>{v}</b>", '<span style="display:block;min-width:140px">' + bar(v, 18, "", "red" if v >= 15 else "ink") + '</span>') for n, v in pts]
 SLIDES.append(slide("The rubric", "Build and defense", 5,
     head("100 points for the system and the report", "Plus the defense: a separate 10 percent of the grade") + '''
-  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s2)">
-    ''' + table(["Line", "Points", ""], rows) + '''
-    <div class="lu-stack">
-      ''' + callout("Full marks for losing", "A graph model that loses to the baseline, reported as such with an explanation, scores full marks on prediction.") + '''
-    </div>
-  </div>''', '''<p>Five minutes. The rubric is the syllabus's (<code>syllabus-source.json</code>, capstone rubric, 100 points); the assessment table gives it 35 percent of the grade, the defense 10. The system is graded by cloning it fresh and running it: what does not come up cannot score.</p>'''))
+  <div class="lu-split" style="margin-top:var(--lu-s2)">
+    ''' + table(["Line", "Points", ""], rows[:5]) + '''
+    ''' + table(["Line", "Points", ""], rows[5:]) + '''
+  </div>
+  ''' + callout("Full marks for losing", "A graph model that loses to the baseline, reported as such with an explanation, scores full marks on evaluation honesty."),
+    '''<p>Five minutes. The rubric is the syllabus's (<code>syllabus-source.json</code>, capstone rubric, 100 points); the assessment table gives it 35 percent of the grade, the defense 10. The system is graded by cloning it fresh and running it: what does not come up cannot score.</p>'''))
 
 rows = [("Length", "At most 16 pages, the open problem included"),
         ("What it documents", "What was deployed, not what was planned"),
