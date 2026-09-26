@@ -2,8 +2,8 @@
 
 The instructor's own labs repository for **Knowledge Representation**.
 Run by the instructor, live, in every session. Separate from
-`kr-team-template`, which is what each student team clones for its own
-project. This repository holds the real, runnable version of the
+`kr-team-template/` (at the repository root), the starter repository each
+student team builds its own project in. This repository holds the real, runnable version of the
 shared supply chain case: DataCo and Brunel, the same data every
 session's lecture and lab work against.
 
