@@ -46,9 +46,21 @@
       const next = [...w.querySelectorAll('button')].find(b => b.textContent.includes('Next step'));
       for (let k = 0; next && !next.disabled && k < 12; k++) { next.click(); await new Promise(r => setTimeout(r, 180)); }
       await new Promise(r => setTimeout(r, 500));
-      const f = w.querySelector('.lu-flow'), bar = w.querySelector('.lu-walk__bar');
-      if (f && bar && f.getBoundingClientRect().bottom > bar.getBoundingClientRect().top + 1)
-        res.push(`${tag} walk overlaps bar by ${Math.round((f.getBoundingClientRect().bottom - bar.getBoundingClientRect().top) / sc)}px`);
+      // .lu-flow's own box can be taller than .lu-walk__view (its parent) when
+      // the walk is squeezed: a flow diagram's SVG is sized from its viewBox
+      // aspect ratio, not from the space left for it. .lu-walk__view clips
+      // that overflow (assets/lu.css, 2026-09-27), so what actually paints
+      // stops at .lu-walk__view's own bottom edge, never at .lu-flow's raw,
+      // unclipped one. Compare against whichever bottom is smaller, or a
+      // clipped diagram reports a false "overlap" that was never visible.
+      const f = w.querySelector('.lu-flow'), bar = w.querySelector('.lu-walk__bar'), view = w.querySelector('.lu-walk__view');
+      if (f && bar && view) {
+        const clips = getComputedStyle(view).overflowY !== 'visible';
+        const flowBottom = f.getBoundingClientRect().bottom;
+        const visibleBottom = clips ? Math.min(flowBottom, view.getBoundingClientRect().bottom) : flowBottom;
+        if (visibleBottom > bar.getBoundingClientRect().top + 1)
+          res.push(`${tag} walk overlaps bar by ${Math.round((visibleBottom - bar.getBoundingClientRect().top) / sc)}px`);
+      }
     }
     if (!selfstudy && s.scrollHeight > s.clientHeight) res.push(`${tag} overflow ${s.scrollHeight - s.clientHeight}px`);
     for (const c of s.querySelectorAll('.lu-code pre')) if (c.scrollWidth > c.clientWidth + 1) res.push(`${tag} code over ${c.scrollWidth - c.clientWidth}px`);
