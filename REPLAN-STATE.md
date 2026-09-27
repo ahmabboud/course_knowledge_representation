@@ -3,7 +3,7 @@
 **Any new session or agent: read this file right after `PROGRESS.md`.**
 The checklist below is the single to-do list. Tick an item (`[x]`) and add a
 dated line to the log at the bottom in the same change as the work.
-Last updated: 2026-09-25 (Session 3 approved and in place in both repos).
+Last updated: 2026-09-27 (syllabus alignment, item 18, done).
 
 Companion documents:
 
@@ -81,8 +81,11 @@ keep the main session's context clear (instructor's preference, 2026-09-24).
    by students) or in the standalone, self-paced Protege guide deck (no
    live narrator to misattribute to), so left as is. Logged as item 23
    below.
-4. **Still open:** item 18 (syllabus alignment) is answered below (yes,
-   update it); doing that update is the next task.
+4. **Done (2026-09-27, instructor agreed to update): item 18, syllabus
+   alignment.** Both `syllabus-source.json` and `Knowledge Representation -
+   Syllabus.docx` (one level above this repo, not tracked in it) were
+   rewritten session by session against the real built decks; see item 18
+   below for the full detail. Nothing left open in this checklist.
 
 **Settled decisions a new session must not reopen:** grading (instructor, 2026-09-26): attendance and lab run 15, team project 55 scored once offline 48 hours before Session 8 (one mark per layer: works, partly, missing), individual defense 30 (one mark 0 to 3 per student from 2 or 3 questions, not a check of every topic); milestones are ungraded feedback checkpoints; Session 8 is defense only, no build; Session 7 uses Gemini only, no Ollama or other provider (instructor, 2026-09-25); lab simplicity (instructor, 2026-09-25): slides never depend on the lab or its results, every slide example is complete on the slide; every Part B task mirrors a worked example of the same kind already shown on a slide or done in Part A, changing one thing; labs stay short and simple, one script per step with one expected result (to be added to `AGENTS.md` 2e once the coding agent's current edit of that file is pushed); visual variety (instructor, 2026-09-25, on approving Session 3: mix picture types across a deck, `AGENTS.md` 2c rule 9); tool rule (2c rule 5:
 concept first, one slide per tool, no slide for trivial tools, video only for
@@ -246,11 +249,31 @@ Items marked `[x]` are done; everything else is still open.
     plain English "edges of the spec".
 17. [ ] Future decks (Sessions 7 and 8): add their terms to `GLOSSARY.md` as a
     `## Session N` table while building them.
-18. [ ] **Syllabus alignment (asked 2026-09-24, answered 2026-09-27: yes,
-    update it to match what was built).** The syllabus still places RDF
-    versus property graphs in Session 1 and gives the lab 85 minutes; it
-    needs to be checked section by section against the rebuilt Sessions 1
-    to 8 and corrected. In progress.
+18. [x] **Done (2026-09-27, instructor agreed).** Syllabus alignment (asked
+    2026-09-24, answered 2026-09-27: yes, update it to match what was
+    built). Both `syllabus-source.json` and `Knowledge Representation -
+    Syllabus.docx` (both one level above the repo, not tracked in it) were
+    checked session by session against the real built decks
+    (`data-section`/`data-minutes` in each `lectures/kr-session-0N.html`)
+    and corrected. Sessions 1 to 5 and 7 had their objective and segment
+    breakdown rewritten to match the real section names, real proportional
+    minute splits, and real content (e.g. Session 1's lecture is now 109
+    minutes covering the reference architecture and reused-tool survey, not
+    the old RDF-versus-property-graph framing at 55; Session 2's lab is now
+    63 minutes, not 85). Session 6 was rewritten from its pre-rebuild
+    Milestone 2 framing to the real to_hetero/RGCN/leakage-split lecture and
+    lab. Session 7 was rewritten from a flat four-topic lecture to the real
+    Why it is hard / Grounding / Measuring / Check and repair / Deployment
+    structure. Session 8 was checked and needs no change (already matches
+    Opening 10 / Team defenses 160 / Course close 10). Every session's
+    segments sum to exactly 180 minutes; verified with a JSON parse and
+    summed against each session. `deliverable`, `reading`, `modules`,
+    `capstone`, `assessment` and `policies` fields were checked and left
+    unchanged as already accurate. The `.docx` was mirrored from the JSON
+    with a python-docx script (objective run plus the three-column segment
+    table per session), validated with `scripts/office/validate.py`
+    (paragraph count unchanged, all checks passed), and visually confirmed
+    by rendering to PDF and reading pages 6 to 13.
 19. [x] **Done (2026-09-27, instructor agreed).** Session 1's lab slides
     and README no longer say "deliverable", "committed" or "due tonight":
     the README's opening now states why the lab exists and that nothing is
@@ -612,3 +635,9 @@ the YouTube series on screen 2). Screens 10 to 24 go in a new `guide2.py`.
 - 2026-09-26: the team template moved out of this repository to its own GitHub template repository, https://github.com/ahmabboud/kr-team-template (instructor; is_template true, SHACL gate run green on its first commit; local clone `../kr-team-template/` with the same repo-local credential helper). This repository's copy removed; references in `demos/README.md`, the Session 8 README and the deck generator point to the new repository. Template README gained "Start your team's repository" (Use this template).
 - 2026-09-26: **kr-team-template verified end to end on the instructor's Mac with Docker:** Fuseki held the example graph (its default query returned late order 1447170386.7), and the access layer answered "How many late orders are there?" through Gemini with `SELECT (COUNT(DISTINCT ?order) AS ?lateOrders) WHERE { ?order a ul:LateOrder }`, which gives 20 on the example (checked here), the right answer.
 - 2026-09-26: **Grading replanned (instructor).** The old weights (labs 15, Milestone 1 20, Milestone 2 20, system and report 35 on a 100 point rubric, defense 10) asked for evaluating each team three times and a defense rubric that 2 or 3 questions cannot cover. New: attendance and lab run 15; team project 55, scored once, offline, from the hand-in 48 hours before Session 8 (one mark per layer, works / partly / missing: ontology 10, shapes and validation 10, mapping and integration 9, learning 9, access layer 9, report and open problem 8; a layer not shown working from a clean checkout is at most partly); individual defense 30 (one overall mark 0 to 3 per student, times 10). Milestones: feedback checkpoints, not graded. Session 8: defense only, one team at a time, about 15 minutes (3 minute demo, one question answered and one refused, then 2 or 3 questions per student). Updated: `syllabus-source.json` (assessment, rubric, Sessions 4, 6, 8, note), `DEFENSE-DAY.md` (rewritten), the scoring sheet, the Session 1 grading slides, the Session 4 and 6 milestone slides, the Session 8 deck (13 slides to 8, no build block), the template's README and report outline, `AGENTS.md` 2e, `PROGRESS.md`, `README.md`, `PROJECT-REDESIGN.md` (marked superseded), the Session 8 README.
+- 2026-09-27: **Fixed Session 2's remaining "walk overlaps bar" audit finding (item 21).** `.lu-walk__view` did not clip its own overflow, so a flow diagram squeezed by extra content above it (a Part B twin note) painted 11px into the step bar below, study mode off. Fixed with `overflow: hidden` on `.lu-walk__view` (`assets/lu.css`, v1.3.2 to v1.3.3, every reference to `lu.css` updated). `scripts/audit-live.js`'s own "walk overlaps bar" check compared the flow's raw, unclipped geometry and produced a false positive after the fix; corrected to compare against the view's own clipped bottom edge. Verified clean on Session 2 and re-swept all eight decks, both study-mode states, no regressions.
+- 2026-09-27: **Item 12, `index.html` session cards, checked and fixed.** Six of eight cards showed a stale minute count against each deck's real summed `data-minutes` (from `python3 build.py` output): Session 1 to 185, Session 2 to 173, Session 3 to 231, Session 4 to 194, Session 5 to 183, Session 7 to 179. Sessions 6 and 8 were already correct.
+- 2026-09-27: **Item 19, remaining labs brought to the `AGENTS.md` 2e wording standard, done.** Session 1's lab slides and README no longer say "deliverable", "committed" or "due tonight" (the callout on the Session 1 wrap slide is now framed as "for your team project" instead of "due tonight", and the README's opening paragraph now says nothing is handed in or graded). A fresh repo-wide sweep for the same three words found two further stragglers, in Session 4's and Session 6's wrap slides ("Milestone 1 is due" and "the syllabus deliverable"), fixed the same way: milestones are described as "a checkpoint for feedback, not graded," using "pushed" rather than "due"/"handed in".
+- 2026-09-27: **Item 20, `lu-lecture-builder` skill copy synced to `kr-team-template`, done.** That template repository had no `.claude/skills/` folder at all; copied `course_knowledge_representation/.claude/skills/lu-lecture-builder/SKILL.md` verbatim (verified identical with `diff`), committed and pushed (`fef3c8e`) since the skill is course-agnostic and reusable.
+- 2026-09-27: **Narrator-voice fix, all eight decks checked.** The instructor flagged visible slide text that referred to "the instructor" or "your instructor" in the third person, as if someone other than the presenter were speaking, when every deck is written to be delivered live by the instructor speaking in the first person. Found and fixed on Sessions 1, 6, 7 and 8: a diagram node label and a caption on Session 1's wrap slide ("the instructor places you" to "I place you", "placed by the instructor" to "I place"), a caption and a speaker note on Session 6's wrap slide ("from your instructor" to "from me"), a caption on Session 7's fallback-state slide ("the instructor's recorded run" to "my recorded run"), a callout on Session 7's replay slide ("the instructor's recorded answers" to "my recorded answers"), and a caption on Session 8's opening slide ("the instructor chooses" to "I choose"). Checked every other deck for the same pattern; the remaining third-person "instructor" references are either inside `<template data-notes>` (private speaker notes, never seen by students) or in the standalone, self-paced Protege guide deck (`scripts/deckgen-s3/guide1.py`, which has no live narrator to misattribute to), so correctly left as is. Files touched: `scripts/deckgen-s1/part_d.py`, `deckgen-s6/part5.py`, `deckgen-s7/part4.py` and `part6.py`, `deckgen-s8/part1.py`. All four decks rebuilt and pushed (commit `298f299`), verified live via screenshot.
+- 2026-09-27: **Item 18, syllabus alignment, done.** Both `syllabus-source.json` and `Knowledge Representation - Syllabus.docx` (one level above this repo, in the parent `Knowledge Representation` folder, not tracked here) were checked session by session against the real built decks and rewritten. Sessions 1 to 5 and 7 had their objective and segment breakdown (segment name, minutes, description) rewritten to real section names and real proportional minute splits read off each deck's own `data-section`/`data-minutes`; Session 6 was rewritten from its pre-rebuild Milestone 2 framing to the real to_hetero/RGCN/leakage-split content; Session 7 from a flat four-topic lecture to the real Why it is hard / Grounding / Measuring / Check and repair / Deployment structure. Session 8 checked and needs no change (already Opening 10 / Team defenses 160 / Course close 10). Every session's segments were verified in Python to sum to exactly 180 minutes. `deliverable`, `reading`, `modules`, `capstone`, `assessment` and `policies` fields were checked and left unchanged as already accurate (from the 2026-09-26 regrade work). The `.docx` was mirrored from the JSON with a python-docx script (the objective run and the three-column segment table, per session), validated with `scripts/office/validate.py` (paragraph count unchanged, 390 to 390, all checks passed), and visually confirmed by rendering to PDF and reading the Session 1, 7, and 8 pages. Not a git-tracked change (both files live outside this repo), so nothing to push here.
