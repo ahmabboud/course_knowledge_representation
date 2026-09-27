@@ -69,7 +69,7 @@ steps = [{"show": ["d1"], "set": {"d1": "active"}},
          {"show": ["d2", "a1"], "run": ["a1"], "set": {"d1": "idle", "d2": "active"}},
          {"show": ["q", "a2"], "run": ["a2"], "set": {"d2": "idle", "q": "active"}},
          {"show": ["m", "a3"], "run": ["a3"], "set": {"q": "idle", "m": "inferred"}}]
-caps = [("Demo, 3 minutes", "<b>Step 1.</b> Your running stack answers one question the instructor chooses."),
+caps = [("Demo, 3 minutes", "<b>Step 1.</b> Your running stack answers one question I choose."),
         ("The refusal", "<b>Step 2.</b> Then a question your graph cannot answer: it must refuse, with a reason. This confirms the offline score; it is not marked again."),
         ("Questions", "<b>Step 3.</b> Each of you answers 2 or 3 questions about a part of the system you did not build."),
         ("The mark", "<b>Step 4.</b> One overall mark per student, from all the answers together, not question by question.")]

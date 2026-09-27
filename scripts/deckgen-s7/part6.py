@@ -21,7 +21,7 @@ SLIDES.append(slide("Lab brief", "Lab", 3,
     </ol>
     <div class="lu-stack">
       ''' + callout("Nothing to hand in", "The lab is for understanding. Start with <code>OVERVIEW.md</code> in <code>demos/session-07-access-layer/</code>.", "concept") + '''
-      ''' + callout("Key not working?", "Put <code>LLM_MODE=replay</code> in front of a command: it replays the instructor's recorded answers for the lab's own questions.", "neutral") + '''
+      ''' + callout("Key not working?", "Put <code>LLM_MODE=replay</code> in front of a command: it replays my recorded answers for the lab's own questions.", "neutral") + '''
     </div>
   </div>''', '''<p>Three minutes, then walk the room. Most common blocker: no <code>demos/.env</code>, or the key pasted with quotes or a space. The error message says which. Second: error 429 on the free tier; <code>LLM_DELAY=4</code>.</p>'''))
 

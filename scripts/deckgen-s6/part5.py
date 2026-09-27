@@ -125,7 +125,7 @@ SLIDES.append(slide("Wrap and next session", "Wrap", 2, '''  <div class="lu-eyeb
         <h3 class="lu-h3">Session 7 · The agentic query layer</h3>
         <p class="lu-sub">A stakeholder asks the graph a question in plain words; a language model writes the SPARQL, and a validation loop repairs it.</p>
       </div>
-      <div class="lu-row"><span class="lu-tag lu-tag--green">For your team</span><span class="lu-caption" style="flex:1">Submit Milestone 2. Take the Session 7 open problems reading list from your instructor.</span></div>
+      <div class="lu-row"><span class="lu-tag lu-tag--green">For your team</span><span class="lu-caption" style="flex:1">Submit Milestone 2. Take the Session 7 open problems reading list from me.</span></div>
     </div>
   </div>''', '''<p>Two minutes. End on the sentence. The syllabus issues the Session 7 open problems reading list here; hand it out with this slide.</p>''', kind="tint"))
 

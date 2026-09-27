@@ -57,7 +57,7 @@ t_nodes = [
     node("today", "Today\nSession 1", 170, 110, 240, 96),
     node("form", "Form a team of 2 or 3\nand pick a topic", 620, 110, 400, 96),
     node("dl", "Before Session 2\nstarts: locked in", 1100, 110, 320, 96),
-    node("late", "No team by then:\nthe instructor places you", 1100, 290, 400, 96),
+    node("late", "No team by then:\nI place you", 1100, 290, 400, 96),
 ]
 t_edges = [edge("a", "today", "form"), edge("b", "form", "dl"), edge("c", "dl", "late", kind="conflict")]
 t_steps = [
@@ -70,7 +70,7 @@ t_caps = [
     ("Today", "<b>Step 1.</b> Today you meet the method on the shared case."),
     ("Form a team", "<b>Step 2.</b> Teams of <b>2 or 3</b>, formed by you, any mix. Agree on a topic area and a database."),
     ("The deadline", "<b>Step 3.</b> Team and topic are locked in <b>before Session 2 starts</b>."),
-    ("Nobody is left out", "<b>Step 4.</b> Anyone without a team by then is placed by the instructor into a team with space."),
+    ("Nobody is left out", "<b>Step 4.</b> Anyone without a team by then, I place into a team with space."),
 ]
 SLIDES.append(slide("Teams and the deadline", "Team project", 3,
     head("The rules", "Teams of 2 or 3, your choice, locked in before Session 2.") +

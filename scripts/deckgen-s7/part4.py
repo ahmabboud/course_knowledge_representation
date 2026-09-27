@@ -98,7 +98,7 @@ if rec:
     notes = f'''<p>Four minutes. <code>reference-outputs/evaluate.txt</code>, {note}. Ask: is the gain from one setting to the next bigger than the difference between two students' runs? Compare two laptops in the room.</p><ul><li>In this run the examples did all the work (questions 7 and 10 went from 0 to 1) and the repair loop added nothing: no query failed the check. That is a real result: the loop is insurance against a failure this model did not make here, and a room of live runs may show it.</li></ul>'''
 else:
     rows = [(s, d, "recorded run pending", "", "", "") for s, d in (("schema", "the schema only"), ("examples", "plus 3 examples"), ("repair", "plus check and repair"))]
-    cap = "The instructor's recorded run (record_llm.py) fills this table."
+    cap = "My recorded run (record_llm.py) fills this table."
     notes = '''<p>Four minutes. <b>Not recorded yet:</b> run <code>python record_llm.py</code> on the Mac, then rebuild this deck; the table reads <code>reference-outputs/evaluate.txt</code>.</p>'''
 SLIDES.append(slide("Three settings, one test set", "Measuring", 4,
     head("15 questions: 12 answerable, 3 to refuse; mean F1 on the 12", cap) + '''
