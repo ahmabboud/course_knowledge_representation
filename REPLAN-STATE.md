@@ -29,7 +29,7 @@ session are at the top of `AGENTS.md`. Running a lab end to end goes to a
 Sonnet sub-agent with a self-contained brief and a short report back, to
 keep the main session's context clear (instructor's preference, 2026-09-24).
 
-**Where to continue (2026-09-26):**
+**Where to continue (2026-09-27):**
 
 1. **All eight sessions are done.** Session 8, the defense day (no build),
    was approved by the instructor 2026-09-26: deck `lectures/kr-session-08.html`
@@ -65,8 +65,24 @@ keep the main session's context clear (instructor's preference, 2026-09-24).
    (diagram label/badge positions, a "code over" width on two Session 2
    slides) present identically in both modes, so not a regression from this
    fix. One separate, small, pre-existing item surfaced while re-verifying
-   Session 2, logged as item 21 below.
-3. **Later:** item 18 (syllabus alignment question), items 12, 19, and 20.
+   Session 2, fixed the next day (item 21 below).
+3. **Done (2026-09-27, instructor agreed to all four): items 12, 19, and 20**
+   (see their entries below), **and a new find, narrator voice.** Some
+   visible slide text referred to "the instructor" or "your instructor" in
+   the third person, as if someone other than whoever is presenting were
+   speaking, when the whole deck is written to be delivered live by the
+   instructor in the first person. Fixed on Sessions 1, 6, 7 and 8 (a
+   diagram node and captions): "the instructor places you" to "I place
+   you", "placed by the instructor" to "I place", "from your instructor"
+   to "from me", "the instructor chooses"/"the instructor's recorded
+   run"/"the instructor's recorded answers" to "I choose"/"my recorded
+   run"/"my recorded answers". Checked every deck for the same pattern;
+   the remaining "instructor" mentions are either speaker notes (not seen
+   by students) or in the standalone, self-paced Protege guide deck (no
+   live narrator to misattribute to), so left as is. Logged as item 23
+   below.
+4. **Still open:** item 18 (syllabus alignment) is answered below (yes,
+   update it); doing that update is the next task.
 
 **Settled decisions a new session must not reopen:** grading (instructor, 2026-09-26): attendance and lab run 15, team project 55 scored once offline 48 hours before Session 8 (one mark per layer: works, partly, missing), individual defense 30 (one mark 0 to 3 per student from 2 or 3 questions, not a check of every topic); milestones are ungraded feedback checkpoints; Session 8 is defense only, no build; Session 7 uses Gemini only, no Ollama or other provider (instructor, 2026-09-25); lab simplicity (instructor, 2026-09-25): slides never depend on the lab or its results, every slide example is complete on the slide; every Part B task mirrors a worked example of the same kind already shown on a slide or done in Part A, changing one thing; labs stay short and simple, one script per step with one expected result (to be added to `AGENTS.md` 2e once the coding agent's current edit of that file is pushed); visual variety (instructor, 2026-09-25, on approving Session 3: mix picture types across a deck, `AGENTS.md` 2c rule 9); tool rule (2c rule 5:
 concept first, one slide per tool, no slide for trivial tools, video only for
@@ -192,8 +208,12 @@ Items marked `[x]` are done; everything else is still open.
 11. [x] `PROGRESS.md` status table reconciled with the repository
     (2026-09-24, at the instructor's request). Facts only, no session marked
     done.
-12. [ ] `index.html` has cards only for Sessions 1 to 4. Add 5, 6 and the
-    guide deck once the instructor confirms they are ready.
+12. [x] **Checked and fixed (2026-09-27).** This item's own text was stale:
+    `index.html` already had cards for all eight sessions. What was actually
+    wrong: six of the eight cards showed a generic "180 min" instead of each
+    deck's real `data-minutes` total. Corrected against each deck's own
+    build output (S1 185, S2 173, S3 231, S4 194, S5 183, S7 179; S6 and S8
+    already matched at 185 and 180).
 13. [ ] DSCAI's design system is behind on purpose (instructor's choice,
     2026-09-23): no `lu-flow`, and missing two poll fixes
     (`.lu-poll__bars[hidden]`, timer hidden once bars show). Port when asked.
@@ -226,22 +246,29 @@ Items marked `[x]` are done; everything else is still open.
     plain English "edges of the spec".
 17. [ ] Future decks (Sessions 7 and 8): add their terms to `GLOSSARY.md` as a
     `## Session N` table while building them.
-18. [ ] **Syllabus alignment (asked 2026-09-24, no answer yet).** The syllabus
-    still places RDF versus property graphs in Session 1 and gives the lab 85
-    minutes. Ask the instructor whether to update it to match the rebuilt
-    Sessions 1 and 2.
-19. [ ] **Bring every lab to the lab standard (`AGENTS.md` 2e).** Session 2
-    is done (2026-09-24). Session 1 is approved but its lab slides and
-    README still say "deliverable", "committed" and "due tonight": change
-    only with the instructor's agreement. Sessions 3 to 6: apply 2e when
-    each is rebuilt (items 2 and 9): parts A, B (write your own, with a
-    checker), C, and "take it to your team project".
-20. [ ] **Keep the lecture skill in step.** `.claude/skills/lu-lecture-builder/SKILL.md`
-    is a copy of the instructor's account skill of the same name, committed
-    so every session and device can use it (Claude Code loads it
-    automatically). When the skill changes, update both copies, or note the
-    drift in the log. It is course-agnostic, so it also belongs in the
-    template repo; copy it there when that repo is next touched.
+18. [ ] **Syllabus alignment (asked 2026-09-24, answered 2026-09-27: yes,
+    update it to match what was built).** The syllabus still places RDF
+    versus property graphs in Session 1 and gives the lab 85 minutes; it
+    needs to be checked section by section against the rebuilt Sessions 1
+    to 8 and corrected. In progress.
+19. [x] **Done (2026-09-27, instructor agreed).** Session 1's lab slides
+    and README no longer say "deliverable", "committed" or "due tonight":
+    the README's opening now states why the lab exists and that nothing is
+    handed in or graded, matching Session 2's wording; the "Deliverable, end
+    of session" callout is now "What you leave with today"; the "Due
+    tonight ... committed" tag is now "For your team project ... Keep your
+    profiling reports and constraint inventory". Also found and fixed two
+    stragglers from the earlier grading sweep (item 75 in the task log) that
+    had been missed: Session 4's wrap slide said "Milestone 1 is due at the
+    end of today" with no "checkpoint, not graded" qualifier, and Session 6's
+    wrap speaker note still said "The syllabus deliverable"; both now match
+    the wording used everywhere else. Sessions 2 to 8 were already at the 2e
+    standard.
+20. [x] **Done (2026-09-27, instructor agreed).** Copied
+    `.claude/skills/lu-lecture-builder/SKILL.md` into the `kr-team-template`
+    repository (it had no `.claude/skills/` folder yet), committed and
+    pushed. Keep both copies in step: update this repo's copy first, then
+    mirror the change there, or note the drift here.
 21. [x] **Fixed (2026-09-27): Session 2, "The triple", walk overlaps bar by
     about 11px, study mode off only.** Same root cause as `.lu-board`'s
     known failure mode (item 2, lu.css:795-801) but never mirrored onto
@@ -264,13 +291,20 @@ Items marked `[x]` are done; everything else is still open.
     unrelated diagram-label/badge findings (identical in both modes, listed
     in item 16, untouched by this fix) and two pre-existing "code over"
     findings on Session 2 (unrelated width issue, also untouched).
-21. [x] **Done 2026-09-24, with the instructor's agreement.** **Session 1 rate band sentence, precision.**
+22. [x] **Done 2026-09-24, with the instructor's agreement.** **Session 1 rate band sentence, precision.**
     Session 1's rate band walkthrough says "1,370 orders fall in gaps like
     this; 1,364 of them on this one lane". All 1,370 are on that lane
     (V444_1, DTD, PORT04 to PORT09): 1,364 in the 2.51 to 70.50 kg hole and
     6 in 0.01 kg slivers between bands (`demos/session-02-rdf-sparql/reference-outputs/q6-versions-oxigraph.txt`).
     Session 1 is approved, so change `scripts/deckgen-s1/part_c.py` only
     with the instructor's agreement.
+23. [x] **Fixed (2026-09-27, instructor's own finding).** Narrator voice:
+    see item 3 above ("Where to continue") for the full explanation. Files
+    touched: `scripts/deckgen-s1/part_d.py` (a diagram node label and its
+    caption), `scripts/deckgen-s6/part5.py`, `scripts/deckgen-s7/part4.py`
+    and `part6.py`, `scripts/deckgen-s8/part1.py`. All four decks rebuilt
+    and pushed (commit `298f299`); verified live on Session 1's affected
+    slide.
 
 ### Not course material
 
