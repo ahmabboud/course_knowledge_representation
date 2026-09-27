@@ -87,13 +87,13 @@ SLIDES.append(slide("Today: objective and time plan", "Opening", 2,
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
       <p class="lu-statement">By the end of today you have met two real supply chain datasets, measured them, and written down rules they obey that no schema states.</p>
-      ''' + callout("Deliverable, end of session", "A working environment, a profiling report for both datasets, and a constraint inventory: at least five rules, each with its evidence in the data. Sessions 3, 4 and 5 start from it.", "concept") + '''
+      ''' + callout("What you leave with today", "A working environment, a profiling report for both datasets, and a constraint inventory: at least five rules, each with its evidence in the data. Sessions 3, 4 and 5 start from it.", "concept") + '''
     </div>
     ''' + table(["Part", "Minutes"], [
         ["1 · Opening", "10"], ["2 · The supply chain and the data", "25"], ["3 · Meaning is not in the schema", "20"],
         ["4 · The architecture", "15"], ["5 · Profiling and hidden rules", "30"], ["6 · The team project", "15"],
         ["Lab, then wrap", "65 + 5"]], "About 185 minutes in all.") + '''
-  </div>''', '''<p>Two minutes. Read the deliverable aloud. The word that matters is <b>evidence</b>: a rule without a count behind it is an opinion.</p>''', kind="tint"))
+  </div>''', '''<p>Two minutes. Read the callout aloud. The word that matters is <b>evidence</b>: a rule without a count behind it is an opinion.</p>''', kind="tint"))
 
 # ================================================================== Part 2
 SLIDES.append(divider("Part 2 · Meet the supply chain and the data", "The supply chain and the data",

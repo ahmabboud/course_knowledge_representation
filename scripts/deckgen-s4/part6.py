@@ -102,7 +102,7 @@ SLIDES.append(slide("Wrap and next session", "Wrap", 2, '''  <div class="lu-eyeb
         <h3 class="lu-h3">Session 5 · Integrating operational data</h3>
         <p class="lu-sub">Today the graph came from files. Next week it comes from a live database, through mappings, and today's shapes check what the mappings produce.</p>
       </div>
-      <div class="lu-row"><span class="lu-tag lu-tag--green">For your team</span><span class="lu-caption" style="flex:1">Milestone 1 is due at the end of today. Copy the gate first; it catches the rest.</span></div>
+      <div class="lu-row"><span class="lu-tag lu-tag--green">For your team</span><span class="lu-caption" style="flex:1">Milestone 1, a checkpoint for feedback, not graded, is pushed at the end of today. Copy the gate first; it catches the rest.</span></div>
     </div>
   </div>''', '''<p>Two minutes. End on the sentence.</p>''', kind="tint"))
 

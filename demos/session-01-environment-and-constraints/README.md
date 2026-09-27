@@ -1,9 +1,12 @@
 # Session 1 lab: environment, profiling, constraint inventory
 
-Builds the syllabus deliverable: a verified environment, a profiling
-report for both datasets, and a written constraint inventory with
-evidence for each entry, per `course_knowledge_representation/lectures/kr-session-01.html`'s
-lab brief slide.
+**Why this lab exists:** to make the lecture concrete on the real DataCo and
+Brunel data. Nothing is handed in or graded; being here and running it is
+what counts. It builds a verified environment, a profiling report for both
+datasets, and a written constraint inventory with evidence for each entry,
+per `course_knowledge_representation/lectures/kr-session-01.html`'s lab
+brief slide. This inventory is the input to Sessions 3, 4 and 5, and the
+starting method for your own team project.
 
 **Read this first:** [What this lab is doing](OVERVIEW.md). It explains the
 two datasets, what profiling and clustering can show, the purpose of the

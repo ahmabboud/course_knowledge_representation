@@ -203,7 +203,7 @@ SLIDES.append(slide("Wrap and next session", "Wrap", 2, '''  <div class="lu-eyeb
         <h3 class="lu-h3">Session 2 · RDF, SPARQL and the graph as a data model</h3>
         <p class="lu-sub">Turn today's rows into a graph, give every thing a global name, and ask questions that follow links.</p>
       </div>
-      <div class="lu-row"><span class="lu-tag lu-tag--red">Due tonight</span><span class="lu-caption" style="flex:1">Profiling reports and constraint inventory, committed.</span></div>
+      <div class="lu-row"><span class="lu-tag lu-tag--green">For your team project</span><span class="lu-caption" style="flex:1">Keep your profiling reports and constraint inventory: Sessions 3, 4 and 5 build on them.</span></div>
     </div>
   </div>''', '''<p>Two minutes. End on the statement, not the admin.</p>''', kind="tint"))
 

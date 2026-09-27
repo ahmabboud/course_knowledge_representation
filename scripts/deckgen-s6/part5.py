@@ -86,7 +86,7 @@ SLIDES.append(slide("Milestone 2 and the project clinic", "Wrap", 5,
       <p class="lu-sub">Say your label, your split, and the one thing that could leak across it. The room names one more.</p>
       <p class="lu-caption">Removed features go in the report too, with the reason: the label hides in more places than one.</p>
     </div>
-  </div>''', '''<p>Five minutes here; the full clinic runs in the discussion time if the lab finished early. The syllabus deliverable: a trained heterogeneous node classification model and a link prediction model over the integrated graph, a leakage-free temporal split, a tabular baseline, and a written evaluation of the limits. A checkpoint for feedback, not graded: the team project is scored once, before Session 8.</p>'''))
+  </div>''', '''<p>Five minutes here; the full clinic runs in the discussion time if the lab finished early. Milestone 2, a checkpoint for feedback, not graded: a trained heterogeneous node classification model and a link prediction model over the integrated graph, a leakage-free temporal split, a tabular baseline, and a written evaluation of the limits. The team project is scored once, before Session 8.</p>'''))
 
 GLOSS = [
     ("Node classification", "A label for each node."),
