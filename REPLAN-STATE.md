@@ -66,7 +66,7 @@ keep the main session's context clear (instructor's preference, 2026-09-24).
    slides) present identically in both modes, so not a regression from this
    fix. One separate, small, pre-existing item surfaced while re-verifying
    Session 2, logged as item 21 below.
-3. **Later:** item 18 (syllabus alignment question), items 12, 19, 20, and 21.
+3. **Later:** item 18 (syllabus alignment question), items 12, 19, and 20.
 
 **Settled decisions a new session must not reopen:** grading (instructor, 2026-09-26): attendance and lab run 15, team project 55 scored once offline 48 hours before Session 8 (one mark per layer: works, partly, missing), individual defense 30 (one mark 0 to 3 per student from 2 or 3 questions, not a check of every topic); milestones are ungraded feedback checkpoints; Session 8 is defense only, no build; Session 7 uses Gemini only, no Ollama or other provider (instructor, 2026-09-25); lab simplicity (instructor, 2026-09-25): slides never depend on the lab or its results, every slide example is complete on the slide; every Part B task mirrors a worked example of the same kind already shown on a slide or done in Part A, changing one thing; labs stay short and simple, one script per step with one expected result (to be added to `AGENTS.md` 2e once the coding agent's current edit of that file is pushed); visual variety (instructor, 2026-09-25, on approving Session 3: mix picture types across a deck, `AGENTS.md` 2c rule 9); tool rule (2c rule 5:
 concept first, one slide per tool, no slide for trivial tools, video only for
@@ -242,17 +242,28 @@ Items marked `[x]` are done; everything else is still open.
     automatically). When the skill changes, update both copies, or note the
     drift in the log. It is course-agnostic, so it also belongs in the
     template repo; copy it there when that repo is next touched.
-21. [ ] **Session 2, "The triple": walk overlaps bar by about 11px, study
-    mode OFF only (found 2026-09-26 while verifying item 2's fix).** Disappears
-    with study mode on, so it is not the bug just fixed and not a regression
-    from it. Diagnosed partially: `.lu-walk__view`'s own box (offsetHeight
-    193) is comfortably taller than its diagram's rendered height (147.67),
-    yet the diagram's bottom edge still lands about 7.6 screen px (about
-    11 canvas px) past the step bar's top, a small geometry mismatch, not a
-    shrink-to-0 collapse. Contradicts the older note (item 16) that "with
-    study mode off all decks are clean"; that note is now wrong and should
-    not be relied on. Needs a decision: fix now, or leave logged here until
-    the instructor asks for it.
+21. [x] **Fixed (2026-09-27): Session 2, "The triple", walk overlaps bar by
+    about 11px, study mode off only.** Same root cause as `.lu-board`'s
+    known failure mode (item 2, lu.css:795-801) but never mirrored onto
+    `.lu-flow`: a flow diagram's SVG is `width:100%; height:auto`, sized
+    from its own viewBox aspect ratio, not from the space actually left for
+    it once `.lu-walk__view` (the only shrinkable item in a walkthrough's
+    column) gets squeezed by other content on the slide. Fixed with
+    `.lu-walk__view { overflow: hidden }` (`assets/lu.css` v1.3.3): a flow
+    diagram's own authored viewBox already carries real margin around its
+    nodes (a walkthrough highlights one node at a time), so clipping a few
+    pixels of that margin is a safe trade, and it keeps every flow diagram's
+    authored aspect ratio intact, unlike `.lu-board`'s fixed-height fix.
+    `scripts/audit-live.js`'s own "walk overlaps bar" check compared raw,
+    unclipped element geometry, so it kept reporting this as a finding even
+    after the CSS fix actually resolved it visually (confirmed by direct
+    screenshot: no bleeding, clean gap between the diagram, its step dots,
+    and the code/callout block below); the check now compares against
+    `.lu-walk__view`'s own clipped bottom edge instead. Verified live on all
+    eight decks, both modes: fully clean except Session 3's pre-existing,
+    unrelated diagram-label/badge findings (identical in both modes, listed
+    in item 16, untouched by this fix) and two pre-existing "code over"
+    findings on Session 2 (unrelated width issue, also untouched).
 21. [x] **Done 2026-09-24, with the instructor's agreement.** **Session 1 rate band sentence, precision.**
     Session 1's rate band walkthrough says "1,370 orders fall in gaps like
     this; 1,364 of them on this one lane". All 1,370 are on that lane
