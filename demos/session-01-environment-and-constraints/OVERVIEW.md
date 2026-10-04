@@ -54,8 +54,9 @@ which kind of evidence supports a proposed rule.
 | 1 | `smoke_test.py` | Checks Python, Java, Docker, and Protégé. | Later work should fail because of data or logic, not an unknown installation. |
 | 2 | `data/fetch_data.py` | Downloads the real datasets and exports Brunel sheets. | The course works from a known source, not invented examples. |
 | 3 | `profiling.py` | Builds profiling reports and charts. | Counts, nulls, ranges, and distributions suggest questions, not automatic rules. |
-| 4 | OpenRefine clustering | Groups near duplicate values. | Different spellings can hide a rule or a data cleaning decision. |
-| 5 | `constraint_inventory_template.csv` | Records a rule, evidence, and source column or table. | A proposed rule needs evidence a reader can check. |
+| 4 | `rule_checks.py` | Counts six rules across the real tables. | Some rules always hold, some have exceptions, and the schema states none of them. |
+| 5 | OpenRefine clustering | Groups near duplicate values. | Different spellings can hide a rule or a data cleaning decision. |
+| 6 | `constraint_inventory_template.csv` | Records a rule, evidence, and source column or table. | A proposed rule needs evidence a reader can check. |
 
 ## The files and their roles
 
@@ -64,7 +65,8 @@ which kind of evidence supports a proposed rule.
 | `smoke_test.py` | Environment check. | Run it. |
 | `profiling.py` | Notebook style profiling workflow. | Run it and read its outputs. |
 | `session1_facts.py` | Recomputes the numbers used in the Session 1 deck. | Run it if a number needs checking. |
-| `constraint_inventory_template.csv` | Place to record evidence based rules. | Yes. |
+| `rule_checks.py` | Six rule checks with counts. | Run it. |
+| `constraint_inventory_template.csv` | Rules already listed with their counts. | Check it; add one of your own. |
 | `reference-outputs/` | Recorded facts and clustering results. | Read only. |
 
 ## Terms you need first

@@ -1,2 +1,8 @@
 rule,evidence_in_data,source_column_or_table
-"Example: a shipment cannot be delivered before it is dispatched","<fill in: e.g. 0 of N rows violate this>","<fill in: e.g. Brunel OrderList.DispatchDate vs DeliveryDate>"
+"An order leaves only through a port linked to its plant","0 of 9,215 orders break it (rule_checks.py, check 1)","Brunel OrderList.Plant Code, Origin Port; PlantPorts"
+"An order asks a plant only for a product that plant makes","0 of 9,215 orders break it (check 2)","Brunel OrderList.Plant Code, Product ID; ProductsPerPlant"
+"A carrier is tied to a service level (V444_0 uses two, the others one)","V444_0: 46 DTD and 6,218 DTP; V444_1 all DTD; V44_3 all CRF (check 3)","Brunel OrderList.Carrier, Service Level"
+"Every order should have a rate lane, but some do not","854 of 9,215 orders have no lane (check 4)","Brunel OrderList; FreightRates"
+"Delivery Status follows real against scheduled days, except Shipping canceled","3 statuses agree in all rows; Shipping canceled: 3,331 not later and 4,423 later (check 5)","DataCo Delivery Status, Days for shipping (real), Days for shipment (scheduled)"
+"A city name is only unique together with its country","Los Angeles (1,845, USA) and Los Ángeles (16, Chile) are different places (check 6, OpenRefine)","DataCo Order City, Order Country"
+"<your own rule, optional>","<the count that supports it>","<column or table>"

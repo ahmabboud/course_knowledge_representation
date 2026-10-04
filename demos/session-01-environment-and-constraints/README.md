@@ -13,11 +13,10 @@ two datasets, what profiling and clustering can show, the purpose of the
 constraint inventory, file roles, terms, and how evidence supports a rule.
 Do not begin the commands until the overall story is clear.
 
-**Then follow your tasks:** [TASKS.md](TASKS.md) is the step by step
-worksheet. Running the scripts is only the setup. What you actually do is
-read the profiles, cluster Order City, test at least five ideas for rules
-with counts, and write each rule, its evidence and its source in the
-inventory.
+**Then follow your steps:** [TASKS.md](TASKS.md) walks you through the lab.
+Each step says what to run, what to look at and what you should see. Nothing
+needs you to write code, and nothing is a test: the aim is to understand what
+happens on real data.
 
 ## Working directories
 
@@ -62,12 +61,18 @@ PowerShell because `cd` and `python` have the same use after activation.
    JupyterLab or VS Code instead to run it step by step, with the
    missingness charts and DataCo's full profile rendered inline as you
    go, rather than running it as one batch script.
-4. Do the tasks in [TASKS.md](TASKS.md): answer the profile questions,
-   cluster Order City, and test your rule ideas with pandas.
-5. Fill in `constraint_inventory_template.csv` as you work. An entry
-   needs all three columns: the rule, the evidence in the data, and the
-   source column or table. Two out of three is not a finding, per the
-   lecture's own "what scores" callout.
+4. Run the rule checks:
+
+   ```text
+   python rule_checks.py
+   ```
+
+   It prints six checks, each with a count and what it means. Nothing to edit.
+5. Cluster Order City in OpenRefine, then open
+   `constraint_inventory_template.csv`. It already lists the rules from the
+   checks. Compare each row with your own output and add one rule of your own
+   if you can. Each entry has the rule, the evidence in the data, and the
+   source column or table.
 
 ## Real tools, matching the lecture
 
@@ -85,7 +90,7 @@ and this file disagree, the file wins.
 
 ## What "done" looks like
 
-A profiling report for both datasets, and a constraint inventory that
-is substantive rather than trivial: each entry cites evidence a reader
-could check, and a rule with real exceptions is noted as such rather
-than silently dropped. This file is the input to Sessions 3, 4, and 5.
+You have a profiling report for both datasets, you have run the six rule
+checks and seen their counts, and your copy of the inventory matches your own
+output. You can say, in one sentence, why a rule needs a count and a source.
+This file is the input to Sessions 3, 4, and 5.

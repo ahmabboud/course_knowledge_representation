@@ -719,19 +719,20 @@ last quarter, and who did we ship them to?
       <li><code>python smoke_test.py</code>: checks Python 3.12, JDK 21, Docker, Protégé.</li>
       <li><code>python data/fetch_data.py</code>, from the demos folder.</li>
       <li><code>python profiling.py</code>, or cell by cell in Jupyter.</li>
-      <li>Cluster DataCo's <b>Order City</b> in OpenRefine. Check every cluster before you touch it.</li>
-      <li>Write at least <b>five</b> rules in <code>constraint_inventory_template.csv</code>: rule, evidence, source. <code>TASKS.md</code> in the lab folder lists what to test.</li>
+      <li>Run <code>python rule_checks.py</code>: six checks, each with a count to read.</li>
+      <li>Cluster DataCo's <b>Order City</b> in OpenRefine. Look at every cluster before you merge it.</li>
+      <li>Check the rules already listed in <code>constraint_inventory_template.csv</code> against your output, and add one of your own if you can. <code>TASKS.md</code> in the lab folder walks you through each step.</li>
     </ol>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Deliverable, end of session</span><p class="lu-sub">Smoke test passing, both profiling reports, and your inventory with evidence for every rule. Committed to your repository.</p></div>
-      <div class="lu-callout"><span class="lu-callout__label">What scores</span><p class="lu-sub">Rules the schema does not already state, each with a count, and exceptions written down rather than dropped.</p></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Deliverable, end of session</span><p class="lu-sub">Smoke test passing, both profiling reports, and your inventory checked against your own numbers. Committed to your repository.</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">What to take away</span><p class="lu-sub">A rule has three parts: the statement, the count behind it, and where it came from. Exceptions are findings, not mistakes.</p></div>
     </div>
   </div>
   <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>JDK</b> Java Development Kit: the Java runtime and tools that Protégé, Fuseki and ROBOT need.</span> <span data-auto="1"><b>Docker</b> A tool that runs software in sealed containers, so the same setup starts the same way on every machine.</span></p>
   <template data-notes><p>Three minutes to brief, then I stop talking and walk the room.</p>
     <ul>
       <li>Most common blocker: the DataCo profile takes several minutes and it looks as if it hung. I say so before you start.</li>
-      <li>Second: twenty trivial rules ("Order Id is unique"). I redirect early. A rule the schema already enforces is not a finding.</li>
+      <li>Second: I remind you that the lab is to understand, not to compete. The inventory is pre-filled; the point is to see where each number comes from.</li>
       <li>Folder: <code>demos/session-01-environment-and-constraints/</code>. Its README has the setup steps, and TASKS.md is the step by step worksheet: what to look for, how to count it, how to write each rule.</li>
     </ul></template>
 </section>
@@ -762,8 +763,8 @@ last quarter, and who did we ship them to?
 
   <div class="lu-grid" style="margin-top:var(--lu-s3)">
     <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 15</span><p class="lu-sub">Smoke test passes. Data fetched. Brunel profiles written.</p></div>
-    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 35</span><p class="lu-sub">DataCo profile read. Order City clustered and every cluster checked.</p></div>
-    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 60</span><p class="lu-sub">Five rules or more, each with evidence and source. Committed.</p></div>
+    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 35</span><p class="lu-sub">DataCo profile read. Rule checks run. Order City clustered.</p></div>
+    <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 60</span><p class="lu-sub">Rules checked against your numbers, one of your own added if you can. Committed.</p></div>
   </div>
   <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Stuck?</span><p class="lu-sub">Start from a slide of Part 5: every measure there is one query in pandas. Your job is to find rules those slides did not show.</p></div>
   <template data-notes><p>Sixty minutes. I circulate. At minute 35, I check that nobody has merged an OpenRefine cluster. At minute 50, I warn that commits are due.</p></template>
