@@ -83,4 +83,4 @@ which kind of evidence supports a proposed rule.
 3. **Modelling decision:** a rule proposed for later RDF, OWL, or SHACL work.
 
 Do not turn a pattern into a rule without recording its evidence and source.
-Now return to the [lab README](README.md), then run the steps in order.
+Now return to the [lab README](README.md), then follow the step by step [tasks](TASKS.md).

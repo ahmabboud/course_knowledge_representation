@@ -13,6 +13,12 @@ two datasets, what profiling and clustering can show, the purpose of the
 constraint inventory, file roles, terms, and how evidence supports a rule.
 Do not begin the commands until the overall story is clear.
 
+**Then follow your tasks:** [TASKS.md](TASKS.md) is the step by step
+worksheet. Running the scripts is only the setup. What you actually do is
+read the profiles, cluster Order City, test at least five ideas for rules
+with counts, and write each rule, its evidence and its source in the
+inventory.
+
 ## Working directories
 
 Start in `DEMO_ROOT`, the folder containing `requirements.txt`, `data/`, and
@@ -56,7 +62,9 @@ PowerShell because `cd` and `python` have the same use after activation.
    JupyterLab or VS Code instead to run it step by step, with the
    missingness charts and DataCo's full profile rendered inline as you
    go, rather than running it as one batch script.
-4. Fill in `constraint_inventory_template.csv` as you work. An entry
+4. Do the tasks in [TASKS.md](TASKS.md): answer the profile questions,
+   cluster Order City, and test your rule ideas with pandas.
+5. Fill in `constraint_inventory_template.csv` as you work. An entry
    needs all three columns: the rule, the evidence in the data, and the
    source column or table. Two out of three is not a finding, per the
    lecture's own "what scores" callout.
