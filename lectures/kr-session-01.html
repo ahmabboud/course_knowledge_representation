@@ -273,13 +273,21 @@ last quarter, and who did we ship them to?
 <!-- ==================================================================== 17 -->
 <section class="slide" data-label="Where it fits and where it does not" data-section="What is knowledge" data-minutes="3">
   <div class="lu-eyebrow">Use it where it pays</div>
-  <h2 class="lu-h2" style="max-width:66ch">A knowledge graph is the right tool for some problems and the wrong tool for others.</h2>
+  <h2 class="lu-h2" style="max-width:66ch">Right for some problems, wrong for others.</h2>
 
-  <div class="lu-split" style="margin-top:var(--lu-s3)">
-    <div class="lu-callout lu-callout--concept" data-build="1"><span class="lu-callout__label">It fits when</span><p class="lu-sub">Many systems name the same thing differently. The questions are about connections or "how many steps". Rules must hold and be explained. The knowledge lives for years and many teams share it. An answer must show why it is right.</p></div>
-    <div class="lu-callout" data-build="2"><span class="lu-callout__label">It fits badly when</span><p class="lu-sub">One clean table answers fixed reports: use a warehouse. You add up billions of rows: use a warehouse. You need thousands of fast transactions: use an operational database. The data is mostly free text and nobody will keep a model: use search. It is a one-off analysis.</p></div>
+  <div class="lu-split" style="margin-top:var(--lu-s1)">
+    <div class="lu-callout lu-callout--concept" data-build="1"><span class="lu-callout__label">It fits when</span>
+      <ul class="lu-list" style="margin:0;gap:var(--lu-s2)">
+        <li><b>Many systems</b> name the same thing differently.</li>
+        <li>The questions are about <b>connections</b> or "how many steps".</li>
+        <li><b>Rules</b> must hold and be explained.</li>
+        <li>The knowledge <b>lives for years</b> and many teams share it.</li>
+        <li>An answer must <b>show why</b> it is right.</li>
+      </ul></div>
+    <table class="lu-table lu-fits" data-build="2"><thead><tr><th>It fits badly when</th><th>Use instead</th></tr></thead><tbody><tr><td><b>Fixed reports</b> from one clean table, or <b>billions of rows</b> to add up</td><td><b>Warehouse</b></td></tr><tr><td>You need <b>thousands of fast transactions</b></td><td><b>Operational database</b></td></tr><tr><td>Mostly <b>free text</b>, and nobody will keep a model</td><td><b>Search</b></td></tr><tr><td>A <b>one-off</b> analysis</td><td><b>A script or a spreadsheet</b></td></tr></tbody></table>
   </div>
-  <div class="lu-callout lu-callout--neutral" data-build="3"><span class="lu-callout__label">Where it sits</span><p class="lu-sub">Beside the operational database (fast, now) and the warehouse (history, sums), not instead of them. It is the layer that connects what they hold and says what it means.</p></div>
+  <style>.lu-fits td,.lu-fits th{padding-top:var(--lu-s2);padding-bottom:var(--lu-s2)}</style>
+  <div class="lu-callout lu-callout--neutral" data-build="3"><span class="lu-callout__label">Where it sits</span><p class="lu-sub"><b>Beside</b> the operational database and the warehouse, not instead of them: it connects what they hold.</p></div>
   <template data-notes><p>Three minutes. I want you to leave able to say no to this technology when it does not fit, because that is a skill.</p>
     <ul>
       <li>The cost is the common reason it does not pay: an ontology must be kept up to date by someone.</li>
