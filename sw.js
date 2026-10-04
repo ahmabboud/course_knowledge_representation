@@ -14,8 +14,8 @@ const SHELL = [
   './assets/lu.css?v=1.3.5',
   './assets/lu-deck.js?v=1.1.0',
   './assets/lu-flow.js?v=1.2.0',
-  './assets/glossary.js?v=1.0.1',
-  './assets/lu-glossary.js?v=1.0.1',
+  './assets/glossary.js?v=1.0.2',
+  './assets/lu-glossary.js?v=1.0.2',
   './assets/sparql-lite.js?v=1.1.0',
   './manifest.webmanifest'
 ];

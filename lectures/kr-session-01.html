@@ -18,7 +18,7 @@
   data-deck-id="kr-s01"
   data-course="Knowledge Representation"
   data-session="Session 1 of 8"
-  data-duration="185"
+  data-duration="220"
   data-app-root="../"
   data-unit="Lebanese University · MSc">
 
@@ -46,10 +46,11 @@
       <p class="lu-lead" style="max-width:46ch">One question no company can answer quickly. Two real datasets that show why. And the project your team will build to answer it.</p>
     </div>
     <div class="lu-row" style="justify-content:space-between;font-size:var(--lu-t-caption);color:var(--lu-on-night-2)">
-      <span>About 180 minutes · about 120 of lecture, about 60 of lab</span>
+      <span>About 220 minutes · about 155 of lecture, about 65 of lab</span>
       <span>Press <kbd>&rarr;</kbd> to begin · <kbd>?</kbd> for shortcuts</span>
     </div>
   </div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Knowledge</b> Information joined to other facts and rules, so it can answer questions and support decisions.</span></p>
   <template data-notes>
     <p>Every number in this deck comes from a real run (<code>demos/session-01-environment-and-constraints/reference-outputs/s1-facts.txt</code>), and every term is defined where it first appears.</p>
     <ul>
@@ -68,7 +69,7 @@
   <p class="lu-lead" style="max-width:70ch">A plant, the factory that makes one of your parts, was sanctioned overnight. Which products you shipped last quarter contain a part from it?</p>
   <table class="lu-table" data-build="1"><thead><tr><th>System</th><th>Stands for, and what it holds</th><th>Supplier is called</th></tr></thead><tbody><tr><td><b>ERP</b></td><td>Enterprise Resource Planning: orders, suppliers, money</td><td>vendor_id</td></tr><tr><td><b>WMS</b></td><td>Warehouse Management System: goods in and out</td><td>supplier_code</td></tr><tr><td><b>PLM</b></td><td>Product Lifecycle Management: designs and parts</td><td>mfr_ref</td></tr><tr><td><b>TMS</b></td><td>Transportation Management System: shipments</td><td>party_no</td></tr><tr><td><b>CRM</b></td><td>Customer Relationship Management: customers</td><td>no supplier at all</td></tr></tbody></table>
   <p class="lu-sub" data-build="2"><b>The honest answer:</b> three weeks, four analysts, a spreadsheet nobody can rebuild.</p>
-  <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>Sanctioned</b> Banned by a government from doing business, so other companies may not buy from it or sell to it.</span></p>
+  <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>Data</b> Symbols or numbers with no context, such as 38.6.</span> <span data-auto="1"><b>Sanctioned</b> Banned by a government from doing business, so other companies may not buy from it or sell to it.</span></p>
   <template data-notes><p>Five minutes. This is the slide the whole course hangs off.</p>
     <ul>
       <li>I ask: who has worked somewhere with more than five systems holding customer or supplier data? Hands go up, and I use that.</li>
@@ -115,23 +116,190 @@ last quarter, and who did we ship them to?
       <p class="lu-statement">By the end of today you have met two real supply chain datasets, measured them, and written down rules they obey that no schema states.</p>
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">What you leave with today</span><p class="lu-sub">A working environment, a profiling report for both datasets, and a constraint inventory: at least five rules, each with its evidence in the data. Sessions 3, 4 and 5 start from it.</p></div>
     </div>
-    <table class="lu-table"><thead><tr><th>Part</th><th>Minutes</th></tr></thead><tbody><tr><td>1 · Opening</td><td>10</td></tr><tr><td>2 · The supply chain and the data</td><td>25</td></tr><tr><td>3 · Meaning is not in the schema</td><td>20</td></tr><tr><td>4 · The architecture</td><td>15</td></tr><tr><td>5 · Profiling and hidden rules</td><td>30</td></tr><tr><td>6 · The team project</td><td>15</td></tr><tr><td>Lab, then wrap</td><td>65 + 5</td></tr></tbody><caption>About 185 minutes in all.</caption></table>
+    <table class="lu-table"><thead><tr><th>Part</th><th>Minutes</th></tr></thead><tbody><tr><td>1 · Opening</td><td>10</td></tr><tr><td>2 · What is knowledge?</td><td>42</td></tr><tr><td>3 · The supply chain and the data</td><td>25</td></tr><tr><td>4 · Meaning is not in the schema</td><td>12</td></tr><tr><td>5 · The architecture</td><td>15</td></tr><tr><td>6 · Profiling and hidden rules</td><td>30</td></tr><tr><td>7 · The team project</td><td>15</td></tr><tr><td>Lab, then wrap</td><td>65 + 5</td></tr></tbody><caption>About 220 minutes in all.</caption></table>
   </div>
   <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Data profiling</b> Measuring a dataset to learn its real shape: counts, missing values, ranges, repeated values, links between tables.</span> <span data-auto="1"><b>Constraint inventory</b> The course&#x27;s table of business rules found in the data, each with its evidence and source column.</span></p>
   <template data-notes><p>Two minutes. I read the callout aloud. The word that matters is <b>evidence</b>: a rule without a count behind it is an opinion.</p></template>
 </section>
 
 <!-- ==================================================================== 05 -->
-<section class="slide slide--night" data-chrome="none" data-label="Part 2 · Meet the supply chain and the data" data-section="The supply chain and the data" data-minutes="1">
+<section class="slide slide--night" data-chrome="none" data-label="Part 2 · What is knowledge?" data-section="What is knowledge" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 2 of 6 · about 25 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Before any theory: what does a supply chain look like, and what is in our two datasets?</h2>
-    <p class="lu-lead" style="max-width:46ch">Every example for the rest of the course comes from these rows.</p>
+    <div class="lu-eyebrow">Part 2 of 7 · about 42 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">What is knowledge, and why does a computer need it written down?</h2>
+    <p class="lu-lead" style="max-width:46ch">From a single number to an engine that answers questions nobody stored. Nothing here needs a computer science background.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 06 -->
+<section class="slide" data-label="The same question, three engines" data-section="What is knowledge" data-minutes="4">
+  <div class="lu-eyebrow">The payoff first</div>
+  <h2 class="lu-h2" style="max-width:66ch">One question, three ways to answer it. Only one can show why it is right.</h2>
+<div class="lu-walk" data-label="The same question answered three ways"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 380, "nodes": [{"id": "q", "label": "Which products contain\na part from the\nsanctioned plant?", "x": 175, "y": 190, "w": 330, "h": 130, "kind": "ours"}, {"id": "a1", "label": "Tables and joins\nacross five systems", "x": 585, "y": 70, "w": 300, "h": 84, "kind": "literal"}, {"id": "r1", "label": "Three weeks,\nfour analysts", "x": 1075, "y": 70, "w": 330, "h": 84, "kind": "literal"}, {"id": "a2", "label": "A language model\non its own", "x": 585, "y": 190, "w": 300, "h": 84, "kind": "upper"}, {"id": "r2", "label": "A fluent answer\nwith no source", "x": 1075, "y": 190, "w": 330, "h": 84, "kind": "upper"}, {"id": "a3", "label": "A knowledge graph", "x": 585, "y": 310, "w": 300, "h": 84, "kind": "individual"}, {"id": "r3", "label": "12 products, each with\nthe path that proves it", "x": 1075, "y": 310, "w": 330, "h": 84, "kind": "individual"}], "edges": [{"id": "e1", "from": "q", "to": "a1", "label": ""}, {"id": "e2", "from": "q", "to": "a2", "label": ""}, {"id": "e3", "from": "q", "to": "a3", "label": ""}, {"id": "e4", "from": "a1", "to": "r1", "label": "weeks", "kind": "conflict"}, {"id": "e5", "from": "a2", "to": "r2", "label": "guesses", "kind": "conflict"}, {"id": "e6", "from": "a3", "to": "r3", "label": "seconds"}], "steps": [{"show": ["q"], "set": {"q": "active"}}, {"show": ["a1", "r1", "e1", "e4"], "run": ["e1", "e4"], "set": {"q": "idle", "r1": "active"}}, {"show": ["a2", "r2", "e2", "e5"], "run": ["e2", "e5"], "set": {"r1": "idle", "r2": "active"}}, {"show": ["a3", "r3", "e3", "e6"], "run": ["e3", "e6"], "set": {"r2": "idle", "r3": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="The question" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The regulator&#x27;s question from the start of the session. Here are three ways to answer it."></div><div data-walk-step="2" data-caption-short="Tables and joins" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Five systems name the supplier five ways. People match the names by hand: weeks of work, and a spreadsheet nobody can rebuild."></div><div data-walk-step="3" data-caption-short="A language model alone" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; It answers at once, in fluent English. It has no list of your parts, so it may invent one, and it cannot show a source."></div><div data-walk-step="4" data-caption-short="A knowledge graph" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; The facts are stored as things and links, with their meaning. The answer is a walk along the links, and the walk is the evidence."></div></div></div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Knowledge graph</b> Data stored as things connected by named relationships, together with the ontology that says what they mean.</span></p>
+  <template data-notes><p>Four minutes. I start with the payoff and promise the how. The question is the one from slide 2.</p>
+    <ul>
+      <li>I do not say yet what a knowledge graph is. I say: by Session 8 you build the third engine.</li>
+      <li>I am fair to the first two. SQL gets the right answer if someone writes the right query, and a language model is excellent at language. What neither gives is an answer with its evidence in seconds.</li>
+      <li>The 12 products are an illustration of the kind of answer, not a number from our data.</li>
+    </ul></template>
+</section>
+
+<!-- ==================================================================== 07 -->
+<section class="slide" data-label="From data to knowledge" data-section="What is knowledge" data-minutes="5">
+  <div class="lu-eyebrow">What makes it knowledge</div>
+  <h2 class="lu-h2" style="max-width:66ch">A number becomes knowledge when it has context, links to other facts, and rules.</h2>
+<div class="lu-walk" data-label="From data to information to knowledge to experience"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 390, "nodes": [{"id": "d", "label": "Data\n38.6", "x": 115, "y": 330, "w": 170, "h": 96, "kind": "literal"}, {"id": "i", "label": "Information\nAmina's temperature\nwas 38.6 °C at 09:00", "x": 451, "y": 255, "w": 290, "h": 112, "kind": "reused"}, {"id": "k", "label": "Knowledge\n38.6 °C is a fever.\nA fever can mean infection.\nInfection needs a doctor.", "x": 872, "y": 170, "w": 340, "h": 150, "kind": "upper"}, {"id": "e", "label": "Experience\nI have seen this\nbefore. With asthma,\nwait or act?", "x": 1283, "y": 85, "w": 270, "h": 130, "kind": "individual"}], "edges": [{"id": "e1", "from": "d", "to": "i", "label": ""}, {"id": "e2", "from": "i", "to": "k", "label": ""}, {"id": "e3", "from": "k", "to": "e", "label": ""}], "steps": [{"show": ["d"], "set": {"d": "active"}}, {"show": ["i", "e1"], "run": ["e1"], "set": {"d": "idle", "i": "active"}}, {"show": ["k", "e2"], "run": ["e2"], "set": {"i": "idle", "k": "active"}}, {"show": ["e", "e3"], "run": ["e3"], "set": {"k": "idle", "e": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="Data" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A number. Alone it means nothing: 38.6 of what?"></div><div data-walk-step="2" data-caption-short="Information" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Add context: who, what, when, which unit. Now a person can read it."></div><div data-walk-step="3" data-caption-short="Knowledge" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Connect it to other facts and rules. A fever means something and leads somewhere, so we can answer questions nobody wrote down."></div><div data-walk-step="4" data-caption-short="Experience" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Judgement from many past cases. The hardest level to write down. These levels are a way of thinking, not a law: people argue about where one ends."></div></div></div><div class="lu-callout lu-callout--concept" data-build="1"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Data</dt><dd>symbols or numbers with no context.</dd><dt>Information</dt><dd>data with context: who, what, when.</dd><dt>Knowledge</dt><dd>information joined to other facts and rules, so it can answer questions and support decisions.</dd></dl></div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Experience</b> Judgement built from many past cases. The level of knowledge hardest to write down.</span></p>
+  <template data-notes><p>Five minutes. I use a body temperature because everyone understands it, and I come back to the supply chain only in Part 3.</p>
+    <ul>
+      <li>Step 1: I ask what 38.6 means. You will say "of what?" and that is the point.</li>
+      <li>Step 3 is the one that matters for the course: a fever is not a number, it is a thing with consequences. Facts, links and rules together are what a computer can use to answer a question nobody stored.</li>
+      <li>Step 4: experience is the level machines handle worst. I am honest that the levels are a lens, not a law.</li>
+    </ul></template>
+</section>
+
+<!-- ==================================================================== 08 -->
+<section class="slide" data-label="How people have stored knowledge" data-section="What is knowledge" data-minutes="3">
+  <div class="lu-eyebrow">Every medium stores more and loses something</div>
+  <h2 class="lu-h2" style="max-width:66ch">People have always written knowledge down. Each step fixed one limit and left the next.</h2>
+<div class="lu-walk" data-label="Five ways humanity has stored knowledge"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 260, "nodes": [{"id": "n1", "label": "Speech and\nmemory", "x": 130, "y": 130, "w": 200, "h": 100, "kind": "reused"}, {"id": "n2", "label": "Writing", "x": 410, "y": 130, "w": 190, "h": 100, "kind": "reused"}, {"id": "n3", "label": "Library\ncatalogues", "x": 690, "y": 130, "w": 210, "h": 100, "kind": "reused"}, {"id": "n4", "label": "Encyclopedias\nand maps", "x": 990, "y": 130, "w": 230, "h": 100, "kind": "reused"}, {"id": "n5", "label": "Computer\nfiles", "x": 1290, "y": 130, "w": 210, "h": 100, "kind": "upper"}], "edges": [{"id": "e1", "from": "n1", "to": "n2", "label": ""}, {"id": "e2", "from": "n2", "to": "n3", "label": ""}, {"id": "e3", "from": "n3", "to": "n4", "label": ""}, {"id": "e4", "from": "n4", "to": "n5", "label": ""}], "steps": [{"show": ["n1"], "set": {"n1": "active"}}, {"show": ["n2", "e1"], "run": ["e1"], "set": {"n1": "idle", "n2": "active"}}, {"show": ["n3", "e2"], "run": ["e2"], "set": {"n2": "idle", "n3": "active"}}, {"show": ["n4", "e3"], "run": ["e3"], "set": {"n3": "idle", "n4": "active"}}, {"show": ["n5", "e4"], "run": ["e4"], "set": {"n4": "idle", "n5": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="Speech and memory" data-caption="&lt;b&gt;Gain:&lt;/b&gt; shared, free, instant. &lt;b&gt;Loss:&lt;/b&gt; forgotten, and changed each time it is retold."></div><div data-walk-step="2" data-caption-short="Writing" data-caption="&lt;b&gt;Gain:&lt;/b&gt; it lasts and it travels. &lt;b&gt;Loss:&lt;/b&gt; someone has to read it to find anything."></div><div data-walk-step="3" data-caption-short="Library catalogues" data-caption="&lt;b&gt;Gain:&lt;/b&gt; a catalogue finds the book. &lt;b&gt;Loss:&lt;/b&gt; it finds the book, not the answer inside it."></div><div data-walk-step="4" data-caption-short="Encyclopedias and maps" data-caption="&lt;b&gt;Gain:&lt;/b&gt; editors organise and link the knowledge. &lt;b&gt;Loss:&lt;/b&gt; fixed in print, and a person still joins the facts."></div><div data-walk-step="5" data-caption-short="Computer files" data-caption="&lt;b&gt;Gain:&lt;/b&gt; unlimited copies, search by words. &lt;b&gt;Loss:&lt;/b&gt; words match, meaning does not: a search for &quot;bank&quot; finds rivers and money."></div></div></div><div class="lu-callout lu-callout--neutral" data-build="1"><span class="lu-callout__label">The pattern</span><p class="lu-sub">Every step stores more. None of them answers a question by itself: a person still reads, connects and judges.</p></div>
+  <template data-notes><p>Three minutes. I move fast: you know this history, and the point is the pattern at the bottom.</p>
+    <ul>
+      <li>At each step I ask what was lost. You will find the losses before I show them.</li>
+      <li>At step 5 I stop: a computer is the first store that can in principle do the reading, connecting and judging. That only works if the knowledge is written in a form it can use.</li>
+    </ul></template>
+</section>
+
+<!-- ==================================================================== 09 -->
+<section class="slide" data-label="Tables: links are found at question time" data-section="What is knowledge" data-minutes="3">
+  <div class="lu-eyebrow">Digital storage 1 · relational tables</div>
+  <h2 class="lu-h2" style="max-width:66ch">Tables store facts well. The links between them are worked out when you ask.</h2>
+<div class="lu-walk" data-label="Following a chain through relational tables"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 340, "nodes": [{"id": "t1", "label": "Order", "x": 95, "y": 120, "w": 130, "h": 76, "kind": "ours"}, {"id": "t2", "label": "Order line", "x": 330, "y": 120, "w": 150, "h": 76, "kind": "ours"}, {"id": "t3", "label": "Product", "x": 570, "y": 120, "w": 140, "h": 76, "kind": "ours"}, {"id": "t4", "label": "Component", "x": 815, "y": 120, "w": 160, "h": 76, "kind": "ours"}, {"id": "t5", "label": "Sub-component", "x": 1085, "y": 120, "w": 190, "h": 76, "kind": "ours"}, {"id": "t6", "label": "Supplier", "x": 1345, "y": 120, "w": 140, "h": 76, "kind": "ours"}, {"id": "q", "label": "Parts inside parts inside parts:\nhow many joins? SQL needs the\ndepth written into the query.", "x": 880, "y": 280, "w": 560, "h": 100, "kind": "ours"}], "edges": [{"id": "e1", "from": "t1", "to": "t2", "label": "join 1"}, {"id": "e2", "from": "t2", "to": "t3", "label": "join 2"}, {"id": "e3", "from": "t3", "to": "t4", "label": "join 3"}, {"id": "e4", "from": "t4", "to": "t5", "label": "join 4"}, {"id": "e5", "from": "t5", "to": "t6", "label": "join 5"}], "steps": [{"show": ["t1", "t2", "t3", "t4", "t5", "t6"], "set": {"t1": "active"}}, {"show": ["e1", "e2"], "run": ["e1", "e2"], "set": {"t1": "idle", "t3": "active"}}, {"show": ["e3", "e4", "e5"], "run": ["e3", "e4", "e5"], "set": {"t3": "idle", "t6": "active"}}, {"show": ["q"], "set": {"t6": "idle", "q": "impossible"}}], "legend": false, "flags": {"impossible": "depth?"}}</script></div><div data-walk-step="1" data-caption-short="Facts in tables" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; One table per kind of thing, linked by keys. Tables are excellent at storing facts."></div><div data-walk-step="2" data-caption-short="A link is a join" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The links are not stored as links. When you ask, the database finds them by &lt;b&gt;joining&lt;/b&gt; two tables on a shared key."></div><div data-walk-step="3" data-caption-short="Five hops, five joins" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Each hop is one more join, written by hand and slower than the last."></div><div data-walk-step="4" data-caption-short="No fixed depth" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Parts inside parts have no fixed depth. Recursive SQL can do it, but it is awkward, and what each column means is still only in people&#x27;s heads."></div></div></div><div class="lu-callout lu-callout--concept" data-build="1"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Schema</dt><dd>the declared shape of the tables: columns, types, keys. How the data looks, not what it means.</dd><dt>Join</dt><dd>SQL's way to combine rows from two tables that share a key.</dd></dl></div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>SQL</b> Structured Query Language: the language for asking questions of relational (table) databases.</span></p>
+  <template data-notes><p>Three minutes. I am fair to tables: they are the right tool for most data, and recursive SQL can follow parts inside parts.</p>
+    <ul>
+      <li>The honest limits are two. The path has to be known and written in advance, and the cost grows with every hop.</li>
+      <li>The deeper limit is the one on the last step: a schema records shape, not meaning. We see real columns that lie in Part 4.</li>
+    </ul></template>
+</section>
+
+<!-- ==================================================================== 10 -->
+<section class="slide" data-label="Data warehouses: fast sums, not connections" data-section="What is knowledge" data-minutes="4">
+  <div class="lu-eyebrow">Digital storage 2 · the data warehouse</div>
+  <h2 class="lu-h2" style="max-width:66ch">A warehouse is built to add things up fast. It is not built to follow connections.</h2>
+<div class="lu-walk" data-label="From operational systems to a star schema"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 350, "nodes": [{"id": "s1", "label": "ERP", "x": 90, "y": 60, "w": 130, "h": 60, "kind": "literal"}, {"id": "s2", "label": "WMS", "x": 90, "y": 160, "w": 130, "h": 60, "kind": "literal"}, {"id": "s3", "label": "TMS", "x": 90, "y": 260, "w": 130, "h": 60, "kind": "literal"}, {"id": "etl", "label": "Copy, clean and\njoin ahead of time", "x": 385, "y": 160, "w": 260, "h": 100, "kind": "builtin"}, {"id": "fact", "label": "Fact table\norders, amounts", "x": 700, "y": 160, "w": 220, "h": 100, "kind": "ours"}, {"id": "d1", "label": "Date", "x": 700, "y": 40, "w": 160, "h": 56, "kind": "reused"}, {"id": "d2", "label": "Plant", "x": 700, "y": 285, "w": 160, "h": 56, "kind": "reused"}, {"id": "d3", "label": "Product", "x": 960, "y": 90, "w": 160, "h": 56, "kind": "reused"}, {"id": "d4", "label": "Customer", "x": 960, "y": 230, "w": 160, "h": 56, "kind": "reused"}, {"id": "ok", "label": "How many? How much?\nSeconds", "x": 1290, "y": 100, "w": 290, "h": 100, "kind": "individual"}, {"id": "no", "label": "Which delay reached\nwhich customer?", "x": 1290, "y": 275, "w": 290, "h": 100, "kind": "literal"}], "edges": [{"id": "a1", "from": "s1", "to": "etl", "label": ""}, {"id": "a2", "from": "s2", "to": "etl", "label": ""}, {"id": "a3", "from": "s3", "to": "etl", "label": ""}, {"id": "b1", "from": "etl", "to": "fact", "label": ""}, {"id": "c1", "from": "fact", "to": "d1", "label": ""}, {"id": "c2", "from": "fact", "to": "d2", "label": ""}, {"id": "c3", "from": "fact", "to": "d3", "label": ""}, {"id": "c4", "from": "fact", "to": "d4", "label": ""}, {"id": "o1", "from": "d3", "to": "ok", "label": ""}, {"id": "n1", "from": "d4", "to": "no", "label": "", "kind": "conflict"}], "steps": [{"show": ["s1", "s2", "s3"], "set": {"s1": "active"}}, {"show": ["etl", "a1", "a2", "a3"], "run": ["a1", "a2", "a3"], "set": {"s1": "idle", "etl": "active"}}, {"show": ["fact", "d1", "d2", "d3", "d4", "b1", "c1", "c2", "c3", "c4"], "run": ["b1"], "set": {"etl": "idle", "fact": "active"}}, {"show": ["ok", "o1"], "run": ["o1"], "set": {"fact": "idle", "ok": "active"}}, {"show": ["no", "n1"], "run": ["n1"], "set": {"ok": "idle", "no": "impossible"}}], "legend": false, "flags": {"impossible": "no path"}}</script></div><div data-walk-step="1" data-caption-short="Operational systems" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Systems record orders as they happen: many small, fast writes. This is the &lt;b&gt;fast, operational&lt;/b&gt; data."></div><div data-walk-step="2" data-caption-short="Copy and join ahead" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; A &lt;b&gt;data warehouse&lt;/b&gt; copies and cleans them on a schedule, and does the joins ahead of time."></div><div data-walk-step="3" data-caption-short="A star schema" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; One fact table holds the measures, with a few descriptive tables around it. &lt;b&gt;Denormalised&lt;/b&gt; on purpose: names repeated, so no joins when you ask."></div><div data-walk-step="4" data-caption-short="Fast sums" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Excellent at &quot;how many&quot; and &quot;how much&quot;, by region and month, in seconds. This is the &lt;b&gt;long term, historical&lt;/b&gt; data."></div><div data-walk-step="5" data-caption-short="Weak on connections" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; Weak at &quot;how is this connected, and why?&quot; The path is not stored, and meaning still lives in column names."></div></div></div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Data warehouse</b> A database that copies and cleans data from many systems on a schedule, shaped for fast sums and history.</span> <span data-auto="1"><b>Star schema</b> A warehouse layout: one fact table of measures with a few descriptive tables around it.</span> <span data-auto="1"><b>Operational data</b> The current data that running systems write as things happen: fast and in small pieces.</span></p>
+  <template data-notes><p>Four minutes. A warehouse is not a failed knowledge store, it is a different tool, and I say so.</p>
+    <ul>
+      <li>Operational data is current and fast; warehouse data is historical and shaped for sums. That is the fast and long term split.</li>
+      <li>Denormalising means repeating names so the join is already done. It makes reports quick and changes expensive.</li>
+      <li>The last step is the bridge to graphs: the question "how is this connected" has no column to read.</li>
+    </ul></template>
+</section>
+
+<!-- ==================================================================== 11 -->
+<section class="slide" data-label="Graphs: the links are stored" data-section="What is knowledge" data-minutes="3">
+  <div class="lu-eyebrow">Digital storage 3 · graphs</div>
+  <h2 class="lu-h2" style="max-width:66ch">A graph stores the links themselves, so following them is one walk, at any depth.</h2>
+<div class="lu-walk" data-label="The same chain as a graph"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 340, "nodes": [{"id": "s", "label": "Supplier 9", "x": 110, "y": 150, "w": 160, "h": 70, "kind": "individual"}, {"id": "p", "label": "Plant P-114", "x": 360, "y": 150, "w": 160, "h": 70, "kind": "individual"}, {"id": "c", "label": "Part 77", "x": 610, "y": 150, "w": 160, "h": 70, "kind": "individual"}, {"id": "pr", "label": "Product A", "x": 860, "y": 150, "w": 160, "h": 70, "kind": "individual"}, {"id": "o", "label": "Order 5", "x": 1110, "y": 150, "w": 160, "h": 70, "kind": "individual"}, {"id": "cu", "label": "Customer X", "x": 1360, "y": 150, "w": 160, "h": 70, "kind": "individual"}, {"id": "sub", "label": "Sub-part 12", "x": 610, "y": 300, "w": 170, "h": 70, "kind": "individual"}], "edges": [{"id": "e1", "from": "s", "to": "p", "label": "runs"}, {"id": "e2", "from": "p", "to": "c", "label": "makes"}, {"id": "e3", "from": "c", "to": "pr", "label": "part of"}, {"id": "e4", "from": "pr", "to": "o", "label": "in"}, {"id": "e5", "from": "o", "to": "cu", "label": "from"}, {"id": "e6", "from": "sub", "to": "c", "label": "part of"}], "steps": [{"show": ["s"], "set": {"s": "active"}}, {"show": ["p", "c", "e1", "e2"], "run": ["e1", "e2"], "set": {"s": "idle", "c": "active"}}, {"show": ["pr", "o", "cu", "e3", "e4", "e5"], "run": ["e3", "e4", "e5"], "set": {"c": "idle", "cu": "active"}}, {"show": ["sub", "e6"], "run": ["e6", "e3", "e4", "e5"], "set": {"cu": "idle", "sub": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="Things and links" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A &lt;b&gt;graph&lt;/b&gt; stores things (nodes) and the links between them (edges). A link is as real as a row."></div><div data-walk-step="2" data-caption-short="Follow the links" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; From a supplier, follow the links: which plant, which part."></div><div data-walk-step="3" data-caption-short="A walk, not a join" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Keep following: product, order, customer. &quot;Who is affected?&quot; is a walk along stored links."></div><div data-walk-step="4" data-caption-short="One more level" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; A part inside a part adds one node and one link. The question does not change, however deep it goes."></div></div></div>
+  <template data-notes><p>Three minutes. The same chain as the tables slide, and nothing else changed except where the links live.</p>
+    <ul>
+      <li>I do not claim graphs beat tables. For fixed reports and sums, tables and warehouses win. Graphs win when the question is about connections.</li>
+      <li>At step 4 I ask: how many joins did this need? None to write. That is the whole argument.</li>
+    </ul></template>
+</section>
+
+<!-- ==================================================================== 12 -->
+<section class="slide" data-label="Graph database or knowledge graph?" data-section="What is knowledge" data-minutes="3">
+  <div class="lu-eyebrow">What the course adds to a graph</div>
+  <h2 class="lu-h2" style="max-width:66ch">A graph database stores the links. A knowledge graph also knows what they mean.</h2>
+<div class="lu-walk" data-label="From a graph database to a knowledge graph"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 300, "nodes": [{"id": "g", "label": "Graph database\nstores things and links,\nfast to walk", "x": 175, "y": 150, "w": 290, "h": 124, "kind": "individual"}, {"id": "o", "label": "+ Ontology\nwhat things are, and\nhow they relate", "x": 557, "y": 150, "w": 270, "h": 124, "kind": "upper"}, {"id": "s", "label": "+ Shapes\nrules the data\nmust obey", "x": 919, "y": 150, "w": 250, "h": 124, "kind": "reused"}, {"id": "r", "label": "+ Reasoner\nderives facts nobody\nstored", "x": 1281, "y": 150, "w": 270, "h": 124, "kind": "ours"}], "edges": [{"id": "e1", "from": "g", "to": "o", "label": "meaning"}, {"id": "e2", "from": "o", "to": "s", "label": "checks"}, {"id": "e3", "from": "s", "to": "r", "label": "derives"}], "steps": [{"show": ["g"], "set": {"g": "active"}}, {"show": ["o", "e1"], "run": ["e1"], "set": {"g": "idle", "o": "active"}}, {"show": ["s", "e2"], "run": ["e2"], "set": {"o": "idle", "s": "active"}}, {"show": ["r", "e3"], "run": ["e3"], "set": {"s": "idle", "r": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="A graph database" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Neo4j is one. It stores nodes and links and walks them fast. It has no built in idea of what they mean: you can store nonsense."></div><div data-walk-step="2" data-caption-short="Add an ontology" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; An &lt;b&gt;ontology&lt;/b&gt; says what kinds of thing exist and how they relate. Session 3."></div><div data-walk-step="3" data-caption-short="Add shapes" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; &lt;b&gt;Shapes&lt;/b&gt; say what the data must look like, and reject what does not fit. Session 4."></div><div data-walk-step="4" data-caption-short="Add a reasoner" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; A &lt;b&gt;reasoner&lt;/b&gt; derives new facts from the ontology. Together: a &lt;b&gt;knowledge graph&lt;/b&gt;. Sessions 2 to 5 build it."></div></div></div><div class="lu-callout lu-callout--concept" data-build="1"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Ontology</dt><dd>a precise, machine readable description of the things in a domain and how they relate.</dd><dt>Knowledge graph</dt><dd>data as things and links, together with the ontology that says what they mean.</dd></dl></div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Graph database</b> A database that stores things and the links between them, such as Neo4j, and walks the links fast.</span> <span data-auto="1"><b>Reasoner</b> A program that works out every fact that follows from an ontology&#x27;s axioms.</span></p>
+  <template data-notes><p>Three minutes. Students often use "graph database" and "knowledge graph" as one word. They are not.</p>
+    <ul>
+      <li>Neo4j is excellent and common in industry; we use it in Session 2 next to an RDF store, so you meet both.</li>
+      <li>The word "knowledge" in knowledge graph is the three additions: meaning, checks and inference. Each is a session.</li>
+    </ul></template>
+</section>
+
+<!-- ==================================================================== 13 -->
+<section class="slide" data-label="Facts need rules" data-section="What is knowledge" data-minutes="2">
+  <div class="lu-eyebrow">Constraints</div>
+  <h2 class="lu-h2" style="max-width:66ch">Storing facts is not enough. Someone has to say which facts are allowed.</h2>
+<div class="lu-walk" data-label="Shapes check a fact before it enters the graph"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 340, "nodes": [{"id": "f1", "label": "New fact\norder 8 weighs 12 kg", "x": 175, "y": 80, "w": 300, "h": 84, "kind": "literal"}, {"id": "f2", "label": "New fact\norder 7 weighs 0 kg", "x": 175, "y": 230, "w": 300, "h": 84, "kind": "literal"}, {"id": "gate", "label": "Shapes\nweight must be above 0", "x": 640, "y": 155, "w": 340, "h": 110, "kind": "reused"}, {"id": "kg", "label": "Knowledge graph", "x": 1170, "y": 80, "w": 270, "h": 84, "kind": "individual"}, {"id": "rej", "label": "Rejected,\nwith the reason", "x": 1170, "y": 230, "w": 270, "h": 84, "kind": "literal"}], "edges": [{"id": "a1", "from": "f1", "to": "gate", "label": ""}, {"id": "a2", "from": "gate", "to": "kg", "label": "passes"}, {"id": "b1", "from": "f2", "to": "gate", "label": ""}, {"id": "b2", "from": "gate", "to": "rej", "label": "fails", "kind": "conflict"}], "steps": [{"show": ["f1", "gate", "kg", "a1", "a2"], "run": ["a1", "a2"], "set": {"gate": "active"}}, {"show": ["f2", "rej", "b1", "b2"], "run": ["b1", "b2"], "set": {"gate": "idle", "rej": "impossible"}}, {"show": ["f1", "f2", "gate", "kg", "rej", "a1", "a2", "b1", "b2"], "set": {"rej": "idle", "gate": "active"}}], "legend": false, "flags": {"impossible": "rejected"}}</script></div><div data-walk-step="1" data-caption-short="A good fact" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A graph accepts what it is given. A fact that obeys the shapes goes in."></div><div data-walk-step="2" data-caption-short="A bad fact" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; An order that weighs nothing stops at the shapes, with the reason. It is checked before it can mislead anyone."></div><div data-walk-step="3" data-caption-short="Meaning and checks" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; The ontology says what things mean. The shapes say what data must look like. Sessions 3 and 4."></div></div></div>
+  <template data-notes><p>Two minutes. The order that weighs 0 kg is real: the first shape run in Session 4 finds two of them in the Brunel data.</p>
+    <ul><li>A graph with no rules is a faster way to store the same mistakes.</li></ul></template>
+</section>
+
+<!-- ==================================================================== 14 -->
+<section class="slide" data-label="Inference: a fact nobody stored" data-section="What is knowledge" data-minutes="4">
+  <div class="lu-eyebrow">The engine</div>
+  <h2 class="lu-h2" style="max-width:66ch">Facts plus a rule give an answer nobody wrote down, and the system can show why.</h2>
+<div class="lu-walk" data-label="A reasoner derives that a shipment is at risk"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 340, "nodes": [{"id": "sh", "label": "Shipment\n1447291369.7", "x": 175, "y": 110, "w": 260, "h": 90, "kind": "individual"}, {"id": "ca", "label": "Carrier V444_1", "x": 600, "y": 110, "w": 240, "h": 90, "kind": "individual"}, {"id": "cl", "label": "Sanctioned\ncarrier", "x": 1000, "y": 110, "w": 220, "h": 90, "kind": "ours"}, {"id": "ar", "label": "At-risk shipment\nnobody stored this", "x": 175, "y": 290, "w": 300, "h": 100, "kind": "ours"}, {"id": "ru", "label": "Rule: a shipment handled by a\nsanctioned carrier is at risk", "x": 760, "y": 290, "w": 440, "h": 100, "kind": "upper"}], "edges": [{"id": "e1", "from": "sh", "to": "ca", "label": "handled by"}, {"id": "e2", "from": "ca", "to": "cl", "label": "is a"}, {"id": "e3", "from": "ru", "to": "ar", "label": "applies"}, {"id": "e4", "from": "sh", "to": "ar", "label": "is a", "kind": "inferred"}], "steps": [{"show": ["sh", "ca", "e1"], "run": ["e1"], "set": {"sh": "active"}}, {"show": ["cl", "e2"], "run": ["e2"], "set": {"sh": "idle", "cl": "active"}}, {"show": ["ru", "ar", "e3"], "run": ["e3"], "set": {"cl": "idle", "ru": "active"}}, {"show": ["e4"], "run": ["e4"], "set": {"ru": "idle", "ar": "inferred"}}], "legend": false, "flags": {"inferred": "derived"}}</script></div><div data-walk-step="1" data-caption-short="Stored fact" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; We stored that this shipment is handled by this carrier."></div><div data-walk-step="2" data-caption-short="Stored fact" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; We stored that this carrier is sanctioned. In our data this is a teaching flag: nothing in the file says it."></div><div data-walk-step="3" data-caption-short="A rule" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; One rule, written once: a shipment handled by a sanctioned carrier is at risk."></div><div data-walk-step="4" data-caption-short="A derived fact" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Ask &quot;which shipments are at risk?&quot; Nobody stored &quot;at risk&quot;. The &lt;b&gt;reasoner&lt;/b&gt; &lt;b&gt;infers&lt;/b&gt; it from the facts and the rule, and can show how."></div></div></div>
+  <template data-notes><p>Four minutes. This is the moment I want you to remember from Part 2: an answer that was never stored.</p>
+    <ul>
+      <li>Amber and dashed always means derived, in every diagram of the course.</li>
+      <li>The rule is written once and applies to every shipment, so adding a thousand shipments needs no new rule.</li>
+      <li>This is Session 3. Here you only need the idea: facts, a rule, a derived fact with a visible reason.</li>
+    </ul></template>
+</section>
+
+<!-- ==================================================================== 15 -->
+<section class="slide" data-label="Knowledge graphs and LLM agents" data-section="What is knowledge" data-minutes="4">
+  <div class="lu-eyebrow">Why this matters now</div>
+  <h2 class="lu-h2" style="max-width:66ch">A language model talks well. A knowledge graph knows what is true here. Together they answer, with proof.</h2>
+<div class="lu-walk" data-label="An LLM agent answers from a knowledge graph"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 340, "nodes": [{"id": "q", "label": "Question\nin English", "x": 120, "y": 130, "w": 180, "h": 90, "kind": "ours"}, {"id": "ag", "label": "LLM agent\nwrites a query", "x": 360, "y": 130, "w": 200, "h": 90, "kind": "upper"}, {"id": "qu", "label": "Checked query", "x": 620, "y": 130, "w": 190, "h": 90, "kind": "literal"}, {"id": "kg", "label": "Knowledge\ngraph", "x": 870, "y": 130, "w": 170, "h": 90, "kind": "individual"}, {"id": "fa", "label": "Facts and\nthe path", "x": 1100, "y": 130, "w": 170, "h": 90, "kind": "individual"}, {"id": "an", "label": "Answer with\nits sources", "x": 1340, "y": 130, "w": 200, "h": 90, "kind": "ours"}, {"id": "rf", "label": "Refuse: the graph\ndoes not say", "x": 620, "y": 290, "w": 280, "h": 90, "kind": "literal"}], "edges": [{"id": "e1", "from": "q", "to": "ag", "label": ""}, {"id": "e2", "from": "ag", "to": "qu", "label": "check"}, {"id": "e3", "from": "qu", "to": "kg", "label": ""}, {"id": "e4", "from": "kg", "to": "fa", "label": ""}, {"id": "e5", "from": "fa", "to": "an", "label": ""}, {"id": "e6", "from": "qu", "to": "rf", "label": "no match", "kind": "conflict"}], "steps": [{"show": ["q", "ag", "e1"], "run": ["e1"], "set": {"q": "active"}}, {"show": ["qu", "e2"], "run": ["e2"], "set": {"q": "idle", "qu": "active"}}, {"show": ["kg", "fa", "e3", "e4"], "run": ["e3", "e4"], "set": {"qu": "idle", "fa": "active"}}, {"show": ["an", "e5"], "run": ["e5"], "set": {"fa": "idle", "an": "active"}}, {"show": ["rf", "e6"], "run": ["e6"], "set": {"an": "idle", "rf": "impossible"}}], "legend": false, "flags": {"impossible": "refuses"}}</script></div><div data-walk-step="1" data-caption-short="Ask in English" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A person asks in plain English. A &lt;b&gt;language model (LLM)&lt;/b&gt; acting as an &lt;b&gt;agent&lt;/b&gt; turns it into a query."></div><div data-walk-step="2" data-caption-short="Check it" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The query is checked against the graph&#x27;s own schema before it runs. The model proposes, the system disposes."></div><div data-walk-step="3" data-caption-short="Facts, not guesses" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; The graph returns stored facts and the path to them. The model invents nothing."></div><div data-walk-step="4" data-caption-short="A cited answer" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; The model phrases the answer and shows its sources, so a person can check it."></div><div data-walk-step="5" data-caption-short="Refuse" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; If the graph does not say, the system refuses. This is where a language model alone fails. Session 7 builds this."></div></div></div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>LLM agent</b> A language model that decides which tool to call, such as a query to a knowledge graph, and uses the result.</span> <span data-auto="1"><b>LLM</b> Short for large language model.</span></p>
+  <template data-notes><p>Four minutes. The model is the least trustworthy part of the system, so everything around it is built to check it.</p>
+    <ul>
+      <li>Where this is going: agents that call a knowledge graph as a tool, and use it as shared memory and as the source of what they are allowed to do. That is an active research area, and I say it is not settled.</li>
+      <li>Session 7 builds exactly this chain and measures it, including how often it refuses correctly.</li>
+    </ul></template>
+</section>
+
+<!-- ==================================================================== 16 -->
+<section class="slide" data-label="Three ways to ground an LLM" data-section="What is knowledge" data-minutes="4">
+  <div class="lu-eyebrow">RAG, and what a graph adds</div>
+  <h2 class="lu-h2" style="max-width:66ch"><b>RAG</b> means retrieve first, then let the model answer from what was retrieved.</h2>
+<table class="lu-table" data-build="1"><thead><tr><th></th><th>A model alone</th><th>RAG over text</th><th>Graph grounded</th></tr></thead><tbody><tr><td><b>It retrieves</b></td><td>Nothing</td><td>Passages like the question</td><td>Facts and paths, by a query</td></tr><tr><td><b>Good at</b></td><td>Language, general facts</td><td>"What does this say?"</td><td>Connections, counts, rules, why</td></tr><tr><td><b>Weak at</b></td><td>Private data, exact counts</td><td>Chains of facts, sums</td><td>Text that is not in the graph</td></tr><tr><td><b>Shows evidence</b></td><td>No</td><td>The passage</td><td>The path and the facts</td></tr><tr><td><b>Cost to build</b></td><td>None</td><td>Medium</td><td>High at first</td></tr></tbody></table><div class="lu-callout lu-callout--neutral" data-build="2"><span class="lu-callout__label">Honest note</span><p class="lu-sub">They combine, and many systems use both. How much a graph beats plain RAG depends on the questions: test it on yours. Session 7 does.</p></div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>RAG</b> Retrieval augmented generation: find relevant material first, then let a language model answer from it.</span></p>
+  <template data-notes><p>Four minutes. I am careful here: the case for grounding is strong, the case that graphs always beat plain text retrieval is not.</p>
+    <ul>
+      <li>RAG over text is the right choice for "what does this document say". A graph is the right choice when the answer is a chain, a count or a rule.</li>
+      <li>The cost row matters: building the graph is real work, and the last slide of this part says where that cost is not worth it.</li>
+    </ul></template>
+</section>
+
+<!-- ==================================================================== 17 -->
+<section class="slide" data-label="Where it fits and where it does not" data-section="What is knowledge" data-minutes="3">
+  <div class="lu-eyebrow">Use it where it pays</div>
+  <h2 class="lu-h2" style="max-width:66ch">A knowledge graph is the right tool for some problems and the wrong tool for others.</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s3)">
+    <div class="lu-callout lu-callout--concept" data-build="1"><span class="lu-callout__label">It fits when</span><p class="lu-sub">Many systems name the same thing differently. The questions are about connections or "how many steps". Rules must hold and be explained. The knowledge lives for years and many teams share it. An answer must show why it is right.</p></div>
+    <div class="lu-callout" data-build="2"><span class="lu-callout__label">It fits badly when</span><p class="lu-sub">One clean table answers fixed reports: use a warehouse. You add up billions of rows: use a warehouse. You need thousands of fast transactions: use an operational database. The data is mostly free text and nobody will keep a model: use search. It is a one-off analysis.</p></div>
+  </div>
+  <div class="lu-callout lu-callout--neutral" data-build="3"><span class="lu-callout__label">Where it sits</span><p class="lu-sub">Beside the operational database (fast, now) and the warehouse (history, sums), not instead of them. It is the layer that connects what they hold and says what it means.</p></div>
+  <template data-notes><p>Three minutes. I want you to leave able to say no to this technology when it does not fit, because that is a skill.</p>
+    <ul>
+      <li>The cost is the common reason it does not pay: an ontology must be kept up to date by someone.</li>
+      <li>Fast operational data and long term historical data both stay where they are. The knowledge graph reads from them and adds meaning and links.</li>
+    </ul></template>
+</section>
+
+<!-- ==================================================================== 18 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 3 · Meet the supply chain and the data" data-section="The supply chain and the data" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part 3 of 7 · about 25 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Now the real thing: what does a supply chain look like, and what is in our two datasets?</h2>
+    <p class="lu-lead" style="max-width:46ch">Every example for the rest of the course comes from these rows.</p>
+  </div>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
+</section>
+
+<!-- ==================================================================== 19 -->
 <section class="slide" data-label="The supply chain in one picture" data-section="The supply chain and the data" data-minutes="4">
   <div class="lu-eyebrow">The domain</div>
   <h2 class="lu-h2" style="max-width:66ch">A <b>supply chain</b> is the path goods take from raw material to the customer.</h2>
@@ -143,7 +311,7 @@ last quarter, and who did we ship them to?
     </ul></template>
 </section>
 
-<!-- ==================================================================== 07 -->
+<!-- ==================================================================== 20 -->
 <section class="slide" data-label="DataCo: what is in it" data-section="The supply chain and the data" data-minutes="4">
   <div class="lu-eyebrow">Dataset 1 · DataCo</div>
   <h2 class="lu-h2" style="max-width:66ch"><b>DataCo</b>: three years of orders from a sports and electronics retailer, in one wide table.</h2>
@@ -155,7 +323,7 @@ last quarter, and who did we ship them to?
     <ul><li>I point at the two day columns and the status column. Part 3 comes back to exactly these three.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 08 -->
+<!-- ==================================================================== 21 -->
 <section class="slide" data-label="One row is an order line, not an order" data-section="The supply chain and the data" data-minutes="3">
   <div class="lu-eyebrow">The first profiling question</div>
   <h2 class="lu-h2" style="max-width:66ch">What does one row stand for? In DataCo, one product inside an order.</h2>
@@ -164,7 +332,7 @@ last quarter, and who did we ship them to?
     <ul><li>Before step 2 I ask: "how many rows does order 2 take?" Most of you will say one.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 09 -->
+<!-- ==================================================================== 22 -->
 <section class="slide" data-label="Brunel: seven tables, drawn" data-section="The supply chain and the data" data-minutes="4">
   <div class="lu-eyebrow">Dataset 2 · Brunel</div>
   <h2 class="lu-h2" style="max-width:66ch"><b>Brunel</b>: one day of a real logistics problem, in seven linked tables.</h2>
@@ -174,7 +342,7 @@ last quarter, and who did we ship them to?
     <ul><li>Someone usually asks what VMI means. It is vendor managed inventory, a standard term, but the file never says so. A human knows; the data does not.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 10 -->
+<!-- ==================================================================== 23 -->
 <section class="slide" data-label="Brunel: one real row from each table" data-section="The supply chain and the data" data-minutes="3">
   <div class="lu-eyebrow">Dataset 2 · the rows</div>
   <h2 class="lu-h2" style="max-width:66ch">Seven tables, one real row each. Read them like sentences.</h2>
@@ -183,7 +351,7 @@ last quarter, and who did we ship them to?
   <template data-notes><p>Three minutes. I let you spot the oddities before I build the callout. Somebody usually sees the decimal in the order number first.</p></template>
 </section>
 
-<!-- ==================================================================== 11 -->
+<!-- ==================================================================== 24 -->
 <section class="slide" data-label="Why the two datasets do not join" data-section="The supply chain and the data" data-minutes="3">
   <div class="lu-eyebrow">Two correct datasets</div>
   <h2 class="lu-h2" style="max-width:66ch">Both describe orders, plants and shipping. Not one name is shared.</h2>
@@ -195,11 +363,10 @@ last quarter, and who did we ship them to?
       <div class="lu-callout" data-build="1"><span class="lu-callout__label">This is normal</span><p class="lu-sub">Both correct, no shared key. This course writes down what names mean, so a machine can connect them.</p></div>
     </div>
   </div>
-  <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>SQL</b> Structured Query Language: the language for asking questions of relational (table) databases.</span></p>
   <template data-notes><p>Three minutes. The point is not that the data is bad. Each dataset is fine. They simply never agreed on names, which is the everyday state of enterprise data.</p></template>
 </section>
 
-<!-- ==================================================================== 12 -->
+<!-- ==================================================================== 25 -->
 <section class="slide slide--tint" data-label="Check: what one row means" data-section="The supply chain and the data" data-minutes="2">
   <div class="lu-eyebrow">Check question</div>
   <div class="lu-stack">
@@ -220,44 +387,17 @@ last quarter, and who did we ship them to?
   <template data-notes><p>Forty seconds, show of hands, then I reveal the answer. Distractor <b>a</b> is the one that ships to management every day.</p></template>
 </section>
 
-<!-- ==================================================================== 13 -->
-<section class="slide slide--night" data-chrome="none" data-label="Part 3 · Meaning is not in the schema" data-section="Meaning and storage" data-minutes="1">
+<!-- ==================================================================== 26 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 4 · Meaning is not in the schema" data-section="Meaning and storage" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 3 of 6 · about 20 minutes</div>
+    <div class="lu-eyebrow">Part 4 of 7 · about 12 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">The file stores every value correctly. So where did its meaning go?</h2>
     <p class="lu-lead" style="max-width:46ch">Meaning is written down nowhere a program can reach it. Our own data shows it leaving.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 14 -->
-<section class="slide" data-label="Storing data against representing meaning" data-section="Meaning and storage" data-minutes="5">
-  <div class="lu-eyebrow">The distinction the course is built on</div>
-  <h2 class="lu-h2" style="max-width:66ch">A schema records the shape of data. It does not record what anything means.</h2>
-
-  <div class="lu-split lu-split--wide-left">
-    <div class="lu-stack">
-      <div class="lu-code lu-code--sm" data-name="DataCo · real columns and what the file never says">
-<pre><code>Late_delivery_risk  <span class="tok-kw">INTEGER</span>  <span class="tok-com">-- 1 means the line WAS late</span>
-Customer Country    <span class="tok-kw">TEXT</span>     <span class="tok-com">-- 'EE. UU.' is Spanish for USA</span>
-Order Zipcode       <span class="tok-kw">NUMBER</span>   <span class="tok-com">-- 155,679 of 180,519 missing</span>
-Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-- always 0, carries nothing</span></code></pre>
-      </div>
-      <div class="lu-callout"><span class="lu-callout__label">Where meaning lives today</span><p class="lu-sub">In heads, in a stale wiki, in the WHERE clauses of old reports. <b>Nowhere a program can read.</b></p></div>
-    </div>
-    <div class="lu-stack" data-build="1">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub"><b>Schema</b>: the declared shape of data: tables, columns, types, keys. How it looks, not what it means.</p><p class="lu-sub"><b>Semantic layer</b>: a machine readable description of what the data means, above the systems that store it.</p></div>
-    </div>
-  </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>WHERE clause</b> The part of a SQL or SPARQL query that says which rows or triples to keep.</span></p>
-  <template data-notes><p>Five minutes. I read the four comments at the bottom of the code aloud, slowly. Every one is a real fact about a real column.</p>
-    <ul>
-      <li><code>Late_delivery_risk</code> is the best one: its name says "risk", yet it equals 1 on exactly the 98,977 lines marked late. The name lies and the schema cannot tell you.</li>
-      <li>I ask: who has met a status column with an undocumented code? Thirty seconds, and it always lands.</li>
-    </ul></template>
-</section>
-
-<!-- ==================================================================== 15 -->
+<!-- ==================================================================== 27 -->
 <section class="slide" data-label="Where meaning leaks: two columns, one country" data-section="Meaning and storage" data-minutes="4">
   <div class="lu-eyebrow">A real leak, inside one file</div>
   <h2 class="lu-h2" style="max-width:66ch">Same country, two spellings. Same word "customer", two different places.</h2>
@@ -282,7 +422,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     </ul></template>
 </section>
 
-<!-- ==================================================================== 16 -->
+<!-- ==================================================================== 28 -->
 <section class="slide" data-label="The two meanings of late" data-section="Meaning and storage" data-minutes="5">
   <div class="lu-eyebrow">Same data, same question, two answers</div>
   <h2 class="lu-h2" style="max-width:66ch">How many DataCo order lines were late? It depends on what "late" means.</h2>
@@ -295,28 +435,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     </ul></template>
 </section>
 
-<!-- ==================================================================== 17 -->
-<section class="slide" data-label="Four words, defined" data-section="Meaning and storage" data-minutes="3">
-  <div class="lu-eyebrow">The vocabulary of this course</div>
-  <h2 class="lu-h2" style="max-width:66ch">Four words you will use every session, from the bottom up.</h2>
-
-  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
-    <ul class="lu-layers">
-      <li><span class="lu-layers__name">Knowledge graph · Session 2 onward</span><span class="lu-layers__note">Things joined by named links, plus the ontology that says what they mean.</span></li>
-      <li><span class="lu-layers__name">Ontology · Session 3</span><span class="lu-layers__note">A precise, machine readable description of the things in a domain and how they relate.</span></li>
-      <li><span class="lu-layers__name">Semantic layer · the goal</span><span class="lu-layers__note">What the data means, readable by a program, above the systems that store it.</span></li>
-      <li><span class="lu-layers__name">Schema · what we have today</span><span class="lu-layers__note">Tables, columns, types, keys. The shape, not the meaning.</span></li>
-    </ul>
-    <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub">Each row is one definition. The glossary link on any later slide takes you back here.</p></div>
-      <div class="lu-callout lu-callout--neutral" data-build="1"><span class="lu-callout__label">A test you can apply</span><p class="lu-sub">If a new team member must ask a person what a column means, the meaning is in a head, not in a semantic layer.</p></div>
-    </div>
-  </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Knowledge graph</b> Data stored as things connected by named relationships, together with the ontology that says what they mean.</span></p>
-  <template data-notes><p>Three minutes. I read from the bottom up: what we have (schema), what we want (semantic layer), and the two tools that build it (ontology, knowledge graph).</p></template>
-</section>
-
-<!-- ==================================================================== 18 -->
+<!-- ==================================================================== 29 -->
 <section class="slide slide--tint" data-label="Check: what a working join proves" data-section="Meaning and storage" data-minutes="2">
   <div class="lu-eyebrow">Check question</div>
   <div class="lu-stack">
@@ -337,17 +456,17 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Forty seconds, show of hands, then I reveal the answer. I spend the time on <b>d</b>: it is a good engineer's instinct, and it wastes a quarter.</p></template>
 </section>
 
-<!-- ==================================================================== 19 -->
-<section class="slide slide--night" data-chrome="none" data-label="Part 4 · The architecture" data-section="Reference architecture" data-minutes="1">
+<!-- ==================================================================== 30 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 5 · The architecture" data-section="Reference architecture" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 4 of 6 · about 15 minutes</div>
+    <div class="lu-eyebrow">Part 5 of 7 · about 15 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">Eight sessions, one pipeline. Where does each session fit?</h2>
     <p class="lu-lead" style="max-width:46ch">Each session adds one stage. By Session 8 the whole system starts with one command.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 20 -->
+<!-- ==================================================================== 31 -->
 <section class="slide" data-label="The architecture, stage by stage" data-section="Reference architecture" data-minutes="7">
   <div class="lu-eyebrow">The spine of the course</div>
   <h2 class="lu-h2" style="max-width:66ch">From disconnected systems to a question answered in English, in six moves across eight sessions.</h2>
@@ -360,7 +479,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     </ul></template>
 </section>
 
-<!-- ==================================================================== 21 -->
+<!-- ==================================================================== 32 -->
 <section class="slide" data-label="The tools, and which ones are alive" data-section="Reference architecture" data-minutes="3">
   <div class="lu-eyebrow">Something a textbook cannot tell you</div>
   <h2 class="lu-h2" style="max-width:66ch">One tool per stage. Half the tools in older tutorials are dead.</h2>
@@ -377,7 +496,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <ul><li>Tool status changes fast. I re-check every release date before I teach this slide, because a stale slide about stale tools is embarrassing.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 22 -->
+<!-- ==================================================================== 33 -->
 <section class="slide" data-label="Where a semantic layer pays" data-section="Reference architecture" data-minutes="3">
   <div class="lu-eyebrow">The business case</div>
   <h2 class="lu-h2" style="max-width:66ch">Nobody funds an ontology. They fund a question with a deadline.</h2>
@@ -392,17 +511,17 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Three minutes. I build the cards one at a time. Card 03 links back to the two meanings of late: the business question cannot even be asked until the word is defined.</p></template>
 </section>
 
-<!-- ==================================================================== 23 -->
-<section class="slide slide--night" data-chrome="none" data-label="Part 5 · Profiling and hidden rules" data-section="Profiling and hidden rules" data-minutes="1">
+<!-- ==================================================================== 34 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 6 · Profiling and hidden rules" data-section="Profiling and hidden rules" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 5 of 6 · about 30 minutes</div>
+    <div class="lu-eyebrow">Part 6 of 7 · about 30 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">The data obeys rules nobody wrote down. How do you find them?</h2>
     <p class="lu-lead" style="max-width:46ch">Guess, measure, then try to break your guess. Every example here comes from our two datasets.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 24 -->
+<!-- ==================================================================== 35 -->
 <section class="slide" data-label="Why profile before modelling" data-section="Profiling and hidden rules" data-minutes="3">
   <div class="lu-eyebrow">The method</div>
   <h2 class="lu-h2" style="max-width:66ch"><b>Data profiling</b>: measuring a dataset to learn its real shape.</h2>
@@ -411,7 +530,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <ul><li>Profiling without a guess produces statistics, not findings. I say it once, clearly.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 25 -->
+<!-- ==================================================================== 36 -->
 <section class="slide" data-label="Distinct values and links" data-section="Profiling and hidden rules" data-minutes="3">
   <div class="lu-eyebrow">Measure 1 · cardinality</div>
   <h2 class="lu-h2" style="max-width:66ch">How many different values? How many links from each side?</h2>
@@ -423,7 +542,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <ul><li>22 of 209 is the headline: only one pair in ten exists. That smells like a rule. The slide "One real row of the inventory" writes it down.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 26 -->
+<!-- ==================================================================== 37 -->
 <section class="slide" data-label="Empty cells, and what missing means" data-section="Profiling and hidden rules" data-minutes="3">
   <div class="lu-eyebrow">Measure 2 · nulls</div>
   <h2 class="lu-h2" style="max-width:66ch">An empty cell is a fact about the data. What it means is a decision.</h2>
@@ -444,7 +563,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <ul><li>I only preview open world. The line I leave you with: missing is not false. Session 3 spends real time on it.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 27 -->
+<!-- ==================================================================== 38 -->
 <section class="slide" data-label="Distributions: what the counts say" data-section="Profiling and hidden rules" data-minutes="3">
   <div class="lu-eyebrow">Measure 3 · distribution</div>
   <h2 class="lu-h2" style="max-width:66ch">How often each value appears. A strange shape is a question to ask.</h2>
@@ -461,7 +580,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Three minutes. The Brunel side is the finding: every order is on one day, to one port. Brunel is a snapshot, not a history, so it cannot teach "late over time". Keep that in mind before Session 6 asks you to predict.</p></template>
 </section>
 
-<!-- ==================================================================== 28 -->
+<!-- ==================================================================== 39 -->
 <section class="slide" data-label="Referential integrity: does every reference point somewhere?" data-section="Profiling and hidden rules" data-minutes="4">
   <div class="lu-eyebrow">Measure 4 · links between tables</div>
   <h2 class="lu-h2" style="max-width:66ch">Every order names a carrier. Does every carrier have a price?</h2>
@@ -471,7 +590,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <ul><li>I do not claim to know what CRF means, because the file does not say. Writing "we do not know what CRF means" in your inventory is a correct answer.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 29 -->
+<!-- ==================================================================== 40 -->
 <section class="slide" data-label="The tool: ydata-profiling" data-section="Profiling and hidden rules" data-minutes="2">
   <div class="lu-eyebrow">One slide for the tool</div>
   <h2 class="lu-h2" style="max-width:66ch"><b>ydata-profiling</b> measures every column and lists what looks odd.</h2>
@@ -489,7 +608,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Two minutes. The concepts came first; this is only where to click. The Alerts tab is the fastest way in.</p></template>
 </section>
 
-<!-- ==================================================================== 30 -->
+<!-- ==================================================================== 41 -->
 <section class="slide" data-label="Clustering: same text, same thing?" data-section="Profiling and hidden rules" data-minutes="3">
   <div class="lu-eyebrow">Measure 5 · near duplicates</div>
   <h2 class="lu-h2" style="max-width:66ch">Clustering suggests values that may be one thing. You decide.</h2>
@@ -498,7 +617,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Three minutes. Everyone expects step 4 to be a merge. It is not. This is the whole lesson of clustering: a cluster is a question, not an answer.</p></template>
 </section>
 
-<!-- ==================================================================== 31 -->
+<!-- ==================================================================== 42 -->
 <section class="slide" data-label="The tool: OpenRefine" data-section="Profiling and hidden rules" data-minutes="2">
   <div class="lu-eyebrow">One slide for the tool</div>
   <h2 class="lu-h2" style="max-width:66ch"><b>OpenRefine</b> clusters a column for you. You still decide.</h2>
@@ -513,7 +632,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Two minutes. Only the path to the dialog is new; the idea was the last slide. If you merge, your DataCo loses a Chilean city and 16 orders move to California.</p></template>
 </section>
 
-<!-- ==================================================================== 32 -->
+<!-- ==================================================================== 43 -->
 <section class="slide" data-label="One real row of the constraint inventory" data-section="Profiling and hidden rules" data-minutes="3">
   <div class="lu-eyebrow">Writing it down</div>
   <h2 class="lu-h2" style="max-width:66ch">A rule, its evidence, and where it lives. Two of three is not a finding.</h2>
@@ -522,7 +641,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Three minutes. I read row 1 across: rule, evidence, source. Where it goes next: Session 3 turns rules into meaning, Session 4 into checks, Session 5 into mapping decisions. That is the standard for the lab. <code>constraint_inventory_template.csv</code> has the same three columns.</p></template>
 </section>
 
-<!-- ==================================================================== 33 -->
+<!-- ==================================================================== 44 -->
 <section class="slide" data-label="Rule or exception?" data-section="Profiling and hidden rules" data-minutes="3">
   <div class="lu-eyebrow">The last step of the loop</div>
   <h2 class="lu-h2" style="max-width:66ch">A rule that breaks is still a finding. Decide what broke.</h2>
@@ -532,17 +651,17 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <ul><li>Session 4 decides what each becomes: no exceptions, an error; real exceptions, a warning or a new class.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 34 -->
-<section class="slide slide--night" data-chrome="none" data-label="Part 6 · The team project" data-section="Team project" data-minutes="1">
+<!-- ==================================================================== 45 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 7 · The team project" data-section="Team project" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 6 of 6 · The team project · about 15 minutes</div>
+    <div class="lu-eyebrow">Part 7 of 7 · The team project · about 15 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">Your team project: the system you build, with whom, and how it is graded.</h2>
     <p class="lu-lead" style="max-width:46ch">Teams of 2 or 3. Your own topic and database. The same pipeline you see in the lectures. Team and topic locked before Session 2.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 35 -->
+<!-- ==================================================================== 46 -->
 <section class="slide" data-label="The team project: what you build" data-section="Team project" data-minutes="4">
   <div class="lu-eyebrow">One system, one layer per session</div>
   <h2 class="lu-h2" style="max-width:66ch">Every team builds the same pipeline. What differs is the domain and the data.</h2>
@@ -553,7 +672,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <li>The remaining 15 percent is attendance and running the lab in class, Sessions 1 to 7.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 36 -->
+<!-- ==================================================================== 47 -->
 <section class="slide" data-label="The topic menu" data-section="Team project" data-minutes="3">
   <div class="lu-eyebrow">Choose a topic area, then a database</div>
   <h2 class="lu-h2" style="max-width:66ch">Five areas, each checked for open data and a real vocabulary to reuse.</h2>
@@ -562,7 +681,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Three minutes. I do not let you choose in the room; you need to look at the data first. The two tests are what matter: a vocabulary to reuse, and hidden rules to find.</p></template>
 </section>
 
-<!-- ==================================================================== 37 -->
+<!-- ==================================================================== 48 -->
 <section class="slide" data-label="Teams and the deadline" data-section="Team project" data-minutes="3">
   <div class="lu-eyebrow">The rules</div>
   <h2 class="lu-h2" style="max-width:66ch">Teams of 2 or 3, your choice, locked in before Session 2.</h2>
@@ -570,7 +689,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Three minutes. I say the deadline twice. Post your team and topic where we agree to collect them.</p></template>
 </section>
 
-<!-- ==================================================================== 38 -->
+<!-- ==================================================================== 49 -->
 <section class="slide" data-label="How the project is graded" data-section="Team project" data-minutes="3">
   <div class="lu-eyebrow">Read this now, not in week 6</div>
   <h2 class="lu-h2" style="max-width:66ch">The project is graded once, at the end; the defense is yours alone.</h2>
@@ -582,7 +701,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Three minutes. Each layer gets one mark: works (full points), partly (half), missing (none), judged from a clean checkout of your team's repository. The milestones at the end of Sessions 4 and 6 are feedback, not grades. The defense is individual: 2 or 3 questions each in Session 8, one overall mark from 0 to 3.</p></template>
 </section>
 
-<!-- ==================================================================== 39 -->
+<!-- ==================================================================== 50 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Profile the data, find the rules" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Hands-on lab · about 60 minutes</div>
@@ -592,7 +711,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Ten seconds, then the brief. The lab clock starts on the next slide.</p></template>
 </section>
 
-<!-- ==================================================================== 40 -->
+<!-- ==================================================================== 51 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="2">
   <div class="lu-eyebrow">Hands-on lab · 60 minutes</div>
   <h2 class="lu-h1" style="max-width:34ch">Measure two real datasets and write down the rules nobody wrote.</h2>
@@ -619,7 +738,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     </ul></template>
 </section>
 
-<!-- ==================================================================== 41 -->
+<!-- ==================================================================== 52 -->
 <section class="slide slide--tint" data-label="Inside the lab: the method, in order" data-section="Lab" data-minutes="2">
   <div class="lu-eyebrow">Inside the lab · about 20 minutes in</div>
   <div class="lu-split lu-split--wide-left">
@@ -638,7 +757,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Two minutes, run as a pause once everyone has a profiling report open. I let you argue whether profiling comes before reading the names. It comes after: a guess first, then the numbers.</p></template>
 </section>
 
-<!-- ==================================================================== 42 -->
+<!-- ==================================================================== 53 -->
 <section class="slide slide--tint" data-label="Lab time" data-section="Lab" data-minutes="60">
   <div class="lu-eyebrow">Lab · 60 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Each student works on their own machine. Checkpoints keep you on time.</h2>
@@ -652,7 +771,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Sixty minutes. I circulate. At minute 35, I check that nobody has merged an OpenRefine cluster. At minute 50, I warn that commits are due.</p></template>
 </section>
 
-<!-- ==================================================================== 43 -->
+<!-- ==================================================================== 54 -->
 <section class="slide" data-label="Failure gallery" data-section="Wrap" data-minutes="4">
   <div class="lu-eyebrow">Discussion · which stage broke?</div>
   <h2 class="lu-h2" style="max-width:66ch">Three failures. Name the stage of the architecture that broke.</h2>
@@ -669,7 +788,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Four minutes. The cases are teaching composites, not named companies. We take each as a show of hands before I reveal the answer.</p></template>
 </section>
 
-<!-- ==================================================================== 44 -->
+<!-- ==================================================================== 55 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The words this session introduced.</h2>
@@ -677,7 +796,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
-<!-- ==================================================================== 45 -->
+<!-- ==================================================================== 56 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
@@ -699,7 +818,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <template data-notes><p>Two minutes. I end on the statement, not the admin.</p></template>
 </section>
 
-<!-- ==================================================================== 46 -->
+<!-- ==================================================================== 57 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">
@@ -718,8 +837,8 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
 </div><!-- /stage -->
 </div><!-- /deck -->
 
-<script src="../assets/glossary.js?v=1.0.1" defer></script>
-<script src="../assets/lu-glossary.js?v=1.0.1" defer></script>
+<script src="../assets/glossary.js?v=1.0.2" defer></script>
+<script src="../assets/lu-glossary.js?v=1.0.2" defer></script>
 <script src="../assets/lu-deck.js?v=1.1.0" defer></script>
 <script src="../assets/lu-flow.js?v=1.2.1" defer></script>
 </body>
