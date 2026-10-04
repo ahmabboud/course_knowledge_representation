@@ -1,18 +1,24 @@
 # KR labs
 
-The instructor's own labs repository for **Knowledge Representation**.
-Run by the instructor, live, in every session. Separate from
-`kr-team-template` (https://github.com/ahmabboud/kr-team-template), the GitHub template repository each
-student team starts its own project from. This repository holds the real, runnable version of the
-shared supply chain case: DataCo and Brunel, the same data every
-session's lecture and lab work against.
+The hands-on labs for **Knowledge Representation**, one per session. Each
+lab runs real code on the course's supply chain case (DataCo and Brunel)
+with a real triplestore and a real graph database. The sandboxes inside the
+lecture slides are small toys that teach a concept in two minutes; these labs
+are the real thing, done in the hands-on block of each session.
 
-The sandbox boxes inside the lecture slides (`course_knowledge_representation/lectures/`)
-are toy examples: seven rows, no setup, runs in the browser. They exist
-to teach a concept in two minutes. This repository is not that. It is
-real code against the real datasets, with a real triplestore and a real
-graph database, the thing actually run during the hands-on lab block of
-each session.
+Your team's own project does not start here. It starts from the separate
+template https://github.com/ahmabboud/kr-team-template and uses the same
+techniques on your own topic.
+
+## Get the labs
+
+```sh
+git clone https://github.com/ahmabboud/course_knowledge_representation.git
+cd course_knowledge_representation/demos
+```
+
+Everything below is run from this `demos/` folder, which this README calls
+`DEMO_ROOT`.
 
 ## Structure
 
@@ -41,22 +47,13 @@ what to expect at each step, and what to take to the team project. Labs are
 individual and nothing is handed in; they exist to make the concepts
 concrete and to prepare the capstone. The lecture decks are in `../lectures/`.
 
-## Start here: the lab repository root
+## Start here
 
-This README lives in the lab repository root, referred to below as
-`DEMO_ROOT`. It is the folder containing `requirements.txt`,
-`docker-compose.yml`, `data/`, and all `session-*/` folders. Open a terminal
-in this folder before following the setup instructions. A quick check:
-
-```text
-DEMO_ROOT/
-  requirements.txt
-  docker-compose.yml
-  data/
-  session-01-environment-and-constraints/
-```
-
-Do not create the virtual environment inside a session folder.
+Do these once, in order: install the prerequisites (next section), create
+the Python environment (Setup), then run the Session 1 smoke test. Open a
+terminal in `demos/`; a quick check is that `ls` (macOS/Linux) or `dir`
+(Windows) shows `requirements.txt`, `docker-compose.yml`, `data/` and the
+`session-*` folders.
 
 ## Install prerequisites
 
@@ -115,7 +112,8 @@ After activating the environment on either platform:
    this one, not instead of it.
 3. Copy `.env.example` to `.env` once you reach Session 7. Not needed
    before then.
-4. See `data/README.md` and run its fetch step before Session 1.
+4. Before Session 1, download the data (no account needed): `python data/fetch_data.py`. Details in `data/README.md`.
+5. Run Session 1's smoke test (`session-01-environment-and-constraints/smoke_test.py`) to confirm the machine is ready.
 
 ## Session-specific environments
 
@@ -132,29 +130,6 @@ install gets the CPU build. **On Linux**, install the CPU build first, or pip
 downloads about 2 GB of GPU libraries:
 `python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu`,
 then the two install lines.
-
-## Conventions, so eight sessions of code still look like one thing
-
-- One folder per session, numbered, so the order is never ambiguous.
-- Each session folder's `README.md` states what it builds, which
-  syllabus deliverable it produces, and which real tools it uses. Read
-  it before the code.
-- Shared code that more than one session needs (the IRI scheme, data
-  paths) lives in `common/`, imported, never copy-pasted between
-  session folders. The IRI convention is fixed in `common/iri.py`
-  (the IRI convention); Session 2 discusses it, it does not reinvent it.
-- Notebooks for anything meant to be read and run step by step in the
-  room; a plain `.py` script for anything meant to run once as a batch
-  step (loading a container, materializing a graph). Both are fine,
-  pick per task, not per session.
-- Every function and every notebook cell that is not obvious from its
-  name gets a comment saying what it does and, where it matters, why.
-  This is taught from, so it has to read cleanly at the front of a
-  room, not just run correctly.
-- Real data, real containers, real errors. No mocked services standing
-  in for Fuseki or Neo4j; if a demo needs to be resilient to a bad
-  network day, that is a documented fallback (see Session 2's Oxigraph
-  fallback), not a fake in place of the real thing.
 
 ## Data
 
