@@ -1,4 +1,4 @@
-# Session 3 lab: find the bug, fix it, write your own
+# Session 3 lab: find the bug and fix it
 
 **Why this lab exists:** to make the lecture concrete (classes and
 restrictions, domain and range, SubClassOf against EquivalentTo, reuse of a
@@ -79,7 +79,21 @@ python local_reasoner.py workspace/scro-extension-v0.ttl         # impossible: O
 python local_reasoner.py workspace/scro-extension-reference.ttl  # impossible: none
 ```
 
-## Part B · write your own axioms (about 15 minutes)
+## Part B · practice axioms (optional, about 15 minutes)
+
+**Two ways through this part. Both are fine.**
+
+- **See it work (no writing).** Run the checker on the worked solution and
+  read what it says. This is enough to understand the part:
+
+  ```sh
+  python check_my_axioms.py solutions/my_axioms_solutions.ttl
+  ```
+
+- **Try it yourself (optional).** Fill in the file for this part, then run
+  the checker without an argument. Every task is a copy of something shown
+  earlier with one thing changed, and the checker gives a hint when it is not
+  yet right.
 
 Open `my_axioms.ttl`. It asks for three axioms, each practising one idea
 from the lecture: Y1 disjointness (no plant is a port), Y2 a defined class

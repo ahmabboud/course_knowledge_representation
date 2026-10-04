@@ -608,11 +608,11 @@
 </section>
 
 <!-- ==================================================================== 40 -->
-<section class="slide slide--night" data-chrome="none" data-label="Lab · Find the bug, fix it, write your own" data-section="Lab" data-minutes="1">
+<section class="slide slide--night" data-chrome="none" data-label="Lab · Find the bug and fix it" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 70 minutes · on your own machine</div>
     <h2 class="lu-display-xl" style="max-width:26ch">Our ontology has a real mistake in it. Can you make the reasoner show you where?</h2>
-    <p class="lu-lead" style="max-width:46ch">Then watch the fixed file classify real shipments, and write three axioms of your own.</p>
+    <p class="lu-lead" style="max-width:46ch">Then watch the fixed file classify real shipments, and see how three axioms are checked.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -625,7 +625,7 @@
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <ol class="lu-list lu-list--num">
       <li><b>Build and observe.</b> Open <code>scro-extension-v0.ttl</code>, run ELK, find the red class, read why, run HermiT, see the fix, watch <code>sample-shipments.ttl</code> classify two shipments.</li>
-      <li><b>Write your own.</b> Three axioms in <code>my_axioms.ttl</code>; <code>check_my_axioms.py</code> says right or not yet.</li>
+      <li><b>Practice, optional.</b> Run <code>check_my_axioms.py</code> on the worked solutions to see how it is done, or write the three axioms in <code>my_axioms.ttl</code> yourself.</li>
       <li><b>Think.</b> Three questions, one about your own team's data, for the discussion.</li>
     </ol>
     <div class="lu-stack">
@@ -654,7 +654,7 @@
 
   <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s4)">
     <div class="lu-card"><span class="lu-card__label">By minute 30 · Part A</span><p class="lu-sub">Red class found and explained. HermiT shows a second one. The fixed file has none. Two shipments of V444_1 classified as at risk.</p></div>
-    <div class="lu-card"><span class="lu-card__label">By minute 45 · Part B</span><p class="lu-sub"><code>python check_my_axioms.py</code> says 3 of 3. Stuck? The hints name the missing word.</p></div>
+    <div class="lu-card"><span class="lu-card__label">By minute 45 · Part B</span><p class="lu-sub">Optional practice: <code>python check_my_axioms.py</code> says 3 of 3, on your file or on the solutions.</p></div>
     <div class="lu-card"><span class="lu-card__label">By minute 55 · Part C</span><p class="lu-sub">Answers to the three questions, one of them about your own team's data.</p></div>
   </div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">For your team project</span><p class="lu-sub">Your project ontology will reuse a published one too. Before you borrow a property, open its definition and check its domain and range.</p></div>

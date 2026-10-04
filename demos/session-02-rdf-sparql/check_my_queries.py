@@ -44,9 +44,9 @@ def short(value):
     return str(value).rstrip("/").rsplit("/", 1)[-1].rsplit("#", 1)[-1]
 
 
-def student_queries():
-    """Split my_queries.sparql on its '# --- ' markers; skip unanswered ones."""
-    text = (HERE / "my_queries.sparql").read_text(encoding="utf-8")
+def student_queries(path=None):
+    """Split my_queries.sparql (or the file given) on its '# --- ' markers; skip unanswered ones."""
+    text = Path(path or HERE / "my_queries.sparql").read_text(encoding="utf-8")
     out = {}
     for block in text.split("# --- ")[1:]:
         label, _, body = block.partition(" ---\n")
@@ -57,11 +57,13 @@ def student_queries():
 
 
 def main():
-    target = sys.argv[1] if len(sys.argv) > 1 else "oxigraph"
+    args = sys.argv[1:]
+    path = next((a for a in args if a.endswith(".sparql")), None)
+    target = next((a for a in args if not a.endswith(".sparql")), "oxigraph")
     store = oxigraph_store() if target == "oxigraph" else None
     right = 0
     practice_total = len(EXPECTED) - len(WORKED)
-    for key, query in student_queries().items():
+    for key, query in student_queries(path).items():
         if not query:
             print(f"{key}: not written yet.")
             continue

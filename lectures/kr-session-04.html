@@ -630,11 +630,11 @@ epcis:AggregationEventShape
 </section>
 
 <!-- ==================================================================== 36 -->
-<section class="slide slide--night" data-chrome="none" data-label="Lab · Validate, triage, gate, write your own" data-section="Lab" data-minutes="1">
+<section class="slide slide--night" data-chrome="none" data-label="Lab · Validate, triage, gate" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 55 minutes · on your own machine</div>
     <h2 class="lu-display-xl" style="max-width:26ch">Our graph has 3,435 problems. Which ones are yours to fix?</h2>
-    <p class="lu-lead" style="max-width:46ch">Then write three shapes of your own, and watch a gate stop a typo.</p>
+    <p class="lu-lead" style="max-width:46ch">Then see three shapes work, and watch a gate stop a typo.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -647,7 +647,7 @@ epcis:AggregationEventShape
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <ol class="lu-list lu-list--num">
       <li><b>Build and observe.</b> Validate the first draft (3,435), then the triaged shapes (2 Violations). Record provenance, release the ontology as 1.0.0, run the gate on the sample and on the broken sample, read GS1's shapes.</li>
-      <li><b>Write your own.</b> Three shapes in <code>my_shapes.ttl</code>; <code>check_my_shapes.py</code> says right or not yet.</li>
+      <li><b>Practice, optional.</b> Run <code>check_my_shapes.py</code> on the worked solutions to see how it is done, or write the three shapes in <code>my_shapes.ttl</code> yourself.</li>
       <li><b>Think.</b> Three questions, one about your own team's data, for the discussion.</li>
     </ol>
     <div class="lu-stack">
@@ -666,7 +666,7 @@ epcis:AggregationEventShape
 
   <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s4)">
     <div class="lu-card"><span class="lu-card__label">By minute 25 · Part A</span><p class="lu-sub">First draft 3,435 Violations; triaged 2 Violations and 2,579 Warnings. The gate passes the sample and fails the broken one, exit code 1.</p></div>
-    <div class="lu-card"><span class="lu-card__label">By minute 40 · Part B</span><p class="lu-sub"><code>python check_my_shapes.py</code> says 3 of 3. Stuck? The hints name the missing piece.</p></div>
+    <div class="lu-card"><span class="lu-card__label">By minute 40 · Part B</span><p class="lu-sub">Optional practice: <code>python check_my_shapes.py</code> says 3 of 3, on your file or on the solutions.</p></div>
     <div class="lu-card"><span class="lu-card__label">By minute 50 · Part C</span><p class="lu-sub">Answers to the three questions, one of them about your own team's data.</p></div>
   </div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">For your team project</span><p class="lu-sub">Milestone 1 asks for the same pipeline on your own data: shapes for your rules, a triaged report, provenance, a version IRI, and a gate that blocks a bad commit.</p></div>

@@ -62,7 +62,21 @@ everything else from runs of these scripts on 2026-09-25.
    in a browser. **Expect:** JSON with `dataset`, `question` and `query`: the
    TEXT2SPARQL contract. Stop the server with Ctrl+C.
 
-## Part B · three small improvements (about 15 minutes)
+## Part B · three small improvements (optional, about 15 minutes)
+
+**Two ways through this part. Both are fine.**
+
+- **See it work (no writing).** Run the checker on the worked solution and
+  read what it says. This is enough to understand the part:
+
+  ```sh
+  python check_my_access.py solutions
+  ```
+
+- **Try it yourself (optional).** Fill in the file for this part, then run
+  the checker without an argument. Every task is a copy of something shown
+  earlier with one thing changed, and the checker gives a hint when it is not
+  yet right.
 
 Each is a copy of something already in the lab, with one thing changed:
 

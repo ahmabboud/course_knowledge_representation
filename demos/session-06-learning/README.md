@@ -56,7 +56,21 @@ training is not bit-for-bit the same everywhere). The pattern must not:
 leak near 1.0, random split high, split by customer near 0.02, popularity
 ahead of TransE.
 
-## Part B · three small functions (about 15 minutes)
+## Part B · three small functions (optional, about 15 minutes)
+
+**Two ways through this part. Both are fine.**
+
+- **See it work (no writing).** Run the checker on the worked solution and
+  read what it says. This is enough to understand the part:
+
+  ```sh
+  python check_my_learning.py solutions/my_learning_solutions.py
+  ```
+
+- **Try it yourself (optional).** Fill in the file for this part, then run
+  the checker without an argument. Every task is a copy of something shown
+  earlier with one thing changed, and the checker gives a hint when it is not
+  yet right.
 
 Open `my_learning.py` next to `learning_utils.py`. Each function is a copy
 of one in `learning_utils.py` with one thing changed:

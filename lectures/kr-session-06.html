@@ -571,7 +571,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 55 minutes · on your own machine</div>
     <h2 class="lu-display-xl" style="max-width:26ch">Does the graph model still win when the test is fair?</h2>
-    <p class="lu-lead" style="max-width:46ch">Then write three small functions, each a copy of one you can read.</p>
+    <p class="lu-lead" style="max-width:46ch">Then see three small functions work, each a copy of one you can read.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -584,7 +584,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <ol class="lu-list lu-list--num">
       <li><b>Build and observe.</b> Convert the graph, run the baseline (the leak, the random split, the split by customer), GraphSAGE on both splits, TransE against the count.</li>
-      <li><b>Three functions.</b> <code>my_learning.py</code>, each a twin of one in <code>learning_utils.py</code>; <code>check_my_learning.py</code> says right or not yet.</li>
+      <li><b>Practice, optional.</b> Run <code>check_my_learning.py</code> on the worked solutions, or write the three functions in <code>my_learning.py</code> yourself, each a twin of one in <code>learning_utils.py</code>.</li>
       <li><b>Think.</b> Three questions, one about your own team's data.</li>
     </ol>
     <div class="lu-stack">
@@ -627,7 +627,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
 
   <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s4)">
     <div class="lu-card"><span class="lu-card__label">By minute 28 · Part A</span><p class="lu-sub">Graph built; baseline 1.000, 0.788, then near 0.02; GraphSAGE about 0.86 random; TransE below the count.</p></div>
-    <div class="lu-card"><span class="lu-card__label">By minute 40 · Part B</span><p class="lu-sub"><code>python check_my_learning.py</code> says 3 of 3. Each hint names the change.</p></div>
+    <div class="lu-card"><span class="lu-card__label">By minute 40 · Part B</span><p class="lu-sub">Optional practice: <code>python check_my_learning.py</code> says 3 of 3, on your file or on the solutions.</p></div>
     <div class="lu-card"><span class="lu-card__label">By minute 48 · Part C</span><p class="lu-sub">Answers to the three questions, one of them about your own team's data.</p></div>
   </div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">For your team project</span><p class="lu-sub">Milestone 2 asks for this evaluation on your own graph: a baseline, a split that does not leak, several seeds, and the limits written down.</p></div>

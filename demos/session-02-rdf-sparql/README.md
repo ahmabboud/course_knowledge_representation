@@ -79,7 +79,21 @@ both versions in `queries.sparql` and say why. Then think about the
 warning under version 2: without its `FILTER EXISTS` line it answers 2,224.
 Which 854 orders did it add, and why does Session 1 say they have no rate?
 
-## Part B · write your own queries (about 20 minutes)
+## Part B · practice queries (optional, about 20 minutes)
+
+**Two ways through this part. Both are fine.**
+
+- **See it work (no writing).** Run the checker on the worked solution and
+  read what it says. This is enough to understand the part:
+
+  ```sh
+  python check_my_queries.py solutions/my_queries_solutions.sparql
+  ```
+
+- **Try it yourself (optional).** Fill in the file for this part, then run
+  the checker without an argument. Every task is a copy of something shown
+  earlier with one thing changed, and the checker gives a hint when it is not
+  yet right.
 
 Open `my_queries.sparql` and begin with Y1. It is a complete worked example:
 one fact pattern becomes a `GROUP BY`, a count, and a descending result. Run

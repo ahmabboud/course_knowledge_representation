@@ -1,4 +1,4 @@
-# Session 4 lab: validate, triage, gate, write your own
+# Session 4 lab: validate, triage and gate
 
 **Why this lab exists:** to make the lecture concrete (open against closed
 world, SHACL core, SPARQL constraints, severity, triage, provenance, version
@@ -71,7 +71,21 @@ Every number in `lectures/kr-session-04.html` comes from the files in
    one node shape, 13 "forbidden" shapes (`sh:maxCount 0`), 77 shapes with
    an `sh:message`. These are the three patterns worth borrowing.
 
-## Part B · write your own shapes (about 15 minutes)
+## Part B · practice shapes (optional, about 15 minutes)
+
+**Two ways through this part. Both are fine.**
+
+- **See it work (no writing).** Run the checker on the worked solution and
+  read what it says. This is enough to understand the part:
+
+  ```sh
+  python check_my_shapes.py solutions/my_shapes_solutions.ttl
+  ```
+
+- **Try it yourself (optional).** Fill in the file for this part, then run
+  the checker without an argument. Every task is a copy of something shown
+  earlier with one thing changed, and the checker gives a hint when it is not
+  yet right.
 
 Open `my_shapes.ttl`. It asks for three shapes, each practising one idea
 from the lecture: Y1 cardinality (every order has exactly one customer),

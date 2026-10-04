@@ -57,7 +57,21 @@ PostgreSQL and Ontop paths; see their files).
    threshold 8 precision 1.000 and recall 0.870. **Look at:** the wrong
    matches and the misses it lists, and why each happened.
 
-## Part B · extend a mapping (about 15 minutes)
+## Part B · extend a mapping (optional, about 15 minutes)
+
+**Two ways through this part. Both are fine.**
+
+- **See it work (no writing).** Run the checker on the worked solution and
+  read what it says. This is enough to understand the part:
+
+  ```sh
+  python check_my_mapping.py solutions/my_mapping_solutions.ttl
+  ```
+
+- **Try it yourself (optional).** Fill in the file for this part, then run
+  the checker without an argument. Every task is a copy of something shown
+  earlier with one thing changed, and the checker gives a hint when it is not
+  yet right.
 
 Open `my_mapping.ttl`. It maps orders (id, weight, carrier) and carriers.
 Three rules are missing, and each is a copy of a rule already in the file
