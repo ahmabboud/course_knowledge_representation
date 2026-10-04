@@ -99,6 +99,7 @@ python evaluate.py --setting repair --add-class-check --questions my_questions.y
 
 - Point the lab at your running Session 2 endpoint instead of the file:
   `SPARQL_ENDPOINT=http://127.0.0.1:3030/kr/sparql python ask.py "..."`
+  (PowerShell: `$env:SPARQL_ENDPOINT="http://127.0.0.1:3030/kr/sparql"` first, then `python ask.py "..."`)
   (Session 2's Fuseki, its `kr` dataset, started from `demos/` with `docker compose up -d`).
 - **void-generator** (SIB, Java 17 or later, needs a running endpoint)
   writes the same kind of VoID file from any endpoint:
