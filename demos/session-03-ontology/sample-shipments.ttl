@@ -7,9 +7,9 @@
 ## the "At-risk shipment" class in the Individuals by class tab, or ask
 ## DL Query for 'At-risk shipment'.
 ##
-## The course's one cast (AGENTS.md 2c rule 4): three real Brunel orders
+## The course's one cast: three real Brunel orders
 ## and two real Brunel carriers from Sessions 1 and 2, one shipment per
-## order. IRIs follow AGENTS.md 2d: .../kr/id/{kind}/brunel/{key}, the key
+## order. IRIs follow the course IRI convention: .../kr/id/{kind}/brunel/{key}, the key
 ## exactly as Brunel writes it.
 ##
 ##   shipment of order 1447385217.7  carrier V444_0             -> not at risk

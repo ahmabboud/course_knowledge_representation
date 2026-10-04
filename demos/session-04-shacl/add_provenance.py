@@ -11,7 +11,7 @@ Writes provenance.ttl next to this script (regenerate, do not edit).
 PROV-O, the W3C provenance ontology (Recommendation, 2013), has three core
 classes: an Entity (a thing: a file, a graph), an Activity (something that
 happened: a conversion run), an Agent (who or what is responsible: here a
-program). The IRIs follow the course convention (AGENTS.md 2d).
+program). The IRIs follow the course convention.
 """
 
 import hashlib

@@ -1,5 +1,0 @@
-## DELETED, kept only as a stub because the tool that made this edit
-## could not unlink files on this mount (see PROGRESS.md, 2026-09-19).
-## Please delete this file by hand: it has been replaced by
-## scro-extension-reference.ttl, a finished ontology, not a starter to
-## build on. Nothing here is current, do not open this file in Protege.

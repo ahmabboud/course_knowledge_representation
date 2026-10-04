@@ -107,7 +107,7 @@ page first if you like: the error messages there are clearer.
 
 ## Part C · think about names (about 10 minutes)
 
-Read `common/iri.py` (the course convention, `AGENTS.md` 2d). Answer for
+Read `common/iri.py` (the course IRI convention). Answer for
 yourself, then in the closing discussion:
 
 1. What does each part of `https://ul.edu.lb/kr/id/order/brunel/1447296446.7`

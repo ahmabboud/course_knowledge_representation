@@ -9,7 +9,7 @@
 ##
 ## The vocabulary is Session 2's (ul:Order, ul:carriedBy, ...), so Session 2's
 ## queries and Session 4's shapes work on the output unchanged. The IRI
-## templates are the course naming rule (demos/common/iri.py, AGENTS.md 2d):
+## templates are the course naming rule (demos/common/iri.py):
 ##   https://ul.edu.lb/kr/id/{kind}/brunel/{source key}
 ##
 ## One deliberate difference from Session 2: every carrier is typed, also the

@@ -1,4 +1,4 @@
-"""The course's IRI scheme (AGENTS.md 2d), argued for on the Session 2 slides
+"""The course's IRI scheme, argued for on the Session 2 slides
 and tested in its closing discussion. Every lab from Session 3 onward, and
 the Session 5 mappings, depend on it: import it, never re-decide it.
 

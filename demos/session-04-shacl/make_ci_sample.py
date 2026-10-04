@@ -23,7 +23,7 @@ SOURCE = HERE.parent / "session-02-rdf-sparql" / "brunel.ttl"
 UL = Namespace("https://ul.edu.lb/kr/scm#")
 ID = "https://ul.edu.lb/kr/id/"
 
-# The course cast (AGENTS.md 2c rule 4) plus one order from the rate table's
+# The course cast  plus one order from the rate table's
 # gap and one late order, so every shape has something real to look at.
 ORDERS = [
     "1447296446.7",   # CRF, carrier V44_3 (Session 1's first row)

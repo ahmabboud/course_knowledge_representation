@@ -39,8 +39,7 @@ session-08-deploy-and-defend/
 Each session folder has its own `README.md`: why the lab exists, the steps,
 what to expect at each step, and what to take to the team project. Labs are
 individual and nothing is handed in; they exist to make the concepts
-concrete and to prepare the capstone. Status per session is in
-`../PROGRESS.md`.
+concrete and to prepare the capstone. The lecture decks are in `../lectures/`.
 
 ## Start here: the lab repository root
 
@@ -143,7 +142,7 @@ then the two install lines.
 - Shared code that more than one session needs (the IRI scheme, data
   paths) lives in `common/`, imported, never copy-pasted between
   session folders. The IRI convention is fixed in `common/iri.py`
-  (`AGENTS.md` 2d); Session 2 discusses it, it does not reinvent it.
+  (the IRI convention); Session 2 discusses it, it does not reinvent it.
 - Notebooks for anything meant to be read and run step by step in the
   room; a plain `.py` script for anything meant to run once as a batch
   step (loading a container, materializing a graph). Both are fine,
