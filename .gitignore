@@ -10,3 +10,15 @@ uploads/
 
 # Python bytecode
 __pycache__/
+
+# Instructor-only course development files: kept locally, never published
+AGENTS.md
+PROMPT.md
+PROGRESS.md
+REPLAN-STATE.md
+COURSE-REPLAN.md
+PROJECT-REDESIGN.md
+GLOSSARY.md
+github.md
+.claude/
+scripts/
