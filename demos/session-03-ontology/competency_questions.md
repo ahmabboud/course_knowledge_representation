@@ -49,8 +49,8 @@ SELECT ?c WHERE {
 
 Not here. Drafting real competency questions, from a real constraint
 inventory, for classes that do not exist yet, is a genuine skill this
-course teaches, and you exercise it on your own team's chosen topic
-(see `PROJECT-REDESIGN.md`), starting right after Session 1, not on
+course teaches, and you exercise it on your own team's chosen topic,
+starting right after Session 1, not on
 this session's shared reference file. The habit to take from today:
 before you add a class to your own ontology, name the question it
 answers first, out loud, then check whether SCRO, GS1, or your own

@@ -227,6 +227,10 @@ html:not(.lu-ready) .slide:first-of-type { display: flex; }
   font-size: var(--lu-t-caption); color: var(--lu-ink-3);
 }
 .slide--night .slide__foot { border-top-color: var(--lu-night-line); color: var(--lu-on-night-2); }
+/* A slide that carries term definitions (.lu-autodefs) gives the footer less air, so the definitions fit above it. */
+.slide:has(.lu-autodefs) .slide__foot { margin-top: var(--lu-s1); padding-top: var(--lu-s2); }
+.slide:has(.lu-autodefs) .lu-autodefs { margin-bottom: 0; }
+.slide:has(.lu-autodefs--tight) .slide__foot { margin-top: 0; padding-top: var(--lu-s1); }
 
 /* --------------------------------------------------------------------------
    4. TYPOGRAPHY PRIMITIVES
