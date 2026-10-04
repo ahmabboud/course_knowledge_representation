@@ -19,21 +19,14 @@ One enterprise problem, a supply chain, carried from raw operational data throug
 | 5 | 3 | Integrating Operational Data | Done |
 | 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | Done · Milestone 2 (checkpoint) |
 | 7 | 5 | The Agentic Query Layer, Deployment, and Open Problems | Done |
-| 8 | 5 | The Defense | Draft, waiting for review |
+| 8 | 5 | The Defense | Done |
 
-Status detail: `PROGRESS.md`.
 
 ## Repository
 
 - **`index.html`**, the course index students land on.
 - **`lectures/kr-session-NN.html`**, one self-contained lecture per file.
-- **`design-system.html`**, the design system and a live gallery of all twelve interactive components. Start here before authoring.
-- **`lectures/_template.html`**, copy this to start a new session.
-- **`demos/`**, instructor-only lab material run live during specific sessions, real code against real data (Docker services, a local Neo4j, notebooks and scripts), separate from the small in-slide sandboxes. See `demos/README.md` for setup, and each `demos/session-NN-.../README.md` for that session's own lab.
-- **`AGENTS.md`**, the authoring contract. Read it before writing a lecture, whether you are a person or an agent.
-- **`PROMPT.md`**, the paste-ready brief for handing a new session to an agent.
-
-Built from the [`LebUniv_Course_Template`](https://github.com/ahmabboud/LebUniv_Course_Template) design system. Fixes to the stylesheet or runtime belong upstream in the template, not here.
+- **`demos/`**, lab material for the sessions, real code against real data (Docker services, a local Neo4j, notebooks and scripts), separate from the small in-slide sandboxes. See `demos/README.md` for setup, and each `demos/session-NN-.../README.md` for that session's own lab.
 
 ## What a lecture gives you
 
@@ -51,15 +44,9 @@ python3 -m http.server 8000
 
 Enable GitHub Pages with **GitHub Actions** as the source, then push to `main`. `.github/workflows/pages.yml` uploads the repository unchanged. There is no build step.
 
-## Before teaching from it
-
-- Replace the `LU` placeholder in the lockup with the official crest at `assets/lu-crest.svg`. The mark here is a typographic stand-in, not the university's emblem.
-- Replace every `.lu-figure__ph` placeholder with a real capture. Each one states the path and what must be visible in the shot.
-- Session 1 slide 16 asserts the maintenance status of eight libraries as of September 2026. Re-check it before teaching. A stale slide about staleness is embarrassing.
-
 ## Accessibility
 
-Built to WCAG 2.2 AA, with the contract and one stated exception documented in `design-system.html` §10.
+Built to WCAG 2.2 AA.
 
 ## Licence
 
