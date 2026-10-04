@@ -7,7 +7,7 @@
                lu.css lands on the next load without anyone bumping a version.
      · Webfonts → cache first. They never change.
    CACHE only needs bumping if you want to evict everything at once. */
-const CACHE = 'lu-slides-v4';
+const CACHE = 'lu-slides-v5';
 const SHELL = [
   './',
   './index.html',
