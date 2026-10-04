@@ -51,7 +51,7 @@
     </div>
   </div>
   <template data-notes>
-    <p>Before minute one: every student's <code>demos/.venv</code> has both install lines of <code>demos/README.md</code> (the second adds Morph-KGC), and Docker Desktop is running. Without Docker the whole lab except Ontop runs on a database file (<code>--sqlite</code>).</p>
+    <p>Before minute one, I expect your <code>demos/.venv</code> to have both install lines of <code>demos/README.md</code> (the second adds Morph-KGC), and Docker Desktop to be running. Without Docker the whole lab except Ontop runs on a database file (<code>--sqlite</code>).</p>
     <ul><li>Every number on these slides is a real run, recorded in <code>demos/session-05-integration/reference-outputs/</code> on 2026-09-25. The customer matching data is teaching data, built on purpose; its slides say so.</li></ul>
   </template>
 </section>
@@ -94,7 +94,7 @@
       </ul>
     </div>
   </div>
-  <template data-notes><p>Name the payoff: one small file of rules rebuilds all 135,799 triples of the Brunel graph, identical to Session 2's except for the 7 carriers it now types correctly.</p></template>
+  <template data-notes><p>I name the payoff: one small file of rules rebuilds all 135,799 triples of the Brunel graph, identical to Session 2's except for the 7 carriers it now types correctly.</p></template>
 </section>
 
 <!-- ==================================================================== 04 -->
@@ -104,7 +104,7 @@
     <h2 class="lu-display-xl" style="max-width:26ch">The database changed overnight. Do we rewrite the converter?</h2>
     <p class="lu-lead" style="max-width:46ch">No. We describe once how rows become triples, and let a tool do it.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 05 -->
@@ -156,7 +156,7 @@
     <h2 class="lu-display-xl" style="max-width:26ch">How do you say, once, what every row of a table means?</h2>
     <p class="lu-lead" style="max-width:46ch">A subject from the key, then one rule per column.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 09 -->
@@ -174,7 +174,7 @@
   <div class="lu-eyebrow">Walkthrough</div>
   <h2 class="lu-h2">A subject from the key, then one rule per column</h2>
   <div class="lu-walk" data-label="One row becomes triples"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 330, "nodes": [{"id": "row", "label": "row of orders: order_id 1447296446.7,\ncarrier V44_3, weight 14.3, ...", "x": 300, "y": 50, "w": 560, "h": 70, "kind": "literal"}, {"id": "s", "label": "order 1447296446.7", "x": 300, "y": 200, "w": 320, "h": 56, "kind": "individual"}, {"id": "c", "label": "carrier V44_3", "x": 960, "y": 100, "w": 260, "h": 56, "kind": "individual"}, {"id": "w", "label": "14.3 (xsd:decimal)", "x": 960, "y": 200, "w": 280, "h": 56, "kind": "literal"}, {"id": "id", "label": "\"1447296446.7\"", "x": 960, "y": 300, "w": 260, "h": 56, "kind": "literal"}], "edges": [{"id": "a", "from": "row", "to": "s", "label": "subject template"}, {"id": "b", "from": "s", "to": "c", "label": "carriedBy"}, {"id": "c1", "from": "s", "to": "w", "label": "weight"}, {"id": "d", "from": "s", "to": "id", "label": "orderId"}], "steps": [{"show": ["row"], "set": {"row": "active"}}, {"show": ["s", "a"], "run": ["a"], "set": {"row": "idle", "s": "active"}}, {"show": ["id", "d"], "run": ["d"]}, {"show": ["w", "c1"], "run": ["c1"]}, {"show": ["c", "b"], "run": ["b"], "set": {"c": "active"}}], "legend": {"literal": "Value", "individual": "Thing with an IRI"}}</script></div><div data-walk-step="1" data-caption-short="One row" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; One real row of the orders table, the order Session 1 met first."></div><div data-walk-step="2" data-caption-short="The subject" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; A template builds the order&#x27;s IRI from its key: &lt;code&gt;.../order/brunel/{order_id}&lt;/code&gt;, the course naming rule."></div><div data-walk-step="3" data-caption-short="A plain value" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; A column copied as text: the order id."></div><div data-walk-step="4" data-caption-short="A typed value" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; A column with a datatype: the weight is an &lt;code&gt;xsd:decimal&lt;/code&gt;."></div><div data-walk-step="5" data-caption-short="A link" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; The carrier column holds another thing&#x27;s key, so a second template builds the carrier&#x27;s IRI: a link, not text."></div></div></div>
-  <template data-notes><p>Six minutes. The row, the IRIs and the values are real (<code>demos/session-02-rdf-sparql/sample/order.ttl</code> holds the same order as Session 2 wrote it). Ask at step 4: why does the datatype matter? Session 4's shape checks <code>sh:datatype xsd:decimal</code>.</p></template>
+  <template data-notes><p>Six minutes. The row, the IRIs and the values are real (<code>demos/session-02-rdf-sparql/sample/order.ttl</code> holds the same order as Session 2 wrote it). At step 4 I ask: why does the datatype matter? Session 4's shape checks <code>sh:datatype xsd:decimal</code>.</p></template>
 </section>
 
 <!-- ==================================================================== 11 -->
@@ -213,7 +213,7 @@
     </div>
     <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why no join</span><p class="lu-sub">Both maps use the same template, so they build the same IRI for V44_3. R2RML can also join tables (<code>rr:parentTriplesMap</code>); with a naming rule like ours, it rarely needs to.</p></div>
   </div>
-  <template data-notes><p>Four minutes. This is the payoff of Session 2's naming rule (AGENTS.md 2d): the IRI is a function of the kind and the key, so every table that mentions V44_3 lands on the same node.</p></template>
+  <template data-notes><p>Four minutes. This is the payoff of Session 2's naming rule: the IRI is a function of the kind and the key, so every table that mentions V44_3 lands on the same node.</p></template>
 </section>
 
 <!-- ==================================================================== 13 -->
@@ -297,7 +297,7 @@
     <h2 class="lu-display-xl" style="max-width:26ch">Did the mapping build the same graph as Session 2's program?</h2>
     <p class="lu-lead" style="max-width:46ch">Check it triple by triple, then run Session 4's shapes on it.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 18 -->
@@ -312,7 +312,7 @@
     </div>
   </div>
   <template data-notes><p>Five minutes. Real run of <code>materialize.py</code> and <code>compare_with_session2.py</code> (<code>reference-outputs/materialize-and-compare.txt</code>).</p>
-<ul><li>Decimals are compared as numbers. Session 2 read the CSV with pandas' fast number parser, which misreads some long decimals by one unit in the last digit (1.462970094059406 for the file's 1.4629700940594061); the database keeps the file's digits exactly. Say it only if asked: it is a real, tiny finding.</li>
+<ul><li>Decimals are compared as numbers. Session 2 read the CSV with pandas' fast number parser, which misreads some long decimals by one unit in the last digit (1.462970094059406 for the file's 1.4629700940594061); the database keeps the file's digits exactly. I only mention it if asked: it is a real, tiny finding.</li>
 <li>A mapping produces data only; the 49 vocabulary triples live in <code>vocabulary.ttl</code>.</li></ul></template>
 </section>
 
@@ -363,7 +363,7 @@
     <h2 class="lu-display-xl" style="max-width:26ch">Can we ask SPARQL questions of a database that has no graph at all?</h2>
     <p class="lu-lead" style="max-width:46ch">Yes: translate each question into SQL, on the fly.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 23 -->
@@ -398,7 +398,7 @@
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">In the lab</span><p class="lu-sub"><code>ontop/run_ontop.py</code> prints the SQL Ontop really wrote. Compare it with this one: longer, but the same question.</p></div>
     </div>
   </div>
-  <template data-notes><p>Four minutes. The hand-written SQL is ours, labelled as such; the generated SQL is recorded in <code>reference-outputs/ontop-q2.txt</code> once the run on the instructor's machine is done.</p></template>
+  <template data-notes><p>Four minutes. The hand-written SQL is ours, labelled as such; the generated SQL is recorded in <code>reference-outputs/ontop-q2.txt</code> from my own run.</p></template>
 </section>
 
 <!-- ==================================================================== 25 -->
@@ -417,7 +417,7 @@
     <h2 class="lu-display-xl" style="max-width:26ch">Two systems list the same customer under two different codes. Which records match?</h2>
     <p class="lu-lead" style="max-width:46ch">A matcher decides, and it will be wrong sometimes. The question is how often, and which way.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 27 -->
@@ -431,7 +431,7 @@
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Teaching data</span><p class="lu-sub">Brunel has no second system. A script wrote this TMS list from Brunel's 46 real customers, plus 6 that are not in Brunel. So the truth is known, and errors can be counted.</p></div>
     </div>
   </div>
-  <template data-notes><p>Five minutes. Say clearly: this is teaching data, like Session 3's sanctioned flag. The customers are real; the second system is not. <code>er/make_teaching_set.py</code> shows exactly how each record was made.</p>
+  <template data-notes><p>Five minutes. I say it clearly: this is teaching data, like Session 3's sanctioned flag. The customers are real; the second system is not. <code>er/make_teaching_set.py</code> shows exactly how each record was made.</p>
 <ul><li>Checked first: DataCo and Brunel share no entities, Brunel's codes are anonymised and unique, and DataCo's names are personal data we never show.</li></ul></template>
 </section>
 
@@ -494,7 +494,7 @@
       <button class="lu-mcq__opt" type="button" data-key="b">A miss: one customer kept twice<span class="lu-mcq__why" hidden>Annoying and costly in reports, but nothing is mixed up, and it can be merged later.</span></button>
     </div>
   </div>
-  <template data-notes><p>Forty five seconds, then discuss. For merging, favour precision (threshold 8). For finding possible duplicates for a person to review, favour recall (threshold 4). The use decides the threshold.</p></template>
+  <template data-notes><p>Forty five seconds, then we discuss. For merging, favour precision (threshold 8). For finding possible duplicates for a person to review, favour recall (threshold 4). The use decides the threshold.</p></template>
 </section>
 
 <!-- ==================================================================== 32 -->
@@ -504,7 +504,7 @@
     <h2 class="lu-display-xl" style="max-width:26ch">One mapping, two routes, one graph. Does it hold up?</h2>
     <p class="lu-lead" style="max-width:46ch">Then add three rules to a mapping, each a copy of one you have already seen.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 33 -->
@@ -523,7 +523,7 @@
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">No Docker?</span><p class="lu-sub">Add <code>--sqlite</code> to the load and materialize steps: the same tables in a file. Only Ontop needs Docker; read its recorded output instead.</p></div>
     </div>
   </div>
-  <template data-notes><p>Three minutes, then walk the room. Most common blocker: Morph-KGC missing, because the second install line of <code>demos/README.md</code> was not run; <code>materialize.py</code> prints the exact command.</p>
+  <template data-notes><p>Three minutes, then I walk the room. Most common blocker: Morph-KGC missing, because the second install line of <code>demos/README.md</code> was not run; <code>materialize.py</code> prints the exact command.</p>
 <ul><li>Second: an old PostgreSQL volume from an earlier course version. The compose file uses a new volume name, so <code>docker compose up -d</code> in this folder starts clean.</li></ul></template>
 </section>
 
@@ -538,7 +538,7 @@
     <div class="lu-card"><span class="lu-card__label">By minute 50 · Part C</span><p class="lu-sub">Answers to the three questions, one of them about your own team's database.</p></div>
   </div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">For your team project</span><p class="lu-sub">Your project's database needs a mapping like this one: one triples map per table, templates from your naming rule, validated with your Session 4 shapes.</p></div>
-  <template data-notes><p>Fifty minutes. The validation step takes about two minutes; let it run while students read <code>brunel-mapping.ttl</code>.</p>
+  <template data-notes><p>Fifty minutes. The validation step takes about two minutes; I let it run while you read <code>brunel-mapping.ttl</code>.</p>
 <ul><li>Most common wrong answer in Part B: Y2 written with <code>rr:column</code>, which makes text instead of a link. The checker shows the text it made.</li></ul></template>
 </section>
 
@@ -568,7 +568,7 @@
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
 <div class="lu-split" style="margin-top:var(--lu-s2)"><dl class="lu-defs"><dt>Mapping · R2RML</dt><dd>Rows to triples · the W3C language.</dd><dt>RML</dt><dd>R2RML for CSV, JSON, XML too.</dd><dt>Triples map</dt><dd>One table, one kind of subject.</dd><dt>IRI template</dt><dd>An IRI built from a column.</dd><dt>Logical view</dt><dd>An SQL query as the source.</dd><dt>Materialize</dt><dd>Build and store the graph now.</dd><dt>Virtualize</dt><dd>Store nothing; SPARQL to SQL.</dd></dl><dl class="lu-defs"><dt>Morph-KGC · Ontop</dt><dd>Materializes · virtualizes.</dd><dt>OBDA</dt><dd>A database queried through an ontology.</dd><dt>Entity resolution</dt><dd>Same real thing, two records?</dd><dt>Blocking</dt><dd>Compare only likely pairs.</dd><dt>Match weight</dt><dd>log2(m / u), evidence per field.</dd><dt>Precision · recall</dt><dd>Right among found · found among right.</dd></dl></div>
-  <template data-notes><p>One minute, or skip in class: it is for revision. The full list is in <code>GLOSSARY.md</code>.</p></template>
+  <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
 <!-- ==================================================================== 37 -->
@@ -589,7 +589,7 @@
       <div class="lu-row"><span class="lu-tag lu-tag--green">For your team</span><span class="lu-caption" style="flex:1">Write your project's first triples map, for its most important table.</span></div>
     </div>
   </div>
-  <template data-notes><p>Two minutes. End on the sentence.</p></template>
+  <template data-notes><p>Two minutes. I end on the sentence.</p></template>
 </section>
 
 <!-- ==================================================================== 38 -->
@@ -605,7 +605,7 @@
       <p class="lu-caption"><kbd>O</kbd> contents · <kbd>/</kbd> search · <kbd>?</kbd> all shortcuts. Answers are stored in this browser only.</p>
     </div>
   </div>
-  <template data-notes><p>Close here so students know where the self study tools are.</p></template>
+  <template data-notes><p>I close here so you know where the self study tools are.</p></template>
 </section>
 
 </div><!-- /stage -->

@@ -51,7 +51,7 @@
     </div>
   </div>
   <template data-notes>
-    <p>Before the day: every team handed in 48 hours ago, and Part 1 of each scoring sheet (<code>module-08-defense/scoring-sheet.html</code>) is filled in, with 3 or 4 questions per team. <code>DEFENSE-DAY.md</code> is the run of show. Leave the Defenses slide up during the slots.</p>
+    <p>Before the day, every team has handed in 48 hours ago, and I have filled in Part 1 of each scoring sheet (<code>module-08-defense/scoring-sheet.html</code>) with 3 or 4 questions per team. <code>DEFENSE-DAY.md</code> is the run of show. I leave the Defenses slide up during the slots.</p>
   </template>
 </section>
 
@@ -73,7 +73,7 @@
   <div class="lu-eyebrow">Walkthrough · about 15 minutes</div>
   <h2 class="lu-h2">Show it running, then answer for it, each of you</h2>
   <div class="lu-walk" data-label="One team&#x27;s slot"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 130, "nodes": [{"id": "d1", "label": "demo: it answers\nyour question", "x": 170, "y": 60, "w": 290, "h": 70, "kind": "builtin"}, {"id": "d2", "label": "demo: it refuses\none it cannot answer", "x": 540, "y": 60, "w": 310, "h": 70, "kind": "builtin"}, {"id": "q", "label": "2 or 3 questions\nper student", "x": 920, "y": 60, "w": 280, "h": 70, "kind": "builtin"}, {"id": "m", "label": "one mark\nper student, 0 to 3", "x": 1270, "y": 60, "w": 290, "h": 70, "kind": "builtin"}], "edges": [{"id": "a1", "from": "d1", "to": "d2", "label": ""}, {"id": "a2", "from": "d2", "to": "q", "label": ""}, {"id": "a3", "from": "q", "to": "m", "label": ""}], "steps": [{"show": ["d1"], "set": {"d1": "active"}}, {"show": ["d2", "a1"], "run": ["a1"], "set": {"d1": "idle", "d2": "active"}}, {"show": ["q", "a2"], "run": ["a2"], "set": {"d2": "idle", "q": "active"}}, {"show": ["m", "a3"], "run": ["a3"], "set": {"q": "idle", "m": "inferred"}}], "legend": {"builtin": "A step", "inferred": "Your own mark"}, "flags": {"inferred": "yours"}}</script></div><div data-walk-step="1" data-caption-short="Demo, 3 minutes" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Your running stack answers one question I choose."></div><div data-walk-step="2" data-caption-short="The refusal" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Then a question your graph cannot answer: it must refuse, with a reason. This confirms the offline score; it is not marked again."></div><div data-walk-step="3" data-caption-short="Questions" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Each of you answers 2 or 3 questions about a part of the system you did not build."></div><div data-walk-step="4" data-caption-short="The mark" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; One overall mark per student, from all the answers together, not question by question."></div></div></div>
-  <template data-notes><p>Three minutes. The questions come from the offline scoring: the weakest layer, a decision that looks borrowed, a number that could not be traced.</p></template>
+  <template data-notes><p>Three minutes. My questions come from the offline scoring: the weakest layer, a decision that looks borrowed, a number that could not be traced.</p></template>
 </section>
 
 <!-- ==================================================================== 04 -->
@@ -85,7 +85,7 @@
     <table class="lu-table"><thead><tr><th>Mark</th><th>You</th></tr></thead><tbody><tr><td>0</td><td>cannot explain the team's system, even the parts asked about</td></tr><tr><td>1</td><td>says what the parts do, not why</td></tr><tr><td>2</td><td>explains why the team decided as it did</td></tr><tr><td>3</td><td>defends the decisions against an alternative, or a failure in your own system</td></tr></tbody></table>
     <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Not a quiz of every topic</span><p class="lu-sub">Two or three questions sample how well you understand the whole system, including what a teammate or a language model wrote. Defense points: mark &times; 10.</p></div>
   </div>
-  <template data-notes><p>Two minutes. The syllabus policy still applies: an ontology the team cannot defend loses its ontology points in the project mark.</p></template>
+  <template data-notes><p>Two minutes. The syllabus policy still applies: an ontology your team cannot defend loses its ontology points in the project mark.</p></template>
 </section>
 
 <!-- ==================================================================== 05 -->
@@ -97,7 +97,7 @@
     <div class="lu-card"><span class="lu-card__label">Why there?</span><p class="lu-sub">This rule: a SHACL shape or an OWL axiom, and why?</p></div>
     <div class="lu-card"><span class="lu-card__label">How do you know?</span><p class="lu-sub">Does your split leak? What does the system do when it does not know?</p></div>
   </div>
-  <template data-notes><p>160 minutes. Score each student right after the slot, on the scoring sheet (Part 2). Record the questions asked.</p></template>
+  <template data-notes><p>160 minutes. I score each student right after the slot, on the scoring sheet (Part 2), and record the questions asked.</p></template>
 </section>
 
 <!-- ==================================================================== 06 -->
@@ -106,7 +106,7 @@
   <h2 class="lu-h2">In Session 1 this was a promise. Today every box runs, on your own data.</h2>
   <div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 400, "nodes": [{"id": "src", "label": "Sources\nSession 1", "x": 130, "y": 200, "w": 200, "h": 84, "kind": "builtin"}, {"id": "prof", "label": "Profiling\nSession 1", "x": 420, "y": 70, "w": 220, "h": 84, "kind": "builtin"}, {"id": "map", "label": "Mapping\nSession 5", "x": 420, "y": 330, "w": 220, "h": 84, "kind": "builtin"}, {"id": "ont", "label": "Ontology\nSession 3", "x": 720, "y": 70, "w": 220, "h": 84, "kind": "builtin"}, {"id": "shp", "label": "Shapes\nSession 4", "x": 720, "y": 200, "w": 220, "h": 84, "kind": "builtin"}, {"id": "kg", "label": "Knowledge graph\nSessions 2 and 5", "x": 1050, "y": 200, "w": 250, "h": 84, "kind": "builtin"}, {"id": "learn", "label": "Learning\nSession 6", "x": 1325, "y": 90, "w": 200, "h": 84, "kind": "builtin"}, {"id": "ask", "label": "Questions\nSession 7", "x": 1325, "y": 310, "w": 200, "h": 84, "kind": "builtin"}], "edges": [{"id": "e1", "from": "src", "to": "prof", "label": ""}, {"id": "e2", "from": "src", "to": "map", "label": ""}, {"id": "e3", "from": "prof", "to": "ont", "label": "rules"}, {"id": "e4", "from": "prof", "to": "shp", "label": ""}, {"id": "e5", "from": "ont", "to": "kg", "label": "meaning", "route": "elbow", "sides": ["right", "top"]}, {"id": "e6", "from": "shp", "to": "kg", "label": "checks"}, {"id": "e7", "from": "map", "to": "kg", "label": "tables in", "route": "elbow", "sides": ["right", "bottom"]}, {"id": "e8", "from": "kg", "to": "learn", "label": ""}, {"id": "e9", "from": "kg", "to": "ask", "label": ""}], "steps": [{"show": ["src", "prof", "map", "ont", "shp", "kg", "learn", "ask", "e1", "e2", "e3", "e4", "e5", "e6", "e7", "e8", "e9"], "set": {"src": "active", "prof": "active", "map": "active", "ont": "active", "shp": "active", "kg": "active", "learn": "active", "ask": "active"}}], "legend": false}</script></div>
   <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Look back at your own</span><p class="lu-sub">Which box was hardest for your data? Which would you build differently now?</p></div>
-  <template data-notes><p>Six minutes. The same diagram as Session 1's "The architecture, stage by stage", every stage now lit. Ask two teams: which box cost you most, and why.</p></template>
+  <template data-notes><p>Six minutes. The same diagram as Session 1's "The architecture, stage by stage", every stage now lit. I ask two teams: which box cost you most, and why.</p></template>
 </section>
 
 <!-- ==================================================================== 07 -->
@@ -128,7 +128,7 @@
     </div>
     <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">After today</span><p class="lu-sub">Grades follow the Assessment section of the syllabus. Keep your repository: it is a portfolio piece.</p></div>
   </div>
-  <template data-notes><p>One minute. End on the sentence.</p></template>
+  <template data-notes><p>One minute. I end on the sentence.</p></template>
 </section>
 
 </div><!-- /stage -->

@@ -51,11 +51,11 @@
     </div>
   </div>
   <template data-notes>
-    <p>Rebuilt on 2026-09-24 to the course standard (AGENTS.md 2c): every concept slide leads with a picture, every term is defined where it first appears, every number comes from a real run (<code>demos/session-01-environment-and-constraints/reference-outputs/s1-facts.txt</code>).</p>
+    <p>Every number in this deck comes from a real run (<code>demos/session-01-environment-and-constraints/reference-outputs/s1-facts.txt</code>), and every term is defined where it first appears.</p>
     <ul>
-      <li>Do not open with housekeeping. Say your name and the course name, then go to slide 2.</li>
-      <li>Setup was due before today. Ask who has Python 3.12, JDK 21, Docker and Protégé installed. Note who does not; the lab smoke test will catch them.</li>
-      <li>Minutes on each slide are realistic. A dry run of the old deck ran 40 minutes against a plan of 112, so this version adds depth, not padding.</li>
+      <li>I do not open with housekeeping. I say my name and the course name, then go to slide 2.</li>
+      <li>Setup was due before today. I ask who has Python 3.12, JDK 21, Docker and Protégé installed, and I note who does not. The lab smoke test will catch them.</li>
+      <li>The minutes on each slide are realistic, so this deck adds depth, not padding.</li>
     </ul>
   </template>
 </section>
@@ -70,8 +70,8 @@
   <p class="lu-sub" data-build="2"><b>The honest answer:</b> three weeks, four analysts, a spreadsheet nobody can rebuild.</p>
   <template data-notes><p>Five minutes. This is the slide the whole course hangs off.</p>
     <ul>
-      <li>Ask: who has worked somewhere with more than five systems holding customer or supplier data? Hands go up. Use it.</li>
-      <li>Build the table and let them read the five names in silence. Then the last line.</li>
+      <li>I ask: who has worked somewhere with more than five systems holding customer or supplier data? Hands go up, and I use that.</li>
+      <li>I build the table and let you read the five names in silence. Then I show the last line.</li>
       <li>The table is an illustration, and the caption says so. From Part 2 on, every example is real data.</li>
     </ul></template>
 </section>
@@ -103,7 +103,7 @@ last quarter, and who did we ship them to?
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">And it is your team's own</span><p class="lu-sub">The lectures use one supply chain case. Your team builds the same pipeline on its own topic and its own data. Part 6 today, the team project, explains how.</p></div>
     </div>
   </div>
-  <template data-notes><p>Two minutes. Do not explain the query. If someone asks about the plus sign after <code>hasComponent</code>: "any depth of sub assembly, the question SQL is worst at." Move on.</p></template>
+  <template data-notes><p>Two minutes. I do not explain the query. If you ask about the plus sign after <code>hasComponent</code>, my answer is: "any depth of sub assembly, the question SQL is worst at." Then I move on.</p></template>
 </section>
 
 <!-- ==================================================================== 04 -->
@@ -116,7 +116,7 @@ last quarter, and who did we ship them to?
     </div>
     <table class="lu-table"><thead><tr><th>Part</th><th>Minutes</th></tr></thead><tbody><tr><td>1 · Opening</td><td>10</td></tr><tr><td>2 · The supply chain and the data</td><td>25</td></tr><tr><td>3 · Meaning is not in the schema</td><td>20</td></tr><tr><td>4 · The architecture</td><td>15</td></tr><tr><td>5 · Profiling and hidden rules</td><td>30</td></tr><tr><td>6 · The team project</td><td>15</td></tr><tr><td>Lab, then wrap</td><td>65 + 5</td></tr></tbody><caption>About 185 minutes in all.</caption></table>
   </div>
-  <template data-notes><p>Two minutes. Read the callout aloud. The word that matters is <b>evidence</b>: a rule without a count behind it is an opinion.</p></template>
+  <template data-notes><p>Two minutes. I read the callout aloud. The word that matters is <b>evidence</b>: a rule without a count behind it is an opinion.</p></template>
 </section>
 
 <!-- ==================================================================== 05 -->
@@ -126,7 +126,7 @@ last quarter, and who did we ship them to?
     <h2 class="lu-display-xl" style="max-width:26ch">Before any theory: what does a supply chain look like, and what is in our two datasets?</h2>
     <p class="lu-lead" style="max-width:46ch">Every example for the rest of the course comes from these rows.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 06 -->
@@ -134,10 +134,10 @@ last quarter, and who did we ship them to?
   <div class="lu-eyebrow">The domain</div>
   <h2 class="lu-h2" style="max-width:66ch">A <b>supply chain</b> is the path goods take from raw material to the customer.</h2>
 <div class="lu-walk" data-label="A supply chain, step by step"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 370, "nodes": [{"id": "order", "label": "Order", "x": 360, "y": 55, "w": 200, "h": 70}, {"id": "supplier", "label": "Supplier", "x": 110, "y": 190, "w": 190, "h": 70}, {"id": "plant", "label": "Plant", "x": 360, "y": 190, "w": 190, "h": 70}, {"id": "oport", "label": "Origin port", "x": 610, "y": 190, "w": 190, "h": 70}, {"id": "ship", "label": "Shipment", "x": 860, "y": 190, "w": 190, "h": 70}, {"id": "dport", "label": "Destination\nport", "x": 1110, "y": 190, "w": 190, "h": 76}, {"id": "customer", "label": "Customer", "x": 1340, "y": 190, "w": 170, "h": 70}, {"id": "carrier", "label": "Carrier", "x": 860, "y": 325, "w": 190, "h": 70}], "edges": [{"id": "e_co", "from": "customer", "to": "order", "label": "places", "route": "elbow", "sides": ["top", "right"]}, {"id": "e_op", "from": "order", "to": "plant", "label": "made at"}, {"id": "e_sp", "from": "supplier", "to": "plant", "label": ""}, {"id": "e_po", "from": "plant", "to": "oport", "label": ""}, {"id": "e_os", "from": "oport", "to": "ship", "label": ""}, {"id": "e_cs", "from": "carrier", "to": "ship", "label": "handles"}, {"id": "e_sd", "from": "ship", "to": "dport", "label": ""}, {"id": "e_dc", "from": "dport", "to": "customer", "label": ""}], "steps": [{"show": ["customer", "order", "e_co"], "run": ["e_co"], "set": {"order": "active"}}, {"show": ["plant", "e_op"], "run": ["e_op"], "set": {"order": "idle", "plant": "active"}}, {"show": ["supplier", "e_sp"], "run": ["e_sp"], "set": {"plant": "idle", "supplier": "active"}}, {"show": ["oport", "e_po"], "run": ["e_po"], "set": {"supplier": "idle", "oport": "active"}}, {"show": ["ship", "carrier", "e_os", "e_cs"], "run": ["e_os", "e_cs"], "set": {"oport": "idle", "ship": "active"}}, {"show": ["dport", "e_sd", "e_dc"], "run": ["e_sd", "e_dc"], "set": {"ship": "idle", "customer": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="A customer places an order" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A &lt;b&gt;customer&lt;/b&gt; places an &lt;b&gt;order&lt;/b&gt;: a request to buy a quantity of a product, with a date and a destination."></div><div data-walk-step="2" data-caption-short="A plant makes it" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The order is made at a &lt;b&gt;plant&lt;/b&gt;, a factory."></div><div data-walk-step="3" data-caption-short="A supplier feeds the plant" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; A &lt;b&gt;supplier&lt;/b&gt; sells the plant the parts it needs."></div><div data-walk-step="4" data-caption-short="It leaves through a port" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; The goods leave through a &lt;b&gt;port&lt;/b&gt;, a place where goods enter or leave a country by sea or air."></div><div data-walk-step="5" data-caption-short="A carrier moves it" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; The &lt;b&gt;shipment&lt;/b&gt; is the physical movement of the goods. A &lt;b&gt;carrier&lt;/b&gt;, a transport company, handles it."></div><div data-walk-step="6" data-caption-short="It reaches the customer" data-caption="&lt;b&gt;Step 6.&lt;/b&gt; The goods arrive. Every arrow here is a hand over between two companies, and between two computer systems."></div></div></div>
-  <template data-notes><p>Four minutes. Step through slowly; each step names one word the rest of the course uses.</p>
+  <template data-notes><p>Four minutes. I step through slowly; each step names one word the rest of the course uses.</p>
     <ul>
-      <li>Keyboard: with the diagram focused, left and right arrows move the steps.</li>
-      <li>End on step 6: "every arrow is a hand over". That is where meaning gets lost, and Part 3 shows it happening in our data.</li>
+      <li>Keyboard: with the diagram focused, the left and right arrows move the steps.</li>
+      <li>I end on step 6: "every arrow is a hand over". That is where meaning gets lost, and Part 3 shows it happening in our data.</li>
     </ul></template>
 </section>
 
@@ -148,8 +148,8 @@ last quarter, and who did we ship them to?
 
   <p class="lu-sub"><b>180,519</b> rows · <b>53</b> columns · <b>65,752</b> orders · <b>20,652</b> customers · <b>118</b> products · 1 Jan 2015 to 31 Jan 2018</p>
   <table class="lu-table lu-table--mono" data-build="1"><thead><tr><th>Order Id</th><th>Order Country</th><th>Shipping Mode</th><th>Days real</th><th>Days scheduled</th><th>Delivery Status</th></tr></thead><tbody><tr><td>77202</td><td>Indonesia</td><td>Standard Class</td><td>3</td><td>4</td><td>Advance shipping</td></tr><tr><td>75939</td><td>India</td><td>Standard Class</td><td>5</td><td>4</td><td>Late delivery</td></tr><tr><td>75938</td><td>India</td><td>Standard Class</td><td>4</td><td>4</td><td>Shipping on time</td></tr></tbody><caption>The first three real rows, 6 of 53 columns. Source: DataCo Global, Mendeley Data, DOI 10.17632/8gx2fvg2k6.5, CC BY 4.0.</caption></table>
-  <template data-notes><p>Four minutes. Read one row aloud as a sentence: "order 75939, placed on 13 January 2018, shipped Standard Class to Bikaner in India, took 5 days against 4 scheduled, marked late."</p>
-    <ul><li>Point at the two day columns and the status column. Part 3 comes back to exactly these three.</li></ul></template>
+  <template data-notes><p>Four minutes. I read one row aloud as a sentence: "order 75939, placed on 13 January 2018, shipped Standard Class to Bikaner in India, took 5 days against 4 scheduled, marked late."</p>
+    <ul><li>I point at the two day columns and the status column. Part 3 comes back to exactly these three.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 08 -->
@@ -158,7 +158,7 @@ last quarter, and who did we ship them to?
   <h2 class="lu-h2" style="max-width:66ch">What does one row stand for? In DataCo, one product inside an order.</h2>
 <div class="lu-split lu-split--wide-left" style="align-items:center"><div class="lu-walk" data-label="One order, three rows"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 800, "height": 360, "nodes": [{"id": "o2", "label": "Order 2\n1 Jan 2015\nDos Quebradas", "x": 140, "y": 180, "w": 260, "h": 110}, {"id": "l2", "label": "Line 2 · Pelican kayak · qty 1", "x": 555, "y": 60, "w": 480, "h": 70}, {"id": "l3", "label": "Line 3 · Nike golf polo · qty 5", "x": 555, "y": 180, "w": 480, "h": 70}, {"id": "l4", "label": "Line 4 · Nike football cleat · qty 1", "x": 555, "y": 300, "w": 480, "h": 70}], "edges": [{"id": "a", "from": "o2", "to": "l2", "label": ""}, {"id": "b", "from": "o2", "to": "l3", "label": ""}, {"id": "c", "from": "o2", "to": "l4", "label": ""}], "steps": [{"show": ["o2"], "set": {"o2": "active"}}, {"show": ["l2", "l3", "l4", "a", "b", "c"], "run": ["a", "b", "c"], "set": {"o2": "idle", "l2": "active", "l3": "active", "l4": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="One order" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; One real order: order 2, placed on 1 January 2015 for Dos Quebradas."></div><div data-walk-step="2" data-caption-short="Three rows" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; It fills &lt;b&gt;three rows&lt;/b&gt; of the file, one per product. Counting rows counts order lines, not orders."></div></div></div><div class="lu-stack"><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Order line</dt><dd>One product inside an order, with its quantity. DataCo stores one order line per row.</dd><dt>Grain</dt><dd>What one row of a table stands for. Always the first thing to find out.</dd></dl></div><div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Real counts</span><p class="lu-sub">65,752 orders fill 180,519 rows. 19,850 orders have one line; the rest have 2 to 5.</p></div></div></div>
   <template data-notes><p>Three minutes. This is the first real finding of the day, and it has a cost: anyone who counts rows and calls them orders is wrong by a factor of 2.7.</p>
-    <ul><li>Ask before step 2: "how many rows does order 2 take?" Most will say one.</li></ul></template>
+    <ul><li>Before step 2 I ask: "how many rows does order 2 take?" Most of you will say one.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 09 -->
@@ -166,8 +166,8 @@ last quarter, and who did we ship them to?
   <div class="lu-eyebrow">Dataset 2 · Brunel</div>
   <h2 class="lu-h2" style="max-width:66ch"><b>Brunel</b>: one day of a real logistics problem, in seven linked tables.</h2>
 <div class="lu-walk" data-label="Brunel&#x27;s seven tables and the columns that link them"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 380, "nodes": [{"id": "ol", "label": "OrderList\n9,215 rows", "x": 724, "y": 190, "w": 260, "h": 90}, {"id": "pp", "label": "PlantPorts\n22 rows", "x": 215, "y": 60, "w": 270, "h": 80}, {"id": "ppl", "label": "ProductsPerPlant\n2,036 rows", "x": 215, "y": 190, "w": 270, "h": 80}, {"id": "vmi", "label": "VmiCustomers\n14 rows", "x": 215, "y": 320, "w": 270, "h": 80}, {"id": "fr", "label": "FreightRates\n1,540 rows", "x": 1233, "y": 60, "w": 270, "h": 80}, {"id": "wcap", "label": "WhCapacities\n19 rows", "x": 1233, "y": 190, "w": 270, "h": 80}, {"id": "wcost", "label": "WhCosts\n19 rows", "x": 1233, "y": 320, "w": 270, "h": 80}], "edges": [{"id": "a", "from": "ol", "to": "pp", "label": "Plant Code", "sides": ["left", "right"], "route": "elbow"}, {"id": "b", "from": "ol", "to": "ppl", "label": "Plant Code", "sides": ["left", "right"]}, {"id": "c", "from": "ol", "to": "vmi", "label": "Customer", "sides": ["left", "right"], "route": "elbow"}, {"id": "d", "from": "ol", "to": "fr", "label": "Carrier", "sides": ["right", "left"], "route": "elbow"}, {"id": "e", "from": "ol", "to": "wcap", "label": "Plant ID", "sides": ["right", "left"]}, {"id": "f", "from": "ol", "to": "wcost", "label": "WH", "sides": ["right", "left"], "route": "elbow"}], "steps": [{"show": ["ol"], "set": {"ol": "active"}}, {"show": ["pp", "ppl", "a", "b"], "run": ["a", "b"], "set": {"ol": "idle"}}, {"show": ["fr", "d"], "run": ["d"]}, {"show": ["wcap", "wcost", "e", "f"], "run": ["e", "f"], "set": {"wcap": "active", "wcost": "active"}}, {"show": ["vmi", "c"], "run": ["c"], "set": {"wcap": "idle", "wcost": "idle"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="The orders" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; &lt;b&gt;OrderList&lt;/b&gt;: 9,215 orders, each with a plant, two ports, a carrier, a customer, a product and a weight."></div><div data-walk-step="2" data-caption-short="What each plant can do" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Which ports each plant ships through, and which products each plant makes. They link by &lt;b&gt;Plant Code&lt;/b&gt;."></div><div data-walk-step="3" data-caption-short="What shipping costs" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; &lt;b&gt;FreightRates&lt;/b&gt;: a price per carrier, per port pair, per weight band."></div><div data-walk-step="4" data-caption-short="Same plant, three names" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Warehouse capacity and cost. The same plant is called &lt;b&gt;Plant Code&lt;/b&gt;, &lt;b&gt;Plant ID&lt;/b&gt; and &lt;b&gt;WH&lt;/b&gt; in three tables of one file."></div><div data-walk-step="5" data-caption-short="Special customers" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; &lt;b&gt;VmiCustomers&lt;/b&gt;: 14 pairs of plant and customer that get special treatment. Nothing in the file says what VMI means."></div></div></div><p class="lu-caption">Source: Kalganova and Dzalbs, Brunel University London, on Figshare, licence CC BY 4.0. Exported from one workbook to seven CSV files by demos/data/fetch_data.py.</p>
-  <template data-notes><p>Four minutes. Stop on step 4. Three names for one plant, in one file, made by one team. That is the whole course in one step.</p>
-    <ul><li>Someone will ask what VMI means. Answer: vendor managed inventory, a standard term, but the file never says so. A human knows; the data does not.</li></ul></template>
+  <template data-notes><p>Four minutes. I stop on step 4. Three names for one plant, in one file, made by one team. That is the whole course in one step.</p>
+    <ul><li>Someone usually asks what VMI means. It is vendor managed inventory, a standard term, but the file never says so. A human knows; the data does not.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 10 -->
@@ -176,7 +176,7 @@ last quarter, and who did we ship them to?
   <h2 class="lu-h2" style="max-width:66ch">Seven tables, one real row each. Read them like sentences.</h2>
 <table class="lu-table lu-table--mono"><thead><tr><th>Table</th><th>Its first real row</th></tr></thead><tbody><tr><td>OrderList</td><td>order <b>1447296446.7</b> · 2013-05-26 · PLANT16 · PORT09 · V44_3 · CRF · 808 units · weight 14.3</td></tr><tr><td>FreightRates</td><td>V444_6 · PORT08 to PORT09 · 250 to 499.99 · DTD · rate 0.7132 · 'AIR   '</td></tr><tr><td>PlantPorts</td><td>PLANT01 ships through PORT01</td></tr><tr><td>ProductsPerPlant</td><td>PLANT15 makes product 1698815</td></tr><tr><td>WhCapacities</td><td>PLANT15 · daily capacity 11</td></tr><tr><td>WhCosts</td><td>PLANT15 · cost per unit 1.4151</td></tr><tr><td>VmiCustomers</td><td>PLANT02 · customer V5555555555555_16</td></tr></tbody><caption>Real first rows, from reference-outputs/s1-facts.txt.</caption></table>
   <p class="lu-sub" data-build="1"><b>Look again:</b> an order number with a decimal point, a mode with three trailing spaces, codes that mean nothing outside this file.</p>
-  <template data-notes><p>Three minutes. Let them spot the oddities before you build the callout. Somebody usually sees the decimal in the order number first.</p></template>
+  <template data-notes><p>Three minutes. I let you spot the oddities before I build the callout. Somebody usually sees the decimal in the order number first.</p></template>
 </section>
 
 <!-- ==================================================================== 11 -->
@@ -212,7 +212,7 @@ last quarter, and who did we ship them to?
     </div>
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">The habit this trains</span><p class="lu-sub"><b>Find the grain before you count anything.</b> It is the first line of every profiling report you will write.</p></div>
   </div>
-  <template data-notes><p>Forty seconds, show of hands, then reveal. Distractor <b>a</b> is the one that ships to management every day.</p></template>
+  <template data-notes><p>Forty seconds, show of hands, then I reveal the answer. Distractor <b>a</b> is the one that ships to management every day.</p></template>
 </section>
 
 <!-- ==================================================================== 13 -->
@@ -222,7 +222,7 @@ last quarter, and who did we ship them to?
     <h2 class="lu-display-xl" style="max-width:26ch">The file stores every value correctly. So where did its meaning go?</h2>
     <p class="lu-lead" style="max-width:46ch">Meaning is written down nowhere a program can reach it. Our own data shows it leaving.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 14 -->
@@ -244,10 +244,10 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub"><b>Schema</b>: the declared shape of data: tables, columns, types, keys. How it looks, not what it means.</p><p class="lu-sub"><b>Semantic layer</b>: a machine readable description of what the data means, above the systems that store it.</p></div>
     </div>
   </div>
-  <template data-notes><p>Five minutes. Read the four comments at the bottom of the code aloud, slowly. Every one is a real fact about a real column.</p>
+  <template data-notes><p>Five minutes. I read the four comments at the bottom of the code aloud, slowly. Every one is a real fact about a real column.</p>
     <ul>
       <li><code>Late_delivery_risk</code> is the best one: its name says "risk", yet it equals 1 on exactly the 98,977 lines marked late. The name lies and the schema cannot tell you.</li>
-      <li>Ask: who has met a status column with an undocumented code? Thirty seconds, always lands.</li>
+      <li>I ask: who has met a status column with an undocumented code? Thirty seconds, and it always lands.</li>
     </ul></template>
 </section>
 
@@ -269,10 +269,10 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
       <div class="lu-callout" data-build="2"><span class="lu-callout__label">Say this one out loud</span><p class="lu-sub">Integration rarely fails because data is dirty. <b>It fails because two correct descriptions of the world meet, and nobody wrote down how they differ.</b></p></div>
     </div>
   </div>
-  <template data-notes><p>Four minutes. Build the second table only after they have read the first and think "customer country" answers "where do we sell".</p>
+  <template data-notes><p>Four minutes. I build the second table only after you have read the first and think "customer country" answers "where do we sell".</p>
     <ul>
       <li>Both columns are correct. One is the billing address of the customer, the other is the delivery destination. The file does not say which is which.</li>
-      <li>Expected question: "would master data management not fix this?" Answer: it picks one spelling and throws the reason away. We want to record the difference, not erase it.</li>
+      <li>Expected question: "would master data management not fix this?" My answer: it picks one spelling and throws the reason away. We want to record the difference, not erase it.</li>
     </ul></template>
 </section>
 
@@ -283,7 +283,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
 <div class="lu-walk" data-label="Two definitions of late on the same rows"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 370, "nodes": [{"id": "data", "label": "DataCo\n180,519 order lines", "x": 150, "y": 180, "w": 260, "h": 96}, {"id": "ra", "label": "Rule A: Delivery Status\n= 'Late delivery'", "x": 560, "y": 70, "w": 360, "h": 90}, {"id": "rb", "label": "Rule B: Days real\n> Days scheduled", "x": 560, "y": 290, "w": 360, "h": 90}, {"id": "na", "label": "98,977 late\n54.8 percent", "x": 950, "y": 70, "w": 250, "h": 90}, {"id": "nb", "label": "103,400 late\n57.3 percent", "x": 950, "y": 290, "w": 250, "h": 90}, {"id": "gap", "label": "4,423 lines\ncanceled, yet\nlate by the clock", "x": 1300, "y": 180, "w": 250, "h": 120}], "edges": [{"id": "a1", "from": "data", "to": "ra", "label": ""}, {"id": "b1", "from": "data", "to": "rb", "label": ""}, {"id": "a2", "from": "ra", "to": "na", "label": ""}, {"id": "b2", "from": "rb", "to": "nb", "label": ""}, {"id": "a3", "from": "na", "to": "gap", "label": "", "kind": "conflict"}, {"id": "b3", "from": "nb", "to": "gap", "label": "", "kind": "conflict"}], "steps": [{"show": ["data"], "set": {"data": "active"}}, {"show": ["ra", "na", "a1", "a2"], "run": ["a1", "a2"], "set": {"data": "idle", "na": "active"}}, {"show": ["rb", "nb", "b1", "b2"], "run": ["b1", "b2"], "set": {"na": "idle", "nb": "active"}}, {"show": ["gap", "a3", "b3"], "run": ["a3", "b3"], "set": {"nb": "idle", "gap": "impossible"}}], "legend": false, "flags": {"impossible": "differ"}}</script></div><div data-walk-step="1" data-caption-short="The same rows" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; One file. The question: how many order lines were late?"></div><div data-walk-step="2" data-caption-short="Answer A" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Count the lines the status column calls late: &lt;b&gt;98,977&lt;/b&gt;."></div><div data-walk-step="3" data-caption-short="Answer B" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Count the lines that took longer than planned: &lt;b&gt;103,400&lt;/b&gt;."></div><div data-walk-step="4" data-caption-short="Where they differ" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; The gap is &lt;b&gt;4,423&lt;/b&gt; lines: shipments canceled, but past their date. Both answers are correct. The word &lt;b&gt;late&lt;/b&gt; has two meanings."></div></div></div>
   <template data-notes><p>Five minutes. This is the most important slide of Part 3: a real disagreement, in real data, with no error anywhere.</p>
     <ul>
-      <li>Before step 4 ask: which number is right? Let two people argue for A and B. Then show that the difference is exactly the canceled shipments.</li>
+      <li>Before step 4 I ask: which number is right? Two of you argue for A and B. Then I show that the difference is exactly the canceled shipments.</li>
       <li>Case B in the failure gallery (the dashboard said 12 percent, operations said 30) is this slide at company scale.</li>
       <li>The fix is not better data. It is writing down which meaning each report uses. That is an ontology's job, Session 3.</li>
     </ul></template>
@@ -306,7 +306,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
       <div class="lu-callout lu-callout--neutral" data-build="1"><span class="lu-callout__label">A test you can apply</span><p class="lu-sub">If a new team member must ask a person what a column means, the meaning is in a head, not in a semantic layer.</p></div>
     </div>
   </div>
-  <template data-notes><p>Three minutes. Read from the bottom up: what we have (schema), what we want (semantic layer), and the two tools that build it (ontology, knowledge graph).</p></template>
+  <template data-notes><p>Three minutes. I read from the bottom up: what we have (schema), what we want (semantic layer), and the two tools that build it (ontology, knowledge graph).</p></template>
 </section>
 
 <!-- ==================================================================== 18 -->
@@ -327,7 +327,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     </div>
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">The habit this trains</span><p class="lu-sub"><b>Separate what the data shows from what you decided it means.</b> Remember the 4,423 canceled lines: correct rows, different meaning.</p></div>
   </div>
-  <template data-notes><p>Forty seconds, show of hands, then reveal. Spend the time on <b>d</b>: it is a good engineer's instinct, and it wastes a quarter.</p></template>
+  <template data-notes><p>Forty seconds, show of hands, then I reveal the answer. I spend the time on <b>d</b>: it is a good engineer's instinct, and it wastes a quarter.</p></template>
 </section>
 
 <!-- ==================================================================== 19 -->
@@ -337,7 +337,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <h2 class="lu-display-xl" style="max-width:26ch">Eight sessions, one pipeline. Where does each session fit?</h2>
     <p class="lu-lead" style="max-width:46ch">Each session adds one stage. By Session 8 the whole system starts with one command.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 20 -->
@@ -347,9 +347,9 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
 <div class="lu-walk" data-label="The reference architecture, session by session"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 400, "nodes": [{"id": "src", "label": "Sources\nToday", "x": 130, "y": 200, "w": 200, "h": 84}, {"id": "prof", "label": "Profiling\nToday", "x": 420, "y": 70, "w": 220, "h": 84}, {"id": "map", "label": "Mapping\nSession 5", "x": 420, "y": 330, "w": 220, "h": 84}, {"id": "ont", "label": "Ontology\nSession 3", "x": 720, "y": 70, "w": 220, "h": 84}, {"id": "shp", "label": "Shapes\nSession 4", "x": 720, "y": 200, "w": 220, "h": 84}, {"id": "kg", "label": "Knowledge graph\nSessions 2 and 5", "x": 1050, "y": 200, "w": 250, "h": 84}, {"id": "learn", "label": "Learning\nSession 6", "x": 1325, "y": 90, "w": 200, "h": 84}, {"id": "ask", "label": "Questions, deploy\nSessions 7 and 8", "x": 1310, "y": 310, "w": 230, "h": 84}], "edges": [{"id": "e1", "from": "src", "to": "prof", "label": ""}, {"id": "e2", "from": "src", "to": "map", "label": ""}, {"id": "e3", "from": "prof", "to": "ont", "label": "rules"}, {"id": "e4", "from": "prof", "to": "shp", "label": ""}, {"id": "e5", "from": "ont", "to": "kg", "label": "meaning", "route": "elbow", "sides": ["right", "top"]}, {"id": "e6", "from": "shp", "to": "kg", "label": "checks"}, {"id": "e7", "from": "map", "to": "kg", "label": "tables in", "route": "elbow", "sides": ["right", "bottom"]}, {"id": "e8", "from": "kg", "to": "learn", "label": ""}, {"id": "e9", "from": "kg", "to": "ask", "label": ""}], "steps": [{"show": ["src"], "set": {"src": "active"}}, {"show": ["prof", "e1"], "run": ["e1"], "set": {"src": "idle", "prof": "active"}}, {"show": ["ont", "shp", "e3", "e4"], "run": ["e3", "e4"], "set": {"prof": "idle", "ont": "active", "shp": "active"}}, {"show": ["map", "kg", "e2", "e5", "e6", "e7"], "run": ["e2", "e7", "e5", "e6"], "set": {"ont": "idle", "shp": "idle", "kg": "active"}}, {"show": ["learn", "e8"], "run": ["e8"], "set": {"kg": "idle", "learn": "active"}}, {"show": ["ask", "e9"], "run": ["e9"], "set": {"learn": "idle", "ask": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="Where you start" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Systems that are each correct and share no names. For us: DataCo and Brunel."></div><div data-walk-step="2" data-caption-short="Profile, find the rules" data-caption="&lt;b&gt;Step 2, today.&lt;/b&gt; Measure the data and write down the rules it obeys. Your constraint inventory feeds everything after."></div><div data-walk-step="3" data-caption-short="Meaning and checks" data-caption="&lt;b&gt;Step 3, Sessions 3 and 4.&lt;/b&gt; The rules become two things. The &lt;b&gt;ontology&lt;/b&gt; says what things are. The &lt;b&gt;shapes&lt;/b&gt; say what data must look like. One adds facts, the other refuses bad data."></div><div data-walk-step="4" data-caption-short="Build the graph" data-caption="&lt;b&gt;Step 4, Sessions 2 and 5.&lt;/b&gt; A mapping turns the tables into a &lt;b&gt;knowledge graph&lt;/b&gt;, given meaning by the ontology and checked by the shapes. You first build a simple graph in Session 2; Session 5 rebuilds it this way."></div><div data-walk-step="5" data-caption-short="Predict" data-caption="&lt;b&gt;Step 5, Session 6.&lt;/b&gt; A model learns from the graph, for example which shipment will be late next."></div><div data-walk-step="6" data-caption-short="Ask in English" data-caption="&lt;b&gt;Step 6, Sessions 7 and 8.&lt;/b&gt; You ask in English; the system writes the query, checks it, and answers or says it does not know. Session 7 also deploys it with one command; your team hands it in before Session 8 and defends it there."></div></div></div>
   <template data-notes><p>Seven minutes, the spine of the course. Six steps for eight sessions: steps 3 and 4 each cover two sessions, and the last step covers Sessions 7 and 8. Use the session labels on the boxes, not the step count, to place the weeks.</p>
     <ul>
-      <li>Stop at step 3 and ask for the difference between the two boxes before reading the caption. "One is meaning, one is validation" is the answer to build on all term.</li>
-      <li>Step 4 is the finished design, not the teaching order: students build a simple graph in Session 2, before the ontology, and Session 5 rebuilds it with the mapping. Say so aloud.</li>
-      <li>Come back to this slide in later sessions; each recap starts from it.</li>
+      <li>I stop at step 3 and ask you for the difference between the two boxes before I read the caption. "One is meaning, one is validation" is the answer to build on all term.</li>
+      <li>Step 4 is the finished design, not the teaching order: you build a simple graph in Session 2, before the ontology, and Session 5 rebuilds it with the mapping. I say so aloud.</li>
+      <li>We come back to this slide in later sessions; each recap starts from it.</li>
     </ul></template>
 </section>
 
@@ -366,7 +366,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     </div>
   </div>
   <template data-notes><p>Three minutes. One line per tool; each gets its own slide in the session that uses it.</p>
-    <ul><li>If you teach this after September 2026, re-check every status before class. A stale slide about stale tools is embarrassing.</li></ul></template>
+    <ul><li>Tool status changes fast. I re-check every release date before I teach this slide, because a stale slide about stale tools is embarrassing.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 22 -->
@@ -380,7 +380,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <div class="lu-card lu-col-3" data-build="3"><span class="lu-card__label">03 · Late delivery</span><h3 class="lu-h3">Which shipment is late next, and why?</h3><p class="lu-sub">Session 6. And which "late"?</p></div>
     <div class="lu-card lu-col-3" data-build="4"><span class="lu-card__label">04 · Wrong answers</span><h3 class="lu-h3">What does a confident wrong answer cost?</h3><p class="lu-sub">More than no answer. Session 7.</p></div>
   </div>
-  <template data-notes><p>Three minutes. Build the cards one at a time. Card 03 links back to the two meanings of late: the business question cannot even be asked until the word is defined.</p></template>
+  <template data-notes><p>Three minutes. I build the cards one at a time. Card 03 links back to the two meanings of late: the business question cannot even be asked until the word is defined.</p></template>
 </section>
 
 <!-- ==================================================================== 23 -->
@@ -390,7 +390,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <h2 class="lu-display-xl" style="max-width:26ch">The data obeys rules nobody wrote down. How do you find them?</h2>
     <p class="lu-lead" style="max-width:46ch">Guess, measure, then try to break your guess. Every example here comes from our two datasets.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 24 -->
@@ -399,7 +399,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <h2 class="lu-h2" style="max-width:66ch"><b>Data profiling</b>: measuring a dataset to learn its real shape.</h2>
 <div class="lu-walk" data-label="The profiling loop"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 230, "nodes": [{"id": "guess", "label": "Guess what a\ncolumn means", "x": 170, "y": 110, "w": 260, "h": 90}, {"id": "meas", "label": "Measure it\n(profile)", "x": 540, "y": 110, "w": 240, "h": 90}, {"id": "rule", "label": "Write the rule,\nwith the count", "x": 910, "y": 110, "w": 260, "h": 90}, {"id": "attack", "label": "Look for a row\nthat breaks it", "x": 1280, "y": 110, "w": 260, "h": 90}], "edges": [{"id": "a", "from": "guess", "to": "meas", "label": ""}, {"id": "b", "from": "meas", "to": "rule", "label": ""}, {"id": "c", "from": "rule", "to": "attack", "label": ""}, {"id": "d", "from": "attack", "to": "guess", "label": "repeat", "route": "elbow", "sides": ["bottom", "bottom"]}], "steps": [{"show": ["guess"], "set": {"guess": "active"}}, {"show": ["meas", "a"], "run": ["a"], "set": {"guess": "idle", "meas": "active"}}, {"show": ["rule", "b"], "run": ["b"], "set": {"meas": "idle", "rule": "active"}}, {"show": ["attack", "c", "d"], "run": ["c", "d"], "set": {"rule": "idle", "attack": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="Guess" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Read the column names and write what you think each one means. A guess gives the numbers something to test."></div><div data-walk-step="2" data-caption-short="Measure" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; &lt;b&gt;Profile&lt;/b&gt; it: count values, empty cells, ranges, links between tables."></div><div data-walk-step="3" data-caption-short="Write the rule" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Write the rule in one sentence, with the count that supports it."></div><div data-walk-step="4" data-caption-short="Try to break it" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Hunt for a row that breaks the rule. Then decide: is the row wrong, or the rule? Repeat."></div></div></div><div class="lu-row" style="gap:var(--lu-s5)"><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Data profiling</dt><dd>Measuring a dataset to learn its real shape: counts, missing values, ranges, repeated values, links between tables.</dd></dl></div></div>
   <template data-notes><p>Three minutes. The loop is the lab. Everything in the next nine slides is one turn of it on real data.</p>
-    <ul><li>Profiling without a guess produces statistics, not findings. Say it once, clearly.</li></ul></template>
+    <ul><li>Profiling without a guess produces statistics, not findings. I say it once, clearly.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 25 -->
@@ -411,7 +411,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <div class="lu-stack"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 800, "height": 372, "nodes": [{"id": "p0", "label": "PLANT03", "x": 170, "y": 28, "w": 230, "h": 38}, {"id": "p1", "label": "PLANT08", "x": 170, "y": 74, "w": 230, "h": 38}, {"id": "p2", "label": "PLANT09", "x": 170, "y": 120, "w": 230, "h": 38}, {"id": "p3", "label": "PLANT12", "x": 170, "y": 166, "w": 230, "h": 38}, {"id": "p4", "label": "PLANT13", "x": 170, "y": 212, "w": 230, "h": 38}, {"id": "p5", "label": "PLANT01", "x": 170, "y": 258, "w": 230, "h": 38}, {"id": "p6", "label": "PLANT16", "x": 170, "y": 304, "w": 230, "h": 38}, {"id": "port4", "label": "PORT04", "x": 620, "y": 120, "w": 200, "h": 52}, {"id": "port1", "label": "PORT01", "x": 620, "y": 258, "w": 200, "h": 38}, {"id": "port2", "label": "PORT02", "x": 620, "y": 304, "w": 200, "h": 38}, {"id": "port9", "label": "PORT09", "x": 620, "y": 350, "w": 200, "h": 38}], "edges": [{"id": "k0", "from": "p0", "to": "port4", "label": ""}, {"id": "k1", "from": "p1", "to": "port4", "label": ""}, {"id": "k2", "from": "p2", "to": "port4", "label": ""}, {"id": "k3", "from": "p3", "to": "port4", "label": ""}, {"id": "k4", "from": "p4", "to": "port4", "label": ""}, {"id": "k5a", "from": "p5", "to": "port1", "label": ""}, {"id": "k5b", "from": "p5", "to": "port2", "label": ""}, {"id": "k6", "from": "p6", "to": "port9", "label": ""}], "steps": [{"show": ["p0", "p1", "p2", "p3", "p4", "p5", "p6", "port4", "port1", "port2", "port9", "k0", "k1", "k2", "k3", "k4", "k5a", "k5b", "k6"], "set": {"port4": "active", "p5": "active"}}], "legend": false}</script></div><p class="lu-caption">Real links, 7 of 19 plants shown. Rings: the many side and the two way side.</p></div>
     <div class="lu-stack"><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub"><b>Cardinality (of a column)</b>: how many different values it holds. Order Date: 1. Order ID: 9,215.</p><p class="lu-sub"><b>One to many</b>: one thing links to several on the other side. Seven plants share PORT04.</p></div><table class="lu-table lu-table--mono" data-build="1"><thead><tr><th>PlantPorts</th><th>Real count</th></tr></thead><tbody><tr><td>Plants · ports</td><td>19 · 11</td></tr><tr><td>Possible pairs</td><td>209</td></tr><tr><td>Pairs that exist</td><td><b>22</b></td></tr></tbody></table></div></div>
   <template data-notes><p>Three minutes. Two kinds of cardinality: a column's number of distinct values, and a link's number of partners on each side.</p>
-    <ul><li>22 of 209 is the headline: only one pair in ten exists. That smells like a rule. Slide "One real row of the inventory" writes it down.</li></ul></template>
+    <ul><li>22 of 209 is the headline: only one pair in ten exists. That smells like a rule. The slide "One real row of the inventory" writes it down.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 26 -->
@@ -432,7 +432,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     </div>
   </div>
   <template data-notes><p>Three minutes. A whole column that is always empty is not a quality problem, it is a column nobody uses. Zip code missing for 86 percent is different: someone needs it and it is not there.</p>
-    <ul><li>Open world is only previewed. The line to leave: missing is not false. Session 3 spends real time on it.</li></ul></template>
+    <ul><li>I only preview open world. The line I leave you with: missing is not false. Session 3 spends real time on it.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 27 -->
@@ -449,7 +449,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
       <table class="lu-table"><thead><tr><th>Brunel · OrderList</th><th>What the counts show</th></tr></thead><tbody><tr><td>Order Date</td><td><b>1</b> distinct value: 2013-05-26</td></tr><tr><td>Destination Port</td><td><b>1</b> distinct value: PORT09</td></tr><tr><td>Ship Late Day count</td><td><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:97.9%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">9,023 zeros</span></span></td></tr><tr><td>Ship ahead day count</td><td><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:48.0%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">4,426 zeros</span></span></td></tr></tbody><caption>Real counts out of 9,215 orders.</caption></table>
     </div>
   </div>
-  <template data-notes><p>Three minutes. The Brunel side is the finding: every order is on one day, to one port. Brunel is a snapshot, not a history, so it cannot teach "late over time". Know that before Session 6 asks you to predict.</p></template>
+  <template data-notes><p>Three minutes. The Brunel side is the finding: every order is on one day, to one port. Brunel is a snapshot, not a history, so it cannot teach "late over time". Keep that in mind before Session 6 asks you to predict.</p></template>
 </section>
 
 <!-- ==================================================================== 28 -->
@@ -458,7 +458,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <h2 class="lu-h2" style="max-width:66ch">Every order names a carrier. Does every carrier have a price?</h2>
 <div class="lu-walk" data-label="Carriers in OrderList against FreightRates"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 250, "nodes": [{"id": "c0", "label": "V444_0 · 6,264 orders", "x": 190, "y": 35, "w": 330, "h": 56}, {"id": "c1", "label": "V444_1 · 2,097 orders", "x": 190, "y": 112, "w": 330, "h": 56}, {"id": "c3", "label": "V44_3 · 854 orders", "x": 190, "y": 190, "w": 330, "h": 56}, {"id": "fr", "label": "FreightRates\ncarriers V444_0 to V444_9", "x": 720, "y": 73, "w": 370, "h": 80}, {"id": "miss", "label": "No rate for V44_3", "x": 720, "y": 190, "w": 370, "h": 56}, {"id": "crf", "label": "All 854 are CRF", "x": 1235, "y": 190, "w": 300, "h": 56}], "edges": [{"id": "a", "from": "c0", "to": "fr", "label": ""}, {"id": "b", "from": "c1", "to": "fr", "label": ""}, {"id": "c", "from": "c3", "to": "miss", "label": "", "kind": "conflict"}, {"id": "d", "from": "miss", "to": "crf", "label": ""}], "steps": [{"show": ["c0", "c1", "fr", "a", "b"], "run": ["a", "b"], "set": {"fr": "active"}}, {"show": ["c3", "miss", "c"], "run": ["c"], "set": {"fr": "idle", "miss": "impossible"}}, {"show": ["crf", "d"], "run": ["d"], "set": {"crf": "active"}}], "legend": false, "flags": {"impossible": "missing"}}</script></div><div data-walk-step="1" data-caption-short="Carriers with rates" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Two carriers in OrderList find their prices in FreightRates, joined on &lt;b&gt;Carrier&lt;/b&gt;."></div><div data-walk-step="2" data-caption-short="A carrier with none" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; &lt;b&gt;854&lt;/b&gt; orders use carrier V44_3, which has &lt;b&gt;no row&lt;/b&gt; in FreightRates. The reference points at nothing."></div><div data-walk-step="3" data-caption-short="A hidden rule" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; All 854 have service level CRF, and no other order does. A rule no table states: CRF orders go with V44_3 and are not priced here."></div></div></div><div class="lu-row" style="gap:var(--lu-s5)"><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Referential integrity</dt><dd>Every reference points at something that exists, for example every order's carrier has a row in the rate table.</dd></dl></div></div>
   <template data-notes><p>Four minutes. Step 3 is the payoff: a broken reference turned into a rule. The counts match exactly: 854 V44_3 orders, 854 CRF orders, the same 854.</p>
-    <ul><li>Do not claim to know what CRF means. The file does not say. Writing "we do not know what CRF means" in the inventory is a correct, graded answer.</li></ul></template>
+    <ul><li>I do not claim to know what CRF means, because the file does not say. Writing "we do not know what CRF means" in your inventory is a correct answer.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 29 -->
@@ -499,7 +499,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
       <div class="lu-callout" data-build="1"><span class="lu-callout__label">Do not click Merge</span><p class="lu-sub">All three clusters are different cities. The Merge box stays empty.</p></div>
     </div>
   </div>
-  <template data-notes><p>Two minutes. Only the path to the dialog is new; the idea was the last slide. If a student merges, their DataCo loses a Chilean city and 16 orders move to California.</p></template>
+  <template data-notes><p>Two minutes. Only the path to the dialog is new; the idea was the last slide. If you merge, your DataCo loses a Chilean city and 16 orders move to California.</p></template>
 </section>
 
 <!-- ==================================================================== 32 -->
@@ -507,7 +507,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <div class="lu-eyebrow">Writing it down</div>
   <h2 class="lu-h2" style="max-width:66ch">A rule, its evidence, and where it lives. Two of three is not a finding.</h2>
 <table class="lu-table"><thead><tr><th>Rule, one sentence</th><th>Evidence in the data</th><th>Source columns</th></tr></thead><tbody><tr><td>A plant ships only through a port it is linked to.</td><td>22 of 209 possible pairs exist. <b>All 9,215 orders</b> leave through a linked port: 0 exceptions.</td><td>OrderList: Plant Code, Origin Port · PlantPorts</td></tr><tr><td>An order with service level CRF uses carrier V44_3, which has no freight rate.</td><td>854 CRF orders, 854 V44_3 orders, the same rows. V44_3 is absent from FreightRates.</td><td>OrderList: Service Level, Carrier · FreightRates: Carrier</td></tr></tbody><caption>Both rules are real and hold on every row. The file states neither.</caption></table><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Business rule</dt><dd>A rule the business follows that the data should obey.</dd><dt>Constraint inventory</dt><dd>Our table of business rules found in the data, each with evidence and source.</dd></dl></div>
-  <template data-notes><p>Three minutes. Read row 1 across: rule, evidence, source. Where it goes next: Session 3 turns rules into meaning, Session 4 into checks, Session 5 into mapping decisions. That is the standard for the lab. <code>constraint_inventory_template.csv</code> has the same three columns.</p></template>
+  <template data-notes><p>Three minutes. I read row 1 across: rule, evidence, source. Where it goes next: Session 3 turns rules into meaning, Session 4 into checks, Session 5 into mapping decisions. That is the standard for the lab. <code>constraint_inventory_template.csv</code> has the same three columns.</p></template>
 </section>
 
 <!-- ==================================================================== 33 -->
@@ -526,7 +526,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <h2 class="lu-display-xl" style="max-width:26ch">Your team project: the system you build, with whom, and how it is graded.</h2>
     <p class="lu-lead" style="max-width:46ch">Teams of 2 or 3. Your own topic and database. The same pipeline you see in the lectures. Team and topic locked before Session 2.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 35 -->
@@ -534,7 +534,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <div class="lu-eyebrow">One system, one layer per session</div>
   <h2 class="lu-h2" style="max-width:66ch">Every team builds the same pipeline. What differs is the domain and the data.</h2>
 <div class="lu-walk" data-label="The team project, session by session, with its milestones"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 300, "nodes": [{"id": "inv", "label": "Constraint\ninventory\nSession 1", "x": 105, "y": 150, "w": 190, "h": 120}, {"id": "ont", "label": "Ontology\nSession 3", "x": 310, "y": 150, "w": 180, "h": 120}, {"id": "shp", "label": "Shapes\nSession 4", "x": 510, "y": 150, "w": 180, "h": 120}, {"id": "map", "label": "Mapping and\nmatching\nSession 5", "x": 715, "y": 150, "w": 190, "h": 120}, {"id": "ml", "label": "Graph\nmodels\nSession 6", "x": 920, "y": 150, "w": 180, "h": 120}, {"id": "qa", "label": "Questions\nin English\nSession 7", "x": 1120, "y": 150, "w": 180, "h": 120}, {"id": "fin", "label": "Hand-in, then\nyour defense\nSession 8", "x": 1335, "y": 150, "w": 210, "h": 120}], "edges": [{"id": "e0", "from": "inv", "to": "ont", "label": ""}, {"id": "e1", "from": "ont", "to": "shp", "label": ""}, {"id": "e2", "from": "shp", "to": "map", "label": ""}, {"id": "e3", "from": "map", "to": "ml", "label": ""}, {"id": "e4", "from": "ml", "to": "qa", "label": ""}, {"id": "e5", "from": "qa", "to": "fin", "label": ""}], "steps": [{"show": ["inv"], "set": {"inv": "active"}}, {"show": ["ont", "shp", "e0", "e1"], "run": ["e0", "e1"], "set": {"inv": "idle", "shp": "active"}}, {"show": ["map", "ml", "e2", "e3"], "run": ["e2", "e3"], "set": {"shp": "idle", "ml": "active"}}, {"show": ["qa", "fin", "e4", "e5"], "run": ["e4", "e5"], "set": {"ml": "idle", "fin": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="Start today" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Your team&#x27;s first piece: a constraint inventory on &lt;b&gt;your own&lt;/b&gt; data, the same method as today&#x27;s lab."></div><div data-walk-step="2" data-caption-short="Milestone 1 · a checkpoint" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; End of Session 4: your ontology and shapes. &lt;b&gt;Milestone 1&lt;/b&gt;, feedback, not graded."></div><div data-walk-step="3" data-caption-short="Milestone 2 · a checkpoint" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; End of Session 6: your integrated graph and your prediction models. &lt;b&gt;Milestone 2&lt;/b&gt;, a checkpoint, not graded."></div><div data-walk-step="4" data-caption-short="Final · 85 percent" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Before Session 8: system and report, 55 percent. Session 8: your defense, 30."></div></div></div><div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Graded once, at the end</span><p class="lu-sub">After each lab, repeat it on your own data. The milestones are feedback; the final system is graded once.</p></div>
-  <template data-notes><p>Four minutes. The message: every lab is a rehearsal on the shared case, and the real work is repeating it on your own topic.</p>
+  <template data-notes><p>Three minutes. The message: every lab is a rehearsal on the shared case, and the real work is repeating it on your own topic.</p>
     <ul><li>The remaining 15 percent is attendance and running the lab in class, Sessions 1 to 7.</li></ul></template>
 </section>
 
@@ -544,7 +544,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <h2 class="lu-h2" style="max-width:66ch">Five areas, each checked for open data and a real vocabulary to reuse.</h2>
 <table class="lu-table"><thead><tr><th>Topic area</th><th>Example open databases</th><th>Vocabulary to reuse</th></tr></thead><tbody><tr><td>Transit and mobility</td><td>GTFS feeds from one transit agency</td><td>Linked GTFS</td></tr><tr><td>Bibliographic</td><td>OpenAlex, CrossRef</td><td>SemOpenAlex, BIBFRAME</td></tr><tr><td>Cultural heritage, music</td><td>MusicBrainz, Europeana</td><td>Music Ontology, EDM</td></tr><tr><td>Public procurement</td><td>OCDS releases from one government</td><td>OCDS ontology</td></tr><tr><td>Food products</td><td>Open Food Facts, USDA FoodData Central</td><td>FoodOn</td></tr></tbody><caption>Full menu and licences: PROJECT-REDESIGN.md.</caption></table>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Or bring your own</span><p class="lu-sub">Any open database with a real vocabulary to reuse and unwritten rules to find. <b>You check and report every licence.</b></p></div>
-  <template data-notes><p>Three minutes. Do not let them choose in the room; they need to look at the data first. The two tests are what matter: a vocabulary to reuse, and hidden rules to find.</p></template>
+  <template data-notes><p>Three minutes. I do not let you choose in the room; you need to look at the data first. The two tests are what matter: a vocabulary to reuse, and hidden rules to find.</p></template>
 </section>
 
 <!-- ==================================================================== 37 -->
@@ -552,7 +552,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <div class="lu-eyebrow">The rules</div>
   <h2 class="lu-h2" style="max-width:66ch">Teams of 2 or 3, your choice, locked in before Session 2.</h2>
 <div class="lu-walk" data-label="Team formation timeline"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 350, "nodes": [{"id": "today", "label": "Today\nSession 1", "x": 170, "y": 110, "w": 240, "h": 96}, {"id": "form", "label": "Form a team of 2 or 3\nand pick a topic", "x": 620, "y": 110, "w": 400, "h": 96}, {"id": "dl", "label": "Before Session 2\nstarts: locked in", "x": 1100, "y": 110, "w": 320, "h": 96}, {"id": "late", "label": "No team by then:\nI place you", "x": 1100, "y": 290, "w": 400, "h": 96}], "edges": [{"id": "a", "from": "today", "to": "form", "label": ""}, {"id": "b", "from": "form", "to": "dl", "label": ""}, {"id": "c", "from": "dl", "to": "late", "label": "", "kind": "conflict"}], "steps": [{"show": ["today"], "set": {"today": "active"}}, {"show": ["form", "a"], "run": ["a"], "set": {"today": "idle", "form": "active"}}, {"show": ["dl", "b"], "run": ["b"], "set": {"form": "idle", "dl": "active"}}, {"show": ["late", "c"], "run": ["c"]}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="Today" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Today you meet the method on the shared case."></div><div data-walk-step="2" data-caption-short="Form a team" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Teams of &lt;b&gt;2 or 3&lt;/b&gt;, formed by you, any mix. Agree on a topic area and a database."></div><div data-walk-step="3" data-caption-short="The deadline" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Team and topic are locked in &lt;b&gt;before Session 2 starts&lt;/b&gt;."></div><div data-walk-step="4" data-caption-short="Nobody is left out" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Anyone without a team by then, I place into a team with space."></div></div></div><p class="lu-sub">The project is graded as a team; the defense is yours alone, and <b>any of you can be asked about any part</b>.</p>
-  <template data-notes><p>Three minutes. Say the deadline twice. Ask them to post team and topic where you collect them (your usual channel).</p></template>
+  <template data-notes><p>Three minutes. I say the deadline twice. Post your team and topic where we agree to collect them.</p></template>
 </section>
 
 <!-- ==================================================================== 38 -->
@@ -564,7 +564,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <table class="lu-table"><thead><tr><th>Course grade</th><th>Percent</th><th>When</th></tr></thead><tbody><tr><td>Attendance and lab run</td><td>15</td><td>Sessions 1 to 7</td></tr><tr><td>Team project: system and report</td><td>55</td><td>48 hours before Session 8</td></tr><tr><td>Individual defense</td><td>30</td><td>Session 8</td></tr></tbody></table>
     <table class="lu-table" data-build="1"><thead><tr><th>Team project, one mark per layer</th><th>Points</th></tr></thead><tbody><tr><td>Ontology</td><td>10</td></tr><tr><td>Shapes and validation</td><td>10</td></tr><tr><td>Mapping and integration</td><td>9</td></tr><tr><td>Learning over the graph</td><td>9</td></tr><tr><td>Access layer</td><td>9</td></tr><tr><td>Report and open problem</td><td>8</td></tr></tbody></table>
   </div>
-  <template data-notes><p>Three minutes. Each layer gets one mark: works (full points), partly (half), missing (none), judged from a clean checkout of the team's repository. The milestones at the end of Sessions 4 and 6 are feedback, not grades. The defense is individual: 2 or 3 questions each in Session 8, one overall mark from 0 to 3.</p></template>
+  <template data-notes><p>Three minutes. Each layer gets one mark: works (full points), partly (half), missing (none), judged from a clean checkout of your team's repository. The milestones at the end of Sessions 4 and 6 are feedback, not grades. The defense is individual: 2 or 3 questions each in Session 8, one overall mark from 0 to 3.</p></template>
 </section>
 
 <!-- ==================================================================== 39 -->
@@ -595,10 +595,10 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
       <div class="lu-callout"><span class="lu-callout__label">What scores</span><p class="lu-sub">Rules the schema does not already state, each with a count, and exceptions written down rather than dropped.</p></div>
     </div>
   </div>
-  <template data-notes><p>Three minutes to brief, then stop talking and walk the room.</p>
+  <template data-notes><p>Three minutes to brief, then I stop talking and walk the room.</p>
     <ul>
-      <li>Most common blocker: the DataCo profile takes several minutes and students think it hung. Say so before they start.</li>
-      <li>Second: twenty trivial rules ("Order Id is unique"). Redirect early. A rule the schema already enforces is not a finding.</li>
+      <li>Most common blocker: the DataCo profile takes several minutes and it looks as if it hung. I say so before you start.</li>
+      <li>Second: twenty trivial rules ("Order Id is unique"). I redirect early. A rule the schema already enforces is not a finding.</li>
       <li>Folder: <code>demos/session-01-environment-and-constraints/</code>. Its README has the same steps.</li>
     </ul></template>
 </section>
@@ -619,7 +619,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     </div>
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Two real examples from today</span><p class="lu-sub">Plant and port: 0 exceptions in 9,215 orders, the rule holds. Rate bands: 1,370 of 8,361 in a gap, the rate table is incomplete.</p></div>
   </div>
-  <template data-notes><p>Two minutes, run as a pause once everyone has a profiling report open. Let them argue whether profiling comes before reading the names. It comes after: a guess first, then the numbers.</p></template>
+  <template data-notes><p>Two minutes, run as a pause once everyone has a profiling report open. I let you argue whether profiling comes before reading the names. It comes after: a guess first, then the numbers.</p></template>
 </section>
 
 <!-- ==================================================================== 42 -->
@@ -633,7 +633,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
     <div class="lu-card lu-col-4"><span class="lu-card__label">By minute 60</span><p class="lu-sub">Five rules or more, each with evidence and source. Committed.</p></div>
   </div>
   <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Stuck?</span><p class="lu-sub">Start from a slide of Part 5: every measure there is one query in pandas. Your job is to find rules those slides did not show.</p></div>
-  <template data-notes><p>Sixty minutes. Circulate. At minute 35, check that nobody has merged an OpenRefine cluster. At minute 50, warn that commits are due.</p></template>
+  <template data-notes><p>Sixty minutes. I circulate. At minute 35, I check that nobody has merged an OpenRefine cluster. At minute 50, I warn that commits are due.</p></template>
 </section>
 
 <!-- ==================================================================== 43 -->
@@ -650,7 +650,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
       <div class="lu-reveal"><button class="lu-reveal__btn" type="button">Which stage</button><div class="lu-reveal__panel" hidden><p>The question layer. It could not say "stale" or "I do not know". Session 7 grades that.</p></div></div></div>
   </div>
   <p class="lu-sub"><b>Then, as a room:</b> compare inventories and count the rules only one person found. That number is the argument for writing meaning down.</p>
-  <template data-notes><p>Four minutes. The cases are teaching composites, not named companies. Take each as a show of hands before the reveal.</p></template>
+  <template data-notes><p>Four minutes. The cases are teaching composites, not named companies. We take each as a show of hands before I reveal the answer.</p></template>
 </section>
 
 <!-- ==================================================================== 44 -->
@@ -658,7 +658,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The words this session introduced.</h2>
 <div class="lu-split" style="margin-top:var(--lu-s2)"><dl class="lu-defs"><dt>Grain</dt><dd>What one row of a table stands for.</dd><dt>Schema</dt><dd>The declared shape of data, not its meaning.</dd><dt>Semantic layer</dt><dd>What the data means, readable by a program.</dd><dt>Ontology</dt><dd>A precise description of things and how they relate.</dd><dt>Knowledge graph</dt><dd>Things joined by named links, with meaning.</dd><dt>Data profiling</dt><dd>Measuring a dataset's real shape.</dd><dt>Cardinality</dt><dd>How many different values a column holds.</dd></dl><dl class="lu-defs"><dt>Null</dt><dd>An empty cell.</dd><dt>Open world</dt><dd>Missing means unknown, not false.</dd><dt>Distribution</dt><dd>How often each value appears.</dd><dt>Referential integrity</dt><dd>Every reference points at something that exists.</dd><dt>Clustering</dt><dd>Grouping look alike values for a person to judge.</dd><dt>Constraint inventory</dt><dd>Rules found in the data, with evidence.</dd></dl></div>
-  <template data-notes><p>One minute, or skip in class: it is for revision. Every term here is also clickable on the slides, and in GLOSSARY.md.</p></template>
+  <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
 <!-- ==================================================================== 45 -->
@@ -679,7 +679,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
       <div class="lu-row"><span class="lu-tag lu-tag--green">For your team project</span><span class="lu-caption" style="flex:1">Keep your profiling reports and constraint inventory: Sessions 3, 4 and 5 build on them.</span></div>
     </div>
   </div>
-  <template data-notes><p>Two minutes. End on the statement, not the admin.</p></template>
+  <template data-notes><p>Two minutes. I end on the statement, not the admin.</p></template>
 </section>
 
 <!-- ==================================================================== 46 -->
@@ -695,7 +695,7 @@ Product Status      <span class="tok-kw">INTEGER</span>  <span class="tok-com">-
       <p class="lu-caption"><kbd>O</kbd> contents · <kbd>/</kbd> search · <kbd>?</kbd> all shortcuts. Answers are stored in this browser only.</p>
     </div>
   </div>
-  <template data-notes><p>Close here so students know where the self study tools are.</p></template>
+  <template data-notes><p>I close here so you know where the self study tools are.</p></template>
 </section>
 
 </div><!-- /stage -->

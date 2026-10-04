@@ -51,8 +51,8 @@
     </div>
   </div>
   <template data-notes>
-    <p>Before minute one: every student has a Gemini key in <code>demos/.env</code> (from <code>demos/.env.example</code>), and Session 2's <code>brunel.ttl</code> exists. A student without a working key runs the lab with <code>LLM_MODE=replay</code>.</p>
-    <ul><li>The model's scores on these slides are the instructor's recorded run (<code>reference-outputs/evaluate.txt</code>). Students' live runs will differ a little; that difference is part of the lesson.</li></ul>
+    <p>Before minute one, I expect you to have a Gemini key in <code>demos/.env</code> (from <code>demos/.env.example</code>), and Session 2's <code>brunel.ttl</code> to exist. If your key does not work, run the lab with <code>LLM_MODE=replay</code>.</p>
+    <ul><li>The model's scores on these slides are from my recorded run (<code>reference-outputs/evaluate.txt</code>). Your live runs will differ a little; that difference is part of the lesson.</li></ul>
   </template>
 </section>
 
@@ -95,7 +95,7 @@
       </ul>
     </div>
   </div>
-  <template data-notes><p>Name the stance now: the model is the least trustworthy part of this system, so everything around it is built to check it.</p></template>
+  <template data-notes><p>I name the stance now: the model is the least trustworthy part of this system, so everything around it is built to check it.</p></template>
 </section>
 
 <!-- ==================================================================== 04 -->
@@ -105,7 +105,7 @@
     <h2 class="lu-display-xl" style="max-width:26ch">A language model writes SQL and SPARQL fluently. Why not just ask it?</h2>
     <p class="lu-lead" style="max-width:46ch">Because it writes about the graph it imagines, not the one you have.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 05 -->
@@ -125,7 +125,7 @@
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">What the writer must know</span><p class="lu-sub">The property is <code>ul:carriedBy</code>, not &ldquo;carry&rdquo;. The carrier is an IRI built from its code. Neither is in the question.</p></div>
     </div>
   </div>
-  <template data-notes><p>Four minutes. 854 is the real answer (Session 2's Q1; test question 4 of the lab). Ask the room: what does a writer need to know that the question does not say? The vocabulary, and the naming rule.</p></template>
+  <template data-notes><p>Four minutes. 854 is the real answer (Session 2's Q1; test question 4 of the lab). I ask: what does a writer need to know that the question does not say? The vocabulary, and the naming rule.</p></template>
 </section>
 
 <!-- ==================================================================== 06 -->
@@ -157,7 +157,7 @@
     <h2 class="lu-display-xl" style="max-width:26ch">What does the model need to know about the graph, and how little is enough?</h2>
     <p class="lu-lead" style="max-width:46ch">Its classes and properties, and a few worked examples. Not the whole ontology.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 09 -->
@@ -271,7 +271,7 @@ SELECT ?product WHERE {
     <h2 class="lu-display-xl" style="max-width:26ch">The model will be wrong sometimes. Can the system notice before the user does?</h2>
     <p class="lu-lead" style="max-width:46ch">Some mistakes, yes: check every query against the graph's description. Some, never.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 16 -->
@@ -362,7 +362,7 @@ answer: 1 row
       <button class="lu-mcq__opt" type="button" data-key="b">Refuse, and say the graph has no locations<span class="lu-mcq__why" hidden>Yes: honest, checkable, and it tells the manager what data is missing.</span></button>
     </div>
   </div>
-  <template data-notes><p>Forty five seconds, then discuss. Someone will say "but the manager wants an answer": the refusal is an answer, about the data. Session 8's defense asks every team what its system does when it does not know.</p></template>
+  <template data-notes><p>Forty five seconds, then we discuss. Someone will say "but the manager wants an answer": the refusal is an answer, about the data. Session 8's defense asks every team what its system does when it does not know.</p></template>
 </section>
 
 <!-- ==================================================================== 22 -->
@@ -372,7 +372,7 @@ answer: 1 row
     <h2 class="lu-display-xl" style="max-width:26ch">Is the repair loop worth it? The examples? Believe a number, not a demo.</h2>
     <p class="lu-lead" style="max-width:46ch">Score every answer against the right one, on questions the model has never seen.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 23 -->
@@ -435,7 +435,7 @@ answer: 1 row
 
   <table class="lu-table"><thead><tr><th>Setting</th><th>What the model gets</th><th>Mean F1</th><th>Refused rightly</th><th>Refused wrongly</th><th>Repaired</th></tr></thead><tbody><tr><td>schema</td><td>the schema only</td><td>0.792</td><td>3 of 3</td><td>0</td><td>0</td></tr><tr><td>examples</td><td>plus 3 examples</td><td>1.000</td><td>3 of 3</td><td>0</td><td>0</td></tr><tr><td><b>repair</b></td><td>plus check and repair</td><td>1.000</td><td>3 of 3</td><td>0</td><td>0</td></tr></tbody></table>
   <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read it as Session 6 taught</span><p class="lu-sub">One run, 15 questions: a difference of one question is 0.08 of F1. State what changed, by how much, and whether it survives a second run.</p></div>
-  <template data-notes><p>Four minutes. <code>reference-outputs/evaluate.txt</code>, 2026-09-25, model gemini-3.5-flash-lite, rules ccb41f71. Ask: is the gain from one setting to the next bigger than the difference between two students' runs? Compare two laptops in the room.</p><ul><li>In this run the examples did all the work (questions 7 and 10 went from 0 to 1) and the repair loop added nothing: no query failed the check. That is a real result: the loop is insurance against a failure this model did not make here, and a room of live runs may show it.</li></ul></template>
+  <template data-notes><p>Four minutes. <code>reference-outputs/evaluate.txt</code>, 2026-09-25, model gemini-3.5-flash-lite, rules ccb41f71. I ask: is the gain from one setting to the next bigger than the difference between two students' runs? We compare two laptops in the room.</p><ul><li>In this run the examples did all the work (questions 7 and 10 went from 0 to 1) and the repair loop added nothing: no query failed the check. That is a real result: the loop is insurance against a failure this model did not make here, and a room of live runs may show it.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 27 -->
@@ -460,7 +460,7 @@ answer: 1 row
     <h2 class="lu-display-xl" style="max-width:26ch">It works on your laptop. What does it take to run it for a company?</h2>
     <p class="lu-lead" style="max-width:46ch">One command to start it, signals that tell you when it breaks, and rules on who may ask what.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 29 -->
@@ -473,7 +473,7 @@ answer: 1 row
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Container topology</dt><dd>Which parts run in which containers, and which one talks to which.</dd></dl></div>
     <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">For Session 8</span><p class="lu-sub"><code>deploy/compose-access-layer.yml</code> adds the access layer to your stack: it reads your endpoint's address and your key from <code>.env</code>, and listens on 127.0.0.1 only.</p></div>
   </div>
-  <template data-notes><p>Four minutes. Every box is a tool the course already used: the database (Session 5), Morph-KGC (Session 5), pyshacl (Session 4), Fuseki (Session 2), the access layer (today). The model API is the one part a team does not run; say what that means for privacy on the next slide.</p></template>
+  <template data-notes><p>Four minutes. Every box is a tool the course already used: the database (Session 5), Morph-KGC (Session 5), pyshacl (Session 4), Fuseki (Session 2), the access layer (today). The model API is the one part a team does not run; I say what that means for privacy on the next slide.</p></template>
 </section>
 
 <!-- ==================================================================== 30 -->
@@ -507,7 +507,7 @@ answer: 1 row
     <h2 class="lu-display-xl" style="max-width:26ch">This course checked every answer after the fact. What would it take not to have to?</h2>
     <p class="lu-lead" style="max-width:46ch">Six open questions. Each team picks one for its report.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 33 -->
@@ -519,7 +519,7 @@ answer: 1 row
     <div class="lu-callout"><span class="lu-callout__label">Why it is open</span><p class="lu-sub">Models now suggest classes and relations well enough to help, but not well enough to trust: someone must still decide what the words mean.</p></div>
     <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read</span><p class="lu-sub">Asim and others, <i>Database</i>, 2018 (a survey) · Babaei Giglou, D'Souza and Auer, &ldquo;LLMs4OL&rdquo;, ISWC 2023</p></div>
   </div>
-  <template data-notes><p>Three minutes. Ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
+  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
 <!-- ==================================================================== 34 -->
@@ -531,7 +531,7 @@ answer: 1 row
     <div class="lu-callout"><span class="lu-callout__label">Why it is open</span><p class="lu-sub">Sessions 4 and 7 check afterwards: SHACL, the query check. Building the rule into training is possible for simple logic, hard for real shapes.</p></div>
     <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read</span><p class="lu-sub">Xu and others, &ldquo;A semantic loss function&rdquo;, ICML 2018 · Giunchiglia and Lukasiewicz, JAIR, 2021</p></div>
   </div>
-  <template data-notes><p>Three minutes. Ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
+  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
 <!-- ==================================================================== 35 -->
@@ -543,7 +543,7 @@ answer: 1 row
     <div class="lu-callout"><span class="lu-callout__label">Why it is open</span><p class="lu-sub">A model may have seen the benchmark in training. Today's score, like ours, shows answers, not how they were reached.</p></div>
     <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read</span><p class="lu-sub">He and others, &ldquo;Language model analysis for ontology subsumption inference&rdquo;, Findings of ACL 2023 · Sainz and others, Findings of EMNLP 2023</p></div>
   </div>
-  <template data-notes><p>Three minutes. Ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
+  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
 <!-- ==================================================================== 36 -->
@@ -555,7 +555,7 @@ answer: 1 row
     <div class="lu-callout"><span class="lu-callout__label">Why it is open</span><p class="lu-sub">This course left them out: Brunel has one order date. Facts that change over time, and places, need more than plain triples.</p></div>
     <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read</span><p class="lu-sub">Gutierrez, Hurtado and Vaisman, IEEE TKDE, 2007 · OGC GeoSPARQL 1.1, 2024</p></div>
   </div>
-  <template data-notes><p>Three minutes. Ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
+  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
 <!-- ==================================================================== 37 -->
@@ -567,7 +567,7 @@ answer: 1 row
     <div class="lu-callout"><span class="lu-callout__label">Why it is open</span><p class="lu-sub">Several did not: tuned old models matched new ones. Session 6's baseline was this lesson on our own data.</p></div>
     <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read</span><p class="lu-sub">Kadlec, Bajgar and Kleindienst, 2017 · Ruffinelli, Broscheit and Gemulla, ICLR 2020 · Sun and others, ACL 2020</p></div>
   </div>
-  <template data-notes><p>Three minutes. Ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
+  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
 <!-- ==================================================================== 38 -->
@@ -579,7 +579,7 @@ answer: 1 row
     <div class="lu-callout"><span class="lu-callout__label">Why it is open</span><p class="lu-sub">SHACL 1.2 Core is a W3C Working Draft (18 September 2026). The RML Working Group is not yet chartered; its charter was being refined from June 2026.</p></div>
     <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read</span><p class="lu-sub">W3C, SHACL 1.2 Core, Working Draft · W3C strategy issue 443, the RML Working Group charter</p></div>
   </div>
-  <template data-notes><p>Three minutes. Ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
+  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
 <!-- ==================================================================== 39 -->
@@ -598,7 +598,7 @@ answer: 1 row
       <p class="lu-sub">Where the problem appears in your own system, what you did about it, and what you could not do. One page, with at least one of the references.</p>
     </div>
   </div>
-  <template data-notes><p>Three minutes. Write each team's choice on the board. The syllabus asks every team to leave this segment with its problem chosen.</p></template>
+  <template data-notes><p>Three minutes. I write each team's choice on the board. Every team leaves this segment with its problem chosen.</p></template>
 </section>
 
 <!-- ==================================================================== 40 -->
@@ -608,7 +608,7 @@ answer: 1 row
     <h2 class="lu-display-xl" style="max-width:26ch">How good is the layer on questions it has never seen, and what does each part add?</h2>
     <p class="lu-lead" style="max-width:46ch">Then make it better in three small ways, and measure again.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 41 -->
@@ -627,7 +627,7 @@ answer: 1 row
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Key not working?</span><p class="lu-sub">Put <code>LLM_MODE=replay</code> in front of a command: it replays my recorded answers for the lab's own questions.</p></div>
     </div>
   </div>
-  <template data-notes><p>Three minutes, then walk the room. Most common blocker: no <code>demos/.env</code>, or the key pasted with quotes or a space. The error message says which. Second: error 429 on the free tier; <code>LLM_DELAY=4</code>.</p></template>
+  <template data-notes><p>Three minutes, then I walk the room. Most common blocker: no <code>demos/.env</code>, or the key pasted with quotes or a space. The error message says which. Second: error 429 on the free tier; <code>LLM_DELAY=4</code>.</p></template>
 </section>
 
 <!-- ==================================================================== 42 -->
@@ -664,7 +664,7 @@ answer: 1 row
     <div class="lu-card"><span class="lu-card__label">By minute 44 · Part C</span><p class="lu-sub">Your three settings' F1 on the board, and your answer about your own graph.</p></div>
   </div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">For your team project</span><p class="lu-sub">Session 8 runs this layer in front of your graph: your void.ttl, your examples, your test set, and the Compose service in <code>deploy/</code>.</p></div>
-  <template data-notes><p>Forty four minutes. <code>evaluate.py</code> makes about 50 calls; start it early and read <code>access_layer.py</code> while it runs. Collect each student's three F1 numbers on the board for the discussion.</p></template>
+  <template data-notes><p>Forty four minutes. <code>evaluate.py</code> makes about 50 calls; start it early and read <code>access_layer.py</code> while it runs. I collect each student's three F1 numbers on the board for the discussion.</p></template>
 </section>
 
 <!-- ==================================================================== 44 -->
@@ -681,7 +681,7 @@ answer: 1 row
     </div>
     <table class="lu-table"><thead><tr><th>The Session 8 checklist</th><th>From</th></tr></thead><tbody><tr><td>One command starts the whole stack from a clean checkout</td><td>Sessions 2 to 7</td></tr><tr><td>Every service listens on 127.0.0.1 only; keys only in .env</td><td>2, 7</td></tr><tr><td>The SHACL gate runs before data reaches the endpoint</td><td>4</td></tr><tr><td>The test set's score is recorded, with the model and the date</td><td>7</td></tr><tr><td>A real unanswerable question is refused, with a reason</td><td>7</td></tr></tbody></table>
   </div>
-  <template data-notes><p>Seven minutes. The syllabus: read the room's scores against the TEXT2SPARQL 2026 leaderboard, then agree the deployment checklist each team is held to in Session 8. Adjust the list with the room and write the agreed version into the course page; Session 8's defense tries each item on a clean checkout.</p></template>
+  <template data-notes><p>Seven minutes. We read the room's scores against the TEXT2SPARQL 2026 leaderboard, then agree the deployment checklist each team is held to in Session 8. We adjust the list together and I write the agreed version into the course page; Session 8's defense tries each item on a clean checkout.</p></template>
 </section>
 
 <!-- ==================================================================== 45 -->
@@ -689,7 +689,7 @@ answer: 1 row
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
 <div class="lu-split" style="margin-top:var(--lu-s2)"><dl class="lu-defs"><dt>Text to SPARQL</dt><dd>A question in words becomes a query.</dd><dt>Large language model</dt><dd>A model that writes text and code.</dd><dt>VoID</dt><dd>The graph's classes, properties, counts.</dd><dt>Prompt · grounding</dt><dd>What the model is sent · facts it must use.</dd><dt>Few-shot examples</dt><dd>Worked pairs to imitate.</dd><dt>Hallucination</dt><dd>Fluent, and not true.</dd></dl><dl class="lu-defs"><dt>Validation · repair loop</dt><dd>Check the query · send problems back.</dd><dt>Refusal</dt><dd>The graph cannot answer, and why.</dd><dt>Execution accuracy</dt><dd>Judge the answer, not the text.</dd><dt>TEXT2SPARQL</dt><dd>The benchmark, its contract and scorer.</dd><dt>Container topology</dt><dd>Which part runs where.</dd><dt>Data drift · access control</dt><dd>Data changing · who may read what.</dd></dl></div>
-  <template data-notes><p>One minute, or skip in class: it is for revision. The full list is in <code>GLOSSARY.md</code>.</p></template>
+  <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
 <!-- ==================================================================== 46 -->
@@ -710,7 +710,7 @@ answer: 1 row
       <div class="lu-row"><span class="lu-tag lu-tag--green">For your team</span><span class="lu-caption" style="flex:1">Put the access layer in your stack, and write up your open problem.</span></div>
     </div>
   </div>
-  <template data-notes><p>Two minutes. End on the sentence. Remind teams: a stack that has never come up from a clean checkout will not come up on defense day either.</p></template>
+  <template data-notes><p>Two minutes. I end on the sentence. A reminder for every team: a stack that has never come up from a clean checkout will not come up on defense day either.</p></template>
 </section>
 
 <!-- ==================================================================== 47 -->
@@ -726,7 +726,7 @@ answer: 1 row
       <p class="lu-caption"><kbd>O</kbd> contents · <kbd>/</kbd> search · <kbd>?</kbd> all shortcuts. Answers are stored in this browser only.</p>
     </div>
   </div>
-  <template data-notes><p>Close here so students know where the self study tools are.</p></template>
+  <template data-notes><p>I close here so you know where the self study tools are.</p></template>
 </section>
 
 </div><!-- /stage -->

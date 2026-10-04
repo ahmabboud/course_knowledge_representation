@@ -51,7 +51,7 @@
     </div>
   </div>
   <template data-notes>
-    <p>Before minute one: every student's <code>demos/.venv</code> has both install lines of <code>demos/README.md</code> run again, since Session 6 adds PyTorch, PyTorch Geometric, PyKEEN and scikit-learn (about 400 MB). On Linux the CPU build of PyTorch goes first; the command is in that README.</p>
+    <p>Before minute one, I expect you to have run both install lines of <code>demos/README.md</code> again in your <code>demos/.venv</code>, since Session 6 adds PyTorch, PyTorch Geometric, PyKEEN and scikit-learn (about 400 MB). On Linux the CPU build of PyTorch goes first; the command is in that README.</p>
     <ul><li>Every result on these slides is a real run, recorded in <code>demos/session-06-learning/reference-outputs/</code> on 2026-09-25. The honest outcome is the lesson: the graph models do not beat the simple ones once the test is fair.</li></ul>
   </template>
 </section>
@@ -94,7 +94,7 @@
       </ul>
     </div>
   </div>
-  <template data-notes><p>Name the surprise now, so nobody feels cheated later: on Brunel, the fair test shows the graph models learn almost nothing that a count or a logistic regression does not. Finding that out properly is the skill.</p></template>
+  <template data-notes><p>I name the surprise now, so nobody feels cheated later: on Brunel, the fair test shows the graph models learn almost nothing that a count or a logistic regression does not. Finding that out properly is the skill.</p></template>
 </section>
 
 <!-- ==================================================================== 04 -->
@@ -104,7 +104,7 @@
     <h2 class="lu-display-xl" style="max-width:26ch">A table row already names the customer. What more can a graph give a model?</h2>
     <p class="lu-lead" style="max-width:46ch">The things around the order: its customer's other orders, its plant's products.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 05 -->
@@ -113,7 +113,7 @@
   <h2 class="lu-h2">A row describes one order. The graph also describes everything around it.</h2>
   <div class="lu-walk" data-label="A row against a graph"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 330, "nodes": [{"id": "o", "label": "order 1447135386.7", "x": 724, "y": 150, "w": 330, "h": 60, "kind": "individual"}, {"id": "x", "label": "3.1 kg · 1,045 units · DTP", "x": 724, "y": 40, "w": 420, "h": 56, "kind": "literal"}, {"id": "c", "label": "customer V555_15", "x": 250, "y": 150, "w": 300, "h": 56, "kind": "individual"}, {"id": "k", "label": "carrier V444_0", "x": 1200, "y": 150, "w": 280, "h": 56, "kind": "individual"}, {"id": "p", "label": "PLANT08", "x": 500, "y": 270, "w": 200, "h": 56, "kind": "individual"}, {"id": "q", "label": "PORT04", "x": 724, "y": 270, "w": 200, "h": 56, "kind": "individual"}, {"id": "d", "label": "product 1681878", "x": 990, "y": 270, "w": 280, "h": 56, "kind": "individual"}, {"id": "oo", "label": "109 other orders\nof V555_15", "x": 200, "y": 280, "w": 300, "h": 70, "kind": "individual"}], "edges": [{"id": "a", "from": "o", "to": "x", "label": ""}, {"id": "b", "from": "o", "to": "c", "label": "orderedBy"}, {"id": "c1", "from": "o", "to": "k", "label": "carriedBy"}, {"id": "d1", "from": "o", "to": "p", "label": "", "route": "elbow"}, {"id": "e1", "from": "o", "to": "q", "label": ""}, {"id": "f", "from": "o", "to": "d", "label": "", "route": "elbow"}, {"id": "g", "from": "c", "to": "oo", "label": ""}], "steps": [{"show": ["o", "x", "a"], "run": ["a"], "set": {"o": "active"}}, {"show": ["c", "k", "p", "q", "d", "b", "c1", "d1", "e1", "f"], "run": ["b", "c1", "d1", "e1", "f"]}, {"show": ["oo", "g"], "run": ["g"], "set": {"o": "idle", "oo": "inferred"}}], "legend": {"individual": "Thing in the graph", "literal": "Value", "inferred": "What the neighbours show"}, "flags": {"inferred": "all late"}}</script></div><div data-walk-step="1" data-caption-short="The row" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A late order, and the three numbers a table model knows about it: weight, quantity, service level."></div><div data-walk-step="2" data-caption-short="Its neighbours" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; In the graph it is linked to five things. A table has these too, as columns holding names."></div><div data-walk-step="3" data-caption-short="Their neighbours" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; What a table does not show: this customer&#x27;s 109 other orders. &lt;b&gt;Every one of them is late.&lt;/b&gt; A graph model can read that."></div></div></div>
   <template data-notes><p>Five minutes. The order and all its links are real (<code>brunel-mapped.nt</code>). V555_15 has 110 orders and all 110 are late: counted on Session 5's graph.</p>
-<ul><li>Plant this now, it pays off in Part 4: a signal this strong is also a trap. A model that remembers "V555_15 means late" has learned about one customer, not about lateness.</li></ul></template>
+<ul><li>Remember this now, it pays off in Part 4: a signal this strong is also a trap. A model that remembers "V555_15 means late" has learned about one customer, not about lateness.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 06 -->
@@ -134,7 +134,7 @@
     </div>
   </div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Node classification</dt><dd>Predicting a label for each node: here, late or not for each order.</dd><dt>Link prediction</dt><dd>Predicting a missing edge: here, which plant makes a product.</dd></dl></div>
-  <template data-notes><p>Five minutes. Counts from <code>reference-outputs/build-graph.txt</code> and <code>link-prediction.txt</code>; PLANT03's 781 counted on <code>brunel-mapped.nt</code>. Ask the room: which of these two numbers already worries you? Both: one class is rare, one plant dominates.</p></template>
+  <template data-notes><p>Five minutes. Counts from <code>reference-outputs/build-graph.txt</code> and <code>link-prediction.txt</code>; PLANT03's 781 counted on <code>brunel-mapped.nt</code>. I ask: which of these two numbers already worries you? Both: one class is rare, one plant dominates.</p></template>
 </section>
 
 <!-- ==================================================================== 07 -->
@@ -159,7 +159,7 @@
     <h2 class="lu-display-xl" style="max-width:26ch">How does a model learn which plant makes a product it has never been told about?</h2>
     <p class="lu-lead" style="max-width:46ch">Give every thing a position, so that true links become short steps.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 09 -->
@@ -226,7 +226,7 @@
       <button class="lu-mcq__opt" type="button" data-key="c">1<span class="lu-mcq__why" hidden>Only the right answers are removed, not the wrong plants above it.</span></button>
     </div>
   </div>
-  <template data-notes><p>Three minutes. Then ask: which rank does PyKEEN report by default? Filtered, like this.</p></template>
+  <template data-notes><p>Three minutes. Then I ask: which rank does PyKEEN report by default? Filtered, like this.</p></template>
 </section>
 
 <!-- ==================================================================== 14 -->
@@ -265,7 +265,7 @@ scores = model.score_h(torch.tensor(
     </div>
   </div>
   <template data-notes><p>Five minutes. <code>reference-outputs/link-prediction.txt</code>: TransE MRR 0.555, 0.495, 0.519; popularity 0.608, 0.562, 0.570; 131, 133 and 141 links scored. Counts of plants and products from <code>brunel-mapped.nt</code>.</p>
-<ul><li>Ask: is this a failure? No. It is a finding: on Brunel's product catalogue, the graph's shape tells you less than one count. On a graph with richer structure, the order can flip; the only way to know is this comparison.</li></ul></template>
+<ul><li>I ask: is this a failure? No. It is a finding: on Brunel's product catalogue, the graph's shape tells you less than one count. On a graph with richer structure, the order can flip; the only way to know is this comparison.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 16 -->
@@ -275,7 +275,7 @@ scores = model.score_h(torch.tensor(
     <h2 class="lu-display-xl" style="max-width:26ch">How does an order learn from the things it is linked to?</h2>
     <p class="lu-lead" style="max-width:46ch">Each thing sends its numbers along its links; each order combines what it receives.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 17 -->
@@ -366,7 +366,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
     </div>
   </div>
   <template data-notes><p>Four minutes. 236,870 weights after conversion (<code>reference-outputs/gnn.txt</code>): each of the 14 kinds of link gets its own copy of each layer, and <code>aggr="sum"</code> adds up what an order receives from its different kinds.</p>
-<ul><li><code>(-1, -1)</code>: the input sizes are read from the data on the first pass, since each kind of node has a different number of columns.</li><li>to_hetero rewrites the forward function by reading its argument names, which is why the name matters. Found in our own feasibility run on 2026-09-25.</li></ul></template>
+<ul><li><code>(-1, -1)</code>: the input sizes are read from the data on the first pass, since each kind of node has a different number of columns.</li><li>to_hetero rewrites the forward function by reading its argument names, which is why the name matters. I found this in my own feasibility run on 2026-09-25.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 22 -->
@@ -417,7 +417,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
       <button class="lu-mcq__opt" type="button" data-key="c">None of them<span class="lu-mcq__why" hidden>Right: whatever they predict comes from the order's other links, not from the customer.</span></button>
     </div>
   </div>
-  <template data-notes><p>Two minutes. Keep this answer on the board: it explains the result of the split by customer in Part 4.</p></template>
+  <template data-notes><p>Two minutes. Keep this answer in mind: it explains the result of the split by customer in Part 4.</p></template>
 </section>
 
 <!-- ==================================================================== 25 -->
@@ -432,7 +432,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
       <li>A model that can score a node it never saw in training is <input class="lu-blank" data-answer="inductive" data-label="Blank 4" placeholder="…">.</li>
     </ol>
   </div>
-  <template data-notes><p>Three minutes. Blank 1 is the one students will meet on their own project: say it twice.</p></template>
+  <template data-notes><p>Three minutes. Blank 1 is the one you will meet on your own project. I say it twice.</p></template>
 </section>
 
 <!-- ==================================================================== 26 -->
@@ -442,7 +442,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
     <h2 class="lu-display-xl" style="max-width:26ch">The model scores 0.87. Did it learn about late orders, or about the test?</h2>
     <p class="lu-lead" style="max-width:46ch">Three ways a test can let the model cheat, all found in this graph.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 27 -->
@@ -465,7 +465,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
     </div>
   </div>
   <template data-notes><p>Four minutes. Real run, line 1 of <code>reference-outputs/baseline.txt</code>. The graph is right to hold these facts: they are what Session 1 profiled. They are the answer, so the model must not see them.</p>
-<ul><li>Ask: where else could the label hide in your own project's graph? A status field, a "delivered on" date, a class assigned after the fact.</li></ul></template>
+<ul><li>I ask: where else could the label hide in your own project's graph? A status field, a "delivered on" date, a class assigned after the fact.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 28 -->
@@ -545,7 +545,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
     </ol>
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Temporal split</dt><dd>Training on everything before a cut date and testing on everything after it.</dd><dt>Temporal leakage</dt><dd>Letting information from after the cut into training.</dd></dl></div>
   </div>
-  <template data-notes><p>Four minutes. The single order date was counted on <code>brunel-mapped.nt</code> (one value, 9,215 times). This is why the lab splits by customer instead, and why Milestone 2 asks for a split by time where the data has dates.</p>
+  <template data-notes><p>Four minutes. The single order date was counted on <code>brunel-mapped.nt</code> (one value, 9,215 times). This is why the lab splits by customer instead, and why Milestone 2 asks your team for a split by time where the data has dates.</p>
 <ul><li>Rule 2 is the graph specific trap: a random split of orders still leaves future links (a customer's later orders) in the graph the model trains on.</li></ul></template>
 </section>
 
@@ -559,7 +559,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
       <button class="lu-mcq__opt" type="button" data-key="b">About 0.02 (split by customer)<span class="lu-mcq__why" hidden>Yes, for new customers: as good as guessing.</span></button>
     </div>
   </div>
-  <template data-notes><p>Forty five seconds, then discuss. Known customers would still see the random split's quality, so an honest report gives both numbers and says which question each answers. If someone suggests averaging them: an average of two different questions answers neither.</p></template>
+  <template data-notes><p>Forty five seconds, then we discuss. Known customers would still see the random split's quality, so an honest report gives both numbers and says which question each answers. If someone suggests averaging them: an average of two different questions answers neither.</p></template>
 </section>
 
 <!-- ==================================================================== 34 -->
@@ -569,7 +569,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
     <h2 class="lu-display-xl" style="max-width:26ch">Does the graph model still win when the test is fair?</h2>
     <p class="lu-lead" style="max-width:46ch">Then write three small functions, each a copy of one you can read.</p>
   </div>
-  <template data-notes><p>Ten seconds. Read the question, let it hang, move on.</p></template>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 35 -->
@@ -588,7 +588,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">CPU only</span><p class="lu-sub">No GPU needed: the slowest step, TransE over three seeds, takes under a minute.</p></div>
     </div>
   </div>
-  <template data-notes><p>Three minutes, then walk the room. Most common blocker: PyTorch missing, because the install lines of <code>demos/README.md</code> were not run again after Session 5. On Linux, the CPU build first (the command is in that README).</p>
+  <template data-notes><p>Three minutes, then I walk the room. Most common blocker: PyTorch missing, because the install lines of <code>demos/README.md</code> were not run again after Session 5. On Linux, the CPU build first (the command is in that README).</p>
 <ul><li>Second: <code>data/brunel-graph.pt</code> missing because step 1 was skipped. Every later script needs it.</li></ul></template>
 </section>
 
@@ -627,7 +627,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
     <div class="lu-card"><span class="lu-card__label">By minute 48 · Part C</span><p class="lu-sub">Answers to the three questions, one of them about your own team's data.</p></div>
   </div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">For your team project</span><p class="lu-sub">Milestone 2 asks for this evaluation on your own graph: a baseline, a split that does not leak, several seeds, and the limits written down.</p></div>
-  <template data-notes><p>Forty eight minutes. Numbers may differ in the last digit on another computer; the pattern must not (leak near 1.0, random high, by customer near 0.02, count ahead of TransE). If a student's pattern differs, check first that <code>build_graph.py</code> read Session 5's graph.</p></template>
+  <template data-notes><p>Forty eight minutes. Numbers may differ in the last digit on another computer; the pattern must not (leak near 1.0, random high, by customer near 0.02, count ahead of TransE). If your pattern differs, check first that <code>build_graph.py</code> read Session 5's graph.</p></template>
 </section>
 
 <!-- ==================================================================== 38 -->
@@ -644,7 +644,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
     </div>
     <div class="lu-callout"><span class="lu-callout__label">Why losing is reportable</span><p class="lu-sub">It says, with evidence, that the simple model is enough for this task on this data. That saves a company from running, and trusting, a model that only looks better.</p></div>
   </div>
-  <template data-notes><p>Seven minutes. The syllabus question verbatim: whose graph model lost to the tabular baseline, and why that is a legitimate and reportable result rather than a failure. Push for the specific wording of question 2: "on customers seen in training, PR-AUC 0.86; on new customers, no better than guessing".</p></template>
+  <template data-notes><p>Seven minutes. The syllabus question verbatim: whose graph model lost to the tabular baseline, and why that is a legitimate and reportable result rather than a failure. I push for the specific wording of question 2: "on customers seen in training, PR-AUC 0.86; on new customers, no better than guessing".</p></template>
 </section>
 
 <!-- ==================================================================== 39 -->
@@ -668,7 +668,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
 <div class="lu-split" style="margin-top:var(--lu-s2)"><dl class="lu-defs"><dt>Node classification</dt><dd>A label for each node.</dd><dt>Link prediction</dt><dd>A missing edge, found.</dd><dt>Baseline</dt><dd>The simple rival to beat, or not.</dd><dt>Embedding · TransE</dt><dd>A position per thing · h + r near t.</dd><dt>DistMult · ComplEx · RotatE</dt><dd>Other ways to score a triple.</dd><dt>Negative sampling</dt><dd>Made-up false triples for training.</dd><dt>Filtered ranking</dt><dd>Other right answers removed first.</dd></dl><dl class="lu-defs"><dt>MRR · Hits@k</dt><dd>Mean 1 / rank · share in the top k.</dd><dt>Message passing</dt><dd>Nodes update from their neighbours.</dd><dt>GraphSAGE · to_hetero</dt><dd>Own plus neighbours' mean · one copy per link kind.</dd><dt>Oversmoothing</dt><dd>Too many layers, all nodes alike.</dd><dt>Inductive · transductive</dt><dd>Scores new things · only seen ones.</dd><dt>Leakage</dt><dd>The answer reaches the model.</dd><dt>PR-AUC</dt><dd>Ranking of the rare class; guessing scores its share.</dd></dl></div>
-  <template data-notes><p>One minute, or skip in class: it is for revision. The full list is in <code>GLOSSARY.md</code>.</p></template>
+  <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
 <!-- ==================================================================== 41 -->
@@ -689,7 +689,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
       <div class="lu-row"><span class="lu-tag lu-tag--green">For your team</span><span class="lu-caption" style="flex:1">Submit Milestone 2. Take the Session 7 open problems reading list from me.</span></div>
     </div>
   </div>
-  <template data-notes><p>Two minutes. End on the sentence. The syllabus issues the Session 7 open problems reading list here; hand it out with this slide.</p></template>
+  <template data-notes><p>Two minutes. I end on the sentence. I hand out the Session 7 open problems reading list with this slide.</p></template>
 </section>
 
 <!-- ==================================================================== 42 -->
@@ -705,7 +705,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
       <p class="lu-caption"><kbd>O</kbd> contents · <kbd>/</kbd> search · <kbd>?</kbd> all shortcuts. Answers are stored in this browser only.</p>
     </div>
   </div>
-  <template data-notes><p>Close here so students know where the self study tools are.</p></template>
+  <template data-notes><p>I close here so you know where the self study tools are.</p></template>
 </section>
 
 </div><!-- /stage -->
