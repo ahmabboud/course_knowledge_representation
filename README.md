@@ -34,11 +34,23 @@ Presenter view on a second screen with speaker notes, elapsed time and pacing ag
 
 ## Run it locally
 
-Open any HTML file directly in a browser. Everything works from `file://` except the offline service worker, which needs `http`:
+Clone the repository, then start a small web server in its folder (the one that holds `index.html`).
+
+macOS or Linux:
 
 ```
 python3 -m http.server 8000
 ```
+
+Windows PowerShell:
+
+```
+python -m http.server 8000
+```
+
+Open <http://localhost:8000/> in a browser. Press `Ctrl+C` in the terminal to stop it.
+
+You can also open any HTML file directly in a browser. Everything works from `file://` except the offline support (the service worker), which needs `http`. If port 8000 is busy, use another number, for example `8080`, and open that port instead.
 
 ## Deploy
 
