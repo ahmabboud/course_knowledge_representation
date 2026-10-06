@@ -19,6 +19,10 @@ Every number in `lectures/kr-session-02.html` comes from the files in
 - Shared setup from `demos/README.md` done in Session 1 (Python 3.12,
   Docker Desktop, `demos/.venv`, the data downloaded). Keep `demos/.venv`
   active.
+- **Nothing else from Lab 1 is needed.** You do not need your profiling
+  reports or your constraint inventory, and Lab 1 does not depend on this lab.
+  Missed Lab 1? Do the shared setup in `demos/README.md`, then run
+  `python data/fetch_data.py` from `demos/`, and you are ready.
 - **Docker Desktop is open and running** (`docker info` answers). On Windows
   this needs WSL 2 and virtualization turned on; see `demos/README.md`.
 - Step 1 runs from `demos/`; every other step from this folder,
