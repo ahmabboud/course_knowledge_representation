@@ -18,7 +18,7 @@
   data-deck-id="kr-s02"
   data-course="Knowledge Representation"
   data-session="Session 2 of 8"
-  data-duration="173"
+  data-duration="176"
   data-app-root="../"
   data-unit="Lebanese University · MSc">
 
@@ -78,9 +78,9 @@
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
       <p class="lu-statement">By the end you can turn a table into triples, design names that survive a second source, and ask a graph questions that follow links.</p>
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">What you leave with</span><p class="lu-sub">A graph of Brunel you can query, three queries you wrote yourself, and a naming scheme sketched for your own project. Nothing to hand in.</p></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">What you leave with</span><p class="lu-sub">A graph of Brunel you can query, seven queries you ran, and a naming scheme sketched for your own project. Nothing to hand in.</p></div>
     </div>
-    <table class="lu-table"><thead><tr><th>Part</th><th>Minutes</th></tr></thead><tbody><tr><td>1 · From a table row to triples</td><td>30</td></tr><tr><td>2 · Naming things: IRI design</td><td>8</td></tr><tr><td>3 · RDFS, the first meaning</td><td>12</td></tr><tr><td>4 · Asking questions: SPARQL</td><td>34</td></tr><tr><td>5 · RDF against the property graph</td><td>10</td></tr><tr><td>Lab</td><td>60</td></tr><tr><td>Discussion and wrap</td><td>15</td></tr></tbody><caption>About 180 minutes in all.</caption></table>
+    <table class="lu-table"><thead><tr><th>Part</th><th>Minutes</th></tr></thead><tbody><tr><td>1 · From a table row to triples</td><td>30</td></tr><tr><td>2 · Naming things: IRI design</td><td>8</td></tr><tr><td>3 · RDFS, the first meaning</td><td>15</td></tr><tr><td>4 · Asking questions: SPARQL</td><td>34</td></tr><tr><td>5 · RDF against the property graph</td><td>10</td></tr><tr><td>Lab</td><td>60</td></tr><tr><td>Discussion and wrap</td><td>15</td></tr></tbody><caption>About 180 minutes in all.</caption></table>
   </div>
   <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>IRI</b> Internationalised Resource Identifier: a globally unique name for a thing, written like a web address.</span> <span data-auto="1"><b>RDFS</b> RDF Schema: the first, simple vocabulary for classes and properties (subclass, domain, range, label).</span> <span data-auto="1"><b>Property graph</b> A graph model where nodes and edges carry key value properties, used by Neo4j.</span></p>
   <template data-notes><p>Two minutes. I say it plainly: the lab is not collected or marked, only running it in class counts (attendance and lab run, 15 percent); it is where the concepts become real and where your team project starts. One query in the set is slow on purpose.</p></template>
@@ -264,7 +264,7 @@ def order_iri(source, key):
 <!-- ==================================================================== 17 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 3 · RDFS, the first meaning" data-section="RDFS" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 3 of 5 · about 12 minutes</div>
+    <div class="lu-eyebrow">Part 3 of 5 · about 15 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">The graph has names. Can it say anything about what an order is?</h2>
     <p class="lu-lead" style="max-width:46ch">A small schema, written as triples too, and the first surprise: it concludes instead of checking.</p>
   </div>
@@ -280,6 +280,30 @@ def order_iri(source, key):
 </section>
 
 <!-- ==================================================================== 19 -->
+<section class="slide" data-label="The same schema, as text" data-section="RDFS" data-minutes="3">
+  <div class="lu-eyebrow">The first schema, written out</div>
+  <h2 class="lu-h2" style="max-width:66ch">These are the real lines from <code>brunel.ttl</code>. Open the file and find them.</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s3)">
+    <div class="lu-code lu-code--sm" data-name="the schema: three facts about our own words" data-build="1"><pre><code>ul:LateOrder  a  rdfs:Class ;
+    rdfs:label  &quot;Late order&quot;@en ;
+    rdfs:subClassOf  ul:Order .
+
+ul:carriedBy  a  rdf:Property ;
+    rdfs:label  &quot;carried by&quot;@en ;
+    rdfs:domain  ul:Order ;
+    rdfs:range   ul:Carrier .</code></pre></div>
+    <div class="lu-code lu-code--sm" data-name="the data, and the fact RDFS adds" data-build="2"><pre><code># written in the data:
+order:1447135386.7  a  ul:LateOrder .
+
+# concluded by RDFS, not written:
+order:1447135386.7  a  ul:Order .</code></pre></div>
+  </div>
+  <div class="lu-callout lu-callout--concept" data-build="3"><span class="lu-callout__label">Read it as sentences</span><p class="lu-sub"><b>subClassOf</b>: every late order is an order. <b>domain</b>: whatever has a carrier is an order. <b>range</b>: whatever it points to is a carrier. The schema is written as triples, like the data.</p></div>
+  <template data-notes><p>Three minutes. This is the previous slide, as the text students will meet in the file. I read the three lines aloud as sentences, then show the data line and the line that is not in the file. The next slide shows what happens when the data is careless.</p></template>
+</section>
+
+<!-- ==================================================================== 20 -->
 <section class="slide" data-label="Entailment, not constraint" data-section="RDFS" data-minutes="5">
   <div class="lu-eyebrow">The most important difference in the course</div>
   <h2 class="lu-h2" style="max-width:66ch">RDFS never rejects data. It concludes new facts from it.</h2>
@@ -288,7 +312,7 @@ def order_iri(source, key):
   <template data-notes><p>Five minutes, and I protect the time. Everyone from SQL expects an error at step 3. The shock is the lesson: domain and range are not checks. Session 4 (SHACL) is where checks live.</p></template>
 </section>
 
-<!-- ==================================================================== 20 -->
+<!-- ==================================================================== 21 -->
 <section class="slide slide--tint" data-label="Check: domain is not a check" data-section="RDFS" data-minutes="2">
   <div class="lu-eyebrow">Check question</div>
   <div class="lu-stack">
@@ -309,7 +333,7 @@ def order_iri(source, key):
   <template data-notes><p>Forty seconds. If most of you pick a, good: that is the SQL instinct, and it is now visible.</p></template>
 </section>
 
-<!-- ==================================================================== 21 -->
+<!-- ==================================================================== 22 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 4 · Asking questions: SPARQL" data-section="SPARQL" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 4 of 5 · about 34 minutes</div>
@@ -319,7 +343,7 @@ def order_iri(source, key):
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 22 -->
+<!-- ==================================================================== 23 -->
 <section class="slide" data-label="A pattern is a triple with holes" data-section="SPARQL" data-minutes="4">
   <div class="lu-eyebrow">The core idea</div>
   <h2 class="lu-h2" style="max-width:66ch">A <b>SPARQL</b> query is a picture of the answer, with holes for what you want to know.</h2>
@@ -334,7 +358,7 @@ SELECT (COUNT(*) AS ?n) WHERE {
   <template data-notes><p>Four minutes. The prefix <code>carrier:</code> is shortened on the slide; the file writes the full IRI. Real result on Fuseki: 854, the same number Session 1 found with pandas.</p></template>
 </section>
 
-<!-- ==================================================================== 23 -->
+<!-- ==================================================================== 24 -->
 <section class="slide" data-label="Two patterns, one shared variable" data-section="SPARQL" data-minutes="3">
   <div class="lu-eyebrow">Joins without JOIN</div>
   <h2 class="lu-h2" style="max-width:66ch">Two patterns that share a variable must match the same thing. That is the whole join mechanism.</h2>
@@ -343,7 +367,7 @@ SELECT (COUNT(*) AS ?n) WHERE {
   <template data-notes><p>Three minutes. I point at the semicolon: it means "same subject". You may read it as a statement end; it is not.</p></template>
 </section>
 
-<!-- ==================================================================== 24 -->
+<!-- ==================================================================== 25 -->
 <section class="slide" data-label="OPTIONAL and FILTER" data-section="SPARQL" data-minutes="3">
   <div class="lu-eyebrow">Missing parts and conditions</div>
   <h2 class="lu-h2" style="max-width:66ch">OPTIONAL keeps a row even when part of the pattern has no match. FILTER removes rows.</h2>
@@ -358,10 +382,11 @@ SELECT (COUNT(*) AS ?n) WHERE {
       <div class="lu-callout" data-build="1"><span class="lu-callout__label">Without OPTIONAL</span><p class="lu-sub">V44_3 would vanish from the result, and the finding with it. OPTIONAL is how a missing link stays visible.</p></div>
     </div>
   </div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>OPTIONAL</b> SPARQL keyword: keep the result even when this part of the pattern has no match, leaving the variable empty.</span> <span data-auto="1"><b>FILTER</b> SPARQL keyword: keep only the results where a condition is true, for example a date after 2024.</span> <span data-auto="1"><b>Fuseki</b> The Apache Jena triple store and SPARQL endpoint used in the lab.</span></p>
   <template data-notes><p>Three minutes. This is Session 1's referential integrity finding, now one query. Remember open world: 0 bands in our graph means "none stated", not "none exist".</p></template>
 </section>
 
-<!-- ==================================================================== 25 -->
+<!-- ==================================================================== 26 -->
 <section class="slide" data-label="Aggregation: counting and grouping" data-section="SPARQL" data-minutes="3">
   <div class="lu-eyebrow">Numbers from the graph</div>
   <h2 class="lu-h2" style="max-width:66ch"><code>GROUP BY</code> and <code>COUNT</code> turn matches into a table of totals.</h2>
@@ -377,19 +402,19 @@ GROUP BY ?carrier ORDER BY DESC(?orders)</code></pre></div>
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub"><b>Aggregation</b>: combining many matches into one number (a count, a sum, an average), grouped by something.</p></div>
     </div>
   </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Fuseki</b> The Apache Jena triple store and SPARQL endpoint used in the lab.</span></p>
   <template data-notes><p>Three minutes. 183 plus 9 is 192, the late orders from the RDFS slide. Numbers that agree across slides are how you start to trust the graph.</p></template>
 </section>
 
-<!-- ==================================================================== 26 -->
+<!-- ==================================================================== 27 -->
 <section class="slide" data-label="The four query forms" data-section="SPARQL" data-minutes="3">
   <div class="lu-eyebrow">Four kinds of answer</div>
   <h2 class="lu-h2" style="max-width:66ch">The same pattern language, four shapes of result.</h2>
 <table class="lu-table"><thead><tr><th>Form</th><th>Returns</th><th>Our real example</th></tr></thead><tbody><tr><td><b>SELECT</b></td><td>A table</td><td>Q2: three carriers with their order counts</td></tr><tr><td><b>ASK</b></td><td>true or false</td><td>Q4: is any order leaving through a port its plant does not serve? <b>false</b></td></tr><tr><td><b>CONSTRUCT</b></td><td>A new graph</td><td>Q7: carrier serves plant, <b>12</b> new triples built from 9,215 orders</td></tr><tr><td><b>DESCRIBE</b></td><td>Everything about a thing</td><td>Order 1447296446.7: <b>13</b> triples</td></tr></tbody><caption>All four run on Fuseki against the lab graph.</caption></table><div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Federation, in one line</span><p class="lu-sub">A query can also reach another endpoint with <code>SERVICE &lt;url&gt; { ... }</code>. We do not run it in the lab; know that it exists.</p></div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>SELECT</b> The SPARQL (and SQL) query form that returns a table of values for the variables you name.</span> <span data-auto="1"><b>CONSTRUCT</b> The SPARQL query form that returns new triples instead of a table.</span> <span data-auto="1"><b>ASK</b> The SPARQL query form that answers only yes or no.</span> <span data-auto="1"><b>DESCRIBE</b> The SPARQL query form that returns the triples a store holds about a resource.</span></p>
   <template data-notes><p>Three minutes. CONSTRUCT is the one to stress: a query whose answer is more graph. It is how Session 5 builds graphs from other graphs.</p></template>
 </section>
 
-<!-- ==================================================================== 27 -->
+<!-- ==================================================================== 28 -->
 <section class="slide" data-label="Property paths: follow links of any length" data-section="SPARQL" data-minutes="4">
   <div class="lu-eyebrow">One character, many hops</div>
   <h2 class="lu-h2" style="max-width:66ch">A <b>property path</b> follows links in sequence, or any number of times.</h2>
@@ -397,7 +422,7 @@ GROUP BY ?carrier ORDER BY DESC(?orders)</code></pre></div>
   <template data-notes><p>Four minutes. Session 1's sanction question, "which products contain a part from this plant, at any depth", is a <code>+</code> path. Brunel has no parts list, so the hierarchy example here is classes; Session 3 gives us part hierarchies.</p></template>
 </section>
 
-<!-- ==================================================================== 28 -->
+<!-- ==================================================================== 29 -->
 <section class="slide" data-label="The same question in SQL" data-section="SPARQL" data-minutes="3">
   <div class="lu-eyebrow">Where SPARQL is better, and where it is not</div>
   <h2 class="lu-h2" style="max-width:66ch">Any depth is one character in SPARQL. In SQL it is a recursive query.</h2>
@@ -421,7 +446,7 @@ JOIN sub ON o.type = sub.cls;</code></pre></div>
   <template data-notes><p>Three minutes. The SQL is an illustration of the shape (a recursive common table expression), not run in the lab. I am fair to SQL: this course does not claim graphs are always better.</p></template>
 </section>
 
-<!-- ==================================================================== 29 -->
+<!-- ==================================================================== 30 -->
 <section class="slide" data-label="Where a query spends its time" data-section="SPARQL" data-minutes="3">
   <div class="lu-eyebrow">Measure, do not guess</div>
   <h2 class="lu-h2" style="max-width:66ch">The same question, written two ways, on the same data and engine.</h2>
@@ -431,11 +456,10 @@ JOIN sub ON o.type = sub.cls;</code></pre></div>
     <table class="lu-table lu-table--mono"><thead><tr><th>Question</th><th>Fuseki</th><th>Oxigraph</th></tr></thead><tbody><tr><td>Q2 aggregation</td><td>47 ms</td><td>20 ms</td></tr><tr><td>Q4 ASK with path</td><td>84 ms</td><td>23 ms</td></tr><tr><td>Q5 subclass path</td><td>32 ms</td><td>14 ms</td></tr><tr><td>Q6 band gap</td><td>2,931 ms</td><td>2,313 ms</td></tr></tbody><caption>Fuseki timings include the web request.</caption></table>
   </div>
   <p class="lu-sub" data-build="1"><b>Why:</b> <code>NOT EXISTS</code> reran the band search for each of 8,361 orders. The rewrite joins once, then counts. Same answer, 75 times faster.</p>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>ASK</b> The SPARQL query form that answers only yes or no.</span></p>
   <template data-notes><p>Three minutes. You see these timings yourself in the lab. Oxigraph runs inside Python, so it has no network cost; Fuseki answers over HTTP.</p></template>
 </section>
 
-<!-- ==================================================================== 30 -->
+<!-- ==================================================================== 31 -->
 <section class="slide" data-label="Query nine real orders, live" data-section="SPARQL" data-minutes="5">
   <div class="lu-eyebrow">Sandbox · runs in your browser, offline</div>
   <h2 class="lu-h2" style="margin-bottom:var(--lu-s2)">Nine real Brunel orders. Edit the query and run it.</h2>
@@ -476,7 +500,7 @@ WHERE {
     <ul><li>Expected: the two late orders 1447288338.7 and 1447298099.7, 6 days each, carrier V444_0. Per carrier: V444_0 4, V44_3 3, V444_1 2. The plant and port query returns no rows: the rule holds.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 31 -->
+<!-- ==================================================================== 32 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 5 · RDF against the property graph" data-section="Graph models" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 5 of 5 · about 10 minutes</div>
@@ -487,7 +511,7 @@ WHERE {
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 32 -->
+<!-- ==================================================================== 33 -->
 <section class="slide" data-label="The same order in Neo4j" data-section="Graph models" data-minutes="4">
   <div class="lu-eyebrow">The property graph</div>
   <h2 class="lu-h2" style="max-width:66ch">In Neo4j, nodes have labels and key value properties, and edges have types.</h2>
@@ -504,7 +528,7 @@ RETURN o, r, n</code></pre></div>
   <template data-notes><p>Four minutes. This is also the one slide for the Neo4j tool: the Browser is at localhost:7474 in the lab. Same four things and three links as the RDF picture in Part 1.</p></template>
 </section>
 
-<!-- ==================================================================== 33 -->
+<!-- ==================================================================== 34 -->
 <section class="slide" data-label="What each model gives up" data-section="Graph models" data-minutes="3">
   <div class="lu-eyebrow">One question shows the difference</div>
   <h2 class="lu-h2" style="max-width:66ch">How many orders are there, counting late orders as orders?</h2>
@@ -525,7 +549,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>Three minutes. Real counts from neo4j_comparison.py. I am fair: Neo4j is excellent and common in industry. We use RDF because the next three sessions need a schema a machine can reason over, and the concepts carry over to property graphs, not the other way.</p></template>
 </section>
 
-<!-- ==================================================================== 34 -->
+<!-- ==================================================================== 35 -->
 <section class="slide slide--tint" data-label="Poll: which model for this job?" data-section="Graph models" data-minutes="2">
   <div class="lu-eyebrow">Room poll · 45 seconds</div>
   <div class="lu-poll" data-qid="s2-poll" data-seconds="45" data-answer="b" data-label="Which graph model fits a traceability graph shared by three companies?">
@@ -540,7 +564,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>Two minutes. I ask one of you who chose a to defend it; the defence is reasonable for a single team.</p></template>
 </section>
 
-<!-- ==================================================================== 35 -->
+<!-- ==================================================================== 36 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Build the first graph" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Hands-on lab · about 60 minutes</div>
@@ -550,7 +574,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>Ten seconds. The lab clock starts on the next slide.</p></template>
 </section>
 
-<!-- ==================================================================== 36 -->
+<!-- ==================================================================== 37 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">Hands-on lab · 60 minutes</div>
   <h2 class="lu-h1" style="max-width:34ch">Tables to triples, triples to answers.</h2>
@@ -570,7 +594,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
     <ul><li>Most common blocker: Docker Desktop not running. Second: port 3030 or 7474 already in use.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 37 -->
+<!-- ==================================================================== 38 -->
 <section class="slide" data-label="The tool: the Fuseki query page" data-section="Lab" data-minutes="2">
   <div class="lu-eyebrow">One slide for the tool</div>
   <h2 class="lu-h2" style="max-width:66ch"><b>Apache Jena Fuseki</b> stores the graph (TDB2) and answers SPARQL over the web.</h2>
@@ -581,7 +605,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>Two minutes. rdflib and Docker get no slide: a Python library and a common tool, both in the README.</p></template>
 </section>
 
-<!-- ==================================================================== 38 -->
+<!-- ==================================================================== 39 -->
 <section class="slide slide--tint" data-label="Lab time" data-section="Lab" data-minutes="55">
   <div class="lu-eyebrow">Lab · 55 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints keep you on time.</h2>
@@ -595,7 +619,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>Fifty five minutes. At minute 25, anyone without a loaded graph switches to <code>run_queries.py oxigraph</code>. At minute 45, I ask two of you to read out your answer to the third question; the usual wrong one is 44 (no DISTINCT).</p></template>
 </section>
 
-<!-- ==================================================================== 39 -->
+<!-- ==================================================================== 40 -->
 <section class="slide" data-label="Discussion: test the IRI convention" data-section="Wrap" data-minutes="8">
   <div class="lu-eyebrow">Discussion · as a room</div>
   <h2 class="lu-h2" style="max-width:66ch">Which IRI schemes break when a second source arrives?</h2>
@@ -611,7 +635,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>Eight minutes. The usual weak spot: a scheme that puts a name or a country in the IRI. I ask what happens the day the supplier renames itself.</p></template>
 </section>
 
-<!-- ==================================================================== 40 -->
+<!-- ==================================================================== 41 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The words this session introduced.</h2>
@@ -619,7 +643,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>One minute, or skipped in class: it is for revision.</p></template>
 </section>
 
-<!-- ==================================================================== 41 -->
+<!-- ==================================================================== 42 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
@@ -641,7 +665,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>Two minutes. I end on the sentence.</p></template>
 </section>
 
-<!-- ==================================================================== 42 -->
+<!-- ==================================================================== 43 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">
