@@ -99,6 +99,7 @@ window.LU_GLOSSARY = [
 {"term": "Literal", "def": "A plain value in a triple: a number, a date, a piece of text.", "session": 2, "scope": "deck", "forms": [{"text": "Literal", "fixed": false}]},
 {"term": "Datatype", "def": "The kind of a literal, for example integer or date (<code>xsd:integer</code>, <code>xsd:date</code>).", "session": 2, "scope": "deck", "forms": [{"text": "Datatype", "fixed": false}]},
 {"term": "Turtle", "def": "A compact, readable text format for writing triples.", "session": 2, "forms": [{"text": "Turtle", "fixed": true}]},
+{"term": "rdflib", "def": "A Python library that builds RDF triples in code and writes them as Turtle, N-Triples or JSON-LD. The conversion script uses it, not an LLM.", "session": 2, "forms": [{"text": "rdflib", "fixed": false}]},
 {"term": "N-Triples", "def": "A one triple per line format, simple to process in bulk.", "session": 2, "forms": [{"text": "N-Triples", "fixed": true}]},
 {"term": "JSON-LD", "def": "Triples written as JSON, used by web APIs.", "session": 2, "forms": [{"text": "JSON-LD", "fixed": true}]},
 {"term": "Blank node", "def": "A node with no global name, used for something that only matters through its links (for example an address).", "session": 2, "forms": [{"text": "Blank node", "fixed": false}]},
