@@ -21,8 +21,17 @@ possibly have members and infer classes that follow from the definitions.
 
 We want to describe supply-chain ideas such as a sole-sourced component and
 an at-risk shipment. Instead of creating every term from scratch, we reuse
-the published Industrial Ontologies Foundry (IOF) Supply Chain Ontology
-(SCRO), which itself uses IOF Core and BFO.
+the published **Supply Chain Reference Ontology (SCRO)** from the Industrial
+Ontologies Foundry (IOF). SCRO is built in three layers, from the bottom up:
+
+- **BFO** (Basic Formal Ontology) says what kinds of thing exist at all, such
+  as physical objects and processes.
+- **IOF Core** adds general industry terms on top of BFO.
+- **SCRO** adds supply-chain terms, such as Shipment and Carrier, on top of
+  IOF Core.
+
+(The SCRO file's own label reads just "Supply Chain Ontology". It is the same
+ontology.)
 
 The danger is that a property can have a familiar name but a different formal
 meaning. The starting file reuses two SCRO properties because their names
@@ -30,21 +39,42 @@ sound right. Their definitions, inherited from BFO, make our physical product
 and component impossible. A reasoner finds the conflict. The fixed ontology
 uses two carefully defined course properties instead.
 
+The lab follows this path. Read it top to bottom:
+
 ```text
-Published SCRO, IOF Core, and BFO meanings
-                 +
-Course supply-chain definitions
-                 |
-                 v
-v0 ontology: two deliberate reuse mistakes
-                 |
-                 | ELK and HermiT explain impossible classes
-                 v
-reference ontology: intended meanings, no impossible course classes
-                 |
-                 | sample shipments + ELK
-                 v
-inferred At-risk shipment classifications
+1. START WITH TWO INGREDIENTS
+
+   Reused (written by others)        Ours (written by the course)
+   SCRO, IOF Core and BFO:           Our own supply-chain classes,
+   ready-made classes and            such as Shipment and
+   properties, each with a           AtRiskShipment, plus how we
+   precise formal meaning            link them to the reused terms
+                 \                   /
+                  \                 /
+                   v               v
+2. OUR FIRST VERSION: scro-extension-v0.ttl
+   It reuses two SCRO properties because their names sound right.
+   Their formal meaning is not what we intended. This is a
+   deliberate mistake.
+                         |
+                         |  run a reasoner (ELK, then HermiT):
+                         |  a program that checks the definitions
+                         v
+3. THE REASONER REPORTS THE PROBLEM
+   Some of our classes can never have a member (impossible
+   classes), and it explains which axioms cause this.
+                         |
+                         |  replace the two reused properties with
+                         |  two course properties that say what we mean
+                         v
+4. THE FIXED VERSION: scro-extension-reference.ttl
+   No impossible classes.
+                         |
+                         |  add sample-shipments.ttl, run ELK again
+                         v
+5. THE REASONER CLASSIFIES FACTS FOR US
+   Shipments handled by a sanctioned carrier are inferred to be
+   AtRiskShipment, without anyone labelling them by hand.
 ```
 
 ## The business questions the ontology must earn
