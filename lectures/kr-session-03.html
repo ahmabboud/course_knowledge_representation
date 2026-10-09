@@ -18,7 +18,7 @@
   data-deck-id="kr-s03"
   data-course="Knowledge Representation"
   data-session="Session 3 of 8"
-  data-duration="231"
+  data-duration="239"
   data-app-root="../"
   data-unit="Lebanese University · MSc">
 
@@ -104,7 +104,7 @@
 </section>
 
 <!-- ==================================================================== 04 -->
-<section class="slide slide--night" data-chrome="none" data-label="Part 1 · What an ontology is" data-section="What an ontology is" data-minutes="1">
+<section class="slide slide--night" data-chrome="none" data-label="Part 1 · What an ontology is" data-section="Fundamentals" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 1 of 5 · about 25 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">One dataset. Three honest answers to &ldquo;how many orders were late?&rdquo;</h2>
@@ -114,7 +114,7 @@
 </section>
 
 <!-- ==================================================================== 05 -->
-<section class="slide" data-label="One word, three numbers" data-section="What an ontology is" data-minutes="4">
+<section class="slide" data-label="One word, three numbers" data-section="Fundamentals" data-minutes="4">
   <div class="lu-eyebrow">Why this session exists</div>
   <h2 class="lu-h2">Same 65,752 DataCo orders. Three definitions of &ldquo;late&rdquo;. Three different answers.</h2>
   <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr))">
@@ -131,12 +131,12 @@
 </section>
 
 <!-- ==================================================================== 06 -->
-<section class="slide" data-label="An ontology in one picture" data-section="What an ontology is" data-minutes="5">
+<section class="slide" data-label="An ontology in one picture" data-section="Fundamentals" data-minutes="5">
   <div class="lu-eyebrow">The idea, drawn</div>
   <h2 class="lu-h2">An ontology names the kinds of things, and how things connect</h2>
   <div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 214, "nodes": [{"id": "ship", "label": "Shipment", "x": 300, "y": 27, "w": 240, "h": 50, "kind": "reused"}, {"id": "atrisk", "label": "At-risk shipment", "x": 300, "y": 102, "w": 260, "h": 50, "kind": "ours"}, {"id": "carrier", "label": "Carrier", "x": 1130, "y": 27, "w": 240, "h": 50, "kind": "reused"}, {"id": "sanct", "label": "Sanctioned carrier", "x": 1130, "y": 102, "w": 280, "h": 50, "kind": "ours"}, {"id": "s1", "label": "shipment of order 1447291369.7", "x": 470, "y": 187, "w": 400, "h": 50, "kind": "individual"}, {"id": "c1", "label": "carrier V444_1", "x": 960, "y": 187, "w": 250, "h": 50, "kind": "individual"}], "edges": [{"id": "a", "from": "atrisk", "to": "ship", "label": "subclass of"}, {"id": "b", "from": "sanct", "to": "carrier", "label": "subclass of"}, {"id": "c", "from": "s1", "to": "ship", "label": "is a", "route": "elbow", "sides": ["top", "right"]}, {"id": "d", "from": "c1", "to": "sanct", "label": "is a", "route": "elbow", "sides": ["top", "left"]}, {"id": "f", "from": "s1", "to": "c1", "label": "handled by"}], "steps": [{"show": ["ship", "atrisk", "carrier", "sanct", "s1", "c1", "a", "b", "c", "d", "f"]}], "legend": {"ours": "Our ontology (ul:)", "reused": "Reused, IOF SCRO (ioc:)", "individual": "Individual", "literal": "Value"}}</script></div>
   <div class="lu-split">
-  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Ontology</dt><dd>A machine readable description of kinds of things and how they relate.</dd><dt>Class</dt><dd>A named kind of thing, a box: <b>Shipment</b>.</dd></dl></div><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Also defined here</span><dl class="lu-defs"><dt>Individual</dt><dd>One particular thing, a pill: <b>carrier V444_1</b>.</dd><dt>Property</dt><dd>A named connection, an arrow: <b>handled by</b>.</dd></dl></div>
+  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Ontology</dt><dd>A machine readable description of kinds of things and how they relate.</dd><dt>Class</dt><dd>A named kind of thing, a box: <b>Shipment</b>.</dd></dl></div><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Also defined here</span><dl class="lu-defs" style="margin:0"><dt>Individual</dt><dd>One particular thing, a pill: <b>carrier V444_1</b>.</dd><dt>Property</dt><dd>A named connection, an arrow: <b>handled by</b>.</dd></dl></div>
   </div>
   <template data-notes><p>Five minutes. I walk the picture in plain words: "this shipment is a shipment; it is handled by carrier V444_1; V444_1 is a sanctioned carrier; every sanctioned carrier is a carrier".</p>
 <ul><li>These are the real Brunel order and carrier from Sessions 1 and 2. <b>Sanctioned is a teaching flag</b>: nothing in the data says so, and V444_1 is an anonymised code, not a company. I say it out loud once.</li>
@@ -144,13 +144,102 @@
 </section>
 
 <!-- ==================================================================== 07 -->
-<section class="slide" data-label="The class tree" data-section="What an ontology is" data-minutes="4">
+<section class="slide" data-label="RDF, RDFS, OWL and ontology" data-section="Fundamentals" data-minutes="4" style="--lu-s5:14px">
+  <div class="lu-eyebrow">Four words that are easy to confuse</div>
+  <h2 class="lu-h2">An ontology is written in RDF, using the words of RDFS and OWL</h2>
+  <div style="display:grid;grid-template-columns:minmax(0,964fr) minmax(0,460fr);gap:var(--lu-s5);align-items:start">
+    <table class="lu-table" style="font-size:20px;line-height:1.25;--lu-s3:5px;--lu-s4:10px"><thead><tr><th>Word</th><th>What it is</th><th>A real line from our files</th></tr></thead><tbody>
+<tr><td><b>RDF</b></td><td>The format. Every fact is written as three parts: subject, predicate, object. RDF says nothing about meaning. (Session 2)</td><td><code>&lt;&hellip;/1447291369.7&gt; ul:handledBy carrier:V444_1 .</code></td></tr>
+<tr><td><b>RDFS</b></td><td>A small set of ready made words for describing kinds of things: subClassOf, domain, range, label. Written in RDF. (Session 2)</td><td><code>ul:SanctionedCarrier rdfs:subClassOf ioc:Carrier .</code></td></tr>
+<tr><td><b>OWL</b></td><td>A bigger set of ready made words with an exact meaning, so a reasoner (slide 15) can compute with them. It includes the RDFS words and adds some, only, exactly, disjoint (no shared member), equivalent.</td><td><code>ul:LateShipment owl:disjointWith ul:CancelledShipment .</code></td></tr>
+<tr><td><b>Ontology</b></td><td>The content: all the statements that say what the words of one subject area mean. Not a language or a file format; it is stored as an RDF file.</td><td><code>scro-extension-reference.ttl</code></td></tr>
+</tbody></table>
+    <div class="lu-stack" style="gap:var(--lu-s2)">
+    <svg class="lu-svg" viewBox="0 0 460 312" role="img" aria-label="Layers: RDF at the bottom; RDFS words and OWL words stacked on it on the left, OWL including RDFS; the ontology and the data, both written in RDF, on the right"><title>Layers: RDF at the bottom; RDFS words and OWL words stacked on it on the left, OWL including RDFS; the ontology and the data, both written in RDF, on the right</title>
+      <rect x="0" y="262" width="460" height="50" rx="8" style="fill:var(--lu-paper-2);stroke:var(--lu-ink-2);stroke-width:2"/>
+      <text x="230" y="284" text-anchor="middle" style="font-weight:600">RDF: every fact is a triple</text>
+      <text x="230" y="304" text-anchor="middle" class="s-label">subject predicate object</text>
+      <rect x="0" y="152" width="260" height="96" rx="8" style="fill:var(--lu-red-050);stroke:var(--lu-red-700);stroke-width:2"/>
+      <text x="130" y="178" text-anchor="middle" style="font-weight:600;fill:var(--lu-red-800)">RDFS words</text>
+      <text x="130" y="204" text-anchor="middle" class="s-label">subClassOf, domain,</text>
+      <text x="130" y="228" text-anchor="middle" class="s-label">range, label</text>
+      <rect x="0" y="0" width="260" height="140" rx="8" style="fill:var(--lu-red-100);stroke:var(--lu-red-700);stroke-width:2"/>
+      <text x="130" y="27" text-anchor="middle" style="font-weight:600;fill:var(--lu-red-800)">OWL words</text>
+      <text x="130" y="53" text-anchor="middle" class="s-label">some, only, exactly,</text>
+      <text x="130" y="77" text-anchor="middle" class="s-label">disjoint, equivalent</text>
+      <text x="130" y="106" text-anchor="middle" class="s-label" style="fill:var(--lu-ink)">(includes the</text>
+      <text x="130" y="128" text-anchor="middle" class="s-label" style="fill:var(--lu-ink)">RDFS words)</text>
+      <rect x="272" y="0" width="188" height="140" rx="8" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/>
+      <text x="366" y="27" text-anchor="middle" style="font-weight:600;fill:var(--lu-blue-900)">Ontology</text>
+      <text x="366" y="53" text-anchor="middle" class="s-label">statements about</text>
+      <text x="366" y="77" text-anchor="middle" class="s-label">what the words of</text>
+      <text x="366" y="101" text-anchor="middle" class="s-label">a subject area</text>
+      <text x="366" y="125" text-anchor="middle" class="s-label">mean</text>
+      <rect x="272" y="152" width="188" height="96" rx="8" style="fill:var(--lu-green-050);stroke:var(--lu-green-700);stroke-width:2"/>
+      <text x="366" y="178" text-anchor="middle" style="font-weight:600;fill:var(--lu-green-900)">Data (Session 2)</text>
+      <text x="366" y="204" text-anchor="middle" class="s-label">statements about</text>
+      <text x="366" y="228" text-anchor="middle" class="s-label">particular orders</text>
+    </svg>
+    <p class="lu-caption" style="line-height:1.25">Prefixes: <code>ul:</code> our names, <code>ioc:</code> the published ontology SCRO (slide 9), <code>rdfs:</code> <code>owl:</code> the RDFS and OWL words. Lines are shortened.</p>
+    </div>
+  </div>
+  <div class="lu-split" style="gap:var(--lu-s5);margin-top:var(--lu-s2)">
+    <div class="lu-callout" style="padding:var(--lu-s2) var(--lu-s4)"><p class="lu-sub"><b>The one sentence to keep: OWL is not an ontology.</b> It is the language you write one in, the way English is not an essay.</p></div>
+    <div class="lu-callout lu-callout--neutral" style="padding:var(--lu-s2) var(--lu-s4)"><p class="lu-sub">&ldquo;Every sanctioned carrier is a carrier&rdquo; needs only RDFS. &ldquo;At risk means a shipment handled by <b>some</b> sanctioned carrier&rdquo; needs OWL.</p></div>
+  </div>
+  <template data-notes><p>Four minutes. Everything on this slide answers "what is the difference between all these words". RDF is the alphabet and grammar, RDFS and OWL are vocabularies, the ontology is the essay. The data from Session 2 is written in the same RDF, so an ontology and a data set can sit in one file or two.</p></template>
+</section>
+
+<!-- ==================================================================== 08 -->
+<section class="slide" data-label="Schema, ontology, knowledge graph" data-section="Fundamentals" data-minutes="4" style="--lu-s5:14px">
+  <div class="lu-eyebrow">Database, ontology, knowledge graph</div>
+  <h2 class="lu-h2">A schema refuses bad data, an ontology gives words a meaning, a knowledge graph is data plus ontology</h2>
+  <table class="lu-table" style="--lu-s3:3px;--lu-s4:10px">
+    <thead><tr><th></th><th>Database schema</th><th>Ontology</th><th>Knowledge graph</th></tr></thead>
+    <tbody>
+<tr><td><b>What it holds</b></td><td>Tables, columns, keys</td><td>Classes, properties, definitions</td><td>The facts (orders, carriers, plants) together with an ontology</td></tr>
+<tr><td><b>An unregistered shipment</b></td><td>The insert is refused</td><td>Accepted. A reasoner can work out its type (Part 3, slide 23)</td><td>Accepted, and the ontology adds the meaning</td></tr>
+<tr><td><b>A missing fact means</b></td><td>Not true</td><td>Unknown (open world)</td><td>Unknown, unless a check is added</td></tr>
+<tr><td><b>Who checks the data</b></td><td>The database, on every insert</td><td>Nobody: an ontology adds facts and refuses nothing</td><td>Session 4 adds checks called shapes that refuse bad data</td></tr>
+<tr><td><b>Written as</b></td><td>SQL</td><td>RDF triples using RDFS and OWL words</td><td>RDF triples</td></tr>
+    </tbody>
+  </table>
+  <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s2) var(--lu-s5)"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Open world</dt><dd>A missing fact is unknown, not false. SQL works the other way: a missing row means not true.</dd><dt>Knowledge graph</dt><dd>Data stored as things and links, together with the ontology that says what they mean (Session 1).</dd><dt>Reasoner</dt><dd>A program that works out the facts that follow from what you wrote (slide 15).</dd></dl></div>
+  <template data-notes><p>Four minutes. The shipment of order 1447311670.7 comes back in Part 3: it is not in the shipment table, so SQL refuses it, while the ontology accepts it. In Session 4 the checking job comes back as shapes.</p></template>
+</section>
+
+<!-- ==================================================================== 09 -->
+<section class="slide" data-label="Why reuse: the stack" data-section="Fundamentals" data-minutes="4">
+  <div class="lu-eyebrow">Where our classes attach</div>
+  <h2 class="lu-h2">Three published layers under us. We only write what they do not already say.</h2>
+  <div class="lu-split lu-split--wide-left">
+  <div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 820, "height": 385, "nodes": [{"id": "bfo", "label": "BFO 2020\nthings, happenings, qualities", "x": 250, "y": 345, "w": 420, "h": 68, "kind": "upper"}, {"id": "core", "label": "IOF Core\nproducts, processes, agents", "x": 250, "y": 240, "w": 420, "h": 68, "kind": "reused"}, {"id": "scro", "label": "IOF SCRO\nshipments, carriers, orders", "x": 250, "y": 135, "w": 420, "h": 68, "kind": "reused"}, {"id": "ul", "label": "ul: our extension\nonly what our questions need", "x": 250, "y": 35, "w": 420, "h": 64, "kind": "ours"}, {"id": "gs1", "label": "GS1 Web\nVocabulary", "x": 700, "y": 135, "w": 200, "h": 68, "kind": "builtin"}], "edges": [{"id": "a", "from": "ul", "to": "scro", "label": "builds on"}, {"id": "b", "from": "scro", "to": "core", "label": "builds on"}, {"id": "c", "from": "core", "to": "bfo", "label": "builds on"}, {"id": "d", "from": "scro", "to": "gs1", "label": "aligned with", "both": true}], "steps": [{"show": ["bfo", "core", "scro", "ul", "gs1", "a", "b", "c", "d"]}], "legend": {"ours": "Our ontology (ul:)", "reused": "Reused, IOF", "upper": "BFO, upper ontology"}}</script></div><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub"><b>Upper ontology</b>: a very general ontology of basic categories that domain ontologies build on. <b>BFO</b> is an ISO standard one.</p><p class="lu-sub"><b>IOF · SCRO</b>: the Industrial Ontologies Foundry's core layer, and its Supply Chain Reference Ontology, the base we extend.</p><p class="lu-sub"><b>Alignment</b>: linking our classes to classes in another ontology.</p></div>
+  </div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>IOF Core</b> The Industrial Ontologies Foundry&#x27;s middle layer, built on BFO: products, processes, agents.</span> <span data-auto="1"><b>IOF</b> Industrial Ontologies Foundry: the OBO idea applied to industry and manufacturing, also built on BFO.</span> <span data-auto="1"><b>GS1</b> The standards body behind barcodes; publishes the GS1 Web Vocabulary for products and supply chain data.</span></p>
+  <template data-notes><p>Four minutes. I build the stack from the bottom in words: BFO says what kinds of thing exist at all; IOF Core adds industry; SCRO adds supply chain; we add only what our competency questions need.</p>
+<ul><li>Why reuse: someone else's shipment is then the same shipment as ours, and their tools and data work with our file. The GS1 check found no term for "port" or "freight rate band", an honest result of reuse first.</li>
+<li>All three are real downloads in <code>workspace/</code> (IOF release 202603, MIT licence).</li></ul></template>
+</section>
+
+<!-- ==================================================================== 10 -->
+<section class="slide" data-label="Classes are sets" data-section="Fundamentals" data-minutes="4">
+  <div class="lu-eyebrow">The picture behind every rule</div>
+  <h2 class="lu-h2">Draw a class as a circle and its members as dots. Every rule says which dots may sit where.</h2>
+  <svg class="lu-svg" viewBox="0 0 1448 240" role="img" aria-label="Venn diagram: Shipment contains At-risk shipment; Carrier contains Sanctioned carrier; dots are individuals"><title>Venn diagram: Shipment contains At-risk shipment; Carrier contains Sanctioned carrier; dots are individuals</title><circle cx="300" cy="120" r="112" style="fill:var(--lu-teal-050);stroke:var(--lu-teal-700);stroke-width:2"/><text x="300" y="34" text-anchor="middle" dominant-baseline="middle" style="fill:var(--lu-teal-700);font-weight:600">Shipment</text><circle cx="338" cy="146" r="64" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><line x1="385" y1="190" x2="420" y2="214" style="stroke:var(--lu-ink-3);stroke-width:1.5"/><text x="426" y="218" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-blue-700);font-weight:600">At-risk shipment</text><circle cx="222" cy="104" r="9" style="fill:var(--lu-green-700)"/><text x="222" y="132" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">1447385217.7</text><circle cx="318" cy="128" r="9" style="fill:var(--lu-green-700)"/><circle cx="352" cy="170" r="9" style="fill:var(--lu-green-700)"/><text x="470" y="128" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">1447291369.7 and 1447311670.7</text><line x1="330" y1="128" x2="462" y2="128" style="stroke:var(--lu-ink-3);stroke-width:1.2"/><circle cx="1060" cy="120" r="112" style="fill:var(--lu-teal-050);stroke:var(--lu-teal-700);stroke-width:2"/><text x="1060" y="34" text-anchor="middle" dominant-baseline="middle" style="fill:var(--lu-teal-700);font-weight:600">Carrier</text><circle cx="1098" cy="146" r="64" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><line x1="1145" y1="190" x2="1180" y2="214" style="stroke:var(--lu-ink-3);stroke-width:1.5"/><text x="1186" y="218" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-blue-700);font-weight:600">Sanctioned carrier</text><circle cx="995" cy="104" r="9" style="fill:var(--lu-green-700)"/><text x="995" y="132" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">V444_0</text><circle cx="1098" cy="150" r="9" style="fill:var(--lu-green-700)"/><text x="1098" y="176" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">V444_1</text></svg>
+  <p class="lu-caption">Circle = class · dot = individual · a circle inside a circle = a subclass.</p>
+  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Member</dt><dd>An individual inside a class: a dot inside a circle.</dd><dt>Class as a set</dt><dd>OWL treats a class as exactly the set of its members.</dd></dl></div>
+  <template data-notes><p>Four minutes. "Every at-risk shipment is a shipment" just says one circle sits inside the other; the next slides add rules the same way.</p>
+<p>The shipments of orders 1447291369.7 and 1447311670.7 are drawn inside At-risk shipment already. In the lab the reasoner puts them there, because of the rule on the slide "SubClassOf and EquivalentTo". I say: hold that thought.</p></template>
+</section>
+
+<!-- ==================================================================== 11 -->
+<section class="slide" data-label="The class tree" data-section="Fundamentals" data-minutes="4">
   <div class="lu-eyebrow">Kinds of things, arranged from general to specific</div>
   <h2 class="lu-h2">Classes form a tree. Read each line as &ldquo;every &hellip; is a &hellip;&rdquo;</h2>
   <div class="lu-split lu-split--wide-left">
     <svg class="lu-svg" viewBox="0 0 803 350" role="img" aria-label="A class tree: owl:Thing, Shipment with three subclasses, Carrier with two"><title>A class tree: owl:Thing, Shipment with three subclasses, Carrier with two</title><line x1="30" y1="38" x2="30" y2="70" style="stroke:var(--lu-line-2);stroke-width:2"/><line x1="30" y1="70" x2="78" y2="70" style="stroke:var(--lu-line-2);stroke-width:2"/><line x1="90" y1="82" x2="90" y2="114" style="stroke:var(--lu-line-2);stroke-width:2"/><line x1="90" y1="114" x2="138" y2="114" style="stroke:var(--lu-line-2);stroke-width:2"/><line x1="90" y1="82" x2="90" y2="158" style="stroke:var(--lu-line-2);stroke-width:2"/><line x1="90" y1="158" x2="138" y2="158" style="stroke:var(--lu-line-2);stroke-width:2"/><line x1="90" y1="82" x2="90" y2="202" style="stroke:var(--lu-line-2);stroke-width:2"/><line x1="90" y1="202" x2="138" y2="202" style="stroke:var(--lu-line-2);stroke-width:2"/><line x1="30" y1="38" x2="30" y2="246" style="stroke:var(--lu-line-2);stroke-width:2"/><line x1="30" y1="246" x2="78" y2="246" style="stroke:var(--lu-line-2);stroke-width:2"/><line x1="90" y1="258" x2="90" y2="290" style="stroke:var(--lu-line-2);stroke-width:2"/><line x1="90" y1="290" x2="138" y2="290" style="stroke:var(--lu-line-2);stroke-width:2"/><line x1="90" y1="258" x2="90" y2="334" style="stroke:var(--lu-line-2);stroke-width:2"/><line x1="90" y1="334" x2="138" y2="334" style="stroke:var(--lu-line-2);stroke-width:2"/><circle cx="30" cy="26" r="9" style="fill:var(--lu-ink-2)"/><text x="52" y="26" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-ink);font-weight:600">owl:Thing</text><circle cx="90" cy="70" r="9" style="fill:var(--lu-teal-700)"/><text x="112" y="70" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-ink);font-weight:600">Shipment (reused)</text><circle cx="150" cy="114" r="9" style="fill:var(--lu-blue-700)"/><text x="172" y="114" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-ink)">Late shipment</text><circle cx="150" cy="158" r="9" style="fill:var(--lu-blue-700)"/><text x="172" y="158" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-ink)">Cancelled shipment</text><circle cx="150" cy="202" r="9" style="fill:var(--lu-blue-700)"/><text x="172" y="202" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-ink)">At-risk shipment</text><circle cx="90" cy="246" r="9" style="fill:var(--lu-teal-700)"/><text x="112" y="246" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-ink);font-weight:600">Carrier (reused)</text><circle cx="150" cy="290" r="9" style="fill:var(--lu-blue-700)"/><text x="172" y="290" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-ink)">Sanctioned carrier</text><circle cx="150" cy="334" r="9" style="fill:var(--lu-blue-700)"/><text x="172" y="334" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-ink)">Multi-route carrier</text><text x="470" y="158" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-3)">every late shipment</text><text x="470" y="184" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-3)">is a shipment</text></svg>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Subclass</dt><dd>A is a subclass of B when every member of A is also a member of B.</dd><dt>owl:Thing</dt><dd>The class of everything. Every class sits somewhere below it.</dd></dl></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Subclass</dt><dd>A is a subclass of B when every member of A is also a member of B.</dd><dt>owl:Thing</dt><dd>The class of everything. Every class sits somewhere below it.</dd></dl></div>
       <div class="lu-callout"><span class="lu-callout__label">Why a tree, not a list</span><p class="lu-sub">A fact stated about <b>Shipment</b> is automatically true of every late, cancelled and at-risk shipment. You write it once.</p></div>
     </div>
   </div>
@@ -158,32 +247,32 @@
 <p>All six of our classes are real classes in <code>scro-extension-reference.ttl</code>; Shipment and Carrier come from IOF SCRO.</p></template>
 </section>
 
-<!-- ==================================================================== 08 -->
-<section class="slide" data-label="Two kinds of arrow, plus notes" data-section="What an ontology is" data-minutes="4">
+<!-- ==================================================================== 12 -->
+<section class="slide" data-label="Two kinds of arrow, plus notes" data-section="Fundamentals" data-minutes="4">
   <div class="lu-eyebrow">Properties</div>
   <h2 class="lu-h2">An arrow points to a thing, or to a value. Notes are for humans only.</h2>
   <div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 220, "nodes": [{"id": "s1", "label": "shipment of order\n1447291369.7", "x": 680, "y": 110, "w": 290, "h": 72, "kind": "individual"}, {"id": "c1", "label": "carrier V444_1", "x": 1200, "y": 35, "w": 250, "h": 56, "kind": "individual"}, {"id": "w", "label": "11.8", "x": 1200, "y": 185, "w": 150, "h": 56, "kind": "literal"}, {"id": "lab", "label": "\"shipment of order 1447291369.7\"", "x": 170, "y": 110, "w": 330, "h": 56, "kind": "builtin"}], "edges": [{"id": "a", "from": "s1", "to": "c1", "label": "handled by (to a thing)"}, {"id": "b", "from": "s1", "to": "w", "label": "weight in kg (to a value)"}, {"id": "c", "from": "s1", "to": "lab", "label": "label"}], "steps": [{"show": ["s1", "c1", "w", "lab", "a", "b", "c"]}], "legend": false}</script></div>
-  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Object property</dt><dd>Links a thing to a thing: <b>handled by</b>.</dd><dt>Datatype property</dt><dd>Links a thing to a value (number, date, text): <b>weight in kg</b>.</dd><dt>Annotation property</dt><dd>A note for humans. The reasoner ignores it.</dd></dl></div>
+  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Object property</dt><dd>Links a thing to a thing: <b>handled by</b>.</dd><dt>Datatype property</dt><dd>Links a thing to a value (number, date, text): <b>weight in kg</b>.</dd><dt>Annotation property</dt><dd>A note for humans. The reasoner ignores it.</dd></dl></div>
   <template data-notes><p>Four minutes. The practical reason this matters: in Protégé, object and datatype properties live in two different tabs, and a value cannot be the start of another arrow.</p>
 <ul><li>11.8 kg is this order's real weight in Brunel's OrderList (Session 2 stored it as <code>ul:weight</code>). Session 1 met the same order in the rate band gap.</li>
 <li>Annotation properties in our file: <code>rdfs:label</code>, <code>skos:definition</code>, and the course's own <code>ul:answersCQ</code>.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 09 -->
-<section class="slide" data-label="Two layers: rules and data" data-section="What an ontology is" data-minutes="4">
+<!-- ==================================================================== 13 -->
+<section class="slide" data-label="Two layers: rules and data" data-section="Fundamentals" data-minutes="4">
   <div class="lu-eyebrow">How an ontology file is organised</div>
   <h2 class="lu-h2">Rules about kinds of things above. Facts about particular things below.</h2>
   <svg class="lu-svg" viewBox="0 0 1448 240" role="img" aria-label="Two layers: rules about classes above, facts about individuals below"><title>Two layers: rules about classes above, facts about individuals below</title><rect x="0" y="4" width="1448" height="110" rx="10" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><text x="30" y="34" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-blue-700);font-weight:600">TBox · the rules</text><text x="1424" y="34" text-anchor="end" dominant-baseline="middle" class="s-mono" style="fill:var(--lu-ink-3)">scro-extension-reference.ttl</text><rect x="90.0" y="53.0" width="600" height="46" rx="8" style="fill:var(--lu-paper);stroke:var(--lu-ink-2);stroke-width:2"/><text x="390" y="76" text-anchor="middle" dominant-baseline="middle" style="fill:var(--lu-ink);font-weight:600">Every At-risk shipment is a Shipment</text><rect x="760.0" y="53.0" width="620" height="46" rx="8" style="fill:var(--lu-paper);stroke:var(--lu-ink-2);stroke-width:2"/><text x="1070" y="76" text-anchor="middle" dominant-baseline="middle" style="fill:var(--lu-ink);font-weight:600">handled by: from a Shipment to a Carrier</text><rect x="0" y="126" width="1448" height="110" rx="10" style="fill:var(--lu-green-050);stroke:var(--lu-green-700);stroke-width:2"/><text x="30" y="156" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-green-700);font-weight:600">ABox · the data</text><text x="1424" y="156" text-anchor="end" dominant-baseline="middle" class="s-mono" style="fill:var(--lu-ink-3)">sample-shipments.ttl</text><rect x="90.0" y="175.0" width="600" height="46" rx="8" style="fill:var(--lu-paper);stroke:var(--lu-ink-2);stroke-width:2"/><text x="390" y="198" text-anchor="middle" dominant-baseline="middle" style="fill:var(--lu-ink);font-weight:600">the shipment of 1447291369.7 is a Shipment</text><rect x="760.0" y="175.0" width="620" height="46" rx="8" style="fill:var(--lu-paper);stroke:var(--lu-ink-2);stroke-width:2"/><text x="1070" y="198" text-anchor="middle" dominant-baseline="middle" style="fill:var(--lu-ink);font-weight:600">it is handled by carrier V444_1</text></svg>
   <div class="lu-split lu-split--wide-left">
-    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Axiom</dt><dd>One statement in an ontology. Each white box above is one axiom.</dd><dt>TBox</dt><dd>The rules part: axioms about classes and properties.</dd><dt>ABox</dt><dd>The data part: axioms about individuals.</dd></dl></div>
+    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Axiom</dt><dd>One statement in an ontology. Each white box above is one axiom.</dd><dt>TBox</dt><dd>The rules part: axioms about classes and properties.</dd><dt>ABox</dt><dd>The data part: axioms about individuals.</dd></dl></div>
     <div class="lu-callout"><span class="lu-callout__label">Why keep them apart</span><p class="lu-sub">You can change the rules without touching the data, and load new data without touching the rules. The lab keeps them in two files.</p></div>
   </div>
   <template data-notes><p>Four minutes. T is for terminology, A is for assertions. I say it once; it helps you remember.</p>
 <ul><li>In Session 5 the ABox will come from the database automatically; the TBox stays hand written. That is why the split matters beyond neatness.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 10 -->
-<section class="slide slide--tint" data-label="Check: rules or data?" data-section="What an ontology is" data-minutes="3">
+<!-- ==================================================================== 14 -->
+<section class="slide slide--tint" data-label="Check: rules or data?" data-section="Fundamentals" data-minutes="3">
   <div class="lu-eyebrow">Check question</div>
   <div class="lu-mcq" data-qid="s3-q1" data-answer="b" data-label="Which statement is an ABox axiom"
        data-fb-correct=" It is about one particular shipment and one particular carrier, so it belongs to the data."
@@ -199,163 +288,8 @@
   <template data-notes><p>Three minutes. If you picked c, that is the most useful wrong answer: it is about a property, not a particular thing, so it is a rule.</p></template>
 </section>
 
-<!-- ==================================================================== 11 -->
-<section class="slide slide--night" data-chrome="none" data-label="Part 2 · Writing rules a machine can use" data-section="Writing rules" data-minutes="1">
-  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 2 of 5 · about 40 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">How do you tell a machine what &ldquo;at risk&rdquo; means?</h2>
-    <p class="lu-lead" style="max-width:46ch">With a handful of words: some, only, and, or, not, exactly. Protégé shows them on every screen.</p>
-  </div>
-  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
-</section>
-
-<!-- ==================================================================== 12 -->
-<section class="slide" data-label="Classes are sets" data-section="Writing rules" data-minutes="4">
-  <div class="lu-eyebrow">The picture behind every rule</div>
-  <h2 class="lu-h2">Draw a class as a circle and its members as dots. Every rule says which dots may sit where.</h2>
-  <svg class="lu-svg" viewBox="0 0 1448 240" role="img" aria-label="Venn diagram: Shipment contains At-risk shipment; Carrier contains Sanctioned carrier; dots are individuals"><title>Venn diagram: Shipment contains At-risk shipment; Carrier contains Sanctioned carrier; dots are individuals</title><circle cx="300" cy="120" r="112" style="fill:var(--lu-teal-050);stroke:var(--lu-teal-700);stroke-width:2"/><text x="300" y="34" text-anchor="middle" dominant-baseline="middle" style="fill:var(--lu-teal-700);font-weight:600">Shipment</text><circle cx="338" cy="146" r="64" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><line x1="385" y1="190" x2="420" y2="214" style="stroke:var(--lu-ink-3);stroke-width:1.5"/><text x="426" y="218" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-blue-700);font-weight:600">At-risk shipment</text><circle cx="222" cy="104" r="9" style="fill:var(--lu-green-700)"/><text x="222" y="132" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">1447385217.7</text><circle cx="318" cy="128" r="9" style="fill:var(--lu-green-700)"/><circle cx="352" cy="170" r="9" style="fill:var(--lu-green-700)"/><text x="470" y="128" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">1447291369.7 and 1447311670.7</text><line x1="330" y1="128" x2="462" y2="128" style="stroke:var(--lu-ink-3);stroke-width:1.2"/><circle cx="1060" cy="120" r="112" style="fill:var(--lu-teal-050);stroke:var(--lu-teal-700);stroke-width:2"/><text x="1060" y="34" text-anchor="middle" dominant-baseline="middle" style="fill:var(--lu-teal-700);font-weight:600">Carrier</text><circle cx="1098" cy="146" r="64" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><line x1="1145" y1="190" x2="1180" y2="214" style="stroke:var(--lu-ink-3);stroke-width:1.5"/><text x="1186" y="218" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-blue-700);font-weight:600">Sanctioned carrier</text><circle cx="995" cy="104" r="9" style="fill:var(--lu-green-700)"/><text x="995" y="132" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">V444_0</text><circle cx="1098" cy="150" r="9" style="fill:var(--lu-green-700)"/><text x="1098" y="176" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">V444_1</text></svg>
-  <p class="lu-caption">Circle = class · dot = individual · a circle inside a circle = a subclass.</p>
-  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Member</dt><dd>An individual inside a class: a dot inside a circle.</dd><dt>Class as a set</dt><dd>OWL treats a class as exactly the set of its members.</dd></dl></div>
-  <template data-notes><p>Four minutes. "Every at-risk shipment is a shipment" just says one circle sits inside the other; the next slides add rules the same way.</p>
-<p>The shipments of orders 1447291369.7 and 1447311670.7 are drawn inside At-risk shipment already. In the lab the reasoner puts them there, because of the rule on the slide "SubClassOf and EquivalentTo". I say: hold that thought.</p></template>
-</section>
-
-<!-- ==================================================================== 13 -->
-<section class="slide" data-label="some: at least one" data-section="Writing rules" data-minutes="5">
-  <div class="lu-eyebrow">The most used rule in OWL</div>
-  <h2 class="lu-h2"><code>some</code> means: at least one arrow of this kind lands in that circle</h2>
-  <div class="lu-split">
-    <svg class="lu-svg" viewBox="0 0 688 244" role="img" aria-label="Which shipments satisfy &#x27;handled by some Sanctioned carrier&#x27;"><title>Which shipments satisfy &#x27;handled by some Sanctioned carrier&#x27;</title><circle cx="540" cy="100" r="88" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><text x="540" y="32" text-anchor="middle" dominant-baseline="middle" style="fill:var(--lu-blue-700);font-weight:600">Sanctioned carrier</text><circle cx="90" cy="72" r="9" style="fill:var(--lu-green-700)"/><text x="90" y="46" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">1447291369.7</text><circle cx="540" cy="104" r="9" style="fill:var(--lu-green-700)"/><text x="540" y="130" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">V444_1</text><line x1="102" y1="73" x2="526" y2="103" style="stroke:var(--lu-ink-2);stroke-width:2.5"/><polygon points="526.0,103.0 512.5,95.0 511.5,109.0" style="fill:var(--lu-ink-2)"/><text x="314.0" y="66" text-anchor="middle" dominant-baseline="middle" class="s-mono" style="fill:var(--lu-ink-2)">handled by</text><circle cx="90" cy="206" r="9" style="fill:var(--lu-green-700)"/><text x="90" y="180" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">1447385217.7</text><circle cx="540" cy="222" r="9" style="fill:var(--lu-green-700)"/><text x="570" y="222" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">V444_0</text><line x1="102" y1="207" x2="526" y2="221" style="stroke:var(--lu-ink-2);stroke-width:2.5"/><polygon points="526.0,221.0 512.2,213.5 511.8,227.5" style="fill:var(--lu-ink-2)"/><text x="314.0" y="198" text-anchor="middle" dominant-baseline="middle" class="s-mono" style="fill:var(--lu-ink-2)">handled by</text><path d="M 21 72 L 28 80 L 41 63" style="stroke:var(--lu-green-700);stroke-width:4;fill:none"/><path d="M 21 197 L 39 215 M 39 197 L 21 215" style="stroke:var(--lu-red-700);stroke-width:4;fill:none"/></svg>
-    <table class="lu-table"><tbody>
-<tr><td>English</td><td>at least one carrier of this shipment is sanctioned</td></tr>
-<tr><td>Protégé</td><td><code>'handled by' some 'Sanctioned carrier'</code></td></tr>
-<tr><td>Turtle</td><td><code>owl:someValuesFrom ul:SanctionedCarrier</code></td></tr>
-</tbody></table>
-  </div>
-  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Restriction</dt><dd>A class described by a condition on a property.</dd><dt>some</dt><dd>Existential restriction: at least one link goes to a member of the class.</dd><dt>Manchester syntax</dt><dd>The readable way Protégé writes rules, with the words some, only, and, or, not.</dd></dl></div>
-  <template data-notes><p>Five minutes. I read the Protégé line aloud slowly, it is exactly what you will see in the Description panel in the lab: <code>'handled by' some 'Sanctioned carrier'</code>. The quotes appear because the names contain spaces.</p>
-<ul><li>The shipment of 1447291369.7 passes (one arrow into the circle). The shipment of 1447385217.7 fails (its only carrier, V444_0, is outside).</li></ul></template>
-</section>
-
-<!-- ==================================================================== 14 -->
-<section class="slide" data-label="only: every one, if any" data-section="Writing rules" data-minutes="4">
-  <div class="lu-eyebrow">The rule people misread</div>
-  <h2 class="lu-h2"><code>only</code> means: no arrow of this kind lands outside that circle</h2>
-  <div class="lu-split">
-    <div class="lu-stack"><svg class="lu-svg" viewBox="0 0 688 300" role="img" aria-label="Which shipments satisfy &#x27;handled by only Sanctioned carrier&#x27;"><title>Which shipments satisfy &#x27;handled by only Sanctioned carrier&#x27;</title><circle cx="540" cy="100" r="88" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><text x="540" y="32" text-anchor="middle" dominant-baseline="middle" style="fill:var(--lu-blue-700);font-weight:600">Sanctioned carrier</text><circle cx="90" cy="72" r="9" style="fill:var(--lu-green-700)"/><text x="90" y="46" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">1447291369.7</text><circle cx="540" cy="104" r="9" style="fill:var(--lu-green-700)"/><text x="540" y="130" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">V444_1</text><line x1="102" y1="73" x2="526" y2="103" style="stroke:var(--lu-ink-2);stroke-width:2.5"/><polygon points="526.0,103.0 512.5,95.0 511.5,109.0" style="fill:var(--lu-ink-2)"/><text x="314.0" y="66" text-anchor="middle" dominant-baseline="middle" class="s-mono" style="fill:var(--lu-ink-2)">handled by</text><circle cx="90" cy="206" r="9" style="fill:var(--lu-green-700)"/><text x="90" y="180" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">1447385217.7</text><circle cx="540" cy="222" r="9" style="fill:var(--lu-green-700)"/><text x="570" y="222" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">V444_0</text><line x1="102" y1="207" x2="526" y2="221" style="stroke:var(--lu-ink-2);stroke-width:2.5"/><polygon points="526.0,221.0 512.2,213.5 511.8,227.5" style="fill:var(--lu-ink-2)"/><text x="314.0" y="198" text-anchor="middle" dominant-baseline="middle" class="s-mono" style="fill:var(--lu-ink-2)">handled by</text><path d="M 21 72 L 28 80 L 41 63" style="stroke:var(--lu-green-700);stroke-width:4;fill:none"/><path d="M 21 197 L 39 215 M 39 197 L 21 215" style="stroke:var(--lu-red-700);stroke-width:4;fill:none"/><circle cx="90" cy="280" r="9" style="fill:var(--lu-green-700)"/><text x="110" y="282" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-3)">a shipment with no carrier recorded</text><path d="M 21 280 L 28 288 L 41 271" style="stroke:var(--lu-green-700);stroke-width:4;fill:none"/></svg>
-    <div class="lu-callout"><span class="lu-callout__label">The trap</span><p class="lu-sub">A shipment with <b>no</b> carrier recorded still passes. <code>only</code> never says an arrow exists. To say both, write <code>some</code> and <code>only</code>.</p></div></div>
-    <div class="lu-stack"><table class="lu-table"><tbody>
-<tr><td>English</td><td>every carrier of this shipment, if any, is sanctioned</td></tr>
-<tr><td>Protégé</td><td><code>'handled by' only 'Sanctioned carrier'</code></td></tr>
-<tr><td>Turtle</td><td><code>owl:allValuesFrom ul:SanctionedCarrier</code></td></tr>
-</tbody></table>
-    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>only</dt><dd>Universal restriction: every link of this kind, if there is any, goes to a member of the class.</dd></dl></div></div>
-  </div>
-  <template data-notes><p>Four minutes. I ask you first: does the shipment with no carrier satisfy it? Most of you will say no. The answer is yes, nothing breaks the rule. This is the single most common OWL misreading, and Part B of the lab asks you to write <code>some</code> plus <code>only</code> correctly.</p>
-<p>Every Brunel order has a carrier, so the third dot is a hypothetical shipment, not a row from the data. I say so.</p></template>
-</section>
-
 <!-- ==================================================================== 15 -->
-<section class="slide" data-label="and, or, not, disjoint" data-section="Writing rules" data-minutes="5">
-  <div class="lu-eyebrow">Combining classes</div>
-  <h2 class="lu-h2">Four ways to combine circles. The shaded area is the new class.</h2>
-  <div class="lu-cards" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4)"><span class="lu-callout__label">and · intersection</span><svg class="lu-svg" viewBox="0 0 270 150" role="img" aria-label="Venn picture for and"><title>Venn picture for and</title><defs><clipPath id="s3clip-and"><circle cx="105" cy="75" r="62"/></clipPath></defs><circle cx="105" cy="75" r="62" style="fill:none;stroke:var(--lu-line-2);stroke-width:2"/><circle cx="165" cy="75" r="62" style="fill:none;stroke:var(--lu-line-2);stroke-width:2"/><circle cx="165" cy="75" r="62" clip-path="url(#s3clip-and)" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/></svg><p class="lu-sub">Members of <b>both</b> classes.</p><p class="lu-sub"><code>Shipment and ('handled by' some 'Sanctioned carrier')</code></p></div><div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4)"><span class="lu-callout__label">or · union</span><svg class="lu-svg" viewBox="0 0 270 150" role="img" aria-label="Venn picture for or"><title>Venn picture for or</title><defs><clipPath id="s3clip-or"><circle cx="105" cy="75" r="62"/></clipPath></defs><circle cx="105" cy="75" r="62" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><circle cx="165" cy="75" r="62" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/></svg><p class="lu-sub">Members of <b>either</b> class.</p><p class="lu-sub"><code>Plant or Port</code></p></div><div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4)"><span class="lu-callout__label">not · complement</span><svg class="lu-svg" viewBox="0 0 270 150" role="img" aria-label="Venn picture for not"><title>Venn picture for not</title><defs><clipPath id="s3clip-not"><circle cx="105" cy="75" r="62"/></clipPath></defs><rect x="6" y="6" width="258" height="138" rx="8" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><circle cx="135" cy="75" r="58" style="fill:var(--lu-paper);stroke:var(--lu-line-2);stroke-width:2"/></svg><p class="lu-sub">Everything <b>outside</b> the class.</p><p class="lu-sub"><code>Carrier and not 'Sanctioned carrier'</code></p></div><div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4)"><span class="lu-callout__label">disjoint</span><svg class="lu-svg" viewBox="0 0 270 150" role="img" aria-label="Venn picture for disjoint"><title>Venn picture for disjoint</title><defs><clipPath id="s3clip-disjoint"><circle cx="105" cy="75" r="62"/></clipPath></defs><circle cx="75" cy="75" r="55" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><circle cx="195" cy="75" r="55" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/></svg><p class="lu-sub">Classes that share <b>no</b> member.</p><p class="lu-sub"><code>'Late shipment' DisjointWith 'Cancelled shipment'</code></p></div></div>
-  <p class="lu-caption">Every example is written the way Protégé shows it. The disjoint one is a real axiom in our lab file.</p>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Intersection</b> Members of both classes.</span> <span data-auto="1"><b>Union</b> Members of either class.</span> <span data-auto="1"><b>Complement</b> Everything that is not a member of the class.</span> <span data-auto="1"><b>Disjoint classes</b> Classes that can share no member.</span></p>
-  <template data-notes><p>Five minutes. Disjointness is the one that makes errors findable: if one individual lands in both circles, the reasoner reports a contradiction instead of silently accepting it. The lab's bug is found by a disjointness axiom in BFO.</p></template>
-</section>
-
-<!-- ==================================================================== 16 -->
-<section class="slide" data-label="Counting: exactly, min, max" data-section="Writing rules" data-minutes="4">
-  <div class="lu-eyebrow">Rules that count</div>
-  <h2 class="lu-h2">Some questions need a number: exactly one supplier, at least two routes</h2>
-  <div class="lu-split lu-split--wide-left">
-    <div class="lu-stack"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 900, "height": 230, "nodes": [{"id": "comp", "label": "Sole-sourced component", "x": 200, "y": 45, "w": 320, "h": 56, "kind": "ours"}, {"id": "sup", "label": "Supplier", "x": 740, "y": 45, "w": 200, "h": 56, "kind": "reused"}, {"id": "mrc", "label": "Multi-route carrier", "x": 200, "y": 170, "w": 300, "h": 56, "kind": "ours"}, {"id": "route", "label": "Shipping route", "x": 740, "y": 170, "w": 240, "h": 56, "kind": "reused"}], "edges": [{"id": "a", "from": "comp", "to": "sup", "label": "supplied by · exactly 1"}, {"id": "b", "from": "mrc", "to": "route", "label": "handles route · min 2"}], "steps": [{"show": ["comp", "sup", "mrc", "route", "a", "b"]}], "legend": false}</script></div>
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">In the Brunel data</span><p class="lu-sub">V444_0 ships on 2 lanes, V44_3 on 3, V444_1 on 1. Two of the three carriers would count as multi-route.</p></div></div>
-    <div class="lu-stack"><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Cardinality restriction</dt><dd>A rule that counts links: exactly 1, min 2, max 3.</dd></dl></div><div class="lu-callout"><span class="lu-callout__label">Remember this for Part 5</span><p class="lu-sub">The fast reasoner used first in the lab, ELK, <b>ignores</b> counting rules. That is why it misses one of the lab's two errors.</p></div>
-    </div>
-  </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Sole-sourced</b> Bought from only one supplier, so if that supplier fails there is no other source.</span> <span data-auto="1"><b>ELK</b> A very fast reasoner for OWL 2 EL; it ignores axioms outside EL, such as counting.</span></p>
-  <template data-notes><p>Four minutes. Both classes are real in <code>scro-extension-reference.ttl</code>: <code>ul:SoleSourcedComponent</code> (<code>'supplied by' exactly 1 Supplier</code>) and <code>ul:MultiRouteCarrier</code> (<code>'handles route' min 2 'Shipping route'</code>).</p>
-<ul><li>Lane counts are from Brunel's OrderList (origin and destination port per order): V444_0 PORT04 and PORT09 to PORT09; V444_1 PORT04 to PORT09 only; V44_3 PORT04, PORT05 and PORT09 to PORT09.</li>
-<li>If you ask: a reasoner cannot conclude "min 2" from two port names alone, because OWL does not assume two names are two things. That is the open world again; Session 4 is where counting is checked.</li></ul></template>
-</section>
-
-<!-- ==================================================================== 17 -->
-<section class="slide" data-label="Domain and range infer, they do not reject" data-section="Writing rules" data-minutes="5">
-  <div class="lu-eyebrow">The biggest surprise for database people</div>
-  <h2 class="lu-h2">The same fact: a database rejects it, OWL learns from it</h2>
-  <div class="lu-split">
-    <div class="lu-stack">
-      <div class="lu-code lu-code--sm" data-name="Database · SQLite 3.37.2, real run of closed_world_demo.py"><pre><code><span class="tok-kw">INSERT INTO</span> handled_by
-  <span class="tok-kw">VALUES</span> (<span class="tok-str">'1447311670.7'</span>, <span class="tok-str">'V444_1'</span>);
-
-<span class="tok-com">IntegrityError: FOREIGN KEY constraint failed</span></code></pre></div>
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Domain</dt><dd>The class every <b>subject</b> is inferred to be in.</dd><dt>Range</dt><dd>The class every <b>object</b> is inferred to be in.</dd><dt>Entailment</dt><dd>A fact that follows, though nobody wrote it.</dd></dl></div>
-    </div>
-    <div class="lu-walk" data-label="OWL infers the type"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 820, "height": 270, "nodes": [{"id": "s", "label": "shipment of order\n1447311670.7", "x": 220, "y": 70, "w": 290, "h": 76, "kind": "individual"}, {"id": "c", "label": "carrier V444_1", "x": 700, "y": 70, "w": 250, "h": 60, "kind": "individual"}, {"id": "S", "label": "Shipment", "x": 220, "y": 220, "w": 220, "h": 60, "kind": "reused", "flag": "right"}], "edges": [{"id": "a", "from": "s", "to": "c", "label": "handled by"}, {"id": "b", "from": "s", "to": "S", "label": "is a", "kind": "inferred"}], "steps": [{"show": ["s", "c", "a"], "run": ["a"], "set": {"s": "active"}}, {"show": ["S", "b"], "run": ["b"], "set": {"s": "idle", "S": "inferred"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="What the file says" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The file only says the shipment of 1447311670.7 is handled by carrier V444_1. It gives the shipment no type at all."></div><div data-walk-step="2" data-caption-short="What OWL concludes" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The domain of &lt;b&gt;handled by&lt;/b&gt; is Shipment, so the reasoner concludes it is a Shipment. Nothing is refused."></div></div></div>
-  </div>
-  <template data-notes><p>Five minutes. Left, the database: the shipment is not in the shipment table, so the row is refused. Right, OWL: nothing is refused, the reasoner concludes a type. Both sides are real. The database error: <code>demos/session-03-ontology/closed_world_demo.py</code> (output in <code>reference-outputs/closed-world-demo.txt</code>). The OWL side is the lab file <code>sample-shipments.ttl</code>, reasoned with ELK in the lab.</p>
-<ul><li>For <code>handled by</code>: domain Shipment, range Carrier.</li><li>I say the sentence: <b>OWL infers rather than complains.</b> Session 4 (SHACL) is the tool that complains.</li></ul></template>
-</section>
-
-<!-- ==================================================================== 18 -->
-<section class="slide" data-label="SubClassOf and EquivalentTo" data-section="Writing rules" data-minutes="6">
-  <div class="lu-eyebrow">Why the reasoner sometimes does nothing</div>
-  <h2 class="lu-h2">A one way door, or a two way door. Only the two way door lets the reasoner classify data.</h2>
-  <div class="lu-split">
-    <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4) var(--lu-s5)"><span class="lu-callout__label">SubClassOf · one way</span><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 600, "height": 130, "nodes": [{"id": "c", "label": "At-risk shipment", "x": 300, "y": 28, "w": 280, "h": 48, "kind": "ours"}, {"id": "x", "label": "Shipment and handled by some Sanctioned carrier", "x": 300, "y": 102, "w": 560, "h": 48, "kind": "builtin"}], "edges": [{"id": "a", "from": "c", "to": "x", "label": "one way only", "both": false}], "steps": [{"show": ["c", "x", "a"]}], "legend": false}</script></div><dl class="lu-defs"><dt>Primitive class</dt><dd>Meeting the conditions does not make you a member.</dd></dl></div>
-    <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4) var(--lu-s5)"><span class="lu-callout__label">EquivalentTo · two way</span><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 600, "height": 130, "nodes": [{"id": "c", "label": "At-risk shipment", "x": 300, "y": 28, "w": 280, "h": 48, "kind": "ours"}, {"id": "x", "label": "Shipment and handled by some Sanctioned carrier", "x": 300, "y": 102, "w": 560, "h": 48, "kind": "builtin"}], "edges": [{"id": "a", "from": "c", "to": "x", "label": "both ways", "both": true}], "steps": [{"show": ["c", "x", "a"]}], "legend": false}</script></div><dl class="lu-defs"><dt>Defined class</dt><dd>Meeting the conditions makes you a member.</dd></dl></div>
-  </div>
-  <table class="lu-table">
-<thead><tr><th>Real reasoner result (ELK)</th><th>1447385217.7 · V444_0</th><th>1447291369.7 · V444_1</th><th>1447311670.7 · V444_1</th></tr></thead>
-<tbody>
-<tr><td>At-risk as <b>SubClassOf</b></td><td>no</td><td>no</td><td>no</td></tr>
-<tr><td>At-risk as <b>EquivalentTo</b></td><td>no</td><td><b>at risk</b></td><td><b>at risk</b></td></tr>
-</tbody></table>
-  <template data-notes><p>Six minutes. This is the slide that answers "what did the reasoner add?". With a primitive class, nothing: no shipment is ever placed in it. With a defined class, the reasoner does the classifying.</p>
-<ul><li>The table is a real ELK run: <code>python realize_sample.py</code> runs ROBOT on <code>sample-shipments.ttl</code> twice, once as shipped (EquivalentTo) and once with that one axiom turned into SubClassOf; output in <code>reference-outputs/realized-sample.txt</code>.</li>
-<li>The v0 file had At-risk shipment as SubClassOf only, which is why nothing visible happened when the reasoner first ran on it.</li></ul></template>
-</section>
-
-<!-- ==================================================================== 19 -->
-<section class="slide" data-label="Property characteristics" data-section="Writing rules" data-minutes="4">
-  <div class="lu-eyebrow">Rules about the arrows themselves</div>
-  <h2 class="lu-h2">A property can carry its own rules, and the reasoner uses them</h2>
-  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Transitive</span><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 470, "height": 190, "nodes": [{"id": "a", "label": "bolt", "x": 70, "y": 140, "w": 110, "h": 50, "kind": "individual"}, {"id": "b", "label": "wheel", "x": 235, "y": 40, "w": 120, "h": 50, "kind": "individual"}, {"id": "c", "label": "truck", "x": 400, "y": 140, "w": 120, "h": 50, "kind": "individual"}], "edges": [{"id": "x", "from": "a", "to": "b", "label": "part of"}, {"id": "y", "from": "b", "to": "c", "label": "part of"}, {"id": "z", "from": "a", "to": "c", "label": "part of (inferred)", "kind": "inferred"}], "steps": [{"show": ["a", "b", "c", "x", "y", "z"]}], "legend": false}</script></div><p class="lu-sub">If A is part of B and B is part of C, then A is part of C.</p></div><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Functional</span><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 470, "height": 190, "nodes": [{"id": "o", "label": "order\n1447291369.7", "x": 110, "y": 90, "w": 200, "h": 70, "kind": "individual"}, {"id": "d1", "label": "2013-05-26", "x": 380, "y": 35, "w": 160, "h": 50, "kind": "literal"}, {"id": "d2", "label": "2013-05-27", "x": 380, "y": 150, "w": 160, "h": 50, "kind": "literal", "flag": "right"}], "edges": [{"id": "x", "from": "o", "to": "d1", "label": "order date"}, {"id": "y", "from": "o", "to": "d2", "label": "order date", "kind": "conflict"}], "steps": [{"show": ["o", "d1", "d2", "x", "y"]}], "legend": false}</script></div><p class="lu-sub">At most one value per subject: one order date per order.</p></div><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Inverse</span><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 470, "height": 190, "nodes": [{"id": "s", "label": "shipment", "x": 90, "y": 90, "w": 150, "h": 56, "kind": "individual"}, {"id": "c", "label": "V444_1", "x": 390, "y": 90, "w": 150, "h": 56, "kind": "individual"}], "edges": [{"id": "x", "from": "s", "to": "c", "label": "handled by / handles", "both": true}], "steps": [{"show": ["s", "c", "x"]}], "legend": false}</script></div><p class="lu-sub">The same link read backwards: <b>handled by</b> and <b>handles</b>.</p></div></div>
-  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Also: punning</span><p class="lu-sub">Using one name as both a class and an individual. OWL 2 allows it, but it confuses people and tools. Avoid it unless you truly need it.</p></div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Punning</b> Using the same IRI as both a class and an individual; allowed in OWL 2, easy to misuse.</span></p>
-  <template data-notes><p>Four minutes. Our file declares <code>ul:deliveredAfter</code> as the inverse of <code>ul:committedBefore</code>, a real example. Transitivity is how "which products contain a part from this plant" works at any depth (Session 1's sanction question); Brunel has no parts list, so the bolt and wheel are a generic picture, not course data.</p>
-<p>The functional card: order 1447291369.7 really was ordered on 2013-05-26; the second date is what a careless second source might send. Two different <i>literal</i> values make the ontology inconsistent. If the two values were individuals, OWL would instead conclude they are the same thing, the open world again.</p></template>
-</section>
-
-<!-- ==================================================================== 20 -->
-<section class="slide slide--tint" data-label="Drill: the rule words" data-section="Writing rules" data-minutes="3">
-  <div class="lu-eyebrow">Drill · complete the statements</div>
-  <div class="lu-blanks" data-qid="s3-blanks1" data-label="OWL rule words">
-    <p class="lu-h3" style="margin-bottom:var(--lu-s4)">Fill in the blanks</p>
-    <ol class="lu-list lu-list--num">
-      <li>&ldquo;At least one link goes to that class&rdquo; is written with <input class="lu-blank" data-answer="some" data-label="Blank 1" placeholder="…">.</li>
-      <li>&ldquo;Every link, if any, goes to that class&rdquo; is written with <input class="lu-blank" data-answer="only" data-label="Blank 2" placeholder="…">.</li>
-      <li>For the reasoner to put data into a class by itself, the class needs an <input class="lu-blank" data-answer="EquivalentTo|equivalent to|equivalence|equivalentClass" data-label="Blank 3" placeholder="…"> axiom.</li>
-      <li>In OWL, a domain never rejects data. It <input class="lu-blank" data-answer="infers|entails|adds|derives" data-label="Blank 4" placeholder="…"> a type.</li>
-    </ol>
-  </div>
-  <template data-notes><p>Three minutes. Blank 3 is the one that matters for the lab.</p></template>
-</section>
-
-<!-- ==================================================================== 21 -->
-<section class="slide slide--night" data-chrome="none" data-label="Part 3 · What a reasoner does" data-section="The reasoner" data-minutes="1">
-  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 3 of 5 · about 27 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Our file carries 4,819 axioms. Who checks that none of them contradict each other?</h2>
-    <p class="lu-lead" style="max-width:46ch">Nobody, by hand. A reasoner does, in seconds, and tells you exactly which axioms are to blame.</p>
-  </div>
-  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
-</section>
-
-<!-- ==================================================================== 22 -->
-<section class="slide" data-label="Nobody checks 4,819 axioms by hand" data-section="The reasoner" data-minutes="4">
+<section class="slide" data-label="Nobody checks 4,819 axioms by hand" data-section="Fundamentals" data-minutes="4">
   <div class="lu-eyebrow">Why a reasoner</div>
   <h2 class="lu-h2">Our small extension imports SCRO, IOF Core and BFO: 4,819 axioms, 254 classes</h2>
   <div class="lu-split lu-split--wide-left">
@@ -369,18 +303,162 @@
 <ul><li>The open world callout is Session 1's point, repeated because every reasoner result today depends on it.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 23 -->
-<section class="slide" data-label="Three jobs" data-section="The reasoner" data-minutes="5">
+<!-- ==================================================================== 16 -->
+<section class="slide" data-label="Three jobs" data-section="Fundamentals" data-minutes="5">
   <div class="lu-eyebrow">What a reasoner actually does for you</div>
   <h2 class="lu-h2">Three jobs, each finding a different kind of mistake</h2>
   <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Consistency</span><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 460, "height": 150, "nodes": [{"id": "a", "label": "Late shipment", "x": 110, "y": 30, "w": 200, "h": 48, "kind": "ours"}, {"id": "b", "label": "Cancelled shipment", "x": 350, "y": 30, "w": 230, "h": 48, "kind": "ours"}, {"id": "x", "label": "one shipment in both", "x": 230, "y": 118, "w": 260, "h": 48, "kind": "individual", "flag": "right"}], "edges": [{"id": "d", "from": "a", "to": "b", "label": "disjoint", "both": true, "kind": "conflict"}, {"id": "p", "from": "x", "to": "a", "label": "is a"}, {"id": "q", "from": "x", "to": "b", "label": "is a"}], "steps": [{"show": ["a", "b", "x", "d", "p", "q"], "set": {"x": "impossible"}}], "legend": false}</script></div><p class="lu-sub">Can this ontology have any model at all? One thing in two disjoint classes: no.</p></div><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Classification</span><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 460, "height": 150, "nodes": [{"id": "a", "label": "At-risk shipment", "x": 230, "y": 118, "w": 240, "h": 48, "kind": "ours", "flag": "right"}, {"id": "b", "label": "Shipment", "x": 230, "y": 30, "w": 200, "h": 48, "kind": "reused"}], "edges": [{"id": "p", "from": "a", "to": "b", "label": "subclass of (inferred)", "kind": "inferred"}], "steps": [{"show": ["a", "b", "p"], "set": {"a": "inferred"}}], "legend": false}</script></div><p class="lu-sub">Compute the full tree, including subclass links nobody wrote.</p></div><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Realization</span><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 460, "height": 150, "nodes": [{"id": "a", "label": "shipment 1447291369.7", "x": 230, "y": 118, "w": 280, "h": 48, "kind": "individual", "flag": "right"}, {"id": "b", "label": "At-risk shipment", "x": 230, "y": 30, "w": 240, "h": 48, "kind": "ours"}], "edges": [{"id": "p", "from": "a", "to": "b", "label": "is a (inferred)", "kind": "inferred"}], "steps": [{"show": ["a", "b", "p"], "set": {"a": "inferred"}}], "legend": false}</script></div><p class="lu-sub">For every individual, compute every class it belongs to.</p></div></div>
-  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Subsumption</dt><dd>The &ldquo;is a subclass of&rdquo; relation, stated or inferred.</dd><dt>Consistency check</dt><dd>The test that the ontology does not contradict itself.</dd></dl></div>
+  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Subsumption</dt><dd>The &ldquo;is a subclass of&rdquo; relation, stated or inferred.</dd><dt>Consistency check</dt><dd>The test that the ontology does not contradict itself.</dd></dl></div>
   <template data-notes><p>Five minutes. I walk the three cards left to right. The middle one is real: At-risk shipment is defined as "Shipment and handled by some Sanctioned carrier", so the reasoner concludes it is a subclass of Shipment although nobody wrote that line. The right one is the lab's realization result (<code>reference-outputs/realized-sample.txt</code>).</p>
 <ul><li>Amber means inferred: Protégé shows the same thing with a yellow background. Red means impossible.</li></ul></template>
 </section>
 
+<!-- ==================================================================== 17 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 2 · Writing rules a machine can use" data-section="Writing definitions" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part 2 of 5 · about 40 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">How do you tell a machine what &ldquo;at risk&rdquo; means?</h2>
+    <p class="lu-lead" style="max-width:46ch">With a handful of words: some, only, and, or, not, exactly. Protégé shows them on every screen.</p>
+  </div>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
+</section>
+
+<!-- ==================================================================== 18 -->
+<section class="slide" data-label="some: at least one" data-section="Writing definitions" data-minutes="5">
+  <div class="lu-eyebrow">The most used rule in OWL</div>
+  <h2 class="lu-h2"><code>some</code> means: at least one arrow of this kind lands in that circle</h2>
+  <div class="lu-split">
+    <svg class="lu-svg" viewBox="0 0 688 244" role="img" aria-label="Which shipments satisfy &#x27;handled by some Sanctioned carrier&#x27;"><title>Which shipments satisfy &#x27;handled by some Sanctioned carrier&#x27;</title><circle cx="540" cy="100" r="88" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><text x="540" y="32" text-anchor="middle" dominant-baseline="middle" style="fill:var(--lu-blue-700);font-weight:600">Sanctioned carrier</text><circle cx="90" cy="72" r="9" style="fill:var(--lu-green-700)"/><text x="90" y="46" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">1447291369.7</text><circle cx="540" cy="104" r="9" style="fill:var(--lu-green-700)"/><text x="540" y="130" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">V444_1</text><line x1="102" y1="73" x2="526" y2="103" style="stroke:var(--lu-ink-2);stroke-width:2.5"/><polygon points="526.0,103.0 512.5,95.0 511.5,109.0" style="fill:var(--lu-ink-2)"/><text x="314.0" y="66" text-anchor="middle" dominant-baseline="middle" class="s-mono" style="fill:var(--lu-ink-2)">handled by</text><circle cx="90" cy="206" r="9" style="fill:var(--lu-green-700)"/><text x="90" y="180" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">1447385217.7</text><circle cx="540" cy="222" r="9" style="fill:var(--lu-green-700)"/><text x="570" y="222" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">V444_0</text><line x1="102" y1="207" x2="526" y2="221" style="stroke:var(--lu-ink-2);stroke-width:2.5"/><polygon points="526.0,221.0 512.2,213.5 511.8,227.5" style="fill:var(--lu-ink-2)"/><text x="314.0" y="198" text-anchor="middle" dominant-baseline="middle" class="s-mono" style="fill:var(--lu-ink-2)">handled by</text><path d="M 21 72 L 28 80 L 41 63" style="stroke:var(--lu-green-700);stroke-width:4;fill:none"/><path d="M 21 197 L 39 215 M 39 197 L 21 215" style="stroke:var(--lu-red-700);stroke-width:4;fill:none"/></svg>
+    <table class="lu-table"><tbody>
+<tr><td>English</td><td>at least one carrier of this shipment is sanctioned</td></tr>
+<tr><td>Protégé</td><td><code>'handled by' some 'Sanctioned carrier'</code></td></tr>
+<tr><td>Turtle</td><td><code>owl:someValuesFrom ul:SanctionedCarrier</code></td></tr>
+</tbody></table>
+  </div>
+  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Restriction</dt><dd>A class described by a condition on a property.</dd><dt>some</dt><dd>Existential restriction: at least one link goes to a member of the class.</dd><dt>Manchester syntax</dt><dd>The readable way Protégé writes rules, with the words some, only, and, or, not.</dd></dl></div>
+  <template data-notes><p>Five minutes. I read the Protégé line aloud slowly, it is exactly what you will see in the Description panel in the lab: <code>'handled by' some 'Sanctioned carrier'</code>. The quotes appear because the names contain spaces.</p>
+<ul><li>The shipment of 1447291369.7 passes (one arrow into the circle). The shipment of 1447385217.7 fails (its only carrier, V444_0, is outside).</li></ul></template>
+</section>
+
+<!-- ==================================================================== 19 -->
+<section class="slide" data-label="only: every one, if any" data-section="Writing definitions" data-minutes="4">
+  <div class="lu-eyebrow">The rule people misread</div>
+  <h2 class="lu-h2"><code>only</code> means: no arrow of this kind lands outside that circle</h2>
+  <div class="lu-split">
+    <div class="lu-stack"><svg class="lu-svg" viewBox="0 0 688 300" role="img" aria-label="Which shipments satisfy &#x27;handled by only Sanctioned carrier&#x27;"><title>Which shipments satisfy &#x27;handled by only Sanctioned carrier&#x27;</title><circle cx="540" cy="100" r="88" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><text x="540" y="32" text-anchor="middle" dominant-baseline="middle" style="fill:var(--lu-blue-700);font-weight:600">Sanctioned carrier</text><circle cx="90" cy="72" r="9" style="fill:var(--lu-green-700)"/><text x="90" y="46" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">1447291369.7</text><circle cx="540" cy="104" r="9" style="fill:var(--lu-green-700)"/><text x="540" y="130" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">V444_1</text><line x1="102" y1="73" x2="526" y2="103" style="stroke:var(--lu-ink-2);stroke-width:2.5"/><polygon points="526.0,103.0 512.5,95.0 511.5,109.0" style="fill:var(--lu-ink-2)"/><text x="314.0" y="66" text-anchor="middle" dominant-baseline="middle" class="s-mono" style="fill:var(--lu-ink-2)">handled by</text><circle cx="90" cy="206" r="9" style="fill:var(--lu-green-700)"/><text x="90" y="180" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">1447385217.7</text><circle cx="540" cy="222" r="9" style="fill:var(--lu-green-700)"/><text x="570" y="222" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">V444_0</text><line x1="102" y1="207" x2="526" y2="221" style="stroke:var(--lu-ink-2);stroke-width:2.5"/><polygon points="526.0,221.0 512.2,213.5 511.8,227.5" style="fill:var(--lu-ink-2)"/><text x="314.0" y="198" text-anchor="middle" dominant-baseline="middle" class="s-mono" style="fill:var(--lu-ink-2)">handled by</text><path d="M 21 72 L 28 80 L 41 63" style="stroke:var(--lu-green-700);stroke-width:4;fill:none"/><path d="M 21 197 L 39 215 M 39 197 L 21 215" style="stroke:var(--lu-red-700);stroke-width:4;fill:none"/><circle cx="90" cy="280" r="9" style="fill:var(--lu-green-700)"/><text x="110" y="282" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-3)">a shipment with no carrier recorded</text><path d="M 21 280 L 28 288 L 41 271" style="stroke:var(--lu-green-700);stroke-width:4;fill:none"/></svg>
+    <div class="lu-callout"><span class="lu-callout__label">The trap</span><p class="lu-sub">A shipment with <b>no</b> carrier recorded still passes. <code>only</code> never says an arrow exists. To say both, write <code>some</code> and <code>only</code>.</p></div></div>
+    <div class="lu-stack"><table class="lu-table"><tbody>
+<tr><td>English</td><td>every carrier of this shipment, if any, is sanctioned</td></tr>
+<tr><td>Protégé</td><td><code>'handled by' only 'Sanctioned carrier'</code></td></tr>
+<tr><td>Turtle</td><td><code>owl:allValuesFrom ul:SanctionedCarrier</code></td></tr>
+</tbody></table>
+    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>only</dt><dd>Universal restriction: every link of this kind, if there is any, goes to a member of the class.</dd></dl></div></div>
+  </div>
+  <template data-notes><p>Four minutes. I ask you first: does the shipment with no carrier satisfy it? Most of you will say no. The answer is yes, nothing breaks the rule. This is the single most common OWL misreading, and Part B of the lab asks you to write <code>some</code> plus <code>only</code> correctly.</p>
+<p>Every Brunel order has a carrier, so the third dot is a hypothetical shipment, not a row from the data. I say so.</p></template>
+</section>
+
+<!-- ==================================================================== 20 -->
+<section class="slide" data-label="and, or, not, disjoint" data-section="Writing definitions" data-minutes="5">
+  <div class="lu-eyebrow">Combining classes</div>
+  <h2 class="lu-h2">Four ways to combine circles. The shaded area is the new class.</h2>
+  <div class="lu-cards" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4)"><span class="lu-callout__label">and · intersection</span><svg class="lu-svg" viewBox="0 0 270 150" role="img" aria-label="Venn picture for and"><title>Venn picture for and</title><defs><clipPath id="s3clip-and"><circle cx="105" cy="75" r="62"/></clipPath></defs><circle cx="105" cy="75" r="62" style="fill:none;stroke:var(--lu-line-2);stroke-width:2"/><circle cx="165" cy="75" r="62" style="fill:none;stroke:var(--lu-line-2);stroke-width:2"/><circle cx="165" cy="75" r="62" clip-path="url(#s3clip-and)" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/></svg><p class="lu-sub">Members of <b>both</b> classes.</p><p class="lu-sub"><code>Shipment and ('handled by' some 'Sanctioned carrier')</code></p></div><div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4)"><span class="lu-callout__label">or · union</span><svg class="lu-svg" viewBox="0 0 270 150" role="img" aria-label="Venn picture for or"><title>Venn picture for or</title><defs><clipPath id="s3clip-or"><circle cx="105" cy="75" r="62"/></clipPath></defs><circle cx="105" cy="75" r="62" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><circle cx="165" cy="75" r="62" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/></svg><p class="lu-sub">Members of <b>either</b> class.</p><p class="lu-sub"><code>Plant or Port</code></p></div><div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4)"><span class="lu-callout__label">not · complement</span><svg class="lu-svg" viewBox="0 0 270 150" role="img" aria-label="Venn picture for not"><title>Venn picture for not</title><defs><clipPath id="s3clip-not"><circle cx="105" cy="75" r="62"/></clipPath></defs><rect x="6" y="6" width="258" height="138" rx="8" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><circle cx="135" cy="75" r="58" style="fill:var(--lu-paper);stroke:var(--lu-line-2);stroke-width:2"/></svg><p class="lu-sub">Everything <b>outside</b> the class.</p><p class="lu-sub"><code>Carrier and not 'Sanctioned carrier'</code></p></div><div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4)"><span class="lu-callout__label">disjoint</span><svg class="lu-svg" viewBox="0 0 270 150" role="img" aria-label="Venn picture for disjoint"><title>Venn picture for disjoint</title><defs><clipPath id="s3clip-disjoint"><circle cx="105" cy="75" r="62"/></clipPath></defs><circle cx="75" cy="75" r="55" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><circle cx="195" cy="75" r="55" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/></svg><p class="lu-sub">Classes that share <b>no</b> member.</p><p class="lu-sub"><code>'Late shipment' DisjointWith 'Cancelled shipment'</code></p></div></div>
+  <p class="lu-caption">Every example is written the way Protégé shows it. The disjoint one is a real axiom in our lab file.</p>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Intersection</b> Members of both classes.</span> <span data-auto="1"><b>Union</b> Members of either class.</span> <span data-auto="1"><b>Complement</b> Everything that is not a member of the class.</span> <span data-auto="1"><b>Disjoint classes</b> Classes that can share no member.</span></p>
+  <template data-notes><p>Five minutes. Disjointness is the one that makes errors findable: if one individual lands in both circles, the reasoner reports a contradiction instead of silently accepting it. The lab's bug is found by a disjointness axiom in BFO.</p></template>
+</section>
+
+<!-- ==================================================================== 21 -->
+<section class="slide" data-label="Counting: exactly, min, max" data-section="Writing definitions" data-minutes="4">
+  <div class="lu-eyebrow">Rules that count</div>
+  <h2 class="lu-h2">Some questions need a number: exactly one supplier, at least two routes</h2>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 900, "height": 230, "nodes": [{"id": "comp", "label": "Sole-sourced component", "x": 200, "y": 45, "w": 320, "h": 56, "kind": "ours"}, {"id": "sup", "label": "Supplier", "x": 740, "y": 45, "w": 200, "h": 56, "kind": "reused"}, {"id": "mrc", "label": "Multi-route carrier", "x": 200, "y": 170, "w": 300, "h": 56, "kind": "ours"}, {"id": "route", "label": "Shipping route", "x": 740, "y": 170, "w": 240, "h": 56, "kind": "reused"}], "edges": [{"id": "a", "from": "comp", "to": "sup", "label": "supplied by · exactly 1"}, {"id": "b", "from": "mrc", "to": "route", "label": "handles route · min 2"}], "steps": [{"show": ["comp", "sup", "mrc", "route", "a", "b"]}], "legend": false}</script></div>
+    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">In the Brunel data</span><p class="lu-sub">V444_0 ships on 2 lanes, V44_3 on 3, V444_1 on 1. Two of the three carriers would count as multi-route.</p></div></div>
+    <div class="lu-stack"><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Cardinality restriction</dt><dd>A rule that counts links: exactly 1, min 2, max 3.</dd></dl></div><div class="lu-callout"><span class="lu-callout__label">Remember this for Part 5</span><p class="lu-sub">The fast reasoner used first in the lab, ELK, <b>ignores</b> counting rules. That is why it misses one of the lab's two errors.</p></div>
+    </div>
+  </div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Sole-sourced</b> Bought from only one supplier, so if that supplier fails there is no other source.</span> <span data-auto="1"><b>ELK</b> A very fast reasoner for OWL 2 EL; it ignores axioms outside EL, such as counting.</span></p>
+  <template data-notes><p>Four minutes. Both classes are real in <code>scro-extension-reference.ttl</code>: <code>ul:SoleSourcedComponent</code> (<code>'supplied by' exactly 1 Supplier</code>) and <code>ul:MultiRouteCarrier</code> (<code>'handles route' min 2 'Shipping route'</code>).</p>
+<ul><li>Lane counts are from Brunel's OrderList (origin and destination port per order): V444_0 PORT04 and PORT09 to PORT09; V444_1 PORT04 to PORT09 only; V44_3 PORT04, PORT05 and PORT09 to PORT09.</li>
+<li>If you ask: a reasoner cannot conclude "min 2" from two port names alone, because OWL does not assume two names are two things. That is the open world again; Session 4 is where counting is checked.</li></ul></template>
+</section>
+
+<!-- ==================================================================== 22 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 3 · What a reasoner does" data-section="What the reasoner does" data-minutes="1">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Part 3 of 5 · about 27 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Our file carries 4,819 axioms. Who checks that none of them contradict each other?</h2>
+    <p class="lu-lead" style="max-width:46ch">Nobody, by hand. A reasoner does, in seconds, and tells you exactly which axioms are to blame.</p>
+  </div>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
+</section>
+
+<!-- ==================================================================== 23 -->
+<section class="slide" data-label="Domain and range infer, they do not reject" data-section="What the reasoner does" data-minutes="5">
+  <div class="lu-eyebrow">The biggest surprise for database people</div>
+  <h2 class="lu-h2">The same fact: a database rejects it, OWL learns from it</h2>
+  <div class="lu-split">
+    <div class="lu-stack">
+      <div class="lu-code lu-code--sm" data-name="Database · SQLite 3.37.2, real run of closed_world_demo.py"><pre><code><span class="tok-kw">INSERT INTO</span> handled_by
+  <span class="tok-kw">VALUES</span> (<span class="tok-str">'1447311670.7'</span>, <span class="tok-str">'V444_1'</span>);
+
+<span class="tok-com">IntegrityError: FOREIGN KEY constraint failed</span></code></pre></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Domain</dt><dd>The class every <b>subject</b> is inferred to be in.</dd><dt>Range</dt><dd>The class every <b>object</b> is inferred to be in.</dd><dt>Entailment</dt><dd>A fact that follows, though nobody wrote it.</dd></dl></div>
+    </div>
+    <div class="lu-walk" data-label="OWL infers the type"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 820, "height": 270, "nodes": [{"id": "s", "label": "shipment of order\n1447311670.7", "x": 220, "y": 70, "w": 290, "h": 76, "kind": "individual"}, {"id": "c", "label": "carrier V444_1", "x": 700, "y": 70, "w": 250, "h": 60, "kind": "individual"}, {"id": "S", "label": "Shipment", "x": 220, "y": 220, "w": 220, "h": 60, "kind": "reused", "flag": "right"}], "edges": [{"id": "a", "from": "s", "to": "c", "label": "handled by"}, {"id": "b", "from": "s", "to": "S", "label": "is a", "kind": "inferred"}], "steps": [{"show": ["s", "c", "a"], "run": ["a"], "set": {"s": "active"}}, {"show": ["S", "b"], "run": ["b"], "set": {"s": "idle", "S": "inferred"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="What the file says" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The file only says the shipment of 1447311670.7 is handled by carrier V444_1. It gives the shipment no type at all."></div><div data-walk-step="2" data-caption-short="What OWL concludes" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The domain of &lt;b&gt;handled by&lt;/b&gt; is Shipment, so the reasoner concludes it is a Shipment. Nothing is refused."></div></div></div>
+  </div>
+  <template data-notes><p>Five minutes. Left, the database: the shipment is not in the shipment table, so the row is refused. Right, OWL: nothing is refused, the reasoner concludes a type. Both sides are real. The database error: <code>demos/session-03-ontology/closed_world_demo.py</code> (output in <code>reference-outputs/closed-world-demo.txt</code>). The OWL side is the lab file <code>sample-shipments.ttl</code>, reasoned with ELK in the lab.</p>
+<ul><li>For <code>handled by</code>: domain Shipment, range Carrier.</li><li>I say the sentence: <b>OWL infers rather than complains.</b> Session 4 (SHACL) is the tool that complains.</li></ul></template>
+</section>
+
 <!-- ==================================================================== 24 -->
-<section class="slide" data-label="The red class" data-section="The reasoner" data-minutes="4">
+<section class="slide" data-label="SubClassOf and EquivalentTo" data-section="What the reasoner does" data-minutes="6">
+  <div class="lu-eyebrow">Why the reasoner sometimes does nothing</div>
+  <h2 class="lu-h2">A one way door, or a two way door. Only the two way door lets the reasoner classify data.</h2>
+  <div class="lu-split">
+    <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4) var(--lu-s5)"><span class="lu-callout__label">SubClassOf · one way</span><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 600, "height": 130, "nodes": [{"id": "c", "label": "At-risk shipment", "x": 300, "y": 28, "w": 280, "h": 48, "kind": "ours"}, {"id": "x", "label": "Shipment and handled by some Sanctioned carrier", "x": 300, "y": 102, "w": 560, "h": 48, "kind": "builtin"}], "edges": [{"id": "a", "from": "c", "to": "x", "label": "one way only", "both": false}], "steps": [{"show": ["c", "x", "a"]}], "legend": false}</script></div><dl class="lu-defs" style="margin:0"><dt>Primitive class</dt><dd>Meeting the conditions does not make you a member.</dd></dl></div>
+    <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4) var(--lu-s5)"><span class="lu-callout__label">EquivalentTo · two way</span><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 600, "height": 130, "nodes": [{"id": "c", "label": "At-risk shipment", "x": 300, "y": 28, "w": 280, "h": 48, "kind": "ours"}, {"id": "x", "label": "Shipment and handled by some Sanctioned carrier", "x": 300, "y": 102, "w": 560, "h": 48, "kind": "builtin"}], "edges": [{"id": "a", "from": "c", "to": "x", "label": "both ways", "both": true}], "steps": [{"show": ["c", "x", "a"]}], "legend": false}</script></div><dl class="lu-defs" style="margin:0"><dt>Defined class</dt><dd>Meeting the conditions makes you a member.</dd></dl></div>
+  </div>
+  <table class="lu-table">
+<thead><tr><th>Real reasoner result (ELK)</th><th>1447385217.7 · V444_0</th><th>1447291369.7 · V444_1</th><th>1447311670.7 · V444_1</th></tr></thead>
+<tbody>
+<tr><td>At-risk as <b>SubClassOf</b></td><td>no</td><td>no</td><td>no</td></tr>
+<tr><td>At-risk as <b>EquivalentTo</b></td><td>no</td><td><b>at risk</b></td><td><b>at risk</b></td></tr>
+</tbody></table>
+  <template data-notes><p>Six minutes. This is the slide that answers "what did the reasoner add?". With a primitive class, nothing: no shipment is ever placed in it. With a defined class, the reasoner does the classifying.</p>
+<ul><li>The table is a real ELK run: <code>python realize_sample.py</code> runs ROBOT on <code>sample-shipments.ttl</code> twice, once as shipped (EquivalentTo) and once with that one axiom turned into SubClassOf; output in <code>reference-outputs/realized-sample.txt</code>.</li>
+<li>The v0 file had At-risk shipment as SubClassOf only, which is why nothing visible happened when the reasoner first ran on it.</li></ul></template>
+</section>
+
+<!-- ==================================================================== 25 -->
+<section class="slide" data-label="Property characteristics" data-section="What the reasoner does" data-minutes="4">
+  <div class="lu-eyebrow">Rules about the arrows themselves</div>
+  <h2 class="lu-h2">A property can carry its own rules, and the reasoner uses them</h2>
+  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Transitive</span><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 470, "height": 190, "nodes": [{"id": "a", "label": "bolt", "x": 70, "y": 140, "w": 110, "h": 50, "kind": "individual"}, {"id": "b", "label": "wheel", "x": 235, "y": 40, "w": 120, "h": 50, "kind": "individual"}, {"id": "c", "label": "truck", "x": 400, "y": 140, "w": 120, "h": 50, "kind": "individual"}], "edges": [{"id": "x", "from": "a", "to": "b", "label": "part of"}, {"id": "y", "from": "b", "to": "c", "label": "part of"}, {"id": "z", "from": "a", "to": "c", "label": "part of (inferred)", "kind": "inferred"}], "steps": [{"show": ["a", "b", "c", "x", "y", "z"]}], "legend": false}</script></div><p class="lu-sub">If A is part of B and B is part of C, then A is part of C.</p></div><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Functional</span><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 470, "height": 190, "nodes": [{"id": "o", "label": "order\n1447291369.7", "x": 110, "y": 90, "w": 200, "h": 70, "kind": "individual"}, {"id": "d1", "label": "2013-05-26", "x": 380, "y": 35, "w": 160, "h": 50, "kind": "literal"}, {"id": "d2", "label": "2013-05-27", "x": 380, "y": 150, "w": 160, "h": 50, "kind": "literal", "flag": "right"}], "edges": [{"id": "x", "from": "o", "to": "d1", "label": "order date"}, {"id": "y", "from": "o", "to": "d2", "label": "order date", "kind": "conflict"}], "steps": [{"show": ["o", "d1", "d2", "x", "y"]}], "legend": false}</script></div><p class="lu-sub">At most one value per subject: one order date per order.</p></div><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Inverse</span><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 470, "height": 190, "nodes": [{"id": "s", "label": "shipment", "x": 90, "y": 90, "w": 150, "h": 56, "kind": "individual"}, {"id": "c", "label": "V444_1", "x": 390, "y": 90, "w": 150, "h": 56, "kind": "individual"}], "edges": [{"id": "x", "from": "s", "to": "c", "label": "handled by / handles", "both": true}], "steps": [{"show": ["s", "c", "x"]}], "legend": false}</script></div><p class="lu-sub">The same link read backwards: <b>handled by</b> and <b>handles</b>.</p></div></div>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Also: punning</span><p class="lu-sub">Using one name as both a class and an individual. OWL 2 allows it, but it confuses people and tools. Avoid it unless you truly need it.</p></div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Punning</b> Using the same IRI as both a class and an individual; allowed in OWL 2, easy to misuse.</span></p>
+  <template data-notes><p>Four minutes. Our file declares <code>ul:deliveredAfter</code> as the inverse of <code>ul:committedBefore</code>, a real example. Transitivity is how "which products contain a part from this plant" works at any depth (Session 1's sanction question); Brunel has no parts list, so the bolt and wheel are a generic picture, not course data.</p>
+<p>The functional card: order 1447291369.7 really was ordered on 2013-05-26; the second date is what a careless second source might send. Two different <i>literal</i> values make the ontology inconsistent. If the two values were individuals, OWL would instead conclude they are the same thing, the open world again.</p></template>
+</section>
+
+<!-- ==================================================================== 26 -->
+<section class="slide slide--tint" data-label="Drill: the rule words" data-section="What the reasoner does" data-minutes="3">
+  <div class="lu-eyebrow">Drill · complete the statements</div>
+  <div class="lu-blanks" data-qid="s3-blanks1" data-label="OWL rule words">
+    <p class="lu-h3" style="margin-bottom:var(--lu-s4)">Fill in the blanks</p>
+    <ol class="lu-list lu-list--num">
+      <li>&ldquo;At least one link goes to that class&rdquo; is written with <input class="lu-blank" data-answer="some" data-label="Blank 1" placeholder="…">.</li>
+      <li>&ldquo;Every link, if any, goes to that class&rdquo; is written with <input class="lu-blank" data-answer="only" data-label="Blank 2" placeholder="…">.</li>
+      <li>For the reasoner to put data into a class by itself, the class needs an <input class="lu-blank" data-answer="EquivalentTo|equivalent to|equivalence|equivalentClass" data-label="Blank 3" placeholder="…"> axiom.</li>
+      <li>In OWL, a domain never rejects data. It <input class="lu-blank" data-answer="infers|entails|adds|derives" data-label="Blank 4" placeholder="…"> a type.</li>
+    </ol>
+  </div>
+  <template data-notes><p>Three minutes. Blank 3 is the one that matters for the lab.</p></template>
+</section>
+
+<!-- ==================================================================== 27 -->
+<section class="slide" data-label="The red class" data-section="What the reasoner does" data-minutes="4">
   <div class="lu-eyebrow">What an error looks like</div>
   <h2 class="lu-h2">A class that can never have a member turns red, under owl:Nothing</h2>
   <div class="lu-split lu-split--wide-left">
@@ -394,39 +472,8 @@
 <ul><li>An unsatisfiable class is not the same as an inconsistent ontology: one class is empty, the rest still works. The next slide shows the other case.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 25 -->
-<section class="slide" data-label="Walkthrough: a domain mistake" data-section="The reasoner" data-minutes="5">
-  <div class="lu-eyebrow">Diagnostic walkthrough</div>
-  <h2 class="lu-h2">One careless fact, four steps, and the reasoner stops everything</h2>
-  <div class="lu-split lu-split--wide-left">
-    <div class="lu-walk" data-label="A domain mistake, found by the reasoner"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1000, "height": 330, "nodes": [{"id": "po", "label": "purchase order po88", "x": 220, "y": 40, "w": 280, "h": 56, "kind": "individual", "flag": "bottom"}, {"id": "c", "label": "carrier V444_1", "x": 720, "y": 40, "w": 250, "h": 56, "kind": "individual"}, {"id": "ship", "label": "Shipment", "x": 220, "y": 165, "w": 220, "h": 56, "kind": "reused", "flag": "right"}, {"id": "ic", "label": "independent\ncontinuant", "x": 220, "y": 290, "w": 250, "h": 68, "kind": "upper"}, {"id": "pord", "label": "Purchase order", "x": 720, "y": 165, "w": 240, "h": 56, "kind": "reused"}, {"id": "gdc", "label": "generically dependent\ncontinuant", "x": 720, "y": 290, "w": 300, "h": 68, "kind": "upper"}], "edges": [{"id": "a", "from": "po", "to": "c", "label": "handled by"}, {"id": "b", "from": "po", "to": "ship", "label": "is a (domain)", "kind": "inferred"}, {"id": "c1", "from": "ship", "to": "ic", "label": "is a"}, {"id": "d", "from": "po", "to": "pord", "label": "is a", "route": "elbow", "sides": ["right", "top"]}, {"id": "f", "from": "pord", "to": "gdc", "label": "is a"}, {"id": "g", "from": "ic", "to": "gdc", "label": "disjoint", "both": true, "kind": "conflict"}], "steps": [{"show": ["po", "c", "a"], "run": ["a"], "set": {"po": "active"}}, {"show": ["ship", "b"], "run": ["b"], "set": {"ship": "inferred"}}, {"show": ["ic", "c1", "pord", "gdc", "d", "f"], "run": ["c1", "d", "f"], "set": {"ship": "idle", "po": "active"}}, {"show": ["g"], "run": ["g"], "set": {"po": "impossible", "ic": "impossible", "gdc": "impossible"}}], "legend": {"reused": "Reused, IOF SCRO", "upper": "BFO, upper ontology", "individual": "Individual"}}</script></div><div data-walk-step="1" data-caption-short="One careless fact" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A mapping says purchase order po88 is &lt;b&gt;handled by&lt;/b&gt; carrier V444_1. In SQL a foreign key would refuse it. Here, nothing complains."></div><div data-walk-step="2" data-caption-short="The domain infers" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The domain of &lt;b&gt;handled by&lt;/b&gt; is Shipment, so the reasoner concludes po88 is a Shipment."></div><div data-walk-step="3" data-caption-short="What SCRO already says" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; In SCRO a Shipment is a physical thing (an independent continuant) and a purchase order is information (a generically dependent continuant)."></div><div data-walk-step="4" data-caption-short="Inconsistent" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; BFO says nothing can be both. So the whole ontology is &lt;b&gt;inconsistent&lt;/b&gt;, and the reasoner refuses to answer anything."></div></div></div>
-    <div class="lu-stack">
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Real run</span><p class="lu-sub"><code>python local_reasoner.py workspace/domain-mistake.ttl</code> answers: the ontology is inconsistent.</p></div>
-      <div class="lu-callout"><span class="lu-callout__label">The lesson</span><p class="lu-sub">A domain is a promise about every subject. Attach the property to the wrong kind of thing and the reasoner believes you, all the way to a contradiction.</p></div>
-    </div>
-  </div>
-  <template data-notes><p>Five minutes. I step through with the arrow keys; at step 2 I ask you what you expect before I show step 3.</p>
-<ul><li>This is a real HermiT run on <code>demos/session-03-ontology/domain-mistake.ttl</code> (<code>reference-outputs/domain-mistake.txt</code>). po88 is a purchase order from the Session 5 ERP seed data.</li>
-<li>Inconsistent is stronger than unsatisfiable: one impossible <i>individual</i> breaks the whole ontology, while an impossible <i>class</i> only empties that class. Protégé says "inconsistent ontology" and stops.</li>
-<li>Continuant and the two kinds of dependent continuant are defined properly in Part 4; here the plain words are enough.</li></ul></template>
-</section>
-
-<!-- ==================================================================== 26 -->
-<section class="slide" data-label="Reading an explanation" data-section="The reasoner" data-minutes="5">
-  <div class="lu-eyebrow">Why is the class red?</div>
-  <h2 class="lu-h2">Click the <b>?</b> next to a red class: Protégé lists the few axioms that together cause it</h2>
-  <figure class="lu-figure" style="margin:0"><div class="lu-figure__frame"><img src="../assets/img/s3-protege-09b-explanation-1.png" alt="Protégé explanation: six axioms that make Order for a sole-sourced good equivalent to owl:Nothing" loading="lazy"></div><figcaption>Real capture: Protégé's first explanation for <b>Order for a sole-sourced good</b>, six lines. Line 1 is ours; lines 2 to 6 come from SCRO and BFO.</figcaption></figure>
-  <div class="lu-split">
-    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Justification</dt><dd>The smallest set of axioms that together cause an inference. Remove any one and the inference goes away.</dd></dl></div>
-    <div class="lu-callout"><span class="lu-callout__label">How to read it</span><p class="lu-sub">Line 1 is the only line we wrote. Lines 2 to 6 were imported. So the mistake is in how line 1 <b>uses</b> SCRO. Part 4 decodes lines 2 to 6.</p></div>
-  </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>SCRO</b> IOF&#x27;s Supply Chain Reference Ontology, built on IOF Core. The base our ontology extends.</span></p>
-  <template data-notes><p>Five minutes. I read the six lines aloud, but I do not explain the BFO words yet: they are Part 4. The point now is the method: find the line that is ours.</p>
-<ul><li>ROBOT's <code>explain</code> finds a different justification for the same class (<code>reference-outputs/explain_v0_ELK.md</code>): there can be more than one. Any single one is enough to fix.</li></ul></template>
-</section>
-
-<!-- ==================================================================== 27 -->
-<section class="slide slide--tint" data-label="Check: which job finds which bug" data-section="The reasoner" data-minutes="3">
+<!-- ==================================================================== 28 -->
+<section class="slide slide--tint" data-label="Check: which job finds which bug" data-section="What the reasoner does" data-minutes="3">
   <div class="lu-eyebrow">Check question</div>
   <div class="lu-mcq" data-qid="s3-q2" data-answer="b" data-label="Which reasoning task surfaces an unintended subclass"
        data-fb-correct=" Classification computes subsumption, so an unintended subclass link shows up in the inferred tree."
@@ -442,8 +489,8 @@
   <template data-notes><p>Three minutes. The scenario is hypothetical (it does not happen in our file): read the inferred tree as a claim about what you said. When it disagrees with what you meant, the model is wrong, not the reasoner.</p></template>
 </section>
 
-<!-- ==================================================================== 28 -->
-<section class="slide slide--night" data-chrome="none" data-label="Part 4 · Reuse, and BFO in plain words" data-section="Reuse and BFO" data-minutes="1">
+<!-- ==================================================================== 29 -->
+<section class="slide slide--night" data-chrome="none" data-label="Part 4 · Reuse, and BFO in plain words" data-section="Reusing ontologies and BFO" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 4 of 5 · about 30 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">Industrial ontologies for supply chain already exist. Why build your own?</h2>
@@ -452,31 +499,18 @@
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 29 -->
-<section class="slide" data-label="Why reuse: the stack" data-section="Reuse and BFO" data-minutes="4">
-  <div class="lu-eyebrow">Where our classes attach</div>
-  <h2 class="lu-h2">Three published layers under us. We only write what they do not already say.</h2>
-  <div class="lu-split lu-split--wide-left">
-  <div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 820, "height": 385, "nodes": [{"id": "bfo", "label": "BFO 2020\nthings, happenings, qualities", "x": 250, "y": 345, "w": 420, "h": 68, "kind": "upper"}, {"id": "core", "label": "IOF Core\nproducts, processes, agents", "x": 250, "y": 240, "w": 420, "h": 68, "kind": "reused"}, {"id": "scro", "label": "IOF SCRO\nshipments, carriers, orders", "x": 250, "y": 135, "w": 420, "h": 68, "kind": "reused"}, {"id": "ul", "label": "ul: our extension\nonly what our questions need", "x": 250, "y": 35, "w": 420, "h": 64, "kind": "ours"}, {"id": "gs1", "label": "GS1 Web\nVocabulary", "x": 700, "y": 135, "w": 200, "h": 68, "kind": "builtin"}], "edges": [{"id": "a", "from": "ul", "to": "scro", "label": "builds on"}, {"id": "b", "from": "scro", "to": "core", "label": "builds on"}, {"id": "c", "from": "core", "to": "bfo", "label": "builds on"}, {"id": "d", "from": "scro", "to": "gs1", "label": "aligned with", "both": true}], "steps": [{"show": ["bfo", "core", "scro", "ul", "gs1", "a", "b", "c", "d"]}], "legend": {"ours": "Our ontology (ul:)", "reused": "Reused, IOF", "upper": "BFO, upper ontology"}}</script></div><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub"><b>Upper ontology</b>: a very general ontology of basic categories that domain ontologies build on. <b>BFO</b> is an ISO standard one.</p><p class="lu-sub"><b>IOF · SCRO</b>: the Industrial Ontologies Foundry's core layer, and its Supply Chain Reference Ontology, the base we extend.</p><p class="lu-sub"><b>Alignment</b>: linking our classes to classes in another ontology.</p></div>
-  </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>IOF Core</b> The Industrial Ontologies Foundry&#x27;s middle layer, built on BFO: products, processes, agents.</span> <span data-auto="1"><b>IOF</b> Industrial Ontologies Foundry: the OBO idea applied to industry and manufacturing, also built on BFO.</span> <span data-auto="1"><b>GS1</b> The standards body behind barcodes; publishes the GS1 Web Vocabulary for products and supply chain data.</span></p>
-  <template data-notes><p>Four minutes. I build the stack from the bottom in words: BFO says what kinds of thing exist at all; IOF Core adds industry; SCRO adds supply chain; we add only what our competency questions need.</p>
-<ul><li>Why reuse: someone else's shipment is then the same shipment as ours, and their tools and data work with our file. The GS1 check found no term for "port" or "freight rate band", an honest result of reuse first.</li>
-<li>All three are real downloads in <code>workspace/</code> (IOF release 202603, MIT licence).</li></ul></template>
-</section>
-
 <!-- ==================================================================== 30 -->
-<section class="slide" data-label="Things and happenings" data-section="Reuse and BFO" data-minutes="4">
+<section class="slide" data-label="Things and happenings" data-section="Reusing ontologies and BFO" data-minutes="4">
   <div class="lu-eyebrow">BFO's first split</div>
   <h2 class="lu-h2">Everything is either a thing that lasts, or something that happens</h2>
   <div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1300, "height": 190, "nodes": [{"id": "cont", "label": "continuant: persists through time", "x": 300, "y": 35, "w": 400, "h": 56, "kind": "upper"}, {"id": "occ", "label": "occurrent: unfolds in time", "x": 1000, "y": 35, "w": 360, "h": 56, "kind": "upper"}, {"id": "truck", "label": "a truck of carrier V444_1", "x": 300, "y": 150, "w": 320, "h": 56, "kind": "individual"}, {"id": "del", "label": "the delivery of order 1447291369.7", "x": 1000, "y": 150, "w": 420, "h": 56, "kind": "individual"}], "edges": [{"id": "a", "from": "truck", "to": "cont", "label": "is a"}, {"id": "b", "from": "del", "to": "occ", "label": "is a"}, {"id": "c", "from": "truck", "to": "del", "label": "participates in"}], "steps": [{"show": ["cont", "occ", "truck", "del", "a", "b", "c"]}], "legend": false}</script></div>
-  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Continuant</dt><dd>Something that persists through time: a truck, a warehouse, a purchase order.</dd><dt>Occurrent</dt><dd>Something that happens and unfolds in time: a delivery.</dd><dt>Process</dt><dd>An occurrent with parts that happen one after another: loading, then shipping.</dd></dl></div>
+  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Continuant</dt><dd>Something that persists through time: a truck, a warehouse, a purchase order.</dd><dt>Occurrent</dt><dd>Something that happens and unfolds in time: a delivery.</dd><dt>Process</dt><dd>An occurrent with parts that happen one after another: loading, then shipping.</dd></dl></div>
   <template data-notes><p>Four minutes. The test I give you: can you ask "how long did it take?" If yes, occurrent. Can you ask "where is it now?" If yes, continuant.</p>
 <ul><li>The truck is an illustration: Brunel records carriers, not their trucks. The order is real.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 31 -->
-<section class="slide" data-label="A truck, its colour, its role, its paperwork" data-section="Reuse and BFO" data-minutes="5">
+<section class="slide" data-label="A truck, its colour, its role, its paperwork" data-section="Reusing ontologies and BFO" data-minutes="5">
   <div class="lu-eyebrow">Three kinds of continuant</div>
   <h2 class="lu-h2">Some things stand on their own. Some exist only in one bearer. Some can be copied.</h2>
   <div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 270, "nodes": [{"id": "truck", "label": "the truck\nmaterial entity", "x": 260, "y": 135, "w": 270, "h": 64, "kind": "individual"}, {"id": "colour", "label": "its colour\nquality", "x": 700, "y": 36, "w": 240, "h": 64, "kind": "individual"}, {"id": "role", "label": "its role as carrier\nrole", "x": 700, "y": 135, "w": 280, "h": 64, "kind": "individual"}, {"id": "po", "label": "the purchase order text\ninformation", "x": 700, "y": 234, "w": 330, "h": 64, "kind": "individual"}, {"id": "ic", "label": "independent\ncontinuant", "x": 260, "y": 36, "w": 250, "h": 64, "kind": "upper"}, {"id": "sdc", "label": "specifically dependent\ncontinuant", "x": 1150, "y": 85, "w": 320, "h": 64, "kind": "upper"}, {"id": "gdc", "label": "generically dependent\ncontinuant", "x": 1150, "y": 234, "w": 320, "h": 64, "kind": "upper"}], "edges": [{"id": "a", "from": "colour", "to": "truck", "label": "inheres in"}, {"id": "b", "from": "role", "to": "truck", "label": "inheres in"}, {"id": "c", "from": "truck", "to": "ic", "label": "is a"}, {"id": "d", "from": "colour", "to": "sdc", "label": "is a"}, {"id": "f", "from": "role", "to": "sdc", "label": "is a"}, {"id": "g", "from": "po", "to": "gdc", "label": "is a"}], "steps": [{"show": ["truck", "colour", "role", "po", "ic", "sdc", "gdc", "a", "b", "c", "d", "f", "g"]}], "legend": false}</script></div>
@@ -488,7 +522,38 @@
 </section>
 
 <!-- ==================================================================== 32 -->
-<section class="slide" data-label="The reuse trap: our real bug" data-section="Reuse and BFO" data-minutes="6">
+<section class="slide" data-label="Walkthrough: a domain mistake" data-section="Reusing ontologies and BFO" data-minutes="5">
+  <div class="lu-eyebrow">Diagnostic walkthrough</div>
+  <h2 class="lu-h2">One careless fact, four steps, and the reasoner stops everything</h2>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-walk" data-label="A domain mistake, found by the reasoner"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1000, "height": 330, "nodes": [{"id": "po", "label": "purchase order po88", "x": 220, "y": 40, "w": 280, "h": 56, "kind": "individual", "flag": "bottom"}, {"id": "c", "label": "carrier V444_1", "x": 720, "y": 40, "w": 250, "h": 56, "kind": "individual"}, {"id": "ship", "label": "Shipment", "x": 220, "y": 165, "w": 220, "h": 56, "kind": "reused", "flag": "right"}, {"id": "ic", "label": "independent\ncontinuant", "x": 220, "y": 290, "w": 250, "h": 68, "kind": "upper"}, {"id": "pord", "label": "Purchase order", "x": 720, "y": 165, "w": 240, "h": 56, "kind": "reused"}, {"id": "gdc", "label": "generically dependent\ncontinuant", "x": 720, "y": 290, "w": 300, "h": 68, "kind": "upper"}], "edges": [{"id": "a", "from": "po", "to": "c", "label": "handled by"}, {"id": "b", "from": "po", "to": "ship", "label": "is a (domain)", "kind": "inferred"}, {"id": "c1", "from": "ship", "to": "ic", "label": "is a"}, {"id": "d", "from": "po", "to": "pord", "label": "is a", "route": "elbow", "sides": ["right", "top"]}, {"id": "f", "from": "pord", "to": "gdc", "label": "is a"}, {"id": "g", "from": "ic", "to": "gdc", "label": "disjoint", "both": true, "kind": "conflict"}], "steps": [{"show": ["po", "c", "a"], "run": ["a"], "set": {"po": "active"}}, {"show": ["ship", "b"], "run": ["b"], "set": {"ship": "inferred"}}, {"show": ["ic", "c1", "pord", "gdc", "d", "f"], "run": ["c1", "d", "f"], "set": {"ship": "idle", "po": "active"}}, {"show": ["g"], "run": ["g"], "set": {"po": "impossible", "ic": "impossible", "gdc": "impossible"}}], "legend": {"reused": "Reused, IOF SCRO", "upper": "BFO, upper ontology", "individual": "Individual"}}</script></div><div data-walk-step="1" data-caption-short="One careless fact" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A mapping says purchase order po88 is &lt;b&gt;handled by&lt;/b&gt; carrier V444_1. In SQL a foreign key would refuse it. Here, nothing complains."></div><div data-walk-step="2" data-caption-short="The domain infers" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The domain of &lt;b&gt;handled by&lt;/b&gt; is Shipment, so the reasoner concludes po88 is a Shipment."></div><div data-walk-step="3" data-caption-short="What SCRO already says" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; In SCRO a Shipment is a physical thing (an independent continuant) and a purchase order is information (a generically dependent continuant)."></div><div data-walk-step="4" data-caption-short="Inconsistent" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; BFO says nothing can be both. So the whole ontology is &lt;b&gt;inconsistent&lt;/b&gt;, and the reasoner refuses to answer anything."></div></div></div>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Real run</span><p class="lu-sub"><code>python local_reasoner.py workspace/domain-mistake.ttl</code> answers: the ontology is inconsistent.</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">The lesson</span><p class="lu-sub">A domain is a promise about every subject. Attach the property to the wrong kind of thing and the reasoner believes you, all the way to a contradiction.</p></div>
+    </div>
+  </div>
+  <template data-notes><p>Five minutes. I step through with the arrow keys; at step 2 I ask you what you expect before I show step 3.</p>
+<ul><li>This is a real HermiT run on <code>demos/session-03-ontology/domain-mistake.ttl</code> (<code>reference-outputs/domain-mistake.txt</code>). po88 is a purchase order from the Session 5 ERP seed data.</li>
+<li>Inconsistent is stronger than unsatisfiable: one impossible <i>individual</i> breaks the whole ontology, while an impossible <i>class</i> only empties that class. Protégé says "inconsistent ontology" and stops.</li>
+<li>Continuant and the two kinds of dependent continuant are defined properly in Part 4; here the plain words are enough.</li></ul></template>
+</section>
+
+<!-- ==================================================================== 33 -->
+<section class="slide" data-label="Reading an explanation" data-section="Reusing ontologies and BFO" data-minutes="5">
+  <div class="lu-eyebrow">Why is the class red?</div>
+  <h2 class="lu-h2">Click the <b>?</b> next to a red class: Protégé lists the few axioms that together cause it</h2>
+  <figure class="lu-figure" style="margin:0"><div class="lu-figure__frame"><img src="../assets/img/s3-protege-09b-explanation-1.png" alt="Protégé explanation: six axioms that make Order for a sole-sourced good equivalent to owl:Nothing" loading="lazy"></div><figcaption>Real capture: Protégé's first explanation for <b>Order for a sole-sourced good</b>, six lines. Line 1 is ours; lines 2 to 6 come from SCRO and BFO.</figcaption></figure>
+  <div class="lu-split">
+    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Justification</dt><dd>The smallest set of axioms that together cause an inference. Remove any one and the inference goes away.</dd></dl></div>
+    <div class="lu-callout"><span class="lu-callout__label">How to read it</span><p class="lu-sub">Line 1 is the only line we wrote. Lines 2 to 6 were imported. So the mistake is in how line 1 <b>uses</b> SCRO. Part 4 decodes lines 2 to 6.</p></div>
+  </div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>SCRO</b> IOF&#x27;s Supply Chain Reference Ontology, built on IOF Core. The base our ontology extends.</span></p>
+  <template data-notes><p>Five minutes. I read the six lines aloud, but I do not explain the BFO words yet: they are Part 4. The point now is the method: find the line that is ours.</p>
+<ul><li>ROBOT's <code>explain</code> finds a different justification for the same class (<code>reference-outputs/explain_v0_ELK.md</code>): there can be more than one. Any single one is enough to fix.</li></ul></template>
+</section>
+
+<!-- ==================================================================== 34 -->
+<section class="slide" data-label="The reuse trap: our real bug" data-section="Reusing ontologies and BFO" data-minutes="6">
   <div class="lu-eyebrow">The lab's red class, explained</div>
   <h2 class="lu-h2">We borrowed a SCRO property for its name, and inherited a rule we did not know about</h2>
   <div class="lu-walk" data-label="The reuse trap, drawn from the real explanation"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 320, "nodes": [{"id": "order", "label": "Order for a\nsole-sourced good", "kind": "ours", "x": 125, "y": 160, "w": 230, "h": 86}, {"id": "product", "label": "its product", "kind": "individual", "x": 520, "y": 160, "w": 180, "h": 60, "flag": "right"}, {"id": "supply", "label": "SupplyRelationship", "kind": "reused", "x": 880, "y": 52, "w": 250, "h": 60}, {"id": "sdc", "label": "specifically\ndependent continuant", "kind": "upper", "x": 1290, "y": 52, "w": 270, "h": 86}, {"id": "matprod", "label": "MaterialProduct", "kind": "reused", "x": 880, "y": 262, "w": 250, "h": 60}, {"id": "ic", "label": "independent\ncontinuant", "kind": "upper", "x": 1290, "y": 262, "w": 270, "h": 86, "flag": "bottom"}, {"id": "nothing", "label": "owl:Nothing", "kind": "builtin", "x": 125, "y": 262, "w": 200, "h": 56, "flag": "right"}], "edges": [{"id": "e1", "from": "order", "to": "product", "label": "orders some"}, {"id": "e2", "from": "product", "to": "supply", "label": "domain", "route": "elbow", "sides": ["top", "left"], "kind": "inferred"}, {"id": "e3", "from": "supply", "to": "sdc", "label": "subclass"}, {"id": "e4", "from": "product", "to": "matprod", "label": "is a", "route": "elbow", "sides": ["bottom", "left"]}, {"id": "e5", "from": "matprod", "to": "ic", "label": "subclass"}, {"id": "e6", "from": "sdc", "to": "ic", "label": "disjoint", "both": true, "kind": "conflict"}, {"id": "e7", "from": "order", "to": "nothing", "label": "equivalent to", "kind": "conflict"}], "steps": [{"show": ["order", "product", "e1"], "run": ["e1"], "set": {"order": "active", "product": "active"}}, {"show": ["supply", "e2"], "run": ["e2"], "set": {"order": "idle", "product": "active", "supply": "inferred"}}, {"show": ["sdc", "e3"], "run": ["e3"], "set": {"supply": "idle", "sdc": "inferred"}}, {"show": ["matprod", "ic", "e4", "e5"], "run": ["e4", "e5"], "set": {"sdc": "idle", "matprod": "active", "ic": "inferred"}}, {"show": ["e6"], "run": ["e6"], "set": {"matprod": "idle", "product": "impossible", "sdc": "impossible", "ic": "impossible"}}, {"show": ["nothing", "e7"], "run": ["e7"], "set": {"order": "impossible", "nothing": "impossible", "product": "impossible"}}], "legend": {"ours": "Our ontology (ul:)", "reused": "Reused, IOF supply chain (ioc:)", "upper": "BFO upper ontology", "builtin": "OWL built-in"}}</script></div><div data-walk-step="1" data-caption-short="Our class" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Our class: an order for a sole-sourced good &lt;b&gt;orders some&lt;/b&gt; product that &lt;b&gt;depends on product&lt;/b&gt; some sole-sourced component. Line 1 of the explanation, the only line we wrote."></div><div data-walk-step="2" data-caption-short="The domain" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; In SCRO, &lt;b&gt;depends on product&lt;/b&gt; has domain SupplyRelationship. So the product is inferred to be a supply relationship."></div><div data-walk-step="3" data-caption-short="What that is in BFO" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; SCRO says a supply relationship is a &lt;b&gt;specifically dependent continuant&lt;/b&gt;: something that exists only in a bearer."></div><div data-walk-step="4" data-caption-short="What the product also is" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; But the product is a MaterialProduct, a material entity: an &lt;b&gt;independent continuant&lt;/b&gt;."></div><div data-walk-step="5" data-caption-short="The clash" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; BFO says the two are &lt;b&gt;disjoint&lt;/b&gt;. No product can be both, so the product is impossible."></div><div data-walk-step="6" data-caption-short="The red class" data-caption="&lt;b&gt;Step 6.&lt;/b&gt; So our class can never have a member: it is equivalent to &lt;b&gt;owl:Nothing&lt;/b&gt;. That is the red class in Protégé. &lt;b&gt;The fix:&lt;/b&gt; do not reuse a property for its name; the reference file uses our own &lt;code&gt;ul:hasComponent&lt;/code&gt; and &lt;code&gt;ul:suppliedBy&lt;/code&gt;."></div></div></div>
@@ -497,47 +562,8 @@
 <li>In plain words: SCRO's "depends on product" means one dependent thing (a supply relationship) depends on a product. We used it to mean a product needs a component. The name fit; the meaning did not.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 33 -->
-<section class="slide slide--tint" data-label="Competency questions decide scope" data-section="Reuse and BFO" data-minutes="5">
-  <div class="lu-eyebrow">Method · drag or use the arrow buttons</div>
-  <div class="lu-split lu-split--wide-left">
-    <div class="lu-sort" data-qid="s3-sort" data-label="Order the ontology-building method">
-      <p class="lu-h3" style="margin-bottom:var(--lu-s3)">Put the method in the order you will actually work in.</p>
-      <ul class="lu-sort__list">
-        <li class="lu-sort__item" data-rank="3"><span>Extend SCRO only where a question needs a class it lacks</span></li>
-        <li class="lu-sort__item" data-rank="1"><span>Write the competency questions the organisation actually asks</span></li>
-        <li class="lu-sort__item" data-rank="5"><span>Read the inferred tree and fix the model, not the output</span></li>
-        <li class="lu-sort__item" data-rank="2"><span>Search for a published ontology that already answers them</span></li>
-        <li class="lu-sort__item" data-rank="4"><span>Run ELK, then HermiT</span></li>
-      </ul>
-    </div>
-    <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Competency question</dt><dd>A question the ontology must be able to answer. It decides what belongs in the ontology.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">In our file</span><p class="lu-sub">Every class carries the question it answers, as a <code>ul:answersCQ</code> note. Eight questions, listed in <code>competency_questions.md</code>.</p></div>
-    </div>
-  </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>HermiT</b> A complete OWL 2 DL reasoner; slower, but reads every axiom.</span></p>
-  <template data-notes><p>Five minutes. I let you argue about whether the search comes before or after writing the questions. It comes after: you cannot judge whether SCRO covers you until you know what you are asking.</p>
-<p>The rule that decides scope: a class earns its place by answering a question the organisation actually asks. If you cannot name the question, delete the class.</p></template>
-</section>
-
-<!-- ==================================================================== 34 -->
-<section class="slide slide--tint" data-label="Poll: does this class earn its place?" data-section="Reuse and BFO" data-minutes="4" style="--lu-s5:12px">
-  <div class="lu-eyebrow">Room poll · 45 seconds</div>
-  <div class="lu-poll" data-qid="s3-poll" data-seconds="45" data-answer="b" data-label="Does a class per service level earn its place?">
-    <p class="lu-mcq__q">Someone adds a class <code>ul:DTPShipment</code> for Brunel's <code>Service Level</code> column. Keep it?</p>
-    <div class="lu-mcq__opts">
-      <button class="lu-mcq__opt" type="button" data-key="a">Keep it: the data has the column<span class="lu-mcq__why" hidden>The source schema is not an argument for a class.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="b">Delete it unless a competency question needs it<span class="lu-mcq__why" hidden>Correct. Questions set the scope, not columns. A plain value can carry the level.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="c">Replace it with a GS1 term<span class="lu-mcq__why" hidden>Reusing a term you do not need is still an unearned class.</span></button>
-    </div>
-  </div>
-  <template data-notes><p>Forty five seconds, then I reveal the answer and we tally with the plus buttons. I spend the rest on whoever picked a: the schema first instinct this course exists to dislodge.</p>
-<p>Session 1 found that CRF orders are exactly the V44_3 orders and have no freight rate: that <i>is</i> a question worth asking, and it could earn a class. I ask you to name the question first.</p></template>
-</section>
-
 <!-- ==================================================================== 35 -->
-<section class="slide" data-label="Alignment hazards" data-section="Reuse and BFO" data-minutes="4">
+<section class="slide" data-label="Alignment hazards" data-section="Reusing ontologies and BFO" data-minutes="4">
   <div class="lu-eyebrow">Linking to other ontologies</div>
   <h2 class="lu-h2">Two linking axioms that look harmless and are not</h2>
   <div class="lu-split lu-split--wide-left">
@@ -553,7 +579,7 @@
 </section>
 
 <!-- ==================================================================== 36 -->
-<section class="slide slide--night" data-chrome="none" data-label="Part 5 · Profiles and reasoners" data-section="Profiles" data-minutes="1">
+<section class="slide slide--night" data-chrome="none" data-label="Part 5 · Profiles and reasoners" data-section="OWL profiles and method" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 5 of 5 · about 14 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">One decision decides whether your reasoner finishes at all. Which one?</h2>
@@ -563,7 +589,7 @@
 </section>
 
 <!-- ==================================================================== 37 -->
-<section class="slide" data-label="Speed against expressiveness" data-section="Profiles" data-minutes="5">
+<section class="slide" data-label="Speed against expressiveness" data-section="OWL profiles and method" data-minutes="5">
   <div class="lu-eyebrow">OWL profiles</div>
   <h2 class="lu-h2">Pick the part of OWL your workload can afford</h2>
   <div class="lu-split lu-split--wide-left">
@@ -578,7 +604,7 @@
 </section>
 
 <!-- ==================================================================== 38 -->
-<section class="slide" data-label="ELK finds 1, HermiT finds 2" data-section="Profiles" data-minutes="4">
+<section class="slide" data-label="ELK finds 1, HermiT finds 2" data-section="OWL profiles and method" data-minutes="4">
   <div class="lu-eyebrow">A real result from the lab file</div>
   <h2 class="lu-h2">Same file, two reasoners: ELK finds one impossible class, HermiT finds two</h2>
   <div class="lu-split lu-split--wide-left">
@@ -593,7 +619,46 @@
 </section>
 
 <!-- ==================================================================== 39 -->
-<section class="slide slide--tint" data-label="Drill: profiles and reasoning" data-section="Profiles" data-minutes="3">
+<section class="slide slide--tint" data-label="Competency questions decide scope" data-section="OWL profiles and method" data-minutes="5">
+  <div class="lu-eyebrow">Method · drag or use the arrow buttons</div>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-sort" data-qid="s3-sort" data-label="Order the ontology-building method">
+      <p class="lu-h3" style="margin-bottom:var(--lu-s3)">Put the method in the order you will actually work in.</p>
+      <ul class="lu-sort__list">
+        <li class="lu-sort__item" data-rank="3"><span>Extend SCRO only where a question needs a class it lacks</span></li>
+        <li class="lu-sort__item" data-rank="1"><span>Write the competency questions the organisation actually asks</span></li>
+        <li class="lu-sort__item" data-rank="5"><span>Read the inferred tree and fix the model, not the output</span></li>
+        <li class="lu-sort__item" data-rank="2"><span>Search for a published ontology that already answers them</span></li>
+        <li class="lu-sort__item" data-rank="4"><span>Run ELK, then HermiT</span></li>
+      </ul>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Competency question</dt><dd>A question the ontology must be able to answer. It decides what belongs in the ontology.</dd></dl></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">In our file</span><p class="lu-sub">Every class carries the question it answers, as a <code>ul:answersCQ</code> note. Eight questions, listed in <code>competency_questions.md</code>.</p></div>
+    </div>
+  </div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>HermiT</b> A complete OWL 2 DL reasoner; slower, but reads every axiom.</span></p>
+  <template data-notes><p>Five minutes. I let you argue about whether the search comes before or after writing the questions. It comes after: you cannot judge whether SCRO covers you until you know what you are asking.</p>
+<p>The rule that decides scope: a class earns its place by answering a question the organisation actually asks. If you cannot name the question, delete the class.</p></template>
+</section>
+
+<!-- ==================================================================== 40 -->
+<section class="slide slide--tint" data-label="Poll: does this class earn its place?" data-section="OWL profiles and method" data-minutes="4" style="--lu-s5:12px">
+  <div class="lu-eyebrow">Room poll · 45 seconds</div>
+  <div class="lu-poll" data-qid="s3-poll" data-seconds="45" data-answer="b" data-label="Does a class per service level earn its place?">
+    <p class="lu-mcq__q">Someone adds a class <code>ul:DTPShipment</code> for Brunel's <code>Service Level</code> column. Keep it?</p>
+    <div class="lu-mcq__opts">
+      <button class="lu-mcq__opt" type="button" data-key="a">Keep it: the data has the column<span class="lu-mcq__why" hidden>The source schema is not an argument for a class.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="b">Delete it unless a competency question needs it<span class="lu-mcq__why" hidden>Correct. Questions set the scope, not columns. A plain value can carry the level.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="c">Replace it with a GS1 term<span class="lu-mcq__why" hidden>Reusing a term you do not need is still an unearned class.</span></button>
+    </div>
+  </div>
+  <template data-notes><p>Forty five seconds, then I reveal the answer and we tally with the plus buttons. I spend the rest on whoever picked a: the schema first instinct this course exists to dislodge.</p>
+<p>Session 1 found that CRF orders are exactly the V44_3 orders and have no freight rate: that <i>is</i> a question worth asking, and it could earn a class. I ask you to name the question first.</p></template>
+</section>
+
+<!-- ==================================================================== 41 -->
+<section class="slide slide--tint" data-label="Drill: profiles and reasoning" data-section="OWL profiles and method" data-minutes="3">
   <div class="lu-eyebrow">Drill · complete the statements</div>
   <div class="lu-blanks" data-qid="s3-blanks2" data-label="Profile and reasoning vocabulary">
     <p class="lu-h3" style="margin-bottom:var(--lu-s4)">Fill in the blanks</p>
@@ -607,7 +672,7 @@
   <template data-notes><p>Three minutes. Ninety seconds to type, then we check as a room.</p></template>
 </section>
 
-<!-- ==================================================================== 40 -->
+<!-- ==================================================================== 42 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Find the bug and fix it" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 70 minutes · on your own machine</div>
@@ -617,7 +682,7 @@
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 41 -->
+<!-- ==================================================================== 43 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">Hands-on lab · about 70 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">A buggy file, a reasoner, and three axioms of your own.</h2>
@@ -636,7 +701,7 @@
   <template data-notes><p>Three minutes, then I walk the room. Most common blocker: opening the file from <code>demos/session-03-ontology/</code> instead of <code>workspace/</code>, so the imports do not resolve (next slide, point 1). Second: <code>python fetch_ontologies.py</code> never run.</p></template>
 </section>
 
-<!-- ==================================================================== 42 -->
+<!-- ==================================================================== 44 -->
 <section class="slide" data-label="The tool: Protégé on our files" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">One slide for the tool</div>
   <h2 class="lu-h2" style="max-width:66ch">Learn Protégé from the video series. These four things it does not show, and our lab needs.</h2>
@@ -647,7 +712,7 @@
   <template data-notes><p>Three minutes. Protégé is a complex GUI tool, so it gets a video plus this one slide. Every capture is real, from my Protégé 5.6 on these files.</p></template>
 </section>
 
-<!-- ==================================================================== 43 -->
+<!-- ==================================================================== 45 -->
 <section class="slide" data-label="Lab time" data-section="Lab" data-minutes="55">
   <div class="lu-eyebrow">Lab · 55 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints keep you on time.</h2>
@@ -663,7 +728,7 @@
 <li>HermiT through the checker takes about 20 seconds; it is not frozen.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 44 -->
+<!-- ==================================================================== 46 -->
 <section class="slide" data-label="The licensing exercise" data-section="Lab" data-minutes="10">
   <div class="lu-eyebrow">Inside the lab · 10 minutes, as a room</div>
   <div class="lu-split">
@@ -690,7 +755,7 @@ All rights reserved.</span></code></pre></div>
 <p>I say the full version: every third-party ontology, vocabulary and dataset in your team's final report must be listed with its licence. <code>workspace/LICENCES.md</code> records the licences for what this lab reuses.</p></template>
 </section>
 
-<!-- ==================================================================== 45 -->
+<!-- ==================================================================== 47 -->
 <section class="slide" data-label="Discussion: what did the reasoner tell us?" data-section="Wrap" data-minutes="8">
   <div class="lu-eyebrow">Discussion · as a room, from Part C</div>
   <h2 class="lu-h2">Three questions, the last one about your own data</h2>
@@ -705,15 +770,15 @@ All rights reserved.</span></code></pre></div>
   <template data-notes><p>Eight minutes. Question 3 is the one to spend time on: two or three teams answer it out loud. The usual weak answer puts a business event (a delivery, a payment) under a continuant.</p></template>
 </section>
 
-<!-- ==================================================================== 46 -->
+<!-- ==================================================================== 48 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
-<div class="lu-split" style="margin-top:var(--lu-s2)"><dl class="lu-defs"><dt>Ontology</dt><dd>Kinds of things and how they relate, machine readable.</dd><dt>Class · individual</dt><dd>A kind of thing · one thing.</dd><dt>TBox · ABox</dt><dd>The rules · the data.</dd><dt>some · only</dt><dd>At least one link · every link, if any.</dd><dt>Domain · range</dt><dd>What subject and object are inferred to be.</dd><dt>Defined class</dt><dd>EquivalentTo: the reasoner fills it.</dd><dt>Reasoner</dt><dd>Works out every fact that follows.</dd></dl><dl class="lu-defs"><dt>Unsatisfiable</dt><dd>Can never have a member; red in Protégé.</dd><dt>Inconsistent</dt><dd>The ontology contradicts itself.</dd><dt>Justification</dt><dd>The axioms behind an inference.</dd><dt>BFO · SCRO</dt><dd>The upper ontology · the one we extend.</dd><dt>Continuant · occurrent</dt><dd>A thing that lasts · a happening.</dd><dt>OWL profile</dt><dd>A part of OWL that keeps reasoning fast.</dd><dt>ELK · HermiT</dt><dd>Fast, partial · complete, slower.</dd></dl></div>
+<div class="lu-split" style="margin-top:var(--lu-s2)"><dl class="lu-defs" style="margin:0"><dt>Ontology</dt><dd>Kinds of things and how they relate, machine readable.</dd><dt>Class · individual</dt><dd>A kind of thing · one thing.</dd><dt>TBox · ABox</dt><dd>The rules · the data.</dd><dt>some · only</dt><dd>At least one link · every link, if any.</dd><dt>Domain · range</dt><dd>What subject and object are inferred to be.</dd><dt>Defined class</dt><dd>EquivalentTo: the reasoner fills it.</dd><dt>Reasoner</dt><dd>Works out every fact that follows.</dd></dl><dl class="lu-defs" style="margin:0"><dt>Unsatisfiable</dt><dd>Can never have a member; red in Protégé.</dd><dt>Inconsistent</dt><dd>The ontology contradicts itself.</dd><dt>Justification</dt><dd>The axioms behind an inference.</dd><dt>BFO · SCRO</dt><dd>The upper ontology · the one we extend.</dd><dt>Continuant · occurrent</dt><dd>A thing that lasts · a happening.</dd><dt>OWL profile</dt><dd>A part of OWL that keeps reasoning fast.</dd><dt>ELK · HermiT</dt><dd>Fast, partial · complete, slower.</dd></dl></div>
   <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here, with every BFO term, is also clickable on the slides.</p></template>
 </section>
 
-<!-- ==================================================================== 47 -->
+<!-- ==================================================================== 49 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
@@ -734,7 +799,7 @@ All rights reserved.</span></code></pre></div>
   <template data-notes><p>Two minutes. I end on the sentence. Milestone 1 (a checkpoint, not graded) is pushed at the end of Session 4.</p></template>
 </section>
 
-<!-- ==================================================================== 48 -->
+<!-- ==================================================================== 50 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1" style="--lu-s3:4px;--lu-s2:2px;--lu-s5:14px">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">
