@@ -33,6 +33,42 @@ Ontologies Foundry (IOF). SCRO is built in three layers, from the bottom up:
 (The SCRO file's own label reads just "Supply Chain Ontology". It is the same
 ontology.)
 
+Each layer **imports** the one below it, which means it loads that ontology
+and builds on its terms. Our course file imports only SCRO, and the rest
+arrive through the chain:
+
+```text
+  +------------------------------------------------------+
+  | OUR EXTENSION (course)                               |
+  | SoleSourcedComponent, AtRiskShipment, hasComponent   |
+  +------------------------------------------------------+
+        | imports, and adds only what our questions need
+        v
+  +------------------------------------------------------+
+  | SCRO  (supply chain)                                 |
+  | Shipment, Carrier, dependsOnProduct                  |
+  +------------------------------------------------------+
+        | imports; its terms are specialisations of IOF Core terms
+        v
+  +------------------------------------------------------+
+  | IOF Core  (general industry)                         |
+  | Material product, Organization, Supplier             |
+  +------------------------------------------------------+
+        | imports; its terms are specialisations of BFO terms
+        v
+  +------------------------------------------------------+
+  | BFO  (what kinds of thing exist at all)              |
+  | independent thing, dependent thing,                  |
+  | "specifically depends on"                            |
+  +------------------------------------------------------+
+```
+
+Read upward, each box specialises the one below: a SCRO Shipment is a kind of
+IOF Core thing, which is a kind of BFO thing. Read downward, each box inherits
+the formal meaning of the one below. That inheritance is exactly what caused
+the lab's mistake: our property borrowed SCRO's name, and so it also
+inherited the BFO rule underneath.
+
 The danger is that a property can have a familiar name but a different formal
 meaning. The starting file reuses two SCRO properties because their names
 sound right. Their definitions, inherited from BFO, make our physical product
@@ -195,6 +231,9 @@ speed and the OWL language features a reasoner supports.
 |---|---|---|
 | `fetch_ontologies.py` | Fetches the pinned IOF/SCRO release, creates the offline catalog, and copies the course files into `workspace/`. | Run first; rerun rather than trying to repair missing imports by hand. |
 | `workspace/` | The safe working folder where the catalog resolves imports locally. | Open ontology files from here in Protégé. |
+| `workspace/supplychain/SupplyChain.rdf` | SCRO itself, the reused supply-chain axioms (about 4,200 lines of RDF/XML). | Do not edit. Read it in Protégé (select a class and look at its description panel), not as raw XML. |
+| `workspace/core/Core.rdf` | IOF Core, the layer under SCRO. | Do not edit. Look here when a SCRO term is defined in terms of a Core term. |
+| `workspace/cache/bfo/2020/bfo.rdf` | BFO, the bottom layer. The meaning behind the lab's mistake ("specifically depends on", and the disjointness of dependent and independent things) is defined here. | Do not edit. In Protégé, follow a property up through its superproperties to find it. |
 | `scro-extension-v0.ttl` | The deliberate starting mistake. | Open it first; do not save over it. |
 | `scro-extension-reference.ttl` | The corrected reference ontology. | Open it after you have examined v0's explanations. |
 | `sample-shipments.ttl` | Three teaching individuals built on real Brunel identifiers. | Open it after the reference ontology to see classification. |
