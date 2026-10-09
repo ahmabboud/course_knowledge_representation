@@ -736,13 +736,15 @@
 <section class="slide" data-label="Check an ontology's licence" data-section="Lab" data-minutes="10" style="--lu-s5:12px">
   <div class="lu-eyebrow">Reuse · licences · 10 minutes, as a room</div>
   <h2 class="lu-h2" style="max-width:none">Check an ontology&rsquo;s licence before reusing it: the SCORVoc repository declares two conflicting ones.</h2>
-  <div class="lu-split" style="gap:var(--lu-s6)">
-    <ol class="lu-list lu-list--num lu-list--tight">
+  <div class="lu-split lu-split--wide-left" style="gap:var(--lu-s6)">
+    <div class="lu-stack" style="gap:var(--lu-s3)"><ol class="lu-list lu-list--num lu-list--tight">
       <li>Open the SCORVoc repository, <code>vocol/scor</code>, on GitHub.</li>
       <li>Find the <b>ODC PDDL</b> licence declared inside <code>scor.ttl</code>.</li>
       <li>Find the <b>all rights reserved</b> notice in the same repository's README.</li>
       <li>Decide which governs. Write why, in two sentences.</li>
     </ol>
+  <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s2) var(--lu-s5)"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0;gap:var(--lu-s1) var(--lu-s5)"><dt>SCORVoc · dct:license</dt><dd>A published ontology of SCOR, a supply chain process model · a file's own statement of its licence.</dd><dt>ODC PDDL</dt><dd>Puts the file in the public domain: anyone may use it for anything.</dd><dt>All rights reserved</dt><dd>The owner keeps every right: you need permission to reuse it.</dd><dt>MIT licence</dt><dd>Anyone may use, change and share the work if they keep the copyright notice. IOF SCRO has it, one reason we build on SCRO, not SCORVoc.</dd></dl></div>
+    </div>
     <div class="lu-stack" style="gap:var(--lu-s2)">
       <div class="lu-code lu-code--sm" data-name="scor.ttl · line 22"><pre><code><span class="tok-kw">dct:license</span>
   &lt;http://www.opendatacommons.org/licenses/pddl/1.0/&gt; ;</code></pre></div>
@@ -752,7 +754,6 @@ All rights reserved.</span></code></pre></div>
       <p class="lu-caption" style="line-height:1.25">Same repository, same commit (<code>d12544b</code>, 12 January 2018, still the latest), two incompatible claims. Checked 25 September 2026.</p>
     </div>
   </div>
-  <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s2) var(--lu-s5)"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0;gap:var(--lu-s1) var(--lu-s5)"><dt>SCORVoc · dct:license</dt><dd>A published ontology of SCOR, a supply chain process model · a file's own statement of its licence.</dd><dt>ODC PDDL</dt><dd>Puts the file in the public domain: anyone may use it for anything.</dd><dt>All rights reserved</dt><dd>The owner keeps every right: you need permission to reuse it.</dd><dt>MIT licence</dt><dd>Anyone may use, change and share the work if they keep the copyright notice. IOF SCRO has it, one reason we build on SCRO, not SCORVoc.</dd></dl></div>
   <p class="lu-caption">In your team's final report, list the licence of every third party ontology, vocabulary and dataset.</p>
   <template data-notes><p>Ten minutes, run as a whole-room pause. I do it live if the network holds; the two panels are the real lines, so the slide also works offline. I check upstream before teaching (<code>github.com/vocol/scor</code>, latest commit): if the conflict has been resolved, the exercise still works but the caption must say so. <code>workspace/LICENCES.md</code> records the licences for what this lab reuses.</p></template>
 </section>
