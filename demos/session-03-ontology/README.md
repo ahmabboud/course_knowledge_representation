@@ -48,7 +48,7 @@ Every number in `lectures/kr-session-03.html` comes from the files in
    hierarchy dropdown from Asserted to Inferred to see what the reasoner
    added.
 3. Click the **?** next to the red class. **Expect:** an explanation of six
-   lines, the chain on the slide "The reuse trap". **Notice:** only the
+   lines, the chain on the slide "Why our class is unsatisfiable". **Notice:** only the
    first line is ours. We used SCRO's `depends on product` for its name,
    and its domain, through BFO, makes our product a specifically dependent
    continuant, which BFO says a material thing can never be.
@@ -134,7 +134,7 @@ Answer for yourself, then in the closing discussion:
   (robot.obolibrary.org/#installing); the script says what is missing.
 - `python realize_sample.py` (ROBOT again) classifies the sample shipments
   twice, as shipped and with At-risk shipment turned into SubClassOf: the
-  table on the slide "SubClassOf and EquivalentTo".
+  table on the slide "EquivalentTo lets the reasoner classify".
 - Instructor demos used in the lecture:
   `python closed_world_demo.py` (a database refuses a row that OWL
   accepts and types) and
