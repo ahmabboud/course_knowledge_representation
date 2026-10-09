@@ -87,20 +87,20 @@
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
       <p class="lu-statement" style="font-size:40px">By the end you can write definitions in Protégé, check them with a program, and fix the mistake it finds.</p>
-      <p class="lu-sub">The mistake is in our own ontology: a written list of what the words of a subject area mean. Each new word is defined in a green box on the slide where it first appears.</p>
-      <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4) var(--lu-s5)"><span class="lu-callout__label">The five parts of the lecture</span><ol class="lu-list lu-list--num lu-list--tight"><li><b>Fundamentals:</b> what the words mean and how they relate</li><li><b>Writing definitions</b> with a few ready made words</li><li><b>What the reasoner does</b>, the program that checks what you wrote</li><li><b>Reusing published ontologies</b> and BFO in detail</li><li><b>OWL profiles</b> and the working method</li></ol></div>
+      <p class="lu-sub">The mistake is in our own ontology: a written set of definitions for one subject area. Every new word is explained in plain words before it is used, in a green box or in the sentence itself.</p>
+      <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s4) var(--lu-s5)"><span class="lu-callout__label">The five parts of the lecture</span><ol class="lu-list lu-list--num lu-list--tight"><li><b>Fundamentals:</b> what the words mean and how they relate</li><li><b>Writing definitions</b> with a few ready made words, ending with what &ldquo;late&rdquo; means</li><li><b>What the reasoner does</b>, the program that checks what you wrote</li><li><b>Reusing published ontologies</b> and BFO in detail</li><li><b>OWL profiles</b> and the working method</li></ol></div>
     </div>
     <div class="lu-card">
       <span class="lu-card__label">How the ~240 minutes are spent</span>
       <ul class="lu-layers">
-        <li><span class="lu-layers__name">Lecture · ~155 min</span><span class="lu-layers__note">The five parts above</span></li>
+        <li><span class="lu-layers__name">Lecture · ~155 min</span><span class="lu-layers__note">The opening (8 min) and the five parts above</span></li>
         <li><span class="lu-layers__name">Lab · ~70 min</span><span class="lu-layers__note">Find the mistake, fix it, watch shipments get classified; optional practice</span></li>
         <li><span class="lu-layers__name">Wrap · ~15 min</span><span class="lu-layers__note">Discussion, glossary, self check</span></li>
       </ul>
     </div>
   </div>
   <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>BFO</b> One of three published ontologies we build on (with IOF Core and SCRO), explained in Part 1.</span></p>
-  <template data-notes><p>I name the payoff early: in the lab the reasoner reports one of <i>our</i> classes as unsatisfiable, and before the end of the session you will know exactly why and will have seen it fixed.</p></template>
+  <template data-notes><p>I name the payoff early: in the lab the reasoner reports one of <i>our</i> classes as unsatisfiable, and before the end of the session you will know exactly why and will have seen it fixed.</p><p>The 155 lecture minutes are the opening (slides 1 to 3, 8 minutes) plus the five parts (50, 19, 26, 30 and 22 minutes).</p></template>
 </section>
 
 <!-- ==================================================================== 04 -->
@@ -124,7 +124,7 @@
   </div>
   <div class="lu-split">
     <div class="lu-callout lu-callout--neutral" style="padding:var(--lu-s4) var(--lu-s5)"><span class="lu-callout__label">The problem</span><p class="lu-sub">Every number is correct: the meaning of &ldquo;late&rdquo; lives in people's heads, not in the data. A dashboard, a model and a report can each pick a different one, and nobody notices.</p></div>
-    <div class="lu-callout" style="padding:var(--lu-s4) var(--lu-s5)"><span class="lu-callout__label">The fix this session builds</span><p class="lu-sub">Write the meaning down <b>once</b>, precisely, so every program reads it the same way. That is what an ontology is for.</p></div>
+    <div class="lu-callout" style="padding:var(--lu-s4) var(--lu-s5)"><span class="lu-callout__label">The fix this session builds</span><p class="lu-sub">Write the meaning down <b>once</b>, precisely, so every program reads it the same way. That is what an ontology is for; slide 22 does it for &ldquo;late&rdquo;.</p></div>
   </div>
   <template data-notes><p>Four minutes. All three numbers were computed on 2026-09-22 from the real file <code>demos/data/dataco/DataCoSupplyChainDataset.csv</code>: 65,752 distinct orders; 37,698 with real days &gt; scheduled (57.3%); 36,048 labelled "Late delivery" (54.8%); 15,578 more than one day late (23.7%).</p>
 <ul><li>I ask you first: which one is right? Every answer is defensible.</li></ul></template>
@@ -195,7 +195,7 @@
     <thead><tr><th></th><th>Database schema</th><th>Ontology</th><th>Knowledge graph</th></tr></thead>
     <tbody>
 <tr><td><b>What it holds</b></td><td>Tables, columns, keys</td><td>Classes, properties, definitions</td><td>The facts (orders, carriers, plants) together with an ontology</td></tr>
-<tr><td><b>An unregistered shipment</b></td><td>The insert is refused</td><td>Accepted. A reasoner can work out its type (Part 3, slide 23)</td><td>Accepted, and the ontology adds the meaning</td></tr>
+<tr><td><b>An unregistered shipment</b></td><td>The insert is refused</td><td>Accepted. A reasoner can work out its type (Part 3, slide 24)</td><td>Accepted, and the ontology adds the meaning</td></tr>
 <tr><td><b>A missing fact means</b></td><td>Not true</td><td>Unknown (open world)</td><td>Unknown, unless a check is added</td></tr>
 <tr><td><b>Who checks the data</b></td><td>The database, on every insert</td><td>Nobody: an ontology adds facts and refuses nothing</td><td>Session 4 adds checks called shapes that refuse bad data</td></tr>
 <tr><td><b>Written as</b></td><td>SQL</td><td>RDF triples using RDFS and OWL words</td><td>RDF triples</td></tr>
@@ -319,13 +319,13 @@
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 2 of 5 · Writing definitions · about 19 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">You define a class such as &ldquo;at risk shipment&rdquo; with six words: some, only, and, or, not, exactly.</h2>
-    <p class="lu-lead" style="max-width:46ch">At risk here means: a shipment handled by a sanctioned carrier. Protégé shows these six words on every screen.</p>
+    <p class="lu-lead" style="max-width:46ch">At risk here means: a shipment handled by a sanctioned carrier. The part ends by writing down what &ldquo;late&rdquo; means (slide 22).</p>
   </div>
   <template data-notes><p>Ten seconds. I read the headline, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 18 -->
-<section class="slide" data-label="some means at least one" data-section="Writing definitions" data-minutes="5" style="--lu-s5:14px">
+<section class="slide" data-label="some means at least one" data-section="Writing definitions" data-minutes="4" style="--lu-s5:14px">
   <div class="lu-eyebrow">The word some</div>
   <h2 class="lu-h2">&ldquo;handled by <code>some</code> Sanctioned carrier&rdquo; is the class of shipments with at least one sanctioned carrier.</h2>
   <div class="lu-split">
@@ -338,7 +338,7 @@
 <p class="lu-caption">One definition, three notations: English, Protégé (quotes, because the names contain spaces), and the file&rsquo;s Turtle (key line only).</p><p class="lu-sub"><b>The answer:</b> shipment 1447291369.7 is in the class (V444_1 is sanctioned, tick); 1447385217.7 is not (V444_0 is not, cross). First half of the at risk definition.</p></div>
   </div>
   <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s2) var(--lu-s5)"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0;gap:var(--lu-s1) var(--lu-s5)"><dt>Restriction</dt><dd>A class described by a condition on a property: here, shipments whose &ldquo;handled by&rdquo; link goes to a sanctioned carrier.</dd><dt>some</dt><dd>At least one link of this kind goes to a member of the class.</dd><dt>Manchester syntax</dt><dd>The readable way Protégé writes definitions, with the words some, only, and, or, not.</dd></dl></div>
-  <template data-notes><p>Five minutes. I read the Protégé line aloud slowly, it is exactly what you will see in the Description panel in the lab.</p></template>
+  <template data-notes><p>Four minutes. I read the Protégé line aloud slowly, it is exactly what you will see in the Description panel in the lab.</p></template>
 </section>
 
 <!-- ==================================================================== 19 -->
@@ -360,16 +360,16 @@
 </section>
 
 <!-- ==================================================================== 20 -->
-<section class="slide" data-label="and, or, not; disjoint" data-section="Writing definitions" data-minutes="5" style="--lu-s5:14px">
+<section class="slide" data-label="and, or, not; disjoint" data-section="Writing definitions" data-minutes="4" style="--lu-s5:14px">
   <div class="lu-eyebrow">Combining classes</div>
   <h2 class="lu-h2">And, or and not build new classes; disjoint is a different statement saying two classes share no member.</h2>
   <div class="lu-cards" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div class="lu-callout lu-callout--concept" style="padding:var(--lu-s3) var(--lu-s4)"><span class="lu-callout__label">and · intersection</span><svg class="lu-svg" viewBox="0 0 270 150" role="img" aria-label="Venn picture for and"><title>Venn picture for and</title><defs><clipPath id="s3clip-and"><circle cx="105" cy="75" r="62"/></clipPath></defs><circle cx="105" cy="75" r="62" style="fill:none;stroke:var(--lu-line-2);stroke-width:2"/><circle cx="165" cy="75" r="62" style="fill:none;stroke:var(--lu-line-2);stroke-width:2"/><circle cx="165" cy="75" r="62" clip-path="url(#s3clip-and)" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/></svg><p class="lu-sub">Members of <b>both</b> classes.</p><p class="lu-sub"><code>Shipment and ('handled by' some 'Sanctioned carrier')</code> is the class At-risk shipment.</p></div><div class="lu-callout lu-callout--concept" style="padding:var(--lu-s3) var(--lu-s4)"><span class="lu-callout__label">or · union</span><svg class="lu-svg" viewBox="0 0 270 150" role="img" aria-label="Venn picture for or"><title>Venn picture for or</title><defs><clipPath id="s3clip-or"><circle cx="105" cy="75" r="62"/></clipPath></defs><circle cx="105" cy="75" r="62" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><circle cx="165" cy="75" r="62" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/></svg><p class="lu-sub">Members of <b>either</b> class.</p><p class="lu-sub"><code>'Late shipment' or 'Cancelled shipment'</code></p></div><div class="lu-callout lu-callout--concept" style="padding:var(--lu-s3) var(--lu-s4)"><span class="lu-callout__label">not · complement</span><svg class="lu-svg" viewBox="0 0 270 150" role="img" aria-label="Venn picture for not"><title>Venn picture for not</title><defs><clipPath id="s3clip-not"><circle cx="105" cy="75" r="62"/></clipPath></defs><rect x="6" y="6" width="258" height="138" rx="8" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><circle cx="135" cy="75" r="58" style="fill:var(--lu-paper);stroke:var(--lu-line-2);stroke-width:2"/></svg><p class="lu-sub">Everything <b>outside</b> the class.</p><p class="lu-sub"><code>Carrier and not 'Sanctioned carrier'</code></p></div><div class="lu-callout lu-callout--neutral" style="padding:var(--lu-s3) var(--lu-s4)"><span class="lu-callout__label">Different: disjoint</span><svg class="lu-svg" viewBox="0 0 270 150" role="img" aria-label="Venn picture for disjoint"><title>Venn picture for disjoint</title><defs><clipPath id="s3clip-disjoint"><circle cx="105" cy="75" r="62"/></clipPath></defs><circle cx="75" cy="75" r="55" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/><circle cx="195" cy="75" r="55" style="fill:var(--lu-blue-050);stroke:var(--lu-blue-700);stroke-width:2"/></svg><p class="lu-sub">Two classes that share <b>no</b> member: it builds no new class. An individual in both is a contradiction.</p><p class="lu-sub"><code>'Late shipment' DisjointWith 'Cancelled shipment'</code></p></div></div>
   <p class="lu-caption">Written the way Protégé shows it. Shaded area = the new class. The disjoint axiom is real, from our lab file; BFO adds many more (Part 4).</p>
-  <template data-notes><p>Five minutes. Disjointness is the one that makes errors findable: if one individual lands in both circles, the reasoner reports a contradiction instead of silently accepting it.</p></template>
+  <template data-notes><p>Four minutes. Disjointness is the one that makes errors findable: if one individual lands in both circles, the reasoner reports a contradiction instead of silently accepting it.</p></template>
 </section>
 
 <!-- ==================================================================== 21 -->
-<section class="slide" data-label="Counting links with a number" data-section="Writing definitions" data-minutes="4" style="--lu-s5:14px">
+<section class="slide" data-label="Counting links with a number" data-section="Writing definitions" data-minutes="3" style="--lu-s5:14px">
   <div class="lu-eyebrow">Counting links</div>
   <h2 class="lu-h2">A cardinality restriction counts links, for example exactly one supplier or at least two routes.</h2>
   <div class="lu-split lu-split--wide-left" style="gap:var(--lu-s6)">
@@ -377,11 +377,43 @@
     <div class="lu-callout lu-callout--neutral" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">In the Brunel data</span><p class="lu-sub">V444_0 ships on 2 routes, V44_3 on 3, V444_1 on 1. V444_0 and V44_3 count as multi route carriers only if their routes are declared different: OWL does not assume that two names are two different things.</p></div>
   </div>
   <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0;gap:var(--lu-s1) var(--lu-s5)"><dt>Cardinality restriction</dt><dd>A restriction that counts links: exactly 1, min 2 (at least 2), max 3 (at most 3).</dd><dt>Sole sourced component</dt><dd>A component bought from exactly one supplier.</dd><dt>Multi route carrier</dt><dd>A carrier that handles shipments on at least two shipping routes.</dd></dl></div>
-  <template data-notes><p>Four minutes. Both classes are real in <code>scro-extension-reference.ttl</code>: <code>ul:SoleSourcedComponent</code> (<code>'supplied by' exactly 1 Supplier</code>) and <code>ul:MultiRouteCarrier</code> (<code>'handles route' min 2 'Shipping route'</code>).</p>
+  <template data-notes><p>Three minutes. Both classes are real in <code>scro-extension-reference.ttl</code>: <code>ul:SoleSourcedComponent</code> (<code>'supplied by' exactly 1 Supplier</code>) and <code>ul:MultiRouteCarrier</code> (<code>'handles route' min 2 'Shipping route'</code>).</p>
 <ul><li>Route counts are from Brunel's OrderList (origin and destination port per order).</li></ul></template>
 </section>
 
 <!-- ==================================================================== 22 -->
+<section class="slide" data-label="Closing the opening puzzle" data-section="Writing definitions" data-minutes="3" style="--lu-s5:12px">
+  <div class="lu-eyebrow">Closing the opening puzzle</div>
+  <h2 class="lu-h2">We chose one meaning of late and wrote it into the ontology.</h2>
+  <div class="lu-split" style="gap:var(--lu-s6)">
+    <div class="lu-stack" style="gap:var(--lu-s2)">
+      <div class="lu-code lu-code--sm" data-name="scro-extension-reference.ttl"><pre><code>ul:LateShipment <span class="tok-kw">a</span> owl:Class ;
+    rdfs:subClassOf ioc:Shipment ;
+    rdfs:subClassOf [
+        <span class="tok-kw">a</span> owl:Restriction ;
+        owl:onProperty ul:deliveredAfter ;
+        owl:someValuesFrom ul:CommittedDate
+    ] ;
+    <span class="tok-com"># &hellip; four more lines left out</span></code></pre></div>
+      <p class="lu-caption" style="line-height:1.25">Real lines. <code>ul:</code> our names, <code>ioc:</code> SCRO (slide 7).</p>
+    </div>
+    <div class="lu-stack" style="gap:var(--lu-s3)">
+      <div class="lu-callout lu-callout--neutral" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">The definition in plain words</span><p class="lu-sub">The file's own <code>skos:definition</code> (the definition written for people): <b>&ldquo;A transport whose actual delivery follows the committed delivery date.&rdquo;</b> The restriction says the same in OWL: a late shipment has a <code>deliveredAfter</code> link to <b>some</b> committed date.</p></div>
+      <div class="lu-callout lu-callout--neutral" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">Which count on slide 5</span><p class="lu-sub">The first one, <b>any delay</b>: a shipment is late as soon as it is delivered after the date promised. The other two meanings are not used.</p></div>
+    </div>
+  </div>
+  <div class="lu-split lu-split--wide-left" style="gap:var(--lu-s6)">
+    <div class="lu-callout lu-callout--neutral" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">Why OWL does not decide it</span><p class="lu-sub">OWL cannot compare two numbers, such as the days a shipment really took and the days promised, so it cannot work out which shipments are late. The <b>data load</b>, the step that fills the graph from the source tables, does it: in Session 5 a filter gives every order with at least one late day the late class.</p></div>
+    <div class="lu-callout" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">Why this fixes the puzzle</span><p class="lu-sub">The definition is written once, so every dashboard, model and report reads the same word the same way.</p></div>
+  </div>
+  <template data-notes><p>Three minutes. This pays off the opening puzzle. I read the quoted definition aloud, then the restriction: it is the same <b>some</b> as slide 18.</p>
+<ul><li>The lines are real, from <code>scro-extension-reference.ttl</code>. Four lines are left out (the label, the definition, the profile note and the competency question), marked on the slide; the definition is quoted exactly in the box beside the code.</li>
+<li>The definition matches the first card of slide 5, any delay. I say it is one choice among three, made once and written down.</li>
+<li>OWL cannot compare two numbers, so it cannot decide which shipments are late by itself. In Session 5 the mapping has a filter (<code>ship_late_day_count &gt; 0</code>) that gives each order with at least one late day the late class. Session 5 names its class differently, so I do not name it here.</li>
+<li>Close with the sentence on the slide: written once, read the same way everywhere.</li></ul></template>
+</section>
+
+<!-- ==================================================================== 23 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 3: what the reasoner does" data-section="What the reasoner does" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 3 of 5 · What the reasoner does with what you wrote · about 26 minutes</div>
@@ -391,7 +423,7 @@
   <template data-notes><p>Ten seconds. I read the headline, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 23 -->
+<!-- ==================================================================== 24 -->
 <section class="slide" data-label="A database refuses, OWL concludes a type" data-section="What the reasoner does" data-minutes="5" style="--lu-s5:12px">
   <div class="lu-eyebrow">What OWL does with a fact the database refuses</div>
   <h2 class="lu-h2">A database refuses a fact about an unknown shipment. OWL accepts it and concludes the shipment's type.</h2>
@@ -417,7 +449,7 @@
 <ul><li>I say the sentence: <b>OWL infers rather than complains.</b> Session 4 (SHACL) is the tool that complains.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 24 -->
+<!-- ==================================================================== 25 -->
 <section class="slide" data-label="EquivalentTo lets the reasoner classify" data-section="What the reasoner does" data-minutes="6" style="--lu-s5:12px">
   <div class="lu-eyebrow">SubClassOf and EquivalentTo</div>
   <h2 class="lu-h2">If &ldquo;At-risk shipment&rdquo; is defined with EquivalentTo, the reasoner places matching shipments in it; SubClassOf never does.</h2>
@@ -439,7 +471,7 @@
 <ul><li>The table is a real ELK run: <code>python realize_sample.py</code> runs ROBOT on <code>sample-shipments.ttl</code> twice, once as shipped (EquivalentTo) and once with that one axiom turned into SubClassOf; output in <code>reference-outputs/realized-sample.txt</code>.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 25 -->
+<!-- ==================================================================== 26 -->
 <section class="slide" data-label="Transitive, functional, inverse properties" data-section="What the reasoner does" data-minutes="4">
   <div class="lu-eyebrow">Properties with extra declarations</div>
   <h2 class="lu-h2">A property can be declared transitive, functional or inverse, and the reasoner derives facts from that.</h2>
@@ -448,7 +480,7 @@
 <p>The functional card: order 1447291369.7 really was ordered on 2013-05-26; the second date is what a careless second source might send.</p></template>
 </section>
 
-<!-- ==================================================================== 26 -->
+<!-- ==================================================================== 27 -->
 <section class="slide slide--tint" data-label="Drill: some, only, EquivalentTo" data-section="What the reasoner does" data-minutes="3">
   <div class="lu-eyebrow">Drill · complete the statements</div>
   <div class="lu-blanks" data-qid="s3-blanks1" data-label="OWL definition words">
@@ -463,7 +495,7 @@
   <template data-notes><p>Three minutes. Blank 3 is the one that matters for the lab.</p></template>
 </section>
 
-<!-- ==================================================================== 27 -->
+<!-- ==================================================================== 28 -->
 <section class="slide" data-label="An unsatisfiable class is empty" data-section="What the reasoner does" data-minutes="4" style="--lu-s5:14px">
   <div class="lu-eyebrow">What the reasoner reports for an impossible class</div>
   <h2 class="lu-h2">An unsatisfiable class can have no members, so the reasoner puts it under owl:Nothing.</h2>
@@ -477,7 +509,7 @@
   <template data-notes><p>Four minutes. This is the moment of the lab, shown now so you do not panic when it happens on your screen. ELK reports one unsatisfiable class in v0; HermiT reports two (Part 5 explains why).</p></template>
 </section>
 
-<!-- ==================================================================== 28 -->
+<!-- ==================================================================== 29 -->
 <section class="slide slide--tint" data-label="Check: which computation" data-section="What the reasoner does" data-minutes="3" style="--lu-s4:6px;--lu-s3:6px;--lu-s5:14px">
   <div class="lu-eyebrow">Check: the three computations</div>
   <div class="lu-mcq" data-qid="s3-q2" data-answer="b" data-label="Which reasoning task surfaces an unintended subclass"
@@ -490,11 +522,11 @@
       <button class="lu-mcq__opt" type="button" data-key="c">Realization<span class="lu-mcq__why" hidden>Realization places individuals in classes; this is a link between two classes.</span></button>
     </div>
   </div>
-  <p class="lu-caption">This is a hypothetical example; it does not happen in our file. The Inferred view is the class tree after the reasoner added its conclusions (slide 27).</p>
+  <p class="lu-caption">This is a hypothetical example; it does not happen in our file. The Inferred view is the class tree after the reasoner added its conclusions (slide 28).</p>
   <template data-notes><p>Three minutes. Read the inferred tree as a claim about what you said. When it disagrees with what you meant, the model is wrong, not the reasoner.</p></template>
 </section>
 
-<!-- ==================================================================== 29 -->
+<!-- ==================================================================== 30 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 4: reusing ontologies and BFO" data-section="Reusing ontologies and BFO" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 4 of 5 · Reusing published ontologies and BFO in detail · about 30 minutes</div>
@@ -504,45 +536,45 @@
   <template data-notes><p>Ten seconds. I read the headline, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 30 -->
+<!-- ==================================================================== 31 -->
 <section class="slide" data-label="Continuants and occurrents" data-section="Reusing ontologies and BFO" data-minutes="4" style="--lu-s5:14px">
   <div class="lu-eyebrow">BFO's first split</div>
   <h2 class="lu-h2">BFO divides everything into continuants (things that persist) and occurrents (things that happen).</h2>
   <div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1300, "height": 190, "nodes": [{"id": "cont", "label": "continuant: persists through time", "x": 300, "y": 35, "w": 400, "h": 56, "kind": "upper"}, {"id": "occ", "label": "occurrent: unfolds in time", "x": 1000, "y": 35, "w": 360, "h": 56, "kind": "upper"}, {"id": "truck", "label": "a truck of carrier V444_1", "x": 300, "y": 150, "w": 320, "h": 56, "kind": "individual"}, {"id": "del", "label": "the delivery of order 1447291369.7", "x": 1000, "y": 150, "w": 420, "h": 56, "kind": "individual"}], "edges": [{"id": "a", "from": "truck", "to": "cont", "label": "is a"}, {"id": "b", "from": "del", "to": "occ", "label": "is a"}, {"id": "c", "from": "truck", "to": "del", "label": "takes part in"}], "steps": [{"show": ["cont", "occ", "truck", "del", "a", "b", "c"]}], "legend": false}</script></div>
   <div class="lu-split" style="gap:var(--lu-s6)">
   <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0"><dt>Continuant</dt><dd>Something that persists through time: a truck, a warehouse, a purchase order.</dd><dt>Occurrent</dt><dd>Something that happens and unfolds in time: a delivery.</dd></dl></div>
-  <div class="lu-callout lu-callout--neutral" style="padding:var(--lu-s3) var(--lu-s5)"><p class="lu-sub"><b>A test.</b> Can you ask &ldquo;how long did it take?&rdquo; Then it is an occurrent. Can you ask &ldquo;where is it now?&rdquo; Then it is a continuant.</p><p class="lu-sub"><b>Why it matters.</b> BFO declares many pairs of classes disjoint (nothing can be in both). The next slides show the pair behind our unsatisfiable class.</p></div>
+  <div class="lu-callout lu-callout--neutral" style="padding:var(--lu-s3) var(--lu-s5)"><p class="lu-sub"><b>A test.</b> Can you ask &ldquo;how long did it take?&rdquo; Then it is an occurrent. Can you ask &ldquo;where is it now?&rdquo; Then it is a continuant.</p><p class="lu-sub"><b>Why it matters.</b> BFO declares many pairs of classes disjoint (nothing can be in both). Slides 34 and 35 show the pair behind our unsatisfiable class.</p></div>
   </div>
   <p class="lu-caption">The truck is an illustration: Brunel records carriers, not their trucks. The order is real.</p>
   <template data-notes><p>Four minutes.</p></template>
 </section>
 
-<!-- ==================================================================== 31 -->
+<!-- ==================================================================== 32 -->
 <section class="slide" data-label="Three kinds of continuant" data-section="Reusing ontologies and BFO" data-minutes="5" style="--lu-s5:12px">
   <div class="lu-eyebrow">Three kinds of continuant</div>
   <h2 class="lu-h2">BFO has three kinds of continuant: things (a truck), features of one thing (its colour) and copyable information.</h2>
   <div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 218, "nodes": [{"id": "truck", "label": "the truck", "x": 260, "y": 108, "w": 270, "h": 56, "kind": "individual"}, {"id": "colour", "label": "its colour", "x": 700, "y": 28, "w": 240, "h": 56, "kind": "individual"}, {"id": "role", "label": "its role as carrier", "x": 700, "y": 108, "w": 280, "h": 56, "kind": "individual"}, {"id": "po", "label": "the purchase order text", "x": 700, "y": 188, "w": 330, "h": 56, "kind": "individual"}, {"id": "ic", "label": "independent\ncontinuant", "x": 260, "y": 28, "w": 250, "h": 56, "kind": "upper"}, {"id": "sdc", "label": "specifically dependent\ncontinuant", "x": 1150, "y": 68, "w": 320, "h": 56, "kind": "upper"}, {"id": "gdc", "label": "generically dependent\ncontinuant", "x": 1150, "y": 188, "w": 320, "h": 56, "kind": "upper"}], "edges": [{"id": "a", "from": "colour", "to": "truck", "label": "feature of"}, {"id": "b", "from": "role", "to": "truck", "label": "feature of"}, {"id": "c", "from": "truck", "to": "ic", "label": "is a"}, {"id": "d", "from": "colour", "to": "sdc", "label": "is a"}, {"id": "f", "from": "role", "to": "sdc", "label": "is a"}, {"id": "g", "from": "po", "to": "gdc", "label": "is a"}], "steps": [{"show": ["truck", "colour", "role", "po", "ic", "sdc", "gdc", "a", "b", "c", "d", "f", "g"]}], "legend": false}</script></div>
   <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s2) var(--lu-s5)"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs" style="margin:0;gap:var(--lu-s1) var(--lu-s5)"><dt>Independent continuant</dt><dd>A thing that exists on its own: a truck.</dd><dt>Specifically dependent continuant</dt><dd>A feature that exists only in one bearer, the thing that has it: the truck's colour or its role as carrier. Destroy the truck and both are gone.</dd><dt>Generically dependent continuant</dt><dd>Information that can be copied between bearers: the text of a purchase order survives in its copies.</dd></dl></div>
   <div class="lu-callout" style="padding:var(--lu-s2) var(--lu-s5)"><p class="lu-sub"><b>The rule that matters for the lab:</b> BFO says these three kinds share no member, they are disjoint. A physical thing is never a feature of another thing and never a document.</p></div>
-  <template data-notes><p>Five minutes. Remember this for the unsatisfiable class two slides on.</p></template>
+  <template data-notes><p>Five minutes. Remember this for the unsatisfiable class on slides 34 and 35.</p></template>
 </section>
 
-<!-- ==================================================================== 32 -->
+<!-- ==================================================================== 33 -->
 <section class="slide" data-label="An inconsistent ontology" data-section="Reusing ontologies and BFO" data-minutes="5" style="--lu-s5:14px">
   <div class="lu-eyebrow">An inconsistent ontology, step by step</div>
   <h2 class="lu-h2">Giving a purchase order a &ldquo;handled by&rdquo; link makes the whole ontology inconsistent.</h2>
   <div class="lu-split lu-split--wide-left">
-    <div class="lu-walk" data-label="An inconsistent ontology, step by step"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1000, "height": 292, "nodes": [{"id": "po", "label": "purchase order po88", "x": 220, "y": 38, "w": 280, "h": 56, "kind": "individual", "flag": "bottom"}, {"id": "c", "label": "carrier V444_1", "x": 720, "y": 38, "w": 250, "h": 56, "kind": "individual"}, {"id": "ship", "label": "Shipment", "x": 220, "y": 148, "w": 220, "h": 56, "kind": "reused", "flag": "right"}, {"id": "ic", "label": "independent continuant\n(a physical thing)", "x": 220, "y": 256, "w": 250, "h": 62, "kind": "upper"}, {"id": "pord", "label": "Purchase order", "x": 720, "y": 148, "w": 240, "h": 56, "kind": "reused"}, {"id": "gdc", "label": "generically dependent\ncontinuant (information)", "x": 720, "y": 256, "w": 300, "h": 62, "kind": "upper"}], "edges": [{"id": "a", "from": "po", "to": "c", "label": "handled by"}, {"id": "b", "from": "po", "to": "ship", "label": "is a (domain)", "kind": "inferred"}, {"id": "c1", "from": "ship", "to": "ic", "label": "is a"}, {"id": "d", "from": "po", "to": "pord", "label": "is a", "route": "elbow", "sides": ["right", "top"]}, {"id": "f", "from": "pord", "to": "gdc", "label": "is a"}, {"id": "g", "from": "ic", "to": "gdc", "label": "disjoint", "both": true, "kind": "conflict"}], "steps": [{"show": ["po", "c", "a"], "run": ["a"], "set": {"po": "active"}}, {"show": ["ship", "b"], "run": ["b"], "set": {"ship": "inferred"}}, {"show": ["ic", "c1", "pord", "gdc", "d", "f"], "run": ["c1", "d", "f"], "set": {"ship": "idle", "po": "active"}}, {"show": ["g"], "run": ["g"], "set": {"po": "impossible", "ic": "impossible", "gdc": "impossible"}}], "legend": {"reused": "Published: SCRO", "upper": "Published: BFO", "individual": "Individual"}}</script></div><div data-walk-step="1" data-caption-short="One wrong fact" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A data file says purchase order po88 is &lt;b&gt;handled by&lt;/b&gt; carrier V444_1, and also that po88 is a Purchase order. A SQL foreign key would refuse this row; here nothing complains."></div><div data-walk-step="2" data-caption-short="The domain infers" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The domain of &lt;b&gt;handled by&lt;/b&gt; is Shipment (slide 23): every thing with that link is a Shipment. So po88 is a Shipment as well."></div><div data-walk-step="3" data-caption-short="What SCRO already says" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; In SCRO a Shipment is a physical thing (BFO: an independent continuant) and a Purchase order is information (BFO: a generically dependent continuant)."></div><div data-walk-step="4" data-caption-short="Inconsistent" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; BFO says these two kinds are disjoint: nothing is both. The axioms cannot all be true together: the ontology is &lt;b&gt;inconsistent&lt;/b&gt;."></div></div></div>
+    <div class="lu-walk" data-label="An inconsistent ontology, step by step"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1000, "height": 292, "nodes": [{"id": "po", "label": "purchase order po88", "x": 220, "y": 38, "w": 280, "h": 56, "kind": "individual", "flag": "bottom"}, {"id": "c", "label": "carrier V444_1", "x": 720, "y": 38, "w": 250, "h": 56, "kind": "individual"}, {"id": "ship", "label": "Shipment", "x": 220, "y": 148, "w": 220, "h": 56, "kind": "reused", "flag": "right"}, {"id": "ic", "label": "independent continuant\n(a physical thing)", "x": 220, "y": 256, "w": 250, "h": 62, "kind": "upper"}, {"id": "pord", "label": "Purchase order", "x": 720, "y": 148, "w": 240, "h": 56, "kind": "reused"}, {"id": "gdc", "label": "generically dependent\ncontinuant (information)", "x": 720, "y": 256, "w": 300, "h": 62, "kind": "upper"}], "edges": [{"id": "a", "from": "po", "to": "c", "label": "handled by"}, {"id": "b", "from": "po", "to": "ship", "label": "is a (domain)", "kind": "inferred"}, {"id": "c1", "from": "ship", "to": "ic", "label": "is a"}, {"id": "d", "from": "po", "to": "pord", "label": "is a", "route": "elbow", "sides": ["right", "top"]}, {"id": "f", "from": "pord", "to": "gdc", "label": "is a"}, {"id": "g", "from": "ic", "to": "gdc", "label": "disjoint", "both": true, "kind": "conflict"}], "steps": [{"show": ["po", "c", "a"], "run": ["a"], "set": {"po": "active"}}, {"show": ["ship", "b"], "run": ["b"], "set": {"ship": "inferred"}}, {"show": ["ic", "c1", "pord", "gdc", "d", "f"], "run": ["c1", "d", "f"], "set": {"ship": "idle", "po": "active"}}, {"show": ["g"], "run": ["g"], "set": {"po": "impossible", "ic": "impossible", "gdc": "impossible"}}], "legend": {"reused": "Published: SCRO", "upper": "Published: BFO", "individual": "Individual"}}</script></div><div data-walk-step="1" data-caption-short="One wrong fact" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A data file says purchase order po88 is &lt;b&gt;handled by&lt;/b&gt; carrier V444_1, and also that po88 is a Purchase order. A SQL foreign key would refuse this row; here nothing complains."></div><div data-walk-step="2" data-caption-short="The domain infers" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The domain of &lt;b&gt;handled by&lt;/b&gt; is Shipment (slide 24): every thing with that link is a Shipment. So po88 is a Shipment as well."></div><div data-walk-step="3" data-caption-short="What SCRO already says" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; In SCRO a Shipment is a physical thing (BFO: an independent continuant) and a Purchase order is information (BFO: a generically dependent continuant)."></div><div data-walk-step="4" data-caption-short="Inconsistent" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; BFO says these two kinds are disjoint: nothing is both. The axioms cannot all be true together: the ontology is &lt;b&gt;inconsistent&lt;/b&gt;."></div></div></div>
     <div class="lu-stack" style="gap:var(--lu-s3)">
       <div class="lu-callout lu-callout--neutral" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">Real run</span><p class="lu-sub"><code>python local_reasoner.py workspace/domain-mistake.ttl</code> answers: &ldquo;The ontology is inconsistent: it contradicts itself, so every answer is worthless.&rdquo;</p></div>
-      <div class="lu-callout" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">Two different outcomes</span><p class="lu-sub">One unsatisfiable class (slides 27 and 34) is empty, and the rest of the ontology still works. An inconsistent ontology, as here, contradicts itself as a whole, so none of its answers can be trusted. The cause is the same kind of mistake: a domain applies to every thing that has the property.</p></div>
+      <div class="lu-callout" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">Two different outcomes</span><p class="lu-sub">One unsatisfiable class (slides 28 and 35) is empty, and the rest of the ontology still works. An inconsistent ontology, as here, contradicts itself as a whole, so none of its answers can be trusted. The cause is the same kind of mistake: a domain applies to every thing that has the property.</p></div>
     </div>
   </div>
   <template data-notes><p>Five minutes. I step through with the arrow keys; at step 2 I ask you what you expect before I show step 3.</p>
 <ul><li>This is a real HermiT run on <code>demos/session-03-ontology/domain-mistake.ttl</code> (<code>reference-outputs/domain-mistake.txt</code>). po88 is a purchase order from the Session 5 ERP seed data.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 33 -->
+<!-- ==================================================================== 34 -->
 <section class="slide" data-label="Reading a justification" data-section="Reusing ontologies and BFO" data-minutes="5" style="--lu-s5:12px">
   <div class="lu-eyebrow">Why a class is unsatisfiable</div>
   <h2 class="lu-h2">Protégé explains an unsatisfiable class with a justification: six axioms, one ours and five imported.</h2>
@@ -563,15 +595,15 @@
   <template data-notes><p>Five minutes. I read the six lines aloud. The point now is the method: find the line that is ours. ROBOT's <code>explain</code> finds a different justification for the same class (<code>reference-outputs/explain_v0_ELK.md</code>).</p></template>
 </section>
 
-<!-- ==================================================================== 34 -->
+<!-- ==================================================================== 35 -->
 <section class="slide" data-label="Why our class is unsatisfiable" data-section="Reusing ontologies and BFO" data-minutes="6" style="--lu-s5:14px">
   <div class="lu-eyebrow">The lab's unsatisfiable class, explained</div>
   <h2 class="lu-h2">A reused SCRO property put our product in two disjoint classes, so our class has no member.</h2>
-  <div class="lu-walk" data-label="Why our class is unsatisfiable, step by step"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 320, "nodes": [{"id": "order", "label": "Order for a\nsole-sourced good", "kind": "ours", "x": 125, "y": 160, "w": 230, "h": 86}, {"id": "product", "label": "its product", "kind": "individual", "x": 520, "y": 160, "w": 180, "h": 60, "flag": "right"}, {"id": "supply", "label": "SupplyRelationship", "kind": "reused", "x": 880, "y": 52, "w": 250, "h": 60}, {"id": "sdc", "label": "specifically\ndependent continuant", "kind": "upper", "x": 1290, "y": 52, "w": 270, "h": 86}, {"id": "matprod", "label": "MaterialProduct", "kind": "reused", "x": 880, "y": 262, "w": 250, "h": 60}, {"id": "ic", "label": "independent\ncontinuant", "kind": "upper", "x": 1290, "y": 262, "w": 270, "h": 86, "flag": "bottom"}, {"id": "nothing", "label": "owl:Nothing", "kind": "builtin", "x": 125, "y": 262, "w": 200, "h": 56, "flag": "right"}], "edges": [{"id": "e1", "from": "order", "to": "product", "label": "orders some"}, {"id": "e2", "from": "product", "to": "supply", "label": "domain", "route": "elbow", "sides": ["top", "left"], "kind": "inferred"}, {"id": "e3", "from": "supply", "to": "sdc", "label": "subclass"}, {"id": "e4", "from": "product", "to": "matprod", "label": "is a", "route": "elbow", "sides": ["bottom", "left"]}, {"id": "e5", "from": "matprod", "to": "ic", "label": "subclass"}, {"id": "e6", "from": "sdc", "to": "ic", "label": "disjoint", "both": true, "kind": "conflict"}, {"id": "e7", "from": "order", "to": "nothing", "label": "equivalent to", "kind": "conflict"}], "steps": [{"show": ["order", "product", "e1"], "run": ["e1"], "set": {"order": "active", "product": "active"}}, {"show": ["supply", "e2"], "run": ["e2"], "set": {"order": "idle", "product": "active", "supply": "inferred"}}, {"show": ["sdc", "e3"], "run": ["e3"], "set": {"supply": "idle", "sdc": "inferred"}}, {"show": ["matprod", "ic", "e4", "e5"], "run": ["e4", "e5"], "set": {"sdc": "idle", "matprod": "active", "ic": "inferred"}}, {"show": ["e6"], "run": ["e6"], "set": {"matprod": "idle", "product": "impossible", "sdc": "impossible", "ic": "impossible"}}, {"show": ["nothing", "e7"], "run": ["e7"], "set": {"order": "impossible", "nothing": "impossible", "product": "impossible"}}], "legend": {"ours": "Ours", "reused": "Published: SCRO", "upper": "Published: BFO", "builtin": "Built into OWL"}}</script></div><div data-walk-step="1" data-caption-short="Our class" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Our class: an order for a sole-sourced good &lt;b&gt;orders some&lt;/b&gt; product that &lt;b&gt;depends on product&lt;/b&gt; some sole-sourced component. We picked that SCRO property because its name sounded right, without reading its domain. This is line 1 of the explanation, the only line we wrote."></div><div data-walk-step="2" data-caption-short="The domain" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; In SCRO, &lt;b&gt;depends on product&lt;/b&gt; has the domain SupplyRelationship (line 2 of the explanation). It means a supply relationship depends on a product. So our product is inferred to be a supply relationship."></div><div data-walk-step="3" data-caption-short="What that is in BFO" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; SCRO says a supply relationship is a &lt;b&gt;specifically dependent continuant&lt;/b&gt;: a feature that exists only in its bearer, the thing that has it (slide 31). Line 3."></div><div data-walk-step="4" data-caption-short="What the product also is" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; But our product is a MaterialProduct, a material entity: an &lt;b&gt;independent continuant&lt;/b&gt;, a thing that exists on its own. Lines 4 and 5."></div><div data-walk-step="5" data-caption-short="The clash" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; BFO says the two are &lt;b&gt;disjoint&lt;/b&gt;: nothing is both. Our product would have to be both, so it is impossible. Line 6."></div><div data-walk-step="6" data-caption-short="The red class" data-caption="&lt;b&gt;Step 6.&lt;/b&gt; So our class can never have a member: it is equal to &lt;b&gt;owl:Nothing&lt;/b&gt;, the empty class. That is the unsatisfiable class. &lt;b&gt;The fix:&lt;/b&gt; never reuse a property for its name alone; the reference file uses our own &lt;code&gt;ul:hasComponent&lt;/code&gt; and &lt;code&gt;ul:suppliedBy&lt;/code&gt;.""></div></div></div>
+  <div class="lu-walk" data-label="Why our class is unsatisfiable, step by step"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 320, "nodes": [{"id": "order", "label": "Order for a\nsole-sourced good", "kind": "ours", "x": 125, "y": 160, "w": 230, "h": 86}, {"id": "product", "label": "its product", "kind": "individual", "x": 520, "y": 160, "w": 180, "h": 60, "flag": "right"}, {"id": "supply", "label": "SupplyRelationship", "kind": "reused", "x": 880, "y": 52, "w": 250, "h": 60}, {"id": "sdc", "label": "specifically\ndependent continuant", "kind": "upper", "x": 1290, "y": 52, "w": 270, "h": 86}, {"id": "matprod", "label": "MaterialProduct", "kind": "reused", "x": 880, "y": 262, "w": 250, "h": 60}, {"id": "ic", "label": "independent\ncontinuant", "kind": "upper", "x": 1290, "y": 262, "w": 270, "h": 86, "flag": "bottom"}, {"id": "nothing", "label": "owl:Nothing", "kind": "builtin", "x": 125, "y": 262, "w": 200, "h": 56, "flag": "right"}], "edges": [{"id": "e1", "from": "order", "to": "product", "label": "orders some"}, {"id": "e2", "from": "product", "to": "supply", "label": "domain", "route": "elbow", "sides": ["top", "left"], "kind": "inferred"}, {"id": "e3", "from": "supply", "to": "sdc", "label": "subclass"}, {"id": "e4", "from": "product", "to": "matprod", "label": "is a", "route": "elbow", "sides": ["bottom", "left"]}, {"id": "e5", "from": "matprod", "to": "ic", "label": "subclass"}, {"id": "e6", "from": "sdc", "to": "ic", "label": "disjoint", "both": true, "kind": "conflict"}, {"id": "e7", "from": "order", "to": "nothing", "label": "equivalent to", "kind": "conflict"}], "steps": [{"show": ["order", "product", "e1"], "run": ["e1"], "set": {"order": "active", "product": "active"}}, {"show": ["supply", "e2"], "run": ["e2"], "set": {"order": "idle", "product": "active", "supply": "inferred"}}, {"show": ["sdc", "e3"], "run": ["e3"], "set": {"supply": "idle", "sdc": "inferred"}}, {"show": ["matprod", "ic", "e4", "e5"], "run": ["e4", "e5"], "set": {"sdc": "idle", "matprod": "active", "ic": "inferred"}}, {"show": ["e6"], "run": ["e6"], "set": {"matprod": "idle", "product": "impossible", "sdc": "impossible", "ic": "impossible"}}, {"show": ["nothing", "e7"], "run": ["e7"], "set": {"order": "impossible", "nothing": "impossible", "product": "impossible"}}], "legend": {"ours": "Ours", "reused": "Published: SCRO", "upper": "Published: BFO", "builtin": "Built into OWL"}}</script></div><div data-walk-step="1" data-caption-short="Our class" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Our class: an order for a sole-sourced good &lt;b&gt;orders some&lt;/b&gt; product that &lt;b&gt;depends on product&lt;/b&gt; some sole-sourced component. We picked that SCRO property because its name sounded right, without reading its domain. This is line 1 of the explanation, the only line we wrote."></div><div data-walk-step="2" data-caption-short="The domain" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; In SCRO, &lt;b&gt;depends on product&lt;/b&gt; has the domain SupplyRelationship (line 2 of the explanation). It means a supply relationship depends on a product. So our product is inferred to be a supply relationship."></div><div data-walk-step="3" data-caption-short="What that is in BFO" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; SCRO says a supply relationship is a &lt;b&gt;specifically dependent continuant&lt;/b&gt;: a feature that exists only in its bearer, the thing that has it (slide 32). Line 3."></div><div data-walk-step="4" data-caption-short="What the product also is" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; But our product is a MaterialProduct, a material entity: an &lt;b&gt;independent continuant&lt;/b&gt;, a thing that exists on its own. Lines 4 and 5."></div><div data-walk-step="5" data-caption-short="The clash" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; BFO says the two are &lt;b&gt;disjoint&lt;/b&gt;: nothing is both. Our product would have to be both, so it is impossible. Line 6."></div><div data-walk-step="6" data-caption-short="The red class" data-caption="&lt;b&gt;Step 6.&lt;/b&gt; So our class can never have a member: it is equal to &lt;b&gt;owl:Nothing&lt;/b&gt;, the empty class. That is the unsatisfiable class. &lt;b&gt;The fix:&lt;/b&gt; never reuse a property for its name alone; the reference file uses our own &lt;code&gt;ul:hasComponent&lt;/code&gt; and &lt;code&gt;ul:suppliedBy&lt;/code&gt;.""></div></div></div>
   <template data-notes><p>Six minutes, the most important slide of Part 4. I step through slowly; at step 5 I ask you why the product cannot be both, and you use the earlier slides.</p></template>
 </section>
 
-<!-- ==================================================================== 35 -->
+<!-- ==================================================================== 36 -->
 <section class="slide" data-label="sameAs and equivalentClass merge things" data-section="Reusing ontologies and BFO" data-minutes="4" style="--lu-s5:14px">
   <div class="lu-eyebrow">Linking to other ontologies</div>
   <h2 class="lu-h2">owl:sameAs and owl:equivalentClass merge two things completely, so one wrong link spreads every fact across both.</h2>
@@ -581,14 +613,14 @@
       <div class="lu-callout lu-callout--neutral" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">Example of the harm</span><p class="lu-sub">Brunel's carrier V444_1 is sanctioned. If another source has a different company also called V444_1 and we link the two with owl:sameAs, that company becomes sanctioned too, and all its shipments are at risk.</p></div>
     </div>
     <div class="lu-stack" style="gap:var(--lu-s3)">
-      <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub"><b>owl:sameAs</b>: two names for exactly the same individual. The reasoner merges everything said about them.</p><p class="lu-sub"><b>owl:equivalentClass</b>: two classes with exactly the same members. Every definition of one applies to the other. It is what Protégé calls EquivalentTo (slide 24).</p></div>
+      <div class="lu-callout lu-callout--concept" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub"><b>owl:sameAs</b>: two names for exactly the same individual. The reasoner merges everything said about them.</p><p class="lu-sub"><b>owl:equivalentClass</b>: two classes with exactly the same members. Every definition of one applies to the other. It is what Protégé calls EquivalentTo (slide 25).</p></div>
       <div class="lu-callout" style="padding:var(--lu-s3) var(--lu-s5)"><span class="lu-callout__label">Safer</span><p class="lu-sub">Prefer <code>rdfs:subClassOf</code> (the &ldquo;every X is a Y&rdquo; link) until you can defend the equivalence. &ldquo;Probably the same&rdquo; is a similarity claim for Session 5's entity resolution (deciding which records describe the same real thing), with a confidence.</p></div>
     </div>
   </div>
   <template data-notes><p>Four minutes. equivalentClass imports every axiom on the other side, which is exactly how the mistake on the previous slides happened, one level down.</p></template>
 </section>
 
-<!-- ==================================================================== 36 -->
+<!-- ==================================================================== 37 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 5: profiles and method" data-section="OWL profiles and method" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 5 of 5 · OWL profiles and the working method · about 22 minutes</div>
@@ -598,7 +630,7 @@
   <template data-notes><p>Ten seconds. I read the headline, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 37 -->
+<!-- ==================================================================== 38 -->
 <section class="slide" data-label="Four OWL profiles" data-section="OWL profiles and method" data-minutes="5" style="--lu-s5:12px">
   <div class="lu-eyebrow">OWL profiles</div>
   <h2 class="lu-h2">OWL has four profiles: three restricted ones that reason faster, and DL, which allows all of OWL&rsquo;s words.</h2>
@@ -608,7 +640,7 @@
   <template data-notes><p>Five minutes. Description logic, the family of logics OWL is built on, is first order logic cut down so the reasoner is guaranteed to finish: that is the whole bargain.</p></template>
 </section>
 
-<!-- ==================================================================== 38 -->
+<!-- ==================================================================== 39 -->
 <section class="slide" data-label="ELK finds one, HermiT finds two" data-section="OWL profiles and method" data-minutes="4">
   <div class="lu-eyebrow">A real result from the lab file</div>
   <h2 class="lu-h2">ELK reports one unsatisfiable class and HermiT two, because ELK ignores the &ldquo;exactly 1&rdquo; axiom.</h2>
@@ -616,13 +648,13 @@
     <div class="lu-walk" data-label="Why HermiT finds a second unsatisfiable class"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1060, "height": 280, "nodes": [{"id": "ssc", "label": "Sole-sourced component", "x": 260, "y": 60, "w": 320, "h": 60, "kind": "ours", "flag": "right"}, {"id": "mc", "label": "material component\nindependent continuant", "x": 260, "y": 210, "w": 330, "h": 76, "kind": "reused"}, {"id": "sup", "label": "depends on supplier\nexactly 1 supplier", "x": 800, "y": 60, "w": 330, "h": 76, "kind": "reused"}, {"id": "sdc", "label": "specifically dependent\ncontinuant", "x": 800, "y": 210, "w": 320, "h": 76, "kind": "upper"}], "edges": [{"id": "a", "from": "ssc", "to": "mc", "label": "is a"}, {"id": "b", "from": "ssc", "to": "sup", "label": "exactly 1 (ELK skips this)"}, {"id": "c", "from": "sup", "to": "sdc", "label": "domain, through BFO"}, {"id": "d", "from": "mc", "to": "sdc", "label": "disjoint", "both": true, "kind": "conflict"}], "steps": [{"show": ["ssc", "mc", "a"], "run": ["a"], "set": {"ssc": "active"}}, {"show": ["sup", "sdc", "b", "c"], "run": ["b", "c"], "set": {"sdc": "inferred"}}, {"show": ["d"], "run": ["d"], "set": {"ssc": "impossible", "mc": "impossible", "sdc": "impossible"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="A physical part" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; v0 (the lab&#x27;s starting file) says a sole-sourced component is a material component: a physical thing."></div><div data-walk-step="2" data-caption-short="The counting rule" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; It also says it &lt;b&gt;depends on supplier exactly 1&lt;/b&gt; supplier, and that property&#x27;s domain makes it a dependent thing."></div><div data-walk-step="3" data-caption-short="Only HermiT sees it" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Physical and dependent are disjoint, so the class is unsatisfiable. ELK ignores &lt;b&gt;exactly 1&lt;/b&gt;, so ELK never gets here. HermiT does."></div></div></div>
     <div class="lu-stack">
       <table class="lu-table"><thead><tr><th>Reasoner</th><th>Unsatisfiable classes in v0</th></tr></thead><tbody><tr><td>ELK</td><td>Order for a sole-sourced good</td></tr><tr><td>HermiT</td><td>Order for a sole-sourced good<br>Sole-sourced component</td></tr></tbody></table>
-      <div class="lu-callout"><span class="lu-callout__label">So what</span><p class="lu-sub">Both reasoners find Order for a sole-sourced good (slide 34). Only HermiT also finds Sole-sourced component. A fast reasoner that says &ldquo;no errors&rdquo; only means no errors <b>it can see</b>. Run the complete one before you ship.</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">So what</span><p class="lu-sub">Both reasoners find Order for a sole-sourced good (slide 35). Only HermiT also finds Sole-sourced component. A fast reasoner that says &ldquo;no errors&rdquo; only means no errors <b>it can see</b>. Run the complete one before you ship.</p></div>
     </div>
   </div>
   <template data-notes><p>Four minutes. Real runs: ROBOT 1.9.10 with each reasoner on <code>scro-extension-v0.ttl</code> (<code>reference-outputs/explain_v0_ELK.md</code>, <code>explain_v0_HermiT.md</code>). This is the same mistake as in Part 4, a second time: <i>depends on supplier</i> is also a kind of BFO's <i>specifically depends on</i>. The fix is the same, our own <code>ul:suppliedBy</code>.</p></template>
 </section>
 
-<!-- ==================================================================== 39 -->
+<!-- ==================================================================== 40 -->
 <section class="slide slide--tint" data-label="The method for building an ontology" data-section="OWL profiles and method" data-minutes="5" style="--lu-s5:14px">
   <div class="lu-eyebrow">The working method</div>
   <h2 class="lu-h2">Build an ontology in this order: write competency questions, reuse, extend, run both reasoners, fix the model.</h2>
@@ -645,7 +677,7 @@
   <template data-notes><p>Five minutes. I let you argue about whether the search comes before or after writing the questions. It comes after.</p></template>
 </section>
 
-<!-- ==================================================================== 40 -->
+<!-- ==================================================================== 41 -->
 <section class="slide slide--tint" data-label="Poll: does this class earn its place?" data-section="OWL profiles and method" data-minutes="4" style="--lu-s5:12px">
   <div class="lu-eyebrow">Room poll · does a class earn its place? · 45 seconds</div>
   <div class="lu-poll" data-qid="s3-poll" data-seconds="45" data-answer="b" data-label="Does a class per service level earn its place?">
@@ -660,7 +692,7 @@
   <template data-notes><p>Forty five seconds, then I reveal the answer and we tally with the plus buttons. I spend the rest on whoever picked a: the schema first instinct this course exists to dislodge.</p></template>
 </section>
 
-<!-- ==================================================================== 41 -->
+<!-- ==================================================================== 42 -->
 <section class="slide slide--tint" data-label="Drill: profiles and reasoning" data-section="OWL profiles and method" data-minutes="3">
   <div class="lu-eyebrow">Drill · complete the statements</div>
   <div class="lu-blanks" data-qid="s3-blanks2" data-label="Profile and reasoning vocabulary">
@@ -675,7 +707,7 @@
   <template data-notes><p>Three minutes. Ninety seconds to type, then we check as a room.</p></template>
 </section>
 
-<!-- ==================================================================== 42 -->
+<!-- ==================================================================== 43 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab: find the mistake and fix it" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 70 minutes · on your own machine</div>
@@ -686,7 +718,7 @@
   <template data-notes><p>Ten seconds. I read the headline, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 43 -->
+<!-- ==================================================================== 44 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3" style="--lu-s5:16px">
   <div class="lu-eyebrow">Lab brief · about 70 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Lab: find the unsatisfiable class with ELK and HermiT, fix it, then optionally write three axioms.</h2>
@@ -705,18 +737,18 @@
   <template data-notes><p>Three minutes, then I walk the room. Most common blocker: opening the file from <code>demos/session-03-ontology/</code> instead of <code>workspace/</code>, so the imports do not resolve. Second: <code>python fetch_ontologies.py</code> never run.</p></template>
 </section>
 
-<!-- ==================================================================== 44 -->
+<!-- ==================================================================== 45 -->
 <section class="slide" data-label="Four Protégé details for the lab" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">The tool: Protégé</div>
   <h2 class="lu-h2" style="max-width:66ch">Four Protégé details that the video series does not cover and our lab needs.</h2>
 
-  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)"><div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">1 · Open the copy in workspace/</span><figure class="lu-figure" style="margin:0"><div class="lu-figure__frame"><img src="../assets/img/s3-protege-16-sample-imports.png" alt="Protégé imports panel: the course ontology resolved to the local file in workspace" loading="lazy"></div><figcaption>Imports (slide 15) resolve to local files only when the file sits next to <code>catalog-v001.xml</code>, a small file that says where each imported ontology is on disk.</figcaption></figure></div><div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">2 · Asserted or Inferred</span><figure class="lu-figure" style="margin:0"><div class="lu-figure__frame"><img src="../assets/img/s3-protege-06-asserted-inferred-dropdown.png" alt="Protégé class hierarchy dropdown: Asserted and Inferred" loading="lazy"></div><figcaption>After the reasoner runs, switch from Asserted (what we wrote) to <b>Inferred</b> (what it added), as on slide 27.</figcaption></figure></div><div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">3 · The ? button</span><figure class="lu-figure" style="margin:0"><div class="lu-figure__frame"><img src="../assets/img/s3-protege-09b-explanation-1.png" alt="Protégé explanation window for an unsatisfiable class" loading="lazy"></div><figcaption>Next to an unsatisfiable class: the axioms that cause it (slide 33).</figcaption></figure></div></div>
+  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)"><div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">1 · Open the copy in workspace/</span><figure class="lu-figure" style="margin:0"><div class="lu-figure__frame"><img src="../assets/img/s3-protege-16-sample-imports.png" alt="Protégé imports panel: the course ontology resolved to the local file in workspace" loading="lazy"></div><figcaption>Imports (slide 15) resolve to local files only when the file sits next to <code>catalog-v001.xml</code>, a small file that says where each imported ontology is on disk.</figcaption></figure></div><div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">2 · Asserted or Inferred</span><figure class="lu-figure" style="margin:0"><div class="lu-figure__frame"><img src="../assets/img/s3-protege-06-asserted-inferred-dropdown.png" alt="Protégé class hierarchy dropdown: Asserted and Inferred" loading="lazy"></div><figcaption>After the reasoner runs, switch from Asserted (what we wrote) to <b>Inferred</b> (what it added), as on slide 28.</figcaption></figure></div><div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">3 · The ? button</span><figure class="lu-figure" style="margin:0"><div class="lu-figure__frame"><img src="../assets/img/s3-protege-09b-explanation-1.png" alt="Protégé explanation window for an unsatisfiable class" loading="lazy"></div><figcaption>Next to an unsatisfiable class: the axioms that cause it (slide 34).</figcaption></figure></div></div>
   <div class="lu-callout"><span class="lu-callout__label">4 · Never save over v0</span><p class="lu-sub">Save your fixed version as a new file. v0 (scro-extension-v0.ttl) is the lab's starting point for everyone, including you next week.</p></div>
   <p class="lu-caption">Learn the basics from the video series: <a href="https://www.youtube.com/watch?v=CduRWyyL3q8&list=PLNohRKRAHaszTV3puqFM9yXDXnEqjS6Fd">Protégé fundamentals on YouTube</a>, also linked in the lab README.</p>
   <template data-notes><p>Three minutes. Protégé is a complex GUI tool, so it gets a video plus this one slide. Every capture is real, from my Protégé 5.6 on these files.</p></template>
 </section>
 
-<!-- ==================================================================== 45 -->
+<!-- ==================================================================== 46 -->
 <section class="slide" data-label="Lab checkpoints" data-section="Lab" data-minutes="55">
   <div class="lu-eyebrow">Lab · 55 minutes hands on</div>
   <h2 class="lu-h2" style="max-width:66ch">Lab checkpoints: unsatisfiable class found by minute 30, practice by 45, three answers by 55.</h2>
@@ -726,12 +758,12 @@
     <div class="lu-card"><span class="lu-card__label">By minute 45 · Part B</span><p class="lu-sub">Optional practice: <code>python check_my_axioms.py</code> says 3 of 3, on your file or on the solutions.</p></div>
     <div class="lu-card"><span class="lu-card__label">By minute 55 · Part C</span><p class="lu-sub">Answers to the three questions, one of them about your own team's data.</p></div>
   </div>
-  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">For your team project</span><p class="lu-sub">Your project ontology will reuse a published one too. Before you borrow a property, open its definition and check its domain and range (the classes it links, slide 23).</p></div>
+  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">For your team project</span><p class="lu-sub">Your project ontology will reuse a published one too. Before you borrow a property, open its definition and check its domain and range (the classes it links, slide 24).</p></div>
   <p class="lu-caption">Each student works on their own machine. Parts A, B and C are the three parts of the lab brief.</p>
   <template data-notes><p>Fifty five minutes. At minute 30, anyone still without an unsatisfiable class runs <code>python local_reasoner.py workspace/scro-extension-v0.ttl</code> and continues from the explanation. HermiT through the checker takes about 20 seconds; it is not frozen.</p></template>
 </section>
 
-<!-- ==================================================================== 46 -->
+<!-- ==================================================================== 47 -->
 <section class="slide" data-label="Check an ontology's licence" data-section="Lab" data-minutes="10" style="--lu-s5:12px">
   <div class="lu-eyebrow">Reuse · licences · 10 minutes, as a room</div>
   <h2 class="lu-h2" style="max-width:none">Check an ontology&rsquo;s licence before reusing it: the SCORVoc repository declares two conflicting ones.</h2>
@@ -757,7 +789,7 @@ All rights reserved.</span></code></pre></div>
   <template data-notes><p>Ten minutes, run as a whole-room pause. I do it live if the network holds; the two panels are the real lines, so the slide also works offline. I check upstream before teaching (<code>github.com/vocol/scor</code>, latest commit): if the conflict has been resolved, the exercise still works but the caption must say so. <code>workspace/LICENCES.md</code> records the licences for what this lab reuses.</p></template>
 </section>
 
-<!-- ==================================================================== 47 -->
+<!-- ==================================================================== 48 -->
 <section class="slide" data-label="Discussion: three questions" data-section="Wrap" data-minutes="8">
   <div class="lu-eyebrow">Discussion · as a room, the three questions of lab Part C</div>
   <h2 class="lu-h2">Three discussion questions, the last one about your own data.</h2>
@@ -772,7 +804,7 @@ All rights reserved.</span></code></pre></div>
   <template data-notes><p>Eight minutes. Question 3 is the one to spend time on: two or three teams answer it out loud. The usual weak answer puts a business event (a delivery, a payment) under a continuant.</p></template>
 </section>
 
-<!-- ==================================================================== 48 -->
+<!-- ==================================================================== 49 -->
 <section class="slide" data-label="Glossary of Session 3" data-section="Wrap" data-minutes="2" style="--lu-s5:12px">
   <div class="lu-eyebrow">Glossary · Session 3 words</div>
   <h2 class="lu-h2" style="max-width:none">Glossary of Session 3: the words you need to read an ontology and a reasoner report.</h2>
@@ -780,7 +812,7 @@ All rights reserved.</span></code></pre></div>
   <template data-notes><p>Two minutes, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
-<!-- ==================================================================== 49 -->
+<!-- ==================================================================== 50 -->
 <section class="slide slide--tint" data-label="Main point and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap · the main point</div>
   <div class="lu-split lu-split--wide-left">
@@ -801,7 +833,7 @@ All rights reserved.</span></code></pre></div>
   <template data-notes><p>Two minutes. I end on the sentence. Milestone 1 (a checkpoint, not graded) is pushed at the end of Session 4.</p></template>
 </section>
 
-<!-- ==================================================================== 50 -->
+<!-- ==================================================================== 51 -->
 <section class="slide" data-label="Self check" data-section="Wrap" data-minutes="1" style="--lu-s3:4px;--lu-s2:2px;--lu-s5:14px">
   <div class="lu-eyebrow">Self check</div>
   <div class="lu-split lu-split--wide-left">
