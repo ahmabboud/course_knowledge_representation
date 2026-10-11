@@ -33,7 +33,9 @@ Read this top to bottom. It is the whole lab.
                          |  and ask "is the rule wrong, or the data?"
                          v
 3. READ THE REPORT AS A LIST OF WORK
-   2,224  orders outside a rate band  -> our rule was too strict
+   2,224  orders outside a rate band
+            854: our rule was wrong (CRF has no prices)
+            1,370: the rate table has a gap
    1,209  bands whose carrier has no type -> the Session 2 conversion
    2      orders that weigh 0 kg      -> the data is really wrong
                          |
