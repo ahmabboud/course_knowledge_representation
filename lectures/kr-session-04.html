@@ -18,7 +18,7 @@
   data-deck-id="kr-s04"
   data-course="Knowledge Representation"
   data-session="Session 4 of 8"
-  data-duration="210"
+  data-duration="213"
   data-app-root="../"
   data-unit="Lebanese University · MSc">
 
@@ -378,16 +378,38 @@ GATE: PASS, no violations.</code></pre></div>
 </section>
 
 <!-- ==================================================================== 21 -->
+<section class="slide" data-label="Two kinds of shape: core and SPARQL" data-section="Rules as shapes" data-minutes="3">
+  <div class="lu-eyebrow">Before the table</div>
+  <h2 class="lu-h2">A shape is either core or SPARQL. Look at what the rule must examine.</h2>
+  <div class="lu-split">
+    <div class="lu-code lu-code--sm" data-name="Core shape · the rule looks only at the node itself"><pre><code><span class="tok-com"># Core shape: uses ready-made keywords</span>
+sh:property [
+  sh:path ul:weight ;
+  sh:minExclusive 0 ] .
+
+<span class="tok-com"># It looks only at this order's weight.</span></code></pre></div>
+    <div class="lu-code lu-code--sm" data-name="SPARQL shape · the rule looks at other nodes"><pre><code><span class="tok-com"># SPARQL shape: you write a query</span>
+sh:sparql [ sh:select """
+  SELECT $this WHERE {
+    <span class="tok-com"># find orders whose port is not</span>
+    <span class="tok-com"># one of the ports of their plant</span>
+  }""" ] .</code></pre></div>
+  </div>
+  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">What is a Violation?</span><p class="lu-sub">One result: one node that <b>breaks</b> one rule. A core shape gives a Violation when a keyword fails (for example, the weight is not above 0). A SPARQL shape gives one Violation for each row that its query returns.</p></div>
+  <template data-notes><p>Three minutes. Core SHACL is a list of ready-made keywords: you choose the property and the value. SPARQL is for rules that need other nodes: the order's port must be compared with its plant's list of ports. The table on the next slide marks each Session 1 rule as core or SPARQL, and counts its Violations in the first run.</p></template>
+</section>
+
+<!-- ==================================================================== 22 -->
 <section class="slide" data-label="From the inventory to shapes" data-section="Rules as shapes" data-minutes="5">
   <div class="lu-eyebrow">The Session 1 rules, as a first draft</div>
-  <h2 class="lu-h2" style="max-width:66ch">A rule needs <b>SPARQL</b> when it must look at <b>other nodes</b>, not only at the node it checks. First run: <b>3,435 Violations</b>.</h2>
-<table class="lu-table lu-fits"><thead><tr><th>Business rule (Session 1)</th><th>The shape looks at</th><th>Kind</th><th>Violations</th></tr></thead><tbody><tr><td>One carrier, plant, date, service level per order</td><td>values of this order</td><td>core</td><td>0</td></tr><tr><td>An order weighs more than 0 kg</td><td>the order's own weight</td><td>core</td><td><b style="color:var(--lu-red-700)">2</b></td></tr><tr><td>A band's low bound is not above its high bound</td><td>two values of the same band</td><td>core</td><td>0</td></tr><tr><td>A rate band belongs to a carrier</td><td>the type of the band's carrier</td><td>core</td><td><b style="color:var(--lu-red-700)">1,209</b></td></tr><tr><td>A plant ships only through ports it is linked to</td><td><b>other nodes:</b> its plant's ports</td><td><b>SPARQL</b></td><td>0</td></tr><tr><td>A plant ships only products it makes</td><td><b>other nodes:</b> its plant's products</td><td><b>SPARQL</b></td><td>0</td></tr><tr><td>An order's weight falls in a rate band of its lane</td><td><b>other nodes:</b> the bands of its lane</td><td><b>SPARQL</b></td><td><b style="color:var(--lu-red-700)">2,224</b></td></tr><tr><td>CRF orders are carried by V44_3</td><td>an if-then rule on two values</td><td><b>SPARQL</b></td><td>Part B</td></tr></tbody></table><style>.lu-fits td,.lu-fits th{padding-top:var(--lu-s2);padding-bottom:var(--lu-s2)}</style>
+  <h2 class="lu-h2" style="max-width:66ch">Which kind of shape each rule needs, and what the first run found: <b>3,435 Violations</b>.</h2>
+<table class="lu-table lu-fits"><thead><tr><th>Business rule (Session 1)</th><th>The shape looks at</th><th>Kind</th><th>Violations</th></tr></thead><tbody><tr><td>One carrier, plant, date, service level per order</td><td>values of this order</td><td>core</td><td>0</td></tr><tr><td>An order weighs more than 0 kg</td><td>the order's own weight</td><td>core</td><td><b style="color:var(--lu-red-700)">2</b></td></tr><tr><td>A band's low bound is not above its high bound</td><td>two values of the same band</td><td>core</td><td>0</td></tr><tr><td>A rate band belongs to a carrier</td><td>the type of the band's carrier</td><td>core</td><td><b style="color:var(--lu-red-700)">1,209</b></td></tr><tr><td>A plant ships only through ports it is linked to</td><td><b>other nodes:</b> its plant's ports</td><td>SPARQL</td><td>0</td></tr><tr><td>A plant ships only products it makes</td><td><b>other nodes:</b> its plant's products</td><td>SPARQL</td><td>0</td></tr><tr><td>An order's weight falls in a rate band of its lane</td><td><b>other nodes:</b> the bands of its lane</td><td>SPARQL</td><td><b style="color:var(--lu-red-700)">2,224</b></td></tr><tr><td>CRF orders are carried by V44_3</td><td>an if-then rule on two values</td><td>SPARQL</td><td>practice only</td></tr></tbody></table><style>.lu-fits td,.lu-fits th{padding-top:var(--lu-s2);padding-bottom:var(--lu-s2)}</style>
   <template data-notes><p>Five minutes. The first draft is what anyone writes from the English list: every rule, all Violations. Real run of <code>brunel-shapes-v0.ttl</code> on the Session 2 graph, 90 seconds (<code>reference-outputs/validate-v0.txt</code>).</p>
 <ul><li>The two SPARQL rules with 0 results confirm Session 1's evidence on all 9,215 orders: no order leaves through an unlinked port, none ships a product its plant does not make.</li>
 <li>The weight rule is new: Session 1 had no rule for it. Adding a rule you did not think of is normal; the gate keeps it from then on.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 22 -->
+<!-- ==================================================================== 23 -->
 <section class="slide" data-label="sh:sparql: when core SHACL is not enough" data-section="Rules as shapes" data-minutes="5">
   <div class="lu-eyebrow">When core SHACL cannot say it</div>
   <h2 class="lu-h2">The rule compares the order's port with its plant's ports. That needs a query.</h2>
@@ -414,7 +436,7 @@ GATE: PASS, no violations.</code></pre></div>
 <li>Prefixes: <code>sh:prefixes</code> points at the ontology node that declares <code>ul:</code> with <code>sh:declare</code>. The old template's <code>sh:prefixes ul:</code> is not standard and fails in pySHACL.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 23 -->
+<!-- ==================================================================== 24 -->
 <section class="slide" data-label="Walkthrough: triage of the first report" data-section="Rules as shapes" data-minutes="6">
   <div class="lu-eyebrow">Diagnostic walkthrough</div>
   <h2 class="lu-h2">3,435 Violations. Only 2 are the orders' fault.</h2>
@@ -425,7 +447,7 @@ GATE: PASS, no violations.</code></pre></div>
 <li>The 1,209: the 7 carriers are V444_2 and V444_4 to V444_9, present only in FreightRates.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 24 -->
+<!-- ==================================================================== 25 -->
 <section class="slide" data-label="Triage: rule wrong, or data wrong?" data-section="Rules as shapes" data-minutes="4">
   <div class="lu-eyebrow">Recording the decision</div>
   <h2 class="lu-h2">Write each triage decision next to its rule, with the evidence</h2>
@@ -449,7 +471,7 @@ GATE: PASS, no violations.</code></pre></div>
 <ul><li>Never delete a rule to make a report green. Deleting the weight in band rule would hide the rate table's gap from everyone after you.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 25 -->
+<!-- ==================================================================== 26 -->
 <section class="slide slide--tint" data-label="Poll: violation or warning?" data-section="Rules as shapes" data-minutes="4" style="--lu-s5:12px">
   <div class="lu-eyebrow">Room poll · 45 seconds</div>
   <div class="lu-poll" data-qid="s4-poll" data-seconds="45" data-answer="b" data-label="How to treat the 1,370 orders in the rate table's gap">
@@ -463,7 +485,7 @@ GATE: PASS, no violations.</code></pre></div>
   <template data-notes><p>Forty five seconds, then I reveal the answer and we tally. I spend the rest on a and c: both are common in practice, and both are wrong for opposite reasons.</p></template>
 </section>
 
-<!-- ==================================================================== 26 -->
+<!-- ==================================================================== 27 -->
 <section class="slide" data-label="The cost of using SPARQL too early" data-section="Rules as shapes" data-minutes="4">
   <div class="lu-eyebrow">Each shape timed alone, on the 9,215 orders</div>
   <h2 class="lu-h2" style="max-width:66ch">One SPARQL rule costs 28 times the whole core order shape</h2>
@@ -479,7 +501,7 @@ GATE: PASS, no violations.</code></pre></div>
 <ul><li>GS1's EPCIS shapes, 1,138 lines (Part 5), contain no SPARQL rule at all.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 27 -->
+<!-- ==================================================================== 28 -->
 <section class="slide slide--tint" data-label="Check: which rule needs SPARQL?" data-section="Rules as shapes" data-minutes="3">
   <div class="lu-eyebrow">Check question</div>
   <div class="lu-mcq" data-qid="s4-q2" data-answer="c" data-label="Which Brunel rule needs a SPARQL constraint"
@@ -496,7 +518,7 @@ GATE: PASS, no violations.</code></pre></div>
   <template data-notes><p>Three minutes. Option b is the trap: comparing two numbers sounds like it needs a query, but both are values of the same node.</p></template>
 </section>
 
-<!-- ==================================================================== 28 -->
+<!-- ==================================================================== 29 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 4 · Provenance and versions" data-section="Provenance" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 4 of 5 · about 21 minutes</div>
@@ -506,7 +528,7 @@ GATE: PASS, no violations.</code></pre></div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 29 -->
+<!-- ==================================================================== 30 -->
 <section class="slide" data-label="PROV-O: entity, activity, agent" data-section="Provenance" data-minutes="5">
   <div class="lu-eyebrow">Provenance, drawn</div>
   <h2 class="lu-h2">Three kinds of thing answer: where did it come from, how was it made, and who did it?</h2>
@@ -520,7 +542,7 @@ GATE: PASS, no violations.</code></pre></div>
 <li>Each file entity carries its SHA-256 checksum, so a changed CSV is detectable.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 30 -->
+<!-- ==================================================================== 31 -->
 <section class="slide" data-label="The same provenance, as Turtle" data-section="Provenance" data-minutes="4">
   <div class="lu-eyebrow">Provenance, as code</div>
   <h2 class="lu-h2">The real provenance triples, shortened. Each line answers one question.</h2>
@@ -545,7 +567,7 @@ software:convert_to_rdf.py <span class="tok-kw">a</span> prov:SoftwareAgent ;
   <template data-notes><p>Four minutes. This is the previous diagram as text, from <code>provenance.ttl</code>, written by <code>add_provenance.py</code>. Prefixes are shortened: <code>graph:</code>, <code>file:</code>, <code>run:</code> and <code>software:</code> stand for the long IRIs under <code>https://ul.edu.lb/kr/id/</code>. The checksum is cut short here; the file has all 64 characters.</p></template>
 </section>
 
-<!-- ==================================================================== 31 -->
+<!-- ==================================================================== 32 -->
 <section class="slide" data-label="Asking where a fact came from" data-section="Provenance" data-minutes="4">
   <div class="lu-eyebrow">Provenance is queryable</div>
   <h2 class="lu-h2">One SPARQL query goes from a triple to its file, its run and its time</h2>
@@ -571,7 +593,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
 <ul><li>The two zero weight orders of Part 2: the same query tells you they came from OrderList.csv, which is where the fix belongs, not in the graph.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 32 -->
+<!-- ==================================================================== 33 -->
 <section class="slide" data-label="Versioning the ontology" data-section="Provenance" data-minutes="4">
   <div class="lu-eyebrow">Releasing an ontology</div>
   <h2 class="lu-h2">The ontology IRI names the ontology. A version IRI names one release of it.</h2>
@@ -589,7 +611,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
 <ul><li>The next release gets a new version IRI and points back with <code>owl:priorVersion</code>. Milestone 1 asks each team for exactly this on its own ontology.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 33 -->
+<!-- ==================================================================== 34 -->
 <section class="slide slide--tint" data-label="Drill: provenance words" data-section="Provenance" data-minutes="3">
   <div class="lu-eyebrow">Drill · type the missing word</div>
   <div class="lu-blanks" data-qid="s4-blanks2" data-label="Provenance and versioning words">
@@ -604,7 +626,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
   <template data-notes><p>Three minutes. Blank 1 is the one you use in Milestone 1.</p></template>
 </section>
 
-<!-- ==================================================================== 34 -->
+<!-- ==================================================================== 35 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 5 · Reuse and the gate" data-section="Reuse and the gate" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 5 of 5 · about 17 minutes</div>
@@ -614,7 +636,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 35 -->
+<!-- ==================================================================== 36 -->
 <section class="slide" data-label="GS1's EPCIS shapes, an industrial example" data-section="Reuse and the gate" data-minutes="4">
   <div class="lu-eyebrow">Reuse: read before you write</div>
   <h2 class="lu-h2" style="max-width:66ch">GS1 publishes the shapes for EPCIS 2.0, its standard for supply chain events</h2>
@@ -638,7 +660,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
 <li>Licence literacy again, as in Session 3: this is not MIT or Apache; it is a patent and intellectual property statement. I name the difference.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 36 -->
+<!-- ==================================================================== 37 -->
 <section class="slide" data-label="Three patterns worth borrowing" data-section="Reuse and the gate" data-minutes="4">
   <div class="lu-eyebrow">What EPCIS does that our first draft did not do</div>
   <h2 class="lu-h2" style="max-width:66ch">Three good habits from a real standard. Each one needs only one line of Turtle.</h2>
@@ -661,7 +683,7 @@ epcis:AggregationEventShape
 <ul><li>Pattern 2 is new to most people: SHACL can forbid, not only require.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 37 -->
+<!-- ==================================================================== 38 -->
 <section class="slide" data-label="The tool: shacl-play" data-section="Reuse and the gate" data-minutes="3">
   <div class="lu-eyebrow">One slide for the tool</div>
   <h2 class="lu-h2">shacl-play validates in the browser: paste the data, paste the shapes, read the report</h2>
@@ -677,7 +699,7 @@ epcis:AggregationEventShape
 <li>Two engines agreeing (pySHACL and TopQuadrant's) is itself a check on our shapes.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 38 -->
+<!-- ==================================================================== 39 -->
 <section class="slide" data-label="The gate blocking a bad commit" data-section="Reuse and the gate" data-minutes="5">
   <div class="lu-eyebrow">A real run on GitHub</div>
   <h2 class="lu-h2">Every push runs the shapes. One wrong character makes the run fail (red).</h2>
@@ -692,7 +714,7 @@ epcis:AggregationEventShape
 <li>Why a sample: the gate runs on six real orders (515 triples) in a second. The full graph is 6 megabytes and takes about two minutes; your team decides what its gate checks.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 39 -->
+<!-- ==================================================================== 40 -->
 <section class="slide" data-label="What the gate runs" data-section="Reuse and the gate" data-minutes="3">
   <div class="lu-eyebrow">The whole gate is one file</div>
   <h2 class="lu-h2">Four steps: get the code, get Python, install pySHACL, validate</h2>
@@ -719,7 +741,7 @@ epcis:AggregationEventShape
 <ul><li>Versions are pinned (pySHACL 0.40.1, rdflib 7.6.0) so the gate gives the same answer next month as today.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 40 -->
+<!-- ==================================================================== 41 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Validate, triage, gate" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 55 minutes · on your own machine</div>
@@ -729,7 +751,7 @@ epcis:AggregationEventShape
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 41 -->
+<!-- ==================================================================== 42 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">Hands-on lab · about 55 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">The real graph and the real report. Optional: three shapes of your own.</h2>
@@ -749,7 +771,7 @@ epcis:AggregationEventShape
 <ul><li>Second blocker: the old Session 2 virtual environment without pySHACL. <code>pip install -r demos/requirements.txt</code> fixes it.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 42 -->
+<!-- ==================================================================== 43 -->
 <section class="slide" data-label="Lab time" data-section="Lab" data-minutes="50">
   <div class="lu-eyebrow">Lab · 50 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints keep you on time.</h2>
@@ -765,7 +787,7 @@ epcis:AggregationEventShape
 <li>Second: Y3 comparing the carrier with the text "V44_3" instead of its IRI, which flags the one correct CRF order.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 43 -->
+<!-- ==================================================================== 44 -->
 <section class="slide" data-label="Discussion and Milestone 1" data-section="Wrap" data-minutes="10">
   <div class="lu-eyebrow">Discussion · as a room, from Part C</div>
   <div class="lu-split lu-split--wide-left">
@@ -793,7 +815,7 @@ epcis:AggregationEventShape
 <ul><li>Milestone 1 is a checkpoint for feedback, not graded: the team project is scored once, before Session 8. I point your team at <code>.github/workflows/shacl-gate.yml</code> and <code>validate.py</code> as templates.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 44 -->
+<!-- ==================================================================== 45 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
@@ -801,7 +823,7 @@ epcis:AggregationEventShape
   <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
-<!-- ==================================================================== 45 -->
+<!-- ==================================================================== 46 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
@@ -822,7 +844,7 @@ epcis:AggregationEventShape
   <template data-notes><p>Two minutes. I end on the sentence.</p></template>
 </section>
 
-<!-- ==================================================================== 46 -->
+<!-- ==================================================================== 47 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1" style="--lu-s3:4px;--lu-s2:2px;--lu-s5:14px">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">
