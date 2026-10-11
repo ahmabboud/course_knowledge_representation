@@ -92,7 +92,7 @@
     <section class="station" id="s3" data-layers="shapes" data-title="Quality">
       <p class="kicker">Question 3 of 8</p>
       <h2>How do we know the data is <em>right</em>?</h2>
-      <p class="say">An order has lost its carrier. A reasoner assumes a carrier exists somewhere. A validator reports the gap. They answer different questions.</p>
+      <p class="say">An order has lost its carrier. Two different tools can read the same RDF data graph and answer differently. Each also reads its own extra rules: the reasoner reads the ontology, and the validator reads the shapes.</p>
       <p class="need"><span class="tag tag--opt">Optional, very common</span> Rules the data must obey (SHACL). It needs no OWL.</p>
       <div class="demo">
         <h3>Concept: a shape is a rule a computer checks</h3>
@@ -100,6 +100,7 @@
           <button type="button" id="t-owl" aria-pressed="true">Reasoner (OWL)</button>
           <button type="button" id="t-shacl" aria-pressed="false">Validator (SHACL)</button>
         </div>
+        <div class="io" id="t-io" aria-live="polite"></div>
         <div class="out" aria-live="polite" id="t-out"></div>
         <pre class="out" style="margin-top:10px;background:#14181d;color:#e8e4de" id="t-code-wrap" hidden><code>uls:OrderShape a sh:NodeShape ;
   sh:targetClass ul:Order ;          # check every order

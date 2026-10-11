@@ -91,7 +91,13 @@
 
   /* ---------- 3 reasoner or validator ---------- */
   var tout = $("#t-out"), twrap = $("#t-code-wrap");
+  var IO = {
+    "t-owl": [["Takes in", "The RDF data graph, and the ontology (RDFS and OWL rules)."], ["Assumes", "Open world: a missing fact is unknown, not false."], ["Gives out", "New facts, or a contradiction. Never a list of broken rules."]],
+    "t-shacl": [["Takes in", "The RDF data graph, and the shapes (rules, also written in RDF)."], ["Assumes", "Closed world: a missing fact is a problem."], ["Gives out", "A report: one result for each broken rule."]]
+  };
   function tool(id) {
+    var io = $("#t-io"); io.innerHTML = "";
+    IO[id].forEach(function (r) { var d = document.createElement("div"); var b = document.createElement("b"); b.textContent = r[0]; d.appendChild(b); d.appendChild(document.createTextNode(r[1])); io.appendChild(d); });
     tout.innerHTML = "";
     var p = document.createElement("p"); p.style.margin = "0";
     if (id === "t-owl") {
