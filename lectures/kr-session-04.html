@@ -18,7 +18,7 @@
   data-deck-id="kr-s04"
   data-course="Knowledge Representation"
   data-session="Session 4 of 8"
-  data-duration="202"
+  data-duration="206"
   data-app-root="../"
   data-unit="Lebanese University · MSc">
 
@@ -201,7 +201,7 @@ Message:     An order has exactly
 <!-- ==================================================================== 10 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 2 · Shapes on the real graph" data-section="SHACL core" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 2 of 5 · about 30 minutes</div>
+    <div class="lu-eyebrow">Part 2 of 5 · about 34 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">How do you tell a computer: every order has exactly one carrier?</h2>
     <p class="lu-lead" style="max-width:46ch">You describe the shape that the data must have. The computer compares the data with the shape.</p>
   </div>
@@ -221,6 +221,34 @@ Message:     An order has exactly
 </section>
 
 <!-- ==================================================================== 12 -->
+<section class="slide" data-label="The anatomy of a shape" data-section="SHACL core" data-minutes="4">
+  <div class="lu-eyebrow">The structure of a shape</div>
+  <h2 class="lu-h2">Every shape has the same seven parts. Learn them once.</h2>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-code lu-code--sm" data-name="brunel-shapes.ttl · the carrier rule, annotated"><pre><code>uls:OrderShape <span class="tok-kw">a</span> sh:NodeShape ;      <span class="tok-com"># 1 the shape</span>
+  sh:targetClass ul:Order ;            <span class="tok-com"># 2 which nodes</span>
+  sh:property [                        <span class="tok-com"># 3 one rule</span>
+    sh:path ul:carriedBy ;             <span class="tok-com"># 4 which property</span>
+    sh:minCount <span class="tok-num">1</span> ; sh:maxCount <span class="tok-num">1</span> ;  <span class="tok-com"># 5 limits</span>
+    sh:class ul:Carrier ;              <span class="tok-com"># 5 value type</span>
+    sh:message <span class="tok-str">"One carrier."</span> ;      <span class="tok-com"># 6 report text</span>
+    sh:severity sh:Violation ] .       <span class="tok-com"># 7 how serious</span></code></pre></div> 
+    <table class="lu-table lu-fits"><thead><tr><th>#</th><th>Part</th><th>It says</th></tr></thead><tbody>
+      <tr><td>1</td><td><b>Shape</b></td><td>a named set of rules</td></tr>
+      <tr><td>2</td><td><b>Target</b></td><td>which nodes to check</td></tr>
+      <tr><td>3</td><td><b>Property shape</b></td><td>one rule about one property</td></tr>
+      <tr><td>4</td><td><b>Path</b></td><td>which property it is about</td></tr>
+      <tr><td>5</td><td><b>Constraints</b></td><td>how many, what type, which values</td></tr>
+      <tr><td>6</td><td><b>Message</b></td><td>text for the report (optional)</td></tr>
+      <tr><td>7</td><td><b>Severity</b></td><td>Violation (default), Warning or Info</td></tr>
+    </tbody></table>
+  </div>
+  <style>.lu-fits td,.lu-fits th{padding-top:var(--lu-s2);padding-bottom:var(--lu-s2)}</style>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Property shape</b> A shape about one property of a node, for example &quot;has exactly one carrier&quot;.</span></p>
+  <template data-notes><p>Four minutes. I point at each comment in turn, 1 to 7. Only parts 1 to 5 are needed; parts 6 and 7 are optional. The next slide shows the whole order shape with several property shapes. A shape is just triples, so it is stored in a .ttl file like the data.</p></template>
+</section>
+
+<!-- ==================================================================== 13 -->
 <section class="slide" data-label="Node shapes and property shapes" data-section="SHACL core" data-minutes="5">
   <div class="lu-eyebrow">Writing a shape</div>
   <h2 class="lu-h2">One node shape for &ldquo;every order&rdquo;, one property shape per rule</h2>
@@ -244,7 +272,7 @@ Message:     An order has exactly
 <li>Standards status checked on w3.org on 2026-09-25: SHACL 1.2 Core is a Working Draft dated 3 August 2026.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 13 -->
+<!-- ==================================================================== 14 -->
 <section class="slide" data-label="The targeting trap" data-section="SHACL core" data-minutes="4">
   <div class="lu-eyebrow">The most common SHACL bug</div>
   <h2 class="lu-h2">A shape that selects no nodes checks nothing, but the report still says &ldquo;conforms&rdquo;</h2>
@@ -268,7 +296,7 @@ GATE: PASS, no violations.</code></pre></div>
 <ul><li>I ask: what would a CI gate have done with this? Passed every commit, forever. Part B's checker refuses a shape with no focus nodes for exactly this reason.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 14 -->
+<!-- ==================================================================== 15 -->
 <section class="slide" data-label="Seven kinds of rule" data-section="SHACL core" data-minutes="5">
   <div class="lu-eyebrow">Core SHACL, on our graph</div>
   <h2 class="lu-h2" style="max-width:66ch">Seven kinds of rule cover most of the Session 1 list. Two of them already find problems.</h2>
@@ -278,7 +306,7 @@ GATE: PASS, no violations.</code></pre></div>
 <ul><li>All counts from <code>reference-outputs/validate-v0.txt</code>. The 1,209 are rate bands whose carrier is not typed ul:Carrier; Part 3 explains why, and whose fault it is.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 15 -->
+<!-- ==================================================================== 16 -->
 <section class="slide" data-label="Two orders that weigh nothing" data-section="SHACL core" data-minutes="4">
   <div class="lu-eyebrow">A real finding</div>
   <h2 class="lu-h2">The first run found two orders that Session 1's profiling missed</h2>
@@ -296,7 +324,7 @@ GATE: PASS, no violations.</code></pre></div>
 <ul><li>Checked on 2026-09-25 with pyoxigraph on <code>brunel.ttl</code>: exactly two orders have weight 0; the smallest non-zero weight is 0.0026 kg.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 16 -->
+<!-- ==================================================================== 17 -->
 <section class="slide" data-label="Severity, and what conforms means" data-section="SHACL core" data-minutes="4">
   <div class="lu-eyebrow">Reading the top of a report</div>
   <h2 class="lu-h2">Any result, of any severity, makes conforms false. A gate decides which results stop a change.</h2>
@@ -315,7 +343,7 @@ GATE: PASS, no violations.</code></pre></div>
 <ul><li>So "does it conform?" and "may this change go in?" are two different questions. SHACL answers the first; your team decides the second, and writes it into the gate.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 17 -->
+<!-- ==================================================================== 18 -->
 <section class="slide slide--tint" data-label="Drill: core SHACL words" data-section="SHACL core" data-minutes="3">
   <div class="lu-eyebrow">Drill · type the missing word</div>
   <div class="lu-blanks" data-qid="s4-blanks1" data-label="Core SHACL words">
@@ -330,7 +358,7 @@ GATE: PASS, no violations.</code></pre></div>
   <template data-notes><p>Three minutes. Blank 4 is the one to discuss: it is the targeting trap in one line.</p></template>
 </section>
 
-<!-- ==================================================================== 18 -->
+<!-- ==================================================================== 19 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 3 · The rules as shapes" data-section="Rules as shapes" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 3 of 5 · about 30 minutes</div>
@@ -340,7 +368,7 @@ GATE: PASS, no violations.</code></pre></div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 19 -->
+<!-- ==================================================================== 20 -->
 <section class="slide" data-label="From the inventory to shapes" data-section="Rules as shapes" data-minutes="5">
   <div class="lu-eyebrow">The Session 1 rules, as a first draft</div>
   <h2 class="lu-h2" style="max-width:66ch">One shape per rule, all Violations. Four need SPARQL. First run: <b>3,435 Violations</b>.</h2>
@@ -350,7 +378,7 @@ GATE: PASS, no violations.</code></pre></div>
 <li>The weight rule is new: Session 1 had no rule for it. Adding a rule you did not think of is normal; the gate keeps it from then on.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 20 -->
+<!-- ==================================================================== 21 -->
 <section class="slide" data-label="sh:sparql: when core SHACL is not enough" data-section="Rules as shapes" data-minutes="5">
   <div class="lu-eyebrow">When core SHACL cannot say it</div>
   <h2 class="lu-h2">The rule compares the order's port with its plant's ports. That needs a query.</h2>
@@ -377,7 +405,7 @@ GATE: PASS, no violations.</code></pre></div>
 <li>Prefixes: <code>sh:prefixes</code> points at the ontology node that declares <code>ul:</code> with <code>sh:declare</code>. The old template's <code>sh:prefixes ul:</code> is not standard and fails in pySHACL.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 21 -->
+<!-- ==================================================================== 22 -->
 <section class="slide" data-label="Walkthrough: triage of the first report" data-section="Rules as shapes" data-minutes="6">
   <div class="lu-eyebrow">Diagnostic walkthrough</div>
   <h2 class="lu-h2">3,435 Violations. Only 2 are the orders' fault.</h2>
@@ -388,7 +416,7 @@ GATE: PASS, no violations.</code></pre></div>
 <li>The 1,209: the 7 carriers are V444_2 and V444_4 to V444_9, present only in FreightRates.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 22 -->
+<!-- ==================================================================== 23 -->
 <section class="slide" data-label="Triage: rule wrong, or data wrong?" data-section="Rules as shapes" data-minutes="4">
   <div class="lu-eyebrow">Recording the decision</div>
   <h2 class="lu-h2">Write each triage decision next to its rule, with the evidence</h2>
@@ -412,7 +440,7 @@ GATE: PASS, no violations.</code></pre></div>
 <ul><li>Never delete a rule to make a report green. Deleting the weight in band rule would hide the rate table's gap from everyone after you.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 23 -->
+<!-- ==================================================================== 24 -->
 <section class="slide slide--tint" data-label="Poll: violation or warning?" data-section="Rules as shapes" data-minutes="4" style="--lu-s5:12px">
   <div class="lu-eyebrow">Room poll · 45 seconds</div>
   <div class="lu-poll" data-qid="s4-poll" data-seconds="45" data-answer="b" data-label="How to treat the 1,370 orders in the rate table's gap">
@@ -426,7 +454,7 @@ GATE: PASS, no violations.</code></pre></div>
   <template data-notes><p>Forty five seconds, then I reveal the answer and we tally. I spend the rest on a and c: both are common in practice, and both are wrong for opposite reasons.</p></template>
 </section>
 
-<!-- ==================================================================== 24 -->
+<!-- ==================================================================== 25 -->
 <section class="slide" data-label="The cost of using SPARQL too early" data-section="Rules as shapes" data-minutes="4">
   <div class="lu-eyebrow">Each shape timed alone, on the 9,215 orders</div>
   <h2 class="lu-h2" style="max-width:66ch">One SPARQL rule costs 28 times the whole core order shape</h2>
@@ -442,7 +470,7 @@ GATE: PASS, no violations.</code></pre></div>
 <ul><li>GS1's EPCIS shapes, 1,138 lines (Part 5), contain no SPARQL rule at all.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 25 -->
+<!-- ==================================================================== 26 -->
 <section class="slide slide--tint" data-label="Check: which rule needs SPARQL?" data-section="Rules as shapes" data-minutes="3">
   <div class="lu-eyebrow">Check question</div>
   <div class="lu-mcq" data-qid="s4-q2" data-answer="c" data-label="Which Brunel rule needs a SPARQL constraint"
@@ -459,7 +487,7 @@ GATE: PASS, no violations.</code></pre></div>
   <template data-notes><p>Three minutes. Option b is the trap: comparing two numbers sounds like it needs a query, but both are values of the same node.</p></template>
 </section>
 
-<!-- ==================================================================== 26 -->
+<!-- ==================================================================== 27 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 4 · Provenance and versions" data-section="Provenance" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 4 of 5 · about 21 minutes</div>
@@ -469,7 +497,7 @@ GATE: PASS, no violations.</code></pre></div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 27 -->
+<!-- ==================================================================== 28 -->
 <section class="slide" data-label="PROV-O: entity, activity, agent" data-section="Provenance" data-minutes="5">
   <div class="lu-eyebrow">Provenance, drawn</div>
   <h2 class="lu-h2">Three kinds of thing answer: where did it come from, how was it made, and who did it?</h2>
@@ -483,7 +511,7 @@ GATE: PASS, no violations.</code></pre></div>
 <li>Each file entity carries its SHA-256 checksum, so a changed CSV is detectable.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 28 -->
+<!-- ==================================================================== 29 -->
 <section class="slide" data-label="The same provenance, as Turtle" data-section="Provenance" data-minutes="4">
   <div class="lu-eyebrow">Provenance, as code</div>
   <h2 class="lu-h2">These are the real provenance triples, shortened. Each line answers one question.</h2>
@@ -512,7 +540,7 @@ software:convert_to_rdf.py <span class="tok-kw">a</span> prov:SoftwareAgent ;
   <template data-notes><p>Four minutes. This is the previous diagram as text, from <code>provenance.ttl</code>, written by <code>add_provenance.py</code>. Prefixes are shortened: <code>graph:</code>, <code>file:</code>, <code>run:</code> and <code>software:</code> stand for the long IRIs under <code>https://ul.edu.lb/kr/id/</code>. The checksum is cut short here; the file has all 64 characters.</p></template>
 </section>
 
-<!-- ==================================================================== 29 -->
+<!-- ==================================================================== 30 -->
 <section class="slide" data-label="Asking where a fact came from" data-section="Provenance" data-minutes="4">
   <div class="lu-eyebrow">Provenance is queryable</div>
   <h2 class="lu-h2">One SPARQL query goes from a triple to its file, its run and its time</h2>
@@ -538,7 +566,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
 <ul><li>The two zero weight orders of Part 2: the same query tells you they came from OrderList.csv, which is where the fix belongs, not in the graph.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 30 -->
+<!-- ==================================================================== 31 -->
 <section class="slide" data-label="Versioning the ontology" data-section="Provenance" data-minutes="4">
   <div class="lu-eyebrow">Releasing an ontology</div>
   <h2 class="lu-h2">The ontology IRI names the ontology. A version IRI names one release of it.</h2>
@@ -556,7 +584,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
 <ul><li>The next release gets a new version IRI and points back with <code>owl:priorVersion</code>. Milestone 1 asks each team for exactly this on its own ontology.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 31 -->
+<!-- ==================================================================== 32 -->
 <section class="slide slide--tint" data-label="Drill: provenance words" data-section="Provenance" data-minutes="3">
   <div class="lu-eyebrow">Drill · type the missing word</div>
   <div class="lu-blanks" data-qid="s4-blanks2" data-label="Provenance and versioning words">
@@ -571,7 +599,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
   <template data-notes><p>Three minutes. Blank 1 is the one you use in Milestone 1.</p></template>
 </section>
 
-<!-- ==================================================================== 32 -->
+<!-- ==================================================================== 33 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 5 · Reuse and the gate" data-section="Reuse and the gate" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 5 of 5 · about 17 minutes</div>
@@ -581,7 +609,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 33 -->
+<!-- ==================================================================== 34 -->
 <section class="slide" data-label="GS1's EPCIS shapes, an industrial example" data-section="Reuse and the gate" data-minutes="4">
   <div class="lu-eyebrow">Reuse: read before you write</div>
   <h2 class="lu-h2" style="max-width:66ch">GS1 publishes the shapes for EPCIS 2.0, its standard for supply chain events</h2>
@@ -605,7 +633,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
 <li>Licence literacy again, as in Session 3: this is not MIT or Apache; it is a patent and intellectual property statement. I name the difference.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 34 -->
+<!-- ==================================================================== 35 -->
 <section class="slide" data-label="Three patterns worth borrowing" data-section="Reuse and the gate" data-minutes="4">
   <div class="lu-eyebrow">What EPCIS does that our first draft did not do</div>
   <h2 class="lu-h2" style="max-width:66ch">Three good habits from a real standard. Each one needs only one line of Turtle.</h2>
@@ -628,7 +656,7 @@ epcis:AggregationEventShape
 <ul><li>Pattern 2 is new to most people: SHACL can forbid, not only require.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 35 -->
+<!-- ==================================================================== 36 -->
 <section class="slide" data-label="The tool: shacl-play" data-section="Reuse and the gate" data-minutes="3">
   <div class="lu-eyebrow">One slide for the tool</div>
   <h2 class="lu-h2">shacl-play validates in the browser: paste the data, paste the shapes, read the report</h2>
@@ -644,7 +672,7 @@ epcis:AggregationEventShape
 <li>Two engines agreeing (pySHACL and TopQuadrant's) is itself a check on our shapes.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 36 -->
+<!-- ==================================================================== 37 -->
 <section class="slide" data-label="The gate blocking a bad commit" data-section="Reuse and the gate" data-minutes="5">
   <div class="lu-eyebrow">A real run on GitHub</div>
   <h2 class="lu-h2">Every push runs the shapes. One wrong character makes the run fail (red).</h2>
@@ -659,7 +687,7 @@ epcis:AggregationEventShape
 <li>Why a sample: the gate runs on six real orders (515 triples) in a second. The full graph is 6 megabytes and takes about two minutes; your team decides what its gate checks.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 37 -->
+<!-- ==================================================================== 38 -->
 <section class="slide" data-label="What the gate runs" data-section="Reuse and the gate" data-minutes="3">
   <div class="lu-eyebrow">The whole gate is one file</div>
   <h2 class="lu-h2">Four steps: get the code, get Python, install pySHACL, validate</h2>
@@ -686,7 +714,7 @@ epcis:AggregationEventShape
 <ul><li>Versions are pinned (pySHACL 0.40.1, rdflib 7.6.0) so the gate gives the same answer next month as today.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 38 -->
+<!-- ==================================================================== 39 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Validate, triage, gate" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 55 minutes · on your own machine</div>
@@ -696,7 +724,7 @@ epcis:AggregationEventShape
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 39 -->
+<!-- ==================================================================== 40 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">Hands-on lab · about 55 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">The real graph and the real report. Optional: three shapes of your own.</h2>
@@ -716,7 +744,7 @@ epcis:AggregationEventShape
 <ul><li>Second blocker: the old Session 2 virtual environment without pySHACL. <code>pip install -r demos/requirements.txt</code> fixes it.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 40 -->
+<!-- ==================================================================== 41 -->
 <section class="slide" data-label="Lab time" data-section="Lab" data-minutes="50">
   <div class="lu-eyebrow">Lab · 50 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints keep you on time.</h2>
@@ -732,7 +760,7 @@ epcis:AggregationEventShape
 <li>Second: Y3 comparing the carrier with the text "V44_3" instead of its IRI, which flags the one correct CRF order.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 41 -->
+<!-- ==================================================================== 42 -->
 <section class="slide" data-label="Discussion and Milestone 1" data-section="Wrap" data-minutes="10">
   <div class="lu-eyebrow">Discussion · as a room, from Part C</div>
   <div class="lu-split lu-split--wide-left">
@@ -760,7 +788,7 @@ epcis:AggregationEventShape
 <ul><li>Milestone 1 is a checkpoint for feedback, not graded: the team project is scored once, before Session 8. I point your team at <code>.github/workflows/shacl-gate.yml</code> and <code>validate.py</code> as templates.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 42 -->
+<!-- ==================================================================== 43 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
@@ -768,7 +796,7 @@ epcis:AggregationEventShape
   <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
-<!-- ==================================================================== 43 -->
+<!-- ==================================================================== 44 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
@@ -789,7 +817,7 @@ epcis:AggregationEventShape
   <template data-notes><p>Two minutes. I end on the sentence.</p></template>
 </section>
 
-<!-- ==================================================================== 44 -->
+<!-- ==================================================================== 45 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1" style="--lu-s3:4px;--lu-s2:2px;--lu-s5:14px">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">
