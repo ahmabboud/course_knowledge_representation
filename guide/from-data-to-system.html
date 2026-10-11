@@ -3,310 +3,226 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>From data to a working system · Knowledge Representation</title>
-<meta name="description" content="A map of the layers of a knowledge graph system: which parts are required, which are optional, where each one lives, and what companies use.">
+<title>From a question to a working system · Knowledge Representation</title>
+<meta name="description" content="A guided journey from a business question to an enterprise knowledge representation system: what each concept adds, which parts you need, where each one lives, with small examples on the Brunel supply chain data.">
 <meta name="theme-color" content="#96122B">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/lu.css?v=1.3.5">
-<style>
-  .gd { max-width: 1040px; margin: 0 auto; padding: var(--lu-s6, 32px) var(--lu-s5, 24px) var(--lu-s9, 72px); }
-  .gd h2 { margin-top: var(--lu-s8, 56px); }
-  .gd .lede { font-size: 20px; line-height: 1.55; color: var(--lu-ink-2); max-width: 62ch; margin-bottom: 16px; }
-  .gd .note { font-size: 15px; color: var(--lu-ink-2); max-width: 68ch; }
-  .map { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: var(--lu-s5, 24px); align-items: start; margin-top: var(--lu-s5, 24px); }
-  @media (max-width: 820px) { .map { grid-template-columns: 1fr; } }
-  .stack { display: flex; flex-direction: column-reverse; gap: 8px; margin: 0; padding: 0; list-style: none; }
-  .layer { width: 100%; text-align: left; font: inherit; color: var(--lu-ink); background: var(--lu-paper-2); border: 2px solid var(--lu-line); border-radius: 10px; padding: 12px 14px; cursor: pointer; display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
-  .layer:hover { border-color: var(--lu-ink-3); }
-  .layer:focus-visible { outline: 3px solid var(--lu-focus, var(--lu-red-700)); outline-offset: 2px; }
-  .layer[aria-pressed="true"] { border-color: var(--lu-red-700); background: var(--lu-paper); box-shadow: var(--lu-shadow-card); }
-  .layer__name { font-weight: 600; }
-  .layer__sub { display: block; font-size: 14px; color: var(--lu-ink-2); font-weight: 400; margin-top: 2px; }
-  .tag { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; border: 1.5px solid currentColor; border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
-  .tag--req { color: var(--lu-green-700); }
-  .tag--opt { color: var(--lu-ink-2); }
-  .tag--alt { color: var(--lu-red-700); }
-  .panel { background: var(--lu-paper); border: 2px solid var(--lu-line); border-radius: 12px; padding: var(--lu-s5, 24px); position: sticky; top: 16px; }
-  .panel h3 { margin: 0 0 4px; }
-  .panel dl { margin: var(--lu-s4, 16px) 0 0; display: grid; grid-template-columns: 8.5em 1fr; gap: 10px 14px; }
-  .panel dt { font-weight: 600; color: var(--lu-ink-2); }
-  .panel dd { margin: 0; }
-  @media (max-width: 520px) { .panel dl { grid-template-columns: 1fr; } .panel dt { margin-top: 6px; } }
-  .q { border: 2px solid var(--lu-line); border-radius: 12px; margin-top: 12px; background: var(--lu-paper); }
-  .q summary { cursor: pointer; padding: 14px 16px; font-weight: 600; font-size: 18px; }
-  .q summary:focus-visible { outline: 3px solid var(--lu-focus, var(--lu-red-700)); outline-offset: 2px; }
-  .q[open] summary { border-bottom: 2px solid var(--lu-line); }
-  .q__body { padding: 4px 18px 16px; }
-  .q__body p, .q__body li { max-width: 68ch; }
-  .answer { font-weight: 600; }
-  .switch { display: inline-flex; border: 2px solid var(--lu-line); border-radius: 999px; overflow: hidden; margin: 12px 0; }
-  .switch button { font: inherit; border: 0; background: var(--lu-paper-2); color: var(--lu-ink); padding: 10px 18px; cursor: pointer; }
-  .switch button[aria-pressed="true"] { background: var(--lu-red-700); color: #fff; font-weight: 600; }
-  .switch button:focus-visible { outline: 3px solid var(--lu-focus, var(--lu-red-700)); outline-offset: -3px; }
-  table.t { border-collapse: collapse; width: 100%; margin-top: 12px; font-size: 16px; }
-  table.t th, table.t td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--lu-line); vertical-align: top; }
-  table.t th { font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--lu-ink-3); border-bottom: 2px solid var(--lu-ink-2); }
-  .scroll { overflow-x: auto; }
-  .flow { counter-reset: s; list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 10px; }
-  .flow li { counter-increment: s; background: var(--lu-paper-2); border-left: 5px solid var(--lu-red-700); border-radius: 8px; padding: 10px 14px 10px 54px; position: relative; max-width: 76ch; }
-  .flow li::before { content: counter(s); position: absolute; left: 14px; top: 8px; width: 28px; height: 28px; border-radius: 50%; background: var(--lu-red-700); color: #fff; display: grid; place-items: center; font-weight: 600; }
-  code { font-family: var(--lu-mono, "IBM Plex Mono", monospace); font-size: .92em; }
-  .skip { position: absolute; left: -999px; } .skip:focus { left: 8px; top: 8px; background: var(--lu-paper); padding: 8px 12px; z-index: 10; }
-</style>
+<link rel="stylesheet" href="guide.css?v=1">
 </head>
-<body class="page-mode">
-<a class="skip" href="#main">Skip to content</a>
-<main class="gd" id="main">
+<body class="guide">
+<a class="skip" href="#journey">Skip to the journey</a>
 
-<p class="note"><a href="../index.html">&larr; Knowledge Representation course</a></p>
-<h1>From data to a working system</h1>
-<p class="lede">One map of everything we build in this course. For each layer it tells you what it is, whether you need it, where it lives, and what we use in the labs and what companies use.</p>
-<p class="note">Click a layer. The tool names are <b>examples</b>, not a ranking or a recommendation to buy. Companies choose different tools, and products change, so check current versions before you decide. Tool names last checked October 2026.</p>
-
-<h2>1. The map</h2>
-<p class="note">Read it from the bottom up: data goes in at the bottom, answers come out at the top. Each tag says whether the layer is <b>required</b>, <b>optional</b>, or an <b>alternative</b> to the standard route.</p>
-
-<div class="map">
-  <div>
-    <ol class="stack" id="stack" aria-label="Layers of the system, from the bottom"></ol>
-    <p class="note" style="margin:16px 0 8px"><b>Underneath all of them</b></p>
-    <ol class="stack" id="cross" aria-label="Across all layers"></ol>
-  </div>
-  <section class="panel" id="panel" aria-live="polite" aria-label="Layer details"></section>
-</div>
-
-<h2>2. Your four questions, answered</h2>
-
-<details class="q" open>
-  <summary>Is SHACL applied to OWL, to RDFS, or to RDF?</summary>
-  <div class="q__body">
-    <p class="answer">To RDF data. It does not need OWL or RDFS.</p>
-    <p>Everything in this stack is written in RDF, as triples:</p>
-    <ul>
-      <li>the <b>data</b> (an order, its carrier, its weight);</li>
-      <li>the <b>meaning</b>, in RDFS and OWL (a late order is an order);</li>
-      <li>the <b>rules</b>, in SHACL (every order has exactly one carrier).</li>
-    </ul>
-    <p>SHACL is a different kind of tool from OWL. OWL adds facts that follow from the data. SHACL checks that the data has the right shape. SHACL can use <code>rdfs:subClassOf</code> if it is in the data, which is why our 192 late orders were still checked as orders in Session 4. But a SHACL file works without any ontology.</p>
-  </div>
-</details>
-
-<details class="q">
-  <summary>Do I need all of them? Are they cumulative or optional?</summary>
-  <div class="q__body">
-    <p class="answer">No. RDF is the base. The rest are optional, and each adds one thing.</p>
-    <div class="scroll"><table class="t">
-      <thead><tr><th>Piece</th><th>Needed?</th><th>What you get</th></tr></thead>
-      <tbody>
-        <tr><td><b>RDF</b></td><td>Required for this route</td><td>Facts as linked triples</td></tr>
-        <tr><td><b>RDFS</b> (light)</td><td>Almost always</td><td>Class names and a hierarchy</td></tr>
-        <tr><td><b>OWL</b></td><td>Optional</td><td>Reasoning, and reuse of published ontologies such as SCRO</td></tr>
-        <tr><td><b>SHACL</b></td><td>Optional, but very common</td><td>Automatic data quality checks</td></tr>
-        <tr><td><b>Mapping</b></td><td>If your data is in a database</td><td>Rebuild the graph from live data</td></tr>
-      </tbody>
-    </table></div>
-    <p>Many enterprise knowledge graphs use RDF, a light vocabulary and SHACL, with little or no OWL reasoning. In practice, OWL is the layer teams use least in production. The course teaches it because reuse and reasoning are valuable when you need them, and because you must know what a reasoner can and cannot do.</p>
-  </div>
-</details>
-
-<details class="q">
-  <summary>Where does the graph live? Do I also need Neo4j?</summary>
-  <div class="q__body">
-    <p class="answer">The data graph lives in a graph database. Neo4j is an alternative, not an extra layer.</p>
-    <ul>
-      <li><b>Triple store</b> (for RDF): Apache Jena Fuseki in our labs. Examples in industry: Ontotext GraphDB, Stardog, Amazon Neptune, OpenLink Virtuoso.</li>
-      <li><b>Virtual graph</b>: nothing is stored. A tool such as Ontop answers each SPARQL question by writing SQL on the live database.</li>
-      <li><b>Property graph database</b>: Neo4j. It stores nodes and relationships with properties, and it uses its own query language, Cypher.</li>
-    </ul>
-    <p>A <b>knowledge graph</b> is not one product. It is the data graph, plus its ontology, plus its shapes, working together. If you choose Neo4j you normally do not use RDF, OWL or SHACL. Section 3 shows the two routes side by side.</p>
-  </div>
-</details>
-
-<details class="q">
-  <summary>Where does the ontology live? In Protégé? In a database?</summary>
-  <div class="q__body">
-    <p class="answer">In a file in git. Protégé is only the editor.</p>
-    <ol class="flow">
-      <li><b>Edit</b> the ontology in Protégé (or a text editor). It is a <code>.ttl</code> or <code>.owl</code> text file.</li>
-      <li><b>Commit</b> it to git. The file in git is the source of truth, with a history and reviewers.</li>
-      <li><b>Check</b> it automatically in CI: a reasoner (for example ROBOT with ELK or HermiT) and SHACL.</li>
-      <li><b>Release</b> it with a version IRI, for example <code>.../scm/1.0.0</code>.</li>
-      <li><b>Load</b> the release into the triple store, usually as its own named graph, and publish it at a URL.</li>
+<header class="hero">
+  <div class="hero__in">
+    <a class="back" href="../index.html">&larr; Knowledge Representation course</a>
+    <h1>From a business question to a working system</h1>
+    <p class="lead">Eight questions a company asks about its data. Each one adds one idea. By the end you will know what you need, what you can skip, and where every part lives.</p>
+    <a class="cta" href="#journey">Start the journey</a>
+    <ol class="path" aria-label="The eight questions">
+      <li><b>1</b> Connect</li><li><b>2</b> Meaning</li><li><b>3</b> Quality</li><li><b>4</b> History</li>
+      <li><b>5</b> Live data</li><li><b>6</b> Ask</li><li><b>7</b> Run it</li><li><b>8</b> Your stack</li>
     </ol>
-    <p>Some commercial products keep the ontology on their own server instead (TopBraid EDG and PoolParty are examples). The git workflow is the open, common one, and it is what this course uses.</p>
   </div>
-</details>
+</header>
 
-<h2>3. Two routes: RDF stack or property graph</h2>
-<p class="note">Choose one route per project. Press a button to see which layers each one uses.</p>
-<div class="switch" role="group" aria-label="Choose a route">
-  <button type="button" id="r-rdf" aria-pressed="true">RDF stack</button>
-  <button type="button" id="r-pg" aria-pressed="false">Property graph (Neo4j)</button>
-</div>
-<div class="scroll"><table class="t" id="routes">
-  <thead><tr><th>Layer</th><th id="routeHead">RDF stack</th></tr></thead>
-  <tbody></tbody>
-</table></div>
-<p class="note" id="routeNote"></p>
+<main id="journey" class="journey">
+  <aside class="map" aria-label="The system map">
+    <h2>Your system so far</h2>
+    <ol class="layers" id="layers"></ol>
+    <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+    <p class="hint">Layers appear as the journey adds them. Click one to jump to where it is explained.</p>
+  </aside>
 
-<h2>4. Where each thing lives</h2>
-<div class="scroll"><table class="t">
-  <thead><tr><th>Thing</th><th>Source of truth</th><th>Where it runs</th><th>Course file</th></tr></thead>
-  <tbody>
-    <tr><td>Source data</td><td>The company's databases and files</td><td>The database</td><td><code>data/</code></td></tr>
-    <tr><td>Mapping</td><td>A file in git</td><td>Morph-KGC or Ontop, when you run it</td><td><code>brunel-mapping.ttl</code></td></tr>
-    <tr><td>Data graph</td><td>The source data (the graph is rebuilt from it)</td><td>The triple store, or virtual</td><td><code>brunel.ttl</code> in Fuseki</td></tr>
-    <tr><td>Ontology</td><td>A file in git</td><td>Loaded into the triple store; read by a reasoner</td><td><code>scro-extension-reference.ttl</code></td></tr>
-    <tr><td>Shapes</td><td>A file in git</td><td>pySHACL in CI, and before loading data</td><td><code>brunel-shapes.ttl</code></td></tr>
-    <tr><td>Provenance</td><td>Written when the graph is built</td><td>In the triple store, as its own graph</td><td><code>provenance.ttl</code></td></tr>
-    <tr><td>Access layer</td><td>Code and test questions in git</td><td>A service in front of the endpoint</td><td><code>serve.py</code></td></tr>
-    <tr><td>The whole stack</td><td>A repository</td><td>Docker Compose, started by CI or by hand</td><td><code>kr-team-template</code></td></tr>
-  </tbody>
-</table></div>
+  <div class="stations" id="stations">
 
-<h2>5. What a real release looks like</h2>
-<ol class="flow">
-  <li>A person edits the ontology or a shapes file and opens a pull request.</li>
-  <li>CI runs the reasoner and the SHACL gate on a small sample. A Violation turns the run red and the change cannot be merged.</li>
-  <li>After the merge, a build job runs the mapping and rebuilds the graph from the live database.</li>
-  <li>The new graph, ontology and shapes are loaded into the triple store, and the SHACL gate validates the full graph.</li>
-  <li>The access layer and any dashboards read from the SPARQL endpoint. The test set is run again and the score is recorded with the model name and date.</li>
-</ol>
-<p class="note">Our labs run each of these steps by hand so you can see them. In a company, CI and a scheduler run them for you. <code>kr-team-template</code> is a small working version of the whole flow.</p>
+    <!-- 1 CONNECT -->
+    <section class="station" id="s1" data-layers="src,graph" data-title="Connect">
+      <p class="kicker">Question 1 of 8</p>
+      <h2>How are things <em>connected</em> across our systems?</h2>
+      <p class="say">The order is in one table, the plant in another, the carrier in a third. To follow a link you must join them, and every new question needs a new join.</p>
+      <p class="need"><span class="tag tag--req">Required</span> Facts that name the same thing the same way.</p>
+      <div class="demo">
+        <h3>Concept: RDF, a graph of facts</h3>
+        <div class="seg" role="group" aria-label="Choose a view">
+          <button type="button" id="v-table" aria-pressed="true">As a table row</button>
+          <button type="button" id="v-graph" aria-pressed="false">As a graph</button>
+        </div>
+        <div class="swap">
+          <div id="p-table"><table class="mini"><thead><tr><th>Order</th><th>Plant</th><th>Port</th><th>Carrier</th></tr></thead><tbody><tr><td>1447296446.7</td><td>PLANT16</td><td>PORT09</td><td>V44_3</td></tr></tbody></table>
+            <p class="foot">The links are hidden inside columns. To use them, you join tables.</p></div>
+          <div id="p-graph" hidden>
+            <svg class="tg" viewBox="0 0 520 210" role="img" aria-label="Order 1447296446.7 linked to plant PLANT16, port PORT09 and carrier V44_3">
+              <line class="e" x1="260" y1="105" x2="90" y2="40"/><line class="e" x1="260" y1="105" x2="90" y2="170"/><line class="e" x1="260" y1="105" x2="430" y2="105"/>
+              <text class="lab" x="130" y="62">fromPlant</text><text class="lab" x="140" y="150">shipsFrom</text><text class="lab" x="318" y="96">carriedBy</text>
+              <rect class="n n--o" x="180" y="82" width="160" height="46" rx="23"/><text x="260" y="110" text-anchor="middle">order 1447296446.7</text>
+              <rect class="n" x="20" y="18" width="140" height="44" rx="22"/><text x="90" y="45" text-anchor="middle">PLANT16</text>
+              <rect class="n" x="20" y="148" width="140" height="44" rx="22"/><text x="90" y="175" text-anchor="middle">PORT09</text>
+              <rect class="n n--c" x="400" y="82" width="110" height="46" rx="23"/><text x="455" y="110" text-anchor="middle">V44_3</text>
+            </svg>
+            <p class="foot">Each link is a fact: <code>order carriedBy V44_3</code>. Each thing has one global name, so facts from any system meet at the same node.</p></div>
+        </div>
+      </div>
+      <p class="skipif"><b>You can skip it if</b> one clean table answers all your questions. Then a database is enough.</p>
+      <p class="where">Where it lives: a triple store (we use Fuseki). Session 2.</p>
+    </section>
 
-<h2>6. Tools: what we use, and what companies use</h2>
-<div class="scroll"><table class="t">
-  <thead><tr><th>Job</th><th>In our labs</th><th>Examples in industry</th></tr></thead>
-  <tbody>
-    <tr><td>Ontology editor</td><td>Protégé</td><td>WebProtégé, TopBraid EDG, PoolParty</td></tr>
-    <tr><td>Reasoner</td><td>ELK, HermiT (in Protégé and ROBOT)</td><td>Built into GraphDB and Stardog; the same open reasoners</td></tr>
-    <tr><td>Triple store</td><td>Apache Jena Fuseki</td><td>Ontotext GraphDB, Stardog, Amazon Neptune, OpenLink Virtuoso</td></tr>
-    <tr><td>Property graph</td><td>Neo4j (for comparison)</td><td>Neo4j, Amazon Neptune, others</td></tr>
-    <tr><td>Mapping</td><td>Morph-KGC (materialize), Ontop (virtualize)</td><td>Ontop, RML tools, commercial integration tools</td></tr>
-    <tr><td>SHACL validation</td><td>pySHACL, shacl-play</td><td>TopBraid SHACL, validation built into GraphDB and Stardog</td></tr>
-    <tr><td>Automation</td><td>GitHub Actions, Docker Compose</td><td>GitHub Actions, GitLab CI, Jenkins; Kubernetes for larger systems</td></tr>
-    <tr><td>Question answering</td><td>Our access layer with Gemini</td><td>Platform features from graph vendors, or an LLM plus SPARQL as we built</td></tr>
-  </tbody>
-</table></div>
-<p class="note">Examples only. A knowledge graph project usually mixes several of these. Pick tools after you know your data, your questions and your team's skills.</p>
+    <!-- 2 MEANING -->
+    <section class="station" id="s2" data-layers="vocab" data-title="Meaning">
+      <p class="kicker">Question 2 of 8</p>
+      <h2>What do our words <em>mean</em>? Is a late order an order?</h2>
+      <p class="say">In the data, 192 orders are typed &ldquo;late order&rdquo; and the rest &ldquo;order&rdquo;. Ask how many orders there are, and the answer depends on whether the system knows a late order is an order.</p>
+      <p class="need"><span class="tag tag--req">Required, light</span> Class names and a hierarchy (RDFS). <span class="tag tag--opt">Optional</span> Richer meaning and reasoning (OWL).</p>
+      <div class="demo">
+        <h3>Concept: a vocabulary says what the words mean</h3>
+        <div class="seg" role="group" aria-label="Choose a setting">
+          <button type="button" id="m-none" aria-pressed="true">No vocabulary</button>
+          <button type="button" id="m-voc" aria-pressed="false">With a vocabulary</button>
+        </div>
+        <div class="out" aria-live="polite"><div class="big" id="m-num">9,023</div><p id="m-txt" class="foot">&ldquo;How many orders?&rdquo; counts only things typed <code>Order</code>. The 192 late orders are missed.</p></div>
+        <pre class="out" style="margin-top:10px;background:#14181d;color:#e8e4de"><code id="m-code">ul:LateOrder  a rdfs:Class .   # a separate type</code></pre>
+      </div>
+      <p class="skipif"><b>You can skip OWL if</b> you only need class names. Many production systems use RDFS and SHACL, and little or no OWL reasoning.</p>
+      <p class="where">Where it lives: a <code>.ttl</code> file in git, loaded into the store. Protégé is only the editor. Session 3.</p>
+    </section>
 
-<h2>7. Where this appears in the course</h2>
-<ul>
-  <li>RDF, SPARQL and the choice between RDF and a property graph: <a href="../lectures/kr-session-02.html">Session 2</a></li>
-  <li>OWL, reuse, reasoners: <a href="../lectures/kr-session-03.html">Session 3</a></li>
-  <li>SHACL, provenance, the gate: <a href="../lectures/kr-session-04.html">Session 4</a></li>
-  <li>Mappings, materialize against virtualize: <a href="../lectures/kr-session-05.html">Session 5</a></li>
-  <li>The access layer and deployment: <a href="../lectures/kr-session-07.html">Session 7</a></li>
-</ul>
+    <!-- 3 QUALITY -->
+    <section class="station" id="s3" data-layers="shapes" data-title="Quality">
+      <p class="kicker">Question 3 of 8</p>
+      <h2>How do we know the data is <em>right</em>?</h2>
+      <p class="say">An order has lost its carrier. A reasoner assumes a carrier exists somewhere. A validator reports the gap. They answer different questions.</p>
+      <p class="need"><span class="tag tag--opt">Optional, very common</span> Rules the data must obey (SHACL). It needs no OWL.</p>
+      <div class="demo">
+        <h3>Concept: a shape is a rule a computer checks</h3>
+        <div class="seg" role="group" aria-label="Choose a tool">
+          <button type="button" id="t-owl" aria-pressed="true">Reasoner (OWL)</button>
+          <button type="button" id="t-shacl" aria-pressed="false">Validator (SHACL)</button>
+        </div>
+        <div class="out" aria-live="polite" id="t-out"></div>
+        <pre class="out" style="margin-top:10px;background:#14181d;color:#e8e4de" id="t-code-wrap" hidden><code>uls:OrderShape a sh:NodeShape ;
+  sh:targetClass ul:Order ;          # check every order
+  sh:property [ sh:path ul:carriedBy ;
+                sh:minCount 1 ;      # at least one carrier
+                sh:maxCount 1 ] .    # at most one</code></pre>
+      </div>
+      <p class="skipif"><b>You can skip it if</b> the data never changes and someone checks it by hand. For a live system, keep it.</p>
+      <p class="where">Where it lives: a <code>.ttl</code> file in git, run by pySHACL in CI and before data is loaded. Session 4.</p>
+    </section>
 
-<footer class="note" style="margin-top:56px;padding-top:16px;border-top:3px solid var(--lu-red-700)">Lebanese University · Faculty of Sciences · MSc Computer Science · Knowledge Representation</footer>
+    <!-- 4 HISTORY -->
+    <section class="station" id="s4" data-layers="prov" data-title="History">
+      <p class="kicker">Question 4 of 8</p>
+      <h2>Where did this fact <em>come from</em>?</h2>
+      <p class="say">The rule found two orders that weigh 0 kg. To fix them we must know which file, which run, and which version of the rules.</p>
+      <p class="need"><span class="tag tag--opt">Optional, but you will want it</span> A record of source, process and release (provenance, version IRI).</p>
+      <div class="demo">
+        <h3>Concept: provenance is the record of where data came from</h3>
+        <button type="button" class="btn btn--solid" id="trace">Trace order 1447336276.7</button>
+        <ol class="trail" id="trail" aria-live="polite"></ol>
+      </div>
+      <p class="skipif"><b>You can skip it if</b> you can always rebuild everything from one source in seconds, and nobody audits the result.</p>
+      <p class="where">Where it lives: written when the graph is built, stored as its own graph; the ontology release is a version number in its file. Session 4.</p>
+    </section>
+
+    <!-- 5 LIVE DATA -->
+    <section class="station" id="s5" data-layers="map" data-title="Live data">
+      <p class="kicker">Question 5 of 8</p>
+      <h2>The data lives in a database that <em>changes every day</em>.</h2>
+      <p class="say">A script that converted four files once is not enough. A mapping describes how rows become facts, so any tool can rebuild the graph when the data changes.</p>
+      <p class="need"><span class="tag tag--req">Required if your data is in a database</span> A mapping (R2RML), and a choice: store the graph, or ask the database live.</p>
+      <div class="demo">
+        <h3>Concept: materialize or virtualize</h3>
+        <button type="button" class="btn btn--solid" id="newrow">A new late order arrives in the database</button>
+        <div class="two" style="margin-top:14px">
+          <div class="card"><h4>Materialize</h4><p class="foot" style="margin:0">Convert once, store the graph.</p><div class="big out" id="mat" style="border:0;padding:6px 0 0">9,215</div><p class="foot" id="mat-n" style="margin:0">orders in the stored graph</p></div>
+          <div class="card"><h4>Virtualize</h4><p class="foot" style="margin:0">Ask the live database each time.</p><div class="big out" id="vir" style="border:0;padding:6px 0 0">9,215</div><p class="foot" id="vir-n" style="margin:0">orders, asked just now</p></div>
+        </div>
+        <p class="foot">Illustration: one extra order is added so you can see the difference.</p>
+      </div>
+      <p class="skipif"><b>You can skip it if</b> your data is a few files that rarely change. A conversion script is fine.</p>
+      <p class="where">Where it lives: the mapping is a file in git. Morph-KGC materializes; Ontop virtualizes. Session 5.</p>
+    </section>
+
+    <!-- 6 ASK -->
+    <section class="station" id="s6" data-layers="ask" data-title="Ask">
+      <p class="kicker">Question 6 of 8</p>
+      <h2>Can people ask in <em>plain language</em>?</h2>
+      <p class="say">Managers do not write SPARQL. A language model writes the query, the system checks it against the graph's description, and it refuses what the graph cannot answer.</p>
+      <p class="need"><span class="tag tag--opt">Optional</span> An access layer: schema, examples, a check, a refusal path.</p>
+      <div class="demo">
+        <h3>Concept: the access layer</h3>
+        <div class="chips" role="group" aria-label="Pick a question">
+          <button type="button" data-q="0" aria-pressed="true">How many orders did carrier V44_3 carry?</button>
+          <button type="button" data-q="1" aria-pressed="false">How many orders are there in total?</button>
+          <button type="button" data-q="2" aria-pressed="false">Which customers are in Beirut?</button>
+        </div>
+        <div class="out" aria-live="polite" id="q-out"></div>
+      </div>
+      <p class="skipif"><b>You can skip it if</b> your users are analysts who write queries themselves.</p>
+      <p class="where">Where it lives: code and a test set in git, run as a service in front of the SPARQL endpoint. Session 7.</p>
+    </section>
+
+    <!-- 7 RUN -->
+    <section class="station" id="s7" data-layers="ops" data-title="Run it">
+      <p class="kicker">Question 7 of 8</p>
+      <h2>How do we keep it <em>working</em> when people change things?</h2>
+      <p class="say">Everything is a file in git. A check runs on every change. If it finds a violation, the change is stopped.</p>
+      <p class="need"><span class="tag tag--req">Required in practice</span> Git, CI, and containers that start the whole stack with one command.</p>
+      <div class="demo">
+        <h3>Concept: the gate</h3>
+        <div class="seg" role="group" aria-label="Choose a change">
+          <button type="button" id="g-ok" aria-pressed="true">Carrier V444_0 (zero)</button>
+          <button type="button" id="g-bad" aria-pressed="false">Typo: V444_O (letter O)</button>
+        </div>
+        <div class="out gate" id="g-out" aria-live="polite"></div>
+      </div>
+      <p class="skipif"><b>You can skip it if</b> you work alone on a throwaway prototype. Never for a shared system.</p>
+      <p class="where">Where it lives: <code>.github/workflows</code> and a Compose file in the repository. Sessions 4, 7 and 8.</p>
+    </section>
+
+  </div>
 </main>
 
-<script>
-(function () {
-  var layers = [
-    { id: "src", name: "Source data", sub: "Databases, CSV files, APIs", tag: ["req", "Required"],
-      what: "The company's real data, where it is made and kept today.",
-      lives: "In the company's own systems. We never edit it for the graph.",
-      course: "Brunel and DataCo CSV files, then a PostgreSQL database in Session 5.",
-      market: "Any database or file system.", sess: "1, 5" },
-    { id: "map", name: "Conversion or mapping", sub: "Rows become triples", tag: ["req", "Required"],
-      what: "Rules that turn rows into RDF triples. A script does it once. A mapping file does it again whenever the data changes.",
-      lives: "A file in git (a script, or an R2RML mapping).",
-      course: "convert_to_rdf.py with rdflib (Session 2); brunel-mapping.ttl with Morph-KGC and Ontop (Session 5).",
-      market: "Ontop, RML tools such as Morph-KGC, commercial integration tools.", sess: "2, 5" },
-    { id: "rdf", name: "RDF data graph", sub: "The facts, as triples", tag: ["req", "Required"],
-      what: "The facts: orders, carriers, plants, as linked triples. Every other layer is also written in RDF.",
-      lives: "In a triple store, or virtual (nothing stored). It can be rebuilt from the source data.",
-      course: "brunel.ttl, loaded into Apache Jena Fuseki.",
-      market: "Ontotext GraphDB, Stardog, Amazon Neptune, OpenLink Virtuoso.", sess: "2" },
-    { id: "rdfs", name: "RDFS vocabulary", sub: "Class names and hierarchy", tag: ["req", "Almost always"],
-      what: "A small vocabulary for classes, subclasses, and what a property links. A late order is an order.",
-      lives: "A .ttl file in git, loaded into the store as a graph.",
-      course: "The schema at the top of brunel.ttl.",
-      market: "The same standard in every RDF tool.", sess: "2" },
-    { id: "owl", name: "OWL ontology", sub: "Meaning, reuse, reasoning", tag: ["opt", "Optional"],
-      what: "A richer account of what things mean. A reasoner uses it to find impossible definitions and to classify facts nobody labelled. It lets you reuse published ontologies.",
-      lives: "A .ttl or .owl file in git. Protégé is only the editor. Released with a version IRI.",
-      course: "scro-extension-reference.ttl, built on SCRO. Protégé, ELK and HermiT.",
-      market: "WebProtégé, TopBraid EDG, PoolParty. Reasoning is built into GraphDB and Stardog.", sess: "3" },
-    { id: "shacl", name: "SHACL shapes", sub: "Data quality rules", tag: ["opt", "Optional, very common"],
-      what: "Rules that the data must obey. A validator reports each broken rule. It does not add facts. It checks RDF data and needs no OWL.",
-      lives: "A .ttl file in git. It runs in CI and before data reaches the store.",
-      course: "brunel-shapes.ttl, run by pySHACL in validate.py and in the GitHub Actions gate.",
-      market: "TopBraid SHACL, validation inside GraphDB and Stardog, pySHACL.", sess: "4" },
-    { id: "ep", name: "SPARQL endpoint", sub: "How programs ask questions", tag: ["req", "Required"],
-      what: "A web address that accepts SPARQL questions and returns answers. Everything above is read through it.",
-      lives: "Served by the triple store, or by a virtualization engine such as Ontop.",
-      course: "Fuseki on port 3030; Ontop in Session 5.",
-      market: "Every triple store provides one.", sess: "2, 5" },
-    { id: "acc", name: "Access layer", sub: "Questions in plain language", tag: ["opt", "Optional"],
-      what: "A service that lets people ask questions in everyday language. A language model writes the SPARQL, and the layer checks it, refuses what the graph cannot answer, and shows its evidence.",
-      lives: "Code and test questions in git. It runs as a service in front of the endpoint.",
-      course: "serve.py with Gemini, VoID, examples and a test set (Session 7).",
-      market: "Features inside graph platforms, or an LLM plus SPARQL as we built.", sess: "7" },
-    { id: "ops", name: "Git, CI and containers", sub: "Keeps everything working", tag: ["req", "Required in practice"],
-      what: "The files live in git. CI runs the checks on every change. Containers start the whole stack with one command.",
-      lives: "A repository, and a CI service.",
-      course: "GitHub Actions and Docker Compose. See kr-team-template.",
-      market: "GitHub Actions, GitLab CI, Jenkins; Kubernetes for larger systems.", sess: "4, 7, 8" }
-  ];
-  var stack = document.getElementById("stack"), cross = document.getElementById("cross"), panel = document.getElementById("panel");
+<!-- 8 YOUR STACK -->
+<section class="build" id="s8">
+  <div class="build__in">
+    <p class="kicker" style="color:#ff9ab0">Question 8 of 8</p>
+    <h2>What does <em style="color:#ff9ab0;font-style:normal">my</em> project need?</h2>
+    <p class="lead">Tick what is true for your project. The list on the right shows which layers you need, which are worth having, and which you can skip.</p>
+    <div class="build__grid">
+      <ul class="needs" id="needs">
+        <li><label><input type="checkbox" data-n="join"><span>Data from several systems must meet in one place.</span></label></li>
+        <li><label><input type="checkbox" data-n="reuse"><span>We want to reuse a published ontology or vocabulary.</span></label></li>
+        <li><label><input type="checkbox" data-n="reason"><span>The software must work out new facts for us (reasoning).</span></label></li>
+        <li><label><input type="checkbox" data-n="quality"><span>Data quality must be checked automatically.</span></label></li>
+        <li><label><input type="checkbox" data-n="live"><span>The data lives in a database that changes.</span></label></li>
+        <li><label><input type="checkbox" data-n="trace"><span>We must show where each fact came from.</span></label></li>
+        <li><label><input type="checkbox" data-n="ask"><span>People must ask questions in plain language.</span></label></li>
+        <li><label><input type="checkbox" data-n="simple"><span>One small team, fast traversals, no shared standards needed.</span></label></li>
+      </ul>
+      <div class="result" aria-live="polite">
+        <h3>Your stack</h3>
+        <ul id="stack"></ul>
+        <p class="note" id="stack-note"></p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  function show(id) {
-    var L = layers.filter(function (l) { return l.id === id; })[0];
-    [].forEach.call(document.querySelectorAll(".layer"), function (b) { b.setAttribute("aria-pressed", b.dataset.id === id ? "true" : "false"); });
-    panel.innerHTML = "<h3></h3><span class='tag'></span><dl></dl>";
-    panel.querySelector("h3").textContent = L.name;
-    var t = panel.querySelector(".tag"); t.textContent = L.tag[1]; t.className = "tag tag--" + L.tag[0];
-    var rows = [["What it is", L.what], ["Where it lives", L.lives], ["In our labs", L.course], ["In industry", L.market], ["Sessions", L.sess]];
-    var dl = panel.querySelector("dl");
-    rows.forEach(function (r) {
-      var dt = document.createElement("dt"); dt.textContent = r[0];
-      var dd = document.createElement("dd"); dd.textContent = r[1];
-      dl.appendChild(dt); dl.appendChild(dd);
-    });
-  }
-  layers.forEach(function (l) {
-    var li = document.createElement("li");
-    var b = document.createElement("button");
-    b.type = "button"; b.className = "layer"; b.dataset.id = l.id; b.setAttribute("aria-pressed", "false");
-    var left = document.createElement("span");
-    var n = document.createElement("span"); n.className = "layer__name"; n.textContent = l.name;
-    var s = document.createElement("span"); s.className = "layer__sub"; s.textContent = l.sub;
-    left.appendChild(n); left.appendChild(s);
-    var tg = document.createElement("span"); tg.className = "tag tag--" + l.tag[0]; tg.textContent = l.tag[1];
-    b.appendChild(left); b.appendChild(tg);
-    b.addEventListener("click", function () { show(l.id); });
-    li.appendChild(b); (l.id === "ops" ? cross : stack).appendChild(li);
-  });
-  show("shacl");
+<nav class="endlinks" aria-label="Where each idea is taught">
+  <p><b>Where this appears in the course</b></p>
+  <ul>
+    <li><a href="../lectures/kr-session-02.html">Session 2: RDF and the choice of graph model</a></li>
+    <li><a href="../lectures/kr-session-03.html">Session 3: OWL and reuse</a></li>
+    <li><a href="../lectures/kr-session-04.html">Session 4: SHACL, provenance, the gate</a></li>
+    <li><a href="../lectures/kr-session-05.html">Session 5: mappings</a></li>
+    <li><a href="../lectures/kr-session-07.html">Session 7: the access layer and deployment</a></li>
+  </ul>
+  <p class="foot">The numbers come from the Brunel supply chain data in the labs. Tool names are examples, not a ranking, and they change: check current versions before you choose. Last checked October 2026.</p>
+</nav>
 
-  var routes = {
-    rdf: { head: "RDF stack", note: "Standards-based and open. You get shared meaning, reuse of published ontologies, reasoning and SHACL, at the cost of learning more pieces.",
-      rows: [["Data model", "Triples (RDF)"], ["Store", "Triple store: Fuseki, GraphDB, Stardog, Neptune"], ["Query language", "SPARQL"], ["Meaning", "RDFS and OWL (optional)"], ["Quality rules", "SHACL"], ["Reasoning", "Yes, with OWL and a reasoner"], ["Reuse of published ontologies", "Yes: SCRO, BFO, schema.org and others"]] },
-    pg: { head: "Property graph (Neo4j)", note: "Simpler to start and fast for traversals. Meaning lives in your own naming and documentation, not in a shared standard. Neo4j has an add-on called neosemantics (n10s) to import RDF, but the model is still a property graph.",
-      rows: [["Data model", "Nodes and relationships, each with properties"], ["Store", "Graph database: Neo4j"], ["Query language", "Cypher"], ["Meaning", "Your own labels and naming rules"], ["Quality rules", "Constraints in the database, and your own checks"], ["Reasoning", "Not built in; write it in queries or code"], ["Reuse of published ontologies", "Not directly"]] }
-  };
-  var body = document.querySelector("#routes tbody"), head = document.getElementById("routeHead"), note = document.getElementById("routeNote");
-  function route(k) {
-    var r = routes[k];
-    head.textContent = r.head; note.textContent = r.note; body.innerHTML = "";
-    r.rows.forEach(function (row) {
-      var tr = document.createElement("tr");
-      var a = document.createElement("td"); a.innerHTML = "<b></b>"; a.firstChild.textContent = row[0];
-      var b = document.createElement("td"); b.textContent = row[1];
-      tr.appendChild(a); tr.appendChild(b); body.appendChild(tr);
-    });
-    document.getElementById("r-rdf").setAttribute("aria-pressed", k === "rdf" ? "true" : "false");
-    document.getElementById("r-pg").setAttribute("aria-pressed", k === "pg" ? "true" : "false");
-  }
-  document.getElementById("r-rdf").addEventListener("click", function () { route("rdf"); });
-  document.getElementById("r-pg").addEventListener("click", function () { route("pg"); });
-  route("rdf");
-})();
-</script>
+<script src="guide.js?v=1"></script>
 </body>
 </html>
