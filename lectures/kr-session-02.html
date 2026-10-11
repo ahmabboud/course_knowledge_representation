@@ -125,10 +125,11 @@
   <h2 class="lu-h2" style="max-width:66ch">Every thing gets a globally unique name, an <b>IRI</b>, built from parts you choose.</h2>
 <div class="lu-walk" data-label="The parts of one real IRI"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 160, "nodes": [{"id": "ns", "label": "https://ul.edu.lb/kr/id/", "x": 260, "y": 80, "w": 420, "h": 70, "kind": "literal"}, {"id": "ty", "label": "order/", "x": 620, "y": 80, "w": 180, "h": 70, "kind": "literal"}, {"id": "src", "label": "brunel/", "x": 860, "y": 80, "w": 190, "h": 70, "kind": "literal"}, {"id": "key", "label": "1447296446.7", "x": 1150, "y": 80, "w": 300, "h": 70, "kind": "literal"}], "edges": [{"id": "a", "from": "ns", "to": "ty", "label": ""}, {"id": "b", "from": "ty", "to": "src", "label": ""}, {"id": "c", "from": "src", "to": "key", "label": ""}], "steps": [{"show": ["ns"], "set": {"ns": "active"}}, {"show": ["ty", "a"], "set": {"ns": "idle", "ty": "active"}}, {"show": ["src", "b"], "set": {"ty": "idle", "src": "active"}}, {"show": ["key", "c"], "set": {"src": "idle", "key": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="Namespace" data-caption="&lt;b&gt;Namespace&lt;/b&gt;: the shared first part. Every thing we mint starts with it."></div><div data-walk-step="2" data-caption-short="What kind" data-caption="The kind of thing: order, plant, port, carrier."></div><div data-walk-step="3" data-caption-short="Which system" data-caption="The system that gave us the key. A second source gets its own space."></div><div data-walk-step="4" data-caption-short="The source key" data-caption="The key exactly as the source wrote it, decimal point included. Never a row number."></div></div></div>
   <div class="lu-split" style="margin-top:var(--lu-s3)">
-    <div class="lu-code lu-code--sm" data-name="a prefix is a nickname for a namespace"><pre><code>@prefix ul:    &lt;https://ul.edu.lb/kr/scm#&gt; .
-@prefix order: &lt;https://ul.edu.lb/kr/id/order/brunel/&gt; .
+    <div class="lu-code lu-code--sm" data-name="a prefix is a nickname for a namespace"><pre><code>@prefix ul: &lt;https://ul.edu.lb/kr/scm#&gt; .
+@prefix order:
+  &lt;https://ul.edu.lb/kr/id/order/brunel/&gt; .
 
-order:1447296446.7  ul:fromPlant  plant:PLANT16 .</code></pre></div>
+order:1447296446.7 ul:fromPlant plant:PLANT16 .</code></pre></div>
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub"><b>IRI</b>: Internationalised Resource Identifier: a globally unique name, written like a web address.</p><p class="lu-sub"><b>Namespace</b>: the shared first part of a group of IRIs.</p><p class="lu-sub"><b>Prefix</b>: a short nickname for a namespace, such as <code>ul:</code>.</p></div>
   </div>
   <template data-notes><p>Four minutes. Two namespaces on purpose: <code>ul:</code> (ending in #) for the words, classes and properties; <code>https://ul.edu.lb/kr/id/</code> (ending in /) for the things. Part 2 argues why.</p></template>
@@ -214,8 +215,8 @@ order:1447296446.7  ul:fromPlant  plant:PLANT16 .</code></pre></div>
   ul:serviceLevel &quot;CRF&quot; .</code></pre></div><p class="lu-caption">Authoring and reading.</p></div>
     <div class="lu-col-4"><div class="lu-code lu-code--sm" data-name="N-Triples · for bulk"><pre><code>&lt;.../order/brunel/1447296446.7&gt;
   &lt;...scm#weight&gt;
-  &quot;14.3&quot;^^&lt;...XMLSchema#decimal&gt; .</code></pre></div><p class="lu-caption">One triple per line: split, stream, load.</p></div>
-    <div class="lu-col-4"><div class="lu-code lu-code--sm" data-name="JSON-LD · for web APIs"><pre><code>{ &quot;@id&quot;: &quot;.../order/brunel/1447296446.7&quot;,
+  &quot;14.3&quot;^^&lt;...#decimal&gt; .</code></pre></div><p class="lu-caption">One triple per line: split, stream, load.</p></div>
+    <div class="lu-col-4"><div class="lu-code lu-code--sm" data-name="JSON-LD · for web APIs"><pre><code>{ &quot;@id&quot;: &quot;.../1447296446.7&quot;,
   &quot;@type&quot;: &quot;ul:Order&quot;,
   &quot;ul:serviceLevel&quot;: &quot;CRF&quot; }</code></pre></div><p class="lu-caption">JSON that is also RDF.</p></div>
   </div>
@@ -382,7 +383,6 @@ SELECT (COUNT(*) AS ?n) WHERE {
       <div class="lu-callout" data-build="1"><span class="lu-callout__label">Without OPTIONAL</span><p class="lu-sub">V44_3 would vanish from the result, and the finding with it. OPTIONAL is how a missing link stays visible.</p></div>
     </div>
   </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>OPTIONAL</b> SPARQL keyword: keep the result even when this part of the pattern has no match, leaving the variable empty.</span> <span data-auto="1"><b>FILTER</b> SPARQL keyword: keep only the results where a condition is true, for example a date after 2024.</span> <span data-auto="1"><b>Fuseki</b> The Apache Jena triple store and SPARQL endpoint used in the lab.</span></p>
   <template data-notes><p>Three minutes. This is Session 1's referential integrity finding, now one query. Remember open world: 0 bands in our graph means "none stated", not "none exist".</p></template>
 </section>
 
@@ -402,6 +402,7 @@ GROUP BY ?carrier ORDER BY DESC(?orders)</code></pre></div>
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub"><b>Aggregation</b>: combining many matches into one number (a count, a sum, an average), grouped by something.</p></div>
     </div>
   </div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Fuseki</b> The Apache Jena triple store and SPARQL endpoint used in the lab.</span></p>
   <template data-notes><p>Three minutes. 183 plus 9 is 192, the late orders from the RDFS slide. Numbers that agree across slides are how you start to trust the graph.</p></template>
 </section>
 
@@ -410,7 +411,6 @@ GROUP BY ?carrier ORDER BY DESC(?orders)</code></pre></div>
   <div class="lu-eyebrow">Four kinds of answer</div>
   <h2 class="lu-h2" style="max-width:66ch">The same pattern language, four shapes of result.</h2>
 <table class="lu-table"><thead><tr><th>Form</th><th>Returns</th><th>Our real example</th></tr></thead><tbody><tr><td><b>SELECT</b></td><td>A table</td><td>Q2: three carriers with their order counts</td></tr><tr><td><b>ASK</b></td><td>true or false</td><td>Q4: is any order leaving through a port its plant does not serve? <b>false</b></td></tr><tr><td><b>CONSTRUCT</b></td><td>A new graph</td><td>Q7: carrier serves plant, <b>12</b> new triples built from 9,215 orders</td></tr><tr><td><b>DESCRIBE</b></td><td>Everything about a thing</td><td>Order 1447296446.7: <b>13</b> triples</td></tr></tbody><caption>All four run on Fuseki against the lab graph.</caption></table><div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Federation, in one line</span><p class="lu-sub">A query can also reach another endpoint with <code>SERVICE &lt;url&gt; { ... }</code>. We do not run it in the lab; know that it exists.</p></div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>SELECT</b> The SPARQL (and SQL) query form that returns a table of values for the variables you name.</span> <span data-auto="1"><b>CONSTRUCT</b> The SPARQL query form that returns new triples instead of a table.</span> <span data-auto="1"><b>ASK</b> The SPARQL query form that answers only yes or no.</span> <span data-auto="1"><b>DESCRIBE</b> The SPARQL query form that returns the triples a store holds about a resource.</span></p>
   <template data-notes><p>Three minutes. CONSTRUCT is the one to stress: a query whose answer is more graph. It is how Session 5 builds graphs from other graphs.</p></template>
 </section>
 
@@ -456,6 +456,7 @@ JOIN sub ON o.type = sub.cls;</code></pre></div>
     <table class="lu-table lu-table--mono"><thead><tr><th>Question</th><th>Fuseki</th><th>Oxigraph</th></tr></thead><tbody><tr><td>Q2 aggregation</td><td>47 ms</td><td>20 ms</td></tr><tr><td>Q4 ASK with path</td><td>84 ms</td><td>23 ms</td></tr><tr><td>Q5 subclass path</td><td>32 ms</td><td>14 ms</td></tr><tr><td>Q6 band gap</td><td>2,931 ms</td><td>2,313 ms</td></tr></tbody><caption>Fuseki timings include the web request.</caption></table>
   </div>
   <p class="lu-sub" data-build="1"><b>Why:</b> <code>NOT EXISTS</code> reran the band search for each of 8,361 orders. The rewrite joins once, then counts. Same answer, 75 times faster.</p>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>ASK</b> The SPARQL query form that answers only yes or no.</span></p>
   <template data-notes><p>Three minutes. You see these timings yourself in the lab. Oxigraph runs inside Python, so it has no network cost; Fuseki answers over HTTP.</p></template>
 </section>
 
