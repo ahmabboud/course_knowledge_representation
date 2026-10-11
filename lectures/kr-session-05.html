@@ -95,7 +95,7 @@
       </ul>
     </div>
   </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>R2RML</b> The W3C language for mappings from relational databases to RDF.</span> <span data-auto="1"><b>Materialization</b> Converting the data to triples once and storing them in a triple store.</span> <span data-auto="1"><b>Ontop</b> The open source engine that answers SPARQL over a database (OBDA). We use it in the lab.</span> <span data-auto="1"><b>Entity resolution</b> Deciding which records in different sources describe the same real thing.</span></p>
+  <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>R2RML</b> The W3C language for mappings from relational databases to RDF.</span> <span data-auto="1"><b>Materialization</b> Run the mapping once, convert all the data to triples, and store them in a triple store. Queries read the stored triples, and do not see later changes until you run it again.</span> <span data-auto="1"><b>Ontop</b> The open source engine that answers SPARQL over a database (OBDA). We use it in the lab.</span> <span data-auto="1"><b>Entity resolution</b> Deciding which records in different sources describe the same real thing, for example the same customer written with two different codes.</span></p>
   <template data-notes><p>I name the payoff: one small file of rules rebuilds all 135,799 triples of the Brunel graph, identical to Session 2's except for the 7 carriers it now types correctly.</p></template>
 </section>
 
