@@ -1,19 +1,48 @@
 # Read first: what this lab is doing
 
-This lab asks a simple project question:
+In this lab we look at two real datasets and write down the rules that the
+data follows. These rules are the starting point for everything in Sessions 3,
+4 and 5.
 
-> Before we model or validate data, what do the real datasets contain, and
-> which rules can we support with evidence?
+> **The lab in one sentence:** we check our tools, download the real Brunel and
+> DataCo data, count what is in it, and write down the rules we find. Each rule
+> has a count that proves it and a note about where the count came from.
 
-## The short story
+This lab is for understanding. Nothing is handed in or graded.
 
-You first verify the tools used later in the course. You then profile two real
-supply chain datasets and turn observations into a constraint inventory. That
-inventory is the evidence base for the ontology, SHACL shapes, and mappings in
-later sessions.
+## The lab in five steps
+
+Read this top to bottom. It is the whole lab.
 
 ```text
-real datasets -> profiling and clustering -> evidence -> constraint inventory
+1. SET UP
+   python smoke_test.py       Python, Java, Docker and Protege are installed
+   python data/fetch_data.py  the real data files are on your computer
+                         |
+                         v
+2. PROFILE THE DATA
+   python profiling.py
+   A report for each dataset: how many rows, which columns are empty,
+   which values are missing, what the numbers look like
+                         |
+                         v
+3. CHECK SIX RULES
+   python rule_checks.py
+   Each rule gets a count. Examples:
+     every order leaves through a port linked to its plant -> 0 of 9,215 break it
+     every order has a freight rate                         -> 854 do not
+                         |
+                         v
+4. CLUSTER NEAR-DUPLICATES
+   OpenRefine on DataCo's Order City
+   3 clusters. "Los Angeles" (USA) and "Los Ángeles" (Chile) look almost
+   the same, but they are different cities: do not merge them
+                         |
+                         v
+5. WRITE THE RULES DOWN
+   constraint_inventory_template.csv
+   One row per rule: the rule, the count (evidence), where it came from
+   This file is the input to Sessions 3, 4 and 5
 ```
 
 ## The tools in this lab

@@ -5,9 +5,57 @@ Do not begin with a command. First understand the question this lab asks:
 > How can several operational tables become one graph that we can query for
 > relationships, missing information, and business rules?
 
-This is an individual practice lab. Nothing is submitted or graded. You are
-not learning a command sequence; you are following one data pipeline from its
-source tables to questions over a graph.
+This is an individual practice lab. Nothing is submitted or graded.
+
+> **The lab in one sentence:** we turn four Brunel tables into one graph of
+> 135,841 facts, load it into a graph database, and ask it seven questions
+> that follow links across the old tables. Then we ask the same questions in a
+> second kind of graph database, Neo4j, and compare.
+
+## The lab in five steps
+
+Read this top to bottom. It is the whole lab.
+
+```text
+1. START WITH FOUR TABLES, LINKED BY CODES
+
+   +--------------+   plant code    +---------------------+
+   | OrderList    |---------------->| PlantPorts          |
+   | one order    |                 | plant -> its ports  |
+   | per row      |---------------->| ProductsPerPlant    |
+   +--------------+   product code  | plant -> its goods  |
+          |                         +---------------------+
+          | carrier + ports + service level
+          v
+   +----------------------+
+   | FreightRates         |  price bands for a carrier and a route
+   +----------------------+
+                         |
+                         |  python convert_to_rdf.py
+                         v
+2. CONVERT TO A GRAPH
+   brunel.ttl: 135,841 facts. Each row becomes linked facts.
+   The same carrier code gives the same node everywhere,
+   so facts from different tables meet.
+                         |
+                         |  python load_fuseki.py
+                         v
+3. LOAD INTO FUSEKI
+   A graph database on your own computer.
+                         |
+                         |  python run_queries.py
+                         v
+4. ASK SEVEN QUESTIONS (SPARQL)
+   Orders and late orders per carrier. Does any order leave through a
+   port its plant does not serve? How many orders have a weight that
+   fits no rate band? (1,370)
+                         |
+                         |  python neo4j_comparison.py
+                         v
+5. ASK THE SAME IN NEO4J, AND COMPARE
+   RDF keeps the order hierarchy as data.
+   Neo4j needs it written into the query.
+```
 
 ## The short story
 
@@ -104,7 +152,7 @@ one.
 | 3 | `load_fuseki.py` | Replaces the contents of Fuseki's `/kr` dataset with `brunel.ttl`. | A Turtle file can be loaded into an RDF database and queried over HTTP. |
 | 4 | `run_queries.py` | Runs seven SPARQL questions and records their results. | SPARQL can follow links, count groups, test absence, traverse a class hierarchy, and construct new facts. |
 | 5 | `neo4j_comparison.py` | Loads a smaller comparison graph into Neo4j and runs related Cypher questions. | RDF/RDFS keeps the order hierarchy as data; this Neo4j example writes that hierarchy into the query. |
-| B | `my_queries.sparql` and `check_my_queries.py` | You study one complete query, then write two similar queries with step-by-step hints; the checker compares their answers with the reference answers. | A query is correct because it returns the right result, not because it copies a particular solution. |
+| B | `check_my_queries.py` | Optional. You study one complete query. Then run the checker on the worked solutions, or write two similar queries yourself; the checker compares the answers with the reference answers. | A query is correct because it returns the right result, not because it copies a particular solution. |
 | C | `common/iri.py` | You inspect the naming rule and design one for your project. | A stable identifier needs a kind, source system, and source key. |
 
 ## The files and their roles
@@ -119,7 +167,7 @@ one.
 | `load_fuseki.py` | Uploads `brunel.ttl` to the local Fuseki `/kr` dataset and counts the loaded triples. | Run it in step 3. |
 | `queries.sparql` | The seven course SPARQL examples. | Read and run; use them as models. |
 | `run_queries.py` | Sends the course queries to Fuseki, or runs them with the Docker-free Oxigraph fallback. | Run it in step 4. |
-| `my_queries.sparql` | One worked query and two guided questions for you to write. | Yes, this is your work area. |
+| `my_queries.sparql` | One worked query and two guided questions. | Only if you want to practise. |
 | `check_my_queries.py` | Confirms the worked query, then checks your two answers and gives hints. | Run it; do not change its expected answers. |
 | `neo4j_comparison.py` | A deliberately smaller property-graph comparison. | Run it in step 5 if Docker is available. |
 | `reference-outputs/` | Recorded results from a real course run. | Use it to check a surprising result; do not treat it as data to edit. |

@@ -110,7 +110,7 @@ another row. So a band gets no IRI; it becomes a blank node, one per row.
 | 5 | `../session-04-shacl/validate.py` | Runs Session 4's shapes on the mapped graph. | The Session 4 triage fix works: 0 band carrier warnings instead of 1,209. The vocabulary must come with the data. |
 | 6 | `ontop/run_ontop.py` | Ontop answers Session 2's Q2 from the database. | Virtualizing: answers straight from the tables, and the SQL Ontop wrote. |
 | 7 | `er/match_customers.py` | Matches TMS customers to Brunel's, at two thresholds. | Every matcher makes mistakes; precision and recall say which kind. |
-| B | `my_mapping.ttl`, `check_my_mapping.py` | You add three rules, each a copy of one already there with one thing changed. | Subject maps, links and datatypes are three small patterns. |
+| B | `check_my_mapping.py` | Optional. Run the checker on the worked solutions, or add three rules yourself, each a copy of one already there with one thing changed. | Subject maps, links and datatypes are three small patterns. |
 | C | questions | Materialize or virtualize, for your own project? | The choice depends on freshness, speed and checking. |
 
 ## The files and their roles
@@ -128,7 +128,7 @@ another row. So a band gets no IRI; it becomes a blank node, one per row.
 | `ontop/run_ontop.py`, `ontop/brunel.properties`, `ontop/q2-orders-per-carrier.sparql` | Ask Ontop one question and show its SQL. | You may write your own question file. |
 | `er/make_teaching_set.py`, `er/tms-customers.csv`, `er/truth.csv` | The entity resolution teaching data, and how it was made. | No. |
 | `er/match_customers.py` | The matcher, with its weights written out. | Read it; try another `--threshold`. |
-| `my_mapping.ttl` | Your work area for Part B. | Yes. |
+| `my_mapping.ttl` | The file for Part B. | Only if you want to practise. |
 | `check_my_mapping.py` | Checks your three rules. | No. |
 | `solutions/`, `reference-outputs/` | Answers, and a real run of every step. | Read them; do not edit. |
 

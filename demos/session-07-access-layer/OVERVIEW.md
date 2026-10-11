@@ -70,7 +70,7 @@ nothing (Session 6's leak, in a new place).
 | 4 | `check.py` | Checks a broken query. | The check turns a wrong guess into a hint the model can use. |
 | 5 | `evaluate.py` | Scores 15 questions in three settings: schema only, plus examples, plus repair. | Each part's value is a measured number, not a belief. |
 | 6 | `serve.py` | Serves the TEXT2SPARQL contract: one GET address. | A benchmark harness, or Session 8's stack, can call your access layer. |
-| B | `my_examples.ttl`, `my_access.py`, `my_questions.yaml` | You add an example, a class check and a test question. | Each improvement is small, and each is measured. |
+| B | `check_my_access.py` | Optional. Run the checker on the solutions, or add an example, a class check and a test question yourself. | Each improvement is small, and each is measured. |
 | C | questions | What would your own graph need? | How to build this for your project. |
 
 ## The files and their roles
@@ -81,7 +81,7 @@ nothing (Session 6's leak, in a new place).
 | `make_void.py`, `show_prompt.py`, `ask.py`, `check.py`, `evaluate.py`, `serve.py` | One script per step. | No; run them. |
 | `score_utils.py` | TEXT2SPARQL's set precision, recall and F1. | No; read it. |
 | `examples.ttl`, `questions.yaml`, `broken.sparql` | The examples, the test set, a broken query. | No. |
-| `my_examples.ttl`, `my_access.py`, `my_questions.yaml` | Your part B work. | Yes. |
+| `my_examples.ttl`, `my_access.py`, `my_questions.yaml` | Your part B work, if you try it. | Only if you want to practise. |
 | `check_my_access.py` | Checks part B. No model call. | No. |
 | `record_llm.py` | The instructor's recording run. | No. |
 | `deploy/` | A container and a Compose service for Session 8. | Copy it into your team's stack. |

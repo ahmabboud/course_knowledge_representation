@@ -212,7 +212,7 @@ shipments; it does not let the reasoner recognise new ones.
 | 4 | v0 with HermiT | Runs a more expressive OWL DL reasoner. | HermiT finds a second impossible class because it understands the `exactly 1` restriction that lies outside ELK's EL profile. |
 | 5 | `scro-extension-reference.ttl` with HermiT | Opens the corrected ontology. | The two course properties say what we actually mean, and no course class is impossible. |
 | 6 | `sample-shipments.ttl` with ELK | Classifies the three teaching shipments. | A domain assertion and an `EquivalentTo` definition can add types that were never written explicitly. |
-| B | `my_axioms.ttl` and `check_my_axioms.py` | You write three small axioms; HermiT checks their meaning. | OWL axioms express constraints and definitions, not just labels. |
+| B | `check_my_axioms.py` | Optional. Run the checker on the worked solutions, or write three small axioms yourself; HermiT checks their meaning. | OWL axioms express constraints and definitions, not just labels. |
 | C | `competency_questions.md` | You assess whether a class earns its place by answering a question. | The ontology should be driven by questions your project needs to answer. |
 
 ## Why there are two reasoners
@@ -238,8 +238,8 @@ speed and the OWL language features a reasoner supports.
 | `scro-extension-reference.ttl` | The corrected reference ontology. | Open it after you have examined v0's explanations. |
 | `sample-shipments.ttl` | Three teaching individuals built on real Brunel identifiers. | Open it after the reference ontology to see classification. |
 | `local_reasoner.py` | Terminal fallback that merges local imports and runs HermiT. | Use if Protégé is unavailable. |
-| `my_axioms.ttl` | Three small axiom exercises. | This is your Part B work area. |
-| `check_my_axioms.py` | Uses HermiT to check the meaning of your Part B axioms. | Run it after each attempt. |
+| `my_axioms.ttl` | Three small axiom exercises. | Only if you want to practise. |
+| `check_my_axioms.py` | Uses HermiT to check the meaning of Part B axioms, yours or the worked solutions. | Run it. |
 | `competency_questions.md` | The questions each reference class is intended to answer. | Use it to understand why the ontology has each class. |
 | `reference-outputs/` | Recorded explanations and results from real course runs. | Use it to verify a result, not as a file to edit. |
 

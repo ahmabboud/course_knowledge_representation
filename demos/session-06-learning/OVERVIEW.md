@@ -100,7 +100,7 @@ purpose, so its near-perfect score makes the leak visible.
 | 2 | `baseline.py` | Logistic regression: with the label left in, with a random split, with a split by customer. | A perfect score means a leak; a random split rewards memory; a split by customer tests what was learned. |
 | 3 | `gnn.py` | GraphSAGE through `to_hetero`, on the same splits. | Message passing uses the neighbours; here it only helps to remember customers. |
 | 4 | `link_prediction.py` | TransE ranks plants for hidden "makes" links, against popularity. | A simple count can beat an embedding; some links cannot be predicted at all. |
-| B | `my_learning.py`, `check_my_learning.py` | You write three functions, each a copy of one in `learning_utils.py` with one change. | Splits and ranking scores are a few lines each. |
+| B | `check_my_learning.py` | Optional. Run the checker on the worked solutions, or write three functions yourself, each a copy of one in `learning_utils.py` with one change. | Splits and ranking scores are a few lines each. |
 | C | questions | What would a split by time need, for your own data? | How to design an honest test for your project. |
 
 ## The files and their roles
@@ -113,7 +113,7 @@ purpose, so its near-perfect score makes the leak visible.
 | `gnn.py` | The graph neural network. | No; read it and run it. |
 | `link_prediction.py` | TransE against popularity. | No; run it. |
 | `data/brunel-graph.pt` | The converted graph. Generated. | No; regenerate it. |
-| `my_learning.py` | Your work area for Part B. | Yes. |
+| `my_learning.py` | The file for Part B. | Only if you want to practise. |
 | `check_my_learning.py` | Checks your three functions. | No. |
 | `solutions/`, `reference-outputs/` | Answers, and a real run of every step. | Read them; do not edit. |
 
