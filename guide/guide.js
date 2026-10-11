@@ -104,7 +104,7 @@
       p.innerHTML = "<span class='unk'>No error.</span> Order 1447291369.7 has no carrier, so the reasoner treats it as <b>unknown</b>. A carrier probably exists somewhere. Missing is not false.";
       twrap.hidden = true;
     } else {
-      p.innerHTML = "<span class='bad'>Violation.</span> MinCount on <code>ul:carriedBy</code>, for order 1447291369.7. The rule needs at least one carrier, and there are zero. The validator checks only the data it is given.";
+      p.innerHTML = "<span class='bad'>Violation.</span> MinCount (too few values) on <code>ul:carriedBy</code>, for order 1447291369.7. The rule needs at least one carrier, and there are zero. The validator checks only the data it is given.";
       twrap.hidden = false;
     }
     tout.appendChild(p);
@@ -115,10 +115,10 @@
   var steps = [
     "<b>Fact:</b> order 1447336276.7 weighs 0 kg",
     "<b>Graph:</b> OrderList (119,844 triples)",
-    "<b>File:</b> OrderList.csv, with its checksum",
+    "<b>File:</b> OrderList.csv, with its checksum (a short code that identifies the exact file)",
     "<b>Run:</b> the Session 2 conversion, 2026-09-25 01:31 UTC",
     "<b>Program:</b> convert_to_rdf.py",
-    "<b>Rules:</b> checked with shapes against ontology release 1.0.0"
+    "<b>Rules:</b> checked with shapes against version 1.0.0 of the ontology"
   ];
   var tn = 0, trail = $("#trail"), tbtn = $("#trace");
   tbtn.addEventListener("click", function () {

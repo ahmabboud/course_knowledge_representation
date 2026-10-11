@@ -141,3 +141,4 @@ table.mini th { font-size: 12.5px; text-transform: uppercase; letter-spacing: .0
 .io div { background: #fff; border: 2px solid var(--g-line); border-radius: 10px; padding: 10px 12px; font-size: 15.5px; }
 .io b { display: block; font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: var(--g-ink3); margin-bottom: 4px; }
 @media (max-width: 640px) { .io { grid-template-columns: 1fr; } }
+.tools { font-size: 15px; color: var(--g-ink3); margin: 8px 0 0; } .tools b { color: var(--g-ink2); }

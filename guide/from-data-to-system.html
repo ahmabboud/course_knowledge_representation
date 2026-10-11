@@ -66,26 +66,29 @@
         </div>
       </div>
       <p class="skipif"><b>You can skip it if</b> one clean table answers all your questions. Then a database is enough.</p>
-      <p class="where">Where it lives: a triple store (we use Fuseki). Session 2.</p>
+      <p class="where">Where it lives: a triple store, a database for RDF facts. Session 2.</p>
+      <p class="tools"><b>Tools.</b> In our labs: Apache Jena Fuseki. In industry (examples): Ontotext GraphDB, Stardog, Amazon Neptune, OpenLink Virtuoso.</p>
+      <p class="foot"><b>Another route.</b> A property graph database such as Neo4j stores nodes with properties and uses its own query language, Cypher. You choose one route per project. The last question helps you decide.</p>
     </section>
 
     <!-- 2 MEANING -->
     <section class="station" id="s2" data-layers="vocab" data-title="Meaning">
       <p class="kicker">Question 2 of 8</p>
       <h2>What do our words <em>mean</em>? Is a late order an order?</h2>
-      <p class="say">In the data, 192 orders are typed &ldquo;late order&rdquo; and the rest &ldquo;order&rdquo;. Ask how many orders there are, and the answer depends on whether the system knows a late order is an order.</p>
-      <p class="need"><span class="tag tag--req">Required, light</span> Class names and a hierarchy (RDFS). <span class="tag tag--opt">Optional</span> Richer meaning and reasoning (OWL).</p>
+      <p class="say">In the data, 192 orders are marked as class &ldquo;late order&rdquo; and the rest as class &ldquo;order&rdquo;. Ask how many orders there are, and the answer depends on whether the system knows a late order is an order. RDFS can say it in one line.</p>
+      <p class="need"><span class="tag tag--req">Required, light</span> Class names and a hierarchy: RDFS (RDF Schema). <span class="tag tag--opt">Optional</span> Richer meaning and reasoning: OWL (Web Ontology Language).</p>
       <div class="demo">
         <h3>Concept: a vocabulary says what the words mean</h3>
         <div class="seg" role="group" aria-label="Choose a setting">
           <button type="button" id="m-none" aria-pressed="true">No vocabulary</button>
           <button type="button" id="m-voc" aria-pressed="false">With a vocabulary</button>
         </div>
-        <div class="out" aria-live="polite"><div class="big" id="m-num">9,023</div><p id="m-txt" class="foot">&ldquo;How many orders?&rdquo; counts only things typed <code>Order</code>. The 192 late orders are missed.</p></div>
+        <div class="out" aria-live="polite"><div class="big" id="m-num">9,023</div><p id="m-txt" class="foot">&ldquo;How many orders?&rdquo; counts only things marked <code>Order</code>. The 192 late orders are missed.</p></div>
         <pre class="out" style="margin-top:10px;background:#14181d;color:#e8e4de"><code id="m-code">ul:LateOrder  a rdfs:Class .   # a separate type</code></pre>
       </div>
       <p class="skipif"><b>You can skip OWL if</b> you only need class names. Many production systems use RDFS and SHACL, and little or no OWL reasoning.</p>
       <p class="where">Where it lives: a <code>.ttl</code> file in git, loaded into the store. Protégé is only the editor. Session 3.</p>
+      <p class="tools"><b>Tools.</b> In our labs: Protégé (editor), ELK and HermiT (reasoners). In industry (examples): WebProtégé, TopBraid, PoolParty; reasoning is built into GraphDB and Stardog.</p>
     </section>
 
     <!-- 3 QUALITY -->
@@ -110,6 +113,7 @@
       </div>
       <p class="skipif"><b>You can skip it if</b> the data never changes and someone checks it by hand. For a live system, keep it.</p>
       <p class="where">Where it lives: a <code>.ttl</code> file in git, run by pySHACL in CI and before data is loaded. Session 4.</p>
+      <p class="tools"><b>Tools.</b> In our labs: pySHACL, shacl-play. In industry (examples): TopBraid SHACL; validation built into GraphDB and Stardog.</p>
     </section>
 
     <!-- 4 HISTORY -->
@@ -125,6 +129,7 @@
       </div>
       <p class="skipif"><b>You can skip it if</b> you can always rebuild everything from one source in seconds, and nobody audits the result.</p>
       <p class="where">Where it lives: written when the graph is built, stored as its own graph; the ontology release is a version number in its file. Session 4.</p>
+      <p class="tools"><b>Tools.</b> In our labs: PROV-O triples written by a script, and a version IRI in the ontology file. In industry (examples): the same W3C standard, PROV-O.</p>
     </section>
 
     <!-- 5 LIVE DATA -->
@@ -132,7 +137,7 @@
       <p class="kicker">Question 5 of 8</p>
       <h2>The data lives in a database that <em>changes every day</em>.</h2>
       <p class="say">A script that converted four files once is not enough. A mapping describes how rows become facts, so any tool can rebuild the graph when the data changes.</p>
-      <p class="need"><span class="tag tag--req">Required if your data is in a database</span> A mapping (R2RML), and a choice: store the graph, or ask the database live.</p>
+      <p class="need"><span class="tag tag--req">Required if your data is in a database</span> A mapping, written in R2RML (the W3C mapping language), and a choice: store the graph, or ask the database live.</p>
       <div class="demo">
         <h3>Concept: materialize or virtualize</h3>
         <button type="button" class="btn btn--solid" id="newrow">A new late order arrives in the database</button>
@@ -143,14 +148,15 @@
         <p class="foot">Illustration: one extra order is added so you can see the difference.</p>
       </div>
       <p class="skipif"><b>You can skip it if</b> your data is a few files that rarely change. A conversion script is fine.</p>
-      <p class="where">Where it lives: the mapping is a file in git. Morph-KGC materializes; Ontop virtualizes. Session 5.</p>
+      <p class="where">Where it lives: the mapping is a file in git. Session 5.</p>
+      <p class="tools"><b>Tools.</b> In our labs: Morph-KGC (materializes), Ontop (virtualizes). In industry (examples): Ontop, other RML tools, commercial integration tools.</p>
     </section>
 
     <!-- 6 ASK -->
     <section class="station" id="s6" data-layers="ask" data-title="Ask">
       <p class="kicker">Question 6 of 8</p>
       <h2>Can people ask in <em>plain language</em>?</h2>
-      <p class="say">Managers do not write SPARQL. A language model writes the query, the system checks it against the graph's description, and it refuses what the graph cannot answer.</p>
+      <p class="say">Managers do not write SPARQL, the query language for graphs. A language model (an AI that writes text and code) writes the query, the system checks it against the graph's description, and it refuses what the graph cannot answer.</p>
       <p class="need"><span class="tag tag--opt">Optional</span> An access layer: schema, examples, a check, a refusal path.</p>
       <div class="demo">
         <h3>Concept: the access layer</h3>
@@ -163,13 +169,14 @@
       </div>
       <p class="skipif"><b>You can skip it if</b> your users are analysts who write queries themselves.</p>
       <p class="where">Where it lives: code and a test set in git, run as a service in front of the SPARQL endpoint. Session 7.</p>
+      <p class="tools"><b>Tools.</b> In our labs: our access layer with Gemini. In industry (examples): features in graph platforms, or a language model plus SPARQL as we built.</p>
     </section>
 
     <!-- 7 RUN -->
     <section class="station" id="s7" data-layers="ops" data-title="Run it">
       <p class="kicker">Question 7 of 8</p>
       <h2>How do we keep it <em>working</em> when people change things?</h2>
-      <p class="say">Everything is a file in git. A check runs on every change. If it finds a violation, the change is stopped.</p>
+      <p class="say">Everything is a file in git, which keeps every version of every file. CI (continuous integration) runs a check automatically on every change. If the check finds a violation, the change is stopped.</p>
       <p class="need"><span class="tag tag--req">Required in practice</span> Git, CI, and containers that start the whole stack with one command.</p>
       <div class="demo">
         <h3>Concept: the gate</h3>
@@ -181,6 +188,7 @@
       </div>
       <p class="skipif"><b>You can skip it if</b> you work alone on a throwaway prototype. Never for a shared system.</p>
       <p class="where">Where it lives: <code>.github/workflows</code> and a Compose file in the repository. Sessions 4, 7 and 8.</p>
+      <p class="tools"><b>Tools.</b> In our labs: GitHub Actions, Docker Compose. In industry (examples): GitHub Actions, GitLab CI, Jenkins; Kubernetes for larger systems.</p>
     </section>
 
   </div>
