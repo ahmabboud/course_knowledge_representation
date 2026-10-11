@@ -18,7 +18,7 @@
   data-deck-id="kr-s05"
   data-course="Knowledge Representation"
   data-session="Session 5 of 8"
-  data-duration="183"
+  data-duration="187"
   data-app-root="../"
   data-unit="Lebanese University · MSc">
 
@@ -43,7 +43,7 @@
     <div class="lu-stack">
       <div class="lu-eyebrow">Knowledge Representation · Session 5 of 8</div>
       <h1 class="lu-display" style="max-width:24ch">Integrating Operational Data</h1>
-      <p class="lu-lead" style="max-width:48ch">The Brunel data moves into a live database. A mapping, not a script, turns it into the same graph as Session 2, two ways. Then two systems disagree on how to write a customer, and we measure how well a matcher sorts it out.</p>
+      <p class="lu-lead" style="max-width:48ch">The Brunel data moves into a live database. A mapping, not a script, turns the database into the same graph as Session 2. We do it in two ways. Then two systems write the same customer differently, and we measure how well a matcher finds the records that are the same.</p>
     </div>
     <div class="lu-row" style="justify-content:space-between;font-size:var(--lu-t-caption);color:var(--lu-on-night-2)">
       <span>About 185 minutes · lecture, lab in Python, wrap</span>
@@ -71,8 +71,8 @@
     <li data-state="muted"><span class="lu-pipeline__n">08</span><span class="lu-pipeline__t">Access</span><span class="lu-pipeline__d">Questions</span></li>
   </ul>
   <div class="lu-split" style="margin-top:var(--lu-s5)">
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">What you have</span><p class="lu-sub">Session 2's converter, a Python script that read four Brunel CSV files once. Session 4's shapes, and its note: 1,209 rate bands point at carriers nobody typed. Fix it in the mapping.</p></div>
-    <div class="lu-callout"><span class="lu-callout__label">What is missing</span><p class="lu-sub">A way to rebuild the graph from a <b>live</b> database, whenever it changes, without writing the converter again.</p></div>
+    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">What you have</span><p class="lu-sub">Session 2's converter, a Python script that read four CSV files. Session 4's shapes, and one open problem: 1,209 rate bands point to carriers with no type.</p></div>
+    <div class="lu-callout"><span class="lu-callout__label">What is missing</span><p class="lu-sub">A way to rebuild the graph from a <b>live</b> database every time the data changes, and to fix that open problem, without a new converter.</p></div>
   </div>
   <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>GNN</b> Graph neural network: a model that learns about a node from the nodes next to it, by passing messages along the edges.</span></p>
   <template data-notes><p>Three minutes. Stage 06 is where the graph stops being a one-time export.</p></template>
@@ -83,28 +83,28 @@
   <div class="lu-eyebrow">Objective</div>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
-      <p class="lu-statement">By the end you can read and extend a mapping from a database to the graph, choose between materializing and virtualizing, and say how often a record matcher is wrong.</p>
+      <p class="lu-statement">By the end you can read and extend a mapping from a database to the graph, choose between materializing and virtualizing, and say how often a record matcher makes a mistake.</p>
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Open these now</span><p class="lu-sub"><code>demos/session-05-integration/</code>, starting with its <code>OVERVIEW.md</code> · Docker Desktop · a terminal with <code>demos/.venv</code> active.</p></div>
     </div>
     <div class="lu-card">
       <span class="lu-card__label">How the ~185 minutes are spent</span>
       <ul class="lu-layers">
-        <li><span class="lu-layers__name">Lecture · ~115 min</span><span class="lu-layers__note">The problem, R2RML, materialize, virtualize, entity resolution</span></li>
-        <li><span class="lu-layers__name">Lab · ~55 min</span><span class="lu-layers__note">Load, map, compare, validate, ask Ontop, match customers, extend a mapping</span></li>
+        <li><span class="lu-layers__name">Lecture · ~115 min</span><span class="lu-layers__note">The problem. R2RML. Materialize. Virtualize. Entity resolution.</span></li>
+        <li><span class="lu-layers__name">Lab · ~55 min</span><span class="lu-layers__note">Load, map, compare, validate, query with Ontop, match customers, and (optional) extend a mapping.</span></li>
         <li><span class="lu-layers__name">Wrap · ~15 min</span><span class="lu-layers__note">Discussion, project clinic, glossary, self-check</span></li>
       </ul>
     </div>
   </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>R2RML</b> The W3C language for mappings from relational databases to RDF.</span> <span data-auto="1"><b>Materialization</b> Converting the data to triples once and storing them in a triple store.</span> <span data-auto="1"><b>Ontop</b> The open source OBDA engine used in the lab.</span> <span data-auto="1"><b>Entity resolution</b> Deciding which records in different sources describe the same real thing.</span></p>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>R2RML</b> The W3C language for mappings from relational databases to RDF.</span> <span data-auto="1"><b>Materialization</b> Converting the data to triples once and storing them in a triple store.</span> <span data-auto="1"><b>Ontop</b> The open source engine that answers SPARQL over a database (OBDA). We use it in the lab.</span> <span data-auto="1"><b>Entity resolution</b> Deciding which records in different sources describe the same real thing.</span></p>
   <template data-notes><p>I name the payoff: one small file of rules rebuilds all 135,799 triples of the Brunel graph, identical to Session 2's except for the 7 carriers it now types correctly.</p></template>
 </section>
 
 <!-- ==================================================================== 04 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 1 · The integration problem" data-section="Integration problem" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 1 of 5 · about 14 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">The database changed overnight. Do we rewrite the converter?</h2>
-    <p class="lu-lead" style="max-width:46ch">No. We describe once how rows become triples, and let a tool do it.</p>
+    <div class="lu-eyebrow">Part 1 of 5 · about 18 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">The database changed overnight. Must we rewrite the converter?</h2>
+    <p class="lu-lead" style="max-width:46ch">No. We describe once how rows become triples, and a tool does the work.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -117,7 +117,7 @@
     <div class="lu-walk" data-label="A program against a mapping"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1000, "height": 220, "nodes": [{"id": "csv", "label": "four CSV files", "x": 170, "y": 45, "w": 250, "h": 56, "kind": "builtin"}, {"id": "py", "label": "convert_to_rdf.py\n(a program)", "x": 540, "y": 45, "w": 300, "h": 70, "kind": "builtin"}, {"id": "g1", "label": "graph", "x": 860, "y": 45, "w": 170, "h": 56, "kind": "builtin"}, {"id": "db", "label": "PostgreSQL:\nthe same four tables", "x": 170, "y": 175, "w": 290, "h": 70, "kind": "builtin"}, {"id": "map", "label": "brunel-mapping.ttl\n(rules, not code)", "x": 540, "y": 175, "w": 300, "h": 70, "kind": "builtin"}, {"id": "g2", "label": "graph", "x": 860, "y": 175, "w": 170, "h": 56, "kind": "builtin"}], "edges": [{"id": "a", "from": "csv", "to": "py", "label": ""}, {"id": "b", "from": "py", "to": "g1", "label": ""}, {"id": "c", "from": "db", "to": "map", "label": ""}, {"id": "d", "from": "map", "to": "g2", "label": ""}], "steps": [{"show": ["csv", "py", "g1", "a", "b"], "run": ["a", "b"], "set": {"py": "active"}}, {"show": ["db", "map", "g2", "c", "d"], "run": ["c", "d"], "set": {"py": "idle", "map": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="Session 2" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A Python script read the files once, row by row, and wrote triples. To change what it produces, you change the program."></div><div data-walk-step="2" data-caption-short="Today" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The tables are in a database. A &lt;b&gt;mapping&lt;/b&gt; says, for each table, which triples a row becomes. A tool reads the mapping and does the work, as often as needed."></div></div></div>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Mapping</dt><dd>Rules that turn rows of a table into triples.</dd><dt>R2RML</dt><dd>The W3C language for mappings from relational databases to RDF (2012).</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why it matters</span><p class="lu-sub">A mapping is a file any R2RML tool can run, and anyone can read. A converter is code only its author knows.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why it matters</span><p class="lu-sub">A mapping is a file that any R2RML tool can run and anyone can read. A converter is code that only its author understands.</p></div>
     </div>
   </div>
   <template data-notes><p>Five minutes. Sizes are similar (the mapping: 11 triples maps in 155 lines, many of them comments; Session 2's converter: 150 lines of Python). The difference is not length: the mapping says <i>what</i>, and any R2RML tool decides <i>how</i>.</p></template>
@@ -136,6 +136,30 @@
 </section>
 
 <!-- ==================================================================== 07 -->
+<section class="slide" data-label="Both routes, as code" data-section="Integration problem" data-minutes="4">
+  <div class="lu-eyebrow">The two routes, as code</div>
+  <h2 class="lu-h2">Same mapping file, two tools, two results.</h2>
+  <div class="lu-split">
+    <div class="lu-code lu-code--sm" data-name="Materialize · Morph-KGC, in Python"><pre><code><span class="tok-com"># Morph-KGC reads the mapping and the database</span>
+<span class="tok-kw">import</span> morph_kgc
+config = <span class="tok-str">"""[Brunel]
+mappings=brunel-mapping.ttl
+db_url=postgresql+psycopg2://.../brunel"""</span>
+graph = morph_kgc.materialize(config)
+graph.serialize(<span class="tok-str">"brunel-mapped.nt"</span>, format=<span class="tok-str">"nt"</span>)</code></pre></div>
+    <div class="lu-code lu-code--sm" data-name="Virtualize · Ontop, on the command line"><pre><code><span class="tok-com"># run_ontop.py runs this command</span>
+ontop query \
+  -m brunel-mapping.ttl \
+  -t vocabulary.ttl \
+  -p brunel.properties \
+  -q q2.sparql
+<span class="tok-com"># prints the SQL, then the answers</span></code></pre></div>
+  </div>
+  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">What is different</span><p class="lu-sub"><b>Materialize</b> writes a file once: a snapshot. <b>Virtualize</b> stores nothing: Ontop turns each question into SQL. <b>-m</b> mapping, <b>-t</b> vocabulary, <b>-p</b> database, <b>-q</b> question.</p></div>
+  <template data-notes><p>Four minutes. Both snippets are shortened from the lab files <code>materialize.py</code> and <code>ontop/run_ontop.py</code>. Note that the mapping file is the same one. Nothing in it says which route we use.</p></template>
+</section>
+
+<!-- ==================================================================== 08 -->
 <section class="slide slide--tint" data-label="Check: which route?" data-section="Integration problem" data-minutes="3">
   <div class="lu-eyebrow">Check question</div>
   <div class="lu-mcq" data-qid="s5-q1" data-answer="b" data-label="Which route gives always-current answers"
@@ -152,36 +176,36 @@
   <template data-notes><p>Three minutes. The honest counterpoint comes in Part 4: SHACL needs a graph to check, so a team that validates every change materializes too.</p></template>
 </section>
 
-<!-- ==================================================================== 08 -->
+<!-- ==================================================================== 09 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 2 · R2RML" data-section="R2RML" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 2 of 5 · about 36 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">How do you say, once, what every row of a table means?</h2>
-    <p class="lu-lead" style="max-width:46ch">A subject from the key, then one rule per column.</p>
+    <p class="lu-lead" style="max-width:46ch">Make the subject from the key, then write one rule for each column.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 09 -->
+<!-- ==================================================================== 10 -->
 <section class="slide" data-label="R2RML and RML, where the standards stand" data-section="R2RML" data-minutes="4">
   <div class="lu-eyebrow">Standards status, checked 25 September 2026</div>
-  <h2 class="lu-h2" style="max-width:66ch">One Recommendation, and its successor on the way</h2>
+  <h2 class="lu-h2" style="max-width:66ch">One W3C standard, and a newer one in preparation</h2>
 
-  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)"><div class="lu-card"><span class="lu-card__label">R2RML</span><h3 class="lu-h3">W3C Recommendation, 2012</h3><p class="lu-sub">Relational databases to RDF. What we use today, and what Ontop and Morph-KGC both read.</p></div><div class="lu-card"><span class="lu-card__label">RML-Core</span><h3 class="lu-h3">Final Community Group Report, 31 October 2025</h3><p class="lu-sub">The same ideas for CSV, JSON and XML too, by the W3C Knowledge Graph Construction group.</p></div><div class="lu-card"><span class="lu-card__label">RML-LV</span><h3 class="lu-h3">Final Community Group Report, 31 October 2025</h3><p class="lu-sub">Logical views: prepare or combine rows before mapping them.</p></div></div>
+  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)"><div class="lu-card"><span class="lu-card__label">R2RML</span><h3 class="lu-h3">W3C Recommendation, 2012</h3><p class="lu-sub">Relational databases to RDF. What we use today, and what Ontop and Morph-KGC both read.</p></div><div class="lu-card"><span class="lu-card__label">RML-Core</span><h3 class="lu-h3">Final Community Group Report, 31 October 2025</h3><p class="lu-sub">The same ideas, also for CSV, JSON and XML files. Made by the W3C Knowledge Graph Construction group.</p></div><div class="lu-card"><span class="lu-card__label">RML-LV</span><h3 class="lu-h3">Final Community Group Report, 31 October 2025</h3><p class="lu-sub">Logical views: prepare or combine rows before mapping them.</p></div></div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>RML</dt><dd>RDF Mapping Language: R2RML extended to CSV, JSON and XML sources.</dd></dl></div>
   <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>Knowledge graph construction</b> Building a knowledge graph from existing sources through mappings.</span> <span data-auto="1"><b>XML</b> Extensible Markup Language: a tagged text format for structured data.</span> <span data-auto="1"><b>RML-LV</b> The RML module for logical views (Final Community Group Report, October 2025).</span></p>
   <template data-notes><p>Four minutes. A Community Group Report is not a W3C Recommendation; a W3C Working Group to standardise RML was in its charter phase in September 2026. Build on R2RML for databases; know that RML is where the tools are going.</p></template>
 </section>
 
-<!-- ==================================================================== 10 -->
+<!-- ==================================================================== 11 -->
 <section class="slide" data-label="One row becomes triples" data-section="R2RML" data-minutes="6">
   <div class="lu-eyebrow">Walkthrough</div>
-  <h2 class="lu-h2">A subject from the key, then one rule per column</h2>
-  <div class="lu-walk" data-label="One row becomes triples"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 330, "nodes": [{"id": "row", "label": "row of orders: order_id 1447296446.7,\ncarrier V44_3, weight 14.3, ...", "x": 300, "y": 50, "w": 560, "h": 70, "kind": "literal"}, {"id": "s", "label": "order 1447296446.7", "x": 300, "y": 200, "w": 320, "h": 56, "kind": "individual"}, {"id": "c", "label": "carrier V44_3", "x": 960, "y": 100, "w": 260, "h": 56, "kind": "individual"}, {"id": "w", "label": "14.3 (xsd:decimal)", "x": 960, "y": 200, "w": 280, "h": 56, "kind": "literal"}, {"id": "id", "label": "\"1447296446.7\"", "x": 960, "y": 300, "w": 260, "h": 56, "kind": "literal"}], "edges": [{"id": "a", "from": "row", "to": "s", "label": "subject template"}, {"id": "b", "from": "s", "to": "c", "label": "carriedBy"}, {"id": "c1", "from": "s", "to": "w", "label": "weight"}, {"id": "d", "from": "s", "to": "id", "label": "orderId"}], "steps": [{"show": ["row"], "set": {"row": "active"}}, {"show": ["s", "a"], "run": ["a"], "set": {"row": "idle", "s": "active"}}, {"show": ["id", "d"], "run": ["d"]}, {"show": ["w", "c1"], "run": ["c1"]}, {"show": ["c", "b"], "run": ["b"], "set": {"c": "active"}}], "legend": {"literal": "Value", "individual": "Thing with an IRI"}}</script></div><div data-walk-step="1" data-caption-short="One row" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; One real row of the orders table, the order Session 1 met first."></div><div data-walk-step="2" data-caption-short="The subject" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; A template builds the order&#x27;s IRI from its key: &lt;code&gt;.../order/brunel/{order_id}&lt;/code&gt;, the course naming rule."></div><div data-walk-step="3" data-caption-short="A plain value" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; A column copied as text: the order id."></div><div data-walk-step="4" data-caption-short="A typed value" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; A column with a datatype: the weight is an &lt;code&gt;xsd:decimal&lt;/code&gt;."></div><div data-walk-step="5" data-caption-short="A link" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; The carrier column holds another thing&#x27;s key, so a second template builds the carrier&#x27;s IRI: a link, not text."></div></div></div>
+  <h2 class="lu-h2">Make the subject from the key, then write one rule for each column</h2>
+  <div class="lu-walk" data-label="One row becomes triples"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 330, "nodes": [{"id": "row", "label": "row of orders: order_id 1447296446.7,\ncarrier V44_3, weight 14.3, ...", "x": 300, "y": 50, "w": 560, "h": 70, "kind": "literal"}, {"id": "s", "label": "order 1447296446.7", "x": 300, "y": 200, "w": 320, "h": 56, "kind": "individual"}, {"id": "c", "label": "carrier V44_3", "x": 960, "y": 100, "w": 260, "h": 56, "kind": "individual"}, {"id": "w", "label": "14.3 (xsd:decimal)", "x": 960, "y": 200, "w": 280, "h": 56, "kind": "literal"}, {"id": "id", "label": "\"1447296446.7\"", "x": 960, "y": 300, "w": 260, "h": 56, "kind": "literal"}], "edges": [{"id": "a", "from": "row", "to": "s", "label": "subject template"}, {"id": "b", "from": "s", "to": "c", "label": "carriedBy"}, {"id": "c1", "from": "s", "to": "w", "label": "weight"}, {"id": "d", "from": "s", "to": "id", "label": "orderId"}], "steps": [{"show": ["row"], "set": {"row": "active"}}, {"show": ["s", "a"], "run": ["a"], "set": {"row": "idle", "s": "active"}}, {"show": ["id", "d"], "run": ["d"]}, {"show": ["w", "c1"], "run": ["c1"]}, {"show": ["c", "b"], "run": ["b"], "set": {"c": "active"}}], "legend": {"literal": "Value", "individual": "Thing with an IRI"}}</script></div><div data-walk-step="1" data-caption-short="One row" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; One real row of the orders table: the first order we saw in Session 1."></div><div data-walk-step="2" data-caption-short="The subject" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; A template builds the order&#x27;s IRI from its key: &lt;code&gt;.../order/brunel/{order_id}&lt;/code&gt;, This is our course naming rule."></div><div data-walk-step="3" data-caption-short="A plain value" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; A column copied as text: the order id."></div><div data-walk-step="4" data-caption-short="A typed value" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; A column with a datatype: the weight is an &lt;code&gt;xsd:decimal&lt;/code&gt;."></div><div data-walk-step="5" data-caption-short="A link" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; The carrier column holds the key of another thing. A second template builds the carrier&#x27;s IRI. This gives a link, not text."></div></div></div>
   <template data-notes><p>Six minutes. The row, the IRIs and the values are real (<code>demos/session-02-rdf-sparql/sample/order.ttl</code> holds the same order as Session 2 wrote it). At step 4 I ask: why does the datatype matter? Session 4's shape checks <code>sh:datatype xsd:decimal</code>.</p></template>
 </section>
 
-<!-- ==================================================================== 11 -->
+<!-- ==================================================================== 12 -->
 <section class="slide" data-label="The triples map, in R2RML" data-section="R2RML" data-minutes="5">
   <div class="lu-eyebrow">The same rules, written down</div>
   <h2 class="lu-h2">A table, a subject, and one predicate-object map per column</h2>
@@ -203,7 +227,7 @@
   <template data-notes><p>Five minutes. Every triples map has these three parts: where rows come from (<code>rr:logicalTable</code>), the subject (<code>rr:subjectMap</code>), the properties (<code>rr:predicateObjectMap</code>).</p></template>
 </section>
 
-<!-- ==================================================================== 12 -->
+<!-- ==================================================================== 13 -->
 <section class="slide" data-label="A link needs no join" data-section="R2RML" data-minutes="4">
   <div class="lu-eyebrow">Foreign keys</div>
   <h2 class="lu-h2">The carrier's IRI is built from the key in the order's own row</h2>
@@ -215,12 +239,12 @@
   ] ] ;</code></pre></div>
       <div class="lu-callout"><span class="lu-callout__label">A column, or a template?</span><p class="lu-sub"><code>rr:column "carrier"</code> would give the text "V44_3". <code>rr:template</code> gives the carrier's IRI: a link to the same node the carriers map makes.</p></div>
     </div>
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why no join</span><p class="lu-sub">Both maps use the same template, so they build the same IRI for V44_3. R2RML can also join tables (<code>rr:parentTriplesMap</code>); with a naming rule like ours, it rarely needs to.</p></div>
+    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why no join</span><p class="lu-sub">Both maps use the same template, so they build the same IRI for V44_3. R2RML can join tables too (<code>rr:parentTriplesMap</code>), but with a naming rule like ours a join is rarely needed.</p></div>
   </div>
   <template data-notes><p>Four minutes. This is the payoff of Session 2's naming rule: the IRI is a function of the kind and the key, so every table that mentions V44_3 lands on the same node.</p></template>
 </section>
 
-<!-- ==================================================================== 13 -->
+<!-- ==================================================================== 14 -->
 <section class="slide" data-label="A logical view types every carrier" data-section="R2RML" data-minutes="5">
   <div class="lu-eyebrow">Session 4's triage, fixed</div>
   <h2 class="lu-h2">An SQL query as the source: every carrier from both tables, typed once</h2>
@@ -235,13 +259,13 @@
     rr:class ul:Carrier ] .</code></pre></div>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Logical view</dt><dd>An SQL query used in place of a table, to prepare or combine rows first.</dd></dl></div>
-      <div class="lu-callout"><span class="lu-callout__label">The fix</span><p class="lu-sub">Session 2 typed a carrier only when an order used it: 3 carriers. This view finds all <b>10</b>. Session 4's 1,209 untyped rate bands: gone.</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">The fix</span><p class="lu-sub">Session 2 gave the type Carrier only to carriers that had an order: 3 carriers. This view finds all <b>10</b>. The 1,209 rate bands from Session 4 that had no carrier type are fixed.</p></div>
     </div>
   </div>
   <template data-notes><p>Five minutes. Session 4 triaged 1,209 Warnings as "the conversion's fault, fix it in the mapping". Here is the fix: one query. The 7 carriers are V444_2 and V444_4 to V444_9.</p></template>
 </section>
 
-<!-- ==================================================================== 14 -->
+<!-- ==================================================================== 15 -->
 <section class="slide" data-label="A class from a column value" data-section="R2RML" data-minutes="4">
   <div class="lu-eyebrow">Two small maps, one per class</div>
   <h2 class="lu-h2">An order with late days is a late order: a filter chooses the class</h2>
@@ -261,10 +285,10 @@
   <template data-notes><p>Four minutes. R2RML classes are constants, so a class that depends on data needs a filtered source. The same trick turns any status column into classes.</p></template>
 </section>
 
-<!-- ==================================================================== 15 -->
+<!-- ==================================================================== 16 -->
 <section class="slide" data-label="A table with no key" data-section="R2RML" data-minutes="4">
   <div class="lu-eyebrow">Rate bands</div>
-  <h2 class="lu-h2">No column, and no combination of columns, names one rate band</h2>
+  <h2 class="lu-h2">No column, and no combination of columns, identifies one rate band</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
       <table class="lu-table"><thead><tr><th>FreightRates</th><th>Count</th></tr></thead><tbody><tr><td>rows in FreightRates</td><td>1,540</td></tr><tr><td>different rows</td><td>1,537 (5 rows are exact copies of another)</td></tr><tr><td>different on carrier, ports, service, minimum weight</td><td>1,258</td></tr></tbody></table>
@@ -272,14 +296,14 @@
   rr:termType rr:BlankNode ; rr:class ul:RateBand ] ;</code></pre></div>
     </div>
     <div class="lu-stack">
-      <div class="lu-callout"><span class="lu-callout__label">The decision</span><p class="lu-sub">A band gets no permanent IRI. It is a <b>blank node</b>, one per row, told apart by the row number the loader adds. As in Session 2.</p></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why not invent a key?</span><p class="lu-sub">An IRI promises that the same name means the same thing tomorrow. A row number cannot keep that promise; a blank node makes none.</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">The decision</span><p class="lu-sub">A band gets no permanent IRI. It is a <b>blank node</b>, one for each row. The loader adds the row number to tell them apart. We did the same in Session 2.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why not make a key?</span><p class="lu-sub">An IRI is a promise: the same name will mean the same thing tomorrow. A row number cannot keep this promise. A blank node does not make the promise.</p></div>
     </div>
   </div>
   <template data-notes><p>Four minutes. Counts checked with pandas on <code>FreightRates.csv</code> on 2026-09-25. The mapped graph has 1,540 bands, each equal to one of Session 2's (<code>reference-outputs/materialize-and-compare.txt</code>).</p></template>
 </section>
 
-<!-- ==================================================================== 16 -->
+<!-- ==================================================================== 17 -->
 <section class="slide slide--tint" data-label="Drill: mapping words" data-section="R2RML" data-minutes="3">
   <div class="lu-eyebrow">Drill · type the missing word</div>
   <div class="lu-blanks" data-qid="s5-blanks1" data-label="R2RML words">
@@ -294,7 +318,7 @@
   <template data-notes><p>Three minutes. These four words are exactly Part B's three tasks plus the view.</p></template>
 </section>
 
-<!-- ==================================================================== 17 -->
+<!-- ==================================================================== 18 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 3 · Materialize" data-section="Materialize" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 3 of 5 · about 18 minutes</div>
@@ -304,10 +328,10 @@
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 18 -->
+<!-- ==================================================================== 19 -->
 <section class="slide" data-label="Morph-KGC builds the same graph" data-section="Materialize" data-minutes="5">
   <div class="lu-eyebrow">A real run, 2.3 seconds</div>
-  <h2 class="lu-h2">Every triple of Session 2's data, and 7 more: nothing else differs</h2>
+  <h2 class="lu-h2">Every triple of Session 2's graph is there, plus 7 more. Nothing else is different.</h2>
   <div class="lu-split lu-split--wide-left">
     <table class="lu-table"><thead><tr><th>Triples</th><th>Count</th></tr></thead><tbody><tr><td>Session 2's graph</td><td>135,841</td></tr><tr><td>minus its vocabulary (class and property descriptions)</td><td>&minus; 49</td></tr><tr><td>plus the 7 carriers the mapping now types</td><td>+ 7</td></tr><tr><td><b>the mapped graph, Morph-KGC</b></td><td><b>135,799</b></td></tr></tbody></table>
     <div class="lu-stack">
@@ -320,31 +344,31 @@
 <li>A mapping produces data only; the 49 vocabulary triples live in <code>vocabulary.ttl</code>.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 19 -->
+<!-- ==================================================================== 20 -->
 <section class="slide" data-label="Session 4's shapes on the mapped graph" data-section="Materialize" data-minutes="4">
   <div class="lu-eyebrow">The same shapes, unchanged</div>
   <h2 class="lu-h2">The data problems stay. The conversion problem is gone.</h2>
   <table class="lu-table"><thead><tr><th>Result</th><th>Session 2 graph</th><th>Mapped graph</th></tr></thead><tbody><tr><td>Violations: weight not above 0</td><td>2</td><td>2</td></tr><tr><td>Warnings: weight in no band of a priced lane</td><td>1,370</td><td>1,370</td></tr><tr><td>Warnings: band carrier is not a Carrier</td><td>1,209</td><td><b>0</b></td></tr></tbody></table>
   <div class="lu-split">
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Right to stay</span><p class="lu-sub">The two zero weight orders and the rate table's gap are in the source tables. No mapping should hide them.</p></div>
-    <div class="lu-callout"><span class="lu-callout__label">Right to go</span><p class="lu-sub">The 1,209 were the converter's fault. Session 4 said: fix it in the mapping. Done.</p></div>
+    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Correct to stay</span><p class="lu-sub">The two zero weight orders and the rate table's gap are in the source tables. A mapping must not hide them.</p></div>
+    <div class="lu-callout"><span class="lu-callout__label">Correct to go</span><p class="lu-sub">The 1,209 were the converter's fault. Session 4 said: fix it in the mapping. Done.</p></div>
   </div>
   <template data-notes><p>Four minutes. Real runs of Session 4's <code>validate.py</code> with <code>brunel-shapes.ttl</code> (Session 4's <code>validate-triaged.txt</code>, and here <code>validate-mapped.txt</code>). This is the first time a triage decision has been closed.</p></template>
 </section>
 
-<!-- ==================================================================== 20 -->
+<!-- ==================================================================== 21 -->
 <section class="slide" data-label="The bug that raised no error" data-section="Materialize" data-minutes="5">
   <div class="lu-eyebrow">Found by accident, building this lab</div>
   <h2 class="lu-h2">The first validation reported 6 fewer warnings. Nothing had improved.</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-walk" data-label="A mapping bug that raises no error"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1100, "height": 250, "nodes": [{"id": "m", "label": "mapped data\n135,799 triples", "x": 190, "y": 55, "w": 300, "h": 70, "kind": "builtin"}, {"id": "f1", "label": "9,023 focus nodes:\n192 late orders unchecked", "x": 640, "y": 55, "w": 420, "h": 70, "kind": "builtin", "flag": "right"}, {"id": "v", "label": "+ vocabulary.ttl:\nlate order ⊑ order", "x": 190, "y": 195, "w": 300, "h": 70, "kind": "builtin"}, {"id": "f2", "label": "9,215 focus nodes:\nevery order checked", "x": 640, "y": 195, "w": 420, "h": 70, "kind": "builtin"}], "edges": [{"id": "a", "from": "m", "to": "f1", "label": "validate"}, {"id": "b", "from": "v", "to": "f2", "label": "validate"}], "steps": [{"show": ["m", "f1", "a"], "run": ["a"], "set": {"f1": "impossible"}}, {"show": ["v", "f2", "b"], "run": ["b"], "set": {"f2": "active"}}], "legend": {"builtin": "Step", "impossible": "Silently unchecked"}, "flags": {"impossible": "unchecked"}}</script></div><div data-walk-step="1" data-caption-short="No error, still wrong" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The order shapes target &lt;code&gt;ul:Order&lt;/code&gt;. The late orders are typed &lt;code&gt;ul:LateOrder&lt;/code&gt; only, and nothing in the data says a late order is an order. 192 orders are silently not checked."></div><div data-walk-step="2" data-caption-short="Data plus vocabulary" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Validate the data &lt;b&gt;together with&lt;/b&gt; the vocabulary. Its rule, every late order is an order, brings the focus nodes back to 9,215."></div></div></div>
-    <div class="lu-callout"><span class="lu-callout__label">Session 4's rule, again</span><p class="lu-sub">Read the focus node count before the result. 9,023 instead of 9,215 was the only sign that 192 orders had not been looked at.</p></div>
+    <div class="lu-callout"><span class="lu-callout__label">Session 4's rule, again</span><p class="lu-sub">Read the focus node count before the result. 9,023 instead of 9,215 was the only sign that 192 orders were not checked.</p></div>
   </div>
   <template data-notes><p>Five minutes. Real: without <code>vocabulary.ttl</code> the weight in band shape reported 1,364 warnings instead of 1,370; the 6 missing are all late orders (<code>reference-outputs/validate-mapped-without-vocabulary.txt</code>).</p>
 <ul><li>Session 2's graph never had the problem because its converter wrote the vocabulary into the same file.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 21 -->
+<!-- ==================================================================== 22 -->
 <section class="slide slide--tint" data-label="Check: why no join?" data-section="Materialize" data-minutes="3">
   <div class="lu-eyebrow">Check question</div>
   <div class="lu-mcq" data-qid="s5-q2" data-answer="c" data-label="Why the order to carrier link needs no join"
@@ -360,17 +384,17 @@
   <template data-notes><p>Three minutes. Answer c is Session 2's naming rule paying off.</p></template>
 </section>
 
-<!-- ==================================================================== 22 -->
+<!-- ==================================================================== 23 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 4 · Virtualize" data-section="Virtualize" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 4 of 5 · about 15 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">Can we ask SPARQL questions of a database that has no graph at all?</h2>
-    <p class="lu-lead" style="max-width:46ch">Yes: translate each question into SQL, on the fly.</p>
+    <p class="lu-lead" style="max-width:46ch">Yes: translate each question into SQL when it is asked.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 23 -->
+<!-- ==================================================================== 24 -->
 <section class="slide" data-label="Ontop: SPARQL in, SQL out" data-section="Virtualize" data-minutes="5">
   <div class="lu-eyebrow">Walkthrough</div>
   <h2 class="lu-h2">The same mapping, used the other way round</h2>
@@ -380,7 +404,7 @@
 <ul><li>Ontop does not support <code>*</code> and <code>+</code> property paths; it uses the vocabulary instead (<code>-t vocabulary.ttl</code>), so <code>?o a ul:Order</code> also finds the late orders, without storing that inference.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 24 -->
+<!-- ==================================================================== 25 -->
 <section class="slide" data-label="The same question, two languages" data-section="Virtualize" data-minutes="4">
   <div class="lu-eyebrow">What Ontop has to produce</div>
   <h2 class="lu-h2">A SPARQL question about triples becomes an SQL question about rows</h2>
@@ -405,29 +429,29 @@
   <template data-notes><p>Four minutes. The hand-written SQL is ours, labelled as such; the generated SQL is recorded in <code>reference-outputs/ontop-q2.txt</code> from my own run.</p></template>
 </section>
 
-<!-- ==================================================================== 25 -->
+<!-- ==================================================================== 26 -->
 <section class="slide" data-label="Materialize or virtualize?" data-section="Virtualize" data-minutes="5">
   <div class="lu-eyebrow">Choosing a route</div>
   <h2 class="lu-h2" style="max-width:66ch">Neither wins: each gives up something the other keeps</h2>
 <table class="lu-table"><thead><tr><th></th><th>Materialize · Morph-KGC</th><th>Virtualize · Ontop</th></tr></thead><tbody><tr><td>Answers are current</td><td>no: a snapshot, until the next run</td><td>yes: every query asks the live tables</td></tr><tr><td>Query speed</td><td>fast: the graph is stored</td><td>depends on the database and the SQL</td></tr><tr><td>SHACL validation</td><td>yes: the shapes need a graph to read</td><td>no: nothing is stored to check</td></tr><tr><td>Space</td><td>a second copy of the data</td><td>nothing extra</td></tr><tr><td>Changes to the mapping</td><td>run it again</td><td>effective at the next query</td></tr></tbody></table>
-  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">A common answer</span><p class="lu-sub">Virtualize for live questions, and materialize on a schedule for validation and for Session 6's learning, from the same mapping.</p></div>
+  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">A common answer</span><p class="lu-sub">Many teams use both: virtualize for live questions, and materialize on a schedule for validation and for learning in Session 6. Both use the same mapping.</p></div>
   <template data-notes><p>Five minutes. Tie it to Part C question 1 and the project clinic: every team names its route and why.</p></template>
 </section>
 
-<!-- ==================================================================== 26 -->
+<!-- ==================================================================== 27 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 5 · Entity resolution" data-section="Entity resolution" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 5 of 5 · about 24 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">Two systems list the same customer under two different codes. Which records match?</h2>
-    <p class="lu-lead" style="max-width:46ch">A matcher decides, and it will be wrong sometimes. The question is how often, and which way.</p>
+    <p class="lu-lead" style="max-width:46ch">A matcher decides. It will sometimes be wrong. We ask: how often, and in which direction?</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 27 -->
+<!-- ==================================================================== 28 -->
 <section class="slide" data-label="Same customer, two systems" data-section="Entity resolution" data-minutes="5">
   <div class="lu-eyebrow">Teaching data, built on purpose</div>
-  <h2 class="lu-h2">A second system writes Brunel's customers the way real systems drift</h2>
+  <h2 class="lu-h2">A second system writes the customer codes differently, as real systems often do</h2>
   <div class="lu-split lu-split--wide-left">
     <table class="lu-table"><thead><tr><th>TMS export</th><th>What drifted</th><th>Brunel</th></tr></thead><tbody><tr><td><code>v555555555555555555_42</code></td><td>lower case</td><td><code>V555555555555555555_42</code></td></tr><tr><td><code>V555555555555555555-45</code></td><td>a dash</td><td><code>V555555555555555555_45</code></td></tr><tr><td><code>V555555555555555_023</code></td><td>a padded number</td><td><code>V555555555555555_23</code></td></tr><tr><td><code>555555555555555_44</code></td><td>the V lost</td><td><code>V555555555555555_44</code></td></tr><tr><td><code>V5555555555555_8</code></td><td>one 5 lost</td><td><code>V55555555555555_8</code></td></tr><tr><td><code>V555555555555_13</code></td><td>two digits swapped</td><td><code>V555555555555_31</code></td></tr></tbody></table>
     <div class="lu-stack">
@@ -439,7 +463,7 @@
 <ul><li>Checked first: DataCo and Brunel share no entities, Brunel's codes are anonymised and unique, and DataCo's names are personal data we never show.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 28 -->
+<!-- ==================================================================== 29 -->
 <section class="slide" data-label="Clean first, then block" data-section="Entity resolution" data-minutes="4">
   <div class="lu-eyebrow">Two cheap steps before any scoring</div>
   <h2 class="lu-h2">Cleaning fixes the easy drift. Blocking skips pairs that cannot match.</h2>
@@ -451,7 +475,7 @@
     </div>
     <div class="lu-card">
       <span class="lu-card__label">2 · Block on the home plant</span>
-      <p class="lu-sub"><b>Blocking</b>: only comparing records that share a cheap key, here the home plant.</p>
+      <p class="lu-sub"><b>Blocking</b>: compare only records that share a simple key, here the home plant.</p>
       <div class="lu-stack" style="gap:var(--lu-s3)"><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:100.0%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">2,392 pairs</span></span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:76.0%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">1,818 pairs</span></span></div>
       <p class="lu-sub">52 &times; 46 = 2,392 possible pairs; 1,818 share a home plant.</p>
     </div>
@@ -459,7 +483,7 @@
   <template data-notes><p>Four minutes. Blocking saves little here, because 41 of the 46 customers have the same home plant, PLANT03. At DataCo's 180,519 order lines, comparing every pair is impossible without it.</p></template>
 </section>
 
-<!-- ==================================================================== 29 -->
+<!-- ==================================================================== 30 -->
 <section class="slide" data-label="Evidence adds up: match weights" data-section="Entity resolution" data-minutes="5">
   <div class="lu-eyebrow">Fellegi and Sunter, 1969</div>
   <h2 class="lu-h2">Each comparison adds evidence for &ldquo;same customer&rdquo;, or against it</h2>
@@ -473,7 +497,7 @@
   <template data-notes><p>Five minutes. The weights are stated in <code>er/match_customers.py</code>; Splink, the tool named in the syllabus, estimates them from the data, for the same model, at scale. A pair's score is the sum of its weights. Exact code, same plant, same service: 9.2 + 0.2 + 1.2, about 10.6. A close code with both the same: 4.1 + 0.2 + 1.2 = 5.5.</p></template>
 </section>
 
-<!-- ==================================================================== 30 -->
+<!-- ==================================================================== 31 -->
 <section class="slide" data-label="One threshold, two kinds of error" data-section="Entity resolution" data-minutes="5">
   <div class="lu-eyebrow">A real run on the teaching set</div>
   <h2 class="lu-h2">Lower the threshold: more found, more wrong. Raise it: fewer wrong, more missed.</h2>
@@ -488,7 +512,7 @@
   <template data-notes><p>Five minutes. Real run of <code>er/match_customers.py</code> (<code>reference-outputs/match-customers.txt</code>). No threshold gives both at 1.000 on this data: a lost 5 makes a code equally close to two customers.</p></template>
 </section>
 
-<!-- ==================================================================== 31 -->
+<!-- ==================================================================== 32 -->
 <section class="slide slide--tint" data-label="Poll: which error costs more?" data-section="Entity resolution" data-minutes="4" style="--lu-s5:12px">
   <div class="lu-eyebrow">Room poll · 45 seconds</div>
   <div class="lu-poll" data-qid="s5-poll" data-seconds="45" data-answer="a" data-label="Which matching error costs more when merging customer records">
@@ -501,17 +525,17 @@
   <template data-notes><p>Forty five seconds, then we discuss. For merging, favour precision (threshold 8). For finding possible duplicates for a person to review, favour recall (threshold 4). The use decides the threshold.</p></template>
 </section>
 
-<!-- ==================================================================== 32 -->
+<!-- ==================================================================== 33 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Map, compare, ask, match" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 55 minutes · on your own machine</div>
     <h2 class="lu-display-xl" style="max-width:26ch">One mapping, two routes, one graph. Does it hold up?</h2>
-    <p class="lu-lead" style="max-width:46ch">Then add three rules to a mapping, each a copy of one you have already seen.</p>
+    <p class="lu-lead" style="max-width:46ch">Then, if you want, add three rules to a mapping. Each is a copy of one you have already seen.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 33 -->
+<!-- ==================================================================== 34 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">Hands-on lab · about 55 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">The Brunel tables in a database, and the mapping that turns them into the graph.</h2>
@@ -531,7 +555,7 @@
 <ul><li>Second: an old PostgreSQL volume from an earlier course version. The compose file uses a new volume name, so <code>docker compose up -d</code> in this folder starts clean.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 34 -->
+<!-- ==================================================================== 35 -->
 <section class="slide" data-label="Lab time" data-section="Lab" data-minutes="50">
   <div class="lu-eyebrow">Lab · 50 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints keep you on time.</h2>
@@ -546,14 +570,14 @@
 <ul><li>Most common wrong answer in Part B: Y2 written with <code>rr:column</code>, which makes text instead of a link. The checker shows the text it made.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 35 -->
+<!-- ==================================================================== 36 -->
 <section class="slide" data-label="Discussion and project clinic" data-section="Wrap" data-minutes="10">
   <div class="lu-eyebrow">Discussion · as a room, from Part C</div>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
       <h2 class="lu-h2">Where does each check belong?</h2>
       <ol class="lu-list lu-list--num">
-        <li>A late order is an order: in the vocabulary, the shapes, or the mapping? Which of them caught the 192 unchecked orders?</li>
+        <li>Where should the rule &ldquo;a late order is an order&rdquo; live: in the vocabulary, in the shapes, or in the mapping? Which of them found the 192 unchecked orders?</li>
         <li>Session 4 checked the graph; today a mapping made it. Should the gate check the mapping's output, the database, or both?</li>
         <li>Materialize or virtualize, for your team's database, and why?</li>
       </ol>
@@ -561,13 +585,13 @@
     <div class="lu-card">
       <span class="lu-card__label">Project clinic · 5 minutes</span>
       <p class="lu-sub">Each team says in one sentence which route it chooses for its own database, and names one thing blocking its mapping.</p>
-      <p class="lu-caption">Milestone 2, a checkpoint for feedback, not graded, is pushed at the end of Session 6.</p>
+      <p class="lu-caption">You push Milestone 2 at the end of Session 6. It is a checkpoint for feedback, not graded.</p>
     </div>
   </div>
   <template data-notes><p>Ten minutes. Question 1 has a clear answer: the rule lives in the vocabulary (a reasoner or SHACL's target resolution uses it); the mapping only produces data; the focus node count exposed the gap.</p></template>
 </section>
 
-<!-- ==================================================================== 36 -->
+<!-- ==================================================================== 37 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
@@ -575,13 +599,13 @@
   <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
-<!-- ==================================================================== 37 -->
+<!-- ==================================================================== 38 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
       <h2 class="lu-h2">One sentence to leave with.</h2>
-      <p class="lu-statement">Write down once what a row means, and every tool can rebuild the graph, or answer from the rows directly.</p>
+      <p class="lu-statement">Write down once what a row means. Then every tool can rebuild the graph, or answer directly from the rows.</p>
       <div class="lu-callout"><span class="lu-callout__label">Before Session 6</span><p class="lu-sub">Read the Session 6 lab's <code>README.md</code> and <code>OVERVIEW.md</code>. The graph learning of Session 6 starts from a graph like today's materialized one.</p></div>
     </div>
     <div class="lu-stack">
@@ -596,7 +620,7 @@
   <template data-notes><p>Two minutes. I end on the sentence.</p></template>
 </section>
 
-<!-- ==================================================================== 38 -->
+<!-- ==================================================================== 39 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">
@@ -605,7 +629,7 @@
       <div data-score></div>
     </div>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Studying alone?</span><p class="lu-sub">Press <kbd>S</kbd> for study mode: every definition shows inline, every reveal opens, every diagram shows its last step.</p></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Studying alone?</span><p class="lu-sub">Press <kbd>S</kbd> for study mode: it shows every definition, opens every hidden answer, and shows the last step of every diagram.</p></div>
       <p class="lu-caption"><kbd>O</kbd> contents · <kbd>/</kbd> search · <kbd>?</kbd> all shortcuts. Answers are stored in this browser only.</p>
     </div>
   </div>

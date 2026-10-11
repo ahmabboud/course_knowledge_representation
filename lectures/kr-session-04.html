@@ -18,7 +18,7 @@
   data-deck-id="kr-s04"
   data-course="Knowledge Representation"
   data-session="Session 4 of 8"
-  data-duration="198"
+  data-duration="202"
   data-app-root="../"
   data-unit="Lebanese University · MSc">
 
@@ -462,7 +462,7 @@ GATE: PASS, no violations.</code></pre></div>
 <!-- ==================================================================== 26 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 4 · Provenance and versions" data-section="Provenance" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 4 of 5 · about 17 minutes</div>
+    <div class="lu-eyebrow">Part 4 of 5 · about 21 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">Order 1447296446.7 is carried by V44_3. Who says so, and since when?</h2>
     <p class="lu-lead" style="max-width:46ch">If we do not know the history of a triple, we cannot trust it and we cannot fix it.</p>
   </div>
@@ -484,6 +484,35 @@ GATE: PASS, no violations.</code></pre></div>
 </section>
 
 <!-- ==================================================================== 28 -->
+<section class="slide" data-label="The same provenance, as Turtle" data-section="Provenance" data-minutes="4">
+  <div class="lu-eyebrow">Provenance, as code</div>
+  <h2 class="lu-h2">These are the real provenance triples, shortened. Each line answers one question.</h2>
+  <div class="lu-split">
+    <div class="lu-code lu-code--sm" data-name="provenance.ttl · the entity and its file"><pre><code><span class="tok-com"># The entity: the named graph OrderList</span>
+graph:OrderList <span class="tok-kw">a</span> prov:Entity ;
+  prov:wasDerivedFrom file:OrderList.csv ;
+  prov:wasGeneratedBy run:convert-20260925T013112Z ;
+  void:triples 119844 .
+
+<span class="tok-com"># The input file, with its checksum</span>
+file:OrderList.csv <span class="tok-kw">a</span> prov:Entity ;
+  dcterms:title <span class="tok-str">"OrderList.csv"</span> ;
+  dcterms:identifier <span class="tok-str">"sha256:158787e9..."</span> .</code></pre></div>
+    <div class="lu-code lu-code--sm" data-name="provenance.ttl · the activity and the agent"><pre><code><span class="tok-com"># The activity: one run of the converter</span>
+run:convert-20260925T013112Z <span class="tok-kw">a</span> prov:Activity ;
+  prov:used file:OrderList.csv ;
+  prov:endedAtTime <span class="tok-str">"2026-09-25T01:31:12+00:00"</span> ;
+  prov:wasAssociatedWith software:convert_to_rdf.py .
+
+<span class="tok-com"># The agent: the program that ran</span>
+software:convert_to_rdf.py <span class="tok-kw">a</span> prov:SoftwareAgent ;
+  rdfs:label <span class="tok-str">"convert_to_rdf.py (Session 2)"</span> .</code></pre></div>
+  </div>
+  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Read it as questions and answers</span><p class="lu-sub"><b>wasDerivedFrom</b>: which file did it come from? <b>wasGeneratedBy</b>: which run made it? <b>endedAtTime</b>: when? <b>wasAssociatedWith</b>: who or what ran it? <b>identifier</b>: which exact file? (the checksum)</p></div>
+  <template data-notes><p>Four minutes. This is the previous diagram as text, from <code>provenance.ttl</code>, written by <code>add_provenance.py</code>. Prefixes are shortened: <code>graph:</code>, <code>file:</code>, <code>run:</code> and <code>software:</code> stand for the long IRIs under <code>https://ul.edu.lb/kr/id/</code>. The checksum is cut short here; the file has all 64 characters.</p></template>
+</section>
+
+<!-- ==================================================================== 29 -->
 <section class="slide" data-label="Asking where a fact came from" data-section="Provenance" data-minutes="4">
   <div class="lu-eyebrow">Provenance is queryable</div>
   <h2 class="lu-h2">One SPARQL query goes from a triple to its file, its run and its time</h2>
@@ -509,7 +538,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
 <ul><li>The two zero weight orders of Part 2: the same query tells you they came from OrderList.csv, which is where the fix belongs, not in the graph.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 29 -->
+<!-- ==================================================================== 30 -->
 <section class="slide" data-label="Versioning the ontology" data-section="Provenance" data-minutes="4">
   <div class="lu-eyebrow">Releasing an ontology</div>
   <h2 class="lu-h2">The ontology IRI names the ontology. A version IRI names one release of it.</h2>
@@ -527,7 +556,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
 <ul><li>The next release gets a new version IRI and points back with <code>owl:priorVersion</code>. Milestone 1 asks each team for exactly this on its own ontology.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 30 -->
+<!-- ==================================================================== 31 -->
 <section class="slide slide--tint" data-label="Drill: provenance words" data-section="Provenance" data-minutes="3">
   <div class="lu-eyebrow">Drill · type the missing word</div>
   <div class="lu-blanks" data-qid="s4-blanks2" data-label="Provenance and versioning words">
@@ -542,7 +571,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
   <template data-notes><p>Three minutes. Blank 1 is the one you use in Milestone 1.</p></template>
 </section>
 
-<!-- ==================================================================== 31 -->
+<!-- ==================================================================== 32 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 5 · Reuse and the gate" data-section="Reuse and the gate" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 5 of 5 · about 17 minutes</div>
@@ -552,7 +581,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 32 -->
+<!-- ==================================================================== 33 -->
 <section class="slide" data-label="GS1's EPCIS shapes, an industrial example" data-section="Reuse and the gate" data-minutes="4">
   <div class="lu-eyebrow">Reuse: read before you write</div>
   <h2 class="lu-h2" style="max-width:66ch">GS1 publishes the shapes for EPCIS 2.0, its standard for supply chain events</h2>
@@ -576,7 +605,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
 <li>Licence literacy again, as in Session 3: this is not MIT or Apache; it is a patent and intellectual property statement. I name the difference.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 33 -->
+<!-- ==================================================================== 34 -->
 <section class="slide" data-label="Three patterns worth borrowing" data-section="Reuse and the gate" data-minutes="4">
   <div class="lu-eyebrow">What EPCIS does that our first draft did not do</div>
   <h2 class="lu-h2" style="max-width:66ch">Three good habits from a real standard. Each one needs only one line of Turtle.</h2>
@@ -599,7 +628,7 @@ epcis:AggregationEventShape
 <ul><li>Pattern 2 is new to most people: SHACL can forbid, not only require.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 34 -->
+<!-- ==================================================================== 35 -->
 <section class="slide" data-label="The tool: shacl-play" data-section="Reuse and the gate" data-minutes="3">
   <div class="lu-eyebrow">One slide for the tool</div>
   <h2 class="lu-h2">shacl-play validates in the browser: paste the data, paste the shapes, read the report</h2>
@@ -615,7 +644,7 @@ epcis:AggregationEventShape
 <li>Two engines agreeing (pySHACL and TopQuadrant's) is itself a check on our shapes.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 35 -->
+<!-- ==================================================================== 36 -->
 <section class="slide" data-label="The gate blocking a bad commit" data-section="Reuse and the gate" data-minutes="5">
   <div class="lu-eyebrow">A real run on GitHub</div>
   <h2 class="lu-h2">Every push runs the shapes. One wrong character makes the run fail (red).</h2>
@@ -630,7 +659,7 @@ epcis:AggregationEventShape
 <li>Why a sample: the gate runs on six real orders (515 triples) in a second. The full graph is 6 megabytes and takes about two minutes; your team decides what its gate checks.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 36 -->
+<!-- ==================================================================== 37 -->
 <section class="slide" data-label="What the gate runs" data-section="Reuse and the gate" data-minutes="3">
   <div class="lu-eyebrow">The whole gate is one file</div>
   <h2 class="lu-h2">Four steps: get the code, get Python, install pySHACL, validate</h2>
@@ -657,7 +686,7 @@ epcis:AggregationEventShape
 <ul><li>Versions are pinned (pySHACL 0.40.1, rdflib 7.6.0) so the gate gives the same answer next month as today.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 37 -->
+<!-- ==================================================================== 38 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Validate, triage, gate" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 55 minutes · on your own machine</div>
@@ -667,7 +696,7 @@ epcis:AggregationEventShape
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 38 -->
+<!-- ==================================================================== 39 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">Hands-on lab · about 55 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">The real graph and the real report. Optional: three shapes of your own.</h2>
@@ -687,7 +716,7 @@ epcis:AggregationEventShape
 <ul><li>Second blocker: the old Session 2 virtual environment without pySHACL. <code>pip install -r demos/requirements.txt</code> fixes it.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 39 -->
+<!-- ==================================================================== 40 -->
 <section class="slide" data-label="Lab time" data-section="Lab" data-minutes="50">
   <div class="lu-eyebrow">Lab · 50 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints keep you on time.</h2>
@@ -703,7 +732,7 @@ epcis:AggregationEventShape
 <li>Second: Y3 comparing the carrier with the text "V44_3" instead of its IRI, which flags the one correct CRF order.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 40 -->
+<!-- ==================================================================== 41 -->
 <section class="slide" data-label="Discussion and Milestone 1" data-section="Wrap" data-minutes="10">
   <div class="lu-eyebrow">Discussion · as a room, from Part C</div>
   <div class="lu-split lu-split--wide-left">
@@ -731,7 +760,7 @@ epcis:AggregationEventShape
 <ul><li>Milestone 1 is a checkpoint for feedback, not graded: the team project is scored once, before Session 8. I point your team at <code>.github/workflows/shacl-gate.yml</code> and <code>validate.py</code> as templates.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 41 -->
+<!-- ==================================================================== 42 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
@@ -739,7 +768,7 @@ epcis:AggregationEventShape
   <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
-<!-- ==================================================================== 42 -->
+<!-- ==================================================================== 43 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
@@ -760,7 +789,7 @@ epcis:AggregationEventShape
   <template data-notes><p>Two minutes. I end on the sentence.</p></template>
 </section>
 
-<!-- ==================================================================== 43 -->
+<!-- ==================================================================== 44 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1" style="--lu-s3:4px;--lu-s2:2px;--lu-s5:14px">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">
