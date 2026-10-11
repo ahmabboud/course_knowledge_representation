@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public">
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="http://purl.obolibrary.org/obo/bfo.owl" uri="workspace/cache/bfo/2020/bfo.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/AboutIOFDev/" uri="workspace/AboutIOFDev.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/AboutIOFProd/" uri="workspace/AboutIOFProd.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/core/AboutIOFDev/" uri="workspace/core/AboutIOFDev.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/core/AboutIOFProd/" uri="workspace/core/AboutIOFProd.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/core/Core/" uri="workspace/core/Core.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/core/commonstocoremapping/MappingCommonsToIOF/" uri="workspace/core/commonstocoremapping/MappingCommonsToIOF.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/core/commonstocoremapping/MappingOWLTimeToIOF/" uri="workspace/core/owltimetocoremapping/MappingTimeToIOF.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/core/commonstocoremapping/meta/MappingAnnotationVocabularyToCommons/" uri="workspace/core/commonstocoremapping/meta/MappingAnnotationVocabularyToCommons.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/core/meta/AnnotationVocabulary/" uri="workspace/core/meta/AnnotationVocabulary.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/core/propertychain/TemporalRelationChain/" uri="workspace/core/addenda/propertychain/TemporalRelationChain.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/core/swrl/TemporalRelationInference/" uri="workspace/core/addenda/swrl/TemporalRelationsInference.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/core/utility/PrescribedAllenIntervalAlgebraUtility/" uri="workspace/core/addenda/utility/PrescribedAllenIntervalAlgebraUtility.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/supplychain/AboutIOFDev/" uri="workspace/supplychain/AboutIOFDev.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/supplychain/AboutIOFProd/" uri="workspace/supplychain/AboutIOFProd.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://spec.industrialontologies.org/ontology/supplychain/SupplyChain/" uri="workspace/supplychain/SupplyChain.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://www.omg.org/spec/Commons/AboutCommons/" uri="workspace/cache/CMNS/AboutCommons.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://www.omg.org/spec/Commons/AnnotationVocabulary/" uri="workspace/cache/CMNS/AnnotationVocabulary.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://www.omg.org/spec/Commons/Collections/" uri="workspace/cache/CMNS/Collections.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://www.omg.org/spec/Commons/Designators/" uri="workspace/cache/CMNS/Designators.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://www.omg.org/spec/Commons/Identifiers/" uri="workspace/cache/CMNS/Identifiers.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1791519940453" name="https://www.omg.org/spec/Commons/TextDatatype/" uri="workspace/cache/CMNS/TextDatatype.rdf"/>
+    </group>
+</catalog>
