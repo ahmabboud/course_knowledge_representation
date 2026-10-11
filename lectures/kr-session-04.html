@@ -43,14 +43,14 @@
     <div class="lu-stack">
       <div class="lu-eyebrow">Knowledge Representation · Session 4 of 8</div>
       <h1 class="lu-display" style="max-width:24ch">Constraints, Quality, and Provenance: SHACL</h1>
-      <p class="lu-lead" style="max-width:48ch">Session 1 wrote the business rules down in English. Today they become checks a machine runs on every order, every time the data changes, and the first real report tells us what is wrong.</p>
+      <p class="lu-lead" style="max-width:48ch">In Session 1 we wrote the business rules as normal sentences. Today we turn them into checks that a computer runs on every order, each time the data changes. The first real report shows what is wrong.</p>
     </div>
     <div class="lu-row" style="justify-content:space-between;font-size:var(--lu-t-caption);color:var(--lu-on-night-2)">
       <span>About 190 minutes · lecture, lab in Python, wrap</span>
       <span>Press <kbd>&rarr;</kbd> to begin · <kbd>?</kbd> for shortcuts</span>
     </div>
   </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>SHACL</b> Shapes Constraint Language: the W3C standard for checking that graph data obeys rules, with a closed world view.</span></p>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>SHACL</b> Shapes Constraint Language: the W3C standard for checking that graph data obeys rules. It looks only at the data it is given (closed world).</span></p>
   <template data-notes>
     <p>Before minute one, I expect you to have the Session 2 graph (<code>demos/session-02-rdf-sparql/brunel.ttl</code>, from <code>convert_to_rdf.py</code>) and pySHACL installed (it is in <code>demos/requirements.txt</code>). The lab needs both.</p>
     <ul>
@@ -63,7 +63,7 @@
 <!-- ==================================================================== 02 -->
 <section class="slide" data-label="Where we are in the architecture" data-section="Opening" data-minutes="3">
   <div class="lu-eyebrow">Recap</div>
-  <h2 class="lu-h1" style="max-width:40ch">We have the data and what it means. Nothing yet <em style="font-style:italic;color:var(--lu-red-700)">checks</em> it.</h2>
+  <h2 class="lu-h1" style="max-width:40ch">We have the data and we know what it means. But nothing yet <em style="font-style:italic;color:var(--lu-red-700)">checks</em> it.</h2>
   <ul class="lu-pipeline" style="margin-top:var(--lu-s5)">
     <li data-state="done"><span class="lu-pipeline__n">01</span><span class="lu-pipeline__t">Sources</span><span class="lu-pipeline__d">DataCo, Brunel</span></li>
     <li data-state="done"><span class="lu-pipeline__n">02</span><span class="lu-pipeline__t">Profiling</span><span class="lu-pipeline__d">Business rules</span></li>
@@ -75,10 +75,10 @@
     <li data-state="muted"><span class="lu-pipeline__n">08</span><span class="lu-pipeline__t">Access</span><span class="lu-pipeline__d">Questions · 7</span></li>
   </ul>
   <div class="lu-split" style="margin-top:var(--lu-s5)">
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">What you have</span><p class="lu-sub">The 9,215 Brunel orders as a graph (Session 2), an ontology that says what the words mean (Session 3), and Session 1's list of business rules, in English.</p></div>
-    <div class="lu-callout"><span class="lu-callout__label">What is missing</span><p class="lu-sub">Nothing runs those rules. Session 3 showed why OWL will not: it <b>infers</b> rather than complains. Today's tool complains.</p></div>
+    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">What you have</span><p class="lu-sub">The 9,215 Brunel orders as a graph (Session 2). An ontology that says what the words mean (Session 3). The business rules from Session 1, written as normal sentences.</p></div>
+    <div class="lu-callout"><span class="lu-callout__label">What is missing</span><p class="lu-sub">Nothing runs those rules yet. In Session 3 we saw that OWL does not check them: OWL <b>infers</b> new facts, it does not report errors. Today's tool reports errors.</p></div>
   </div>
-  <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>RML</b> RDF Mapping Language: R2RML extended to CSV, JSON and XML sources.</span> <span data-auto="1"><b>GNN</b> Graph neural network: a model that learns from a node&#x27;s neighbours by passing messages along edges.</span></p>
+  <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>RML</b> RDF Mapping Language: rules that turn CSV, JSON or XML files into RDF.</span> <span data-auto="1"><b>GNN</b> Graph neural network: a model that learns about a node from the nodes next to it, by passing messages along the edges.</span></p>
   <template data-notes><p>Three minutes. I point at stage 05. The one line to say: Session 3 taught the machine what things mean; today teaches it what the data must look like.</p></template>
 </section>
 
@@ -87,19 +87,19 @@
   <div class="lu-eyebrow">Objective</div>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
-      <p class="lu-statement">By the end you can turn a business rule into a check, run it on the real graph, read the report as a list of work, and put the check where every change has to pass it.</p>
+      <p class="lu-statement">By the end you can turn a business rule into a check, run the check on the real graph, read the report as a list of things to fix, and make every change pass the check before it is accepted.</p>
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Open these now</span><p class="lu-sub">The folder <code>demos/session-04-shacl/</code> · the Session 2 graph <code>brunel.ttl</code> · a terminal with <code>demos/.venv</code> active.</p></div>
     </div>
     <div class="lu-card">
       <span class="lu-card__label">How the ~190 minutes are spent</span>
       <ul class="lu-layers">
-        <li><span class="lu-layers__name">Lecture · ~120 min</span><span class="lu-layers__note">Why OWL cannot check, SHACL core, the rules as shapes, provenance and versions, reuse and the gate</span></li>
-        <li><span class="lu-layers__name">Lab · ~55 min</span><span class="lu-layers__note">Validate, triage, record provenance, watch the gate fail, write three shapes of your own</span></li>
+        <li><span class="lu-layers__name">Lecture · ~120 min</span><span class="lu-layers__note">Why OWL cannot check. Basic SHACL rules. Rules as shapes. Provenance and versions. Reuse and the gate.</span></li>
+        <li><span class="lu-layers__name">Lab · ~55 min</span><span class="lu-layers__note">Validate, triage, provenance, the gate, and three optional shapes.</span></li>
         <li><span class="lu-layers__name">Wrap · ~15 min</span><span class="lu-layers__note">Discussion, Milestone 1, glossary, self-check</span></li>
       </ul>
     </div>
   </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Triage</b> Going through a validation report result by result and deciding, for each, whether the rule or the data is wrong, and what to do about it.</span></p>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Triage</b> Reading a validation report one result at a time. For each result you decide: is the rule wrong, or is the data wrong? Then you decide what to do.</span></p>
   <template data-notes><p>I name the payoff: the first real report on our graph has 3,435 problems. By the lab, you will know which of them are ours to fix and which are the data's.</p></template>
 </section>
 
@@ -107,8 +107,8 @@
 <section class="slide slide--night" data-chrome="none" data-label="Part 1 · The gap OWL leaves open" data-section="Why OWL cannot check" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 1 of 5 · about 18 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">An order has lost its carrier. Does the reasoner complain?</h2>
-    <p class="lu-lead" style="max-width:46ch">No. And by OWL's own rules, it is right not to.</p>
+    <h2 class="lu-display-xl" style="max-width:26ch">An order has lost its carrier. Does the reasoner report an error?</h2>
+    <p class="lu-lead" style="max-width:46ch">No. This is correct: in OWL, a missing fact is unknown, not wrong.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -116,9 +116,9 @@
 <!-- ==================================================================== 05 -->
 <section class="slide" data-label="OWL infers, SHACL checks" data-section="Why OWL cannot check" data-minutes="5">
   <div class="lu-eyebrow">The same missing fact, two tools</div>
-  <h2 class="lu-h2">A reasoner fills the gap with an unknown. A validator reports the gap.</h2>
+  <h2 class="lu-h2">A reasoner treats a missing fact as unknown. A validator reports it as a problem.</h2>
   <div class="lu-split lu-split--wide-left">
-    <div class="lu-walk" data-label="OWL infers, SHACL checks"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1000, "height": 240, "nodes": [{"id": "o", "label": "order 1447291369.7", "x": 230, "y": 50, "w": 300, "h": 60, "kind": "individual"}, {"id": "u", "label": "some carrier,\nname unknown", "x": 760, "y": 50, "w": 260, "h": 70, "kind": "builtin"}, {"id": "s", "label": "rule: exactly one carrier", "x": 230, "y": 190, "w": 330, "h": 60, "kind": "builtin"}, {"id": "r", "label": "report: MinCount\non carried by", "x": 700, "y": 190, "w": 280, "h": 70, "kind": "builtin", "flag": "right"}], "edges": [{"id": "a", "from": "o", "to": "u", "label": "carried by", "kind": "inferred"}, {"id": "b", "from": "s", "to": "o", "label": "checks"}, {"id": "c", "from": "s", "to": "r", "label": "result"}], "steps": [{"show": ["o"], "set": {"o": "active"}}, {"show": ["u", "a"], "run": ["a"], "set": {"u": "inferred"}}, {"show": ["s", "b"], "run": ["b"], "set": {"u": "idle", "o": "active"}}, {"show": ["r", "c"], "run": ["c"], "set": {"r": "impossible"}}], "legend": {"individual": "Individual", "builtin": "Value or rule", "inferred": "Inferred", "impossible": "Violation"}, "flags": {"impossible": "violation"}}</script></div><div data-walk-step="1" data-caption-short="The data" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Suppose the conversion lost the &lt;b&gt;carried by&lt;/b&gt; line of order 1447291369.7 (Part B plants exactly this fault)."></div><div data-walk-step="2" data-caption-short="OWL, open world" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; If the ontology says every order is carried by some carrier, the reasoner concludes a carrier exists that nobody named. No error: missing is not false."></div><div data-walk-step="3" data-caption-short="SHACL, closed world" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; A SHACL rule looks only at the triples in front of it: this order has zero &lt;b&gt;carried by&lt;/b&gt; values."></div><div data-walk-step="4" data-caption-short="A Violation" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Zero is fewer than one, so the report says: Violation, MinCount on &lt;b&gt;carried by&lt;/b&gt;, for this order."></div></div></div>
+    <div class="lu-walk" data-label="OWL infers, SHACL checks"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1000, "height": 240, "nodes": [{"id": "o", "label": "order 1447291369.7", "x": 230, "y": 50, "w": 300, "h": 60, "kind": "individual"}, {"id": "u", "label": "some carrier,\nname unknown", "x": 760, "y": 50, "w": 260, "h": 70, "kind": "builtin"}, {"id": "s", "label": "rule: exactly one carrier", "x": 230, "y": 190, "w": 330, "h": 60, "kind": "builtin"}, {"id": "r", "label": "report: MinCount\non carried by", "x": 700, "y": 190, "w": 280, "h": 70, "kind": "builtin", "flag": "right"}], "edges": [{"id": "a", "from": "o", "to": "u", "label": "carried by", "kind": "inferred"}, {"id": "b", "from": "s", "to": "o", "label": "checks"}, {"id": "c", "from": "s", "to": "r", "label": "result"}], "steps": [{"show": ["o"], "set": {"o": "active"}}, {"show": ["u", "a"], "run": ["a"], "set": {"u": "inferred"}}, {"show": ["s", "b"], "run": ["b"], "set": {"u": "idle", "o": "active"}}, {"show": ["r", "c"], "run": ["c"], "set": {"r": "impossible"}}], "legend": {"individual": "Individual", "builtin": "Value or rule", "inferred": "Inferred", "impossible": "Violation"}, "flags": {"impossible": "violation"}}</script></div><div data-walk-step="1" data-caption-short="The data" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Suppose the conversion lost the &lt;b&gt;carried by&lt;/b&gt; line of order 1447291369.7 (The test file in Part B has exactly this fault)."></div><div data-walk-step="2" data-caption-short="OWL, open world" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The ontology says every order is carried by some carrier. So the reasoner decides that a carrier exists, but nobody named it. There is no error, because a missing fact is not a false fact."></div><div data-walk-step="3" data-caption-short="SHACL, closed world" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; A SHACL rule looks only at the data it is given. This order has zero &lt;b&gt;carried by&lt;/b&gt; values."></div><div data-walk-step="4" data-caption-short="A Violation" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; The rule needs at least one value, and zero is less than one. So the report says: Violation, MinCount, on &lt;b&gt;carried by&lt;/b&gt;, for this order."></div></div></div>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>SHACL</dt><dd>Shapes Constraint Language: the W3C standard for checking that graph data obeys rules, looking only at the data it is given.</dd></dl></div>
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Session 3 did this too</span><p class="lu-sub">The untyped shipment of order 1447311670.7 was not refused: OWL concluded it was a Shipment. Inferring is what OWL is for; checking is not.</p></div>
@@ -132,11 +132,11 @@
 <!-- ==================================================================== 06 -->
 <section class="slide" data-label="Open world and closed world" data-section="Why OWL cannot check" data-minutes="5">
   <div class="lu-eyebrow">The one idea behind this session</div>
-  <h2 class="lu-h2">OWL treats the graph as part of the truth. SHACL treats it as the whole truth.</h2>
+  <h2 class="lu-h2">OWL: the graph is part of the truth. SHACL: the graph is the whole truth.</h2>
   <svg class="lu-svg" viewBox="0 0 1448 250" role="img" aria-label="Open world: the graph is part of what is true. Closed world: the graph is all that is true."><title>Open world: the graph is part of what is true. Closed world: the graph is all that is true.</title><rect x="0" y="4" width="704" height="240" rx="10" style="fill:var(--lu-paper);stroke:var(--lu-line-2);stroke-width:2"/><text x="24" y="34" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-ink-2);font-weight:600">Open world · OWL</text><text x="680" y="34" text-anchor="end" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-3)">not in the graph: unknown</text><circle cx="292.0" cy="140" r="92" style="fill:none;stroke:var(--lu-line-2);stroke-width:2" stroke-dasharray="8 6"/><text x="292.0" y="72" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-3)">true in the world</text><circle cx="272.0" cy="158" r="52" style="fill:var(--lu-green-050);stroke:var(--lu-green-700);stroke-width:2"/><text x="272.0" y="146" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-green-700)">what the</text><text x="272.0" y="170" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-green-700)">graph says</text><circle cx="350.0" cy="112" r="9" style="fill:var(--lu-ink-2)"/><text x="368.0" y="112" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-2)">a carrier?</text><text x="368.0" y="138" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-3)">maybe: unknown</text><rect x="744" y="4" width="704" height="240" rx="10" style="fill:var(--lu-paper);stroke:var(--lu-line-2);stroke-width:2"/><text x="768" y="34" text-anchor="start" dominant-baseline="middle" style="fill:var(--lu-ink-2);font-weight:600">Closed world · SHACL</text><text x="1424" y="34" text-anchor="end" dominant-baseline="middle" class="s-label" style="fill:var(--lu-ink-3)">not in the graph: false</text><circle cx="1036.0" cy="140" r="92" style="fill:var(--lu-green-050);stroke:var(--lu-green-700);stroke-width:2"/><text x="1036.0" y="128" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-green-700)">what the graph says</text><text x="1036.0" y="152" text-anchor="middle" dominant-baseline="middle" class="s-label" style="fill:var(--lu-green-700)">is the whole world</text><circle cx="1158.0" cy="88" r="9" style="fill:var(--lu-red-700)"/><text x="1176.0" y="88" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-red-700)">a carrier?</text><text x="1176.0" y="114" text-anchor="start" dominant-baseline="middle" class="s-label" style="fill:var(--lu-red-700)">not here: false</text></svg>
   <div class="lu-split">
-    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Open world assumption</dt><dd>If a fact is missing, it is unknown, not false.</dd><dt>Closed world assumption</dt><dd>If a fact is missing, it is false. How SQL databases behave.</dd></dl></div>
-    <div class="lu-callout"><span class="lu-callout__label">Two tools, two jobs</span><p class="lu-sub">Use OWL to <b>add</b> what follows from the data. Use SHACL to <b>check</b> the data you actually hold. A real system runs both, on the same graph.</p></div>
+    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Open world assumption</dt><dd>If a fact is missing, it is unknown, not false.</dd><dt>Closed world assumption</dt><dd>If a fact is missing, it is false. SQL databases work this way.</dd></dl></div>
+    <div class="lu-callout"><span class="lu-callout__label">Two tools, two jobs</span><p class="lu-sub">Use OWL to <b>add</b> facts that follow from the data. Use SHACL to <b>check</b> the data you have. A real system uses both on the same graph.</p></div>
   </div>
   <template data-notes><p>Five minutes. Both terms were previewed in Session 1 (the open world surprise) and used in Session 3; here they finally do opposite jobs side by side.</p>
 <ul><li>The question I expect: can't I just close the world in OWL? Partly (owl:FunctionalProperty, cardinalities), but OWL then infers equalities or declares the whole ontology inconsistent; it never produces a list of the orders to fix. That list is what SHACL gives.</li></ul></template>
@@ -147,7 +147,7 @@
   <div class="lu-eyebrow">What goes wrong in real data</div>
   <h2 class="lu-h2" style="max-width:66ch">Four everyday data errors. OWL accepts all four. SHACL reports all four.</h2>
 
-  <div class="lu-cards" style="grid-template-columns:repeat(2,minmax(0,1fr));margin-top:var(--lu-s3)"><div class="lu-card"><span class="lu-card__label">A missing value</span><p class="lu-sub">Order 1447291369.7 with no carrier.</p><p class="lu-sub"><b>OWL:</b> Some carrier exists, name unknown.</p><p class="lu-sub" style="color:var(--lu-red-700)"><b>SHACL:</b> MinCount: Violation.</p></div><div class="lu-card"><span class="lu-card__label">One value too many</span><p class="lu-sub">An order carried by both V444_0 and V444_1.</p><p class="lu-sub"><b>OWL:</b> If carried by is functional: the two carriers are the same carrier.</p><p class="lu-sub" style="color:var(--lu-red-700)"><b>SHACL:</b> MaxCount: Violation.</p></div><div class="lu-card"><span class="lu-card__label">A value outside the list</span><p class="lu-sub">Service level <code>"DTX"</code>, a typo for DTD.</p><p class="lu-sub"><b>OWL:</b> A string, like any other.</p><p class="lu-sub" style="color:var(--lu-red-700)"><b>SHACL:</b> In ( CRF DTD DTP ): Violation.</p></div><div class="lu-card"><span class="lu-card__label">A value outside the range</span><p class="lu-sub">Orders 1447336276.7 and 1447215484.7 weigh 0 kg.</p><p class="lu-sub"><b>OWL:</b> 0 is a decimal: nothing to say.</p><p class="lu-sub" style="color:var(--lu-red-700)"><b>SHACL:</b> MinExclusive 0: Violation, on the real data.</p></div></div>
+  <div class="lu-cards" style="grid-template-columns:repeat(2,minmax(0,1fr));margin-top:var(--lu-s3)"><div class="lu-card"><span class="lu-card__label">A missing value</span><p class="lu-sub">Order 1447291369.7 with no carrier.</p><p class="lu-sub"><b>OWL:</b> Some carrier exists, name unknown.</p><p class="lu-sub" style="color:var(--lu-red-700)"><b>SHACL:</b> MinCount: Violation.</p></div><div class="lu-card"><span class="lu-card__label">One value too many</span><p class="lu-sub">An order carried by both V444_0 and V444_1.</p><p class="lu-sub"><b>OWL:</b> If carried by is functional, OWL decides that the two carriers are the same carrier.</p><p class="lu-sub" style="color:var(--lu-red-700)"><b>SHACL:</b> MaxCount: Violation.</p></div><div class="lu-card"><span class="lu-card__label">A value outside the list</span><p class="lu-sub">Service level <code>"DTX"</code>, a typo for DTD.</p><p class="lu-sub"><b>OWL:</b> A string, like any other.</p><p class="lu-sub" style="color:var(--lu-red-700)"><b>SHACL:</b> In ( CRF DTD DTP ): Violation.</p></div><div class="lu-card"><span class="lu-card__label">A value that is too small</span><p class="lu-sub">Orders 1447336276.7 and 1447215484.7 weigh 0 kg.</p><p class="lu-sub"><b>OWL:</b> 0 is a valid decimal number, so OWL reports nothing.</p><p class="lu-sub" style="color:var(--lu-red-700)"><b>SHACL:</b> MinExclusive 0: Violation, on the real data.</p></div></div>
   <template data-notes><p>Four minutes. Card 2 surprises people most: declaring a property functional does not stop two carriers; the reasoner merges them into one carrier (or, if they are declared different, declares the ontology inconsistent). Neither is a list of orders to fix.</p>
 <ul><li>Card 4 is not an example: it is the real Brunel data. Two orders of 361 and 348 units have weight 0 kg. Session 1 did not catch them; the first shape run did (Part 2).</li>
 <li>Cards 1 to 3 are the faults Part B's test file plants on real orders.</li></ul></template>
@@ -161,7 +161,7 @@
        data-fb-wrong=" Ask what the open world assumption says about a fact that is simply not there.">
     <p class="lu-mcq__q">Every order is carried by <b>some</b> carrier. Order 1447291369.7 has none. What does HermiT report?</p>
     <div class="lu-mcq__opts">
-      <button class="lu-mcq__opt" type="button" data-key="a">The ontology is inconsistent<span class="lu-mcq__why" hidden>A missing value contradicts nothing.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="a">The ontology is inconsistent<span class="lu-mcq__why" hidden>A missing value is not a contradiction.</span></button>
       <button class="lu-mcq__opt" type="button" data-key="b">The class Order is unsatisfiable<span class="lu-mcq__why" hidden>Orders can still exist; this one has an unnamed carrier.</span></button>
       <button class="lu-mcq__opt" type="button" data-key="c">Nothing: it assumes a carrier exists that it cannot name<span class="lu-mcq__why" hidden>Correct. That is the open world assumption at work.</span></button>
       <button class="lu-mcq__opt" type="button" data-key="d">A MinCount Violation for that order<span class="lu-mcq__why" hidden>That is SHACL's answer. A reasoner writes no report of broken rules.</span></button>
@@ -174,8 +174,8 @@
 <section class="slide slide--night" data-chrome="none" data-label="Part 2 · Shapes on the real graph" data-section="SHACL core" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 2 of 5 · about 30 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">How do you tell a machine: every order has exactly one carrier?</h2>
-    <p class="lu-lead" style="max-width:46ch">You describe the shape the data must have, and let it compare.</p>
+    <h2 class="lu-display-xl" style="max-width:26ch">How do you tell a computer: every order has exactly one carrier?</h2>
+    <p class="lu-lead" style="max-width:46ch">You describe the shape that the data must have. The computer compares the data with the shape.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -183,8 +183,8 @@
 <!-- ==================================================================== 10 -->
 <section class="slide" data-label="A shape, a target, a report" data-section="SHACL core" data-minutes="5">
   <div class="lu-eyebrow">How validation works</div>
-  <h2 class="lu-h2">A shape picks its nodes, checks each one, and writes one line per broken rule</h2>
-  <div class="lu-walk" data-label="How one shape runs"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 112, "nodes": [{"id": "sh", "label": "Order shape", "x": 130, "y": 45, "w": 220, "h": 60, "kind": "builtin"}, {"id": "t", "label": "target:\nevery ul:Order", "x": 440, "y": 45, "w": 250, "h": 66, "kind": "builtin"}, {"id": "f", "label": "9,215 focus nodes\n(192 late orders too)", "x": 790, "y": 45, "w": 320, "h": 66, "kind": "individual"}, {"id": "c", "label": "7 property\nchecks each", "x": 1110, "y": 45, "w": 210, "h": 66, "kind": "builtin"}, {"id": "r", "label": "report:\n2 results", "x": 1340, "y": 45, "w": 190, "h": 66, "kind": "builtin", "flag": "bottom"}], "edges": [{"id": "a", "from": "sh", "to": "t", "label": ""}, {"id": "b", "from": "t", "to": "f", "label": ""}, {"id": "c1", "from": "f", "to": "c", "label": ""}, {"id": "d", "from": "c", "to": "r", "label": ""}], "steps": [{"show": ["sh", "t", "a"], "run": ["a"], "set": {"t": "active"}}, {"show": ["f", "b"], "run": ["b"], "set": {"t": "idle", "f": "active"}}, {"show": ["c", "c1"], "run": ["c1"], "set": {"f": "idle", "c": "active"}}, {"show": ["r", "d"], "run": ["d"], "set": {"c": "idle", "r": "impossible"}}], "legend": {"builtin": "SHACL", "individual": "Our data", "impossible": "Violation"}, "flags": {"impossible": "2 violations"}}</script></div><div data-walk-step="1" data-caption-short="A shape and its target" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A shape names its target: here every member of &lt;b&gt;ul:Order&lt;/b&gt;."></div><div data-walk-step="2" data-caption-short="Focus nodes" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The target selects 9,215 focus nodes: 9,023 orders, plus the 192 late orders, because the graph says every late order is an order (rdfs:subClassOf)."></div><div data-walk-step="3" data-caption-short="Checks" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Each focus node is checked against the shape&#x27;s rules: one carrier, one date, a weight above 0, and four more."></div><div data-walk-step="4" data-caption-short="The report" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; One result per broken rule per node. On the real graph: 2 results, the two orders that weigh 0 kg. It took 2.6 seconds."></div></div></div>
+  <h2 class="lu-h2">A shape selects nodes, checks each node, and reports each broken rule</h2>
+  <div class="lu-walk" data-label="How one shape runs"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 112, "nodes": [{"id": "sh", "label": "Order shape", "x": 130, "y": 45, "w": 220, "h": 60, "kind": "builtin"}, {"id": "t", "label": "target:\nevery ul:Order", "x": 440, "y": 45, "w": 250, "h": 66, "kind": "builtin"}, {"id": "f", "label": "9,215 focus nodes\n(192 late orders too)", "x": 790, "y": 45, "w": 320, "h": 66, "kind": "individual"}, {"id": "c", "label": "7 property\nchecks each", "x": 1110, "y": 45, "w": 210, "h": 66, "kind": "builtin"}, {"id": "r", "label": "report:\n2 results", "x": 1340, "y": 45, "w": 190, "h": 66, "kind": "builtin", "flag": "bottom"}], "edges": [{"id": "a", "from": "sh", "to": "t", "label": ""}, {"id": "b", "from": "t", "to": "f", "label": ""}, {"id": "c1", "from": "f", "to": "c", "label": ""}, {"id": "d", "from": "c", "to": "r", "label": ""}], "steps": [{"show": ["sh", "t", "a"], "run": ["a"], "set": {"t": "active"}}, {"show": ["f", "b"], "run": ["b"], "set": {"t": "idle", "f": "active"}}, {"show": ["c", "c1"], "run": ["c1"], "set": {"f": "idle", "c": "active"}}, {"show": ["r", "d"], "run": ["d"], "set": {"c": "idle", "r": "impossible"}}], "legend": {"builtin": "SHACL", "individual": "Our data", "impossible": "Violation"}, "flags": {"impossible": "2 violations"}}</script></div><div data-walk-step="1" data-caption-short="A shape and its target" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A shape names its target: here every member of &lt;b&gt;ul:Order&lt;/b&gt;."></div><div data-walk-step="2" data-caption-short="Focus nodes" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The target selects 9,215 focus nodes: 9,023 orders and 192 late orders. Late orders are included because the graph says every late order is an order (rdfs:subClassOf)."></div><div data-walk-step="3" data-caption-short="Checks" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Each focus node is checked against the shape&#x27;s rules: one carrier, one date, a weight above 0, and four more."></div><div data-walk-step="4" data-caption-short="The report" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Each broken rule on each node gives one result. On the real graph there are 2 results: the two orders that weigh 0 kg. It took 2.6 seconds."></div></div></div>
   <div class="lu-split">
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Shape</dt><dd>A named set of rules that some nodes of the graph must obey.</dd><dt>Target</dt><dd>Which nodes a shape checks, for example every member of a class.</dd></dl></div><div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Also defined here</span><dl class="lu-defs"><dt>Focus node</dt><dd>The node being checked when a shape runs.</dd><dt>Validation report</dt><dd>SHACL's output: conforms or not, and one result per broken rule.</dd></dl></div>
   </div>
@@ -208,7 +208,7 @@
 <span class="tok-com"># four more property shapes in the file</span></code></pre></div>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Node shape</dt><dd>A shape about a whole node: every order.</dd><dt>Property shape</dt><dd>A shape about one property of that node: exactly one carrier.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Which SHACL</span><p class="lu-sub">SHACL 1.0, a W3C Recommendation since 2017. SHACL 1.2 Core is still a Working Draft (3 August 2026): build on 1.0.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Which version</span><p class="lu-sub">We use SHACL 1.0, an official W3C standard since 2017. SHACL 1.2 is still a draft (3 August 2026), so we build on 1.0.</p></div>
     </div>
   </div>
   <template data-notes><p>Five minutes. I read the shape aloud as English: every order has exactly one carrier, and it is a Carrier; a service level from this list; a decimal weight above 0.</p>
@@ -219,7 +219,7 @@
 <!-- ==================================================================== 12 -->
 <section class="slide" data-label="The targeting trap" data-section="SHACL core" data-minutes="4">
   <div class="lu-eyebrow">The most common SHACL bug</div>
-  <h2 class="lu-h2">A shape that targets nothing checks nothing, and the report still says &ldquo;conforms&rdquo;</h2>
+  <h2 class="lu-h2">A shape that selects no nodes checks nothing, but the report still says &ldquo;conforms&rdquo;</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
       <div class="lu-code lu-code--sm" data-name="a real run: the old template on the Brunel graph"><pre><code>$ python validate.py \
@@ -232,8 +232,8 @@ GATE: PASS, no violations.</code></pre></div>
       <p class="lu-caption">The template targets <code>ul:PurchaseOrder</code>. Our graph has 9,215 <code>ul:Order</code> nodes and not one <code>ul:PurchaseOrder</code>.</p>
     </div>
     <div class="lu-stack">
-      <div class="lu-callout"><span class="lu-callout__label">Green is not proof</span><p class="lu-sub">A clean report on zero focus nodes means nothing was looked at. <b>Read the focus node count before the result.</b></p></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Our tools print it first</span><p class="lu-sub"><code>validate.py</code> lists every shape's focus nodes before validating. shacl-play warns &ldquo;Shapes did not match anything!&rdquo;</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">A passing result is not proof</span><p class="lu-sub">If there are zero focus nodes, nothing was checked. <b>Read the number of focus nodes before you read the result.</b></p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Our tools show it first</span><p class="lu-sub"><code>validate.py</code> prints the focus nodes of every shape before it validates. shacl-play warns &ldquo;Shapes did not match anything!&rdquo;</p></div>
     </div>
   </div>
   <template data-notes><p>Four minutes. This is a real run on 2026-09-25 (<code>reference-outputs/targeting-trap.txt</code>): the course's own old template shape, written before the Session 2 graph existed, silently passes.</p>
@@ -243,7 +243,7 @@ GATE: PASS, no violations.</code></pre></div>
 <!-- ==================================================================== 13 -->
 <section class="slide" data-label="Seven kinds of rule" data-section="SHACL core" data-minutes="5">
   <div class="lu-eyebrow">Core SHACL, on our graph</div>
-  <h2 class="lu-h2" style="max-width:66ch">Seven kinds of rule cover most of Session 1's list. Two of them already find problems.</h2>
+  <h2 class="lu-h2" style="max-width:66ch">Seven kinds of rule cover most of the Session 1 list. Two of them already find problems.</h2>
 <table class="lu-table"><thead><tr><th>Constraint</th><th>Says</th><th>Our rule</th><th>Results on Brunel</th></tr></thead><tbody><tr><td><code>sh:minCount</code> · <code>sh:maxCount</code></td><td>how many values</td><td>exactly one carrier</td><td>0</td></tr><tr><td><code>sh:datatype</code></td><td>the kind of value</td><td>weight is an <code>xsd:decimal</code></td><td>0</td></tr><tr><td><code>sh:in</code></td><td>one of a list</td><td>service level CRF, DTD or DTP</td><td>0</td></tr><tr><td><code>sh:pattern</code></td><td>text matches a pattern</td><td>order id: digits, a dot, one digit</td><td>0</td></tr><tr><td><code>sh:minExclusive</code></td><td>above a bound</td><td>weight above 0 kg</td><td><b style="color:var(--lu-red-700)">2</b></td></tr><tr><td><code>sh:class</code></td><td>the value's type</td><td>a band's carrier is a <code>ul:Carrier</code></td><td><b style="color:var(--lu-red-700)">1,209</b></td></tr><tr><td><code>sh:lessThanOrEquals</code></td><td>two values compared</td><td>a band's lower bound &le; its upper bound</td><td>0</td></tr></tbody></table>
   <p class="lu-caption">First draft of <code>brunel-shapes.ttl</code>, run on the 9,215 orders and 1,540 rate bands of the Session 2 graph.</p>
   <template data-notes><p>Five minutes. We go down the last column: five rules hold on every order. The two that do not are the next two slides and Part 3.</p>
@@ -260,8 +260,8 @@ GATE: PASS, no violations.</code></pre></div>
       <p class="lu-caption">From the Session 2 graph. Every other order weighs more than 0.0026 kg.</p>
     </div>
     <div class="lu-stack">
-      <div class="lu-callout"><span class="lu-callout__label">Why nobody saw them</span><p class="lu-sub">A profile reports the weight column's minimum, 0, among dozens of other numbers: easy to read past. A rule that says <b>above 0</b> cannot overlook it.</p></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Rule wrong, or data wrong?</span><p class="lu-sub">Hundreds of units cannot weigh nothing. The rule is right; the two rows are wrong. Part 3 names this decision: triage.</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">Why nobody saw them</span><p class="lu-sub">A profile shows the minimum weight (0) among dozens of other numbers, so it is easy to miss. A rule that says <b>above 0</b> cannot be missed.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Is the rule wrong, or is the data wrong?</span><p class="lu-sub">Hundreds of units cannot weigh nothing. The rule is right and the two rows are wrong. Part 3 gives this decision a name: triage.</p></div>
     </div>
   </div>
   <template data-notes><p>Four minutes. This is the value of writing rules down: profiling shows you what the data is; a rule says what it must be, and runs every time.</p>
@@ -271,10 +271,10 @@ GATE: PASS, no violations.</code></pre></div>
 <!-- ==================================================================== 15 -->
 <section class="slide" data-label="Severity, and what conforms means" data-section="SHACL core" data-minutes="4">
   <div class="lu-eyebrow">Reading the top of a report</div>
-  <h2 class="lu-h2">Any result at all makes conforms false. A gate decides which results block.</h2>
+  <h2 class="lu-h2">Any result, of any severity, makes conforms false. A gate decides which results stop a change.</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
-      <table class="lu-table"><thead><tr><th>Severity</th><th>Meaning</th><th>Our triaged run</th></tr></thead><tbody><tr><td><b>Violation</b></td><td>the default: the data breaks the rule</td><td>2 (weight 0 kg)</td></tr><tr><td><b>Warning</b></td><td>worth a look, not an error</td><td>2,579 (Part 3)</td></tr><tr><td><b>Info</b></td><td>for the record</td><td>0</td></tr></tbody></table>
+      <table class="lu-table"><thead><tr><th>Severity</th><th>Meaning</th><th>Our triaged run</th></tr></thead><tbody><tr><td><b>Violation</b></td><td>the default: the data breaks the rule</td><td>2 (weight 0 kg)</td></tr><tr><td><b>Warning</b></td><td>worth checking, but not an error</td><td>2,579 (Part 3)</td></tr><tr><td><b>Info</b></td><td>for information only</td><td>0</td></tr></tbody></table>
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Severity</dt><dd>How serious a broken rule is: Violation, Warning or Info, set per rule with <code>sh:severity</code>.</dd></dl></div>
     </div>
     <div class="lu-stack">
@@ -306,24 +306,24 @@ GATE: PASS, no violations.</code></pre></div>
 <section class="slide slide--night" data-chrome="none" data-label="Part 3 · The rules as shapes" data-section="Rules as shapes" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 3 of 5 · about 30 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Session 1 wrote the rules in English. The first run says 3,435 are broken. Are they?</h2>
-    <p class="lu-lead" style="max-width:46ch">A report is a list of work. Some of the work is fixing the rule.</p>
+    <h2 class="lu-display-xl" style="max-width:26ch">In Session 1 we wrote the rules as normal sentences. The first run reports 3,435 broken rules. Are they all real problems?</h2>
+    <p class="lu-lead" style="max-width:46ch">A report is a list of work. Sometimes the right fix is to change the rule, not the data.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 18 -->
 <section class="slide" data-label="From the inventory to shapes" data-section="Rules as shapes" data-minutes="5">
-  <div class="lu-eyebrow">Session 1's list, as a first draft</div>
+  <div class="lu-eyebrow">The Session 1 rules, as a first draft</div>
   <h2 class="lu-h2" style="max-width:66ch">One shape per rule, all Violations. Four need SPARQL. First run: <b>3,435 Violations</b>.</h2>
-<table class="lu-table"><thead><tr><th>Business rule (Session 1)</th><th>Kind of shape</th><th>First draft, results</th></tr></thead><tbody><tr><td>One carrier, plant, date and service level per order</td><td>core</td><td>0</td></tr><tr><td>An order weighs more than 0 kg</td><td>core</td><td><b style="color:var(--lu-red-700)">2</b></td></tr><tr><td>A band's lower bound is not above its upper bound</td><td>core, two values</td><td>0</td></tr><tr><td>A rate band belongs to a carrier</td><td>core</td><td><b style="color:var(--lu-red-700)">1,209</b></td></tr><tr><td>A plant ships only through ports it is linked to</td><td>SPARQL</td><td>0</td></tr><tr><td>A plant ships only products it makes</td><td>SPARQL</td><td>0</td></tr><tr><td>An order's weight falls in a rate band of its lane</td><td>SPARQL</td><td><b style="color:var(--lu-red-700)">2,224</b></td></tr><tr><td>CRF orders are carried by V44_3</td><td>SPARQL</td><td>you write it (Part B)</td></tr></tbody></table>
+<table class="lu-table"><thead><tr><th>Business rule (Session 1)</th><th>Kind of shape</th><th>First draft, results</th></tr></thead><tbody><tr><td>One carrier, plant, date and service level per order</td><td>core</td><td>0</td></tr><tr><td>An order weighs more than 0 kg</td><td>core</td><td><b style="color:var(--lu-red-700)">2</b></td></tr><tr><td>A band's lower bound is not above its upper bound</td><td>core, two values</td><td>0</td></tr><tr><td>A rate band belongs to a carrier</td><td>core</td><td><b style="color:var(--lu-red-700)">1,209</b></td></tr><tr><td>A plant ships only through ports it is linked to</td><td>SPARQL</td><td>0</td></tr><tr><td>A plant ships only products it makes</td><td>SPARQL</td><td>0</td></tr><tr><td>An order's weight falls in a rate band of its lane</td><td>SPARQL</td><td><b style="color:var(--lu-red-700)">2,224</b></td></tr><tr><td>CRF orders are carried by V44_3</td><td>SPARQL</td><td>optional practice (Part B)</td></tr></tbody></table>
   <template data-notes><p>Five minutes. The first draft is what anyone writes from the English list: every rule, all Violations. Real run of <code>brunel-shapes-v0.ttl</code> on the Session 2 graph, 90 seconds (<code>reference-outputs/validate-v0.txt</code>).</p>
 <ul><li>The two SPARQL rules with 0 results confirm Session 1's evidence on all 9,215 orders: no order leaves through an unlinked port, none ships a product its plant does not make.</li>
 <li>The weight rule is new: Session 1 had no rule for it. Adding a rule you did not think of is normal; the gate keeps it from then on.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 19 -->
-<section class="slide" data-label="sh:sparql, the escape hatch" data-section="Rules as shapes" data-minutes="5">
+<section class="slide" data-label="sh:sparql: when core SHACL is not enough" data-section="Rules as shapes" data-minutes="5">
   <div class="lu-eyebrow">When core SHACL cannot say it</div>
   <h2 class="lu-h2">The rule compares the order's port with its plant's ports. That needs a query.</h2>
   <div class="lu-split lu-split--wide-left">
@@ -341,7 +341,7 @@ GATE: PASS, no violations.</code></pre></div>
       }""" ] .</code></pre></div>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>SHACL-SPARQL</dt><dd>A SHACL rule written as a SPARQL query. Each row the query returns is one result.</dd><dt>$this</dt><dd>The focus node being checked, filled in for every order in turn.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Result on Brunel</span><p class="lu-sub">0 of 9,215 orders. Session 1's rule holds on every order, now checked by a machine.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Result on Brunel</span><p class="lu-sub">0 of 9,215 orders break it. The Session 1 rule holds for every order, and now a computer has checked it.</p></div>
     </div>
   </div>
   <template data-notes><p>Five minutes. I read the query as a sentence: find this order's plant and port, and return the order if the plant has no link to that port.</p>
@@ -353,7 +353,7 @@ GATE: PASS, no violations.</code></pre></div>
 <section class="slide" data-label="Walkthrough: triage of the first report" data-section="Rules as shapes" data-minutes="6">
   <div class="lu-eyebrow">Diagnostic walkthrough</div>
   <h2 class="lu-h2">3,435 Violations. Only 2 are the orders' fault.</h2>
-  <div class="lu-walk" data-label="Triage of the first report"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 330, "nodes": [{"id": "d", "label": "first draft\n3,435 violations", "x": 140, "y": 165, "w": 240, "h": 78, "kind": "builtin"}, {"id": "g1", "label": "2,224 · weight in\nno rate band", "x": 520, "y": 73, "w": 300, "h": 70, "kind": "builtin"}, {"id": "g2", "label": "1,209 · band carrier\nnot a Carrier", "x": 520, "y": 200, "w": 300, "h": 70, "kind": "builtin"}, {"id": "g3", "label": "2 · weight 0 kg", "x": 520, "y": 298, "w": 300, "h": 56, "kind": "builtin"}, {"id": "h1", "label": "854 CRF orders, never priced:\nfix the shape, priced lanes only", "x": 1080, "y": 34, "w": 440, "h": 62, "kind": "builtin"}, {"id": "h2", "label": "1,370 in the rate table's gap:\nkeep, as a Warning", "x": 1080, "y": 112, "w": 440, "h": 62, "kind": "builtin", "flag": "right"}, {"id": "k2", "label": "typed only if it carries an order:\na Warning until Session 5", "x": 1080, "y": 200, "w": 440, "h": 62, "kind": "builtin", "flag": "right"}, {"id": "k3", "label": "361 units cannot weigh 0:\nstays a Violation", "x": 1080, "y": 298, "w": 440, "h": 56, "kind": "builtin", "flag": "right"}], "edges": [{"id": "e1", "from": "d", "to": "g1", "label": "", "route": "elbow"}, {"id": "e2", "from": "d", "to": "g2", "label": ""}, {"id": "e3", "from": "d", "to": "g3", "label": "", "route": "elbow"}, {"id": "f1", "from": "g1", "to": "h1", "label": "", "route": "elbow"}, {"id": "f2", "from": "g1", "to": "h2", "label": "", "route": "elbow"}, {"id": "f3", "from": "g2", "to": "k2", "label": ""}, {"id": "f4", "from": "g3", "to": "k3", "label": ""}], "steps": [{"show": ["d", "g1", "g2", "g3", "e1", "e2", "e3"], "run": ["e1", "e2", "e3"], "set": {"g1": "impossible", "g2": "impossible", "g3": "impossible"}}, {"show": ["h1", "f1"], "run": ["f1"], "set": {"g1": "active"}}, {"show": ["h2", "f2"], "run": ["f2"], "set": {"h2": "inferred"}}, {"show": ["k2", "f3"], "run": ["f3"], "set": {"g1": "idle", "g2": "active", "k2": "inferred"}}, {"show": ["k3", "f4"], "run": ["f4"], "set": {"g2": "idle", "g3": "active", "k3": "impossible"}}], "legend": {"builtin": "SHACL result", "impossible": "Violation", "inferred": "Warning"}, "flags": {"impossible": "violation", "inferred": "warning"}}</script></div><div data-walk-step="1" data-caption-short="The first report" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Three groups of results, all Violations: 2,224, 1,209 and 2."></div><div data-walk-step="2" data-caption-short="Shape wrong" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; 854 of the 2,224 are the CRF orders, all carrier V44_3. Session 1 found CRF is &lt;b&gt;not in the rate table at all&lt;/b&gt;. The rule only means something on a priced lane: the shape was wrong."></div><div data-walk-step="3" data-caption-short="Data wrong, elsewhere" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; The other 1,370 are all on one lane, V444_1 · PORT04 · DTD, 1,364 in one hole between 2.5 and 70.51 kg. The orders are fine; the &lt;b&gt;rate table&lt;/b&gt; has a gap."></div><div data-walk-step="4" data-caption-short="The conversion&#x27;s fault" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; 1,209 bands belong to 7 carriers that carry no order. Session 2&#x27;s converter types a carrier only when an order uses it. Fix the mapping in Session 5."></div><div data-walk-step="5" data-caption-short="Data wrong" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; The 2 zero weight orders are simply wrong. After triage: &lt;b&gt;2 Violations, 2,579 Warnings&lt;/b&gt;."></div></div></div>
+  <div class="lu-walk" data-label="Triage of the first report"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 330, "nodes": [{"id": "d", "label": "first draft\n3,435 violations", "x": 140, "y": 165, "w": 240, "h": 78, "kind": "builtin"}, {"id": "g1", "label": "2,224 · weight in\nno rate band", "x": 520, "y": 73, "w": 300, "h": 70, "kind": "builtin"}, {"id": "g2", "label": "1,209 · band carrier\nnot a Carrier", "x": 520, "y": 200, "w": 300, "h": 70, "kind": "builtin"}, {"id": "g3", "label": "2 · weight 0 kg", "x": 520, "y": 298, "w": 300, "h": 56, "kind": "builtin"}, {"id": "h1", "label": "854 CRF orders have no price:\nchange the shape to check priced lanes only", "x": 1080, "y": 34, "w": 440, "h": 62, "kind": "builtin"}, {"id": "h2", "label": "1,370 in the rate table's gap:\nkeep, as a Warning", "x": 1080, "y": 112, "w": 440, "h": 62, "kind": "builtin", "flag": "right"}, {"id": "k2", "label": "typed only if it carries an order:\na Warning until Session 5", "x": 1080, "y": 200, "w": 440, "h": 62, "kind": "builtin", "flag": "right"}, {"id": "k3", "label": "361 units cannot weigh 0:\nstays a Violation", "x": 1080, "y": 298, "w": 440, "h": 56, "kind": "builtin", "flag": "right"}], "edges": [{"id": "e1", "from": "d", "to": "g1", "label": "", "route": "elbow"}, {"id": "e2", "from": "d", "to": "g2", "label": ""}, {"id": "e3", "from": "d", "to": "g3", "label": "", "route": "elbow"}, {"id": "f1", "from": "g1", "to": "h1", "label": "", "route": "elbow"}, {"id": "f2", "from": "g1", "to": "h2", "label": "", "route": "elbow"}, {"id": "f3", "from": "g2", "to": "k2", "label": ""}, {"id": "f4", "from": "g3", "to": "k3", "label": ""}], "steps": [{"show": ["d", "g1", "g2", "g3", "e1", "e2", "e3"], "run": ["e1", "e2", "e3"], "set": {"g1": "impossible", "g2": "impossible", "g3": "impossible"}}, {"show": ["h1", "f1"], "run": ["f1"], "set": {"g1": "active"}}, {"show": ["h2", "f2"], "run": ["f2"], "set": {"h2": "inferred"}}, {"show": ["k2", "f3"], "run": ["f3"], "set": {"g1": "idle", "g2": "active", "k2": "inferred"}}, {"show": ["k3", "f4"], "run": ["f4"], "set": {"g2": "idle", "g3": "active", "k3": "impossible"}}], "legend": {"builtin": "SHACL result", "impossible": "Violation", "inferred": "Warning"}, "flags": {"impossible": "violation", "inferred": "warning"}}</script></div><div data-walk-step="1" data-caption-short="The first report" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Three groups of results, all Violations: 2,224, 1,209 and 2."></div><div data-walk-step="2" data-caption-short="Shape wrong" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; 854 of the 2,224 are CRF orders, all with carrier V44_3. In Session 1 we found that CRF is &lt;b&gt;not in the rate table at all&lt;/b&gt;. The rule only makes sense for lanes that have a price. So the shape was wrong."></div><div data-walk-step="3" data-caption-short="Data wrong, elsewhere" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; The other 1,370 are all on one lane: V444_1 · PORT04 · DTD. Of these, 1,364 weigh between 2.5 and 70.51 kg, a range that the rate table does not cover. The orders are correct. The &lt;b&gt;rate table&lt;/b&gt; has a gap."></div><div data-walk-step="4" data-caption-short="The conversion&#x27;s fault" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; 1,209 rate bands belong to 7 carriers that have no orders. The Session 2 converter gives the type Carrier only to carriers that have an order. We fix this in the Session 5 mapping."></div><div data-walk-step="5" data-caption-short="Data wrong" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; The 2 orders with weight 0 are wrong data. After triage: &lt;b&gt;2 Violations, 2,579 Warnings&lt;/b&gt;."></div></div></div>
   <template data-notes><p>Six minutes, the most important slide of the session. At step 2 I ask you before showing it: the 854 all have carrier V44_3; what did Session 1 say about V44_3?</p>
 <ul><li>Every split is real: 854 = the CRF orders (Session 1); 1,370 = Session 2's Q6 answer; 2,224 = Q6 without its priced-lane filter. The triaged file adds exactly that filter.</li>
 <li>Amber here means Warning, not inferred: this diagram has no reasoner in it. Red is the only thing that blocks.</li>
@@ -362,22 +362,22 @@ GATE: PASS, no violations.</code></pre></div>
 
 <!-- ==================================================================== 21 -->
 <section class="slide" data-label="Triage: rule wrong, or data wrong?" data-section="Rules as shapes" data-minutes="4">
-  <div class="lu-eyebrow">Writing the decision down</div>
-  <h2 class="lu-h2">Every triage decision lives next to its rule, with the evidence</h2>
+  <div class="lu-eyebrow">Recording the decision</div>
+  <h2 class="lu-h2">Write each triage decision next to its rule, with the evidence</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-code lu-code--sm" data-name="brunel-shapes.ttl · the band carrier rule, after triage"><pre><code>sh:property [
   sh:path ul:bandCarrier ; sh:class ul:Carrier ;
   sh:severity sh:Warning ;
-  rdfs:comment <span class="tok-str">"TRIAGE: data incomplete, the
-    conversion's fault. The Session 2 converter
-    types a carrier ul:Carrier only when it
-    carries an order, so the 7 carriers that
-    appear only in FreightRates are untyped,
-    1,209 bands. Fix it in the mapping
-    (Session 5); a Warning until then."</span> ] .</code></pre></div>
+  rdfs:comment <span class="tok-str">"TRIAGE: the data is incomplete
+    because of the conversion. The Session 2
+    converter gives the type ul:Carrier only to
+    carriers that have an order. The 7 carriers
+    that appear only in FreightRates have no
+    type, so 1,209 bands fail. Fix the mapping
+    in Session 5. A Warning until then."</span> ] .</code></pre></div>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Triage</dt><dd>Going through a report result by result, and deciding for each whether the rule or the data is wrong, and what to do.</dd></dl></div>
-      <div class="lu-callout"><span class="lu-callout__label">Three honest answers</span><p class="lu-sub"><b>Rule wrong:</b> change the rule. <b>Data wrong:</b> fix the source, keep the rule. <b>Known and accepted for now:</b> lower the severity, and say until when.</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">Three possible decisions</span><p class="lu-sub"><b>The rule is wrong:</b> change the rule. <b>The data is wrong:</b> fix the source and keep the rule. <b>We know about it and accept it for now:</b> lower the severity, and write until when.</p></div>
     </div>
   </div>
   <template data-notes><p>Four minutes. The comment is the real text in <code>brunel-shapes.ttl</code>; every triaged rule has one starting TRIAGE.</p>
@@ -388,18 +388,18 @@ GATE: PASS, no violations.</code></pre></div>
 <section class="slide slide--tint" data-label="Poll: violation or warning?" data-section="Rules as shapes" data-minutes="4" style="--lu-s5:12px">
   <div class="lu-eyebrow">Room poll · 45 seconds</div>
   <div class="lu-poll" data-qid="s4-poll" data-seconds="45" data-answer="b" data-label="How to treat the 1,370 orders in the rate table's gap">
-    <p class="lu-mcq__q">1,370 orders weigh an amount no rate band of their lane covers, because the rate table has a gap. What should the rule say?</p>
+    <p class="lu-mcq__q">1,370 orders have a weight that no rate band of their lane covers, because the rate table has a gap. What should the rule be?</p>
     <div class="lu-mcq__opts">
-      <button class="lu-mcq__opt" type="button" data-key="a">Keep it a Violation: the gate must stop them<span class="lu-mcq__why" hidden>The orders are correct; blocking every change until someone else fixes a price table stops all work.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="a">Keep it a Violation: the gate must stop them<span class="lu-mcq__why" hidden>The orders are correct. If we block every change until someone fixes the price table, nobody can work.</span></button>
       <button class="lu-mcq__opt" type="button" data-key="b">Make it a Warning, with a note on who fixes the table<span class="lu-mcq__why" hidden>Correct. The problem stays visible in every report, and work is not blocked.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="c">Delete the rule: the orders are fine<span class="lu-mcq__why" hidden>Then nobody ever sees the gap again, including whoever owns the rate table.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="c">Delete the rule: the orders are fine<span class="lu-mcq__why" hidden>Then nobody will see the gap again, not even the owner of the rate table.</span></button>
     </div>
   </div>
   <template data-notes><p>Forty five seconds, then I reveal the answer and we tally. I spend the rest on a and c: both are common in practice, and both are wrong for opposite reasons.</p></template>
 </section>
 
 <!-- ==================================================================== 23 -->
-<section class="slide" data-label="The cost of reaching for SPARQL too early" data-section="Rules as shapes" data-minutes="4">
+<section class="slide" data-label="The cost of using SPARQL too early" data-section="Rules as shapes" data-minutes="4">
   <div class="lu-eyebrow">Each shape timed alone, on the 9,215 orders</div>
   <h2 class="lu-h2" style="max-width:66ch">One SPARQL rule costs 28 times the whole core order shape</h2>
 
@@ -407,7 +407,7 @@ GATE: PASS, no violations.</code></pre></div>
     <div class="lu-stack" style="gap:var(--lu-s3)"><div class="lu-row" style="gap:var(--lu-s4);align-items:center"><span style="width:15ch"><b>Order shape</b><br><span class="lu-caption">core, 7 rules</span></span><span style="flex:1"><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:3.6%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">2.6 s</span></span></span></div><div class="lu-row" style="gap:var(--lu-s4);align-items:center"><span style="width:15ch"><b>Rate band shape</b><br><span class="lu-caption">core, 2 rules</span></span><span style="flex:1"><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:1.6%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">1.2 s</span></span></span></div><div class="lu-row" style="gap:var(--lu-s4);align-items:center"><span style="width:15ch"><b>Linked port</b><br><span class="lu-caption">SPARQL</span></span><span style="flex:1"><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:21.6%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">15.8 s</span></span></span></div><div class="lu-row" style="gap:var(--lu-s4);align-items:center"><span style="width:15ch"><b>Plant makes product</b><br><span class="lu-caption">SPARQL</span></span><span style="flex:1"><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:22.0%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">16.1 s</span></span></span></div><div class="lu-row" style="gap:var(--lu-s4);align-items:center"><span style="width:15ch"><b>Weight in a rate band</b><br><span class="lu-caption">SPARQL</span></span><span style="flex:1"><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:100.0%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">73.1 s</span></span></span></div></div>
     <div class="lu-stack">
       <div class="lu-callout"><span class="lu-callout__label">Why</span><p class="lu-sub">pySHACL runs a SPARQL rule once per focus node: 9,215 small queries. Session 2 answered the same weight question as one query in under 3 seconds.</p></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">The rule of thumb</span><p class="lu-sub">Write it in core SHACL if you can. Reach for SPARQL only when a rule compares a node with other nodes.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">The rule of thumb</span><p class="lu-sub">Use core SHACL when you can. Use SPARQL only when a rule must compare a node with other nodes.</p></div>
     </div>
   </div>
   <template data-notes><p>Four minutes. Real timings, pySHACL 0.40.1 in the course workspace (<code>reference-outputs/shape-timings.txt</code>); your laptop will differ, the ratio will not.</p>
@@ -424,7 +424,7 @@ GATE: PASS, no violations.</code></pre></div>
     <div class="lu-mcq__opts">
       <button class="lu-mcq__opt" type="button" data-key="a">Every order has exactly one carrier<span class="lu-mcq__why" hidden>Counting values: sh:minCount and sh:maxCount.</span></button>
       <button class="lu-mcq__opt" type="button" data-key="b">A band's lower bound is not above its upper bound<span class="lu-mcq__why" hidden>Two values of the same node: core, sh:lessThanOrEquals.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="c">An order's weight falls in a rate band of its lane<span class="lu-mcq__why" hidden>Correct: it has to find the bands of the lane, other nodes of the graph.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="c">An order's weight falls in a rate band of its lane<span class="lu-mcq__why" hidden>Correct: it must find the bands of the lane. Those are other nodes in the graph.</span></button>
       <button class="lu-mcq__opt" type="button" data-key="d">The service level is CRF, DTD or DTP<span class="lu-mcq__why" hidden>A list of values: sh:in.</span></button>
     </div>
   </div>
@@ -435,8 +435,8 @@ GATE: PASS, no violations.</code></pre></div>
 <section class="slide slide--night" data-chrome="none" data-label="Part 4 · Provenance and versions" data-section="Provenance" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 4 of 5 · about 17 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Order 1447296446.7 is carried by V44_3. Says who, and since when?</h2>
-    <p class="lu-lead" style="max-width:46ch">A triple without its history cannot be trusted, or fixed.</p>
+    <h2 class="lu-display-xl" style="max-width:26ch">Order 1447296446.7 is carried by V44_3. Who says so, and since when?</h2>
+    <p class="lu-lead" style="max-width:46ch">If we do not know the history of a triple, we cannot trust it and we cannot fix it.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -444,8 +444,8 @@ GATE: PASS, no violations.</code></pre></div>
 <!-- ==================================================================== 26 -->
 <section class="slide" data-label="PROV-O: entity, activity, agent" data-section="Provenance" data-minutes="5">
   <div class="lu-eyebrow">Provenance, drawn</div>
-  <h2 class="lu-h2">Three kinds of thing answer &ldquo;where from, how, and who&rdquo;</h2>
-  <div class="lu-walk" data-label="Provenance of the OrderList graph"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 190, "nodes": [{"id": "g", "label": "Entity · named graph OrderList\n119,844 triples", "x": 290, "y": 40, "w": 470, "h": 62, "kind": "individual"}, {"id": "f", "label": "Entity · file OrderList.csv", "x": 290, "y": 155, "w": 470, "h": 56, "kind": "individual"}, {"id": "r", "label": "Activity · conversion run\nended 2026-09-25 01:31 UTC", "x": 860, "y": 155, "w": 380, "h": 62, "kind": "individual"}, {"id": "p", "label": "Agent · program\nconvert_to_rdf.py", "x": 1250, "y": 40, "w": 300, "h": 62, "kind": "builtin"}], "edges": [{"id": "a", "from": "g", "to": "f", "label": "was derived from"}, {"id": "b", "from": "g", "to": "r", "label": "was generated by", "route": "elbow", "sides": ["right", "top"]}, {"id": "c", "from": "r", "to": "f", "label": "used"}, {"id": "d", "from": "r", "to": "p", "label": "associated with", "route": "elbow", "sides": ["right", "bottom"]}], "steps": [{"show": ["g", "f", "a"], "run": ["a"], "set": {"g": "active"}}, {"show": ["r", "b", "c"], "run": ["b", "c"], "set": {"g": "idle", "r": "active"}}, {"show": ["p", "d"], "run": ["d"], "set": {"r": "idle", "p": "active"}}], "legend": {"individual": "Recorded provenance", "builtin": "Program"}}</script></div><div data-walk-step="1" data-caption-short="Where it came from" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; An &lt;b&gt;entity&lt;/b&gt; is a thing: the named graph OrderList was derived from another entity, the file OrderList.csv."></div><div data-walk-step="2" data-caption-short="How and when" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; An &lt;b&gt;activity&lt;/b&gt; is something that happened: a conversion run used the file and generated the graph."></div><div data-walk-step="3" data-caption-short="Who" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; An &lt;b&gt;agent&lt;/b&gt; is responsible: here a program, Session 2&#x27;s convert_to_rdf.py, recorded with its checksum."></div></div></div>
+  <h2 class="lu-h2">Three kinds of thing answer: where did it come from, how was it made, and who did it?</h2>
+  <div class="lu-walk" data-label="Provenance of the OrderList graph"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 190, "nodes": [{"id": "g", "label": "Entity · named graph OrderList\n119,844 triples", "x": 290, "y": 40, "w": 470, "h": 62, "kind": "individual"}, {"id": "f", "label": "Entity · file OrderList.csv", "x": 290, "y": 155, "w": 470, "h": 56, "kind": "individual"}, {"id": "r", "label": "Activity · conversion run\nended 2026-09-25 01:31 UTC", "x": 860, "y": 155, "w": 380, "h": 62, "kind": "individual"}, {"id": "p", "label": "Agent · program\nconvert_to_rdf.py", "x": 1250, "y": 40, "w": 300, "h": 62, "kind": "builtin"}], "edges": [{"id": "a", "from": "g", "to": "f", "label": "was derived from"}, {"id": "b", "from": "g", "to": "r", "label": "was generated by", "route": "elbow", "sides": ["right", "top"]}, {"id": "c", "from": "r", "to": "f", "label": "used"}, {"id": "d", "from": "r", "to": "p", "label": "associated with", "route": "elbow", "sides": ["right", "bottom"]}], "steps": [{"show": ["g", "f", "a"], "run": ["a"], "set": {"g": "active"}}, {"show": ["r", "b", "c"], "run": ["b", "c"], "set": {"g": "idle", "r": "active"}}, {"show": ["p", "d"], "run": ["d"], "set": {"r": "idle", "p": "active"}}], "legend": {"individual": "Recorded provenance", "builtin": "Program"}}</script></div><div data-walk-step="1" data-caption-short="Where it came from" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; An &lt;b&gt;entity&lt;/b&gt; is a thing. The named graph OrderList was derived from another entity: the file OrderList.csv."></div><div data-walk-step="2" data-caption-short="How and when" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; An &lt;b&gt;activity&lt;/b&gt; is something that happened: a conversion run used the file and generated the graph."></div><div data-walk-step="3" data-caption-short="Who" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; An &lt;b&gt;agent&lt;/b&gt; is who or what is responsible. Here the agent is a program: convert_to_rdf.py from Session 2. We record its checksum, a short code that identifies the exact file."></div></div></div>
   <div class="lu-split">
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Provenance</dt><dd>The record of where data came from, who produced it, and how.</dd></dl></div>
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Also defined here</span><dl class="lu-defs"><dt>PROV-O</dt><dd>The W3C ontology for writing provenance as triples: entities, activities, agents.</dd></dl></div>
@@ -458,7 +458,7 @@ GATE: PASS, no violations.</code></pre></div>
 <!-- ==================================================================== 27 -->
 <section class="slide" data-label="Asking where a fact came from" data-section="Provenance" data-minutes="4">
   <div class="lu-eyebrow">Provenance is queryable</div>
-  <h2 class="lu-h2">One SPARQL query walks from a triple to its file, its run and its time</h2>
+  <h2 class="lu-h2">One SPARQL query goes from a triple to its file, its run and its time</h2>
   <div class="lu-split">
     <div class="lu-code lu-code--sm" data-name="add_provenance.py · the question"><pre><code><span class="tok-kw">SELECT</span> <span class="tok-var">?g</span> <span class="tok-var">?file</span> <span class="tok-var">?run</span> <span class="tok-var">?time</span> <span class="tok-kw">WHERE</span> {
   <span class="tok-kw">GRAPH</span> <span class="tok-var">?g</span> {
@@ -474,7 +474,7 @@ file      OrderList.csv
 run       run/brunel/
             convert-20260925T013112Z
 finished  2026-09-25T01:31:12+00:00</code></pre></div>
-      <div class="lu-callout"><span class="lu-callout__label">Why it matters today</span><p class="lu-sub">When triage says &ldquo;data wrong&rdquo;, this is how you find which file to fix, and prove later which run fixed it.</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">Why it matters today</span><p class="lu-sub">If triage says &ldquo;the data is wrong&rdquo;, this query shows which file to fix. Later it proves which run fixed it.</p></div>
     </div>
   </div>
   <template data-notes><p>Four minutes. I read the answer aloud as a sentence: the fact came from OrderList.csv, through this run, finished at this time.</p>
@@ -483,7 +483,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
 
 <!-- ==================================================================== 28 -->
 <section class="slide" data-label="Versioning the ontology" data-section="Provenance" data-minutes="4">
-  <div class="lu-eyebrow">Release discipline</div>
+  <div class="lu-eyebrow">Releasing an ontology</div>
   <h2 class="lu-h2">The ontology IRI names the ontology. A version IRI names one release of it.</h2>
   <div class="lu-code lu-code--sm" data-name="python version_ontology.py · the Session 3 ontology, released as 1.0.0"><pre><code>&lt;https://ul.edu.lb/kr/scm#&gt; <span class="tok-kw">a</span> owl:Ontology ;
   owl:versionIRI &lt;https://ul.edu.lb/kr/scm/1.0.0&gt; ; <span class="tok-com"># new</span>
@@ -493,7 +493,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
       ontology/supplychain/SupplyChain/&gt; .</code></pre></div>
   <div class="lu-split">
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Version IRI</dt><dd>The name of one release of an ontology (<code>owl:versionIRI</code>), next to the ontology IRI that names all its releases.</dd></dl></div>
-    <div class="lu-callout"><span class="lu-callout__label">Why shapes need it</span><p class="lu-sub">Shapes are written against one release. Import the version IRI you validated against, and a later change to the ontology cannot silently break your checks.</p></div>
+    <div class="lu-callout"><span class="lu-callout__label">Why shapes need it</span><p class="lu-sub">Shapes are written for one release of the ontology. Import the version IRI that you validated against. Then a later change to the ontology cannot break your checks without you noticing.</p></div>
   </div>
   <template data-notes><p>Four minutes. Real run: the Session 3 reference file had no version IRI at all (176 triples); the release has 178 (<code>reference-outputs/version-ontology.txt</code>). The script writes a new file; Session 3's file is not changed.</p>
 <ul><li>The next release gets a new version IRI and points back with <code>owl:priorVersion</code>. Milestone 1 asks each team for exactly this on its own ontology.</li></ul></template>
@@ -518,8 +518,8 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
 <section class="slide slide--night" data-chrome="none" data-label="Part 5 · Reuse and the gate" data-section="Reuse and the gate" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 5 of 5 · about 17 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Who stops the next bad triple before it reaches the graph?</h2>
-    <p class="lu-lead" style="max-width:46ch">Not a person. A check that runs on every change.</p>
+    <h2 class="lu-display-xl" style="max-width:26ch">Who stops the next bad triple before it enters the graph?</h2>
+    <p class="lu-lead" style="max-width:46ch">Not a person. An automatic check that runs on every change.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -540,7 +540,7 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
     xsd:dateTimeStamp"</span> .</code></pre></div>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>EPCIS</dt><dd>GS1's standard for recording supply chain events: what was seen, where, when and why.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Licence</span><p class="lu-sub">Its <code>LICENSE</code> file is GS1's intellectual property disclaimer, not an open source licence. Borrow the patterns; read GS1's policy before shipping the file.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Licence</span><p class="lu-sub">The <code>LICENSE</code> file is a GS1 legal notice about intellectual property. It is not an open source licence. Copy the ideas, not the file. Read GS1's policy before you publish it.</p></div>
     </div>
   </div>
   <template data-notes><p>Four minutes. Counted on 2026-09-25 from <code>https://ref.gs1.org/standards/epcis/epcis-shacl.ttl</code> (the same file as <code>Ontology/EPCIS-SHACL.ttl</code> in github.com/gs1/EPCIS); <code>python fetch_epcis.py</code> downloads it and prints the same counts.</p>
@@ -550,8 +550,8 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
 
 <!-- ==================================================================== 32 -->
 <section class="slide" data-label="Three patterns worth borrowing" data-section="Reuse and the gate" data-minutes="4">
-  <div class="lu-eyebrow">What EPCIS does that our first draft did not</div>
-  <h2 class="lu-h2" style="max-width:66ch">Three habits from a real standard, each one line of Turtle</h2>
+  <div class="lu-eyebrow">What EPCIS does that our first draft did not do</div>
+  <h2 class="lu-h2" style="max-width:66ch">Three good habits from a real standard. Each one needs only one line of Turtle.</h2>
 
   <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)"><div class="lu-card"><span class="lu-card__label">1 · Write a rule once, reuse it by name</span><div class="lu-code lu-code--sm" data-name="27 property shapes used by 2 to 5 node shapes"><pre><code>epcis:ObjectEventShape
   sh:property
@@ -561,12 +561,12 @@ epcis:AggregationEventShape
     epcis:EventTimeShape ;</code></pre></div><p class="lu-sub">Our order and late order rules could share one carrier rule the same way.</p></div><div class="lu-card"><span class="lu-card__label">2 · Say what must not be there</span><div class="lu-code lu-code--sm" data-name="13 &ldquo;forbidden&rdquo; shapes"><pre><code>epcis:
  ChildEPCsForbiddenShape
   sh:path epcis:childEPCs ;
-  sh:maxCount <span class="tok-num">0</span> .</code></pre></div><p class="lu-sub"><code>sh:maxCount 0</code> forbids a property: EPCIS keeps fields out of the event types where they make no sense.</p></div><div class="lu-card"><span class="lu-card__label">3 · A message a person can act on</span><div class="lu-code lu-code--sm" data-name="77 shapes carry one"><pre><code>sh:message
+  sh:maxCount <span class="tok-num">0</span> .</code></pre></div><p class="lu-sub"><code>sh:maxCount 0</code> forbids a property. EPCIS uses it to keep fields out of event types where they make no sense.</p></div><div class="lu-card"><span class="lu-card__label">3 · A message a person can act on</span><div class="lu-code lu-code--sm" data-name="77 shapes carry one"><pre><code>sh:message
  <span class="tok-str">"childEPCs should not
   appear within
   ObjectEvent,
   TransactionEvent or
-  TransformationEvent"</span></code></pre></div><p class="lu-sub">A report is read by whoever fixes the data. Write the fix into the message.</p></div></div>
+  TransformationEvent"</span></code></pre></div><p class="lu-sub">A person reads the report and fixes the data. Put the fix in the message.</p></div></div>
   <template data-notes><p>Four minutes. All three counts from the real file (27 reused shapes, 13 forbidden shapes, 77 messages). The syllabus asks you to note three patterns worth borrowing: these are the three.</p>
 <ul><li>Pattern 2 is new to most people: SHACL can forbid, not only require.</li></ul></template>
 </section>
@@ -576,7 +576,7 @@ epcis:AggregationEventShape
   <div class="lu-eyebrow">One slide for the tool</div>
   <h2 class="lu-h2">shacl-play validates in the browser: paste the data, paste the shapes, read the report</h2>
   <div class="lu-split lu-split--wide-left">
-    <figure class="lu-figure" style="margin:0"><div class="lu-figure__ph"><span class="lu-figure__ph-title">Screenshot: shacl-play's report for the broken CI sample</span><span class="lu-figure__ph-note">On shacl-play.sparna.fr/play/validate: paste <code>ci/sample-orders-broken.ttl</code> as data and <code>brunel-shapes.ttl</code> as shapes, press Validate. Capture the report page showing 1 Violation on order 1447385217.7, save as <code>assets/img/s4-shacl-play-report.png</code>.</span></div><figcaption>shacl-play (v0.12.4 on 2026-09-25) runs TopQuadrant's SHACL engine, a second implementation next to pySHACL.</figcaption></figure>
+    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Try it in four steps</span><p class="lu-sub"><ol class="lu-list lu-list--num"><li>Open <b>shacl-play.sparna.fr/play/validate</b>.</li><li>Paste <code>ci/sample-orders-broken.ttl</code> as the <b>data</b>.</li><li>Paste <code>brunel-shapes.ttl</code> as the <b>shapes</b>.</li><li>Press <b>Validate</b>. You should see 1 Violation, on order 1447385217.7.</li></ol><p class="lu-caption">shacl-play (v0.12.4 on 2026-09-25) uses TopQuadrant's SHACL engine, a second implementation next to pySHACL.</p></p></div>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Use it for</span><p class="lu-sub">Trying one shape on a small file, and showing a report to someone who will not install Python.</p></div>
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Not for</span><p class="lu-sub">The full 6 megabyte graph, or a gate. The gate is a script in the repository.</p></div>
@@ -590,13 +590,13 @@ epcis:AggregationEventShape
 <!-- ==================================================================== 34 -->
 <section class="slide" data-label="The gate blocking a bad commit" data-section="Reuse and the gate" data-minutes="5">
   <div class="lu-eyebrow">A real run on GitHub</div>
-  <h2 class="lu-h2">Every push runs the shapes. One wrong character turns the run red.</h2>
-  <div class="lu-walk" data-label="A bad commit, stopped"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 130, "nodes": [{"id": "c", "label": "a push changes one value:\nV444_0 typed V444_O", "x": 200, "y": 45, "w": 360, "h": 70, "kind": "builtin"}, {"id": "a", "label": "GitHub Actions\nruns validate.py", "x": 580, "y": 45, "w": 290, "h": 70, "kind": "builtin"}, {"id": "r", "label": "1 Violation: Class\non carried by", "x": 930, "y": 45, "w": 300, "h": 70, "kind": "builtin", "flag": "bottom"}, {"id": "m", "label": "exit code 1:\nred run, no merge", "x": 1290, "y": 45, "w": 290, "h": 70, "kind": "builtin", "flag": "bottom"}], "edges": [{"id": "x", "from": "c", "to": "a", "label": ""}, {"id": "y", "from": "a", "to": "r", "label": ""}, {"id": "z", "from": "r", "to": "m", "label": ""}], "steps": [{"show": ["c"], "set": {"c": "active"}}, {"show": ["a", "x"], "run": ["x"], "set": {"c": "idle", "a": "active"}}, {"show": ["r", "y"], "run": ["y"], "set": {"a": "idle", "r": "impossible"}}, {"show": ["m", "z"], "run": ["z"], "set": {"m": "impossible"}}], "legend": {"builtin": "Step of the gate", "impossible": "Blocked"}, "flags": {"impossible": "blocked"}}</script></div><div data-walk-step="1" data-caption-short="One typo" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A commit changes one character: order 1447385217.7 is carried by V444_O (letter O), not V444_0 (zero). Nobody would see it in a spreadsheet."></div><div data-walk-step="2" data-caption-short="The check runs" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The push starts the workflow &lt;code&gt;shacl-gate.yml&lt;/code&gt;: GitHub installs pySHACL and runs &lt;code&gt;validate.py&lt;/code&gt; on the sample orders."></div><div data-walk-step="3" data-caption-short="The report" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; V444_O is not a Carrier: one Violation, Class on &lt;b&gt;carried by&lt;/b&gt;."></div><div data-walk-step="4" data-caption-short="Blocked" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; The script exits with code 1, so GitHub marks the run red. A red pull request is not merged."></div></div></div>
+  <h2 class="lu-h2">Every push runs the shapes. One wrong character makes the run fail (red).</h2>
+  <div class="lu-walk" data-label="A bad commit, stopped"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 130, "nodes": [{"id": "c", "label": "a push changes one value:\nV444_0 typed V444_O", "x": 200, "y": 45, "w": 360, "h": 70, "kind": "builtin"}, {"id": "a", "label": "GitHub Actions\nruns validate.py", "x": 580, "y": 45, "w": 290, "h": 70, "kind": "builtin"}, {"id": "r", "label": "1 Violation: Class\non carried by", "x": 930, "y": 45, "w": 300, "h": 70, "kind": "builtin", "flag": "bottom"}, {"id": "m", "label": "exit code 1:\nred run, no merge", "x": 1290, "y": 45, "w": 290, "h": 70, "kind": "builtin", "flag": "bottom"}], "edges": [{"id": "x", "from": "c", "to": "a", "label": ""}, {"id": "y", "from": "a", "to": "r", "label": ""}, {"id": "z", "from": "r", "to": "m", "label": ""}], "steps": [{"show": ["c"], "set": {"c": "active"}}, {"show": ["a", "x"], "run": ["x"], "set": {"c": "idle", "a": "active"}}, {"show": ["r", "y"], "run": ["y"], "set": {"a": "idle", "r": "impossible"}}, {"show": ["m", "z"], "run": ["z"], "set": {"m": "impossible"}}], "legend": {"builtin": "Step of the gate", "impossible": "Blocked"}, "flags": {"impossible": "blocked"}}</script></div><div data-walk-step="1" data-caption-short="One typo" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A commit changes one character: order 1447385217.7 is carried by V444_O (letter O), not V444_0 (zero). Nobody would notice it in a spreadsheet."></div><div data-walk-step="2" data-caption-short="The check runs" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The push starts the workflow &lt;code&gt;shacl-gate.yml&lt;/code&gt;: GitHub installs pySHACL and runs &lt;code&gt;validate.py&lt;/code&gt; on the sample orders."></div><div data-walk-step="3" data-caption-short="The report" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; V444_O is not a Carrier: one Violation, Class on &lt;b&gt;carried by&lt;/b&gt;."></div><div data-walk-step="4" data-caption-short="Blocked" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; The script ends with exit code 1, so GitHub marks the run red. A pull request (a request to add a change) with a red run is not merged."></div></div></div>
   <div class="lu-split">
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Validation gate</dt><dd>A check every change must pass before it is accepted; here, validation with no Violation.</dd></dl></div>
     <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Open both runs</span><p class="lu-sub"><a href="https://github.com/ahmabboud/course_knowledge_representation/actions/runs/36143360459">Red: branch demo/broken-carrier-code</a> · <a href="https://github.com/ahmabboud/course_knowledge_representation/actions/runs/36143273457">Green: main</a>. Same shapes, same six orders, one value different.</p></div>
   </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>GitHub Actions</b> GitHub&#x27;s service that runs checks automatically on every push; a failed check marks the commit red.</span></p>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>GitHub Actions</b> GitHub&#x27;s service that runs checks automatically on every push. If a check fails, the commit is marked red.</span></p>
   <template data-notes><p>Five minutes. I open the red run live and click into the failed step: the report printed there is the same as <code>python validate.py --data ci/sample-orders-broken.ttl</code> on a laptop.</p>
 <ul><li>Both runs are real (2026-09-25, <code>reference-outputs/ci-runs.txt</code>). The demo branch is kept on purpose and never merged.</li>
 <li>Why a sample: the gate runs on six real orders (515 triples) in a second. The full graph is 6 megabytes and takes about two minutes; your team decides what its gate checks.</li></ul></template>
@@ -633,7 +633,7 @@ epcis:AggregationEventShape
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Validate, triage, gate" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 55 minutes · on your own machine</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Our graph has 3,435 problems. Which ones are yours to fix?</h2>
+    <h2 class="lu-display-xl" style="max-width:26ch">Our graph has 3,435 reported problems. Which of them really need to be fixed?</h2>
     <p class="lu-lead" style="max-width:46ch">Then see three shapes work, and watch a gate stop a typo.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
@@ -642,7 +642,7 @@ epcis:AggregationEventShape
 <!-- ==================================================================== 37 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">Hands-on lab · about 55 minutes</div>
-  <h2 class="lu-h2" style="max-width:66ch">The real graph, the real report, and three shapes of your own.</h2>
+  <h2 class="lu-h2" style="max-width:66ch">The real graph and the real report. Optional: three shapes of your own.</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <ol class="lu-list lu-list--num">
@@ -652,7 +652,7 @@ epcis:AggregationEventShape
     </ol>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Nothing to hand in</span><p class="lu-sub">The lab is for understanding. The README in <code>demos/session-04-shacl/</code> says what to expect at each step and what to take to your project.</p></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">If the big graph is slow</span><p class="lu-sub">Each full run takes about two minutes. Short of time? Use <code>--data ci/sample-orders.ttl</code>: the same shapes on six real orders, in a second.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">If the big graph is too slow</span><p class="lu-sub">A full run takes about two minutes. If you have little time, use <code>--data ci/sample-orders.ttl</code>. It runs the same shapes on six real orders in about one second.</p></div>
     </div>
   </div>
   <template data-notes><p>Three minutes, then I walk the room. Most common blocker: <code>brunel.ttl</code> missing, because Session 2's <code>convert_to_rdf.py</code> was never run on this laptop; <code>validate.py</code> says so in one line.</p>
@@ -682,9 +682,9 @@ epcis:AggregationEventShape
     <div class="lu-stack">
       <h2 class="lu-h2">Three questions, the last one about your own data</h2>
       <ol class="lu-list lu-list--num">
-        <li>Pick one Session 1 rule OWL could state as an axiom. Should it live in the ontology, in the shapes, or both?</li>
-        <li>The 1,370 orders in the rate table's gap: who fixes what, and how would the report show it is fixed?</li>
-        <li>Name two rules in your team's data: which are core, which need SPARQL, and what severity each gets.</li>
+        <li>Choose one rule from Session 1 that OWL could state as an axiom. Where should it be: in the ontology, in the shapes, or in both?</li>
+        <li>The 1,370 orders in the gap of the rate table: who fixes what? How will the report show that it is fixed?</li>
+        <li>Choose two rules from your team's data. For each one: is it core SHACL, or does it need SPARQL? What severity does it get?</li>
       </ol>
     </div>
     <div class="lu-card">
@@ -696,7 +696,7 @@ epcis:AggregationEventShape
         <li>Provenance for your data</li>
         <li>A gate that blocks a bad commit</li>
       </ul>
-      <p class="lu-caption">For feedback only: the project is graded once, at the end. Read before you push: Allemang, Hendler and Gandon on RDFS and SHACL, and on good and bad modeling practices; Hogan et al., Chapter 7.</p>
+      <p class="lu-caption">For feedback only: the project is graded once, at the end. Reading: Allemang, Hendler and Gandon on RDFS and SHACL, and on good and bad modelling practice; Hogan et al., Chapter 7.</p>
     </div>
   </div>
   <template data-notes><p>Ten minutes: five on the questions, five on Milestone 1. Question 1 has no single answer: a rule that must hold for reasoning (a domain) belongs in OWL; a rule about what the data must contain belongs in the shapes. Many teams will say both, and should say why.</p>
@@ -707,7 +707,7 @@ epcis:AggregationEventShape
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
-<div class="lu-split" style="margin-top:var(--lu-s2)"><dl class="lu-defs"><dt>SHACL</dt><dd>Rules the data must obey, checked.</dd><dt>Shape · target</dt><dd>A set of rules · the nodes it checks.</dd><dt>Focus node</dt><dd>The node being checked.</dd><dt>Node · property shape</dt><dd>About a node · about one property.</dd><dt>Validation report</dt><dd>One result per broken rule.</dd><dt>Severity</dt><dd>Violation, Warning or Info.</dd><dt>SHACL-SPARQL</dt><dd>A rule written as a query.</dd></dl><dl class="lu-defs"><dt>Triage</dt><dd>Rule wrong, or data wrong?</dd><dt>Provenance · PROV-O</dt><dd>Where data came from · as triples.</dd><dt>Version IRI</dt><dd>The name of one release.</dd><dt>Validation gate</dt><dd>No Violation, or no merge.</dd><dt>CI · GitHub Actions</dt><dd>Checks on every push · GitHub's.</dd><dt>EPCIS</dt><dd>GS1's supply chain event standard.</dd><dt>Open · closed world</dt><dd>Missing is unknown · missing is false.</dd></dl></div>
+<div class="lu-split" style="margin-top:var(--lu-s2)"><dl class="lu-defs"><dt>SHACL</dt><dd>Rules the data must obey, checked.</dd><dt>Shape · target</dt><dd>A set of rules · the nodes it checks.</dd><dt>Focus node</dt><dd>The node being checked.</dd><dt>Node · property shape</dt><dd>About a node · about one property.</dd><dt>Validation report</dt><dd>One result per broken rule.</dd><dt>Severity</dt><dd>Violation, Warning or Info.</dd><dt>SHACL-SPARQL</dt><dd>A rule written as a query.</dd></dl><dl class="lu-defs"><dt>Triage</dt><dd>Is the rule wrong, or is the data wrong?</dd><dt>Provenance · PROV-O</dt><dd>Where data came from · how to write it as triples.</dd><dt>Version IRI</dt><dd>The name of one release.</dd><dt>Validation gate</dt><dd>A check that every change must pass.</dd><dt>CI · GitHub Actions</dt><dd>Automatic checks on every push · GitHub's service for them.</dd><dt>EPCIS</dt><dd>GS1's supply chain event standard.</dd><dt>Open · closed world</dt><dd>Missing is unknown · missing is false.</dd></dl></div>
   <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
@@ -717,16 +717,16 @@ epcis:AggregationEventShape
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
       <h2 class="lu-h2">One sentence to leave with.</h2>
-      <p class="lu-statement">A rule nobody runs is a wish. A shape in a gate is a rule that holds.</p>
-      <div class="lu-callout"><span class="lu-callout__label">Before Session 5</span><p class="lu-sub">Sequeda and Lassila, Chapters 2 and 3 (designing enterprise knowledge graphs, mapping design patterns); Kejriwal et al., Chapter 8. Bring the 1,209 untyped bands: Session 5's mapping is where they get fixed.</p></div>
+      <p class="lu-statement">A rule that nobody runs is only a wish. A shape in a gate is a rule that is enforced.</p>
+      <div class="lu-callout"><span class="lu-callout__label">Before Session 5</span><p class="lu-sub">Reading: Sequeda and Lassila, Chapters 2 and 3 (designing enterprise knowledge graphs, mapping design patterns); Kejriwal et al., Chapter 8. Remember the 1,209 bands without a carrier type: we fix them in the Session 5 mapping.</p></div>
     </div>
     <div class="lu-stack">
       <div class="lu-card">
         <span class="lu-card__label">Next session</span>
         <h3 class="lu-h3">Session 5 · Integrating operational data</h3>
-        <p class="lu-sub">Today the graph came from files. Next week it comes from a live database, through mappings, and today's shapes check what the mappings produce.</p>
+        <p class="lu-sub">Today the graph came from files. Next week it comes from a live database through mappings. Today's shapes will check what the mappings produce.</p>
       </div>
-      <div class="lu-row"><span class="lu-tag lu-tag--green">For your team</span><span class="lu-caption" style="flex:1">Milestone 1, a checkpoint for feedback, not graded, is pushed at the end of today. Copy the gate first; it catches the rest.</span></div>
+      <div class="lu-row"><span class="lu-tag lu-tag--green">For your team</span><span class="lu-caption" style="flex:1">Milestone 1, a checkpoint for feedback, not graded, is pushed at the end of today. Copy the gate first. After that, it catches the other errors for you.</span></div>
     </div>
   </div>
   <template data-notes><p>Two minutes. I end on the sentence.</p></template>
@@ -741,7 +741,7 @@ epcis:AggregationEventShape
       <div data-score></div>
     </div>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Studying alone?</span><p class="lu-sub">Press <kbd>S</kbd> for study mode: every definition shows inline, every reveal opens, every diagram shows its last step.</p></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Studying alone?</span><p class="lu-sub">Press <kbd>S</kbd> for study mode: it shows every definition, opens every hidden answer, and shows the last step of every diagram.</p></div>
       <p class="lu-caption"><kbd>O</kbd> contents · <kbd>/</kbd> search · <kbd>?</kbd> all shortcuts. Answers are stored in this browser only.</p>
     </div>
   </div>
