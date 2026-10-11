@@ -109,7 +109,7 @@ window.LU_GLOSSARY = [
 {"term": "Entailment", "def": "A fact that follows from the stated facts and rules, even though nobody wrote it down.", "session": 2, "scope": "deck", "forms": [{"text": "Entailment", "fixed": false}]},
 {"term": "Constraint", "def": "A rule that data must obey; breaking it is reported as an error.", "session": 2, "link": false},
 {"term": "SPARQL", "def": "The query language for RDF graphs.", "session": 2, "forms": [{"text": "SPARQL", "fixed": true}]},
-{"term": "FILTER NOT EXISTS", "def": "In SPARQL: keep a result only if the pattern in the braces finds nothing for it. It finds what is missing.", "session": 2, "forms": [{"text": "FILTER NOT EXISTS", "fixed": true}]},
+{"term": "FILTER NOT EXISTS", "def": "In SPARQL, it checks each result row. If the pattern in the braces matches anything, the row is removed. If nothing matches, the row is kept. It finds what is missing.", "session": 2, "forms": [{"text": "FILTER NOT EXISTS", "fixed": true}]},
 {"term": "Triple pattern", "def": "A triple with some parts replaced by variables, the basic unit of a SPARQL query.", "session": 2, "forms": [{"text": "Triple pattern", "fixed": false}]},
 {"term": "Variable", "def": "A placeholder in a query, written <code>?name</code>, filled by every match.", "session": 2, "link": false},
 {"term": "Aggregation", "def": "Combining many matches into one number: COUNT, SUM, AVG, grouped by something.", "session": 2, "scope": "deck", "forms": [{"text": "Aggregation", "fixed": false}]},

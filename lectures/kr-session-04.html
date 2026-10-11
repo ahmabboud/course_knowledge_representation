@@ -430,7 +430,7 @@ sh:sparql [ sh:select """
       }""" ] .</code></pre></div>
       <p class="lu-caption">It reports an order when its plant is not linked to its port. On Brunel: <b>0 of 9,215</b> orders.</p>
     </div>
-    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>SHACL-SPARQL</dt><dd>A SHACL rule written as a query. Each row it returns is one result.</dd><dt>$this</dt><dd>The order being checked, one at a time.</dd><dt><code>sh:prefixes</code></dt><dd>Says what <code>ul:</code> means.</dd><dt><code>FILTER NOT EXISTS</code></dt><dd>From Session 2: keep a row only if the pattern in the braces finds nothing for it.</dd></dl></div>
+    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>SHACL-SPARQL</dt><dd>A SHACL rule written as a query. Each row it returns is one result.</dd><dt>$this</dt><dd>The order being checked, one at a time.</dd><dt><code>sh:prefixes</code></dt><dd>Says what <code>ul:</code> means.</dd><dt><code>FILTER NOT EXISTS</code></dt><dd>From Session 2. It checks each result row. If the pattern in the braces matches anything, the row is removed. If nothing matches, the row is kept.</dd></dl></div>
   </div>
   <template data-notes><p>Five minutes. I read the query as a sentence: find this order's plant and port, and return the order if the plant has no link to that port.</p>
 <ul><li>A query returns problems, not matches: an empty result is good news. That surprises people who write SELECT to find what they want.</li>
