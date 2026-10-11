@@ -18,7 +18,7 @@
   data-deck-id="kr-s05"
   data-course="Knowledge Representation"
   data-session="Session 5 of 8"
-  data-duration="187"
+  data-duration="191"
   data-app-root="../"
   data-unit="Lebanese University · MSc">
 
@@ -439,6 +439,16 @@ ontop query \
 </section>
 
 <!-- ==================================================================== 27 -->
+<section class="slide" data-label="From data to a working system" data-section="Virtualize" data-minutes="4">
+  <div class="lu-eyebrow">Where each layer lives</div>
+  <h2 class="lu-h2">Every layer is a file in git or a service. This is the whole picture.</h2>
+  <table class="lu-table lu-fits"><thead><tr><th>Layer</th><th>Lives in</th><th>In our labs</th><th>In industry (examples)</th></tr></thead><tbody><tr><td>Data graph</td><td>a triple store, or virtual</td><td>Fuseki</td><td>GraphDB, Stardog, Neptune, Virtuoso</td></tr><tr><td>Mapping</td><td>a file in git</td><td>Morph-KGC, Ontop</td><td>Ontop, RML tools</td></tr><tr><td>Ontology</td><td>a file in git; Protégé is the editor</td><td>Protégé, ELK</td><td>WebProtégé, TopBraid</td></tr><tr><td>Shapes</td><td>a file in git</td><td>pySHACL</td><td>TopBraid, GraphDB, Stardog</td></tr><tr><td>Checks and release</td><td>CI and containers</td><td>GitHub Actions, Docker Compose</td><td>GitLab CI, Kubernetes</td></tr></tbody></table><style>.lu-fits td,.lu-fits th{padding-top:var(--lu-s2);padding-bottom:var(--lu-s2)}</style>
+  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">An interactive map</span><p class="lu-sub">Click each layer to see what it is, whether you need it, and where it lives: <a href="../guide/from-data-to-system.html">From data to a working system</a>. The tool names are examples, not a ranking.</p></div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Docker Compose</b> Docker&#x27;s tool for starting several containers together from one file.</span></p>
+  <template data-notes><p>Four minutes. This is the first point where students have seen every storage choice: a stored graph, a virtual graph, and files in git. I show the guide page and click through two layers. The ontology and the shapes are files in git; the graph is rebuilt from the data.</p></template>
+</section>
+
+<!-- ==================================================================== 28 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 5 · Entity resolution" data-section="Entity resolution" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 5 of 5 · about 24 minutes</div>
@@ -448,7 +458,7 @@ ontop query \
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 28 -->
+<!-- ==================================================================== 29 -->
 <section class="slide" data-label="Same customer, two systems" data-section="Entity resolution" data-minutes="5">
   <div class="lu-eyebrow">Teaching data, built on purpose</div>
   <h2 class="lu-h2">A second system writes the customer codes differently, as real systems often do</h2>
@@ -463,7 +473,7 @@ ontop query \
 <ul><li>Checked first: DataCo and Brunel share no entities, Brunel's codes are anonymised and unique, and DataCo's names are personal data we never show.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 29 -->
+<!-- ==================================================================== 30 -->
 <section class="slide" data-label="Clean first, then block" data-section="Entity resolution" data-minutes="4">
   <div class="lu-eyebrow">Two cheap steps before any scoring</div>
   <h2 class="lu-h2">Cleaning fixes the easy drift. Blocking skips pairs that cannot match.</h2>
@@ -483,7 +493,7 @@ ontop query \
   <template data-notes><p>Four minutes. Blocking saves little here, because 41 of the 46 customers have the same home plant, PLANT03. At DataCo's 180,519 order lines, comparing every pair is impossible without it.</p></template>
 </section>
 
-<!-- ==================================================================== 30 -->
+<!-- ==================================================================== 31 -->
 <section class="slide" data-label="Evidence adds up: match weights" data-section="Entity resolution" data-minutes="5">
   <div class="lu-eyebrow">Fellegi and Sunter, 1969</div>
   <h2 class="lu-h2">Each comparison adds evidence for &ldquo;same customer&rdquo;, or against it</h2>
@@ -497,7 +507,7 @@ ontop query \
   <template data-notes><p>Five minutes. The weights are stated in <code>er/match_customers.py</code>; Splink, the tool named in the syllabus, estimates them from the data, for the same model, at scale. A pair's score is the sum of its weights. Exact code, same plant, same service: 9.2 + 0.2 + 1.2, about 10.6. A close code with both the same: 4.1 + 0.2 + 1.2 = 5.5.</p></template>
 </section>
 
-<!-- ==================================================================== 31 -->
+<!-- ==================================================================== 32 -->
 <section class="slide" data-label="One threshold, two kinds of error" data-section="Entity resolution" data-minutes="5">
   <div class="lu-eyebrow">A real run on the teaching set</div>
   <h2 class="lu-h2">Lower the threshold: more found, more wrong. Raise it: fewer wrong, more missed.</h2>
@@ -512,7 +522,7 @@ ontop query \
   <template data-notes><p>Five minutes. Real run of <code>er/match_customers.py</code> (<code>reference-outputs/match-customers.txt</code>). No threshold gives both at 1.000 on this data: a lost 5 makes a code equally close to two customers.</p></template>
 </section>
 
-<!-- ==================================================================== 32 -->
+<!-- ==================================================================== 33 -->
 <section class="slide slide--tint" data-label="Poll: which error costs more?" data-section="Entity resolution" data-minutes="4" style="--lu-s5:12px">
   <div class="lu-eyebrow">Room poll · 45 seconds</div>
   <div class="lu-poll" data-qid="s5-poll" data-seconds="45" data-answer="a" data-label="Which matching error costs more when merging customer records">
@@ -525,7 +535,7 @@ ontop query \
   <template data-notes><p>Forty five seconds, then we discuss. For merging, favour precision (threshold 8). For finding possible duplicates for a person to review, favour recall (threshold 4). The use decides the threshold.</p></template>
 </section>
 
-<!-- ==================================================================== 33 -->
+<!-- ==================================================================== 34 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Map, compare, ask, match" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 55 minutes · on your own machine</div>
@@ -535,7 +545,7 @@ ontop query \
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 34 -->
+<!-- ==================================================================== 35 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">Hands-on lab · about 55 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">The Brunel tables in a database, and the mapping that turns them into the graph.</h2>
@@ -555,7 +565,7 @@ ontop query \
 <ul><li>Second: an old PostgreSQL volume from an earlier course version. The compose file uses a new volume name, so <code>docker compose up -d</code> in this folder starts clean.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 35 -->
+<!-- ==================================================================== 36 -->
 <section class="slide" data-label="Lab time" data-section="Lab" data-minutes="50">
   <div class="lu-eyebrow">Lab · 50 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints keep you on time.</h2>
@@ -570,7 +580,7 @@ ontop query \
 <ul><li>Most common wrong answer in Part B: Y2 written with <code>rr:column</code>, which makes text instead of a link. The checker shows the text it made.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 36 -->
+<!-- ==================================================================== 37 -->
 <section class="slide" data-label="Discussion and project clinic" data-section="Wrap" data-minutes="10">
   <div class="lu-eyebrow">Discussion · as a room, from Part C</div>
   <div class="lu-split lu-split--wide-left">
@@ -591,7 +601,7 @@ ontop query \
   <template data-notes><p>Ten minutes. Question 1 has a clear answer: the rule lives in the vocabulary (a reasoner or SHACL's target resolution uses it); the mapping only produces data; the focus node count exposed the gap.</p></template>
 </section>
 
-<!-- ==================================================================== 37 -->
+<!-- ==================================================================== 38 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
@@ -599,7 +609,7 @@ ontop query \
   <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
-<!-- ==================================================================== 38 -->
+<!-- ==================================================================== 39 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
@@ -620,7 +630,7 @@ ontop query \
   <template data-notes><p>Two minutes. I end on the sentence.</p></template>
 </section>
 
-<!-- ==================================================================== 39 -->
+<!-- ==================================================================== 40 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">

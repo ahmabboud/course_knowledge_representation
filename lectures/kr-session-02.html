@@ -18,7 +18,7 @@
   data-deck-id="kr-s02"
   data-course="Knowledge Representation"
   data-session="Session 2 of 8"
-  data-duration="176"
+  data-duration="179"
   data-app-root="../"
   data-unit="Lebanese University · MSc">
 
@@ -565,6 +565,15 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
 </section>
 
 <!-- ==================================================================== 36 -->
+<section class="slide" data-label="Choose your path: RDF stack or property graph" data-section="Graph models" data-minutes="3">
+  <div class="lu-eyebrow">Which route for your project</div>
+  <h2 class="lu-h2">Both are real graph databases. They suit different jobs.</h2>
+  <table class="lu-table lu-fits"><thead><tr><th></th><th>RDF stack</th><th>Property graph (Neo4j)</th></tr></thead><tbody><tr><td>Facts are</td><td>triples with global names (IRIs)</td><td>nodes and links, each with properties</td></tr><tr><td>Query language</td><td>SPARQL</td><td>Cypher</td></tr><tr><td>Meaning and rules</td><td>RDFS, OWL and SHACL are standards</td><td>your own labels and naming rules</td></tr><tr><td>Reuse a published ontology</td><td>yes</td><td>not directly</td></tr><tr><td>Good fit</td><td>data shared across teams or companies, where meaning must be explicit</td><td>one team, fast traversals, a simple start</td></tr></tbody></table><style>.lu-fits td,.lu-fits th{padding-top:var(--lu-s2);padding-bottom:var(--lu-s2)}</style>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">You choose once, early</span><p class="lu-sub">Sessions 3 to 7 use the RDF stack. If you choose Neo4j for your project, you skip RDF, OWL and SHACL, and you write your own checks. <a href="../guide/from-data-to-system.html">See both routes, layer by layer</a>.</p></div>
+  <template data-notes><p>Three minutes. I stay fair: Neo4j is excellent and widely used. The point for your project is to choose on purpose, and to say why. You defend this choice at the end of the course.</p></template>
+</section>
+
+<!-- ==================================================================== 37 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Build the first graph" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Hands-on lab · about 60 minutes</div>
@@ -574,7 +583,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>Ten seconds. The lab clock starts on the next slide.</p></template>
 </section>
 
-<!-- ==================================================================== 37 -->
+<!-- ==================================================================== 38 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">Hands-on lab · 60 minutes</div>
   <h2 class="lu-h1" style="max-width:34ch">Tables to triples, triples to answers.</h2>
@@ -594,7 +603,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
     <ul><li>Most common blocker: Docker Desktop not running. Second: port 3030 or 7474 already in use.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 38 -->
+<!-- ==================================================================== 39 -->
 <section class="slide" data-label="The tool: the Fuseki query page" data-section="Lab" data-minutes="2">
   <div class="lu-eyebrow">One slide for the tool</div>
   <h2 class="lu-h2" style="max-width:66ch"><b>Apache Jena Fuseki</b> stores the graph (TDB2) and answers SPARQL over the web.</h2>
@@ -605,7 +614,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>Two minutes. rdflib and Docker get no slide: a Python library and a common tool, both in the README.</p></template>
 </section>
 
-<!-- ==================================================================== 39 -->
+<!-- ==================================================================== 40 -->
 <section class="slide slide--tint" data-label="Lab time" data-section="Lab" data-minutes="55">
   <div class="lu-eyebrow">Lab · 55 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints keep you on time.</h2>
@@ -619,7 +628,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>Fifty five minutes. At minute 25, anyone without a loaded graph switches to <code>run_queries.py oxigraph</code>. At minute 45, I ask two of you to read out your answer to the third question; the usual wrong one is 44 (no DISTINCT).</p></template>
 </section>
 
-<!-- ==================================================================== 40 -->
+<!-- ==================================================================== 41 -->
 <section class="slide" data-label="Discussion: test the IRI convention" data-section="Wrap" data-minutes="8">
   <div class="lu-eyebrow">Discussion · as a room</div>
   <h2 class="lu-h2" style="max-width:66ch">Which IRI schemes break when a second source arrives?</h2>
@@ -635,7 +644,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>Eight minutes. The usual weak spot: a scheme that puts a name or a country in the IRI. I ask what happens the day the supplier renames itself.</p></template>
 </section>
 
-<!-- ==================================================================== 41 -->
+<!-- ==================================================================== 42 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The words this session introduced.</h2>
@@ -643,7 +652,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>One minute, or skipped in class: it is for revision.</p></template>
 </section>
 
-<!-- ==================================================================== 42 -->
+<!-- ==================================================================== 43 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
@@ -665,7 +674,7 @@ MATCH (o) WHERE o:Order OR o:LateOrder  // 9,215</code></pre></div>
   <template data-notes><p>Two minutes. I end on the sentence.</p></template>
 </section>
 
-<!-- ==================================================================== 43 -->
+<!-- ==================================================================== 44 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">

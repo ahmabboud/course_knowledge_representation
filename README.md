@@ -28,6 +28,10 @@ One enterprise problem, a supply chain, carried from raw operational data throug
 - **`lectures/kr-session-NN.html`**, one self-contained lecture per file.
 - **`demos/`**, lab material for the sessions, real code against real data (Docker services, a local Neo4j, notebooks and scripts), separate from the small in-slide sandboxes. See `demos/README.md` for setup, and each `demos/session-NN-.../README.md` for that session's own lab.
 
+## The map
+
+`guide/from-data-to-system.html` is one page that shows every layer of the system, which parts are required or optional, where each one lives, and what companies use. Open it from the course index, or at `/guide/from-data-to-system.html` when you run the site locally.
+
 ## What a lecture gives you
 
 Presenter view on a second screen with speaker notes, elapsed time and pacing against the plan · deep-linkable slides (`#/12`) · contents panel and full-text search · a study mode that expands every popover, held-back answer and build step · one-page-per-slide printing with the instructor notes attached · offline support once installed · answers and position saved on the student's own device.

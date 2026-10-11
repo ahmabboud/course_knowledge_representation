@@ -18,7 +18,7 @@
   data-deck-id="kr-s07"
   data-course="Knowledge Representation"
   data-session="Session 7 of 8"
-  data-duration="182"
+  data-duration="186"
   data-app-root="../"
   data-unit="Lebanese University · MSc">
 
@@ -503,6 +503,15 @@ answer: 1 row
 </section>
 
 <!-- ==================================================================== 31 -->
+<section class="slide" data-label="The reference implementation: kr-team-template" data-section="Deployment" data-minutes="4">
+  <div class="lu-eyebrow">Your team's repository</div>
+  <h2 class="lu-h2">One folder for each layer you built. Replace the example, one folder at a time.</h2>
+  <table class="lu-table lu-fits"><thead><tr><th>Folder</th><th>It holds</th><th>Session</th></tr></thead><tbody><tr><td><code>data/</code> and <code>mapping/</code></td><td>the source database and the R2RML mapping</td><td>5</td></tr><tr><td><code>ontology/</code></td><td>your ontology, with a version IRI</td><td>3</td></tr><tr><td><code>shapes/</code> and <code>.github/workflows/</code></td><td>your SHACL shapes and the gate that runs them</td><td>4</td></tr><tr><td><code>pipeline/</code> and <code>fuseki/</code></td><td>the steps that build the graph, and the triple store</td><td>2, 5</td></tr><tr><td><code>model/</code></td><td>your learning model and its evaluation</td><td>6</td></tr><tr><td><code>access-layer/</code></td><td>the question answering service, void.ttl, examples, test set</td><td>7</td></tr><tr><td><code>docker-compose.yml</code> and <code>report/</code></td><td>one command to start it all, and your report</td><td>8</td></tr></tbody></table><style>.lu-fits td,.lu-fits th{padding-top:var(--lu-s2);padding-bottom:var(--lu-s2)}</style>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">See the whole map</span><p class="lu-sub"><a href="../guide/from-data-to-system.html">From data to a working system</a> shows these folders as layers, and what companies use for each one.</p></div>
+  <template data-notes><p>Four minutes. Open the template repository on screen. It already runs on a tiny example: 60 Brunel orders. Each folder matches a session, so the repository is the map in files. Your team replaces the example with its own data, one layer at a time, and keeps the gate green.</p></template>
+</section>
+
+<!-- ==================================================================== 32 -->
 <section class="slide" data-label="Knowing when it breaks" data-section="Deployment" data-minutes="3">
   <div class="lu-eyebrow">Four things that break silently, and the signal for each</div>
   <h2 class="lu-h2" style="max-width:66ch">Every signal is something you already built</h2>
@@ -512,7 +521,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. The test set is a monitor too: run it every week, and a drop in F1 says something changed, in the data, the mapping or the model. References: Dimou and others, ISWC 2015, on assessing mapping quality.</p></template>
 </section>
 
-<!-- ==================================================================== 32 -->
+<!-- ==================================================================== 33 -->
 <section class="slide" data-label="Who may ask what" data-section="Deployment" data-minutes="3">
   <div class="lu-eyebrow">One query can cross departments. The access layer must not allow it.</div>
   <h2 class="lu-h2" style="max-width:66ch">Access control on a graph, and what the model is allowed to see</h2>
@@ -526,7 +535,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. Fuseki's data access control works per dataset and, for read-only datasets, per named graph (Apache Jena documentation). Kirrane, Mileo and Decker (Semantic Web journal, 2017) survey access control for RDF. The free tier note is Google's own terms for the Gemini API.</p></template>
 </section>
 
-<!-- ==================================================================== 33 -->
+<!-- ==================================================================== 34 -->
 <section class="slide slide--night" data-chrome="none" data-label="Open problems" data-section="Open problems" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Six questions the field has not settled · about 22 minutes</div>
@@ -536,7 +545,7 @@ answer: 1 row
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 34 -->
+<!-- ==================================================================== 35 -->
 <section class="slide" data-label="Open problem 1: Ontology learning from text" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">Open problem 1 of 6</div>
   <h2 class="lu-h2">Ontology learning from text</h2>
@@ -549,7 +558,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
-<!-- ==================================================================== 35 -->
+<!-- ==================================================================== 36 -->
 <section class="slide" data-label="Open problem 2: Constraints by construction" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">Open problem 2 of 6</div>
   <h2 class="lu-h2">Constraints by construction</h2>
@@ -561,7 +570,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
-<!-- ==================================================================== 36 -->
+<!-- ==================================================================== 37 -->
 <section class="slide" data-label="Open problem 3: Do models reason over ontologies?" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">Open problem 3 of 6</div>
   <h2 class="lu-h2">Do models reason over ontologies?</h2>
@@ -573,7 +582,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
-<!-- ==================================================================== 37 -->
+<!-- ==================================================================== 38 -->
 <section class="slide" data-label="Open problem 4: Time and space" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">Open problem 4 of 6</div>
   <h2 class="lu-h2">Time and space</h2>
@@ -585,7 +594,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
-<!-- ==================================================================== 38 -->
+<!-- ==================================================================== 39 -->
 <section class="slide" data-label="Open problem 5: Reproducible results" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">Open problem 5 of 6</div>
   <h2 class="lu-h2">Reproducible results</h2>
@@ -597,7 +606,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
-<!-- ==================================================================== 39 -->
+<!-- ==================================================================== 40 -->
 <section class="slide" data-label="Open problem 6: Standards in motion" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">Open problem 6 of 6</div>
   <h2 class="lu-h2">Standards in motion</h2>
@@ -609,7 +618,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
-<!-- ==================================================================== 40 -->
+<!-- ==================================================================== 41 -->
 <section class="slide slide--tint" data-label="Choose your team's problem" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">For the report</div>
   <div class="lu-split lu-split--wide-left">
@@ -628,7 +637,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I write each team's choice on the board. Every team leaves this segment with its problem chosen.</p></template>
 </section>
 
-<!-- ==================================================================== 41 -->
+<!-- ==================================================================== 42 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Ask, check, measure" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 50 minutes · on your own machine</div>
@@ -638,7 +647,7 @@ answer: 1 row
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 42 -->
+<!-- ==================================================================== 43 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">Hands-on lab · about 50 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">The access layer over Session 2's Brunel graph, with your own Gemini key.</h2>
@@ -658,7 +667,7 @@ answer: 1 row
   <template data-notes><p>Three minutes, then I walk the room. Most common blocker: no <code>demos/.env</code>, or the key pasted with quotes or a space. The error message says which. Second: error 429 on the free tier; <code>LLM_DELAY=4</code>.</p></template>
 </section>
 
-<!-- ==================================================================== 43 -->
+<!-- ==================================================================== 44 -->
 <section class="slide" data-label="Part B: each task has a twin" data-section="Lab" data-minutes="2">
   <div class="lu-eyebrow">Lab Part B · three improvements</div>
   <h2 class="lu-h2" style="max-width:66ch">Copy the twin, change one thing</h2>
@@ -681,7 +690,7 @@ answer: 1 row
   <template data-notes><p>Two minutes. For Y2, three things change: classes instead of props, <code>isupper</code> instead of <code>islower</code>, "class" in the message. Most common wrong answer: keeping <code>islower</code>; the checker says it reports <code>ul:shippedBy</code>, a property.</p></template>
 </section>
 
-<!-- ==================================================================== 44 -->
+<!-- ==================================================================== 45 -->
 <section class="slide" data-label="Lab time" data-section="Lab" data-minutes="44">
   <div class="lu-eyebrow">Lab · 44 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints keep you on time.</h2>
@@ -695,7 +704,7 @@ answer: 1 row
   <template data-notes><p>Forty four minutes. <code>evaluate.py</code> makes about 50 calls; start it early and read <code>access_layer.py</code> while it runs. I collect each student's three F1 numbers on the board for the discussion.</p></template>
 </section>
 
-<!-- ==================================================================== 45 -->
+<!-- ==================================================================== 46 -->
 <section class="slide" data-label="Discussion and the Session 8 checklist" data-section="Wrap" data-minutes="7">
   <div class="lu-eyebrow">Discussion · the room's scores, then the checklist</div>
   <div class="lu-split lu-split--wide-left">
@@ -713,7 +722,7 @@ answer: 1 row
   <template data-notes><p>Seven minutes. We read the room's scores against the TEXT2SPARQL 2026 leaderboard, then agree the deployment checklist each team is held to in Session 8. We adjust the list together and I write the agreed version into the course page; Session 8's defense tries each item on a clean checkout.</p></template>
 </section>
 
-<!-- ==================================================================== 46 -->
+<!-- ==================================================================== 47 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
@@ -721,7 +730,7 @@ answer: 1 row
   <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
-<!-- ==================================================================== 47 -->
+<!-- ==================================================================== 48 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
@@ -742,7 +751,7 @@ answer: 1 row
   <template data-notes><p>Two minutes. I end on the sentence. A reminder for every team: a stack that has never come up from a clean checkout will not come up on defense day either.</p></template>
 </section>
 
-<!-- ==================================================================== 48 -->
+<!-- ==================================================================== 49 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">
