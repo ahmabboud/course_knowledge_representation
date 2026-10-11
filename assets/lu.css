@@ -456,6 +456,7 @@ strong, .lu-strong { font-weight: 600; }
 .lu-table { width: 100%; border-collapse: collapse; font-size: var(--lu-t-small); }
 .lu-table th, .lu-table td { text-align: left; padding: var(--lu-s3) var(--lu-s4); border-bottom: 1px solid var(--lu-line); vertical-align: top; }
 .lu-table th { font-size: var(--lu-t-caption); text-transform: uppercase; letter-spacing: .08em; color: var(--lu-ink-3); font-weight: 600; border-bottom: 2px solid var(--lu-ink-2); }
+.lu-table--tight th, .lu-table--tight td { padding-top: var(--lu-s2); padding-bottom: var(--lu-s2); }
 .lu-table tbody tr:nth-child(even) { background: var(--lu-paper-2); }
 .lu-table--mono td { font-family: var(--lu-mono); font-size: var(--lu-t-caption); }
 .lu-table caption { caption-side: bottom; text-align: left; padding-top: var(--lu-s3); font-size: var(--lu-t-caption); color: var(--lu-ink-3); }

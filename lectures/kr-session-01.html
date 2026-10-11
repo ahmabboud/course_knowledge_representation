@@ -276,10 +276,10 @@ last quarter, and who did we ship them to?
   <h2 class="lu-h2" style="max-width:66ch">Right for some problems, wrong for others.</h2>
 
   <div class="lu-split" style="margin-top:var(--lu-s1)">
-    <table class="lu-table lu-fits" data-build="1"><thead><tr><th>It fits when</th><th>What the graph gives</th></tr></thead><tbody><tr><td><b>Many systems</b> name one thing differently</td><td><b>One shared name</b></td></tr><tr><td>Questions are about <b>connections</b></td><td><b>Links stored</b> as data</td></tr><tr><td><b>Rules</b> must hold and be explained</td><td><b>Checks</b> and reasoning</td></tr><tr><td>Knowledge <b>lives for years</b>, many teams</td><td><b>One shared</b> model</td></tr><tr><td>An answer must <b>show why</b></td><td>A <b>traceable</b> path</td></tr></tbody></table>
-    <table class="lu-table lu-fits" data-build="2"><thead><tr><th>It fits badly when</th><th>Use instead</th></tr></thead><tbody><tr><td><b>Fixed reports</b> from one clean table, or <b>billions of rows</b> to add up</td><td><b>Warehouse</b></td></tr><tr><td>You need <b>thousands of fast transactions</b></td><td><b>Operational database</b></td></tr><tr><td>Mostly <b>free text</b>, and nobody will keep a model</td><td><b>Search</b></td></tr><tr><td>A <b>one-off</b> analysis</td><td><b>A script or a spreadsheet</b></td></tr></tbody></table>
+    <table class="lu-table lu-table--tight" data-build="1"><thead><tr><th>It fits when</th><th>What the graph gives</th></tr></thead><tbody><tr><td><b>Many systems</b> name one thing differently</td><td><b>One shared name</b></td></tr><tr><td>Questions are about <b>connections</b></td><td><b>Links stored</b> as data</td></tr><tr><td><b>Rules</b> must hold and be explained</td><td><b>Checks</b> and reasoning</td></tr><tr><td>Knowledge <b>lives for years</b>, many teams</td><td><b>One shared</b> model</td></tr><tr><td>An answer must <b>show why</b></td><td>A <b>traceable</b> path</td></tr></tbody></table>
+    <table class="lu-table lu-table--tight" data-build="2"><thead><tr><th>It fits badly when</th><th>Use instead</th></tr></thead><tbody><tr><td><b>Fixed reports</b> from one clean table, or <b>billions of rows</b> to add up</td><td><b>Warehouse</b></td></tr><tr><td>You need <b>thousands of fast transactions</b></td><td><b>Operational database</b></td></tr><tr><td>Mostly <b>free text</b>, and nobody will keep a model</td><td><b>Search</b></td></tr><tr><td>A <b>one-off</b> analysis</td><td><b>A script or a spreadsheet</b></td></tr></tbody></table>
   </div>
-  <style>.lu-fits td,.lu-fits th{padding-top:var(--lu-s2);padding-bottom:var(--lu-s2)}</style>
+  
   <div class="lu-callout lu-callout--neutral" data-build="3"><span class="lu-callout__label">Where it sits</span><p class="lu-sub"><b>Beside</b> the operational database and the warehouse, not instead of them: it connects what they hold.</p></div>
   <template data-notes><p>Three minutes. I want you to leave able to say no to this technology when it does not fit, because that is a skill.</p>
     <ul>
@@ -717,19 +717,17 @@ last quarter, and who did we ship them to?
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <ol class="lu-list lu-list--num">
-      <li><code>python smoke_test.py</code>: checks Python 3.12, JDK 21, Docker, Protégé.</li>
-      <li><code>python data/fetch_data.py</code>, from the demos folder.</li>
-      <li><code>python profiling.py</code>, or cell by cell in Jupyter.</li>
-      <li>Run <code>python rule_checks.py</code>: six checks, each with a count to read.</li>
-      <li>Cluster DataCo's <b>Order City</b> in OpenRefine. Look at every cluster before you merge it.</li>
-      <li>Check the rules already listed in <code>constraint_inventory_template.csv</code> against your output, and add one of your own if you can. <code>TASKS.md</code> in the lab folder walks you through each step.</li>
+      <li><code>python smoke_test.py</code>, then <code>python data/fetch_data.py</code>.</li>
+      <li><code>python profiling.py</code> (it takes a few minutes).</li>
+      <li><code>python rule_checks.py</code>: six checks, each with a count.</li>
+      <li>OpenRefine: cluster <b>Order City</b>. Look at each cluster before you merge it.</li>
+      <li>Compare <code>constraint_inventory_template.csv</code> with your numbers. <code>TASKS.md</code> has the steps.</li>
     </ol>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Deliverable, end of session</span><p class="lu-sub">Smoke test passing, both profiling reports, and your inventory checked against your own numbers. Committed to your repository.</p></div>
-      <div class="lu-callout"><span class="lu-callout__label">What to take away</span><p class="lu-sub">A rule has three parts: the statement, the count behind it, and where it came from. Exceptions are findings, not mistakes.</p></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Deliverable, end of session</span><p class="lu-sub">Smoke test passing, both profiling reports, and your inventory checked against your own numbers.</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">What to take away</span><p class="lu-sub">A rule has three parts: the statement, its count, and its source. Exceptions are findings.</p></div>
     </div>
   </div>
-  <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>JDK</b> Java Development Kit: the Java runtime and tools that Protégé, Fuseki and ROBOT need.</span> <span data-auto="1"><b>Docker</b> A tool that runs software in sealed containers, so the same setup starts the same way on every machine.</span></p>
   <template data-notes><p>Three minutes to brief, then I stop talking and walk the room.</p>
     <ul>
       <li>Most common blocker: the DataCo profile takes several minutes and it looks as if it hung. I say so before you start.</li>

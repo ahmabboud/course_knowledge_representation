@@ -86,7 +86,7 @@
 <section class="slide" data-label="How RDF, RDFS, OWL and SHACL fit together" data-section="Opening" data-minutes="4">
   <div class="lu-eyebrow">Before SHACL: how the pieces fit</div>
   <h2 class="lu-h2">Everything is RDF. RDFS and OWL say what things mean. SHACL checks the data.</h2>
-  <table class="lu-table lu-fits"><thead><tr><th>Piece</th><th>It is written in</th><th>What it does</th><th>Needed?</th></tr></thead><tbody><tr><td><b>RDF</b></td><td>triples</td><td>holds the facts: orders, carriers, plants</td><td>Yes</td></tr><tr><td><b>RDFS</b></td><td>RDF</td><td>names classes and a hierarchy: a late order is an order</td><td>Almost always</td></tr><tr><td><b>OWL</b></td><td>RDF</td><td>adds meaning and reasoning, and lets you reuse published ontologies</td><td>Optional</td></tr><tr><td><b>SHACL</b></td><td>RDF</td><td>checks that the data has the right shape and reports each problem</td><td>Optional, very common</td></tr></tbody></table><style>.lu-fits td,.lu-fits th{padding-top:var(--lu-s2);padding-bottom:var(--lu-s2)}</style>
+  <table class="lu-table lu-table--tight"><thead><tr><th>Piece</th><th>It is written in</th><th>What it does</th><th>Needed?</th></tr></thead><tbody><tr><td><b>RDF</b></td><td>triples</td><td>holds the facts: orders, carriers, plants</td><td>Yes</td></tr><tr><td><b>RDFS</b></td><td>RDF</td><td>names classes and a hierarchy: a late order is an order</td><td>Almost always</td></tr><tr><td><b>OWL</b></td><td>RDF</td><td>adds meaning and reasoning, and lets you reuse published ontologies</td><td>Optional</td></tr><tr><td><b>SHACL</b></td><td>RDF</td><td>checks that the data has the right shape and reports each problem</td><td>Optional, very common</td></tr></tbody></table>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">What SHACL is applied to</span><p class="lu-sub"><b>RDF data.</b> It does not need OWL. If the data includes <b>rdfs:subClassOf</b>, SHACL uses it when it finds a target class. The shapes themselves are also RDF, stored in a <b>.ttl</b> file in git. <a href="../guide/from-data-to-system.html">Open the map of the whole system</a>.</p></div>
   <template data-notes><p>Four minutes. This answers the question I get most: what does SHACL apply to? To RDF data. OWL and SHACL are two different vocabularies written in the same RDF. OWL adds facts that follow from the data; SHACL checks the data. In many companies SHACL is used more than OWL reasoning. The guide page in the course shows all layers on one map and says where each one lives.</p></template>
 </section>
@@ -242,7 +242,7 @@ Message:     An order has exactly
     sh:class ul:Carrier ;              <span class="tok-com"># 5 value type</span>
     sh:message <span class="tok-str">"One carrier."</span> ;      <span class="tok-com"># 6 report text</span>
     sh:severity sh:Violation ] .       <span class="tok-com"># 7 how serious</span></code></pre></div> 
-    <table class="lu-table lu-fits"><thead><tr><th>#</th><th>Part</th><th>It says</th></tr></thead><tbody>
+    <table class="lu-table lu-table--tight"><thead><tr><th>#</th><th>Part</th><th>It says</th></tr></thead><tbody>
       <tr><td>1</td><td><b>Shape</b></td><td>a named set of rules</td></tr>
       <tr><td>2</td><td><b>Target</b></td><td>which nodes to check</td></tr>
       <tr><td>3</td><td><b>Property shape</b></td><td>one rule about one property</td></tr>
@@ -252,7 +252,7 @@ Message:     An order has exactly
       <tr><td>7</td><td><b>Severity</b></td><td>Violation (default), Warning or Info</td></tr>
     </tbody></table>
   </div>
-  <style>.lu-fits td,.lu-fits th{padding-top:var(--lu-s2);padding-bottom:var(--lu-s2)}</style>
+  
   <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Property shape</b> A shape about one property of a node, for example &quot;has exactly one carrier&quot;.</span></p>
   <template data-notes><p>Four minutes. I point at each comment in turn, 1 to 7. Only parts 1 to 5 are needed; parts 6 and 7 are optional. The next slide shows the whole order shape with several property shapes. A shape is just triples, so it is stored in a .ttl file like the data.</p></template>
 </section>
@@ -379,7 +379,7 @@ GATE: PASS, no violations.</code></pre></div>
 
 <!-- ==================================================================== 21 -->
 <section class="slide" data-label="Two kinds of shape: core and SPARQL" data-section="Rules as shapes" data-minutes="3">
-  <div class="lu-eyebrow">Before the table</div>
+  <div class="lu-eyebrow">Core and SPARQL shapes</div>
   <h2 class="lu-h2">A shape is either core or SPARQL. Look at what the rule must examine.</h2>
   <div class="lu-split">
     <div class="lu-code lu-code--sm" data-name="Core shape · the rule looks only at the node itself"><pre><code><span class="tok-com"># Core shape: uses ready-made keywords</span>
@@ -396,14 +396,14 @@ sh:sparql [ sh:select """
   }""" ] .</code></pre></div>
   </div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">What is a Violation?</span><p class="lu-sub">One result: one node that <b>breaks</b> one rule. A core shape gives a Violation when a keyword fails (for example, the weight is not above 0). A SPARQL shape gives one Violation for each row that its query returns.</p></div>
-  <template data-notes><p>Three minutes. Core SHACL is a list of ready-made keywords: you choose the property and the value. SPARQL is for rules that need other nodes: the order's port must be compared with its plant's list of ports. The table on the next slide marks each Session 1 rule as core or SPARQL, and counts its Violations in the first run.</p></template>
+  <template data-notes><p>Three minutes. Core SHACL is a list of ready-made keywords: you choose the property and the value. SPARQL is for rules that need other nodes: the order's port must be compared with its plant's list of ports. The next slide classifies each Session 1 rule as core or SPARQL, and counts its Violations in the first run.</p></template>
 </section>
 
 <!-- ==================================================================== 22 -->
 <section class="slide" data-label="From the inventory to shapes" data-section="Rules as shapes" data-minutes="5">
   <div class="lu-eyebrow">The Session 1 rules, as a first draft</div>
   <h2 class="lu-h2" style="max-width:66ch">Which kind of shape each rule needs, and what the first run found: <b>3,435 Violations</b>.</h2>
-<table class="lu-table lu-fits"><thead><tr><th>Business rule (Session 1)</th><th>The shape looks at</th><th>Kind</th><th>Violations</th></tr></thead><tbody><tr><td>One carrier, plant, date, service level per order</td><td>values of this order</td><td>core</td><td>0</td></tr><tr><td>An order weighs more than 0 kg</td><td>the order's own weight</td><td>core</td><td><b style="color:var(--lu-red-700)">2</b></td></tr><tr><td>A band's low bound is not above its high bound</td><td>two values of the same band</td><td>core</td><td>0</td></tr><tr><td>A rate band belongs to a carrier</td><td>the type of the band's carrier</td><td>core</td><td><b style="color:var(--lu-red-700)">1,209</b></td></tr><tr><td>A plant ships only through ports it is linked to</td><td><b>other nodes:</b> its plant's ports</td><td>SPARQL</td><td>0</td></tr><tr><td>A plant ships only products it makes</td><td><b>other nodes:</b> its plant's products</td><td>SPARQL</td><td>0</td></tr><tr><td>An order's weight falls in a rate band of its lane</td><td><b>other nodes:</b> the bands of its lane</td><td>SPARQL</td><td><b style="color:var(--lu-red-700)">2,224</b></td></tr><tr><td>CRF orders are carried by V44_3</td><td>an if-then rule on two values</td><td>SPARQL</td><td>practice only</td></tr></tbody></table><style>.lu-fits td,.lu-fits th{padding-top:var(--lu-s2);padding-bottom:var(--lu-s2)}</style>
+<table class="lu-table lu-table--tight"><thead><tr><th>Business rule (Session 1)</th><th>The shape looks at</th><th>Kind</th><th>Violations</th></tr></thead><tbody><tr><td>One carrier, plant, date, service level per order</td><td>values of this order</td><td>core</td><td>0</td></tr><tr><td>An order weighs more than 0 kg</td><td>the order's own weight</td><td>core</td><td><b style="color:var(--lu-red-700)">2</b></td></tr><tr><td>A band's low bound is not above its high bound</td><td>two values of the same band</td><td>core</td><td>0</td></tr><tr><td>A rate band belongs to a carrier</td><td>the type of the band's carrier</td><td>core</td><td><b style="color:var(--lu-red-700)">1,209</b></td></tr><tr><td>A plant ships only through ports it is linked to</td><td><b>other nodes:</b> its plant's ports</td><td>SPARQL</td><td>0</td></tr><tr><td>A plant ships only products it makes</td><td><b>other nodes:</b> its plant's products</td><td>SPARQL</td><td>0</td></tr><tr><td>An order's weight falls in a rate band of its lane</td><td><b>other nodes:</b> the bands of its lane</td><td>SPARQL</td><td><b style="color:var(--lu-red-700)">2,224</b></td></tr><tr><td>CRF orders are carried by V44_3</td><td>an if-then rule on two values</td><td>SPARQL</td><td>practice only</td></tr></tbody></table>
   <template data-notes><p>Five minutes. The first draft is what anyone writes from the English list: every rule, all Violations. Real run of <code>brunel-shapes-v0.ttl</code> on the Session 2 graph, 90 seconds (<code>reference-outputs/validate-v0.txt</code>).</p>
 <ul><li>The two SPARQL rules with 0 results confirm Session 1's evidence on all 9,215 orders: no order leaves through an unlinked port, none ships a product its plant does not make.</li>
 <li>The weight rule is new: Session 1 had no rule for it. Adding a rule you did not think of is normal; the gate keeps it from then on.</li></ul></template>
