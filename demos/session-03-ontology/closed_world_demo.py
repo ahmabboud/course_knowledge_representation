@@ -1,10 +1,10 @@
-"""The same fact, two worlds: a database refuses it, OWL learns from it.
+"""The same fact, two worlds: a database refuses it, OWL accepts it and concludes a type.
 
     python closed_world_demo.py
 
-The slide "Domain and range infer, they do not reject" shows this run. A
+The slide "A database refuses, OWL concludes a type" shows this run. A
 relational database with a foreign key refuses a "handled by" row for a
-shipment it has never heard of. OWL does the opposite: the domain of
+shipment it has never heard of. OWL accepts it instead: the domain of
 ul:handledBy is Shipment, so the reasoner concludes the unknown thing is a
 Shipment (see sample-shipments.ttl, the shipment of order 1447311670.7).
 Only the Python standard library is needed. Output also goes to

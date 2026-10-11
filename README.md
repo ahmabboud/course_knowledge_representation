@@ -14,7 +14,7 @@ One enterprise problem, a supply chain, carried from raw operational data throug
 |---|---|---|---|
 | 1 | 1 | Enterprise Knowledge Representation and the Supply Chain Problem | Done |
 | 2 | 1 | RDF, SPARQL, and the Graph as a Data Model | Done |
-| 3 | 2 | Ontology Engineering: Description Logic, OWL, and Reuse | Done |
+| 3 | 2 | Ontology Engineering: OWL and Reuse | Done |
 | 4 | 2 | Constraints, Quality, and Provenance: SHACL | Done · Milestone 1 (checkpoint) |
 | 5 | 3 | Integrating Operational Data | Done |
 | 6 | 4 | Learning Over the Graph: Embeddings and Graph Neural Networks | Done · Milestone 2 (checkpoint) |

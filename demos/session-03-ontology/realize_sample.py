@@ -1,7 +1,7 @@
 """Ask ELK which classes the sample shipments belong to, twice: with At-risk
 shipment as a defined class (EquivalentTo, as shipped) and as a primitive
 class (the same axiom turned into SubClassOf). This produces the table on
-the slide "SubClassOf and EquivalentTo".
+the slide "EquivalentTo lets the reasoner classify".
 
     python realize_sample.py                 # robot on PATH, or robot.jar next to this script
     python realize_sample.py --jar ~/tools/robot.jar
