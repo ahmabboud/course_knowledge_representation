@@ -1,16 +1,15 @@
 # Session 4 lab: validate, triage and gate
 
-**Why this lab exists:** to make the lecture concrete (open against closed
-world, SHACL core, SPARQL constraints, severity, triage, provenance, version
-IRIs, a validation gate) on the real Brunel graph, and to give you the
-pipeline Milestone 1 of your team project asks for. Nothing is handed in or
-graded. The lab works when you can explain why the first report has 3,435
-Violations and only 2 of them are the orders' fault.
+**What this lab does:** we run SHACL rules on the real Brunel graph, read the
+first report, decide which problems are real, and make the check run
+automatically. You also get the pipeline that Milestone 1 of your team project
+asks for. Nothing is handed in or graded. You understood the lab when you can
+explain why the first report shows 3,435 Violations and only 2 of them are
+wrong orders.
 
-**Read this first:** [What this lab is doing](OVERVIEW.md). It explains the
-Session 2 graph, why SHACL is a data check rather than an OWL axiom, triage,
-the CI sample and gate, file roles, terms, and how to separate facts from
-validation decisions. Do not start Part A until the overall story is clear.
+**Read this first:** [What this lab is doing](OVERVIEW.md). It shows the whole
+lab as five steps, with one real shape and one real report. Read it before
+you start Part A.
 
 Every number in `lectures/kr-session-04.html` comes from the files in
 `reference-outputs/`, produced by these scripts on 2026-09-25.
@@ -87,34 +86,32 @@ Every number in `lectures/kr-session-04.html` comes from the files in
   earlier with one thing changed, and the checker gives a hint when it is not
   yet right.
 
-Open `my_shapes.ttl`. It asks for three shapes, each practising one idea
-from the lecture: Y1 cardinality (every order has exactly one customer),
-Y2 a value range (every order date falls in 2013), Y3 a SPARQL constraint
-(a CRF order is carried by V44_3). None of them is in `brunel-shapes.ttl`,
-but the patterns are. Complete each shape under its marker, then:
+The file `my_shapes.ttl` has three shapes to complete, each practising one
+idea from the lecture:
 
-```sh
-python check_my_shapes.py
-```
+- **Y1:** every order has exactly one customer (counting values).
+- **Y2:** every order date falls in 2013 (a value range).
+- **Y3:** a CRF order is carried by V44_3 (a SPARQL rule).
 
-The checker runs each shape alone on `part-b/test-orders.ttl` (six real
-orders, four of them changed on purpose, each listed at the top of that
-file) and compares which orders your shape flags with the orders it should
-flag. **Expect** when all three are right: `3 of 3 right.` Any shape that
-flags exactly the right orders passes. Stuck after trying?
-`solutions/my_shapes_solutions.ttl`. The common wrong answers and the
-checker's hints are in `reference-outputs/my-shapes-check.txt`.
+The patterns are in `brunel-shapes.ttl`, but these three shapes are not.
+The checker (`python check_my_shapes.py`) runs each shape alone on
+`part-b/test-orders.ttl`: six real orders, four changed on purpose. The faults
+are listed at the top of that file. It compares the orders your shape flags
+with the orders it should flag. Any shape that flags exactly the right orders
+passes. **Expect** `3 of 3 right.` when all three are right. If you are
+stuck, look at `solutions/my_shapes_solutions.ttl`. The common wrong answers
+and the hints are in `reference-outputs/my-shapes-check.txt`.
 
 ## Part C · think (about 10 minutes)
 
-Answer for yourself, then in the closing discussion:
+Think about these, then discuss them with the class:
 
-1. Pick one Session 1 rule OWL could state as an axiom. Should it live in
-   the ontology, in the shapes, or both?
-2. The 1,370 orders in the rate table's gap: who fixes what, and how would
+1. Choose one rule from Session 1 that OWL could state as an axiom. Where
+   should it be: in the ontology, in the shapes, or in both?
+2. The 1,370 orders in the gap of the rate table: who fixes what? How will
    the report show that it is fixed?
-3. Name two rules in **your team project's own data**: which are core
-   SHACL, which need SPARQL, and what severity does each get?
+3. Choose two rules from **your team project's own data**. For each one: is
+   it core SHACL, or does it need SPARQL? What severity does it get?
 
 ## Optional
 
@@ -149,8 +146,9 @@ Answer for yourself, then in the closing discussion:
   with a version IRI, shapes covering your rule list, a triaged report,
   provenance, and a gate that blocks a bad commit.
 
-## The old template, kept on purpose
+## A template that checks nothing, on purpose
 
-`shapes_template.ttl` is the old Session 4 template. It targets
-`ul:PurchaseOrder`, which the Session 2 graph does not have, so it is kept
-as the real example of the targeting trap (Part A step 1). Do not build on it.
+`shapes_template.ttl` is an old template. It targets `ul:PurchaseOrder`, but
+the Session 2 graph has no such class, so the shape selects no nodes and checks
+nothing. We keep it as the real example of the targeting problem (Part A,
+step 1). Do not build on it. Start from `brunel-shapes.ttl` instead.
