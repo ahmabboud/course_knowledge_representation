@@ -134,7 +134,7 @@
   <div class="lu-eyebrow">Three failures, each real on the Brunel graph</div>
   <h2 class="lu-h2" style="max-width:66ch">None of the three shows an error message</h2>
 
-  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)"><div class="lu-card"><span class="lu-card__label">It invents a property</span><p class="lu-sub"><code>ul:shippedBy</code> sounds right. The graph says <code>ul:carriedBy</code>. The query runs and answers nothing.</p></div><div class="lu-card"><span class="lu-card__label">It misses a subclass</span><p class="lu-sub">Asked how many orders customer V555_15 placed, it wrote <code>?order a ul:Order</code>: 0. All 110 are typed <code>ul:LateOrder</code> only.</p></div><div class="lu-card"><span class="lu-card__label">It answers the unanswerable</span><p class="lu-sub">&ldquo;Which customers are in Beirut?&rdquo; The graph has no places at all, but a query can still be written.</p></div></div>
+  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)"><div class="lu-card"><span class="lu-card__label">It invents a property</span><p class="lu-sub"><code>ul:shippedBy</code> sounds right. The graph says <code>ul:carriedBy</code>. The query runs and answers nothing.</p></div><div class="lu-card"><span class="lu-card__label">It misses a subclass</span><p class="lu-sub">Asked how many orders customer V555_15 placed, it wrote <code>?order a ul:Order</code>: 0. All 110 have only the class <code>ul:LateOrder</code>.</p></div><div class="lu-card"><span class="lu-card__label">It answers the unanswerable</span><p class="lu-sub">&ldquo;Which customers are in Beirut?&rdquo; The graph has no places at all, but a query can still be written.</p></div></div>
   <div class="lu-split" style="margin-top:var(--lu-s3)">
     <div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">Orders found by <code>?o a ul:Order</code></span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:97.9%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">9,023</span></span><span class="lu-card__label">All orders</span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:100.0%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">9,215</span></span></div>
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Hallucination</dt><dd>A model stating something fluent that is not true: here, a property or an answer the graph does not have.</dd></dl></div>
@@ -338,7 +338,7 @@ Question: How many orders did carrier V44_3 carry?</code></pre></div>
   <h2 class="lu-h2" style="max-width:66ch">The check knows the graph's words, not the manager's meaning</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
-    <table class="lu-table"><thead><tr><th>Mistake</th><th>Caught?</th><th>By</th></tr></thead><tbody><tr><td>Not SPARQL at all</td><td>yes</td><td>the parser</td></tr><tr><td>A property the graph lacks (ul:shippedBy)</td><td>yes</td><td>unknown_properties</td></tr><tr><td>A class the graph lacks (ul:Shipment)</td><td>after Part B</td><td>unknown_classes, Y2</td></tr><tr><td><b>Only ul:Order: V555_15 gets 0 orders, not 110</b></td><td><b>no</b></td><td>every term exists</td></tr><tr><td><b>ul:shipsTo for &ldquo;leave from&rdquo; PORT09: 9,023, not 173</b></td><td><b>no</b></td><td>only a test set can tell</td></tr></tbody></table>
+    <table class="lu-table"><thead><tr><th>Mistake</th><th>Caught?</th><th>Caught by, or why not</th></tr></thead><tbody><tr><td>Not SPARQL at all</td><td>yes</td><td>the parser</td></tr><tr><td>A property the graph lacks (ul:shippedBy)</td><td>yes</td><td>unknown_properties</td></tr><tr><td>A class the graph lacks (ul:Shipment)</td><td>only after lab Part B</td><td>unknown_classes (lab task Y2)</td></tr><tr><td><b>Only ul:Order: V555_15 gets 0 orders, not 110</b></td><td><b>no</b></td><td>every term exists, so it passes</td></tr><tr><td><b>The wrong property: ul:shipsTo for &ldquo;leave from&rdquo; PORT09 gives 9,023, not 173</b></td><td><b>no</b></td><td>it exists, so it passes; only a test set can tell</td></tr></tbody></table>
     <div class="lu-callout"><span class="lu-callout__label">So: measure</span><p class="lu-sub">The subclass mistake passes every check and returns a number that looks fine. Only comparing with the right answer, on a test set, shows it. That is Part 4.</p></div>
   </div>
   <template data-notes><p>Three minutes. Both bold rows are real: the recorded run's <code>schema</code> setting wrote these queries for test questions 7 and 10, and both passed the check. With the three examples in the prompt, both came out right.</p></template>
@@ -404,7 +404,7 @@ answer: 1 row
 <!-- ==================================================================== 24 -->
 <section class="slide" data-label="The TEXT2SPARQL contract" data-section="Measuring" data-minutes="3">
   <div class="lu-eyebrow">serve.py · what a benchmark calls</div>
-  <h2 class="lu-h2">One web address in, one query out: any system, any harness</h2>
+  <h2 class="lu-h2">A benchmark calls one web address and gets one query back</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-code lu-code--sm" data-name="the request and the reply"><pre><code>GET /?question=How many late orders are there?
      &amp;dataset=https://ul.edu.lb/kr/brunel/
@@ -422,7 +422,7 @@ answer: 1 row
 
 <!-- ==================================================================== 25 -->
 <section class="slide" data-label="Scoring one answer" data-section="Measuring" data-minutes="4">
-  <div class="lu-eyebrow">Test question 3: &ldquo;Which carriers carry orders?&rdquo;</div>
+  <div class="lu-eyebrow">Scoring one answer · test question 3: &ldquo;Which carriers carry orders?&rdquo;</div>
   <h2 class="lu-h2" style="max-width:66ch">Every value returned goes into one set; compare it with the right set</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
@@ -431,7 +431,7 @@ answer: 1 row
       <p class="lu-statement" style="font-size:var(--lu-t-h3)">precision 2/3 · recall 2/3 · F1 0.67</p>
     </div>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Execution accuracy</dt><dd>Judging a query by the answer it returns, not by its text.</dd></dl></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Execution accuracy</dt><dd>Judging a query by the answer it returns, not by its text.</dd><dt>F1</dt><dd>One score from precision and recall: 1 is perfect, 0 is nothing right.</dd></dl></div>
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why not compare query text?</span><p class="lu-sub">The same answer has many correct queries. Only the answer can be compared fairly.</p></div>
     </div>
   </div>
@@ -668,12 +668,12 @@ answer: 1 row
 </section>
 
 <!-- ==================================================================== 44 -->
-<section class="slide" data-label="Part B: each task has a twin" data-section="Lab" data-minutes="2">
+<section class="slide" data-label="Part B: copy a function, change one thing" data-section="Lab" data-minutes="2">
   <div class="lu-eyebrow">Lab Part B · three improvements</div>
-  <h2 class="lu-h2" style="max-width:66ch">Copy the twin, change one thing</h2>
+  <h2 class="lu-h2" style="max-width:66ch">Copy a function you can read, and change one thing</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s2)">
-    <div class="lu-code lu-code--sm" data-name="access_layer.py · the twin of Y2, wrapped to fit"><pre><code>def unknown_properties(query, classes, props):
+    <div class="lu-code lu-code--sm" data-name="access_layer.py · the function to copy for Y2, wrapped to fit"><pre><code>def unknown_properties(query, classes, props):
     known = {p.split("#")[1] for p in props}
     used = {t for t in ul_terms(query)
             if t[0].islower()}
@@ -683,7 +683,7 @@ answer: 1 row
             f"this graph. The properties are: {listed}"
             for t in sorted(used - known)]</code></pre></div>
     <div class="lu-stack">
-      <table class="lu-table"><thead><tr><th>Write</th><th>Copy, then change</th></tr></thead><tbody><tr><td>Y1 <code>my_examples.ttl</code></td><td><code>ex:3</code>: PLANT08 and <code>ul:servesPort</code></td></tr><tr><td>Y2 <code>my_access.py</code></td><td>this function, for classes</td></tr><tr><td>Y3 <code>my_questions.yaml</code></td><td>question 5: PLANT08, id 101</td></tr></tbody></table>
+      <table class="lu-table"><thead><tr><th>You write</th><th>Copy this one, then change it</th></tr></thead><tbody><tr><td>Y1 <code>my_examples.ttl</code></td><td><code>ex:3</code>: PLANT08 and <code>ul:servesPort</code></td></tr><tr><td>Y2 <code>my_access.py</code></td><td>this function, for classes</td></tr><tr><td>Y3 <code>my_questions.yaml</code></td><td>question 5: PLANT08, id 101</td></tr></tbody></table>
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Then measure</span><p class="lu-sub"><code>python evaluate.py --setting repair --add-class-check --questions my_questions.yaml</code></p></div>
     </div>
   </div>
