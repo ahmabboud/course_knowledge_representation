@@ -71,7 +71,7 @@
     <li data-state="muted"><span class="lu-pipeline__n">08</span><span class="lu-pipeline__t">Access</span><span class="lu-pipeline__d">Questions</span></li>
   </ul>
   <div class="lu-split" style="margin-top:var(--lu-s5)">
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">What you have</span><p class="lu-sub">Session 2's converter, a Python script that read four CSV files. Session 4's shapes, and one open problem: 1,209 rate bands point to carriers with no type.</p></div>
+    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">What you have</span><p class="lu-sub">Session 2's converter, a Python script that read four CSV files. Session 4's shapes, and one open problem: 1,209 rate bands whose carrier is not marked as a Carrier.</p></div>
     <div class="lu-callout"><span class="lu-callout__label">What is missing</span><p class="lu-sub">A way to rebuild the graph from a <b>live</b> database every time the data changes, and to fix that open problem, without a new converter.</p></div>
   </div>
   <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>GNN</b> Graph neural network: a model that learns about a node from the nodes next to it, by passing messages along the edges.</span></p>
@@ -112,7 +112,7 @@
 <!-- ==================================================================== 05 -->
 <section class="slide" data-label="A converter is a program; a mapping is a set of rules" data-section="Integration problem" data-minutes="5">
   <div class="lu-eyebrow">The idea</div>
-  <h2 class="lu-h2">Same tables, same graph. The difference is who does the work.</h2>
+  <h2 class="lu-h2">A converter is a program. A mapping is a description that any tool can run.</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-walk" data-label="A program against a mapping"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1000, "height": 220, "nodes": [{"id": "csv", "label": "four CSV files", "x": 170, "y": 45, "w": 250, "h": 56, "kind": "builtin"}, {"id": "py", "label": "convert_to_rdf.py\n(a program)", "x": 540, "y": 45, "w": 300, "h": 70, "kind": "builtin"}, {"id": "g1", "label": "graph", "x": 860, "y": 45, "w": 170, "h": 56, "kind": "builtin"}, {"id": "db", "label": "PostgreSQL:\nthe same four tables", "x": 170, "y": 175, "w": 290, "h": 70, "kind": "builtin"}, {"id": "map", "label": "brunel-mapping.ttl\n(rules, not code)", "x": 540, "y": 175, "w": 300, "h": 70, "kind": "builtin"}, {"id": "g2", "label": "graph", "x": 860, "y": 175, "w": 170, "h": 56, "kind": "builtin"}], "edges": [{"id": "a", "from": "csv", "to": "py", "label": ""}, {"id": "b", "from": "py", "to": "g1", "label": ""}, {"id": "c", "from": "db", "to": "map", "label": ""}, {"id": "d", "from": "map", "to": "g2", "label": ""}], "steps": [{"show": ["csv", "py", "g1", "a", "b"], "run": ["a", "b"], "set": {"py": "active"}}, {"show": ["db", "map", "g2", "c", "d"], "run": ["c", "d"], "set": {"py": "idle", "map": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="Session 2" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A Python script read the files once, row by row, and wrote triples. To change what it produces, you change the program."></div><div data-walk-step="2" data-caption-short="Today" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The tables are in a database. A &lt;b&gt;mapping&lt;/b&gt; says, for each table, which triples a row becomes. A tool reads the mapping and does the work, as often as needed."></div></div></div>
     <div class="lu-stack">
@@ -126,7 +126,7 @@
 <!-- ==================================================================== 06 -->
 <section class="slide" data-label="Two routes from one mapping" data-section="Integration problem" data-minutes="5">
   <div class="lu-eyebrow">Materialize or virtualize</div>
-  <h2 class="lu-h2">Store the graph, or translate every question. One mapping does both.</h2>
+  <h2 class="lu-h2">One mapping, two routes: store the graph, or translate each question</h2>
   <div class="lu-walk" data-label="Two routes from one mapping"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 220, "nodes": [{"id": "map", "label": "one mapping", "x": 150, "y": 112, "w": 230, "h": 56, "kind": "builtin"}, {"id": "mk", "label": "Morph-KGC", "x": 500, "y": 45, "w": 240, "h": 56, "kind": "builtin"}, {"id": "file", "label": "brunel-mapped.nt\n135,799 triples, stored", "x": 1020, "y": 45, "w": 380, "h": 70, "kind": "builtin"}, {"id": "on", "label": "Ontop", "x": 500, "y": 180, "w": 240, "h": 56, "kind": "builtin"}, {"id": "sql", "label": "SPARQL in, SQL to the\ndatabase, answers out", "x": 1020, "y": 180, "w": 380, "h": 70, "kind": "builtin"}], "edges": [{"id": "a", "from": "map", "to": "mk", "label": "", "route": "elbow"}, {"id": "b", "from": "mk", "to": "file", "label": "materialize"}, {"id": "c", "from": "map", "to": "on", "label": "", "route": "elbow"}, {"id": "d", "from": "on", "to": "sql", "label": "virtualize"}], "steps": [{"show": ["map"], "set": {"map": "active"}}, {"show": ["mk", "file", "a", "b"], "run": ["a", "b"], "set": {"map": "idle", "file": "active"}}, {"show": ["on", "sql", "c", "d"], "run": ["c", "d"], "set": {"file": "idle", "sql": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="One mapping" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The same R2RML file serves both routes."></div><div data-walk-step="2" data-caption-short="Materialize" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Morph-KGC reads every table now and stores the whole graph in a file. Fast to query, but a snapshot: run it again when the data changes."></div><div data-walk-step="3" data-caption-short="Virtualize" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Ontop stores nothing. Each SPARQL question becomes SQL on the live database, so every answer is current."></div></div></div>
   <div class="lu-split">
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Materialization</dt><dd>Converting the data to triples once and storing them.</dd></dl></div>
@@ -250,8 +250,8 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 
 <!-- ==================================================================== 14 -->
 <section class="slide" data-label="A logical view types every carrier" data-section="R2RML" data-minutes="5">
-  <div class="lu-eyebrow">Session 4's triage, fixed</div>
-  <h2 class="lu-h2">An SQL query as the source: every carrier from both tables, typed once</h2>
+  <div class="lu-eyebrow">Fixing the 1,209 warnings from Session 4</div>
+  <h2 class="lu-h2">One SQL query gives all 10 carriers the class Carrier</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-code lu-code--sm" data-name="brunel-mapping.ttl · <#Carriers>"><pre><code>&lt;#Carriers&gt;
   rr:logicalTable [ rr:sqlQuery <span class="tok-str">"""
@@ -262,8 +262,8 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
     <span class="tok-str">"https://ul.edu.lb/kr/id/carrier/brunel/{carrier}"</span> ;
     rr:class ul:Carrier ] .</code></pre></div>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Logical view</dt><dd>An SQL query used in place of a table, to prepare or combine rows first.</dd></dl></div>
-      <div class="lu-callout"><span class="lu-callout__label">The fix</span><p class="lu-sub">Session 2 gave the type Carrier only to carriers that had an order: 3 carriers. This view finds all <b>10</b>. The 1,209 rate bands from Session 4 that had no carrier type are fixed.</p></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Logical view</dt><dd>An SQL query used in place of a table, to prepare or combine rows first.</dd><dt>UNION</dt><dd>SQL: joins two lists, each value once.</dd><dt>rr:class</dt><dd>Gives every subject this class.</dd></dl></div>
+      <div class="lu-callout"><span class="lu-callout__label">Before and after</span><p class="lu-sub">Before: 3 of 10 carriers had the class. Now: all <b>10</b>, so the 1,209 warnings go.</p></div>
     </div>
   </div>
   <template data-notes><p>Five minutes. Session 4 triaged 1,209 Warnings as "the conversion's fault, fix it in the mapping". Here is the fix: one query. The 7 carriers are V444_2 and V444_4 to V444_9.</p></template>
@@ -272,7 +272,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 <!-- ==================================================================== 15 -->
 <section class="slide" data-label="A class from a column value" data-section="R2RML" data-minutes="4">
   <div class="lu-eyebrow">Two small maps, one per class</div>
-  <h2 class="lu-h2">An order with late days is a late order: a filter chooses the class</h2>
+  <h2 class="lu-h2">A WHERE filter decides which class each order gets</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-code lu-code--sm" data-name="brunel-mapping.ttl · <#LateOrders>"><pre><code>&lt;#LateOrders&gt;
   rr:logicalTable [ rr:sqlQuery <span class="tok-str">"""
@@ -282,8 +282,8 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
     <span class="tok-str">"https://ul.edu.lb/kr/id/order/brunel/{order_id}"</span> ;
     rr:class ul:LateOrder ] .</code></pre></div>
     <div class="lu-stack">
-      <div class="lu-callout"><span class="lu-callout__label">The twin</span><p class="lu-sub"><code>&lt;#OnTimeOrders&gt;</code> is the same map with <code>= 0</code> and <code>rr:class ul:Order</code>: 9,023 orders and 192 late orders, as in Session 2.</p></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Same subject, several maps</span><p class="lu-sub">Three maps make the same order IRI: the properties, the date, the class. The triples simply add up.</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">The second map</span><p class="lu-sub"><code>&lt;#OnTimeOrders&gt;</code> is the same map with <code>= 0</code> and <code>rr:class ul:Order</code>. Together the two maps give 9,023 orders and 192 late orders, as in Session 2.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Same subject, several maps</span><p class="lu-sub">Several maps can build the same order IRI: one for its properties, one for each class. The triples they make are simply added together.</p></div>
     </div>
   </div>
   <template data-notes><p>Four minutes. R2RML classes are constants, so a class that depends on data needs a filtered source. The same trick turns any status column into classes.</p></template>
@@ -291,11 +291,11 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 
 <!-- ==================================================================== 16 -->
 <section class="slide" data-label="A table with no key" data-section="R2RML" data-minutes="4">
-  <div class="lu-eyebrow">Rate bands</div>
-  <h2 class="lu-h2">No column, and no combination of columns, identifies one rate band</h2>
+  <div class="lu-eyebrow">A table with no key: the rate bands</div>
+  <h2 class="lu-h2">A rate band has no key, so the mapping makes it a blank node</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
-      <table class="lu-table"><thead><tr><th>FreightRates</th><th>Count</th></tr></thead><tbody><tr><td>rows in FreightRates</td><td>1,540</td></tr><tr><td>different rows</td><td>1,537 (5 rows are exact copies of another)</td></tr><tr><td>different on carrier, ports, service, minimum weight</td><td>1,258</td></tr></tbody></table>
+      <table class="lu-table"><thead><tr><th>FreightRates</th><th>Count</th></tr></thead><tbody><tr><td>rows in FreightRates</td><td>1,540</td></tr><tr><td>different rows</td><td>1,537 (5 rows are exact copies of another)</td></tr><tr><td>different on carrier, ports, service and minimum weight together</td><td>1,258: still fewer than 1,537</td></tr></tbody></table>
       <div class="lu-code lu-code--sm" data-name="brunel-mapping.ttl · <#RateBands>"><pre><code>rr:subjectMap [ rr:template <span class="tok-str">"rate-band-{rate_id}"</span> ;
   rr:termType rr:BlankNode ; rr:class ul:RateBand ] ;</code></pre></div>
     </div>
@@ -337,10 +337,10 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
   <div class="lu-eyebrow">A real run, 2.3 seconds</div>
   <h2 class="lu-h2">Every triple of Session 2's graph is there, plus 7 more. Nothing else is different.</h2>
   <div class="lu-split lu-split--wide-left">
-    <table class="lu-table"><thead><tr><th>Triples</th><th>Count</th></tr></thead><tbody><tr><td>Session 2's graph</td><td>135,841</td></tr><tr><td>minus its vocabulary (class and property descriptions)</td><td>&minus; 49</td></tr><tr><td>plus the 7 carriers the mapping now types</td><td>+ 7</td></tr><tr><td><b>the mapped graph, Morph-KGC</b></td><td><b>135,799</b></td></tr></tbody></table>
+    <table class="lu-table"><thead><tr><th>Triples</th><th>Count</th></tr></thead><tbody><tr><td>Session 2's graph</td><td>135,841</td></tr><tr><td>minus its vocabulary (class and property descriptions)</td><td>&minus; 49</td></tr><tr><td>plus the 7 carriers that now have the class Carrier</td><td>+ 7</td></tr><tr><td><b>the mapped graph, Morph-KGC</b></td><td><b>135,799</b></td></tr></tbody></table>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Morph-KGC</dt><dd>The open source tool that runs a mapping and writes the whole graph.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Compared one by one</span><p class="lu-sub">0 triples only in Session 2's graph, 7 only in the mapped graph (the new carrier types), all 1,540 rate bands equal.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Compared one by one</span><p class="lu-sub">0 triples only in Session 2's graph, 7 only in the mapped graph (the new Carrier class statements), all 1,540 rate bands equal.</p></div>
     </div>
   </div>
   <template data-notes><p>Five minutes. Real run of <code>materialize.py</code> and <code>compare_with_session2.py</code> (<code>reference-outputs/materialize-and-compare.txt</code>).</p>
@@ -350,23 +350,23 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 
 <!-- ==================================================================== 20 -->
 <section class="slide" data-label="Session 4's shapes on the mapped graph" data-section="Materialize" data-minutes="4">
-  <div class="lu-eyebrow">The same shapes, unchanged</div>
-  <h2 class="lu-h2">The data problems stay. The conversion problem is gone.</h2>
+  <div class="lu-eyebrow">Session 4's shapes, run on the mapped graph</div>
+  <h2 class="lu-h2">The warning caused by the converter is gone. The warnings about the data stay.</h2>
   <table class="lu-table"><thead><tr><th>Result</th><th>Session 2 graph</th><th>Mapped graph</th></tr></thead><tbody><tr><td>Violations: weight not above 0</td><td>2</td><td>2</td></tr><tr><td>Warnings: weight in no band of a priced lane</td><td>1,370</td><td>1,370</td></tr><tr><td>Warnings: band carrier is not a Carrier</td><td>1,209</td><td><b>0</b></td></tr></tbody></table>
   <div class="lu-split">
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Correct to stay</span><p class="lu-sub">The two zero weight orders and the rate table's gap are in the source tables. A mapping must not hide them.</p></div>
-    <div class="lu-callout"><span class="lu-callout__label">Correct to go</span><p class="lu-sub">The 1,209 were the converter's fault. Session 4 said: fix it in the mapping. Done.</p></div>
+    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Should stay</span><p class="lu-sub">The two orders with weight 0, and the orders whose weight no rate band covers, are in the source tables. A mapping must not hide them.</p></div>
+    <div class="lu-callout"><span class="lu-callout__label">Should go</span><p class="lu-sub">The 1,209 warnings came from the converter, not from the data. Session 4 said: fix it in the mapping. Done.</p></div>
   </div>
   <template data-notes><p>Four minutes. Real runs of Session 4's <code>validate.py</code> with <code>brunel-shapes.ttl</code> (Session 4's <code>validate-triaged.txt</code>, and here <code>validate-mapped.txt</code>). This is the first time a triage decision has been closed.</p></template>
 </section>
 
 <!-- ==================================================================== 21 -->
 <section class="slide" data-label="The bug that raised no error" data-section="Materialize" data-minutes="5">
-  <div class="lu-eyebrow">Found by accident, building this lab</div>
-  <h2 class="lu-h2">The first validation reported 6 fewer warnings. Nothing had improved.</h2>
+  <div class="lu-eyebrow">A trap we met while building this lab</div>
+  <h2 class="lu-h2">Fewer warnings can mean some orders were never checked</h2>
   <div class="lu-split lu-split--wide-left">
-    <div class="lu-walk" data-label="A mapping bug that raises no error"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1100, "height": 250, "nodes": [{"id": "m", "label": "mapped data\n135,799 triples", "x": 190, "y": 55, "w": 300, "h": 70, "kind": "builtin"}, {"id": "f1", "label": "9,023 focus nodes:\n192 late orders unchecked", "x": 640, "y": 55, "w": 420, "h": 70, "kind": "builtin", "flag": "right"}, {"id": "v", "label": "+ vocabulary.ttl:\nlate order ⊑ order", "x": 190, "y": 195, "w": 300, "h": 70, "kind": "builtin"}, {"id": "f2", "label": "9,215 focus nodes:\nevery order checked", "x": 640, "y": 195, "w": 420, "h": 70, "kind": "builtin"}], "edges": [{"id": "a", "from": "m", "to": "f1", "label": "validate"}, {"id": "b", "from": "v", "to": "f2", "label": "validate"}], "steps": [{"show": ["m", "f1", "a"], "run": ["a"], "set": {"f1": "impossible"}}, {"show": ["v", "f2", "b"], "run": ["b"], "set": {"f2": "active"}}], "legend": {"builtin": "Step", "impossible": "Silently unchecked"}, "flags": {"impossible": "unchecked"}}</script></div><div data-walk-step="1" data-caption-short="No error, still wrong" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The order shapes target &lt;code&gt;ul:Order&lt;/code&gt;. The late orders are typed &lt;code&gt;ul:LateOrder&lt;/code&gt; only, and nothing in the data says a late order is an order. 192 orders are silently not checked."></div><div data-walk-step="2" data-caption-short="Data plus vocabulary" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Validate the data &lt;b&gt;together with&lt;/b&gt; the vocabulary. Its rule, every late order is an order, brings the focus nodes back to 9,215."></div></div></div>
-    <div class="lu-callout"><span class="lu-callout__label">Session 4's rule, again</span><p class="lu-sub">Read the focus node count before the result. 9,023 instead of 9,215 was the only sign that 192 orders were not checked.</p></div>
+    <div class="lu-walk" data-label="A mapping bug that raises no error"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1100, "height": 250, "nodes": [{"id": "m", "label": "mapped data\n135,799 triples", "x": 190, "y": 55, "w": 300, "h": 70, "kind": "builtin"}, {"id": "f1", "label": "9,023 focus nodes:\n192 late orders unchecked", "x": 640, "y": 55, "w": 420, "h": 70, "kind": "builtin", "flag": "right"}, {"id": "v", "label": "+ vocabulary.ttl:\na late order\nis an order", "x": 190, "y": 195, "w": 300, "h": 70, "kind": "builtin"}, {"id": "f2", "label": "9,215 focus nodes:\nevery order checked", "x": 640, "y": 195, "w": 420, "h": 70, "kind": "builtin"}], "edges": [{"id": "a", "from": "m", "to": "f1", "label": "validate"}, {"id": "b", "from": "v", "to": "f2", "label": "validate"}], "steps": [{"show": ["m", "f1", "a"], "run": ["a"], "set": {"f1": "impossible"}}, {"show": ["v", "f2", "b"], "run": ["b"], "set": {"f2": "active"}}], "legend": {"builtin": "Step", "impossible": "Silently unchecked"}, "flags": {"impossible": "unchecked"}}</script></div><div data-walk-step="1" data-caption-short="No error, still wrong" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The order shapes target &lt;code&gt;ul:Order&lt;/code&gt;. The late orders have only the class &lt;code&gt;ul:LateOrder&lt;/code&gt;, and nothing in the data says a late order is an order. So 192 orders are silently not checked, and the validation reported 6 fewer warnings. Nothing had improved."></div><div data-walk-step="2" data-caption-short="Data plus vocabulary" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Validate the data &lt;b&gt;together with&lt;/b&gt; the vocabulary. Its rule, every late order is an order, brings the focus nodes back to 9,215."></div></div></div>
+    <div class="lu-callout"><span class="lu-callout__label">Session 4's rule, again</span><p class="lu-sub">Before you trust a result, read the focus node count: how many nodes were checked. 9,023 instead of 9,215 was the only sign that 192 orders were not checked.</p></div>
   </div>
   <template data-notes><p>Five minutes. Real: without <code>vocabulary.ttl</code> the weight in band shape reported 1,364 warnings instead of 1,370; the 6 missing are all late orders (<code>reference-outputs/validate-mapped-without-vocabulary.txt</code>).</p>
 <ul><li>Session 2's graph never had the problem because its converter wrote the vocabulary into the same file.</li></ul></template>
@@ -480,8 +480,8 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 
 <!-- ==================================================================== 30 -->
 <section class="slide" data-label="Clean first, then block" data-section="Entity resolution" data-minutes="4">
-  <div class="lu-eyebrow">Two cheap steps before any scoring</div>
-  <h2 class="lu-h2">Cleaning fixes the easy drift. Blocking skips pairs that cannot match.</h2>
+  <div class="lu-eyebrow">Two cheap steps before we compare records</div>
+  <h2 class="lu-h2">Cleaning fixes the easy drift. Blocking skips pairs of records that cannot match.</h2>
   <div class="lu-split">
     <div class="lu-card">
       <span class="lu-card__label">1 · Clean both sides the same way</span>
@@ -490,7 +490,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
     </div>
     <div class="lu-card">
       <span class="lu-card__label">2 · Block on the home plant</span>
-      <p class="lu-sub"><b>Blocking</b>: compare only records that share a simple key, here the home plant.</p>
+      <p class="lu-sub"><b>Blocking</b>: compare only pairs of records that share a simple key, here the home plant.</p>
       <div class="lu-stack" style="gap:var(--lu-s3)"><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:100.0%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">2,392 pairs</span></span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:76.0%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">1,818 pairs</span></span></div>
       <p class="lu-sub">52 &times; 46 = 2,392 possible pairs; 1,818 share a home plant.</p>
     </div>
@@ -500,13 +500,13 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 
 <!-- ==================================================================== 31 -->
 <section class="slide" data-label="Evidence adds up: match weights" data-section="Entity resolution" data-minutes="5">
-  <div class="lu-eyebrow">Fellegi and Sunter, 1969</div>
+  <div class="lu-eyebrow">How a matcher scores a pair · the Fellegi-Sunter method, 1969</div>
   <h2 class="lu-h2">Each comparison adds evidence for &ldquo;same customer&rdquo;, or against it</h2>
   <div class="lu-split lu-split--wide-left">
-    <table class="lu-table"><thead><tr><th>Outcome</th><th>m</th><th>u</th><th>Weight</th></tr></thead><tbody><tr><td>code, exact after cleaning</td><td>0.6</td><td>0.001</td><td>+9.2</td></tr><tr><td>code, close (Jaro-Winkler &ge; 0.93)</td><td>0.35</td><td>0.02</td><td>+4.1</td></tr><tr><td>code, different</td><td>0.05</td><td>0.979</td><td>-4.3</td></tr><tr><td>same home plant</td><td>0.95</td><td>0.8</td><td>+0.2</td></tr><tr><td>same main service</td><td>0.9</td><td>0.4</td><td>+1.2</td></tr></tbody></table>
+    <table class="lu-table"><thead><tr><th>Outcome</th><th>m</th><th>u</th><th>Weight</th></tr></thead><tbody><tr><td>code, exact after cleaning</td><td>0.6</td><td>0.001</td><td>+9.2</td></tr><tr><td>code, close (similarity &ge; 0.93)</td><td>0.35</td><td>0.02</td><td>+4.1</td></tr><tr><td>code, different</td><td>0.05</td><td>0.979</td><td>-4.3</td></tr><tr><td>same home plant</td><td>0.95</td><td>0.8</td><td>+0.2</td></tr><tr><td>same main service</td><td>0.9</td><td>0.4</td><td>+1.2</td></tr></tbody></table>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Match weight</dt><dd>log2(m / u): m is how often the outcome happens for a true match, u for two different customers.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read one row</span><p class="lu-sub">Same home plant: true matches share it 95% of the time, different customers 80%. Weak evidence: +0.2. An exact code: +9.2.</p></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Match weight</dt><dd>log2(m / u). m: how often this outcome happens when two records are the same customer. u: how often it happens for two different customers.</dd></dl></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Score of a pair</span><p class="lu-sub">Add the weights. Exact code + same plant + same service: 9.2 + 0.2 + 1.2 = <b>10.6</b>. A shared plant is weak evidence (+0.2): 95% of true matches have it, and so do 80% of different customers.</p></div>
     </div>
   </div>
   <template data-notes><p>Five minutes. The weights are stated in <code>er/match_customers.py</code>; Splink, the tool named in the syllabus, estimates them from the data, for the same model, at scale. A pair's score is the sum of its weights. Exact code, same plant, same service: 9.2 + 0.2 + 1.2, about 10.6. A close code with both the same: 4.1 + 0.2 + 1.2 = 5.5.</p></template>
@@ -514,7 +514,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 
 <!-- ==================================================================== 32 -->
 <section class="slide" data-label="One threshold, two kinds of error" data-section="Entity resolution" data-minutes="5">
-  <div class="lu-eyebrow">A real run on the teaching set</div>
+  <div class="lu-eyebrow">Real run · the threshold is the score above which a pair counts as a match</div>
   <h2 class="lu-h2">Lower the threshold: more found, more wrong. Raise it: fewer wrong, more missed.</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
@@ -558,7 +558,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <ol class="lu-list lu-list--num">
       <li><b>Build and observe.</b> Start PostgreSQL, load the tables, materialize (135,799 triples), compare with Session 2, validate with Session 4's shapes, ask Ontop Q2, match the TMS customers.</li>
-      <li><b>Practice, optional.</b> Run <code>check_my_mapping.py</code> on the worked solutions, or write the three rules in <code>my_mapping.ttl</code> yourself, each the twin of one already there.</li>
+      <li><b>Practice, optional.</b> Run <code>check_my_mapping.py</code> on the worked solutions, or write the three rules in <code>my_mapping.ttl</code> yourself, each a copy of one already there.</li>
       <li><b>Think.</b> Three questions, one about your own team's database.</li>
     </ol>
     <div class="lu-stack">
