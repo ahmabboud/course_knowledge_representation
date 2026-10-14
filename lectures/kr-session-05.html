@@ -207,33 +207,37 @@ ontop query \
 
 <!-- ==================================================================== 12 -->
 <section class="slide" data-label="The triples map, in R2RML" data-section="R2RML" data-minutes="5">
-  <div class="lu-eyebrow">The same rules, written down</div>
-  <h2 class="lu-h2">A table, a subject, and one predicate-object map per column</h2>
+  <div class="lu-eyebrow">The rules from the last slide, as a file</div>
+  <h2 class="lu-h2">Rules 1 to 3 of the last slide, written in R2RML</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-code lu-code--sm" data-name="brunel-mapping.ttl · <#Orders>, shortened"><pre><code>&lt;#Orders&gt;
   rr:logicalTable [ rr:tableName <span class="tok-str">"orders"</span> ] ;
+  <span class="tok-com"># Rule 1 · the subject</span>
   rr:subjectMap [ rr:template
     <span class="tok-str">"https://ul.edu.lb/kr/id/order/brunel/{order_id}"</span> ] ;
+  <span class="tok-com"># Rule 2 · copy order_id as text</span>
   rr:predicateObjectMap [ rr:predicate ul:orderId ;
     rr:objectMap [ rr:column <span class="tok-str">"order_id"</span> ] ] ;
+  <span class="tok-com"># Rule 3 · copy weight as a decimal</span>
   rr:predicateObjectMap [ rr:predicate ul:weight ;
     rr:objectMap [ rr:column <span class="tok-str">"weight"</span> ;
                    rr:datatype xsd:decimal ] ] .</code></pre></div>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Triples map</dt><dd>One table or query, and the triples each of its rows becomes.</dd><dt>IRI template</dt><dd>A pattern that builds an IRI from a column: <code>{order_id}</code> is replaced by the row's value.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read it as English</span><p class="lu-sub">For each row of <i>orders</i>, make the order's IRI; give it the id as text and the weight as a decimal.</p></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub"><b>rr:subjectMap</b>: Rule 1. Makes the subject: the thing every other triple is about.</p><p class="lu-sub"><b>rr:predicateObjectMap</b>: Rules 2 and 3. One property, and where its value comes from.</p><p class="lu-sub"><b>rr:template</b>: Builds text from a pattern. <code>{order_id}</code> becomes the row's value.</p><p class="lu-sub"><b>rr:column</b>: Copies the cell as it is.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why order_id appears twice</span><p class="lu-sub">Rule 1 uses it to <i>name</i> the order: it becomes part of the IRI. Rule 2 uses it as a <i>value</i>: the id is also stored as text on that order.</p></div>
     </div>
   </div>
-  <template data-notes><p>Five minutes. Every triples map has these three parts: where rows come from (<code>rr:logicalTable</code>), the subject (<code>rr:subjectMap</code>), the properties (<code>rr:predicateObjectMap</code>).</p></template>
+  <template data-notes><p>Five minutes. Read it with the previous slide open: each comment line is one of the four rules. Rule 4, the carrier link, is on the next slide. The first question students ask is why order_id appears twice: once to name the thing, once as data about the thing. Every triples map has three parts: where rows come from (<code>rr:logicalTable</code>), the subject (<code>rr:subjectMap</code>), the properties (<code>rr:predicateObjectMap</code>).</p></template>
 </section>
 
 <!-- ==================================================================== 13 -->
 <section class="slide" data-label="A link needs no join" data-section="R2RML" data-minutes="4">
-  <div class="lu-eyebrow">Foreign keys</div>
+  <div class="lu-eyebrow">Rule 4 of the last slide: a link</div>
   <h2 class="lu-h2">The carrier's IRI is built from the key in the order's own row</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-stack">
-      <div class="lu-code lu-code--sm" data-name="brunel-mapping.ttl · inside <#Orders>"><pre><code>rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
+      <div class="lu-code lu-code--sm" data-name="brunel-mapping.ttl · inside <#Orders>"><pre><code><span class="tok-com"># Rule 4 · make a link</span>
+rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
   rr:objectMap [ rr:template
     <span class="tok-str">"https://ul.edu.lb/kr/id/carrier/brunel/{carrier}"</span>
   ] ] ;</code></pre></div>
@@ -400,6 +404,7 @@ ontop query \
   <h2 class="lu-h2">The same mapping, used the other way round</h2>
   <div class="lu-walk" data-label="How Ontop answers"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 205, "nodes": [{"id": "q", "label": "SPARQL: orders and late\norders per carrier", "x": 190, "y": 45, "w": 340, "h": 70, "kind": "builtin"}, {"id": "o", "label": "Ontop reads\nbrunel-mapping.ttl", "x": 620, "y": 45, "w": 320, "h": 70, "kind": "builtin"}, {"id": "s", "label": "SQL on the orders table", "x": 1070, "y": 45, "w": 380, "h": 56, "kind": "builtin"}, {"id": "db", "label": "PostgreSQL: rows", "x": 1070, "y": 170, "w": 300, "h": 56, "kind": "builtin"}, {"id": "a", "label": "answers, as if from a graph", "x": 520, "y": 170, "w": 400, "h": 56, "kind": "builtin"}], "edges": [{"id": "x", "from": "q", "to": "o", "label": ""}, {"id": "y", "from": "o", "to": "s", "label": "rewrite"}, {"id": "z", "from": "s", "to": "db", "label": "run"}, {"id": "w", "from": "db", "to": "a", "label": "answers"}], "steps": [{"show": ["q"], "set": {"q": "active"}}, {"show": ["o", "x"], "run": ["x"], "set": {"q": "idle", "o": "active"}}, {"show": ["s", "y"], "run": ["y"], "set": {"o": "idle", "s": "active"}}, {"show": ["db", "z", "a", "w"], "run": ["z", "w"], "set": {"s": "idle", "a": "active"}}], "legend": false}</script></div><div data-walk-step="1" data-caption-short="A SPARQL question" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Session 2&#x27;s Q2, unchanged: orders and late orders per carrier."></div><div data-walk-step="2" data-caption-short="The mapping, read backwards" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Ontop finds which triples map produces &lt;code&gt;ul:carriedBy&lt;/code&gt; and &lt;code&gt;ul:lateDays&lt;/code&gt;: columns &lt;code&gt;carrier&lt;/code&gt; and &lt;code&gt;ship_late_day_count&lt;/code&gt; of &lt;code&gt;orders&lt;/code&gt;."></div><div data-walk-step="3" data-caption-short="SQL" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; It writes one SQL query that groups the orders table by carrier."></div><div data-walk-step="4" data-caption-short="Answers" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; PostgreSQL returns rows; Ontop turns them back into SPARQL answers. No triple was ever stored."></div></div></div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Ontop</dt><dd>The open source engine that answers SPARQL over a relational database, through a mapping.</dd><dt>OBDA</dt><dd>Ontology based data access: querying a database through an ontology, by virtualization.</dd></dl></div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Triples map</b> One part of an R2RML mapping: one table or query, and the triples each of its rows becomes.</span></p>
   <template data-notes><p>Five minutes. Ontop 5.5.0 (February 2026) reads R2RML directly; in the lab <code>ontop/run_ontop.py</code> prints the SQL it generated.</p>
 <ul><li>Ontop does not support <code>*</code> and <code>+</code> property paths; it uses the vocabulary instead (<code>-t vocabulary.ttl</code>), so <code>?o a ul:Order</code> also finds the late orders, without storing that inference.</li></ul></template>
 </section>
