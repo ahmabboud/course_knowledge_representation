@@ -18,7 +18,7 @@
   data-deck-id="kr-s05"
   data-course="Knowledge Representation"
   data-session="Session 5 of 8"
-  data-duration="196"
+  data-duration="200"
   data-app-root="../"
   data-unit="Lebanese University · MSc">
 
@@ -46,7 +46,7 @@
       <p class="lu-lead" style="max-width:48ch">The Brunel data moves into a live database. A mapping, not a script, turns the database into the same graph as Session 2. We do it in two ways. Then two systems write the same customer differently, and we measure how well a matcher finds the records that are the same.</p>
     </div>
     <div class="lu-row" style="justify-content:space-between;font-size:var(--lu-t-caption);color:var(--lu-on-night-2)">
-      <span>About 185 minutes · lecture, lab in Python, wrap</span>
+      <span>About 195 minutes · lecture, lab in Python, wrap</span>
       <span>Press <kbd>&rarr;</kbd> to begin · <kbd>?</kbd> for shortcuts</span>
     </div>
   </div>
@@ -87,9 +87,9 @@
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Open these now</span><p class="lu-sub"><code>demos/session-05-integration/</code>, starting with its <code>OVERVIEW.md</code> · Docker Desktop · a terminal with <code>demos/.venv</code> active.</p></div>
     </div>
     <div class="lu-card">
-      <span class="lu-card__label">How the ~185 minutes are spent</span>
+      <span class="lu-card__label">How the ~195 minutes are spent</span>
       <ul class="lu-layers">
-        <li><span class="lu-layers__name">Lecture · ~115 min</span><span class="lu-layers__note">The problem. R2RML. Materialize. Virtualize. Entity resolution.</span></li>
+        <li><span class="lu-layers__name">Lecture · ~125 min</span><span class="lu-layers__note">The problem. R2RML. Materialize. Virtualize. Entity resolution.</span></li>
         <li><span class="lu-layers__name">Lab · ~55 min</span><span class="lu-layers__note">Load, map, compare, validate, query with Ontop, match customers, and (optional) extend a mapping.</span></li>
         <li><span class="lu-layers__name">Wrap · ~15 min</span><span class="lu-layers__note">Discussion, project clinic, glossary, self-check</span></li>
       </ul>
@@ -179,7 +179,7 @@ ontop query \
 <!-- ==================================================================== 09 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 2 · R2RML" data-section="R2RML" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 2 of 5 · about 36 minutes</div>
+    <div class="lu-eyebrow">Part 2 of 5 · about 38 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">How do you say, once, what every row of a table means?</h2>
     <p class="lu-lead" style="max-width:46ch">Make the subject from the key, then write one rule for each column.</p>
   </div>
@@ -198,7 +198,7 @@ ontop query \
 </section>
 
 <!-- ==================================================================== 11 -->
-<section class="slide" data-label="The structure of a triples map" data-section="R2RML" data-minutes="5">
+<section class="slide" data-label="The structure of a triples map" data-section="R2RML" data-minutes="3">
   <div class="lu-eyebrow">The structure of every R2RML mapping</div>
   <h2 class="lu-h2">A triples map answers three questions: which rows, which subject, which properties</h2>
   <div class="lu-split lu-split--wide-left">
@@ -480,7 +480,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 <!-- ==================================================================== 29 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 5 · Entity resolution" data-section="Entity resolution" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 5 of 5 · about 24 minutes</div>
+    <div class="lu-eyebrow">Part 5 of 5 · about 30 minutes</div>
     <h2 class="lu-display-xl" style="max-width:26ch">Two systems list the same customer under two different codes. Which records match?</h2>
     <p class="lu-lead" style="max-width:46ch">A matcher decides. It will sometimes be wrong. We ask: how often, and in which direction?</p>
   </div>
@@ -523,20 +523,53 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 </section>
 
 <!-- ==================================================================== 32 -->
+<section class="slide" data-label="A matcher compares records field by field" data-section="Entity resolution" data-minutes="3">
+  <div class="lu-eyebrow">How a matcher works · one real record, TMS-003</div>
+  <h2 class="lu-h2" style="max-width:66ch">For each TMS record, the matcher compares every candidate customer, field by field</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <table class="lu-table"><thead><tr><th>Field</th><th>Value</th><th>Candidate A: ...&#95;45</th><th>Candidate B: ...&#95;17</th></tr></thead><tbody><tr><td>Customer code</td><td><code>V555555555555555555_45</code></td><td>exact</td><td>close</td></tr><tr><td>Home plant</td><td><code>PLANT03</code></td><td>same</td><td>same</td></tr><tr><td>Main service</td><td><code>DTD</code></td><td>same</td><td>same</td></tr></tbody></table>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub"><b>Candidate</b>: A Brunel customer the TMS record might describe.</p><p class="lu-sub"><b>Outcome</b>: The result of comparing one field of the two records: exact, close or different for the code; same or different for the other fields.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">The question</span><p class="lu-sub">Candidate A agrees on all three fields; candidate B has only a close code. Which is more likely the same customer, and by how much? The next slide gives the numbers.</p></div>
+    </div>
+  </div>
+  <template data-notes><p>Four minutes. Real: TMS-003 is <code>V555555555555555555-45</code>, home plant "Plant 03", service DTD in <code>er/tms-customers.csv</code>; after cleaning it is exactly Brunel's customer _45. Candidate B is customer _17: its code differs in two digits, so the lab calls it close. Blocking has already removed customers with another home plant. The matcher does this for every candidate, and keeps the best score.</p></template>
+</section>
+
+<!-- ==================================================================== 33 -->
+<section class="slide" data-label="Where m and u come from" data-section="Entity resolution" data-minutes="3">
+  <div class="lu-eyebrow">Evidence · the outcome &ldquo;the codes match exactly&rdquo;</div>
+  <h2 class="lu-h2" style="max-width:66ch">m and u count how often an outcome happens in each group</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-stack">
+      <table class="lu-table"><thead><tr><th>Imagine</th><th>Pairs</th><th>Exact code</th><th>Share</th></tr></thead><tbody><tr><td>Pairs of the same customer</td><td>1,000</td><td>600</td><td>m = 0.6</td></tr><tr><td>Pairs of different customers</td><td>1,000</td><td>1</td><td>u = 0.001</td></tr></tbody></table>
+      <p class="lu-statement" style="font-size:var(--lu-t-h3)">m / u = 600 · weight = log2(600) = <b>+9.2</b></p>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Where the numbers come from</span><p class="lu-sub">In our lab we state m and u ourselves. Tools such as Splink estimate them from data.</p></div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>m</dt><dd>How often an outcome happens when the two records are the same customer (m for match).</dd><dt>u</dt><dd>How often it happens when they are different customers (u for unmatched).</dd><dt>Weight</dt><dd>log2(m / u). Positive: evidence for the same customer. Negative: evidence against.</dd></dl></div>
+    </div>
+  </div>
+  <template data-notes><p>Four minutes. The 1,000 pairs are an imagined example to show what m and u count; the lab's values for this outcome are m = 0.60 and u = 0.001, stated in <code>er/match_customers.py</code>. An exact code is 600 times more common among true matches, which is strong evidence. Each +1 doubles the odds. A shared home plant is nearly as common among different customers (80%) as among matches (95%), so its weight is small, +0.2.</p></template>
+</section>
+
+<!-- ==================================================================== 34 -->
 <section class="slide" data-label="Evidence adds up: match weights" data-section="Entity resolution" data-minutes="5">
-  <div class="lu-eyebrow">How a matcher scores a pair · the Fellegi-Sunter method, 1969</div>
+  <div class="lu-eyebrow">The lab&rsquo;s m, u and weight for each outcome · the Fellegi-Sunter method, 1969</div>
   <h2 class="lu-h2">Each comparison adds evidence for &ldquo;same customer&rdquo;, or against it</h2>
   <div class="lu-split lu-split--wide-left">
     <table class="lu-table"><thead><tr><th>Outcome</th><th>m</th><th>u</th><th>Weight</th></tr></thead><tbody><tr><td>code, exact after cleaning</td><td>0.6</td><td>0.001</td><td>+9.2</td></tr><tr><td>code, close (similarity &ge; 0.93)</td><td>0.35</td><td>0.02</td><td>+4.1</td></tr><tr><td>code, different</td><td>0.05</td><td>0.979</td><td>-4.3</td></tr><tr><td>same home plant</td><td>0.95</td><td>0.8</td><td>+0.2</td></tr><tr><td>same main service</td><td>0.9</td><td>0.4</td><td>+1.2</td></tr></tbody></table>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Match weight</dt><dd>log2(m / u). m: how often this outcome happens when two records are the same customer. u: how often it happens for two different customers.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Score of a pair</span><p class="lu-sub">Add the weights. Exact code + same plant + same service: 9.2 + 0.2 + 1.2 = <b>10.6</b>. A shared plant is weak evidence (+0.2): 95% of true matches have it, and so do 80% of different customers.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Score of a pair</span><p class="lu-sub">Add the weights. TMS-003 with candidate A (exact code, same plant, same service): 9.2 + 0.2 + 1.2 = <b>10.6</b>. With candidate B (close code): 4.1 + 0.2 + 1.2 = <b>5.5</b>. The higher score wins.</p></div>
     </div>
   </div>
   <template data-notes><p>Five minutes. The weights are stated in <code>er/match_customers.py</code>; Splink, the tool named in the syllabus, estimates them from the data, for the same model, at scale. A pair's score is the sum of its weights. Exact code, same plant, same service: 9.2 + 0.2 + 1.2, about 10.6. A close code with both the same: 4.1 + 0.2 + 1.2 = 5.5.</p></template>
 </section>
 
-<!-- ==================================================================== 33 -->
+<!-- ==================================================================== 35 -->
 <section class="slide" data-label="One threshold, two kinds of error" data-section="Entity resolution" data-minutes="5">
   <div class="lu-eyebrow">Real run · the threshold is the score above which a pair counts as a match</div>
   <h2 class="lu-h2">Lower the threshold: more found, more wrong. Raise it: fewer wrong, more missed.</h2>
@@ -551,7 +584,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
   <template data-notes><p>Five minutes. Real run of <code>er/match_customers.py</code> (<code>reference-outputs/match-customers.txt</code>). No threshold gives both at 1.000 on this data: a lost 5 makes a code equally close to two customers.</p></template>
 </section>
 
-<!-- ==================================================================== 34 -->
+<!-- ==================================================================== 36 -->
 <section class="slide slide--tint" data-label="Poll: which error costs more?" data-section="Entity resolution" data-minutes="4" style="--lu-s5:12px">
   <div class="lu-eyebrow">Room poll · 45 seconds</div>
   <div class="lu-poll" data-qid="s5-poll" data-seconds="45" data-answer="a" data-label="Which matching error costs more when merging customer records">
@@ -564,7 +597,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
   <template data-notes><p>Forty five seconds, then we discuss. For merging, favour precision (threshold 8). For finding possible duplicates for a person to review, favour recall (threshold 4). The use decides the threshold.</p></template>
 </section>
 
-<!-- ==================================================================== 35 -->
+<!-- ==================================================================== 37 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Map, compare, ask, match" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 55 minutes · on your own machine</div>
@@ -574,7 +607,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 36 -->
+<!-- ==================================================================== 38 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">Hands-on lab · about 55 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">The Brunel tables in a database, and the mapping that turns them into the graph.</h2>
@@ -594,7 +627,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 <ul><li>Second: an old PostgreSQL volume from an earlier course version. The compose file uses a new volume name, so <code>docker compose up -d</code> in this folder starts clean.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 37 -->
+<!-- ==================================================================== 39 -->
 <section class="slide" data-label="Lab time" data-section="Lab" data-minutes="50">
   <div class="lu-eyebrow">Lab · 50 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints keep you on time.</h2>
@@ -609,7 +642,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 <ul><li>Most common wrong answer in Part B: Y2 written with <code>rr:column</code>, which makes text instead of a link. The checker shows the text it made.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 38 -->
+<!-- ==================================================================== 40 -->
 <section class="slide" data-label="Discussion and project clinic" data-section="Wrap" data-minutes="10">
   <div class="lu-eyebrow">Discussion · as a room, from Part C</div>
   <div class="lu-split lu-split--wide-left">
@@ -630,7 +663,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
   <template data-notes><p>Ten minutes. Question 1 has a clear answer: the rule lives in the vocabulary (a reasoner or SHACL's target resolution uses it); the mapping only produces data; the focus node count exposed the gap.</p></template>
 </section>
 
-<!-- ==================================================================== 39 -->
+<!-- ==================================================================== 41 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
@@ -638,7 +671,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
   <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
-<!-- ==================================================================== 40 -->
+<!-- ==================================================================== 42 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
@@ -659,7 +692,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
   <template data-notes><p>Two minutes. I end on the sentence.</p></template>
 </section>
 
-<!-- ==================================================================== 41 -->
+<!-- ==================================================================== 43 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">
