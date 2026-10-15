@@ -18,7 +18,7 @@
   data-deck-id="kr-s06"
   data-course="Knowledge Representation"
   data-session="Session 6 of 8"
-  data-duration="210"
+  data-duration="186"
   data-app-root="../"
   data-unit="Lebanese University · MSc">
 
@@ -46,7 +46,7 @@
       <p class="lu-lead" style="max-width:50ch">Two models learn from the Brunel graph. One predicts which orders will be late. The other predicts which plant makes a product. We compare each model with the simplest model that could do the same job. We test each one in a way that stops it from cheating.</p>
     </div>
     <div class="lu-row" style="justify-content:space-between;font-size:var(--lu-t-caption);color:var(--lu-on-night-2)">
-      <span>About 210 minutes · lecture, lab in Python, wrap</span>
+      <span>About 185 minutes · lecture, lab in Python, wrap</span>
       <span>Press <kbd>&rarr;</kbd> to begin · <kbd>?</kbd> for shortcuts</span>
     </div>
   </div>
@@ -86,9 +86,9 @@
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Open these now</span><p class="lu-sub"><code>demos/session-06-learning/</code>, starting with its <code>OVERVIEW.md</code> · a terminal with <code>demos/.venv</code> active.</p></div>
     </div>
     <div class="lu-card">
-      <span class="lu-card__label">How the ~210 minutes are spent</span>
+      <span class="lu-card__label">How the ~185 minutes are spent</span>
       <ul class="lu-layers">
-        <li><span class="lu-layers__name">Lecture · ~140 min</span><span class="lu-layers__note">Why a graph, embeddings, message passing, leakage</span></li>
+        <li><span class="lu-layers__name">Lecture · ~115 min</span><span class="lu-layers__note">Why a graph, embeddings, message passing, leakage</span></li>
         <li><span class="lu-layers__name">Lab · ~55 min</span><span class="lu-layers__note">Convert the graph. Run a baseline, a GNN and TransE. (Optional) write three functions.</span></li>
         <li><span class="lu-layers__name">Wrap · ~15 min</span><span class="lu-layers__note">Discussion, project clinic, Milestone 2, self-check</span></li>
       </ul>
@@ -101,14 +101,24 @@
 <!-- ==================================================================== 04 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 1 · Why learn on a graph" data-section="Why a graph" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 1 of 4 · Why a graph · about 22 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Why give a model a graph, and not only a table?</h2>
-    <p class="lu-lead" style="max-width:46ch">A table row describes one order. A graph also links the order to its customer, carrier and plant. We see what these links add, and how a model learns from data.</p>
+    <div class="lu-eyebrow">Part 1 of 4 · Why a graph · about 25 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Why machine learning on a knowledge graph?</h2>
+    <p class="lu-lead" style="max-width:46ch">What an ontology cannot answer, which model solves which problem, and how every model learns.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 05 -->
+<section class="slide" data-label="What the ontology cannot answer" data-section="Why a graph" data-minutes="4">
+  <div class="lu-eyebrow">The limit of an ontology and SPARQL</div>
+  <h2 class="lu-h2" style="max-width:66ch">SPARQL and the reasoner only return facts that are stated, or that follow from them</h2>
+
+  <table class="lu-table"><thead><tr><th>A question about Brunel</th><th>Can SPARQL answer it?</th><th>Why</th></tr></thead><tbody><tr><td>How many orders did carrier V44_3 carry?</td><td><b>yes</b>: 854</td><td>The facts are stated in the graph.</td></tr><tr><td>Is order 1447135386.7 a late order?</td><td><b>yes</b></td><td>The mapping marked it ul:LateOrder (Session 5).</td></tr><tr><td>Will tomorrow's new order be late?</td><td><b>no</b></td><td>It is about the future. Nothing in the graph states it.</td></tr><tr><td>Which plant makes a product, if nobody recorded it?</td><td><b>no</b></td><td>Nobody recorded it: missing means unknown.</td></tr></tbody></table>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">What a model adds</span><p class="lu-sub">A model learns patterns from the stated facts and estimates what is not stated: a probability, or a ranked guess. That is a prediction, not a fact.</p></div>
+  <template data-notes><p>Four minutes. This is the reason for the whole session. The first two rows are what Sessions 2 to 5 built. The last two are the two tasks of the next slides. 854 is Session 7's count for V44_3.</p></template>
+</section>
+
+<!-- ==================================================================== 06 -->
 <section class="slide" data-label="A row against a graph" data-section="Why a graph" data-minutes="5">
   <div class="lu-eyebrow">Walkthrough · a real order</div>
   <h2 class="lu-h2">A row describes one order. The graph also describes everything around it.</h2>
@@ -117,7 +127,7 @@
 <ul><li>Remember this now, we use it in Part 4: a signal this strong is also a trap. A model that remembers "V555_15 means late" has learned about one customer, not about lateness.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 06 -->
+<!-- ==================================================================== 07 -->
 <section class="slide" data-label="Two questions for a model" data-section="Why a graph" data-minutes="5">
   <div class="lu-eyebrow">The two tasks of this session, on Brunel</div>
   <h2 class="lu-h2" style="max-width:66ch">Predict a label for a node, or predict a missing link</h2>
@@ -138,26 +148,26 @@
   <template data-notes><p>Five minutes. Counts from <code>reference-outputs/build-graph.txt</code> and <code>link-prediction.txt</code>; PLANT03's 781 counted on <code>brunel-mapped.nt</code>. I ask: which of these two numbers already worries you? Both: one class is rare, one plant dominates.</p></template>
 </section>
 
-<!-- ==================================================================== 07 -->
-<section class="slide" data-label="How a model learns" data-section="Why a graph" data-minutes="3">
-  <div class="lu-eyebrow">The idea behind every model in this session · a toy example</div>
-  <h2 class="lu-h2">A model learns by repeating: predict, compare, adjust</h2>
-  <div class="lu-walk" data-label="How a model learns"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 250, "nodes": [{"id": "x", "label": "inputs of one order\n0.5 and 0.8", "x": 190, "y": 40, "w": 330, "h": 64, "kind": "literal"}, {"id": "m", "label": "the model: one weight\nfor each input", "x": 724, "y": 40, "w": 360, "h": 64, "kind": "ours"}, {"id": "p", "label": "prediction\n0 = on time, 1 = late", "x": 1258, "y": 40, "w": 360, "h": 64, "kind": "literal"}, {"id": "l", "label": "loss: how far the prediction\nis from the known answer", "x": 1258, "y": 170, "w": 420, "h": 64, "kind": "builtin"}, {"id": "y", "label": "the known answer\nthis order was late = 1", "x": 724, "y": 170, "w": 360, "h": 64, "kind": "literal"}, {"id": "a", "label": "adjust the weights", "x": 190, "y": 170, "w": 330, "h": 64, "kind": "inferred"}], "edges": [{"id": "e1", "from": "x", "to": "m", "label": ""}, {"id": "e2", "from": "m", "to": "p", "label": ""}, {"id": "e3", "from": "p", "to": "l", "label": ""}, {"id": "e4", "from": "y", "to": "l", "label": ""}, {"id": "e5", "from": "l", "to": "a", "label": ""}, {"id": "e6", "from": "a", "to": "m", "label": "repeat"}], "steps": [{"show": ["x", "m", "e1"], "run": ["e1"], "set": {"m": "active"}}, {"show": ["p", "e2"], "run": ["e2"], "set": {"m": "idle", "p": "active"}}, {"show": ["y", "l", "e3", "e4"], "run": ["e3", "e4"], "set": {"p": "idle", "l": "active"}}, {"show": ["a", "e5"], "run": ["e5"], "set": {"l": "idle", "a": "active"}}, {"show": ["e6"], "run": ["e6"], "set": {"a": "idle", "m": "active"}}, {"show": ["x", "m", "p"], "set": {"m": "idle", "p": "active"}}], "legend": {"literal": "Numbers", "ours": "The model", "builtin": "A measure", "inferred": "The change"}, "flags": {"inferred": "changes"}}</script></div><div data-walk-step="1" data-caption-short="The model" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A toy example, not Brunel. The &lt;b&gt;inputs&lt;/b&gt; (also called features) are two numbers about an order: 0.5 and 0.8. The model is also two numbers, called &lt;b&gt;weights&lt;/b&gt;. They start at 0.2 and 0.2."></div><div data-walk-step="2" data-caption-short="A prediction" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The model multiplies each input by its weight and adds: 0.5 &amp;times; 0.2 + 0.8 &amp;times; 0.2 = 0.26. A real model also squeezes the result between 0 and 1."></div><div data-walk-step="3" data-caption-short="The loss" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; We know this order was late, so the right answer (the &lt;b&gt;label&lt;/b&gt;) is 1. The &lt;b&gt;loss&lt;/b&gt; measures the gap: 1 &amp;minus; 0.26 = 0.74."></div><div data-walk-step="4" data-caption-short="Adjust" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Training raises each weight a little, more for the larger input: 0.2 and 0.2 become 0.35 and 0.41."></div><div data-walk-step="5" data-caption-short="Repeat" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; The prediction is now 0.5 &amp;times; 0.35 + 0.8 &amp;times; 0.41 = 0.50: closer to 1. &lt;b&gt;Training&lt;/b&gt; repeats predict, measure, adjust for many orders, many times."></div><div data-walk-step="6" data-caption-short="After training" data-caption="&lt;b&gt;Step 6.&lt;/b&gt; The trained model predicts for orders it has never seen. A &lt;b&gt;test&lt;/b&gt; measures how often it is right, on orders that were not used for training (Part 4)."></div></div></div>
-  <template data-notes><p>Five minutes. Everything later in this session, TransE positions and GraphSAGE layers, is trained by this same loop; only the way the prediction is computed changes. The numbers are a toy, chosen so that the arithmetic fits on a slide. I say so, and I say that real models change weights by a rule called gradient descent, which moves each weight in the direction that lowers the loss.</p></template>
-</section>
-
 <!-- ==================================================================== 08 -->
-<section class="slide" data-label="The three models" data-section="Why a graph" data-minutes="3">
-  <div class="lu-eyebrow">Three models, side by side</div>
-  <h2 class="lu-h2" style="max-width:66ch">Each takes something in, gives something out, and learns its own numbers</h2>
+<section class="slide" data-label="Which model for which problem" data-section="Why a graph" data-minutes="4">
+  <div class="lu-eyebrow">Problem, place in the ontology, model type</div>
+  <h2 class="lu-h2" style="max-width:66ch">Each question needs its own kind of model</h2>
 
-  <table class="lu-table"><thead><tr><th>Model</th><th>What goes in</th><th>What comes out</th><th>Useful for</th><th>What it learns</th></tr></thead><tbody><tr><td>Logistic regression</td><td>a row of numbers about an order</td><td>probability the order is late</td><td>late orders, from a table</td><td>a weight for each column</td></tr><tr><td>TransE</td><td>a triple: plant, makes, product</td><td>a score: high = likely true</td><td>guessing a missing link</td><td>a position for every thing</td></tr><tr><td>GraphSAGE</td><td>the order and what it is linked to</td><td>probability the order is late</td><td>late orders, using links</td><td>weights in each layer</td></tr></tbody></table>
-  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Same loop, different model</span><p class="lu-sub">All three learn by the loop of the previous slide: predict, compare, adjust. Parts 2 and 3 open TransE and GraphSAGE as block diagrams.</p></div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>GraphSAGE</b> A graph neural network layer. For each node it averages the numbers of its neighbours, then combines that average with the node&#x27;s own numbers.</span> <span data-auto="1"><b>Logistic regression</b> A table model that gives each column a weight, adds up the weighted values and turns the sum into a probability, for example the probability that an order is late.</span></p>
-  <template data-notes><p>Four minutes. Logistic regression is the table model of Part 1's baseline. TransE (Part 2) and GraphSAGE (Part 3) are the two graph models. A fourth entry, the popularity count, is not a learning model: it only counts, and it is the baseline for the link task.</p></template>
+  <table class="lu-table"><thead><tr><th>Question</th><th>Where it sits in the ontology</th><th>Type of task</th><th>Simple model, then graph model</th><th>Value for Brunel</th></tr></thead><tbody><tr><td>Will this order be late?</td><td>a class on a node: <code>ul:LateOrder</code></td><td>node classification</td><td>logistic regression, then GraphSAGE (a graph neural network)</td><td>warn planners early</td></tr><tr><td>Which plant makes this product?</td><td>a property between two nodes: <code>ul:makes</code></td><td>link prediction</td><td>a popularity count, then TransE (a knowledge graph embedding)</td><td>complete the catalogue; flag doubtful links</td></tr></tbody></table>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">How the rest of the session goes</span><p class="lu-sub">First, how every model learns. Then one part for each graph model, always in the same order: what it solves, how it is trained, how it is used, how it compares with similar models, and our result.</p></div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Knowledge graph embedding</b> An embedding of every node and relation, trained so that true triples score higher than false ones.</span> <span data-auto="1"><b>GraphSAGE</b> A graph neural network layer. For each node it averages the numbers of its neighbours, then combines that average with the node&#x27;s own numbers.</span> <span data-auto="1"><b>Logistic regression</b> A table model that gives each column a weight, adds up the weighted values and turns the sum into a probability, for example the probability that an order is late.</span></p>
+  <template data-notes><p>Four minutes. Node classification predicts a class or label of a node; link prediction predicts a missing property between two nodes. A graph neural network can also do link prediction, and an embedding can feed a classifier; this table shows the usual pairing, and what this session uses.</p></template>
 </section>
 
 <!-- ==================================================================== 09 -->
+<section class="slide" data-label="How a model learns" data-section="Why a graph" data-minutes="3">
+  <div class="lu-eyebrow">The idea behind every model in this session · a toy example</div>
+  <h2 class="lu-h2">A model learns by repeating: predict, compare, adjust</h2>
+  <div class="lu-walk" data-label="How a model learns"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 250, "nodes": [{"id": "x", "label": "inputs of one order\n0.5 and 0.8", "x": 190, "y": 40, "w": 330, "h": 64, "kind": "literal"}, {"id": "m", "label": "the model: one weight\nfor each input", "x": 724, "y": 40, "w": 360, "h": 64, "kind": "ours"}, {"id": "p", "label": "prediction\n0 = on time, 1 = late", "x": 1258, "y": 40, "w": 360, "h": 64, "kind": "literal"}, {"id": "l", "label": "loss: how far the prediction\nis from the known answer", "x": 1258, "y": 170, "w": 420, "h": 64, "kind": "builtin"}, {"id": "y", "label": "the known answer\nthis order was late = 1", "x": 724, "y": 170, "w": 360, "h": 64, "kind": "literal"}, {"id": "a", "label": "adjust the weights", "x": 190, "y": 170, "w": 330, "h": 64, "kind": "inferred"}], "edges": [{"id": "e1", "from": "x", "to": "m", "label": ""}, {"id": "e2", "from": "m", "to": "p", "label": ""}, {"id": "e3", "from": "p", "to": "l", "label": ""}, {"id": "e4", "from": "y", "to": "l", "label": ""}, {"id": "e5", "from": "l", "to": "a", "label": ""}, {"id": "e6", "from": "a", "to": "m", "label": "repeat"}], "steps": [{"show": ["x", "m", "e1"], "run": ["e1"], "set": {"m": "active"}}, {"show": ["p", "e2"], "run": ["e2"], "set": {"m": "idle", "p": "active"}}, {"show": ["y", "l", "e3", "e4"], "run": ["e3", "e4"], "set": {"p": "idle", "l": "active"}}, {"show": ["a", "e5"], "run": ["e5"], "set": {"l": "idle", "a": "active"}}, {"show": ["e6"], "run": ["e6"], "set": {"a": "idle", "m": "active"}}, {"show": ["x", "m", "p"], "set": {"m": "idle", "p": "active"}}], "legend": {"literal": "Numbers", "ours": "The model", "builtin": "A measure", "inferred": "The change"}, "flags": {"inferred": "changes"}}</script></div><div data-walk-step="1" data-caption-short="The model" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A toy example, not Brunel. The &lt;b&gt;inputs&lt;/b&gt; (also called features) are two numbers about an order: 0.5 and 0.8. The model is also two numbers, called &lt;b&gt;weights&lt;/b&gt;. They start at 0.2 and 0.2."></div><div data-walk-step="2" data-caption-short="A prediction" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The model multiplies each input by its weight and adds: 0.5 &amp;times; 0.2 + 0.8 &amp;times; 0.2 = 0.26. A real model also squeezes the result between 0 and 1."></div><div data-walk-step="3" data-caption-short="The loss" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; We know this order was late, so the right answer (the &lt;b&gt;label&lt;/b&gt;) is 1. The &lt;b&gt;loss&lt;/b&gt; measures the gap: 1 &amp;minus; 0.26 = 0.74."></div><div data-walk-step="4" data-caption-short="Adjust" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; Training raises each weight a little, more for the larger input: 0.2 and 0.2 become 0.35 and 0.41."></div><div data-walk-step="5" data-caption-short="Repeat" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; The prediction is now 0.5 &amp;times; 0.35 + 0.8 &amp;times; 0.41 = 0.50: closer to 1. &lt;b&gt;Training&lt;/b&gt; repeats predict, measure, adjust for many orders, many times. One pass over all the training examples is an &lt;b&gt;epoch&lt;/b&gt;."></div><div data-walk-step="6" data-caption-short="After training" data-caption="&lt;b&gt;Step 6.&lt;/b&gt; The trained model predicts for orders it has never seen. A &lt;b&gt;test&lt;/b&gt; measures how often it is right, on orders that were not used for training (Part 4)."></div></div></div>
+  <template data-notes><p>Five minutes. Everything later in this session, TransE positions and GraphSAGE layers, is trained by this same loop; only the way the prediction is computed changes. The numbers are a toy, chosen so that the arithmetic fits on a slide. I say so, and I say that real models change weights by a rule called gradient descent, which moves each weight in the direction that lowers the loss.</p></template>
+</section>
+
+<!-- ==================================================================== 10 -->
 <section class="slide" data-label="The baseline comes first" data-section="Why a graph" data-minutes="5">
   <div class="lu-eyebrow">Every model needs a simple model to compare with</div>
   <h2 class="lu-h2" style="max-width:66ch">A graph model is useful only if it beats the simple model on a fair test</h2>
@@ -172,17 +182,31 @@
   <template data-notes><p>Five minutes. XGBoost is the usual stronger table baseline; for your project it is a good second one. Today logistic regression is enough, because it already ties the graph model.</p></template>
 </section>
 
-<!-- ==================================================================== 10 -->
+<!-- ==================================================================== 11 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 2 · Embeddings" data-section="Embeddings" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 2 of 4 · Embeddings · about 38 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Embeddings: how a model guesses a missing link</h2>
-    <p class="lu-lead" style="max-width:46ch">Every thing gets a list of numbers. Things that are linked get numbers that are close. The model can then guess a link that is not recorded.</p>
+    <div class="lu-eyebrow">Part 2 of 4 · TransE · about 30 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">TransE: guessing a missing link</h2>
+    <p class="lu-lead" style="max-width:46ch">What it solves, how it is trained, how it is used, how it compares with similar models, and our result.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 11 -->
+<!-- ==================================================================== 12 -->
+<section class="slide" data-label="TransE: what it solves" data-section="Embeddings" data-minutes="3">
+  <div class="lu-eyebrow">TransE · what it solves, what goes in, what comes out</div>
+  <h2 class="lu-h2" style="max-width:66ch">TransE guesses a missing link, and gives every possible answer a score</h2>
+
+  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)">
+    <div class="lu-card"><span class="lu-card__label">It solves</span><h3 class="lu-h3">Link prediction</h3><p class="lu-sub">Which plant makes product 1681878, if the link is missing?</p></div>
+    <div class="lu-card"><span class="lu-card__label">Training needs</span><h3 class="lu-h3">The true triples</h3><p class="lu-sub">All 2,036 <code>makes</code> links, and the other links of the graph. No labels to add.</p></div>
+    <div class="lu-card"><span class="lu-card__label">At run time</span><h3 class="lu-h3">A question in, a ranking out</h3><p class="lu-sub">In: (?, makes, product 1681878). Out: a score for each of the 19 plants, highest first.</p></div>
+  </div>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Knowledge graph embedding</span><p class="lu-sub">TransE belongs to a family of models that learn a list of numbers for every thing and every relation in a graph. The numbers are called an embedding.</p></div>
+  <template data-notes><p>Three minutes. 2,036 makes links and 19 plants: counted on <code>brunel-mapped.nt</code>.</p></template>
+</section>
+
+<!-- ==================================================================== 13 -->
 <section class="slide" data-label="TransE: a relation is a step" data-section="Embeddings" data-minutes="5">
   <div class="lu-eyebrow">The idea behind knowledge graph embeddings</div>
   <h2 class="lu-h2">TransE gives every thing a position, and scores a link by a distance</h2>
@@ -197,7 +221,7 @@
 <ul><li>TransE: Bordes and others, 2013. Training moves the positions until true triples are short trips and made-up ones are long.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 12 -->
+<!-- ==================================================================== 14 -->
 <section class="slide" data-label="Negative sampling" data-section="Embeddings" data-minutes="4">
   <div class="lu-eyebrow">Negative sampling · how training learns what is false</div>
   <h2 class="lu-h2">Training makes false examples by replacing one part of a true triple</h2>
@@ -207,75 +231,34 @@
 <ul><li>The graph is open world (Session 3): a missing link is unknown, not false. Negative sampling pretends it is false, and is sometimes wrong. PyKEEN replaces the head or the tail at random, half each.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 13 -->
+<!-- ==================================================================== 15 -->
 <section class="slide" data-label="TransE as blocks" data-section="Embeddings" data-minutes="3">
-  <div class="lu-eyebrow">Block diagram · what TransE does with one triple</div>
-  <h2 class="lu-h2">TransE: a triple goes in, a score comes out, and training moves the positions</h2>
+  <div class="lu-eyebrow">TransE · how it is trained, block by block</div>
+  <h2 class="lu-h2">Training: a triple goes in, a score comes out, and the positions move</h2>
   <div class="lu-walk" data-label="TransE as blocks"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 250, "nodes": [{"id": "t", "label": "one triple\nPLANT08 · makes · 1681878", "x": 215, "y": 40, "w": 410, "h": 64, "kind": "literal"}, {"id": "pos", "label": "look up the positions\n32 numbers for each of h, r, t", "x": 724, "y": 40, "w": 430, "h": 64, "kind": "ours"}, {"id": "hr", "label": "add: h + r", "x": 1258, "y": 40, "w": 300, "h": 64, "kind": "builtin"}, {"id": "dist", "label": "distance from h + r to t", "x": 1258, "y": 170, "w": 330, "h": 64, "kind": "builtin"}, {"id": "sc", "label": "score = minus the distance\nclose = likely true", "x": 724, "y": 170, "w": 430, "h": 64, "kind": "literal"}, {"id": "loss", "label": "loss: true triples should score\nhigh, made-up ones low", "x": 215, "y": 170, "w": 430, "h": 64, "kind": "builtin"}], "edges": [{"id": "a1", "from": "t", "to": "pos", "label": ""}, {"id": "a2", "from": "pos", "to": "hr", "label": ""}, {"id": "a3", "from": "hr", "to": "dist", "label": ""}, {"id": "a4", "from": "dist", "to": "sc", "label": ""}, {"id": "a5", "from": "sc", "to": "loss", "label": ""}, {"id": "a6", "from": "loss", "to": "pos", "label": "move the positions"}], "steps": [{"show": ["t"], "set": {"t": "active"}}, {"show": ["pos", "a1"], "run": ["a1"], "set": {"t": "idle", "pos": "active"}}, {"show": ["hr", "a2"], "run": ["a2"], "set": {"pos": "idle", "hr": "active"}}, {"show": ["dist", "a3"], "run": ["a3"], "set": {"hr": "idle", "dist": "active"}}, {"show": ["sc", "a4"], "run": ["a4"], "set": {"dist": "idle", "sc": "active"}}, {"show": ["loss", "a5", "a6"], "run": ["a5", "a6"], "set": {"sc": "idle", "loss": "active"}}], "legend": {"literal": "Input or output", "ours": "The numbers that are learned", "builtin": "A calculation"}, "flags": {"ours": "learned"}}</script></div><div data-walk-step="1" data-caption-short="Input" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The input is one triple: head h, relation r, tail t. Here a real link: PLANT08 (h) makes (r) product 1681878 (t)."></div><div data-walk-step="2" data-caption-short="Positions" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The numbers the model learns are the positions: a list of 32 numbers for every thing and every relation. The model looks up the three it needs."></div><div data-walk-step="3" data-caption-short="Add" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; It adds the relation&#x27;s numbers to the head&#x27;s: h + r. This is where the head should land if the link is true."></div><div data-walk-step="4" data-caption-short="Distance" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; It measures the distance from h + r to the tail t."></div><div data-walk-step="5" data-caption-short="Score" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; The score is minus the distance. Close means a high score: the link is probably true."></div><div data-walk-step="6" data-caption-short="Learn" data-caption="&lt;b&gt;Step 6.&lt;/b&gt; Training compares scores with the truth and moves the positions so true triples score high and the made-up ones of the previous slide score low. It repeats for every link in the graph (150 times)."></div></div></div>
   <template data-notes><p>Four minutes. This is the operation the previous slide drew as a picture, written as the steps a program follows. The same blocks run twice in training: once for true triples, once for the made-up ones of the negative sampling slide. Inside PyKEEN the calculation is one call; the lab slide shows it.</p></template>
 </section>
 
-<!-- ==================================================================== 14 -->
-<section class="slide" data-label="Four patterns of relations" data-section="Embeddings" data-minutes="4">
-  <div class="lu-eyebrow">Four patterns of relations</div>
-  <h2 class="lu-h2" style="max-width:66ch">A model must be able to represent the patterns that relations follow</h2>
-
-  <table class="lu-table"><thead><tr><th>Pattern</th><th>In plain words</th><th>Example</th></tr></thead><tbody><tr><td>Symmetric</td><td>If A r B is true, B r A is true too.</td><td><i>is married to</i>. Brunel has none.</td></tr><tr><td>Antisymmetric</td><td>A r B is true, but B r A is not.</td><td><i>makes</i>: PLANT08 makes product 1681878, but the product does not make PLANT08.</td></tr><tr><td>Inverse</td><td>Two relations that are the same fact read in opposite directions.</td><td><i>makes</i> and <i>made by</i>.</td></tr><tr><td>Composition</td><td>Two relations in a row imply a third.</td><td>an order <i>from</i> a plant that <i>serves</i> a port: the order <i>ships from</i> that port.</td></tr></tbody></table>
-  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">How to read &ldquo;A r B&rdquo;</span><p class="lu-sub">A and B are two things, and r is the relation between them. Example: A = PLANT08, r = makes, B = product 1681878. A model that cannot represent a pattern scores such links wrongly. The next slide draws one pattern; the slide after shows which model can represent which.</p></div>
-  <template data-notes><p>Four minutes. These are the four patterns used in the RotatE paper (Sun and others, 2019). Walk through one example each, then move on.</p></template>
-</section>
-
-<!-- ==================================================================== 15 -->
-<section class="slide" data-label="The inverse pattern, drawn" data-section="Embeddings" data-minutes="3">
-  <div class="lu-eyebrow">One pattern, drawn · inverse relations</div>
-  <h2 class="lu-h2">Inverse relations: the same fact, read in both directions</h2>
-  <div class="lu-walk" data-label="The inverse pattern"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 310, "nodes": [{"id": "p1", "label": "PLANT08", "x": 260, "y": 45, "w": 260, "h": 56, "kind": "individual"}, {"id": "q1", "label": "product 1681878", "x": 1180, "y": 45, "w": 320, "h": 56, "kind": "individual"}, {"id": "q2", "label": "product 1681878", "x": 260, "y": 155, "w": 320, "h": 56, "kind": "individual"}, {"id": "p2", "label": "PLANT08", "x": 1180, "y": 155, "w": 260, "h": 56, "kind": "individual"}, {"id": "f1", "label": "PLANT08 + makes ≈ 1681878", "x": 450, "y": 270, "w": 560, "h": 56, "kind": "literal"}, {"id": "f2", "label": "1681878 − makes ≈ PLANT08", "x": 1080, "y": 270, "w": 560, "h": 56, "kind": "literal"}], "edges": [{"id": "r1", "from": "p1", "to": "q1", "label": "makes"}, {"id": "r2", "from": "q2", "to": "p2", "label": "made by"}], "steps": [{"show": ["p1", "q1", "r1"], "run": ["r1"], "set": {"r1": "active"}}, {"show": ["q2", "p2", "r2"], "run": ["r2"]}, {"show": ["f1", "f2"], "set": {"f1": "active", "f2": "active"}}], "legend": {"individual": "Thing in the graph", "literal": "In TransE"}}</script></div><div data-walk-step="1" data-caption-short="One direction" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The graph says: PLANT08 &lt;b&gt;makes&lt;/b&gt; product 1681878. Read from the plant to the product."></div><div data-walk-step="2" data-caption-short="The other direction" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The same fact, read from the product to the plant: product 1681878 is &lt;b&gt;made by&lt;/b&gt; PLANT08. &lt;i&gt;makes&lt;/i&gt; and &lt;i&gt;made by&lt;/i&gt; are &lt;b&gt;inverse&lt;/b&gt; relations: one is true exactly when the other is."></div><div data-walk-step="3" data-caption-short="In TransE" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; In TransE a relation is a step. If &lt;i&gt;makes&lt;/i&gt; is a step forward, &lt;i&gt;made by&lt;/i&gt; is the same step backward. So TransE can represent inverse relations: it does not have to learn two unrelated steps."></div></div></div>
-  <template data-notes><p>Three minutes. Brunel's graph stores only <i>makes</i>; <i>made by</i> is drawn here to show the pattern. In the lab the graph is made undirected for the GNN (Part 3), which adds the reverse of every link, so this pattern does appear in practice. The symbol &asymp; means "close to": in a trained model the two sides are near each other, not exactly equal.</p></template>
-</section>
-
 <!-- ==================================================================== 16 -->
-<section class="slide" data-label="Four ways to score a triple" data-section="Embeddings" data-minutes="5">
-  <div class="lu-eyebrow">The same idea, four scoring functions</div>
-  <h2 class="lu-h2" style="max-width:66ch">Each can represent some of the four patterns, and not others</h2>
-
-  <table class="lu-table"><thead><tr><th>Model</th><th>How a triple (h, r, t) is scored</th><th>Symmetric</th><th>Antisymmetric</th><th>Inverse</th><th>Composition</th></tr></thead><tbody><tr><td>TransE, 2013</td><td>h + r ends near t</td><td>no</td><td>yes</td><td>yes</td><td>yes</td></tr><tr><td>DistMult, 2015</td><td>h, r and t multiplied, number by number: every relation symmetric</td><td>yes</td><td>no</td><td>no</td><td>no</td></tr><tr><td>ComplEx, 2016</td><td>DistMult with complex numbers: a relation can go one way</td><td>yes</td><td>yes</td><td>yes</td><td>no</td></tr><tr><td>RotatE, 2019</td><td>r rotates h onto t, in complex numbers</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td></tr></tbody></table>
-  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">For Brunel</span><p class="lu-sub">h is the head, r the relation, t the tail. Every Brunel relation links two different kinds, so none is symmetric. TransE fits: it is the one the lab trains.</p></div>
-  <template data-notes><p>Five minutes. The pattern table is the one in the RotatE paper (Sun and others, 2019). Symmetric: <i>married to</i>. Antisymmetric: <i>makes</i>. Inverse: <i>makes</i> and <i>made by</i>. Composition: an order <i>from</i> a plant that <i>serves</i> a port <i>ships from</i> that port.</p>
-<ul><li>All four are one word apart in PyKEEN: <code>model="DistMult"</code>. The lab README's optional task tries it.</li></ul></template>
+<section class="slide" data-label="TransE at run time" data-section="Embeddings" data-minutes="3">
+  <div class="lu-eyebrow">TransE · how it is used, block by block</div>
+  <h2 class="lu-h2">At run time: a question goes in, a ranking of plants comes out</h2>
+  <div class="lu-walk" data-label="TransE at run time"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 250, "nodes": [{"id": "q", "label": "a question\nproduct 1681878 · makes · ?", "x": 215, "y": 40, "w": 410, "h": 64, "kind": "literal"}, {"id": "m", "label": "the trained positions\n(no more training)", "x": 724, "y": 40, "w": 400, "h": 64, "kind": "ours"}, {"id": "s", "label": "a score for each\nof the 19 plants", "x": 1258, "y": 40, "w": 320, "h": 64, "kind": "builtin"}, {"id": "r", "label": "plants ranked,\nhighest score first", "x": 1258, "y": 170, "w": 320, "h": 64, "kind": "literal"}, {"id": "p", "label": "a person checks\nthe top 3", "x": 724, "y": 170, "w": 400, "h": 64, "kind": "individual"}, {"id": "w", "label": "accepted: write the triple\nPLANT0x · makes · 1681878", "x": 215, "y": 170, "w": 410, "h": 64, "kind": "individual"}], "edges": [{"id": "c1", "from": "q", "to": "m", "label": ""}, {"id": "c2", "from": "m", "to": "s", "label": ""}, {"id": "c3", "from": "s", "to": "r", "label": ""}, {"id": "c4", "from": "r", "to": "p", "label": ""}, {"id": "c5", "from": "p", "to": "w", "label": ""}], "steps": [{"show": ["q"], "set": {"q": "active"}}, {"show": ["m", "c1"], "run": ["c1"], "set": {"q": "idle", "m": "active"}}, {"show": ["s", "c2", "r", "c3"], "run": ["c2", "c3"], "set": {"m": "idle", "r": "active"}}, {"show": ["p", "c4", "w", "c5"], "run": ["c4", "c5"], "set": {"r": "idle", "w": "active"}}], "legend": {"literal": "Input or output", "ours": "The trained model", "builtin": "A calculation", "individual": "How a company uses it"}}</script></div><div data-walk-step="1" data-caption-short="The question" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; At run time the input is a question with one part missing: which plant makes product 1681878?"></div><div data-walk-step="2" data-caption-short="The model" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The model is the positions learned in training. Nothing is learned now; the positions are only used."></div><div data-walk-step="3" data-caption-short="The output" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; It scores the triple once for each of the 19 plants and sorts them. The output is a ranking, not one answer."></div><div data-walk-step="4" data-caption-short="How we use it" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; A company would show the top 3 to a person who checks them, and write the accepted link into the graph, marked as predicted. Then SPARQL can answer the question. Our lab stops at the ranking."></div></div></div>
+  <template data-notes><p>Three minutes. Steps 1 to 3 are what the lab does. Step 4 is how a company would use the output; the lab does not write predicted triples, and the slide says so. A predicted triple should carry its score and its source (Session 4's provenance), so nobody mistakes it for a recorded fact.</p></template>
 </section>
 
 <!-- ==================================================================== 17 -->
-<section class="slide" data-label="Ranking, raw and filtered" data-section="Embeddings" data-minutes="5">
-  <div class="lu-eyebrow">Worked example · hide one link, rank all plants by products made</div>
-  <h2 class="lu-h2" style="max-width:72ch">Filtering moves the hidden answer, PLANT08, from rank 13 to rank 11</h2>
+<section class="slide" data-label="TransE and similar models" data-section="Embeddings" data-minutes="3">
+  <div class="lu-eyebrow">TransE · how it compares with similar models</div>
+  <h2 class="lu-h2" style="max-width:66ch">Four embedding models: the same idea, different ways to score a triple</h2>
 
-  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s2)">
-    <table class="lu-table"><thead><tr><th>Raw rank</th><th>Plant</th><th>Products made</th><th>Filtered rank</th></tr></thead><tbody><tr><td>1 to 5</td><td>PLANT03, 01, 13, 04, 05</td><td>781 to 127</td><td>1 to 5</td></tr><tr><td>6</td><td>PLANT10</td><td>121</td><td><i>removed: also right</i></td></tr><tr><td>7 to 10</td><td>PLANT02, 16, 11, 12</td><td>116 to 57</td><td>6 to 9</td></tr><tr><td>11</td><td>PLANT07</td><td>29</td><td><i>removed: also right</i></td></tr><tr><td>12</td><td>PLANT06</td><td>26</td><td>10</td></tr><tr><td><b>13</b></td><td><b>PLANT08, hidden</b></td><td><b>20</b></td><td><b>11</b>: 1/11 = 0.09</td></tr></tbody></table>
-    <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Filtered ranking</dt><dd>Removing the other right answers before ranking the hidden one. PLANT10 and PLANT07 also make the product, so PLANT08 moves up two places.</dd><dt>MRR</dt><dd>The average of 1 / rank of the right answer.</dd><dt>Hits@k</dt><dd>The share of right answers ranked k or better.</dd></dl></div>
-    </div>
-  </div>
-  <template data-notes><p>Five minutes. This is the popularity model's real ranking for one link, counted over the other 2,035 makes links of <code>brunel-mapped.nt</code> (PLANT08 makes 21 products, 20 once this one is hidden; PLANT17 also makes 20 and ranks after it).</p>
-<ul><li>Filtered ranking: Bordes and others, 2013, the TransE paper. Every published link prediction score today is filtered.</li></ul></template>
+  <table class="lu-table"><thead><tr><th>Model</th><th>How it scores a triple</th><th>Good for</th><th>In our lab</th></tr></thead><tbody><tr><td>TransE, 2013</td><td>head + relation should land near the tail</td><td>one-way links, such as <i>makes</i>; simple and fast</td><td>used</td></tr><tr><td>DistMult, 2015</td><td>multiplies head, relation and tail</td><td>two-way links; cannot tell A makes B from B makes A</td><td>not used</td></tr><tr><td>ComplEx, 2016</td><td>DistMult with complex numbers</td><td>one-way and two-way links</td><td>not used</td></tr><tr><td>RotatE, 2019</td><td>the relation rotates the head onto the tail</td><td>most kinds of link; more settings to tune</td><td>not used</td></tr></tbody></table>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why TransE here</span><p class="lu-sub">Every Brunel relation is one-way (a plant makes a product; a product never makes a plant), and TransE handles one-way links well. In PyKEEN, the others are one word away: <code>model="DistMult"</code>.</p></div>
+  <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>PyKEEN</b> The Python library for training knowledge graph embeddings, used in the lab.</span> <span data-auto="1"><b>DistMult</b> A knowledge graph embedding that scores a triple by multiplying the numbers of the head, relation and tail. It cannot tell which way a relation goes, so it treats every relation as symmetric.</span> <span data-auto="1"><b>ComplEx</b> DistMult with complex numbers, so it can tell which way a relation goes.</span> <span data-auto="1"><b>RotatE</b> A knowledge graph embedding in which a relation rotates the head&#x27;s numbers onto the tail&#x27;s numbers.</span></p>
+  <template data-notes><p>Three minutes. The appendix has the four relation patterns behind the "good for" column, with a diagram of the inverse pattern.</p></template>
 </section>
 
 <!-- ==================================================================== 18 -->
-<section class="slide slide--tint" data-label="Check: filtered rank" data-section="Embeddings" data-minutes="3">
-  <div class="lu-eyebrow">Check question</div>
-  <div class="lu-mcq" data-qid="s6-q1" data-answer="b" data-label="Filtered rank of a hidden link"
-       data-fb-correct=" Filtering removes only the other right answers, so the hidden one moves up by exactly that many."
-       data-fb-wrong=" Filtering removes the other right answers, and nothing else.">
-    <p class="lu-mcq__q">A hidden link's right answer ranks 7th among all plants. Three of the plants ranked above it are also right answers. What is its filtered rank?</p>
-    <div class="lu-mcq__opts">
-      <button class="lu-mcq__opt" type="button" data-key="a">7<span class="lu-mcq__why" hidden>That is the raw rank: the other right answers still count against it.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="b">4<span class="lu-mcq__why" hidden>Right: 7 minus the 3 right answers above it.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="c">1<span class="lu-mcq__why" hidden>Only the right answers are removed, not the wrong plants above it.</span></button>
-    </div>
-  </div>
-  <template data-notes><p>Three minutes. Then I ask: which rank does PyKEEN report by default? Filtered, like this.</p></template>
-</section>
-
-<!-- ==================================================================== 19 -->
 <section class="slide" data-label="TransE in PyKEEN" data-section="Embeddings" data-minutes="4">
   <div class="lu-eyebrow">What the lab runs</div>
   <h2 class="lu-h2">One call trains the model. We do the ranking ourselves, among plants only.</h2>
@@ -298,10 +281,10 @@ scores = model.score_h(torch.tensor(
   <template data-notes><p>Four minutes. The lab trains on five kinds of link: makes, plus four from the orders (a customer orders a product, a carrier ships it, it leaves from a port, a plant serves a port). The pair "this plant shipped this product" is left out on purpose: every one of them is also a makes link, so it would give the answer away.</p></template>
 </section>
 
-<!-- ==================================================================== 20 -->
+<!-- ==================================================================== 19 -->
 <section class="slide" data-label="TransE against a count" data-section="Embeddings" data-minutes="5">
-  <div class="lu-eyebrow">A real run: three seeds (three random starts), filtered MRR among plants</div>
-  <h2 class="lu-h2" style="max-width:66ch">Counting the products of each plant beats TransE on every seed</h2>
+  <div class="lu-eyebrow">TransE · our result · MRR from 0 to 1, where 1 means the right plant is always ranked first · three random starts (seeds)</div>
+  <h2 class="lu-h2" style="max-width:66ch">Counting the products of each plant beats TransE on every run</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <div class="lu-stack" style="gap:var(--lu-s4)"><div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">seed 0</span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:55.5%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">TransE 0.555</span></span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:60.8%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">count 0.608</span></span></div><div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">seed 1</span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:49.5%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">TransE 0.495</span></span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:56.2%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">count 0.562</span></span></div><div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">seed 2</span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:51.9%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">TransE 0.519</span></span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:57.0%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">count 0.570</span></span></div></div>
@@ -310,18 +293,33 @@ scores = model.score_h(torch.tensor(
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">And some links cannot be scored</span><p class="lu-sub">In seed 0, 72 of the 203 hidden links name a product that appears in no other link. The model has no position for it, so the lab leaves them out.</p></div>
     </div>
   </div>
+  <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>MRR</b> Mean reciprocal rank. For each hidden link, take 1 divided by the rank of the right answer (rank 1 gives 1, rank 2 gives 0.5), then average over all links. 1 is perfect.</span></p>
   <template data-notes><p>Five minutes. <code>reference-outputs/link-prediction.txt</code>: TransE MRR 0.555, 0.495, 0.519; popularity 0.608, 0.562, 0.570; 131, 133 and 141 links scored. Counts of plants and products from <code>brunel-mapped.nt</code>.</p>
 <ul><li>I ask: is this a failure? No. It is a finding: on Brunel's product catalogue, the graph's shape tells you less than one count. On a graph with richer structure, the order can flip; the only way to know is this comparison.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 21 -->
+<!-- ==================================================================== 20 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 3 · Message passing" data-section="Message passing" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 3 of 4 · Graph neural networks · about 40 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Graph neural networks: learning from neighbours</h2>
-    <p class="lu-lead" style="max-width:46ch">We start with one layer on a tiny graph, then the same layer on a real order. Then we see the whole model as blocks, and how it predicts whether an order is late.</p>
+    <div class="lu-eyebrow">Part 3 of 4 · Graph neural networks · about 25 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Graph neural networks: predicting a label from the neighbours</h2>
+    <p class="lu-lead" style="max-width:46ch">What it solves, how one layer works, how it is trained, how it is used, how it compares with similar models.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
+</section>
+
+<!-- ==================================================================== 21 -->
+<section class="slide" data-label="GNN: what it solves" data-section="Message passing" data-minutes="3">
+  <div class="lu-eyebrow">Graph neural network · what it solves, what goes in, what comes out</div>
+  <h2 class="lu-h2" style="max-width:66ch">A graph neural network predicts a label for a node, using the nodes around it</h2>
+
+  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)">
+    <div class="lu-card"><span class="lu-card__label">It solves</span><h3 class="lu-h3">Node classification</h3><p class="lu-sub">Will this order be late?</p></div>
+    <div class="lu-card"><span class="lu-card__label">Training needs</span><h3 class="lu-h3">The graph and the labels</h3><p class="lu-sub">Every order's numbers and links, and for the training orders the known answer: late or not.</p></div>
+    <div class="lu-card"><span class="lu-card__label">At run time</span><h3 class="lu-h3">The graph in, a probability out</h3><p class="lu-sub">In: the graph with an order and its links. Out: a probability between 0 and 1 that it is late.</p></div>
+  </div>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why a graph helps</span><p class="lu-sub">A table model sees one order's own row. A graph neural network also sees the customer, carrier and plant it is linked to, and their other orders.</p></div>
+  <template data-notes><p>Three minutes. The model in the lab is GraphSAGE; the next slides build it from one layer.</p></template>
 </section>
 
 <!-- ==================================================================== 22 -->
@@ -329,7 +327,7 @@ scores = model.score_h(torch.tensor(
   <div class="lu-eyebrow">A graph neural network layer · the arithmetic, on a tiny graph</div>
   <h2 class="lu-h2">A layer combines a node's own number with its neighbours' numbers</h2>
   <div class="lu-walk" data-label="One layer on a tiny graph"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 250, "nodes": [{"id": "c", "label": "customer · number 0.9", "x": 190, "y": 40, "w": 330, "h": 56, "kind": "individual"}, {"id": "q", "label": "plant · number 0.1", "x": 190, "y": 130, "w": 330, "h": 56, "kind": "individual"}, {"id": "av", "label": "average of the\nneighbours' numbers: 0.5", "x": 700, "y": 40, "w": 360, "h": 70, "kind": "literal"}, {"id": "o", "label": "the order's own\nnumber: 0.5", "x": 700, "y": 160, "w": 360, "h": 70, "kind": "individual"}, {"id": "h", "label": "new number of the order\n0.70", "x": 1240, "y": 100, "w": 340, "h": 70, "kind": "inferred"}], "edges": [{"id": "m1", "from": "c", "to": "av", "label": "message"}, {"id": "m2", "from": "q", "to": "av", "label": "message"}, {"id": "u1", "from": "av", "to": "h", "label": "× 0.8"}, {"id": "u2", "from": "o", "to": "h", "label": "× 0.6"}], "steps": [{"show": ["o"], "set": {"o": "active"}}, {"show": ["c", "q"], "set": {"o": "idle"}}, {"show": ["av", "m1", "m2"], "run": ["m1", "m2"], "set": {"av": "active"}}, {"show": ["h", "u1", "u2"], "run": ["u1", "u2"], "set": {"av": "idle", "h": "active"}}], "legend": {"individual": "Thing in the graph", "literal": "Numbers", "inferred": "Computed by the layer"}, "flags": {"inferred": "computed"}}</script></div><div data-walk-step="1" data-caption-short="Own number" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; A toy graph, not Brunel: one order, with its own number, 0.5."></div><div data-walk-step="2" data-caption-short="Neighbours" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The order is linked to a customer and a plant. Each has a number too: 0.9 and 0.1."></div><div data-walk-step="3" data-caption-short="Messages" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Each neighbour sends its number along its link: a &lt;b&gt;message&lt;/b&gt;. The order averages the messages: (0.9 + 0.1) / 2 = 0.5."></div><div data-walk-step="4" data-caption-short="A new number" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; The layer multiplies the average by one weight (0.8) and the order&#x27;s own number by another (0.6), and adds: 0.4 + 0.3 = 0.70. This is one &lt;b&gt;layer&lt;/b&gt;. Its two weights are what training adjusts."></div></div></div>
-  <template data-notes><p>Five minutes. Same toy spirit as the previous slide. A real layer works on lists of 32 numbers at once, with a separate pair of weights for each kind of link, but the arithmetic is exactly this. The next slide repeats it on a real Brunel order.</p></template>
+  <template data-notes><p>Five minutes. A toy, like the learning slide of Part 1. A real layer works on lists of 32 numbers at once, with a separate pair of weights for each kind of link, but the arithmetic is exactly this. The next slide repeats it on a real Brunel order.</p></template>
 </section>
 
 <!-- ==================================================================== 23 -->
@@ -338,176 +336,53 @@ scores = model.score_h(torch.tensor(
   <h2 class="lu-h2">The same layer on a real Brunel order: five neighbours send five messages</h2>
   <div class="lu-walk" data-label="One round of message passing"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 184, "nodes": [{"id": "c", "label": "customer V555_15", "x": 150, "y": 28, "w": 262, "h": 50, "kind": "individual"}, {"id": "k", "label": "carrier V444_0", "x": 437, "y": 28, "w": 262, "h": 50, "kind": "individual"}, {"id": "p", "label": "PLANT08", "x": 724, "y": 28, "w": 262, "h": 50, "kind": "individual"}, {"id": "q", "label": "PORT04", "x": 1011, "y": 28, "w": 262, "h": 50, "kind": "individual"}, {"id": "d", "label": "product 1681878", "x": 1298, "y": 28, "w": 262, "h": 50, "kind": "individual"}, {"id": "o", "label": "order 1447135386.7", "x": 724, "y": 145, "w": 330, "h": 56, "kind": "individual"}, {"id": "x", "label": "own numbers:\n3.1 kg, 1,045 units, DTP", "x": 220, "y": 145, "w": 360, "h": 70, "kind": "literal"}, {"id": "h", "label": "new numbers\nfor the order (32)", "x": 1230, "y": 145, "w": 300, "h": 70, "kind": "literal"}], "edges": [{"id": "mc", "from": "c", "to": "o", "label": ""}, {"id": "mk", "from": "k", "to": "o", "label": ""}, {"id": "mp", "from": "p", "to": "o", "label": ""}, {"id": "mq", "from": "q", "to": "o", "label": ""}, {"id": "md", "from": "d", "to": "o", "label": ""}, {"id": "u", "from": "o", "to": "h", "label": "combine"}, {"id": "v", "from": "x", "to": "o", "label": ""}], "steps": [{"show": ["o", "x", "v"], "set": {"o": "active"}}, {"show": ["c", "k", "p", "q", "d"]}, {"show": ["mc", "mk", "mp", "mq", "md"], "run": ["mc", "mk", "mp", "mq", "md"]}, {"show": ["h", "u"], "run": ["u"], "set": {"o": "idle", "h": "inferred"}}], "legend": {"individual": "Thing in the graph", "literal": "Numbers", "inferred": "Computed by the layer"}, "flags": {"inferred": "learned"}}</script></div><div data-walk-step="1" data-caption-short="Before" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The order starts with its own three numbers."></div><div data-walk-step="2" data-caption-short="Neighbours" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; Its five neighbours have numbers too. Here the numbers only say which neighbour it is, for example customer 23 of 46."></div><div data-walk-step="3" data-caption-short="Messages" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Each neighbour sends its numbers along its link. That is a &lt;b&gt;message&lt;/b&gt;."></div><div data-walk-step="4" data-caption-short="Update" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; The order averages the messages of each kind of link. It multiplies them and its own numbers by learned weights, and adds everything up. This is one layer."></div></div></div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Message passing</dt><dd>Each node updates itself from what its neighbours send it, one round per layer.</dd><dt>GraphSAGE</dt><dd>A layer where a node combines its own numbers with the average of its neighbours'.</dd></dl></div>
-  <template data-notes><p>Five minutes. Every node does this at the same time, so the customer also updates, from its 110 orders. That is the point of the next slide.</p>
+  <template data-notes><p>Five minutes. Every node does this at the same time, so the customer also updates, from its 110 orders. After two layers an order has received numbers, through its port and carrier, from almost every other order (appendix).</p>
 <ul><li>GraphSAGE: Hamilton, Ying and Leskovec, 2017. The weights are shared by every node of a kind, so the model learns a rule, not one answer per order.</li></ul></template>
 </section>
 
 <!-- ==================================================================== 24 -->
-<section class="slide" data-label="Two layers reach almost everything" data-section="Message passing" data-minutes="4">
-  <div class="lu-eyebrow">How many other orders does one order reach after k layers?</div>
-  <h2 class="lu-h2" style="max-width:66ch">On Brunel, two layers already reach almost every order</h2>
-
-  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
-    <div class="lu-stack" style="gap:var(--lu-s4)">
-      <div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">1 layer · its 5 neighbours</span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:0.0%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">0 orders</span></span></div>
-      <div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">2 layers · through a shared port or carrier</span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:98.5%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">9,074</span></span></div>
-      <div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">4 layers</span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:100.0%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">all 9,214</span></span></div>
-    </div>
-    <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Oversmoothing</dt><dd>After many layers every node has received numbers from almost the same nodes, so all the nodes end up with similar numbers.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why the lab stops at 2</span><p class="lu-sub">PORT04 alone serves 9,041 orders. More layers add no new neighbours, only more averaging.</p></div>
-    </div>
-  </div>
-  <template data-notes><p>Four minutes. Counted on <code>brunel-mapped.nt</code> over the seven kinds of link <code>build_graph.py</code> keeps, in both directions: the median over 200 random orders is 9,074 at two layers and 9,214 at four; the order from Part 1 gives the same 9,074.</p>
-<ul><li>Oversmoothing: Li, Han and Wu, 2018, among others. Real GNNs are usually 2 or 3 layers deep for this reason.</li></ul></template>
-</section>
-
-<!-- ==================================================================== 25 -->
-<section class="slide" data-label="The graph as PyTorch Geometric sees it" data-section="Message passing" data-minutes="4">
-  <div class="lu-eyebrow">What build_graph.py writes</div>
-  <h2 class="lu-h2">One table of numbers per kind of node, one list of pairs per kind of link</h2>
-  <div class="lu-split lu-split--wide-left">
-    <div class="lu-stack">
-      <table class="lu-table"><thead><tr><th>Node kind</th><th>How many</th><th>Numbers per node</th></tr></thead><tbody><tr><td>order</td><td>9,215</td><td>weight, quantity, service level: 5 numbers</td></tr><tr><td>customer</td><td>46</td><td>which one it is: 46 numbers, one set to 1</td></tr><tr><td>carrier · plant · port · product</td><td>3 · 20 · 11 · 1,540</td><td>which one it is</td></tr></tbody></table>
-      <div class="lu-code lu-code--sm" data-name="build_graph.py and gnn.py · shortened"><pre><code>data = HeteroData()
-data[<span class="tok-str">"order"</span>].x = torch.tensor(x)  <span class="tok-com"># 9215 x 5</span>
-data[<span class="tok-str">"order"</span>, <span class="tok-str">"orderedBy"</span>, <span class="tok-str">"customer"</span>
-     ].edge_index = pairs.T   <span class="tok-com"># 2 x 9215</span></code></pre></div>
-    </div>
-    <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>HeteroData</dt><dd>PyTorch Geometric's object for a graph with several kinds of node and link.</dd></dl></div>
-      <div class="lu-callout"><span class="lu-callout__label">ToUndirected</span><p class="lu-sub">Every link points from the order outward. Messages flow along links, so without the reverse links an order would receive nothing at all.</p></div>
-    </div>
-  </div>
-  <template data-notes><p>Four minutes. Seven kinds of link, 9,215 of each order link, 2,036 makes, 22 servesPort (<code>reference-outputs/build-graph.txt</code>); ToUndirected adds the seven reverse kinds.</p>
-<ul><li>The label is not in <code>x</code>. Part 4 shows where it was hiding and what happens if it stays.</li></ul></template>
-</section>
-
-<!-- ==================================================================== 26 -->
 <section class="slide" data-label="The ontology decides the kinds" data-section="Message passing" data-minutes="3">
   <div class="lu-eyebrow">How the Session 3 ontology helps here</div>
   <h2 class="lu-h2" style="max-width:66ch">Classes become node kinds, properties become link kinds</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
-    <table class="lu-table"><thead><tr><th>In the ontology</th><th>In HeteroData</th></tr></thead><tbody><tr><td><code>ul:Order</code>, and its subclass <code>ul:LateOrder</code></td><td>one node kind: order</td></tr><tr><td><code>ul:Customer</code>, <code>ul:Carrier</code>, <code>ul:Plant</code>, ...</td><td>one node kind each</td></tr><tr><td><code>ul:orderedBy</code> (domain Order, range Customer)</td><td>one link kind: order to customer</td></tr><tr><td><code>ul:makes</code> (domain Plant, range Product)</td><td>one link kind: plant to product</td></tr></tbody></table>
+    <table class="lu-table"><thead><tr><th>In the ontology</th><th>In the graph model</th></tr></thead><tbody><tr><td><code>ul:Order</code>, and its subclass <code>ul:LateOrder</code></td><td>one node kind: order</td></tr><tr><td><code>ul:Customer</code>, <code>ul:Carrier</code>, <code>ul:Plant</code>, ...</td><td>one node kind each</td></tr><tr><td><code>ul:orderedBy</code> (domain Order, range Customer)</td><td>one link kind: order to customer</td></tr><tr><td><code>ul:makes</code> (domain Plant, range Product)</td><td>one link kind: plant to product</td></tr></tbody></table>
     <div class="lu-stack">
-      <div class="lu-callout"><span class="lu-callout__label">A subclass is not a kind</span><p class="lu-sub">A late order is an order, so build_graph.py makes one kind, order. A separate kind for late orders would <b>be</b> the label.</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">A subclass is not a kind</span><p class="lu-sub">A late order is an order, so the lab makes one kind, order. A separate kind for late orders would <b>be</b> the label.</p></div>
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Better ontology, better graph</span><p class="lu-sub">A property with a clear domain and range becomes one clean link kind. A vague one puts different things in one list.</p></div>
     </div>
   </div>
   <template data-notes><p>Three minutes. The mapped data types late orders only as <code>ul:LateOrder</code>; <code>build_graph.py</code> takes both classes as orders, which is the subclass axiom of Session 3 applied by hand (Session 5 found the same gap with SHACL targets).</p></template>
 </section>
 
-<!-- ==================================================================== 27 -->
+<!-- ==================================================================== 25 -->
 <section class="slide" data-label="A graph neural network as blocks" data-section="Message passing" data-minutes="3">
-  <div class="lu-eyebrow">Block diagram · the whole model for the late-order question</div>
-  <h2 class="lu-h2">The graph goes in, layers combine neighbours, a probability comes out</h2>
+  <div class="lu-eyebrow">Graph neural network · how it is trained, block by block</div>
+  <h2 class="lu-h2">Training: the graph goes in, a probability comes out, and the weights move</h2>
   <div class="lu-walk" data-label="A graph neural network as blocks"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 250, "nodes": [{"id": "g", "label": "the graph: orders, customers,\nplants... each with numbers", "x": 215, "y": 40, "w": 430, "h": 64, "kind": "individual"}, {"id": "l1", "label": "layer 1: each node combines its\nown and its neighbours' numbers", "x": 724, "y": 40, "w": 430, "h": 64, "kind": "ours"}, {"id": "l2", "label": "layer 2: the same again,\nwith other weights", "x": 1258, "y": 40, "w": 340, "h": 64, "kind": "ours"}, {"id": "lin", "label": "final step: 32 numbers\nbecome one score", "x": 1258, "y": 170, "w": 340, "h": 64, "kind": "ours"}, {"id": "sg", "label": "probability that the\norder is late", "x": 724, "y": 170, "w": 430, "h": 64, "kind": "literal"}, {"id": "loss", "label": "loss: compare with the\nknown label, late or not", "x": 215, "y": 170, "w": 430, "h": 64, "kind": "builtin"}], "edges": [{"id": "b1", "from": "g", "to": "l1", "label": ""}, {"id": "b2", "from": "l1", "to": "l2", "label": ""}, {"id": "b3", "from": "l2", "to": "lin", "label": ""}, {"id": "b4", "from": "lin", "to": "sg", "label": ""}, {"id": "b5", "from": "sg", "to": "loss", "label": ""}, {"id": "b6", "from": "loss", "to": "l1", "label": "adjust the weights"}], "steps": [{"show": ["g"], "set": {"g": "active"}}, {"show": ["l1", "b1"], "run": ["b1"], "set": {"g": "idle", "l1": "active"}}, {"show": ["l2", "b2"], "run": ["b2"], "set": {"l1": "idle", "l2": "active"}}, {"show": ["lin", "b3"], "run": ["b3"], "set": {"l2": "idle", "lin": "active"}}, {"show": ["sg", "b4"], "run": ["b4"], "set": {"lin": "idle", "sg": "active"}}, {"show": ["loss", "b5", "b6"], "run": ["b5", "b6"], "set": {"sg": "idle", "loss": "active"}}], "legend": {"individual": "Input", "ours": "Blocks with learned weights", "literal": "Output", "builtin": "A calculation"}, "flags": {"ours": "learned"}}</script></div><div data-walk-step="1" data-caption-short="Input" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The input is the whole graph: every node has a list of numbers (for an order: weight, quantity, service level)."></div><div data-walk-step="2" data-caption-short="Layer 1" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; In layer 1, every node combines its own numbers with those of its neighbours, as on the previous slides. Every order gets 32 new numbers."></div><div data-walk-step="3" data-caption-short="Layer 2" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Layer 2 does the same on the new numbers, so each order now carries information from neighbours of neighbours."></div><div data-walk-step="4" data-caption-short="Final step" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; A last step turns each order&#x27;s 32 numbers into one score."></div><div data-walk-step="5" data-caption-short="Prediction" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; The score becomes a probability between 0 and 1 that the order is late."></div><div data-walk-step="6" data-caption-short="Learn" data-caption="&lt;b&gt;Step 6.&lt;/b&gt; Training compares the probability with the known label and adjusts the weights of both layers and the final step. It repeats this 100 times."></div></div></div>
-  <template data-notes><p>Four minutes. This is the model of <code>gnn.py</code> as blocks. The next slide lists the same blocks with the code that builds each one. The blocks with learned weights are the only ones training changes.</p></template>
+  <template data-notes><p>Four minutes. This is the model of <code>gnn.py</code> as blocks. The appendix lists the same blocks with the code that builds each one. The blocks with learned weights are the only ones training changes.</p></template>
+</section>
+
+<!-- ==================================================================== 26 -->
+<section class="slide" data-label="GNN at run time" data-section="Message passing" data-minutes="3">
+  <div class="lu-eyebrow">Graph neural network · how it is used, block by block</div>
+  <h2 class="lu-h2">At run time: the graph goes in, a risk per order comes out</h2>
+  <div class="lu-walk" data-label="A graph neural network at run time"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 250, "nodes": [{"id": "g", "label": "the graph, with a new order\nand its links", "x": 215, "y": 40, "w": 410, "h": 64, "kind": "literal"}, {"id": "m", "label": "the trained layers\n(no more training)", "x": 724, "y": 40, "w": 400, "h": 64, "kind": "ours"}, {"id": "p", "label": "a probability per order\nfor example 0.83", "x": 1258, "y": 40, "w": 320, "h": 64, "kind": "literal"}, {"id": "w", "label": "write it into the graph\norder · ul:lateRisk · 0.83", "x": 1258, "y": 170, "w": 360, "h": 64, "kind": "individual"}, {"id": "q", "label": "SPARQL: which open orders\nhave lateRisk above 0.5?", "x": 724, "y": 170, "w": 400, "h": 64, "kind": "individual"}, {"id": "a", "label": "a planner acts\non those orders", "x": 215, "y": 170, "w": 410, "h": 64, "kind": "individual"}], "edges": [{"id": "c1", "from": "g", "to": "m", "label": ""}, {"id": "c2", "from": "m", "to": "p", "label": ""}, {"id": "c3", "from": "p", "to": "w", "label": ""}, {"id": "c4", "from": "w", "to": "q", "label": ""}, {"id": "c5", "from": "q", "to": "a", "label": ""}], "steps": [{"show": ["g"], "set": {"g": "active"}}, {"show": ["m", "c1"], "run": ["c1"], "set": {"g": "idle", "m": "active"}}, {"show": ["p", "c2"], "run": ["c2"], "set": {"m": "idle", "p": "active"}}, {"show": ["w", "c3", "q", "c4", "a", "c5"], "run": ["c3", "c4", "c5"], "set": {"p": "idle", "q": "active"}}], "legend": {"literal": "Input or output", "ours": "The trained model", "individual": "How a company uses it"}}</script></div><div data-walk-step="1" data-caption-short="The input" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; At run time the input is the graph, including a new order with its customer, carrier, plant and port."></div><div data-walk-step="2" data-caption-short="The model" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The model is the layers with the weights learned in training. Nothing is learned now; the weights are only used."></div><div data-walk-step="3" data-caption-short="The output" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; The output is a probability for each order. The number 0.83 is an illustration, not a lab result."></div><div data-walk-step="4" data-caption-short="How we use it" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; A company would write the probability into the graph as a new property, and ask SPARQL for the risky orders. Then a planner acts. Our lab stops at the probability."></div></div></div>
+  <template data-notes><p>Three minutes. ul:lateRisk does not exist in our ontology; it is the kind of property a team would add (Session 3) to store a prediction, with its provenance (Session 4): which model, which date.</p></template>
+</section>
+
+<!-- ==================================================================== 27 -->
+<section class="slide" data-label="GraphSAGE and similar models" data-section="Message passing" data-minutes="3">
+  <div class="lu-eyebrow">Graph neural network · how GraphSAGE compares with similar models</div>
+  <h2 class="lu-h2" style="max-width:66ch">Four graph neural networks: they differ in how a node combines its neighbours</h2>
+
+  <table class="lu-table"><thead><tr><th>Model</th><th>How a node combines its neighbours</th><th>In our lab</th></tr></thead><tbody><tr><td>GCN, 2017</td><td>a weighted average of the neighbours, one kind of link</td><td>not used</td></tr><tr><td>GraphSAGE, 2017</td><td>its own numbers plus the average of its neighbours'; works for new nodes</td><td>used, one copy per kind of link</td></tr><tr><td>GAT, 2018</td><td>learns how much attention to give each neighbour</td><td>not used</td></tr><tr><td>RGCN, 2018</td><td>separate weights for each kind of link</td><td>not used (appendix)</td></tr></tbody></table>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Our result</span><p class="lu-sub">Part 4 tests GraphSAGE against logistic regression, first on a random split, then on a fair one.</p></div>
+  <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>GCN</b> Graph convolutional network: a graph neural network layer that gives each node a weighted average of its neighbours&#x27; numbers, for one kind of link (Kipf and Welling, 2017).</span> <span data-auto="1"><b>GAT</b> Graph attention network: a graph neural network layer that learns how much weight to give each neighbour (Veličković and others, 2018).</span> <span data-auto="1"><b>RGCN</b> Relational graph convolutional network: a layer with one weight matrix per kind of link.</span> <span data-auto="1"><b>Random split</b> The test examples are chosen at random, so the same customer (or other group) can appear in training and in the test. This often makes a model look better than it is.</span></p>
+  <template data-notes><p>Three minutes. GCN: Kipf and Welling, ICLR 2017. GraphSAGE: Hamilton, Ying and Leskovec, NeurIPS 2017. GAT: Veli&#269;kovi&#263; and others, ICLR 2018. RGCN: Schlichtkrull and others, ESWC 2018. The appendix has the code that builds GraphSAGE for every kind of link.</p></template>
 </section>
 
 <!-- ==================================================================== 28 -->
-<section class="slide" data-label="From numbers to a prediction" data-section="Message passing" data-minutes="3">
-  <div class="lu-eyebrow">What gnn.py does after the layers</div>
-  <h2 class="lu-h2" style="max-width:66ch">Each order's 32 numbers become one probability of being late</h2>
-
-  <table class="lu-table"><thead><tr><th>Step</th><th>What happens</th><th>In gnn.py</th></tr></thead><tbody><tr><td>1 · Two layers</td><td>Each order has 32 numbers. We choose 32.</td><td><code>SAGEConv(..., 32)</code>, twice</td></tr><tr><td>2 · ReLU</td><td>After each layer, every negative number becomes 0.</td><td><code>.relu()</code></td></tr><tr><td>3 · Final step</td><td>One weight for each number, added up: one score.</td><td><code>Linear(32, 1)</code></td></tr><tr><td>4 · Probability</td><td>The score is squeezed to a number between 0 and 1.</td><td><code>torch.sigmoid</code></td></tr><tr><td>5 · Training</td><td>Measure the loss, adjust the weights. One pass over the training orders is an <b>epoch</b>; we do 100.</td><td><code>EPOCHS = 100</code>, <code>Adam</code></td></tr><tr><td>6 · Rare late orders</td><td>Only 2% are late, so a missed late order counts more.</td><td><code>pos_weight</code></td></tr></tbody></table>
-  <template data-notes><p>Five minutes. This is the missing middle between the layer arithmetic and the code on the next slide. <code>Adam</code> is the rule that decides how far each weight moves; <code>lr=0.01</code> sets the step size. Binary cross entropy is the loss: large when a confident prediction is wrong.</p></template>
-</section>
-
-<!-- ==================================================================== 29 -->
-<section class="slide" data-label="to_hetero: one model, every kind of link" data-section="Message passing" data-minutes="4">
-  <div class="lu-eyebrow">What gnn.py trains</div>
-  <h2 class="lu-h2">Write the model for one kind of link. to_hetero copies it for all fourteen.</h2>
-  <div class="lu-split lu-split--wide-left">
-    <div class="lu-code lu-code--sm" data-name="gnn.py · the model, shortened"><pre><code>class SAGE(torch.nn.Module):
-    def __init__(self):
-        self.conv1 = SAGEConv((-1, -1), 32)
-        self.conv2 = SAGEConv((-1, -1), 32)
-        self.score = Linear(32, 1)
-    def forward(self, x, edge_index):
-        h = self.conv1(x, edge_index).relu()
-        h = self.conv2(h, edge_index).relu()
-        return self.score(h)
-
-model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</span>)</code></pre></div>
-    <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>to_hetero</dt><dd>PyTorch Geometric's tool that copies a model once per kind of link.</dd></dl></div>
-      <div class="lu-callout"><span class="lu-callout__label">A real problem we met</span><p class="lu-sub">The argument must be called <code>edge_index</code>. Named <code>ei</code>, to_hetero failed with an error that never said why.</p></div>
-    </div>
-  </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>PyTorch Geometric</b> The Python library for graph neural networks, used in the lab.</span></p>
-  <template data-notes><p>Four minutes. 236,870 weights after conversion (<code>reference-outputs/gnn.txt</code>): each of the 14 kinds of link gets its own copy of each layer, and <code>aggr="sum"</code> adds up what an order receives from its different kinds.</p>
-<ul><li><code>(-1, -1)</code>: the input sizes are read from the data on the first pass, since each kind of node has a different number of columns.</li><li>to_hetero rewrites the forward function by reading its argument names, which is why the name matters. I found this in my own feasibility run on 2026-09-25.</li></ul></template>
-</section>
-
-<!-- ==================================================================== 30 -->
-<section class="slide" data-label="RGCN, the explicit version" data-section="Message passing" data-minutes="3">
-  <div class="lu-eyebrow">The same idea, written for relations from the start</div>
-  <h2 class="lu-h2" style="max-width:66ch">RGCN: a layer with its own weights for each kind of link</h2>
-
-  <table class="lu-table"><thead><tr><th></th><th><code>to_hetero(SAGE)</code></th><th><code>RGCNConv</code></th></tr></thead><tbody><tr><td>How it is written</td><td>a normal model, converted in one line</td><td>wired by hand, relations as numbers</td></tr><tr><td>Weights per kind of link</td><td>a full copy of each layer</td><td>one matrix, or a mix of a few shared ones</td></tr><tr><td>In this course</td><td>the lab</td><td>this slide</td></tr></tbody></table>
-  <div class="lu-split">
-    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>RGCN</dt><dd>Relational graph convolutional network: a layer with one weight matrix per kind of link.</dd></dl></div>
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Weights multiply</span><p class="lu-sub">to_hetero gave 236,870 weights for 14 kinds of link: each new kind adds a full copy. RGCN can share a few basis matrices instead.</p></div>
-  </div>
-  <template data-notes><p>Three minutes. RGCN: Schlichtkrull and others, 2018, built for knowledge graphs. In PyTorch Geometric it is <code>RGCNConv(in, out, num_relations, num_bases=...)</code>. On Brunel's 14 kinds of link, either works; the lab keeps one model to stay simple.</p></template>
-</section>
-
-<!-- ==================================================================== 31 -->
-<section class="slide" data-label="New things: inductive and transductive" data-section="Message passing" data-minutes="4">
-  <div class="lu-eyebrow">What happens when something appears that training never saw?</div>
-  <h2 class="lu-h2" style="max-width:66ch">Some models learn a position per thing, some learn a rule</h2>
-
-  <div class="lu-split" style="margin-top:var(--lu-s3)">
-    <div class="lu-card">
-      <span class="lu-card__label">Transductive · TransE</span>
-      <p class="lu-sub">One position per thing seen in training. A new product has none.</p>
-      <p class="lu-sub">CND9 makes one product. When that link is hidden, CND9 has no position, and the lab ranks it last for every other product.</p>
-    </div>
-    <div class="lu-card">
-      <span class="lu-card__label">Inductive · GraphSAGE</span>
-      <p class="lu-sub">Learns weights, not positions: a new order gets numbers from its neighbours.</p>
-      <p class="lu-sub">But a customer's numbers only say which one it is. A new customer is a column the model never trained.</p>
-    </div>
-  </div>
-  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Transductive</dt><dd>A model that can only score things it saw in training.</dd><dt>Inductive</dt><dd>A model that can score new things, from their numbers and neighbours.</dd></dl></div>
-  <template data-notes><p>Four minutes. CND9 appears only in the ProductsPerPlant table, with one product; <code>link_prediction.py</code> gives a plant it never saw the lowest possible score.</p>
-<ul><li>The second card is Part 4 in one sentence: a split by customer asks the model about customers it never saw.</li></ul></template>
-</section>
-
-<!-- ==================================================================== 32 -->
-<section class="slide slide--tint" data-label="Check: a new customer" data-section="Message passing" data-minutes="2">
-  <div class="lu-eyebrow">Check question</div>
-  <div class="lu-mcq" data-qid="s6-q2" data-answer="c" data-label="Which model has learned about a new customer"
-       data-fb-correct=" Inductive means it can compute numbers for a new node; it still learned nothing about this customer."
-       data-fb-wrong=" Ask what the model saw about this customer during training.">
-    <p class="lu-mcq__q">A customer that never ordered before places its first order. Which of today's models has learned anything about that customer?</p>
-    <div class="lu-mcq__opts">
-      <button class="lu-mcq__opt" type="button" data-key="a">GraphSAGE, because it is inductive<span class="lu-mcq__why" hidden>It can compute numbers for the order, but the customer's column was never trained.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="b">TransE, because it embeds every thing<span class="lu-mcq__why" hidden>Only every thing it saw: a new customer has no position.</span></button>
-      <button class="lu-mcq__opt" type="button" data-key="c">None of them<span class="lu-mcq__why" hidden>Right: whatever they predict comes from the order's other links, not from the customer.</span></button>
-    </div>
-  </div>
-  <template data-notes><p>Two minutes. Keep this answer in mind: it explains the result of the split by customer in Part 4.</p></template>
-</section>
-
-<!-- ==================================================================== 33 -->
-<section class="slide slide--tint" data-label="Drill: graph learning words" data-section="Message passing" data-minutes="3">
-  <div class="lu-eyebrow">Drill · type the missing word</div>
-  <div class="lu-blanks" data-qid="s6-blanks1" data-label="Graph learning words">
-    <p class="lu-h3" style="margin-bottom:var(--lu-s4)">Fill in the blanks</p>
-    <ol class="lu-list lu-list--num">
-      <li>For to_hetero, the model's second argument must be named <input class="lu-blank" data-answer="edge_index" data-label="Blank 1" placeholder="…">.</li>
-      <li>The tool that copies a model once per kind of link is <input class="lu-blank" data-answer="to_hetero" data-label="Blank 2" placeholder="…">.</li>
-      <li>After too many layers every node looks alike: <input class="lu-blank" data-answer="oversmoothing|over-smoothing" data-label="Blank 3" placeholder="…">.</li>
-      <li>A model that can score a node it never saw in training is <input class="lu-blank" data-answer="inductive" data-label="Blank 4" placeholder="…">.</li>
-    </ol>
-  </div>
-  <template data-notes><p>Three minutes. Blank 1 is the one you will meet on your own project. I say it twice.</p></template>
-</section>
-
-<!-- ==================================================================== 34 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 4 · Leakage" data-section="Leakage" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 4 of 4 · Testing · about 25 minutes</div>
@@ -517,7 +392,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 35 -->
+<!-- ==================================================================== 29 -->
 <section class="slide" data-label="The label is in the graph twice" data-section="Leakage" data-minutes="4">
   <div class="lu-eyebrow">Leak 1 · the answer among the features</div>
   <h2 class="lu-h2">The graph says &ldquo;late&rdquo; twice: as a class and as a number</h2>
@@ -536,12 +411,12 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
       <div class="lu-callout"><span class="lu-callout__label">A perfect score is a warning</span><p class="lu-sub">Nothing predicts the future perfectly. <code>build_graph.py</code> removes both the class and <code>lateDays</code> before any model sees the order.</p></div>
     </div>
   </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Random split</b> The test examples are chosen at random, so the same customer (or other group) can appear in training and in the test. This often makes a model look better than it is.</span> <span data-auto="1"><b>PR-AUC</b> A score from 0 to 1 for ranking a rare class: how well the true cases are ranked above the rest. A model that guesses scores about the share of true cases (for 2% late orders, about 0.02).</span></p>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>PR-AUC</b> A score from 0 to 1 for ranking a rare class: how well the true cases are ranked above the rest. A model that guesses scores about the share of true cases (for 2% late orders, about 0.02).</span></p>
   <template data-notes><p>Four minutes. Real run, line 1 of <code>reference-outputs/baseline.txt</code>. The graph is right to hold these facts: they are what Session 1 profiled. They are the answer, so the model must not see them.</p>
 <ul><li>I ask: where else could the label hide in your own project's graph? A status field, a "delivered on" date, a class assigned after the fact.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 36 -->
+<!-- ==================================================================== 30 -->
 <section class="slide" data-label="Accuracy is the wrong score" data-section="Leakage" data-minutes="3">
   <div class="lu-eyebrow">When 2% are late, saying &ldquo;never late&rdquo; is 97.9% accurate</div>
   <h2 class="lu-h2" style="max-width:66ch">Score the ranking of the rare class instead</h2>
@@ -558,7 +433,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <template data-notes><p>Three minutes. <code>reference-outputs/baseline.txt</code>, lines 2 and the header. The model is less accurate than saying "never", and far more useful: it finds late orders. Accuracy cannot tell those apart; PR-AUC can.</p></template>
 </section>
 
-<!-- ==================================================================== 37 -->
+<!-- ==================================================================== 31 -->
 <section class="slide" data-label="Random split against split by customer" data-section="Leakage" data-minutes="5">
   <div class="lu-eyebrow">Leak 2 · the same customer on both sides</div>
   <h2 class="lu-h2">The graph model wins a random split, but on new customers both only guess</h2>
@@ -576,7 +451,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
 <ul><li>This is the honest headline of the session: the graph model's advantage exists only where it can remember.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 38 -->
+<!-- ==================================================================== 32 -->
 <section class="slide" data-label="Why the random split flatters" data-section="Leakage" data-minutes="3">
   <div class="lu-eyebrow">Brunel's 46 customers. Only four ever have a late order.</div>
   <h2 class="lu-h2" style="max-width:66ch">Whether an order is late almost entirely depends on which customer it belongs to</h2>
@@ -589,7 +464,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <template data-notes><p>Three minutes. Counted on <code>brunel-mapped.nt</code>: late orders per customer. The dots' order is arbitrary; the counts are real. 30% of 46 customers is 14 (<code>split_by_customer</code> in <code>learning_utils.py</code>).</p></template>
 </section>
 
-<!-- ==================================================================== 39 -->
+<!-- ==================================================================== 33 -->
 <section class="slide" data-label="One split is not evidence" data-section="Leakage" data-minutes="3">
   <div class="lu-eyebrow">Five splits by customer, five different tests</div>
   <h2 class="lu-h2" style="max-width:66ch">Which customers land in the test decides the number</h2>
@@ -604,7 +479,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <template data-notes><p>Three minutes. <code>baseline.txt</code> and <code>gnn.txt</code>, the split by customer rows. With 4 positive customers this is noisy by nature; a real project with this shape would say so in its limits.</p></template>
 </section>
 
-<!-- ==================================================================== 40 -->
+<!-- ==================================================================== 34 -->
 <section class="slide" data-label="With dates, split by time" data-section="Leakage" data-minutes="4">
   <div class="lu-eyebrow">The rule for your project: train on the past, test on the future</div>
   <h2 class="lu-h2" style="max-width:66ch">Brunel cannot do this: all 9,215 orders are dated 2013-05-26</h2>
@@ -622,7 +497,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
 <ul><li>Rule 2 is the graph specific trap: a random split of orders still leaves future links (a customer's later orders) in the graph the model trains on.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 41 -->
+<!-- ==================================================================== 35 -->
 <section class="slide slide--tint" data-label="Poll: which number do you report?" data-section="Leakage" data-minutes="3" style="--lu-s5:12px">
   <div class="lu-eyebrow">Room poll · 45 seconds</div>
   <div class="lu-poll" data-qid="s6-poll" data-seconds="45" data-answer="b" data-label="Which late order score to report to the company">
@@ -635,7 +510,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <template data-notes><p>Forty five seconds, then we discuss. Known customers would still see the random split's quality, so an honest report gives both numbers and says which question each answers. If someone suggests averaging them: an average of two different questions answers neither.</p></template>
 </section>
 
-<!-- ==================================================================== 42 -->
+<!-- ==================================================================== 36 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Train, compare, split" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 55 minutes · on your own machine</div>
@@ -645,7 +520,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 43 -->
+<!-- ==================================================================== 37 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">Hands-on lab · about 55 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">The Brunel graph as PyTorch Geometric reads it, three models, two splits.</h2>
@@ -661,11 +536,12 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">CPU only</span><p class="lu-sub">No GPU needed: the slowest step, TransE over three seeds, takes under a minute.</p></div>
     </div>
   </div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>PyTorch Geometric</b> The Python library for graph neural networks, used in the lab.</span></p>
   <template data-notes><p>Three minutes, then I walk the room. Most common blocker: PyTorch missing, because the install lines of <code>demos/README.md</code> were not run again after Session 5. On Linux, the CPU build first (the command is in that README).</p>
 <ul><li>Second: <code>data/brunel-graph.pt</code> missing because step 1 was skipped. Every later script needs it.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 44 -->
+<!-- ==================================================================== 38 -->
 <section class="slide" data-label="Part B: copy a function, change one thing" data-section="Lab" data-minutes="2">
   <div class="lu-eyebrow">Lab Part B · three functions</div>
   <h2 class="lu-h2" style="max-width:66ch">Copy a function you can read, and change one thing</h2>
@@ -689,7 +565,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <template data-notes><p>Two minutes. The split by customer on this slide is the function behind the honest numbers of Part 4; Y1 is the same idea for plants. Most common wrong answer: Y3 with <code>&lt; k</code>; the checker says rank 10 is a hit at k = 10.</p></template>
 </section>
 
-<!-- ==================================================================== 45 -->
+<!-- ==================================================================== 39 -->
 <section class="slide" data-label="Lab time" data-section="Lab" data-minutes="48">
   <div class="lu-eyebrow">Lab · 48 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints show whether you are on schedule.</h2>
@@ -703,7 +579,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <template data-notes><p>Forty eight minutes. Numbers may differ in the last digit on another computer; the pattern must not (leak near 1.0, random high, by customer near 0.02, count ahead of TransE). If your pattern differs, check first that <code>build_graph.py</code> read Session 5's graph.</p></template>
 </section>
 
-<!-- ==================================================================== 46 -->
+<!-- ==================================================================== 40 -->
 <section class="slide" data-label="Discussion: whose graph model lost?" data-section="Wrap" data-minutes="7">
   <div class="lu-eyebrow">Discussion · as a room, from Part C</div>
   <div class="lu-split lu-split--wide-left">
@@ -720,23 +596,24 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <template data-notes><p>Seven minutes. The syllabus question verbatim: whose graph model lost to the tabular baseline, and why that is a legitimate and reportable result rather than a failure. I push for the specific wording of question 2: "on customers seen in training, PR-AUC 0.86; on new customers, no better than guessing".</p></template>
 </section>
 
-<!-- ==================================================================== 47 -->
+<!-- ==================================================================== 41 -->
 <section class="slide" data-label="Milestone 2 and the project clinic" data-section="Wrap" data-minutes="5">
   <div class="lu-eyebrow">Milestone 2 · a checkpoint, not graded · on your team's own topic</div>
   <h2 class="lu-h2" style="max-width:72ch">Today's lab is the pattern. The clinic checks one thing: does your split leak?</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
-    <table class="lu-table"><thead><tr><th>Part</th><th>What it must show</th></tr></thead><tbody><tr><td>Node classification</td><td>a heterogeneous GNN on your own graph, for your own label</td></tr><tr><td>Link prediction</td><td>an embedding such as TransE, filtered MRR and Hits@k</td></tr><tr><td>A baseline</td><td>a table model on the same rows, next to every result, and guessing</td></tr><tr><td>A split that does not leak</td><td>by time if your data has dates; by group otherwise, and say why</td></tr><tr><td>The limits</td><td>several seeds, the spread, and what the numbers do not show</td></tr></tbody></table>
+    <table class="lu-table"><thead><tr><th>Part</th><th>What it must show</th></tr></thead><tbody><tr><td>Node classification</td><td>a heterogeneous GNN on your own graph, for your own label</td></tr><tr><td>Link prediction</td><td>an embedding such as TransE, filtered MRR and Hits@k (see the appendix)</td></tr><tr><td>A baseline</td><td>a table model on the same rows, next to every result, and guessing</td></tr><tr><td>A split that does not leak</td><td>by time if your data has dates; by group otherwise, and say why</td></tr><tr><td>The limits</td><td>several seeds, the spread, and what the numbers do not show</td></tr></tbody></table>
     <div class="lu-card">
       <span class="lu-card__label">Project clinic · each team, 1 minute</span>
       <p class="lu-sub">Say your label, your split, and the one thing that could leak across it. The room names one more.</p>
       <p class="lu-caption">Also write the removed features in the report, with the reason. The label can hide in more than one place.</p>
     </div>
   </div>
+  <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>Hits@k</b> For link prediction, the share of hidden links whose right answer is ranked in the top k.</span></p>
   <template data-notes><p>Five minutes here; the full clinic runs in the discussion time if the lab finished early. Milestone 2, a checkpoint for feedback, not graded: a trained heterogeneous node classification model and a link prediction model over the integrated graph, a leakage-free temporal split, a tabular baseline, and a written evaluation of the limits. The team project is scored once, before Session 8.</p></template>
 </section>
 
-<!-- ==================================================================== 48 -->
+<!-- ==================================================================== 42 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
@@ -744,7 +621,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
-<!-- ==================================================================== 49 -->
+<!-- ==================================================================== 43 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
@@ -765,7 +642,7 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
   <template data-notes><p>Two minutes. I end on the sentence. I hand out the Session 7 open problems reading list with this slide.</p></template>
 </section>
 
-<!-- ==================================================================== 50 -->
+<!-- ==================================================================== 44 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">
@@ -779,6 +656,217 @@ model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</spa
     </div>
   </div>
   <template data-notes><p>I close here so you know where the self study tools are.</p></template>
+</section>
+
+<!-- ==================================================================== 45 -->
+<section class="slide slide--night" data-chrome="none" data-label="Appendix" data-section="Appendix" data-minutes="0">
+  <div class="slide__body lu-center" style="gap:var(--lu-s5)">
+    <div class="lu-eyebrow">Appendix · not part of the lecture time</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">More depth, for those who want it</h2>
+    <p class="lu-lead" style="max-width:46ch">Relation patterns, ranking, the code that builds the graph model, and other graph neural networks.</p>
+  </div>
+  <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
+</section>
+
+<!-- ==================================================================== 46 -->
+<section class="slide" data-label="Four patterns of relations" data-section="Appendix" data-minutes="0">
+  <div class="lu-eyebrow">Four patterns of relations</div>
+  <h2 class="lu-h2" style="max-width:66ch">A model must be able to represent the patterns that relations follow</h2>
+
+  <table class="lu-table"><thead><tr><th>Pattern</th><th>In plain words</th><th>Example</th></tr></thead><tbody><tr><td>Symmetric</td><td>If A r B is true, B r A is true too.</td><td><i>is married to</i>. Brunel has none.</td></tr><tr><td>Antisymmetric</td><td>A r B is true, but B r A is not.</td><td><i>makes</i>: PLANT08 makes product 1681878, but the product does not make PLANT08.</td></tr><tr><td>Inverse</td><td>Two relations that are the same fact read in opposite directions.</td><td><i>makes</i> and <i>made by</i>.</td></tr><tr><td>Composition</td><td>Two relations in a row imply a third.</td><td>an order <i>from</i> a plant that <i>serves</i> a port: the order <i>ships from</i> that port.</td></tr></tbody></table>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">How to read &ldquo;A r B&rdquo;</span><p class="lu-sub">A and B are two things, and r is the relation between them. Example: A = PLANT08, r = makes, B = product 1681878. A model that cannot represent a pattern scores such links wrongly. The next slide draws one pattern; the slide after shows which model can represent which.</p></div>
+  <template data-notes><p>Four minutes. These are the four patterns used in the RotatE paper (Sun and others, 2019). Walk through one example each, then move on.</p></template>
+</section>
+
+<!-- ==================================================================== 47 -->
+<section class="slide" data-label="The inverse pattern, drawn" data-section="Appendix" data-minutes="0">
+  <div class="lu-eyebrow">One pattern, drawn · inverse relations</div>
+  <h2 class="lu-h2">Inverse relations: the same fact, read in both directions</h2>
+  <div class="lu-walk" data-label="The inverse pattern"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 310, "nodes": [{"id": "p1", "label": "PLANT08", "x": 260, "y": 45, "w": 260, "h": 56, "kind": "individual"}, {"id": "q1", "label": "product 1681878", "x": 1180, "y": 45, "w": 320, "h": 56, "kind": "individual"}, {"id": "q2", "label": "product 1681878", "x": 260, "y": 155, "w": 320, "h": 56, "kind": "individual"}, {"id": "p2", "label": "PLANT08", "x": 1180, "y": 155, "w": 260, "h": 56, "kind": "individual"}, {"id": "f1", "label": "PLANT08 + makes ≈ 1681878", "x": 450, "y": 270, "w": 560, "h": 56, "kind": "literal"}, {"id": "f2", "label": "1681878 − makes ≈ PLANT08", "x": 1080, "y": 270, "w": 560, "h": 56, "kind": "literal"}], "edges": [{"id": "r1", "from": "p1", "to": "q1", "label": "makes"}, {"id": "r2", "from": "q2", "to": "p2", "label": "made by"}], "steps": [{"show": ["p1", "q1", "r1"], "run": ["r1"], "set": {"r1": "active"}}, {"show": ["q2", "p2", "r2"], "run": ["r2"]}, {"show": ["f1", "f2"], "set": {"f1": "active", "f2": "active"}}], "legend": {"individual": "Thing in the graph", "literal": "In TransE"}}</script></div><div data-walk-step="1" data-caption-short="One direction" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The graph says: PLANT08 &lt;b&gt;makes&lt;/b&gt; product 1681878. Read from the plant to the product."></div><div data-walk-step="2" data-caption-short="The other direction" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The same fact, read from the product to the plant: product 1681878 is &lt;b&gt;made by&lt;/b&gt; PLANT08. &lt;i&gt;makes&lt;/i&gt; and &lt;i&gt;made by&lt;/i&gt; are &lt;b&gt;inverse&lt;/b&gt; relations: one is true exactly when the other is."></div><div data-walk-step="3" data-caption-short="In TransE" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; In TransE a relation is a step. If &lt;i&gt;makes&lt;/i&gt; is a step forward, &lt;i&gt;made by&lt;/i&gt; is the same step backward. So TransE can represent inverse relations: it does not have to learn two unrelated steps."></div></div></div>
+  <template data-notes><p>Three minutes. Brunel's graph stores only <i>makes</i>; <i>made by</i> is drawn here to show the pattern. In the lab the graph is made undirected for the GNN (Part 3), which adds the reverse of every link, so this pattern does appear in practice. The symbol &asymp; means "close to": in a trained model the two sides are near each other, not exactly equal.</p></template>
+</section>
+
+<!-- ==================================================================== 48 -->
+<section class="slide" data-label="Four ways to score a triple" data-section="Appendix" data-minutes="0">
+  <div class="lu-eyebrow">The same idea, four scoring functions</div>
+  <h2 class="lu-h2" style="max-width:66ch">Each can represent some of the four patterns, and not others</h2>
+
+  <table class="lu-table"><thead><tr><th>Model</th><th>How a triple (h, r, t) is scored</th><th>Symmetric</th><th>Antisymmetric</th><th>Inverse</th><th>Composition</th></tr></thead><tbody><tr><td>TransE, 2013</td><td>h + r ends near t</td><td>no</td><td>yes</td><td>yes</td><td>yes</td></tr><tr><td>DistMult, 2015</td><td>h, r and t multiplied, number by number: every relation symmetric</td><td>yes</td><td>no</td><td>no</td><td>no</td></tr><tr><td>ComplEx, 2016</td><td>DistMult with complex numbers: a relation can go one way</td><td>yes</td><td>yes</td><td>yes</td><td>no</td></tr><tr><td>RotatE, 2019</td><td>r rotates h onto t, in complex numbers</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td></tr></tbody></table>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">For Brunel</span><p class="lu-sub">h is the head, r the relation, t the tail. Every Brunel relation links two different kinds, so none is symmetric. TransE fits: it is the one the lab trains.</p></div>
+  <template data-notes><p>Five minutes. The pattern table is the one in the RotatE paper (Sun and others, 2019). Symmetric: <i>married to</i>. Antisymmetric: <i>makes</i>. Inverse: <i>makes</i> and <i>made by</i>. Composition: an order <i>from</i> a plant that <i>serves</i> a port <i>ships from</i> that port.</p>
+<ul><li>All four are one word apart in PyKEEN: <code>model="DistMult"</code>. The lab README's optional task tries it.</li></ul></template>
+</section>
+
+<!-- ==================================================================== 49 -->
+<section class="slide" data-label="Ranking, raw and filtered" data-section="Appendix" data-minutes="0">
+  <div class="lu-eyebrow">Worked example · hide one link, rank all plants by products made</div>
+  <h2 class="lu-h2" style="max-width:72ch">Filtering moves the hidden answer, PLANT08, from rank 13 to rank 11</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s2)">
+    <table class="lu-table"><thead><tr><th>Raw rank</th><th>Plant</th><th>Products made</th><th>Filtered rank</th></tr></thead><tbody><tr><td>1 to 5</td><td>PLANT03, 01, 13, 04, 05</td><td>781 to 127</td><td>1 to 5</td></tr><tr><td>6</td><td>PLANT10</td><td>121</td><td><i>removed: also right</i></td></tr><tr><td>7 to 10</td><td>PLANT02, 16, 11, 12</td><td>116 to 57</td><td>6 to 9</td></tr><tr><td>11</td><td>PLANT07</td><td>29</td><td><i>removed: also right</i></td></tr><tr><td>12</td><td>PLANT06</td><td>26</td><td>10</td></tr><tr><td><b>13</b></td><td><b>PLANT08, hidden</b></td><td><b>20</b></td><td><b>11</b>: 1/11 = 0.09</td></tr></tbody></table>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Filtered ranking</dt><dd>Removing the other right answers before ranking the hidden one. PLANT10 and PLANT07 also make the product, so PLANT08 moves up two places.</dd><dt>MRR</dt><dd>The average of 1 / rank of the right answer.</dd><dt>Hits@k</dt><dd>The share of right answers ranked k or better.</dd></dl></div>
+    </div>
+  </div>
+  <template data-notes><p>Five minutes. This is the popularity model's real ranking for one link, counted over the other 2,035 makes links of <code>brunel-mapped.nt</code> (PLANT08 makes 21 products, 20 once this one is hidden; PLANT17 also makes 20 and ranks after it).</p>
+<ul><li>Filtered ranking: Bordes and others, 2013, the TransE paper. Every published link prediction score today is filtered.</li></ul></template>
+</section>
+
+<!-- ==================================================================== 50 -->
+<section class="slide slide--tint" data-label="Check: filtered rank" data-section="Appendix" data-minutes="0">
+  <div class="lu-eyebrow">Check question</div>
+  <div class="lu-mcq" data-qid="s6-q1" data-answer="b" data-label="Filtered rank of a hidden link"
+       data-fb-correct=" Filtering removes only the other right answers, so the hidden one moves up by exactly that many."
+       data-fb-wrong=" Filtering removes the other right answers, and nothing else.">
+    <p class="lu-mcq__q">A hidden link's right answer ranks 7th among all plants. Three of the plants ranked above it are also right answers. What is its filtered rank?</p>
+    <div class="lu-mcq__opts">
+      <button class="lu-mcq__opt" type="button" data-key="a">7<span class="lu-mcq__why" hidden>That is the raw rank: the other right answers still count against it.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="b">4<span class="lu-mcq__why" hidden>Right: 7 minus the 3 right answers above it.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="c">1<span class="lu-mcq__why" hidden>Only the right answers are removed, not the wrong plants above it.</span></button>
+    </div>
+  </div>
+  <template data-notes><p>Three minutes. Then I ask: which rank does PyKEEN report by default? Filtered, like this.</p></template>
+</section>
+
+<!-- ==================================================================== 51 -->
+<section class="slide" data-label="Two layers reach almost everything" data-section="Appendix" data-minutes="0">
+  <div class="lu-eyebrow">How many other orders does one order reach after k layers?</div>
+  <h2 class="lu-h2" style="max-width:66ch">On Brunel, two layers already reach almost every order</h2>
+
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
+    <div class="lu-stack" style="gap:var(--lu-s4)">
+      <div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">1 layer · its 5 neighbours</span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:0.0%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">0 orders</span></span></div>
+      <div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">2 layers · through a shared port or carrier</span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:98.5%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">9,074</span></span></div>
+      <div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">4 layers</span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:100.0%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">all 9,214</span></span></div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Oversmoothing</dt><dd>After many layers every node has received numbers from almost the same nodes, so all the nodes end up with similar numbers.</dd></dl></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why the lab stops at 2</span><p class="lu-sub">PORT04 alone serves 9,041 orders. More layers add no new neighbours, only more averaging.</p></div>
+    </div>
+  </div>
+  <template data-notes><p>Four minutes. Counted on <code>brunel-mapped.nt</code> over the seven kinds of link <code>build_graph.py</code> keeps, in both directions: the median over 200 random orders is 9,074 at two layers and 9,214 at four; the order from Part 1 gives the same 9,074.</p>
+<ul><li>Oversmoothing: Li, Han and Wu, 2018, among others. Real GNNs are usually 2 or 3 layers deep for this reason.</li></ul></template>
+</section>
+
+<!-- ==================================================================== 52 -->
+<section class="slide" data-label="The graph as PyTorch Geometric sees it" data-section="Appendix" data-minutes="0">
+  <div class="lu-eyebrow">What build_graph.py writes</div>
+  <h2 class="lu-h2">One table of numbers per kind of node, one list of pairs per kind of link</h2>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-stack">
+      <table class="lu-table"><thead><tr><th>Node kind</th><th>How many</th><th>Numbers per node</th></tr></thead><tbody><tr><td>order</td><td>9,215</td><td>weight, quantity, service level: 5 numbers</td></tr><tr><td>customer</td><td>46</td><td>which one it is: 46 numbers, one set to 1</td></tr><tr><td>carrier · plant · port · product</td><td>3 · 20 · 11 · 1,540</td><td>which one it is</td></tr></tbody></table>
+      <div class="lu-code lu-code--sm" data-name="build_graph.py and gnn.py · shortened"><pre><code>data = HeteroData()
+data[<span class="tok-str">"order"</span>].x = torch.tensor(x)  <span class="tok-com"># 9215 x 5</span>
+data[<span class="tok-str">"order"</span>, <span class="tok-str">"orderedBy"</span>, <span class="tok-str">"customer"</span>
+     ].edge_index = pairs.T   <span class="tok-com"># 2 x 9215</span></code></pre></div>
+    </div>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>HeteroData</dt><dd>PyTorch Geometric's object for a graph with several kinds of node and link.</dd></dl></div>
+      <div class="lu-callout"><span class="lu-callout__label">ToUndirected</span><p class="lu-sub">Every link points from the order outward. Messages flow along links, so without the reverse links an order would receive nothing at all.</p></div>
+    </div>
+  </div>
+  <template data-notes><p>Four minutes. Seven kinds of link, 9,215 of each order link, 2,036 makes, 22 servesPort (<code>reference-outputs/build-graph.txt</code>); ToUndirected adds the seven reverse kinds.</p>
+<ul><li>The label is not in <code>x</code>. Part 4 shows where it was hiding and what happens if it stays.</li></ul></template>
+</section>
+
+<!-- ==================================================================== 53 -->
+<section class="slide" data-label="From numbers to a prediction" data-section="Appendix" data-minutes="0">
+  <div class="lu-eyebrow">What gnn.py does after the layers</div>
+  <h2 class="lu-h2" style="max-width:66ch">Each order's 32 numbers become one probability of being late</h2>
+
+  <table class="lu-table"><thead><tr><th>Step</th><th>What happens</th><th>In gnn.py</th></tr></thead><tbody><tr><td>1 · Two layers</td><td>Each order has 32 numbers. We choose 32.</td><td><code>SAGEConv(..., 32)</code>, twice</td></tr><tr><td>2 · ReLU</td><td>After each layer, every negative number becomes 0.</td><td><code>.relu()</code></td></tr><tr><td>3 · Final step</td><td>One weight for each number, added up: one score.</td><td><code>Linear(32, 1)</code></td></tr><tr><td>4 · Probability</td><td>The score is squeezed to a number between 0 and 1.</td><td><code>torch.sigmoid</code></td></tr><tr><td>5 · Training</td><td>Measure the loss, adjust the weights. One pass over the training orders is an <b>epoch</b>; we do 100.</td><td><code>EPOCHS = 100</code>, <code>Adam</code></td></tr><tr><td>6 · Rare late orders</td><td>Only 2% are late, so a missed late order counts more.</td><td><code>pos_weight</code></td></tr></tbody></table>
+  <template data-notes><p>Five minutes. This is the missing middle between the layer arithmetic and the code on the next slide. <code>Adam</code> is the rule that decides how far each weight moves; <code>lr=0.01</code> sets the step size. Binary cross entropy is the loss: large when a confident prediction is wrong.</p></template>
+</section>
+
+<!-- ==================================================================== 54 -->
+<section class="slide" data-label="to_hetero: one model, every kind of link" data-section="Appendix" data-minutes="0">
+  <div class="lu-eyebrow">What gnn.py trains</div>
+  <h2 class="lu-h2">Write the model for one kind of link. to_hetero copies it for all fourteen.</h2>
+  <div class="lu-split lu-split--wide-left">
+    <div class="lu-code lu-code--sm" data-name="gnn.py · the model, shortened"><pre><code>class SAGE(torch.nn.Module):
+    def __init__(self):
+        self.conv1 = SAGEConv((-1, -1), 32)
+        self.conv2 = SAGEConv((-1, -1), 32)
+        self.score = Linear(32, 1)
+    def forward(self, x, edge_index):
+        h = self.conv1(x, edge_index).relu()
+        h = self.conv2(h, edge_index).relu()
+        return self.score(h)
+
+model = to_hetero(SAGE(), data.metadata(), aggr=<span class="tok-str">"sum"</span>)</code></pre></div>
+    <div class="lu-stack">
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>to_hetero</dt><dd>PyTorch Geometric's tool that copies a model once per kind of link.</dd></dl></div>
+      <div class="lu-callout"><span class="lu-callout__label">A real problem we met</span><p class="lu-sub">The argument must be called <code>edge_index</code>. Named <code>ei</code>, to_hetero failed with an error that never said why.</p></div>
+    </div>
+  </div>
+  <template data-notes><p>Four minutes. 236,870 weights after conversion (<code>reference-outputs/gnn.txt</code>): each of the 14 kinds of link gets its own copy of each layer, and <code>aggr="sum"</code> adds up what an order receives from its different kinds.</p>
+<ul><li><code>(-1, -1)</code>: the input sizes are read from the data on the first pass, since each kind of node has a different number of columns.</li><li>to_hetero rewrites the forward function by reading its argument names, which is why the name matters. I found this in my own feasibility run on 2026-09-25.</li></ul></template>
+</section>
+
+<!-- ==================================================================== 55 -->
+<section class="slide" data-label="RGCN, the explicit version" data-section="Appendix" data-minutes="0">
+  <div class="lu-eyebrow">The same idea, written for relations from the start</div>
+  <h2 class="lu-h2" style="max-width:66ch">RGCN: a layer with its own weights for each kind of link</h2>
+
+  <table class="lu-table"><thead><tr><th></th><th><code>to_hetero(SAGE)</code></th><th><code>RGCNConv</code></th></tr></thead><tbody><tr><td>How it is written</td><td>a normal model, converted in one line</td><td>wired by hand, relations as numbers</td></tr><tr><td>Weights per kind of link</td><td>a full copy of each layer</td><td>one matrix, or a mix of a few shared ones</td></tr><tr><td>In this course</td><td>the lab</td><td>this slide</td></tr></tbody></table>
+  <div class="lu-split">
+    <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>RGCN</dt><dd>Relational graph convolutional network: a layer with one weight matrix per kind of link.</dd></dl></div>
+    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Weights multiply</span><p class="lu-sub">to_hetero gave 236,870 weights for 14 kinds of link: each new kind adds a full copy. RGCN can share a few basis matrices instead.</p></div>
+  </div>
+  <template data-notes><p>Three minutes. RGCN: Schlichtkrull and others, 2018, built for knowledge graphs. In PyTorch Geometric it is <code>RGCNConv(in, out, num_relations, num_bases=...)</code>. On Brunel's 14 kinds of link, either works; the lab keeps one model to stay simple.</p></template>
+</section>
+
+<!-- ==================================================================== 56 -->
+<section class="slide" data-label="New things: inductive and transductive" data-section="Appendix" data-minutes="0">
+  <div class="lu-eyebrow">What happens when something appears that training never saw?</div>
+  <h2 class="lu-h2" style="max-width:66ch">Some models learn a position per thing, some learn a rule</h2>
+
+  <div class="lu-split" style="margin-top:var(--lu-s3)">
+    <div class="lu-card">
+      <span class="lu-card__label">Transductive · TransE</span>
+      <p class="lu-sub">One position per thing seen in training. A new product has none.</p>
+      <p class="lu-sub">CND9 makes one product. When that link is hidden, CND9 has no position, and the lab ranks it last for every other product.</p>
+    </div>
+    <div class="lu-card">
+      <span class="lu-card__label">Inductive · GraphSAGE</span>
+      <p class="lu-sub">Learns weights, not positions: a new order gets numbers from its neighbours.</p>
+      <p class="lu-sub">But a customer's numbers only say which one it is. A new customer is a column the model never trained.</p>
+    </div>
+  </div>
+  <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Transductive</dt><dd>A model that can only score things it saw in training.</dd><dt>Inductive</dt><dd>A model that can score new things, from their numbers and neighbours.</dd></dl></div>
+  <template data-notes><p>Four minutes. CND9 appears only in the ProductsPerPlant table, with one product; <code>link_prediction.py</code> gives a plant it never saw the lowest possible score.</p>
+<ul><li>The second card is Part 4 in one sentence: a split by customer asks the model about customers it never saw.</li></ul></template>
+</section>
+
+<!-- ==================================================================== 57 -->
+<section class="slide slide--tint" data-label="Check: a new customer" data-section="Appendix" data-minutes="0">
+  <div class="lu-eyebrow">Check question</div>
+  <div class="lu-mcq" data-qid="s6-q2" data-answer="c" data-label="Which model has learned about a new customer"
+       data-fb-correct=" Inductive means it can compute numbers for a new node; it still learned nothing about this customer."
+       data-fb-wrong=" Ask what the model saw about this customer during training.">
+    <p class="lu-mcq__q">A customer that never ordered before places its first order. Which of today's models has learned anything about that customer?</p>
+    <div class="lu-mcq__opts">
+      <button class="lu-mcq__opt" type="button" data-key="a">GraphSAGE, because it is inductive<span class="lu-mcq__why" hidden>It can compute numbers for the order, but the customer's column was never trained.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="b">TransE, because it embeds every thing<span class="lu-mcq__why" hidden>Only every thing it saw: a new customer has no position.</span></button>
+      <button class="lu-mcq__opt" type="button" data-key="c">None of them<span class="lu-mcq__why" hidden>Right: whatever they predict comes from the order's other links, not from the customer.</span></button>
+    </div>
+  </div>
+  <template data-notes><p>Two minutes. Keep this answer in mind: it explains the result of the split by customer in Part 4.</p></template>
+</section>
+
+<!-- ==================================================================== 58 -->
+<section class="slide slide--tint" data-label="Drill: graph learning words" data-section="Appendix" data-minutes="0">
+  <div class="lu-eyebrow">Drill · type the missing word</div>
+  <div class="lu-blanks" data-qid="s6-blanks1" data-label="Graph learning words">
+    <p class="lu-h3" style="margin-bottom:var(--lu-s4)">Fill in the blanks</p>
+    <ol class="lu-list lu-list--num">
+      <li>For to_hetero, the model's second argument must be named <input class="lu-blank" data-answer="edge_index" data-label="Blank 1" placeholder="…">.</li>
+      <li>The tool that copies a model once per kind of link is <input class="lu-blank" data-answer="to_hetero" data-label="Blank 2" placeholder="…">.</li>
+      <li>After too many layers every node looks alike: <input class="lu-blank" data-answer="oversmoothing|over-smoothing" data-label="Blank 3" placeholder="…">.</li>
+      <li>A model that can score a node it never saw in training is <input class="lu-blank" data-answer="inductive" data-label="Blank 4" placeholder="…">.</li>
+    </ol>
+  </div>
+  <template data-notes><p>Three minutes. Blank 1 is the one you will meet on your own project. I say it twice.</p></template>
 </section>
 
 </div><!-- /stage -->
