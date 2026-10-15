@@ -115,9 +115,9 @@
 <!-- ==================================================================== 05 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 1 · The gap OWL leaves open" data-section="Why OWL cannot check" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 1 of 5 · about 22 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">An order has lost its carrier. Does the reasoner report an error?</h2>
-    <p class="lu-lead" style="max-width:46ch">No. This is correct: in OWL, a missing fact is unknown, not wrong.</p>
+    <div class="lu-eyebrow">Part 1 of 5 · The gap OWL leaves open · about 22 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Why OWL cannot check your data</h2>
+    <p class="lu-lead" style="max-width:46ch">An order that has lost its carrier is not an error in OWL: a missing fact is only unknown, not wrong. So we need a second tool, SHACL, that checks data against rules.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -210,9 +210,9 @@ Message:     An order has exactly
 <!-- ==================================================================== 11 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 2 · Shapes on the real graph" data-section="SHACL core" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 2 of 5 · about 34 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">How do you tell a computer: every order has exactly one carrier?</h2>
-    <p class="lu-lead" style="max-width:46ch">You describe the shape that the data must have. The computer compares the data with the shape.</p>
+    <div class="lu-eyebrow">Part 2 of 5 · Shapes on the real graph · about 34 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">SHACL: writing a rule as a shape</h2>
+    <p class="lu-lead" style="max-width:46ch">A shape describes what the data must look like, for example: every order has exactly one carrier. The computer compares the data with the shape and reports each difference.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -371,9 +371,9 @@ GATE: PASS, no violations.</code></pre></div>
 <!-- ==================================================================== 20 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 3 · The rules as shapes" data-section="Rules as shapes" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 3 of 5 · about 30 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">In Session 1 we wrote the rules as normal sentences. The first run reports 3,435 broken rules. Are they all real problems?</h2>
-    <p class="lu-lead" style="max-width:46ch">A report is a list of work. Sometimes the right fix is to change the rule, not the data.</p>
+    <div class="lu-eyebrow">Part 3 of 5 · The rules as shapes · about 30 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">From written rules to shapes, and reading the report</h2>
+    <p class="lu-lead" style="max-width:46ch">In Session 1 we wrote the rules as sentences. As shapes, they report 3,435 problems. We learn to decide which are real problems in the data, and when the right fix is to change the rule.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -495,7 +495,7 @@ sh:sparql [ sh:select """
     <div class="lu-stack" style="gap:var(--lu-s3)"><div class="lu-row" style="gap:var(--lu-s4);align-items:center"><span style="width:15ch"><b>Order shape</b><br><span class="lu-caption">core, 7 rules</span></span><span style="flex:1"><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:3.6%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">2.6 s</span></span></span></div><div class="lu-row" style="gap:var(--lu-s4);align-items:center"><span style="width:15ch"><b>Rate band shape</b><br><span class="lu-caption">core, 2 rules</span></span><span style="flex:1"><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:1.6%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">1.2 s</span></span></span></div><div class="lu-row" style="gap:var(--lu-s4);align-items:center"><span style="width:15ch"><b>Linked port</b><br><span class="lu-caption">SPARQL</span></span><span style="flex:1"><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:21.6%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">15.8 s</span></span></span></div><div class="lu-row" style="gap:var(--lu-s4);align-items:center"><span style="width:15ch"><b>Plant makes product</b><br><span class="lu-caption">SPARQL</span></span><span style="flex:1"><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:22.0%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">16.1 s</span></span></span></div><div class="lu-row" style="gap:var(--lu-s4);align-items:center"><span style="width:15ch"><b>Weight in a rate band</b><br><span class="lu-caption">SPARQL</span></span><span style="flex:1"><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:100.0%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">73.1 s</span></span></span></div></div>
     <div class="lu-stack">
       <div class="lu-callout"><span class="lu-callout__label">Why</span><p class="lu-sub">pySHACL runs a SPARQL rule once per focus node: 9,215 small queries. Session 2 answered the same weight question as one query in under 3 seconds.</p></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">The rule of thumb</span><p class="lu-sub">Use core SHACL when a keyword can state the rule. Use SPARQL when none can: the rule must look at other nodes, or it is an if-then rule.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">A simple rule to follow</span><p class="lu-sub">Use core SHACL when a keyword can state the rule. Use SPARQL when none can: the rule must look at other nodes, or it is an if-then rule.</p></div>
     </div>
   </div>
   <template data-notes><p>Four minutes. Real timings, pySHACL 0.40.1 in the course workspace (<code>reference-outputs/shape-timings.txt</code>); your laptop will differ, the ratio will not.</p>
@@ -522,9 +522,9 @@ sh:sparql [ sh:select """
 <!-- ==================================================================== 29 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 4 · Provenance: where does a fact come from?" data-section="Provenance" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 4 of 5 · about 25 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Order 1447296446.7 is carried by V44_3. Who says so, and since when?</h2>
-    <p class="lu-lead" style="max-width:46ch">Provenance is the record of where data came from, how it was made, and who made it. Without it, we cannot trust a fact and we cannot fix it.</p>
+    <div class="lu-eyebrow">Part 4 of 5 · Provenance · about 25 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Provenance: where does a fact come from?</h2>
+    <p class="lu-lead" style="max-width:46ch">Provenance is the record of where data came from, how it was made, and who made it. Without it, we cannot trust a fact or fix it. We record it for order 1447296446.7, carried by V44_3.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -641,9 +641,9 @@ finished  2026-09-25T01:31:12+00:00</code></pre></div>
 <!-- ==================================================================== 36 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 5 · Reuse and the gate" data-section="Reuse and the gate" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 5 of 5 · about 17 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Who stops the next bad triple before it enters the graph? And must we write every shape ourselves?</h2>
-    <p class="lu-lead" style="max-width:46ch">First we learn from shapes that industry already publishes. Then we make the check run automatically on every change.</p>
+    <div class="lu-eyebrow">Part 5 of 5 · Reuse and the gate · about 17 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Reusing industry shapes, and stopping bad data automatically</h2>
+    <p class="lu-lead" style="max-width:46ch">First we learn from shapes that industry already publishes. Then we make the check run automatically on every change, so a bad triple cannot enter the graph.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -775,8 +775,8 @@ epcis:AggregationEventShape
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Validate, triage, gate" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 55 minutes · on your own machine</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Our graph has 3,435 reported problems. Which of them really need to be fixed?</h2>
-    <p class="lu-lead" style="max-width:46ch">Then see three shapes work, and watch a gate stop a typo.</p>
+    <h2 class="lu-display-xl" style="max-width:26ch">Lab: validate the graph and decide what to fix</h2>
+    <p class="lu-lead" style="max-width:46ch">Our graph has 3,435 reported problems. You run the shapes and decide which ones need a fix. Then you watch a gate stop a typo.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -793,7 +793,7 @@ epcis:AggregationEventShape
       <li><b>Think.</b> Three questions, one about your own team's data, for the discussion.</li>
     </ol>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Nothing to hand in</span><p class="lu-sub">The lab is for understanding. The README in <code>demos/session-04-shacl/</code> says what to expect at each step and what to take to your project.</p></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Nothing to submit</span><p class="lu-sub">The lab is for understanding. The README in <code>demos/session-04-shacl/</code> says what to expect at each step and what to take to your project.</p></div>
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">If the big graph is too slow</span><p class="lu-sub">A full run takes about two minutes. If you have little time, use <code>--data ci/sample-orders.ttl</code>. It runs the same shapes on six real orders in about one second.</p></div>
     </div>
   </div>
@@ -804,7 +804,7 @@ epcis:AggregationEventShape
 <!-- ==================================================================== 46 -->
 <section class="slide" data-label="Lab time" data-section="Lab" data-minutes="50">
   <div class="lu-eyebrow">Lab · 50 minutes</div>
-  <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints keep you on time.</h2>
+  <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints show whether you are on schedule.</h2>
 
   <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s4)">
     <div class="lu-card"><span class="lu-card__label">By minute 25 · Part A</span><p class="lu-sub">First draft 3,435 Violations; triaged 2 Violations and 2,579 Warnings. The gate passes the sample and fails the broken one, exit code 1.</p></div>

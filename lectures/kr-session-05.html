@@ -102,9 +102,9 @@
 <!-- ==================================================================== 04 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 1 · The integration problem" data-section="Integration problem" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 1 of 5 · about 18 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">The database changed overnight. Must we rewrite the converter?</h2>
-    <p class="lu-lead" style="max-width:46ch">No. We describe once how rows become triples, and a tool does the work.</p>
+    <div class="lu-eyebrow">Part 1 of 5 · The integration problem · about 18 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Why a converter program is not enough</h2>
+    <p class="lu-lead" style="max-width:46ch">A company's database changes every day. We do not rewrite the converter each time. We describe once how rows become triples, and a tool does the work.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -179,9 +179,9 @@ ontop query \
 <!-- ==================================================================== 09 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 2 · R2RML" data-section="R2RML" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 2 of 5 · about 38 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">How do you say, once, what every row of a table means?</h2>
-    <p class="lu-lead" style="max-width:46ch">Make the subject from the key, then write one rule for each column.</p>
+    <div class="lu-eyebrow">Part 2 of 5 · R2RML · about 38 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">R2RML: describing how a table becomes a graph</h2>
+    <p class="lu-lead" style="max-width:46ch">R2RML is the standard language for these descriptions. We learn its structure, then write the rules for the Brunel orders.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -350,9 +350,9 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 <!-- ==================================================================== 19 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 3 · Materialize" data-section="Materialize" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 3 of 5 · about 18 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Did the mapping build the same graph as Session 2's program?</h2>
-    <p class="lu-lead" style="max-width:46ch">Check it triple by triple, then run Session 4's shapes on it.</p>
+    <div class="lu-eyebrow">Part 3 of 5 · Materialize · about 18 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Materialize: build the whole graph and check it</h2>
+    <p class="lu-lead" style="max-width:46ch">To materialize is to run the mapping once and store the graph. We compare it triple by triple with Session 2's graph, then run Session 4's shapes on it.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -416,9 +416,9 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 <!-- ==================================================================== 24 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 4 · Virtualize" data-section="Virtualize" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 4 of 5 · about 15 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Can we ask SPARQL questions of a database that has no graph at all?</h2>
-    <p class="lu-lead" style="max-width:46ch">Yes: translate each question into SQL when it is asked.</p>
+    <div class="lu-eyebrow">Part 4 of 5 · Virtualize · about 15 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Virtualize: ask the database without building a graph</h2>
+    <p class="lu-lead" style="max-width:46ch">Nothing is stored. A tool translates each SPARQL question into an SQL question at the moment it is asked.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -461,7 +461,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 <!-- ==================================================================== 27 -->
 <section class="slide" data-label="Materialize or virtualize?" data-section="Virtualize" data-minutes="5">
   <div class="lu-eyebrow">Choosing a route</div>
-  <h2 class="lu-h2" style="max-width:66ch">Neither wins: each gives up something the other keeps</h2>
+  <h2 class="lu-h2" style="max-width:66ch">Neither route is better in every way: each gives up something the other keeps</h2>
 <table class="lu-table"><thead><tr><th></th><th>Materialize · Morph-KGC</th><th>Virtualize · Ontop</th></tr></thead><tbody><tr><td>Answers are current</td><td>no: a snapshot, until the next run</td><td>yes: every query asks the live tables</td></tr><tr><td>Query speed</td><td>fast: the graph is stored</td><td>depends on the database and the SQL</td></tr><tr><td>SHACL validation</td><td>yes: the shapes need a graph to read</td><td>no: nothing is stored to check</td></tr><tr><td>Space</td><td>a second copy of the data</td><td>nothing extra</td></tr><tr><td>Changes to the mapping</td><td>run it again</td><td>effective at the next query</td></tr></tbody></table>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">A common answer</span><p class="lu-sub">Many teams use both: virtualize for live questions, and materialize on a schedule for validation and for learning in Session 6. Both use the same mapping.</p></div>
   <template data-notes><p>Five minutes. Tie it to Part C question 1 and the project clinic: every team names its route and why.</p></template>
@@ -470,7 +470,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 <!-- ==================================================================== 28 -->
 <section class="slide" data-label="From data to a working system" data-section="Virtualize" data-minutes="4">
   <div class="lu-eyebrow">Where each layer lives</div>
-  <h2 class="lu-h2">Every layer is a file in git or a service. This is the whole picture.</h2>
+  <h2 class="lu-h2">Every layer is a file in git or a service. This shows all the layers together.</h2>
   <table class="lu-table lu-table--tight"><thead><tr><th>Layer</th><th>Lives in</th><th>In our labs</th><th>In industry (examples)</th></tr></thead><tbody><tr><td>Data graph</td><td>a triple store, or virtual</td><td>Fuseki</td><td>GraphDB, Stardog, Neptune, Virtuoso</td></tr><tr><td>Mapping</td><td>a file in git</td><td>Morph-KGC, Ontop</td><td>Ontop, RML tools</td></tr><tr><td>Ontology</td><td>a file in git; Protégé is the editor</td><td>Protégé, ELK</td><td>WebProtégé, TopBraid</td></tr><tr><td>Shapes</td><td>a file in git</td><td>pySHACL</td><td>TopBraid, GraphDB, Stardog</td></tr><tr><td>Checks and release</td><td>CI and containers</td><td>GitHub Actions, Docker Compose</td><td>GitLab CI, Kubernetes</td></tr></tbody></table>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">An interactive map</span><p class="lu-sub">Click each layer to see what it is, whether you need it, and where it lives: <a href="../guide/from-data-to-system.html">From data to a working system</a>. The tool names are examples, not a ranking.</p></div>
   <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Docker Compose</b> Docker&#x27;s tool for starting several containers together from one file.</span></p>
@@ -480,9 +480,9 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 <!-- ==================================================================== 29 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 5 · Entity resolution" data-section="Entity resolution" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
-    <div class="lu-eyebrow">Part 5 of 5 · about 30 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Two systems list the same customer under two different codes. Which records match?</h2>
-    <p class="lu-lead" style="max-width:46ch">A matcher decides. It will sometimes be wrong. We ask: how often, and in which direction?</p>
+    <div class="lu-eyebrow">Part 5 of 5 · Entity resolution · about 30 minutes</div>
+    <h2 class="lu-display-xl" style="max-width:26ch">Entity resolution: which records are the same customer?</h2>
+    <p class="lu-lead" style="max-width:46ch">Two systems list the same customer under different codes. A program called a matcher decides which records match. It will sometimes be wrong, so we measure how often, and in which direction.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -492,7 +492,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
   <div class="lu-eyebrow">Teaching data, built on purpose</div>
   <h2 class="lu-h2">A second system writes the customer codes differently, as real systems often do</h2>
   <div class="lu-split lu-split--wide-left">
-    <table class="lu-table"><thead><tr><th>TMS export</th><th>What drifted</th><th>Brunel</th></tr></thead><tbody><tr><td><code>v555555555555555555_42</code></td><td>lower case</td><td><code>V555555555555555555_42</code></td></tr><tr><td><code>V555555555555555555-45</code></td><td>a dash</td><td><code>V555555555555555555_45</code></td></tr><tr><td><code>V555555555555555_023</code></td><td>a padded number</td><td><code>V555555555555555_23</code></td></tr><tr><td><code>555555555555555_44</code></td><td>the V lost</td><td><code>V555555555555555_44</code></td></tr><tr><td><code>V5555555555555_8</code></td><td>one 5 lost</td><td><code>V55555555555555_8</code></td></tr><tr><td><code>V555555555555_13</code></td><td>two digits swapped</td><td><code>V555555555555_31</code></td></tr></tbody></table>
+    <table class="lu-table"><thead><tr><th>TMS export</th><th>What differs</th><th>Brunel</th></tr></thead><tbody><tr><td><code>v555555555555555555_42</code></td><td>lower case</td><td><code>V555555555555555555_42</code></td></tr><tr><td><code>V555555555555555555-45</code></td><td>a dash</td><td><code>V555555555555555555_45</code></td></tr><tr><td><code>V555555555555555_023</code></td><td>a padded number</td><td><code>V555555555555555_23</code></td></tr><tr><td><code>555555555555555_44</code></td><td>the V lost</td><td><code>V555555555555555_44</code></td></tr><tr><td><code>V5555555555555_8</code></td><td>one 5 lost</td><td><code>V55555555555555_8</code></td></tr><tr><td><code>V555555555555_13</code></td><td>two digits swapped</td><td><code>V555555555555_31</code></td></tr></tbody></table>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Entity resolution</dt><dd>Deciding which records in different sources describe the same real thing.</dd></dl></div>
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Teaching data</span><p class="lu-sub">Brunel has no second system. A script wrote this TMS list from Brunel's 46 real customers, plus 6 that are not in Brunel. So the truth is known, and errors can be counted.</p></div>
@@ -504,13 +504,13 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 
 <!-- ==================================================================== 31 -->
 <section class="slide" data-label="Clean first, then block" data-section="Entity resolution" data-minutes="4">
-  <div class="lu-eyebrow">Two cheap steps before we compare records</div>
-  <h2 class="lu-h2">Cleaning fixes the easy drift. Blocking skips pairs of records that cannot match.</h2>
+  <div class="lu-eyebrow">Two simple steps before we compare records</div>
+  <h2 class="lu-h2">Cleaning fixes the easy differences. Blocking skips pairs of records that cannot match.</h2>
   <div class="lu-split">
     <div class="lu-card">
       <span class="lu-card__label">1 · Clean both sides the same way</span>
       <p class="lu-sub">Upper case, spaces off, dash to underscore, the V back, <code>_023</code> to <code>_23</code>.</p>
-      <p class="lu-sub">4 of the 6 drifts above now match exactly. A lost 5 and swapped digits do not.</p>
+      <p class="lu-sub">4 of the 6 differences above now match exactly. A lost 5 and swapped digits do not.</p>
     </div>
     <div class="lu-card">
       <span class="lu-card__label">2 · Block on the home plant</span>
@@ -601,8 +601,8 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Map, compare, ask, match" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 55 minutes · on your own machine</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">One mapping, two routes, one graph. Does it hold up?</h2>
-    <p class="lu-lead" style="max-width:46ch">Then, if you want, add three rules to a mapping. Each is a copy of one you have already seen.</p>
+    <h2 class="lu-display-xl" style="max-width:26ch">Lab: one mapping, two routes, one graph</h2>
+    <p class="lu-lead" style="max-width:46ch">You build the graph from the database in both ways and check that the results agree. Then, if you want, you add three rules to a mapping.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
@@ -619,7 +619,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
       <li><b>Think.</b> Three questions, one about your own team's database.</li>
     </ol>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Nothing to hand in</span><p class="lu-sub">The lab is for understanding. Start with <code>OVERVIEW.md</code> in <code>demos/session-05-integration/</code>: what the data is, and why each step exists.</p></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Nothing to submit</span><p class="lu-sub">The lab is for understanding. Start with <code>OVERVIEW.md</code> in <code>demos/session-05-integration/</code>: what the data is, and why each step exists.</p></div>
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">No Docker?</span><p class="lu-sub">Add <code>--sqlite</code> to the load and materialize steps: the same tables in a file. Only Ontop needs Docker; read its recorded output instead.</p></div>
     </div>
   </div>
@@ -630,7 +630,7 @@ rr:predicateObjectMap [ rr:predicate ul:carriedBy ;
 <!-- ==================================================================== 39 -->
 <section class="slide" data-label="Lab time" data-section="Lab" data-minutes="50">
   <div class="lu-eyebrow">Lab · 50 minutes</div>
-  <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints keep you on time.</h2>
+  <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints show whether you are on schedule.</h2>
 
   <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s4)">
     <div class="lu-card"><span class="lu-card__label">By minute 30 · Part A</span><p class="lu-sub">135,799 triples; compare says 0 and 7; shapes say 2 Violations and 1,370 Warnings; matcher precision 0.878 and 1.000.</p></div>
