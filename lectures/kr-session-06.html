@@ -72,7 +72,7 @@
   </ul>
   <div class="lu-split" style="margin-top:var(--lu-s5)">
     <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">What you have</span><p class="lu-sub">Session 5's graph: 9,215 orders, each linked to its customer, carrier, plant, port and product, rebuilt from the database by a mapping.</p></div>
-    <div class="lu-callout"><span class="lu-callout__label">What is new</span><p class="lu-sub">Some questions the graph does not answer by itself. <b>Will</b> this order be late? <b>Which</b> plant makes this product, if that link is missing?</p></div>
+    <div class="lu-callout"><span class="lu-callout__label">What is new</span><p class="lu-sub">Two kinds of question the graph cannot simply look up. <b>Will</b> this order be late? The future is not in the graph yet. <b>Which</b> plant makes this product, if nobody has recorded it? A model can guess a missing fact from the links around it.</p></div>
   </div>
   <template data-notes><p>Three minutes. Every earlier stage wrote down what is known. This one guesses what is not, and so it needs a way to measure how often the guess is right.</p></template>
 </section>
@@ -129,9 +129,9 @@
       <p class="lu-sub">2.1% are late. Only <b>4 of the 46 customers</b> ever have a late order.</p>
     </div>
     <div class="lu-card">
-      <span class="lu-card__label">Link prediction · which plant makes this product?</span>
+      <span class="lu-card__label">Link prediction · which plant makes this product, if the link is missing?</span>
       <div class="lu-stack" style="gap:var(--lu-s3)"><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:100.0%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">2,036 links</span></span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:38.4%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">781 PLANT03</span></span></div>
-      <p class="lu-sub">Hide some links. Ask the model to find them. One plant, PLANT03, makes 781 of them.</p>
+      <p class="lu-sub">Every product already has its plant: we hide some links, and test whether the model finds them. In a company, it suggests links nobody recorded. PLANT03 makes 781.</p>
     </div>
   </div>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Node classification</dt><dd>Predicting a label for each node: here, late or not for each order.</dd><dt>Link prediction</dt><dd>Predicting a missing edge: here, which plant makes a product.</dd></dl></div>
