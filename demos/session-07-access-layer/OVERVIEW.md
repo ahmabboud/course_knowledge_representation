@@ -16,21 +16,45 @@ forgets the late orders, or answers a question the graph cannot answer. So
 the lab wraps the model in four small parts, and measures what each adds.
 
 ```text
-question in English
-   |
-   |  1 schema: what the graph holds, from its VoID description (void.ttl)
-   |  2 examples: the 3 example queries closest to the question (examples.ttl)
-   v
-language model (Gemini) ---> a SPARQL query, or "REFUSE: ..."
-   |
-   |  3 check: valid SPARQL? only properties the graph has?
-   |    if not: the problems go back to the model, up to 2 repairs
-   v
-the graph (Session 2's Brunel graph) ---> rows: the answer and its evidence
-   |
-   |  4 score: the rows against the right query's rows (TEXT2SPARQL's F1)
-   v
-a number you can compare, before and after one improvement
+HOW ONE QUESTION IS ANSWERED
+
+  +--------------------------------------------------+
+  | A question in plain English                      |
+  | "How many orders did carrier V44_3 carry?"       |
+  +--------------------------------------------------+
+        |  the prompt adds what the graph holds:
+        |    the schema, from void.ttl
+        |    the 3 closest examples, from examples.ttl
+        v
+  +--------------------------------------------------+
+  | The language model (Gemini)                      |
+  | writes a SPARQL query, or "REFUSE: <reason>"     |
+  +--------------------------------------------------+
+        |
+        v
+  +--------------------------------------------------+
+  | The check (check.py)                             |
+  | Is it SPARQL? Is each ul: property in void.ttl?  |
+  +--------------------------------------------------+
+        |  no: the problems go back to the model,
+        |      at most 2 more tries
+        |  yes:
+        v
+  +--------------------------------------------------+
+  | The graph runs the query                         |
+  | The rows are the answer and its evidence: 854    |
+  +--------------------------------------------------+
+
+HOW WE MEASURE IT (evaluate.py)
+
+  15 test questions, each answered as above
+        |
+        v
+  each answer's rows compared with the right rows: a score (F1)
+        |
+        v
+  one number for each setting:
+  schema only  |  plus examples  |  plus check and repair
 ```
 
 ## The data you are using
