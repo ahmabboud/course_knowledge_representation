@@ -439,17 +439,17 @@ answer: 1 row
 
 <!-- ==================================================================== 26 -->
 <section class="slide" data-label="Scoring one answer" data-section="Measuring" data-minutes="4">
-  <div class="lu-eyebrow">Scoring one answer · test question 3: &ldquo;Which carriers carry orders?&rdquo;</div>
-  <h2 class="lu-h2" style="max-width:66ch">Every value returned goes into one set; compare it with the right set</h2>
+  <div class="lu-eyebrow">How one answer is scored · a worked example with a made-up answer</div>
+  <h2 class="lu-h2" style="max-width:90ch">Compare the values the query returns with the right values</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <div class="lu-stack">
-      <table class="lu-table"><thead><tr><th></th><th>The set of values</th></tr></thead><tbody><tr><td>Right answer (from a query we wrote by hand)</td><td>V444_0 · V444_1 · V44_3</td></tr><tr><td>An answer to score (made up)</td><td>V444_0 · V44_3 · V444_5</td></tr><tr><td>In both</td><td>V444_0 · V44_3: 2 values</td></tr></tbody></table>
+      <table class="lu-table"><thead><tr><th>Which carriers carry orders?</th><th>Values</th></tr></thead><tbody><tr><td>Right answer (from a query we wrote by hand)</td><td>V444_0 · V444_1 · V44_3</td></tr><tr><td>An answer to score (made up)</td><td>V444_0 · V44_3 · V444_5</td></tr><tr><td>In both</td><td>V444_0 · V44_3: 2 values</td></tr></tbody></table>
       <p class="lu-statement" style="font-size:var(--lu-t-h3)">precision 2/3 · recall 2/3 · F1 0.67</p>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Where this comes from</span><p class="lu-sub">The right answer is real (our test question 3); the scored answer is made up. Our evaluate.py and TEXT2SPARQL both score this way. Our real results: two slides on.</p></div>
     </div>
     <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Execution accuracy</dt><dd>Judging a query by the answer it returns, not by its text.</dd><dt>F1</dt><dd>One score from precision and recall: 1 is perfect, 0 is nothing right.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why not compare query text?</span><p class="lu-sub">The same answer has many correct queries. Only the answer can be compared fairly.</p></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Execution accuracy</dt><dd>Judging a query by the answer it returns, not its text: one answer has many correct queries.</dd><dt>F1</dt><dd>One score from precision and recall: 1 is perfect, 0 is nothing right.</dd></dl></div>
     </div>
   </div>
   <template data-notes><p>Four minutes. The right set is real (the three carriers with orders); the answer to score is made up for the example (V444_5 has rate bands but no orders). This is exactly <code>score_utils.py</code>: set precision, recall and F1, as TEXT2SPARQL computes them.</p></template>
