@@ -18,7 +18,7 @@
   data-deck-id="kr-s07"
   data-course="Knowledge Representation"
   data-session="Session 7 of 8"
-  data-duration="186"
+  data-duration="188"
   data-app-root="../"
   data-unit="Lebanese University · MSc">
 
@@ -145,8 +145,8 @@
 
 <!-- ==================================================================== 07 -->
 <section class="slide" data-label="The access layer, step by step" data-section="Why it is hard" data-minutes="5">
-  <div class="lu-eyebrow">Walkthrough · the design of this session</div>
-  <h2 class="lu-h2">The model is one step of six. The other five are there to keep it honest.</h2>
+  <div class="lu-eyebrow">The access layer, block by block · the plan of this session</div>
+  <h2 class="lu-h2">The language model is one of six steps. The other five check its work.</h2>
   <div class="lu-walk" data-label="The access layer"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 240, "nodes": [{"id": "q", "label": "question", "x": 110, "y": 60, "w": 180, "h": 56, "kind": "literal"}, {"id": "s", "label": "schema + 3 examples", "x": 420, "y": 60, "w": 300, "h": 56, "kind": "builtin"}, {"id": "m", "label": "language model", "x": 760, "y": 60, "w": 250, "h": 56, "kind": "builtin"}, {"id": "c", "label": "check the query", "x": 1100, "y": 60, "w": 270, "h": 56, "kind": "builtin"}, {"id": "g", "label": "run on the graph", "x": 1100, "y": 190, "w": 270, "h": 56, "kind": "builtin"}, {"id": "r", "label": "rows: answer + evidence", "x": 700, "y": 190, "w": 340, "h": 56, "kind": "literal"}, {"id": "x", "label": "REFUSE: what is missing", "x": 300, "y": 190, "w": 360, "h": 56, "kind": "literal"}], "edges": [{"id": "a", "from": "q", "to": "s", "label": ""}, {"id": "b", "from": "s", "to": "m", "label": "prompt"}, {"id": "c1", "from": "m", "to": "c", "label": "query"}, {"id": "d", "from": "c", "to": "m", "label": "problems", "route": "elbow", "sides": ["top", "top"]}, {"id": "e", "from": "c", "to": "g", "label": "valid"}, {"id": "f", "from": "g", "to": "r", "label": ""}, {"id": "h", "from": "m", "to": "x", "label": "cannot", "route": "elbow", "sides": ["bottom", "top"]}], "steps": [{"show": ["q", "s", "a"], "run": ["a"], "set": {"s": "active"}}, {"show": ["m", "b"], "run": ["b"], "set": {"s": "idle", "m": "active"}}, {"show": ["c", "c1"], "run": ["c1"], "set": {"m": "idle", "c": "active"}}, {"show": ["d"], "run": ["d"], "set": {"c": "impossible"}}, {"show": ["g", "r", "e", "f"], "run": ["e", "f"], "set": {"c": "active", "r": "inferred"}}, {"show": ["x", "h"], "run": ["h"], "set": {"c": "idle", "x": "inferred"}}], "legend": {"builtin": "A step", "literal": "What goes in or out", "impossible": "Check failed", "inferred": "Output"}, "flags": {"impossible": "problems", "inferred": "output"}}</script></div><div data-walk-step="1" data-caption-short="Ground it" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; The question is sent with what the graph holds (its schema) and the three closest worked examples. Part 2."></div><div data-walk-step="2" data-caption-short="Ask" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The model writes one query, or says it cannot."></div><div data-walk-step="3" data-caption-short="Check" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; Before anything runs: is it SPARQL, and does every property exist? Part 3."></div><div data-walk-step="4" data-caption-short="Repair" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; If not, the problems go back to the model as hints, up to twice."></div><div data-walk-step="5" data-caption-short="Answer" data-caption="&lt;b&gt;Step 5.&lt;/b&gt; A valid query runs on the graph. The rows are the answer and its evidence."></div><div data-walk-step="6" data-caption-short="Refuse" data-caption="&lt;b&gt;Step 6.&lt;/b&gt; If the graph cannot answer, the right output is a refusal that says what is missing."></div></div></div>
   <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Prompt</b> Everything a language model is given in one call: rules, schema, examples, question.</span> <span data-auto="1"><b>Refusal</b> Saying the graph cannot answer, and why, instead of guessing.</span></p>
   <template data-notes><p>Five minutes. This is the whole session on one slide: Part 2 is step 1, Part 3 is steps 3, 4 and 6, Part 4 measures the lot. The lab's <code>access_layer.py</code> is these six steps in about 260 lines.</p></template>
@@ -164,31 +164,49 @@
 </section>
 
 <!-- ==================================================================== 09 -->
-<section class="slide" data-label="VoID: the graph describes itself" data-section="Grounding" data-minutes="5">
-  <div class="lu-eyebrow">What make_void.py writes</div>
-  <h2 class="lu-h2">For each class: how many things. For each property: from which class, to which.</h2>
-  <div class="lu-split lu-split--wide-left">
-    <div class="lu-code lu-code--sm" data-name="void.ttl · the Plant partition, shortened"><pre><code>&lt;.../brunel/void&gt;
-    void:classPartition ul:Plant-partition .
-ul:Plant-partition void:class ul:Plant ;
-    void:entities 19 ;
-    void:propertyPartition ul:Plant-makes .
-ul:Plant-makes void:property ul:makes ;
-    void:triples 2035 ;
-    void:classPartition [ void:class ul:Product ] .</code></pre></div>
-    <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>VoID</dt><dd>Vocabulary of Interlinked Datasets: a small RDF description of a graph's classes, properties and counts.</dd></dl></div>
-      <div class="lu-callout"><span class="lu-callout__label">Small on purpose</span><p class="lu-sub"><b>189 triples</b> describe all 135,841. One SPARQL CONSTRUCT writes them, in 0.3 seconds, in the layout of SIB's void-generator.</p></div>
-    </div>
+<section class="slide" data-label="VoID: what it is for" data-section="Grounding" data-minutes="3">
+  <div class="lu-eyebrow">VoID · what it is for</div>
+  <h2 class="lu-h2" style="max-width:66ch">VoID is a graph's own short description of what it contains</h2>
+
+  <p class="lu-sub" style="max-width:70ch;margin-top:var(--lu-s2)"><b>VoID</b> (Vocabulary of Interlinked Datasets) is a W3C standard (2011) for describing a dataset in RDF: where to query it, how big it is, which classes and properties it uses and how often. The ontology says what <i>may</i> be in the graph; VoID says what <i>is</i> in it, with counts. In our system one file, <code>void.ttl</code>, does three jobs:</p>
+  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)">
+    <div class="lu-card"><span class="lu-card__label">Use 1 · Part 2</span><h3 class="lu-h3">Tell the model what exists</h3><p class="lu-sub">The real classes and properties, and their counts, go into the prompt. The prompt could never hold 135,841 triples.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Use 2 · Part 3</span><h3 class="lu-h3">Check the model's query</h3><p class="lu-sub">Every class and property in a query must appear in VoID. <code>ul:shippedBy</code> does not, so it is caught.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Use 3 · Part 5</span><h3 class="lu-h3">Notice when data changes</h3><p class="lu-sub">Compare this week's counts with last week's. A jump means the data or the mapping changed.</p></div>
   </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>SIB</b> The Swiss Institute of Bioinformatics, whose endpoints and tools (void-generator, sparql-llm) lead in text to SPARQL.</span> <span data-auto="1"><b>void-generator</b> SIB&#x27;s Java tool that writes a VoID description from a live SPARQL endpoint.</span></p>
-  <template data-notes><p>Five minutes. Real run: <code>reference-outputs/make-void.txt</code>. The 2,035 makes links are those whose plant is typed <code>ul:Plant</code>: CND9 makes one product and is typed nothing in Session 2's graph.</p>
-<ul><li>SIB's void-generator (Java 17) writes the same layout from any live endpoint, and sparql-llm reads it; the lab's README has the command.</li><li>Why not the ontology? It says what could be true (Session 3's classes and axioms); VoID says what is actually there, with counts. The model needs the second.</li></ul></template>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>VoID</b> Vocabulary of Interlinked Datasets: a small RDF description of a graph&#x27;s classes, properties and counts.</span></p>
+  <template data-notes><p>Three minutes. VoID is a W3C Interest Group Note, "Describing Linked Datasets with the VoID Vocabulary", 3 March 2011. Data catalogues and federated query tools use it to find which endpoint holds which data; we use its statistics part. The three uses come back in Parts 2, 3 and 5.</p></template>
 </section>
 
 <!-- ==================================================================== 10 -->
+<section class="slide" data-label="VoID: the graph describes itself" data-section="Grounding" data-minutes="4">
+  <div class="lu-eyebrow">VoID · what the file looks like, for Brunel</div>
+  <h2 class="lu-h2" style="max-width:66ch">A summary at class level: how many things, and which property links which classes</h2>
+
+  <div class="lu-split lu-split--wide-right">
+    <div class="lu-stack">
+      <div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 540, "height": 110, "nodes": [{"id": "pl", "label": "Plant\n19 things", "x": 85, "y": 50, "w": 160, "h": 70, "kind": "ours"}, {"id": "pr", "label": "Product\n1,540 things", "x": 450, "y": 50, "w": 170, "h": 70, "kind": "ours"}], "edges": [{"id": "mk", "from": "pl", "to": "pr", "label": "makes · 2,035"}], "steps": [{"show": ["pl", "pr", "mk"]}], "legend": false}</script></div>
+      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><p class="lu-sub"><b>Class partition</b>: The group of things that have one class, here Plant.</p><p class="lu-sub"><b>Property partition</b>: How that group uses one property, here makes: how often, and to which class.</p></div>
+    </div>
+    <div class="lu-code lu-code--sm" data-name="void.ttl · the Plant part, with comments"><pre><code>&lt;.../brunel/void&gt;
+  void:classPartition ul:Plant-partition .
+<span class="tok-com"># the group of things of class Plant</span>
+ul:Plant-partition void:class ul:Plant ;
+  void:entities 19 ;           <span class="tok-com"># 19 plants</span>
+  void:propertyPartition ul:Plant-makes .
+<span class="tok-com"># how those plants use the property makes</span>
+ul:Plant-makes void:property ul:makes ;
+  void:triples 2035 ;          <span class="tok-com"># 2,035 links</span>
+  <span class="tok-com"># (not 2,036: plant CND9 has no class)</span>
+  <span class="tok-com"># the things at the other end are Products</span>
+  void:classPartition [ void:class ul:Product ] .</code></pre></div>
+  </div>
+  <template data-notes><p>Four minutes. Real run: <code>reference-outputs/make-void.txt</code>. 189 triples describe all 135,841; one SPARQL CONSTRUCT query writes them in 0.3 seconds, in the same layout as SIB's void-generator (the lab README has its command). The names ul:Plant-partition and ul:Plant-makes are labels the script gives to the parts; they are not ontology terms.</p></template>
+</section>
+
+<!-- ==================================================================== 11 -->
 <section class="slide" data-label="The schema, as the model reads it" data-section="Grounding" data-minutes="3">
-  <div class="lu-eyebrow">schema_text(): VoID turned into plain lines</div>
+  <div class="lu-eyebrow">VoID use 1 · the schema part of the prompt</div>
   <h2 class="lu-h2">One line per class, one line per property: 41 lines for the whole graph</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-code lu-code--sm" data-name="the schema part of the prompt, shortened"><pre><code>ul:Order (9,023 things)
@@ -209,9 +227,9 @@ ul:Plant ul:servesPort ul:Port</code></pre></div>
   <template data-notes><p>Three minutes. The whole schema is 1,317 characters (<code>show_prompt.py</code> prints it). The rules at the top of the prompt also state the subclass explicitly, because a count alone is a weak hint.</p></template>
 </section>
 
-<!-- ==================================================================== 11 -->
+<!-- ==================================================================== 12 -->
 <section class="slide" data-label="Examples, in the SHACL vocabulary" data-section="Grounding" data-minutes="4">
-  <div class="lu-eyebrow">examples.ttl · six worked examples</div>
+  <div class="lu-eyebrow">Grounding, part 2 · six worked examples (examples.ttl)</div>
   <h2 class="lu-h2">A question and its query, stored as RDF, so tools can find and share them</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-code lu-code--sm" data-name="examples.ttl · ex:3, shortened"><pre><code>ex:3 a sh:SPARQLExecutable ;
@@ -223,24 +241,25 @@ SELECT ?product WHERE {
 }"""</span> .</code></pre></div>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Few-shot examples</dt><dd>Worked question and query pairs placed in the prompt for the model to imitate.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why the SHACL vocabulary</span><p class="lu-sub"><code>sh:SPARQLExecutable</code> is how SIB's endpoints publish their examples, and what sparql-llm loads. Your examples become reusable data.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why a SHACL word?</span><p class="lu-sub">SHACL has a word for a stored query, <code>sh:SPARQLExecutable</code>. Public endpoints such as SIB's use it, so other tools can load our examples.</p></div>
     </div>
   </div>
-  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>sparql-llm</b> SIB&#x27;s Python library for text to SPARQL: VoID, retrieved examples, validation and repair.</span></p>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>SIB</b> The Swiss Institute of Bioinformatics, whose endpoints and tools (void-generator, sparql-llm) lead in text to SPARQL.</span></p>
   <template data-notes><p>Four minutes. The model copies patterns: the IRI form of a code, the property name, the shape of a count. Part B's Y1 is a copy of this example with one property changed.</p></template>
 </section>
 
-<!-- ==================================================================== 12 -->
+<!-- ==================================================================== 13 -->
 <section class="slide" data-label="Picking the closest examples" data-section="Grounding" data-minutes="3">
   <div class="lu-eyebrow">For &ldquo;How many orders did carrier V44_3 carry?&rdquo;: the words it shares with each example</div>
   <h2 class="lu-h2" style="max-width:66ch">The three with most shared words go into the prompt: 1, 2 and 4</h2>
 
   <table class="lu-table"><thead><tr><th>Example</th><th>Its question</th><th>Shared words</th></tr></thead><tbody><tr><td><b>1</b></td><td>Which orders did carrier V44_3 carry, with their service level?</td><td><b>4</b>: carrier, carry, orders, v44_3</td></tr><tr><td><b>2</b></td><td>How many orders and how many late orders does each carrier have?</td><td><b>2</b>: carrier, orders</td></tr><tr><td><b>4</b></td><td>How many orders are there in total, late ones included?</td><td><b>1</b>: orders</td></tr><tr><td>6</td><td>How many orders did customer V555_15 place with service level DTP?</td><td>1: orders (a tie, later in the file)</td></tr><tr><td>3, 5</td><td>Which products does plant PLANT08 make? · Which ports does ...</td><td>0</td></tr></tbody></table>
-  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">A simple rule, on purpose</span><p class="lu-sub">Common words (how, many, did) are ignored first. sparql-llm does the same job with embeddings of the questions. Word overlap needs no download and always picks the same three examples.</p></div>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Retrieval</span><p class="lu-sub">Picking the examples closest to the question is <b>retrieval</b>. Here we count shared words, ignoring common ones (how, many, did). sparql-llm compares meanings instead, with embeddings.</p></div>
+  <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>sparql-llm</b> SIB&#x27;s Python library for text to SPARQL: VoID, retrieved examples, validation and repair.</span></p>
   <template data-notes><p>Three minutes. Real output of <code>show_prompt.py</code>: <code>examples picked: 1, 2, 4</code>. Example 1 is almost the question itself, which is why test questions and examples must never be the same (next slide).</p></template>
 </section>
 
-<!-- ==================================================================== 13 -->
+<!-- ==================================================================== 14 -->
 <section class="slide" data-label="What the model is sent" data-section="Grounding" data-minutes="3">
   <div class="lu-eyebrow">The whole prompt for one question</div>
   <h2 class="lu-h2" style="max-width:66ch">Nothing hidden: python show_prompt.py prints every character</h2>
@@ -252,7 +271,7 @@ SELECT ?product WHERE {
   <template data-notes><p>Three minutes. Measured with <code>build_prompt</code>: rules 1,021, schema 1,317 plus 55 of headings, examples 796, question 50; 3,239 in all (<code>reference-outputs/show-prompt.txt</code>). The Session 3 ontology would be many times this, and would still not say what is actually in the data.</p></template>
 </section>
 
-<!-- ==================================================================== 14 -->
+<!-- ==================================================================== 15 -->
 <section class="slide" data-label="The prompt, as the model reads it" data-section="Grounding" data-minutes="3">
   <div class="lu-eyebrow">The prompt, as text</div>
   <h2 class="lu-h2">The prompt has four parts.</h2>
@@ -274,7 +293,7 @@ Question: How many orders did carrier V44_3 carry?</code></pre></div>
   <template data-notes><p>Three minutes. This is the previous slide as text. The lab prints the whole prompt, 3,239 characters, with python show_prompt.py; no model call is made. I point at the REFUSE line: refusal is written into the rules, not added later.</p></template>
 </section>
 
-<!-- ==================================================================== 15 -->
+<!-- ==================================================================== 16 -->
 <section class="slide slide--tint" data-label="Check: examples and tests" data-section="Grounding" data-minutes="2">
   <div class="lu-eyebrow">Check question</div>
   <div class="lu-mcq" data-qid="s7-q1" data-answer="b" data-label="Why no test question may also be an example"
@@ -290,7 +309,7 @@ Question: How many orders did carrier V44_3 carry?</code></pre></div>
   <template data-notes><p>Two minutes. The Part B checker refuses a test question that is already an example, for exactly this reason.</p></template>
 </section>
 
-<!-- ==================================================================== 16 -->
+<!-- ==================================================================== 17 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 3 · Validate, repair, refuse" data-section="Check and repair" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 3 of 5 · Check, repair, refuse · about 22 minutes</div>
@@ -300,9 +319,9 @@ Question: How many orders did carrier V44_3 carry?</code></pre></div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 17 -->
+<!-- ==================================================================== 18 -->
 <section class="slide" data-label="Check before running" data-section="Check and repair" data-minutes="4">
-  <div class="lu-eyebrow">check.py broken.sparql · a real run</div>
+  <div class="lu-eyebrow">VoID use 2 · checking a query before it runs · a real run of check.py</div>
   <h2 class="lu-h2">Two tests: is it SPARQL, and does every term exist in void.ttl?</h2>
   <div class="lu-split">
     <div class="lu-stack">
@@ -323,7 +342,7 @@ Question: How many orders did carrier V44_3 carry?</code></pre></div>
   <template data-notes><p>Four minutes. Real output: <code>reference-outputs/check.txt</code>. Run as written, this query does not fail: it returns a count of 0, a wrong answer with no error. That is why the check comes first.</p></template>
 </section>
 
-<!-- ==================================================================== 18 -->
+<!-- ==================================================================== 19 -->
 <section class="slide" data-label="The repair loop" data-section="Check and repair" data-minutes="5">
   <div class="lu-eyebrow">Walkthrough · broken.sparql, repaired</div>
   <h2 class="lu-h2">A problem the model can read becomes a second, better try</h2>
@@ -333,19 +352,19 @@ Question: How many orders did carrier V44_3 carry?</code></pre></div>
 <ul><li>This loop is the design decision the syllabus calls the one that separates working systems from demonstrations: sparql-llm and SIB's endpoints do exactly this.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 19 -->
+<!-- ==================================================================== 20 -->
 <section class="slide" data-label="What the check cannot catch" data-section="Check and repair" data-minutes="3">
   <div class="lu-eyebrow">A valid query can still be the wrong query</div>
   <h2 class="lu-h2" style="max-width:66ch">The check knows the graph's words, not the manager's meaning</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
-    <table class="lu-table"><thead><tr><th>Mistake</th><th>Caught?</th><th>Caught by, or why not</th></tr></thead><tbody><tr><td>Not SPARQL at all</td><td>yes</td><td>the parser</td></tr><tr><td>A property the graph lacks (ul:shippedBy)</td><td>yes</td><td>unknown_properties</td></tr><tr><td>A class the graph lacks (ul:Shipment)</td><td>only after lab Part B</td><td>unknown_classes (lab task Y2)</td></tr><tr><td><b>Only ul:Order: V555_15 gets 0 orders, not 110</b></td><td><b>no</b></td><td>every term exists, so it passes</td></tr><tr><td><b>The wrong property: ul:shipsTo for &ldquo;leave from&rdquo; PORT09 gives 9,023, not 173</b></td><td><b>no</b></td><td>it exists, so it passes; only a test set can tell</td></tr></tbody></table>
+    <table class="lu-table"><thead><tr><th>Mistake</th><th>Caught?</th><th>Caught by, or why not</th></tr></thead><tbody><tr><td>Not SPARQL at all</td><td>yes</td><td>the SPARQL parser</td></tr><tr><td>A property the graph lacks (ul:shippedBy)</td><td>yes</td><td>the check against VoID</td></tr><tr><td>A class the graph lacks (ul:Shipment)</td><td>only after lab Part B</td><td>a check you add (lab Y2)</td></tr><tr><td><b>Only ul:Order: V555_15 gets 0 orders, not 110</b></td><td><b>no</b></td><td>every term exists, so it passes</td></tr><tr><td><b>The wrong property: ul:shipsTo for &ldquo;leave from&rdquo; PORT09 gives 9,023, not 173</b></td><td><b>no</b></td><td>it exists, so it passes; only a test set can tell</td></tr></tbody></table>
     <div class="lu-callout"><span class="lu-callout__label">So: measure</span><p class="lu-sub">The subclass mistake passes every check and returns a number that looks fine. Only comparing with the right answer, on a test set, shows it. That is Part 4.</p></div>
   </div>
   <template data-notes><p>Three minutes. Both bold rows are real: the recorded run's <code>schema</code> setting wrote these queries for test questions 7 and 10, and both passed the check. With the three examples in the prompt, both came out right.</p></template>
 </section>
 
-<!-- ==================================================================== 20 -->
+<!-- ==================================================================== 21 -->
 <section class="slide" data-label="The refusal path" data-section="Check and repair" data-minutes="4">
   <div class="lu-eyebrow">Three test questions the graph cannot answer</div>
   <h2 class="lu-h2" style="max-width:66ch">A query can be written for each. The right answer is to refuse.</h2>
@@ -360,7 +379,7 @@ Question: How many orders did carrier V44_3 carry?</code></pre></div>
   <template data-notes><p>Four minutes. The refusal must name what is missing, so the user learns what the graph holds. Refusing is harder than it sounds: a model trained to be helpful prefers to answer. The lab counts refusals separately from F1.</p></template>
 </section>
 
-<!-- ==================================================================== 21 -->
+<!-- ==================================================================== 22 -->
 <section class="slide" data-label="The answer shows its evidence" data-section="Check and repair" data-minutes="3">
   <div class="lu-eyebrow">Grounding and citation</div>
   <h2 class="lu-h2">Never a bare number: the query and the rows come with it</h2>
@@ -379,7 +398,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. The query and 854 are the gold ones for test question 4; the recorded model's own query is in <code>reference-outputs/ask-v44-3.txt</code>.</p></template>
 </section>
 
-<!-- ==================================================================== 22 -->
+<!-- ==================================================================== 23 -->
 <section class="slide slide--tint" data-label="Poll: refuse or guess?" data-section="Check and repair" data-minutes="3" style="--lu-s5:12px">
   <div class="lu-eyebrow">Room poll · 45 seconds</div>
   <div class="lu-poll" data-qid="s7-poll" data-seconds="45" data-answer="b" data-label="What the layer should do when the graph cannot answer">
@@ -392,7 +411,7 @@ answer: 1 row
   <template data-notes><p>Forty five seconds, then we discuss. Someone will say "but the manager wants an answer": the refusal is an answer, about the data. Session 8's defense asks every team what its system does when it does not know.</p></template>
 </section>
 
-<!-- ==================================================================== 23 -->
+<!-- ==================================================================== 24 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 4 · Measuring" data-section="Measuring" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 4 of 5 · Measuring · about 16 minutes</div>
@@ -402,9 +421,9 @@ answer: 1 row
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 24 -->
+<!-- ==================================================================== 25 -->
 <section class="slide" data-label="The TEXT2SPARQL contract" data-section="Measuring" data-minutes="3">
-  <div class="lu-eyebrow">serve.py · what a benchmark calls</div>
+  <div class="lu-eyebrow">The access layer as a web service (serve.py)</div>
   <h2 class="lu-h2">A benchmark calls one web address and gets one query back</h2>
   <div class="lu-split lu-split--wide-left">
     <div class="lu-code lu-code--sm" data-name="the request and the reply"><pre><code>GET /?question=How many late orders are there?
@@ -415,20 +434,20 @@ answer: 1 row
  "query": "SELECT (COUNT(?o) AS ?n) WHERE ..."}</code></pre></div>
     <div class="lu-stack">
       <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>TEXT2SPARQL</dt><dd>A yearly benchmark for text to SPARQL systems, with a fixed contract and scorer.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why a contract</span><p class="lu-sub">The harness runs the returned query itself and scores the rows. So the system is judged on answers, not on how it got them.</p></div>
+      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why a contract</span><p class="lu-sub">A benchmark is a fixed set of test questions with a scoring program. It sends each question to this one web address, runs the query it gets back, and scores the rows. Every system is judged on its answers, in the same way.</p></div>
     </div>
   </div>
   <template data-notes><p>Three minutes. The contract is TEXT2SPARQL's (2025 and 2026 editions): <code>GET /?question=...&amp;dataset=...</code> returning dataset, question and query. The official client, <code>text2sparql-client</code>, can call <code>serve.py</code>; the lab's own <code>evaluate.py</code> scores the same way without it.</p></template>
 </section>
 
-<!-- ==================================================================== 25 -->
+<!-- ==================================================================== 26 -->
 <section class="slide" data-label="Scoring one answer" data-section="Measuring" data-minutes="4">
   <div class="lu-eyebrow">Scoring one answer · test question 3: &ldquo;Which carriers carry orders?&rdquo;</div>
   <h2 class="lu-h2" style="max-width:66ch">Every value returned goes into one set; compare it with the right set</h2>
 
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <div class="lu-stack">
-      <table class="lu-table"><thead><tr><th></th><th>The set of values</th></tr></thead><tbody><tr><td>Right answer (the gold query)</td><td>V444_0 · V444_1 · V44_3</td></tr><tr><td>An answer to score (made up)</td><td>V444_0 · V44_3 · V444_5</td></tr><tr><td>In both</td><td>V444_0 · V44_3: 2 values</td></tr></tbody></table>
+      <table class="lu-table"><thead><tr><th></th><th>The set of values</th></tr></thead><tbody><tr><td>Right answer (from a query we wrote by hand)</td><td>V444_0 · V444_1 · V44_3</td></tr><tr><td>An answer to score (made up)</td><td>V444_0 · V44_3 · V444_5</td></tr><tr><td>In both</td><td>V444_0 · V44_3: 2 values</td></tr></tbody></table>
       <p class="lu-statement" style="font-size:var(--lu-t-h3)">precision 2/3 · recall 2/3 · F1 0.67</p>
     </div>
     <div class="lu-stack">
@@ -439,7 +458,7 @@ answer: 1 row
   <template data-notes><p>Four minutes. The right set is real (the three carriers with orders); the answer to score is made up for the example (V444_5 has rate bands but no orders). This is exactly <code>score_utils.py</code>: set precision, recall and F1, as TEXT2SPARQL computes them.</p></template>
 </section>
 
-<!-- ==================================================================== 26 -->
+<!-- ==================================================================== 27 -->
 <section class="slide slide--tint" data-label="Check: one number" data-section="Measuring" data-minutes="3">
   <div class="lu-eyebrow">Check question</div>
   <div class="lu-mcq" data-qid="s7-q2" data-answer="b" data-label="F1 of a count that is slightly wrong"
@@ -455,17 +474,17 @@ answer: 1 row
   <template data-notes><p>Three minutes. This is the subclass mistake again: the check passes it, the score does not.</p></template>
 </section>
 
-<!-- ==================================================================== 27 -->
+<!-- ==================================================================== 28 -->
 <section class="slide" data-label="Three settings, one test set" data-section="Measuring" data-minutes="4">
-  <div class="lu-eyebrow">15 questions: 12 answerable, 3 to refuse; mean F1 on the 12</div>
-  <h2 class="lu-h2" style="max-width:66ch">Recorded run: 2026-09-25, model gemini-3.5-flash-lite, rules ccb41f71. Your live run may differ.</h2>
+  <div class="lu-eyebrow">Test set · 15 questions: 12 answerable, 3 to refuse · mean F1 on the 12</div>
+  <h2 class="lu-h2" style="max-width:66ch">Three examples raised mean F1 from 0.79 to 1.00; the repair loop added nothing in this run</h2>
 
   <table class="lu-table"><thead><tr><th>Setting</th><th>What the model gets</th><th>Mean F1</th><th>Refused rightly</th><th>Refused wrongly</th><th>Repaired</th></tr></thead><tbody><tr><td>schema</td><td>the schema only</td><td>0.792</td><td>3 of 3</td><td>0</td><td>0</td></tr><tr><td>examples</td><td>plus 3 examples</td><td>1.000</td><td>3 of 3</td><td>0</td><td>0</td></tr><tr><td><b>repair</b></td><td>plus check and repair</td><td>1.000</td><td>3 of 3</td><td>0</td><td>0</td></tr></tbody></table>
-  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read it as Session 6 taught us</span><p class="lu-sub">One run, 15 questions: one question changes F1 by 0.08. Say what changed, by how much, and whether it holds in a second run.</p></div>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read it as Session 6 taught us</span><p class="lu-sub">Recorded run: 2026-09-25, model gemini-3.5-flash-lite, rules ccb41f71. Your live run may differ. One run, 15 questions: one question changes F1 by 0.08. Say what changed, by how much, and whether it holds in a second run.</p></div>
   <template data-notes><p>Four minutes. <code>reference-outputs/evaluate.txt</code>, 2026-09-25, model gemini-3.5-flash-lite, rules ccb41f71. I ask: is the gain from one setting to the next bigger than the difference between two students' runs? We compare two laptops in the room.</p><ul><li>In this run the examples did all the work (questions 7 and 10 went from 0 to 1) and the repair loop added nothing: no query failed the check. That is a real result: the loop is insurance against a failure this model did not make here, and a room of live runs may show it.</li></ul></template>
 </section>
 
-<!-- ==================================================================== 28 -->
+<!-- ==================================================================== 29 -->
 <section class="slide" data-label="The TEXT2SPARQL 2026 leaderboard" data-section="Measuring" data-minutes="3">
   <div class="lu-eyebrow">TEXT2SPARQL 2026, overall F1, the top three</div>
   <h2 class="lu-h2" style="max-width:66ch">The winner is the kind of system that this lab copies, in a small version</h2>
@@ -473,14 +492,14 @@ answer: 1 row
   <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s3)">
     <div class="lu-stack" style="gap:var(--lu-s4)"><div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">SPARQL-LLM</span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:79.0%;background:var(--lu-red-700)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">0.790</span></span></div><div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">INFAI-ETI-AND-FRIENDS-A</span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:59.3%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">0.593</span></span></div><div class="lu-stack" style="gap:var(--lu-s2)"><span class="lu-card__label">ADFR</span><span class="lu-row" style="gap:var(--lu-s3);align-items:center"><span style="flex:1;height:14px;background:var(--lu-paper-2);border-radius:7px;overflow:hidden"><span style="display:block;height:100%;width:41.8%;background:var(--lu-ink-2)"></span></span><span class="lu-mono" style="min-width:9ch;text-align:right">0.418</span></span></div></div>
     <div class="lu-stack">
-      <div class="lu-callout"><span class="lu-callout__label">Our number is not comparable</span><p class="lu-sub">Their questions are over DBpedia and a company graph, and there are many more of them. Ours are 15 questions over Brunel. The metric is the same, but the test is different.</p></div>
+      <div class="lu-callout"><span class="lu-callout__label">Our number is not comparable</span><p class="lu-sub">Their questions are over DBpedia (a public graph built from Wikipedia) and a company graph, and there are many more of them. Ours are 15 questions over Brunel. The metric is the same, but the test is different.</p></div>
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">What the winner does</span><p class="lu-sub">SPARQL-LLM: VoID, retrieved examples, validation and repair. The same four parts as the lab, done on a much larger scale.</p></div>
     </div>
   </div>
   <template data-notes><p>Three minutes. Results published 2026-05-13 at text2sparql.aksw.org (datasets DB26 and CK26). In 2025 the organisers reported a plain Qwen2.5 7B model at 0.129 on DBpedia: grounding is most of the difference.</p></template>
 </section>
 
-<!-- ==================================================================== 29 -->
+<!-- ==================================================================== 30 -->
 <section class="slide slide--night" data-chrome="none" data-label="Part 5 · Deployment and governance" data-section="Deployment" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Part 5 of 5 · Deployment and governance · about 12 minutes</div>
@@ -490,7 +509,7 @@ answer: 1 row
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 30 -->
+<!-- ==================================================================== 31 -->
 <section class="slide" data-label="The stack, one command" data-section="Deployment" data-minutes="4">
   <div class="lu-eyebrow">Everything from Sessions 2 to 7, as containers in one Compose file</div>
   <h2 class="lu-h2" style="max-width:66ch">docker compose up starts it all; only the model is outside</h2>
@@ -498,12 +517,12 @@ answer: 1 row
   <div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 290, "nodes": [{"id": "db", "label": "operational database", "x": 160, "y": 40, "w": 280, "h": 56, "kind": "builtin"}, {"id": "mk", "label": "mapping job\n(Morph-KGC)", "x": 520, "y": 40, "w": 280, "h": 70, "kind": "builtin"}, {"id": "sh", "label": "SHACL gate\n(pyshacl)", "x": 880, "y": 40, "w": 260, "h": 70, "kind": "builtin"}, {"id": "fu", "label": "SPARQL endpoint\n(Fuseki)", "x": 880, "y": 150, "w": 280, "h": 70, "kind": "builtin"}, {"id": "al", "label": "access layer\n(serve.py)", "x": 520, "y": 150, "w": 280, "h": 70, "kind": "builtin"}, {"id": "u", "label": "a manager's question", "x": 160, "y": 150, "w": 280, "h": 56, "kind": "literal"}, {"id": "llm", "label": "model API (outside the stack)", "x": 520, "y": 258, "w": 380, "h": 56, "kind": "literal"}], "edges": [{"id": "a", "from": "db", "to": "mk", "label": "rows"}, {"id": "b", "from": "mk", "to": "sh", "label": "triples"}, {"id": "c", "from": "sh", "to": "fu", "label": "if valid"}, {"id": "d", "from": "u", "to": "al", "label": ""}, {"id": "e", "from": "al", "to": "fu", "label": "query"}, {"id": "f", "from": "al", "to": "llm", "label": "prompt"}], "steps": [{"show": ["db", "mk", "sh", "fu", "al", "u", "llm", "a", "b", "c", "d", "e", "f"]}], "legend": {"builtin": "A container in the stack", "literal": "Outside it"}}</script></div>
   <div class="lu-split">
     <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Container topology</dt><dd>Which parts run in which containers, and which one talks to which.</dd></dl></div>
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">For Session 8</span><p class="lu-sub"><code>deploy/compose-access-layer.yml</code> adds the access layer to your stack: it reads your endpoint's address and your key from <code>.env</code>, and listens on 127.0.0.1 only.</p></div>
+    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">For Session 8</span><p class="lu-sub"><code>deploy/compose-access-layer.yml</code> adds the access layer to your stack. It reads your endpoint and key from <code>.env</code>, and only your own machine (127.0.0.1) can reach it.</p></div>
   </div>
   <template data-notes><p>Four minutes. Every box is a tool the course already used: the database (Session 5), Morph-KGC (Session 5), pyshacl (Session 4), Fuseki (Session 2), the access layer (today). The model API is the one part a team does not run; I say what that means for privacy on the next slide.</p></template>
 </section>
 
-<!-- ==================================================================== 31 -->
+<!-- ==================================================================== 32 -->
 <section class="slide" data-label="The reference implementation: kr-team-template" data-section="Deployment" data-minutes="4">
   <div class="lu-eyebrow">Your team's repository</div>
   <h2 class="lu-h2">One folder for each layer you built. Replace the example, one folder at a time.</h2>
@@ -512,7 +531,7 @@ answer: 1 row
   <template data-notes><p>Four minutes. Open the template repository on screen. It already runs on a tiny example: 60 Brunel orders. Each folder matches a session, so the repository is the map in files. Your team replaces the example with its own data, one layer at a time, and keeps the gate green.</p></template>
 </section>
 
-<!-- ==================================================================== 32 -->
+<!-- ==================================================================== 33 -->
 <section class="slide" data-label="Knowing when it breaks" data-section="Deployment" data-minutes="3">
   <div class="lu-eyebrow">Four things that break silently, and the signal for each</div>
   <h2 class="lu-h2" style="max-width:66ch">Every signal is something you already built</h2>
@@ -522,7 +541,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. The test set is a monitor too: run it every week, and a drop in F1 says something changed, in the data, the mapping or the model. References: Dimou and others, ISWC 2015, on assessing mapping quality.</p></template>
 </section>
 
-<!-- ==================================================================== 33 -->
+<!-- ==================================================================== 34 -->
 <section class="slide" data-label="Who may ask what" data-section="Deployment" data-minutes="3">
   <div class="lu-eyebrow">One query can cross departments. The access layer must not allow it.</div>
   <h2 class="lu-h2" style="max-width:66ch">Access control on a graph, and what the model is allowed to see</h2>
@@ -536,7 +555,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. Fuseki's data access control works per dataset and, for read-only datasets, per named graph (Apache Jena documentation). Kirrane, Mileo and Decker (Semantic Web journal, 2017) survey access control for RDF. The free tier note is Google's own terms for the Gemini API.</p></template>
 </section>
 
-<!-- ==================================================================== 34 -->
+<!-- ==================================================================== 35 -->
 <section class="slide slide--night" data-chrome="none" data-label="Open problems" data-section="Open problems" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Open problems · about 22 minutes</div>
@@ -546,7 +565,7 @@ answer: 1 row
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 35 -->
+<!-- ==================================================================== 36 -->
 <section class="slide" data-label="Open problem 1: Ontology learning from text" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">Open problem 1 of 6</div>
   <h2 class="lu-h2">Ontology learning from text</h2>
@@ -559,7 +578,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
-<!-- ==================================================================== 36 -->
+<!-- ==================================================================== 37 -->
 <section class="slide" data-label="Open problem 2: Constraints by construction" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">Open problem 2 of 6</div>
   <h2 class="lu-h2">Constraints by construction</h2>
@@ -571,7 +590,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
-<!-- ==================================================================== 37 -->
+<!-- ==================================================================== 38 -->
 <section class="slide" data-label="Open problem 3: Do models reason over ontologies?" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">Open problem 3 of 6</div>
   <h2 class="lu-h2">Do models reason over ontologies?</h2>
@@ -583,7 +602,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
-<!-- ==================================================================== 38 -->
+<!-- ==================================================================== 39 -->
 <section class="slide" data-label="Open problem 4: Time and space" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">Open problem 4 of 6</div>
   <h2 class="lu-h2">Time and space</h2>
@@ -595,7 +614,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
-<!-- ==================================================================== 39 -->
+<!-- ==================================================================== 40 -->
 <section class="slide" data-label="Open problem 5: Reproducible results" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">Open problem 5 of 6</div>
   <h2 class="lu-h2">Reproducible results</h2>
@@ -607,7 +626,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
-<!-- ==================================================================== 40 -->
+<!-- ==================================================================== 41 -->
 <section class="slide" data-label="Open problem 6: Standards in motion" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">Open problem 6 of 6</div>
   <h2 class="lu-h2">Standards in motion</h2>
@@ -619,7 +638,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
 </section>
 
-<!-- ==================================================================== 41 -->
+<!-- ==================================================================== 42 -->
 <section class="slide slide--tint" data-label="Choose your team's problem" data-section="Open problems" data-minutes="3">
   <div class="lu-eyebrow">For the report</div>
   <div class="lu-split lu-split--wide-left">
@@ -638,7 +657,7 @@ answer: 1 row
   <template data-notes><p>Three minutes. I write each team's choice on the board. Every team leaves this segment with its problem chosen.</p></template>
 </section>
 
-<!-- ==================================================================== 42 -->
+<!-- ==================================================================== 43 -->
 <section class="slide slide--night" data-chrome="none" data-label="Lab · Ask, check, measure" data-section="Lab" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Lab · about 50 minutes · on your own machine</div>
@@ -648,7 +667,7 @@ answer: 1 row
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
-<!-- ==================================================================== 43 -->
+<!-- ==================================================================== 44 -->
 <section class="slide" data-label="Lab brief" data-section="Lab" data-minutes="3">
   <div class="lu-eyebrow">Hands-on lab · about 50 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">The access layer over Session 2's Brunel graph, with your own Gemini key.</h2>
@@ -668,7 +687,7 @@ answer: 1 row
   <template data-notes><p>Three minutes, then I walk the room. Most common blocker: no <code>demos/.env</code>, or the key pasted with quotes or a space. The error message says which. Second: error 429 on the free tier; <code>LLM_DELAY=4</code>.</p></template>
 </section>
 
-<!-- ==================================================================== 44 -->
+<!-- ==================================================================== 45 -->
 <section class="slide" data-label="Part B: copy a function, change one thing" data-section="Lab" data-minutes="2">
   <div class="lu-eyebrow">Lab Part B · three improvements</div>
   <h2 class="lu-h2" style="max-width:66ch">Copy a function you can read, and change one thing</h2>
@@ -691,7 +710,7 @@ answer: 1 row
   <template data-notes><p>Two minutes. For Y2, three things change: classes instead of props, <code>isupper</code> instead of <code>islower</code>, "class" in the message. Most common wrong answer: keeping <code>islower</code>; the checker says it reports <code>ul:shippedBy</code>, a property.</p></template>
 </section>
 
-<!-- ==================================================================== 45 -->
+<!-- ==================================================================== 46 -->
 <section class="slide" data-label="Lab time" data-section="Lab" data-minutes="44">
   <div class="lu-eyebrow">Lab · 44 minutes</div>
   <h2 class="lu-h2" style="max-width:66ch">Each student on their own machine. Checkpoints show whether you are on schedule.</h2>
@@ -705,7 +724,7 @@ answer: 1 row
   <template data-notes><p>Forty four minutes. <code>evaluate.py</code> makes about 50 calls; start it early and read <code>access_layer.py</code> while it runs. I collect each student's three F1 numbers on the board for the discussion.</p></template>
 </section>
 
-<!-- ==================================================================== 46 -->
+<!-- ==================================================================== 47 -->
 <section class="slide" data-label="Discussion and the Session 8 checklist" data-section="Wrap" data-minutes="7">
   <div class="lu-eyebrow">Discussion · the room's scores, then the checklist</div>
   <div class="lu-split lu-split--wide-left">
@@ -717,13 +736,13 @@ answer: 1 row
         <li>What would it take to score 0.790 on your own graph, and would it mean the same?</li>
       </ol>
     </div>
-    <table class="lu-table"><thead><tr><th>The Session 8 checklist</th><th>From</th></tr></thead><tbody><tr><td>One command starts the whole stack from a clean checkout</td><td>Sessions 2 to 7</td></tr><tr><td>Every service listens on 127.0.0.1 only; keys only in .env</td><td>2, 7</td></tr><tr><td>The SHACL gate runs before data reaches the endpoint</td><td>4</td></tr><tr><td>The test set's score is recorded, with the model and the date</td><td>7</td></tr><tr><td>A real unanswerable question is refused, with a reason</td><td>7</td></tr></tbody></table>
+    <table class="lu-table"><thead><tr><th>The Session 8 checklist</th><th>From</th></tr></thead><tbody><tr><td>One command starts the whole stack from a clean checkout</td><td>Sessions 2 to 7</td></tr><tr><td>Every service is reachable only from your own machine (127.0.0.1); keys only in .env</td><td>2, 7</td></tr><tr><td>The SHACL gate runs before data reaches the endpoint</td><td>4</td></tr><tr><td>The test set's score is recorded, with the model and the date</td><td>7</td></tr><tr><td>A real unanswerable question is refused, with a reason</td><td>7</td></tr></tbody></table>
   </div>
   <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Clean checkout</b> A fresh copy of a repository in an empty folder, with nothing added by hand except the secrets file.</span></p>
   <template data-notes><p>Seven minutes. We read the room's scores against the TEXT2SPARQL 2026 leaderboard, then agree the deployment checklist each team is held to in Session 8. We adjust the list together and I write the agreed version into the course page; Session 8's defense tries each item on a clean checkout.</p></template>
 </section>
 
-<!-- ==================================================================== 47 -->
+<!-- ==================================================================== 48 -->
 <section class="slide" data-label="Glossary for this session" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Glossary</div>
   <h2 class="lu-h2" style="max-width:66ch">The main words this session introduced. Every one is clickable on the slides.</h2>
@@ -731,7 +750,7 @@ answer: 1 row
   <template data-notes><p>One minute, or skipped in class: it is for revision. Every term here is also clickable on the slides.</p></template>
 </section>
 
-<!-- ==================================================================== 48 -->
+<!-- ==================================================================== 49 -->
 <section class="slide slide--tint" data-label="Wrap and next session" data-section="Wrap" data-minutes="2">
   <div class="lu-eyebrow">Wrap</div>
   <div class="lu-split lu-split--wide-left">
@@ -752,7 +771,7 @@ answer: 1 row
   <template data-notes><p>Two minutes. I end on the sentence. A reminder for every team: a stack that has never come up from a clean checkout will not come up on defense day either.</p></template>
 </section>
 
-<!-- ==================================================================== 49 -->
+<!-- ==================================================================== 50 -->
 <section class="slide" data-label="Self-check" data-section="Wrap" data-minutes="1">
   <div class="lu-eyebrow">Self-check</div>
   <div class="lu-split lu-split--wide-left">
