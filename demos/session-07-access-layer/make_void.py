@@ -2,13 +2,18 @@
 and which properties link each class to which class or datatype. The same
 layout as SIB's void-generator (which needs Java 17 and a SPARQL endpoint).
 
-    python make_void.py            writes void.ttl
+    python make_void.py            writes void.ttl from Session 2's brunel.ttl,
+                                   loaded in memory (no server needed)
+
+With SPARQL_ENDPOINT set (for example http://127.0.0.1:3030/kr/sparql, your
+Session 2 Fuseki), the same query runs on that server instead.
 """
 import sys
 import time
 from pathlib import Path
 
 import pyoxigraph as ox
+import requests
 
 from access_layer import GRAPH, HERE, open_store
 
@@ -40,10 +45,17 @@ CONSTRUCT {
 def main():
     t0 = time.time()
     store = open_store(Path(sys.argv[1]) if len(sys.argv) > 1 else GRAPH)
-    triples = list(store.query(QUERY))
+    if isinstance(store, str):  # SPARQL_ENDPOINT is set: ask that server
+        r = requests.post(store, data={"query": QUERY}, timeout=300, headers={"Accept": "application/n-triples"})
+        r.raise_for_status()
+        triples = list(ox.parse(r.content, format=ox.RdfFormat.N_TRIPLES))
+        source = store
+    else:  # Session 2's file, loaded in memory
+        triples = list(store.query(QUERY))
+        source = f"{len(store):,} triples"
     out = HERE / "void.ttl"
     out.write_bytes(ox.serialize(triples, format=ox.RdfFormat.TURTLE, prefixes={"void": "http://rdfs.org/ns/void#", "void-ext": "http://ldf.fi/void-ext#", "ul": "https://ul.edu.lb/kr/scm#"}))
-    print(f"read {len(store):,} triples; wrote void.ttl: {len(triples)} triples in {time.time() - t0:.1f} s")
+    print(f"read {source}; wrote void.ttl: {len(triples)} triples in {time.time() - t0:.1f} s")
 
 
 if __name__ == "__main__":
