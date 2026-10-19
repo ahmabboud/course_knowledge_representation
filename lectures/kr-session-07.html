@@ -422,19 +422,17 @@ answer: 1 row
 
 <!-- ==================================================================== 25 -->
 <section class="slide" data-label="The TEXT2SPARQL contract" data-section="Measuring" data-minutes="3">
-  <div class="lu-eyebrow">The access layer as a web service (serve.py)</div>
-  <h2 class="lu-h2">A benchmark calls one web address and gets one query back</h2>
-  <div class="lu-split lu-split--wide-left">
-    <div class="lu-code lu-code--sm" data-name="the request and the reply"><pre><code>GET /?question=How many late orders are there?
+  <div class="lu-eyebrow">The access layer as a web service · how other programs use it</div>
+  <h2 class="lu-h2">Any program can send a question to one web address and get the query back</h2>
+  <div class="lu-walk" data-label="The access layer as a web service"><div class="lu-walk__view"><div class="lu-flow"><script type="application/json" class="lu-flow__spec">{"width": 1448, "height": 150, "nodes": [{"id": "p", "label": "1 · a program sends\na question", "x": 190, "y": 60, "w": 330, "h": 70, "kind": "literal"}, {"id": "s", "label": "2 · the access layer\n(serve.py) writes a query", "x": 560, "y": 60, "w": 360, "h": 70, "kind": "ours"}, {"id": "r", "label": "3 · it replies with\nthe query", "x": 920, "y": 60, "w": 290, "h": 70, "kind": "literal"}, {"id": "g", "label": "4 · the program runs the\nquery and scores the rows", "x": 1260, "y": 60, "w": 340, "h": 70, "kind": "builtin"}], "edges": [{"id": "e1", "from": "p", "to": "s", "label": ""}, {"id": "e2", "from": "s", "to": "r", "label": ""}, {"id": "e3", "from": "r", "to": "g", "label": ""}], "steps": [{"show": ["p"], "set": {"p": "active"}}, {"show": ["s", "e1"], "run": ["e1"], "set": {"p": "idle", "s": "active"}}, {"show": ["r", "e2"], "run": ["e2"], "set": {"s": "idle", "r": "active"}}, {"show": ["g", "e3"], "run": ["e3"], "set": {"r": "idle", "g": "active"}}], "legend": {"literal": "Request or reply", "ours": "The access layer", "builtin": "The caller's work"}}</script></div><div data-walk-step="1" data-caption-short="Ask" data-caption="&lt;b&gt;Step 1.&lt;/b&gt; Another program sends a question to one web address. It could be a benchmark, an app, or you in a browser."></div><div data-walk-step="2" data-caption-short="Write" data-caption="&lt;b&gt;Step 2.&lt;/b&gt; The access layer runs the whole loop of Parts 2 and 3: prompt, model, check, repair."></div><div data-walk-step="3" data-caption-short="Reply" data-caption="&lt;b&gt;Step 3.&lt;/b&gt; It sends back the question and the SPARQL query it wrote. A refusal comes back as a query that returns nothing, with the reason."></div><div data-walk-step="4" data-caption-short="Score" data-caption="&lt;b&gt;Step 4.&lt;/b&gt; The calling program runs the query on the graph itself and scores the rows. So every system is judged on its answers, in the same way."></div></div></div>
+  <div class="lu-split lu-split--wide-left" style="margin-top:var(--lu-s2)">
+    <div class="lu-code lu-code--sm" data-name="the request (a GET: asking a web address) and the reply (JSON: named fields)"><pre><code>GET /?question=How many late orders are there?
      &amp;dataset=https://ul.edu.lb/kr/brunel/
 
 {"dataset": "https://ul.edu.lb/kr/brunel/",
  "question": "How many late orders are there?",
  "query": "SELECT (COUNT(?o) AS ?n) WHERE ..."}</code></pre></div>
-    <div class="lu-stack">
-      <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>TEXT2SPARQL</dt><dd>A yearly benchmark for text to SPARQL systems, with a fixed contract and scorer.</dd></dl></div>
-      <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Why a contract</span><p class="lu-sub">A benchmark is a fixed set of test questions with a scoring program. It sends each question to this one web address, runs the query it gets back, and scores the rows. Every system is judged on its answers, in the same way.</p></div>
-    </div>
+    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Who calls it</span><p class="lu-sub"><b>TEXT2SPARQL</b>, a yearly benchmark: a fixed set of test questions with a scoring program, which calls every system this same way. Your Session 8 stack, which runs serve.py in a container. Our lab's evaluate.py calls the layer directly.</p></div>
   </div>
   <template data-notes><p>Three minutes. The contract is TEXT2SPARQL's (2025 and 2026 editions): <code>GET /?question=...&amp;dataset=...</code> returning dataset, question and query. The official client, <code>text2sparql-client</code>, can call <code>serve.py</code>; the lab's own <code>evaluate.py</code> scores the same way without it.</p></template>
 </section>
