@@ -557,83 +557,95 @@ answer: 1 row
 <section class="slide slide--night" data-chrome="none" data-label="Open problems" data-section="Open problems" data-minutes="1">
   <div class="slide__body lu-center" style="gap:var(--lu-s5)">
     <div class="lu-eyebrow">Open problems · about 22 minutes</div>
-    <h2 class="lu-display-xl" style="max-width:26ch">Six questions the field has not answered yet</h2>
-    <p class="lu-lead" style="max-width:46ch">In this course we checked every answer after it was produced. These six questions ask what it would take to not need that. Each team picks one for its report.</p>
+    <h2 class="lu-display-xl" style="max-width:26ch">Six questions researchers are still working on</h2>
+    <p class="lu-lead" style="max-width:46ch">Each one touches something we built in this course. Each team picks one and writes one page about it for the report.</p>
   </div>
   <template data-notes><p>Ten seconds. I read the question, let it hang, and move on.</p></template>
 </section>
 
 <!-- ==================================================================== 36 -->
-<section class="slide" data-label="Open problem 1: Ontology learning from text" data-section="Open problems" data-minutes="3">
-  <div class="lu-eyebrow">Open problem 1 of 6</div>
-  <h2 class="lu-h2">Ontology learning from text</h2>
-  <p class="lu-statement" style="font-size:var(--lu-t-h3);max-width:44ch">Can a model write the ontology Session 3 wrote by hand, from documents?</p>
-  <div class="lu-split" style="margin-top:var(--lu-s4)">
-    <div class="lu-callout"><span class="lu-callout__label">Why it is open</span><p class="lu-sub">Models now suggest classes and relations well enough to help, but not well enough to trust: someone must still decide what the words mean.</p></div>
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read</span><p class="lu-sub">Asim and others, <i>Database</i>, 2018 (a survey) · Babaei Giglou, D'Souza and Auer, &ldquo;LLMs4OL&rdquo;, ISWC 2023</p></div>
+<section class="slide" data-label="Open problem 1: Ontology learning" data-section="Open problems" data-minutes="3">
+  <div class="lu-eyebrow">Open problem 1 of 6 · Ontology learning</div>
+  <h2 class="lu-h2">Can a model build the ontology for us?</h2>
+  <p class="lu-sub" style="max-width:70ch">Could a language model read company documents and write the classes and properties we wrote by hand in Session 3?</p>
+  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)">
+    <div class="lu-card"><span class="lu-card__label">In our course</span><p class="lu-sub">In Session 3 we decided that a late order is a kind of order. A model might suggest <i>LateOrder</i>, or <i>DelayedShipment</i> for the same idea.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Why it is still open</span><p class="lu-sub">Models suggest useful classes and relations, but also wrong or duplicated ones. A person must still check each one.</p></div>
+    <div class="lu-card"><span class="lu-card__label">For your report</span><p class="lu-sub">Which of your classes could a model have suggested? Which needed a decision only your team could make?</p></div>
   </div>
+  <p class="lu-caption" style="margin-top:var(--lu-s3)"><b>To read:</b> Asim and others, <i>Database</i>, 2018 (a survey) · Babaei Giglou, D'Souza and Auer, &ldquo;LLMs4OL&rdquo;, ISWC 2023</p>
   <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>Ontology learning</b> Building an ontology, or parts of it, automatically from text or data.</span></p>
-  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
+  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project?</p></template>
 </section>
 
 <!-- ==================================================================== 37 -->
-<section class="slide" data-label="Open problem 2: Constraints by construction" data-section="Open problems" data-minutes="3">
-  <div class="lu-eyebrow">Open problem 2 of 6</div>
-  <h2 class="lu-h2">Constraints by construction</h2>
-  <p class="lu-statement" style="font-size:var(--lu-t-h3);max-width:44ch">Can a learned model obey a rule because of how it is built, not because we check its output?</p>
-  <div class="lu-split" style="margin-top:var(--lu-s4)">
-    <div class="lu-callout"><span class="lu-callout__label">Why it is open</span><p class="lu-sub">Sessions 4 and 7 check afterwards: SHACL, the query check. Building the rule into training is possible for simple logic, hard for real shapes.</p></div>
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read</span><p class="lu-sub">Xu and others, &ldquo;A semantic loss function&rdquo;, ICML 2018 · Giunchiglia and Lukasiewicz, JAIR, 2021</p></div>
+<section class="slide" data-label="Open problem 2: Rules built into the model" data-section="Open problems" data-minutes="3">
+  <div class="lu-eyebrow">Open problem 2 of 6 · Rules built into the model</div>
+  <h2 class="lu-h2">Can a model follow a rule by design?</h2>
+  <p class="lu-sub" style="max-width:70ch">Today we check a model's output after it is produced. Could a model be built so that it cannot break the rule at all?</p>
+  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)">
+    <div class="lu-card"><span class="lu-card__label">In our course</span><p class="lu-sub">Our layer can write <code>ul:shippedBy</code>, and check.py catches it afterwards. A model that could only write properties listed in VoID would never make that mistake.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Why it is still open</span><p class="lu-sub">It works for simple rules. For real rules with many conditions, like our SHACL shapes, it is still hard.</p></div>
+    <div class="lu-card"><span class="lu-card__label">For your report</span><p class="lu-sub">Which of your checks happen after the fact? Could any of them be built in?</p></div>
   </div>
-  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
+  <p class="lu-caption" style="margin-top:var(--lu-s3)"><b>To read:</b> Xu and others, &ldquo;A semantic loss function&rdquo;, ICML 2018 · Giunchiglia and Lukasiewicz, JAIR, 2021</p>
+  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project?</p></template>
 </section>
 
 <!-- ==================================================================== 38 -->
-<section class="slide" data-label="Open problem 3: Do models reason over ontologies?" data-section="Open problems" data-minutes="3">
-  <div class="lu-eyebrow">Open problem 3 of 6</div>
-  <h2 class="lu-h2">Do models reason over ontologies?</h2>
-  <p class="lu-statement" style="font-size:var(--lu-t-h3);max-width:44ch">When a model scores well on a benchmark, did it reason, or remember?</p>
-  <div class="lu-split" style="margin-top:var(--lu-s4)">
-    <div class="lu-callout"><span class="lu-callout__label">Why it is open</span><p class="lu-sub">A model may have seen the benchmark in training. Today's score, like ours, shows answers, not how they were reached.</p></div>
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read</span><p class="lu-sub">He and others, &ldquo;Language model analysis for ontology subsumption inference&rdquo;, Findings of ACL 2023 · Sainz and others, Findings of EMNLP 2023</p></div>
+<section class="slide" data-label="Open problem 3: Reasoning or memory" data-section="Open problems" data-minutes="3">
+  <div class="lu-eyebrow">Open problem 3 of 6 · Reasoning or memory</div>
+  <h2 class="lu-h2">Does a model work out the answer, or remember it?</h2>
+  <p class="lu-sub" style="max-width:70ch">When a language model answers well, did it reason with the ontology, or had it seen similar questions while it was trained?</p>
+  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)">
+    <div class="lu-card"><span class="lu-card__label">In our course</span><p class="lu-sub">Our layer scored 1.00 with three examples. That shows the answers were right, not how the model reached them.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Why it is still open</span><p class="lu-sub">Models are trained on huge amounts of public text, which may contain the test questions. It is hard to prove a model did not just remember.</p></div>
+    <div class="lu-card"><span class="lu-card__label">For your report</span><p class="lu-sub">How would you test your layer on questions that are unlike your examples?</p></div>
   </div>
-  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
+  <p class="lu-caption" style="margin-top:var(--lu-s3)"><b>To read:</b> He and others, &ldquo;Language model analysis for ontology subsumption inference&rdquo;, Findings of ACL 2023 · Sainz and others, Findings of EMNLP 2023</p>
+  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project?</p></template>
 </section>
 
 <!-- ==================================================================== 39 -->
-<section class="slide" data-label="Open problem 4: Time and space" data-section="Open problems" data-minutes="3">
-  <div class="lu-eyebrow">Open problem 4 of 6</div>
-  <h2 class="lu-h2">Time and space</h2>
-  <p class="lu-statement" style="font-size:var(--lu-t-h3);max-width:44ch">How do you ask when something was true, or how near two things are?</p>
-  <div class="lu-split" style="margin-top:var(--lu-s4)">
-    <div class="lu-callout"><span class="lu-callout__label">Why it is open</span><p class="lu-sub">This course left them out: Brunel has one order date. Facts that change over time, and places, need more than plain triples.</p></div>
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read</span><p class="lu-sub">Gutierrez, Hurtado and Vaisman, IEEE TKDE, 2007 · OGC GeoSPARQL 1.1, 2024</p></div>
+<section class="slide" data-label="Open problem 4: Time and places" data-section="Open problems" data-minutes="3">
+  <div class="lu-eyebrow">Open problem 4 of 6 · Time and places</div>
+  <h2 class="lu-h2">How do you store when a fact was true, and where things are?</h2>
+  <p class="lu-sub" style="max-width:70ch">A triple states a fact with no date and no place. Many business questions need both.</p>
+  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)">
+    <div class="lu-card"><span class="lu-card__label">In our course</span><p class="lu-sub">Brunel has one order date, so we never asked which carrier a route used last year. The graph has no locations, so we refused &ldquo;Which customers are in Beirut?&rdquo;</p></div>
+    <div class="lu-card"><span class="lu-card__label">Why it is still open</span><p class="lu-sub">Extensions exist, such as GeoSPARQL for places, and several proposals for time, but no single way is agreed and supported everywhere.</p></div>
+    <div class="lu-card"><span class="lu-card__label">For your report</span><p class="lu-sub">Which of your facts change over time? How would your graph keep their history?</p></div>
   </div>
-  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
+  <p class="lu-caption" style="margin-top:var(--lu-s3)"><b>To read:</b> Gutierrez, Hurtado and Vaisman, IEEE TKDE, 2007 · OGC GeoSPARQL 1.1, 2024</p>
+  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project?</p></template>
 </section>
 
 <!-- ==================================================================== 40 -->
-<section class="slide" data-label="Open problem 5: Reproducible results" data-section="Open problems" data-minutes="3">
-  <div class="lu-eyebrow">Open problem 5 of 6</div>
-  <h2 class="lu-h2">Reproducible results</h2>
-  <p class="lu-statement" style="font-size:var(--lu-t-h3);max-width:44ch">Do reported gains in knowledge graph completion still hold in a fair comparison?</p>
-  <div class="lu-split" style="margin-top:var(--lu-s4)">
-    <div class="lu-callout"><span class="lu-callout__label">Why it is open</span><p class="lu-sub">Several did not: tuned old models matched new ones. Session 6's baseline was this lesson on our own data.</p></div>
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read</span><p class="lu-sub">Kadlec, Bajgar and Kleindienst, 2017 · Ruffinelli, Broscheit and Gemulla, ICLR 2020 · Sun and others, ACL 2020</p></div>
+<section class="slide" data-label="Open problem 5: Results that hold" data-section="Open problems" data-minutes="3">
+  <div class="lu-eyebrow">Open problem 5 of 6 · Results that hold</div>
+  <h2 class="lu-h2">Do published improvements still hold in a fair test?</h2>
+  <p class="lu-sub" style="max-width:70ch">Papers report new models that predict missing links better. Does the gain remain when the comparison is fair?</p>
+  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)">
+    <div class="lu-card"><span class="lu-card__label">In our course</span><p class="lu-sub">In Session 6, a simple popularity count beat TransE on Brunel.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Why it is still open</span><p class="lu-sub">Several studies found that older models, tuned with the same care, matched newer ones. Many gains came from how the test was run.</p></div>
+    <div class="lu-card"><span class="lu-card__label">For your report</span><p class="lu-sub">Did your Milestone 2 result beat a simple model, on a fair split? Could someone else repeat it?</p></div>
   </div>
-  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
+  <p class="lu-caption" style="margin-top:var(--lu-s3)"><b>To read:</b> Kadlec, Bajgar and Kleindienst, 2017 · Ruffinelli, Broscheit and Gemulla, ICLR 2020 · Sun and others, ACL 2020</p>
+  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project?</p></template>
 </section>
 
 <!-- ==================================================================== 41 -->
-<section class="slide" data-label="Open problem 6: Standards in motion" data-section="Open problems" data-minutes="3">
-  <div class="lu-eyebrow">Open problem 6 of 6</div>
-  <h2 class="lu-h2">Standards in motion</h2>
-  <p class="lu-statement" style="font-size:var(--lu-t-h3);max-width:44ch">What do you build on when the standard is still changing?</p>
-  <div class="lu-split" style="margin-top:var(--lu-s4)">
-    <div class="lu-callout"><span class="lu-callout__label">Why it is open</span><p class="lu-sub">SHACL 1.2 Core is a W3C Working Draft (18 September 2026). The RML Working Group is not yet chartered; its charter was being refined from June 2026.</p></div>
-    <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Read</span><p class="lu-sub">W3C, SHACL 1.2 Core, Working Draft · W3C strategy issue 443, the RML Working Group charter</p></div>
+<section class="slide" data-label="Open problem 6: Unfinished standards" data-section="Open problems" data-minutes="3">
+  <div class="lu-eyebrow">Open problem 6 of 6 · Unfinished standards</div>
+  <h2 class="lu-h2">What should you build on when a standard is not finished?</h2>
+  <p class="lu-sub" style="max-width:70ch">Some standards we used are complete; others are still drafts that may change.</p>
+  <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)">
+    <div class="lu-card"><span class="lu-card__label">In our course</span><p class="lu-sub">Session 5 used R2RML (finished in 2012), while its successor RML is not yet a W3C standard. SHACL 1.2, the next version of Session 4's SHACL, is a draft.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Why it is still open</span><p class="lu-sub">Drafts change, and tools follow at different speeds. Waiting costs time; building early may mean rewriting later.</p></div>
+    <div class="lu-card"><span class="lu-card__label">For your report</span><p class="lu-sub">Which standards does your system use, and which are drafts? What would you change if they changed?</p></div>
   </div>
-  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project? The references are the reading list's starting points for this problem.</p></template>
+  <p class="lu-caption" style="margin-top:var(--lu-s3)"><b>To read:</b> W3C, SHACL 1.2 Core, Working Draft, 18 September 2026 · W3C strategy issue 443, the RML Working Group charter</p>
+  <template data-notes><p>Three minutes. I ask one team: how would this problem show up in your own project?</p></template>
 </section>
 
 <!-- ==================================================================== 42 -->
@@ -643,8 +655,8 @@ answer: 1 row
     <div class="lu-stack">
       <h2 class="lu-h2">Each team leaves with one of the six</h2>
       <ol class="lu-list lu-list--num">
-        <li>Ontology learning from text</li><li>Constraints by construction</li><li>Do models reason over ontologies?</li>
-        <li>Time and space</li><li>Reproducible results</li><li>Standards in motion</li>
+        <li>Can a model build the ontology for us?</li><li>Can a model follow a rule by design?</li><li>Does a model work out the answer, or remember it?</li>
+        <li>How do you store when a fact was true, and where things are?</li><li>Do published improvements still hold in a fair test?</li><li>What should you build on when a standard is not finished?</li>
       </ol>
     </div>
     <div class="lu-card">
