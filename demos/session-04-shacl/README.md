@@ -61,8 +61,8 @@ Every number in `lectures/kr-session-04.html` comes from the files in
    exit code 1). The broken file differs by one character: carrier V444_O
    (letter O) instead of V444_0 (zero). Then open the same check on GitHub,
    in the repository's Actions tab: workflow **SHACL gate**, green on
-   `main`, red on the branch `demo/broken-carrier-code`
-   (links in `reference-outputs/ci-runs.txt`).
+   `main`, red on a demo branch that has since been deleted; the red run
+   is still on GitHub (links in `reference-outputs/ci-runs.txt`).
 6. `python fetch_epcis.py` (needs the network once). Downloads GS1's EPCIS
    2.0 shapes into `workspace/` and prints what they are made of.
    **Expect:** 1,137 lines, 30 node shapes, 71 property shapes, 0 SPARQL

@@ -180,10 +180,9 @@ the Session 4 lab or the workflow. It installs pySHACL 0.40.1 and rdflib
 7.6.0, then runs `validate.py` on the committed sample with the triaged
 shapes. Any Violation gives a red run. Warnings are printed but pass.
 
-The real green run is on `main`. The real red run is on the branch
-`demo/broken-carrier-code`. Their links and results are in
-`reference-outputs/ci-runs.txt`. The demo branch is kept for teaching and is
-never merged.
+The real green run is on `main`. The real red run was made on a demo branch,
+`demo/broken-carrier-code`, which has since been deleted; the run itself stays
+on GitHub. Their links and results are in `reference-outputs/ci-runs.txt`.
 
 ## The files and their roles
 
