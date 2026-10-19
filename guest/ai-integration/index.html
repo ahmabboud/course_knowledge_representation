@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Integration in the Market · Guest lecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="deck.css?v=5">
+</head>
+<body data-footer="AI Integration in the Market · Lebanese University">
+<div class="stage"><div class="deck">
+
+<!-- 1 · COVER -->
+<section class="slide" style="justify-content:center">
+  <div class="kicker">Guest lecture · Lebanese University</div>
+  <h1 class="title" style="font-size:96px;max-width:1300px;margin-top:28px">AI Integration in the Market</h1>
+  <p class="sub" style="font-size:34px;max-width:1200px;margin-top:24px">How a company moves from a slow manual workflow to a working AI solution, shown step by step on one real client project.</p>
+  <div class="row" style="margin-top:70px;gap:14px;align-items:center;flex-wrap:wrap">
+    <span class="pill green">Readiness</span><span class="arrow" style="font-size:28px">&rarr;</span>
+    <span class="pill cyan">Discovery</span><span class="arrow" style="font-size:28px">&rarr;</span>
+    <span class="pill violet">Solution design</span><span class="arrow" style="font-size:28px">&rarr;</span>
+    <span class="pill amber">Business case and roadmap</span><span class="arrow" style="font-size:28px">&rarr;</span>
+    <span class="pill green">First build</span>
+  </div>
+  <div class="notes"><p>One minute. I introduce myself in one sentence: I lead AI projects for companies, and today I show you exactly how such a project runs, using one real client.</p><p>Nothing today needs code. Every term is explained on the slide where it appears.</p></div>
+</section>
+
+<!-- 2 · RESULT -->
+<section class="slide">
+  <div class="kicker">The result of one project</div>
+  <h2 class="title">The result: five days of expert work became one day</h2>
+  <p class="sub">At Arc'teryx, the outdoor clothing company, three product experts now prepare each season's product content in one day instead of five.</p>
+  <div class="body" style="justify-content:center;gap:30px">
+    <div class="col" style="gap:14px">
+      <div class="label">Expert hours per season</div>
+      <div class="row" style="align-items:center"><span class="t24 muted" style="width:120px">Before</span><div class="hbar" data-step="1" style="width:1000px;background:var(--red)">120 hours · $6,000</div></div>
+      <div class="row" style="align-items:center"><span class="t24 muted" style="width:120px">After</span><div class="hbar" data-step="2" style="width:200px;background:var(--green)">24 h</div><span class="t26" data-step="2" style="align-self:center"><b>$1,200</b></span></div>
+    </div>
+    <div class="g3" data-step="3">
+      <div class="card"><div class="big green">&minus;80%</div><p style="margin-top:12px">time and cost of expert work</p></div>
+      <div class="card"><div class="big cyan">1</div><p style="margin-top:12px">company standard for every product story</p></div>
+      <div class="card"><div class="big amber">0</div><p style="margin-top:12px">conflicting specs left unchecked</p></div>
+    </div>
+  </div>
+  <div class="notes"><p>Two minutes. I start with the outcome so you know where we are going. 3 experts × 5 days × 8 hours = 120 hours; at $50 per expert hour that is $6,000. After: 24 hours, $1,200.</p><p>The model we used is not special. What the company paid for is the method that chose the right work for AI and proved the value. That method is today's lecture.</p></div>
+</section>
+
+<!-- 3 · AGENDA -->
+<section class="slide">
+  <div class="kicker">Plan for the next 60 minutes</div>
+  <h2 class="title">Today's plan: four parts, one real project</h2>
+  <p class="sub">We follow the Arc'teryx project from the first meeting to the first working system.</p>
+  <div class="body" style="justify-content:center">
+    <div class="row" style="gap:10px;height:300px">
+      <div class="card" style="flex:15;border-top:6px solid var(--green)"><div class="label">Part 1 · 15 min</div><h3>AI readiness</h3><p>Where does the company stand today?</p></div>
+      <div class="card" style="flex:11;border-top:6px solid var(--cyan)"><div class="label">Part 2 · 11 min</div><h3>Discovery</h3><p>How is the work done, and where does it hurt?</p></div>
+      <div class="card" style="flex:13;border-top:6px solid var(--violet)"><div class="label">Part 3 · 13 min</div><h3>Solution design</h3><p>How a workflow becomes AI features</p></div>
+      <div class="card" style="flex:16;border-top:6px solid var(--amber)"><div class="label">Part 4 · 16 min</div><h3>Value and plan</h3><p>Priorities, business case, roadmap, first build</p></div>
+    </div>
+  </div>
+  <div class="notes"><p>One minute. Each new idea appears first in general, then on the real project.</p></div>
+</section>
+
+<!-- 4 · THE SIX STEPS -->
+<section class="slide">
+  <div class="kicker">The method in one picture</div>
+  <h2 class="title">An AI project with a client follows six steps</h2>
+  <p class="sub">Each step uses the result of the step before. The client approves twice before any system is built.</p>
+  <div class="body" style="justify-content:center">
+    <svg class="svgfull" viewBox="0 0 1420 420" role="img" aria-label="Six steps on a line with two client approval points">
+      <line x1="90" y1="110" x2="1330" y2="110" stroke="#2b3530" stroke-width="6"/>
+      <g data-step="1"><circle cx="90" cy="110" r="46" fill="#141a17" stroke="#8fd14f" stroke-width="4"/><text x="90" y="112" text-anchor="middle" dominant-baseline="middle" font-size="34" font-weight="700" fill="#8fd14f">1</text>
+        <text x="90" y="200" text-anchor="middle" font-size="27" font-weight="600" fill="#f1f4f2">Readiness</text><text x="90" y="234" text-anchor="middle" font-size="22" fill="#a7b1ac">Where is the</text><text x="90" y="262" text-anchor="middle" font-size="22" fill="#a7b1ac">company today?</text></g>
+      <g data-step="2"><circle cx="338" cy="110" r="46" fill="#141a17" stroke="#38bdf8" stroke-width="4"/><text x="338" y="112" text-anchor="middle" dominant-baseline="middle" font-size="34" font-weight="700" fill="#38bdf8">2</text>
+        <text x="338" y="200" text-anchor="middle" font-size="27" font-weight="600" fill="#f1f4f2">Discovery</text><text x="338" y="234" text-anchor="middle" font-size="22" fill="#a7b1ac">How is the work</text><text x="338" y="262" text-anchor="middle" font-size="22" fill="#a7b1ac">done today?</text></g>
+      <g data-step="3"><circle cx="586" cy="110" r="46" fill="#141a17" stroke="#f5c542" stroke-width="4"/><text x="586" y="112" text-anchor="middle" dominant-baseline="middle" font-size="34" font-weight="700" fill="#f5c542">3</text>
+        <text x="586" y="200" text-anchor="middle" font-size="27" font-weight="600" fill="#f1f4f2">Proposals</text><text x="586" y="234" text-anchor="middle" font-size="22" fill="#a7b1ac">What could AI fix,</text><text x="586" y="262" text-anchor="middle" font-size="22" fill="#a7b1ac">and what is it worth?</text></g>
+      <g data-step="4"><polygon points="710,62 734,86 710,110 686,86" fill="#ff6b6b"/><text x="710" y="40" text-anchor="middle" font-size="21" font-weight="600" fill="#ff6b6b">client approves</text></g>
+      <g data-step="5"><circle cx="834" cy="110" r="46" fill="#141a17" stroke="#b794ff" stroke-width="4"/><text x="834" y="112" text-anchor="middle" dominant-baseline="middle" font-size="34" font-weight="700" fill="#b794ff">4</text>
+        <text x="834" y="200" text-anchor="middle" font-size="27" font-weight="600" fill="#f1f4f2">Solution design</text><text x="834" y="234" text-anchor="middle" font-size="22" fill="#a7b1ac">Which features,</text><text x="834" y="262" text-anchor="middle" font-size="22" fill="#a7b1ac">built how?</text></g>
+      <g data-step="6"><circle cx="1082" cy="110" r="46" fill="#141a17" stroke="#f5c542" stroke-width="4"/><text x="1082" y="112" text-anchor="middle" dominant-baseline="middle" font-size="34" font-weight="700" fill="#f5c542">5</text>
+        <text x="1082" y="200" text-anchor="middle" font-size="27" font-weight="600" fill="#f1f4f2">Roadmap</text><text x="1082" y="234" text-anchor="middle" font-size="22" fill="#a7b1ac">Tasks, time,</text><text x="1082" y="262" text-anchor="middle" font-size="22" fill="#a7b1ac">people, order</text></g>
+      <g data-step="7"><polygon points="1206,62 1230,86 1206,110 1182,86" fill="#ff6b6b"/><text x="1206" y="40" text-anchor="middle" font-size="21" font-weight="600" fill="#ff6b6b">client approves</text></g>
+      <g data-step="8"><circle cx="1330" cy="110" r="46" fill="#8fd14f"/><text x="1330" y="112" text-anchor="middle" dominant-baseline="middle" font-size="34" font-weight="700" fill="#0c100e">6</text>
+        <text x="1330" y="200" text-anchor="middle" font-size="27" font-weight="600" fill="#f1f4f2">Build</text><text x="1330" y="234" text-anchor="middle" font-size="22" fill="#a7b1ac">PoC, MVP or</text><text x="1330" y="262" text-anchor="middle" font-size="22" fill="#a7b1ac">optimization</text></g>
+      <text x="0" y="340" font-size="22" fill="#a7b1ac"><tspan font-weight="700" fill="#8fd14f">Business case:</tspan> the money a solution saves, compared with what it costs.  <tspan font-weight="700" fill="#8fd14f">Roadmap:</tspan> the plan in time.</text>
+      <text x="0" y="380" font-size="22" fill="#a7b1ac"><tspan font-weight="700" fill="#8fd14f">PoC, MVP, optimization:</tspan> three sizes of first build, explained in Part 4.</text>
+    </svg>
+  </div>
+  <div class="notes"><p>Two minutes. I press the arrow key for each step. The two red diamonds are where the client signs off: after the proposals and after the roadmap. Only then do we build.</p><p>Discovery and design overlap in real life: during design we still meet the experts to confirm requirements and infrastructure.</p></div>
+</section>
+
+<!-- 5 · DIVIDER PART 1 -->
+<section class="slide divider">
+  <div class="num">01</div>
+  <h2 class="title">Part 1 · AI readiness</h2>
+  <p class="sub">How we measure where a company stands before we propose any AI.</p>
+  <div class="notes"><p>Ten seconds.</p></div>
+</section>
+
+<!-- 6 · ASSESSMENT FLOW -->
+<section class="slide">
+  <div class="kicker">The real deliverable · Arc'teryx</div>
+  <h2 class="title">The assessment we delivered to the client, on one page</h2>
+  <p class="sub">Six blocks. Each block is one part of the assessment; the road shows the same journey from the client's side.</p>
+  <div class="body" style="display:grid;grid-template-columns:390px 1fr;gap:34px;align-items:center;margin-top:24px">
+    <img src="img/flow-road.png" alt="A winding road with five stops: preparation, current state analysis, gap analysis, solution design, roadmap and value" style="width:100%;height:auto">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px 28px">
+      <div class="row" data-step="1" style="gap:16px;align-items:center"><div class="big green" style="font-size:72px;width:56px">1</div><div><div class="t26" style="font-weight:600">Scope and objectives</div><img src="img/flow-1-scope.png" alt="Lighthouse: GenAI integration, recommendations, roadmap" style="height:118px"></div></div>
+      <div class="row" data-step="2" style="gap:16px;align-items:center"><div class="big cyan" style="font-size:72px;width:56px">2</div><div><div class="t26" style="font-weight:600">Current state</div><img src="img/flow-2-current.png" alt="Data collection, technical interpretation, content creation" style="height:118px"></div></div>
+      <div class="row" data-step="3" style="gap:16px;align-items:center"><div class="big violet" style="font-size:72px;width:56px">3</div><div><div class="t26" style="font-weight:600">AI maturity assessment</div><img src="img/flow-3-maturity.png" alt="Five maturity dimensions around an AI core" style="height:118px"></div></div>
+      <div class="row" data-step="4" style="gap:16px;align-items:center"><div class="big amber" style="font-size:72px;width:56px">4</div><div><div class="t26" style="font-weight:600">Recommendations</div><img src="img/flow-4-recommend.png" alt="Four recommendations around a light bulb" style="height:118px"></div></div>
+      <div class="row" data-step="5" style="gap:16px;align-items:center"><div class="big green" style="font-size:72px;width:56px">5</div><div><div class="t26" style="font-weight:600">Prioritize opportunities</div><img src="img/flow-5-prioritize.png" alt="Grid of business value against project feasibility" style="height:100px"></div></div>
+      <div class="row" data-step="6" style="gap:16px;align-items:center"><div class="big cyan" style="font-size:72px;width:56px">6</div><div><div class="t26" style="font-weight:600">Roadmap</div><div class="t22 muted" style="line-height:1.5">Q1 · governance, data engine<br>Q2 · product differentiator<br>Q3 · content co-pilot</div></div></div>
+    </div>
+  </div>
+  <div class="notes"><p>Three minutes. This is the real one-page summary from the Arc'teryx assessment. One block per key press. Blocks 1 and 2 are the discovery work, block 3 is the readiness score, blocks 4 and 5 are the proposals and their priority, block 6 is the plan. The rest of the lecture opens each block.</p></div>
+</section>
+
+<!-- 7 · FIVE DIMENSIONS -->
+<section class="slide">
+  <div class="kicker">Step 1 · Readiness</div>
+  <h2 class="title">AI maturity is measured on five dimensions</h2>
+  <p class="sub">A dimension is one area of the company. We check the same areas in every company, so results can be compared over time.</p>
+  <div class="body" style="margin-top:20px">
+    <svg class="svgfull" viewBox="0 0 1420 500" role="img" aria-label="Five dimensions around the center: strategy alignment, AI governance, AI data, talent and AI skills, technology and AI infrastructure">
+      <circle cx="710" cy="255" r="200" fill="none" stroke="#2b3530" stroke-width="2" stroke-dasharray="6 8"/>
+      <circle cx="710" cy="255" r="88" fill="rgba(143,209,79,.12)" stroke="#8fd14f" stroke-width="3"/>
+      <text x="710" y="244" text-anchor="middle" font-size="26" font-weight="700" fill="#f1f4f2">AI maturity</text><text x="710" y="276" text-anchor="middle" font-size="21" fill="#a7b1ac">of the company</text>
+      <g data-step="1"><circle cx="710" cy="55" r="36" fill="#141a17" stroke="#8fd14f" stroke-width="4"/><text x="710" y="57" text-anchor="middle" dominant-baseline="middle" font-size="28" font-weight="700" fill="#8fd14f">1</text>
+        <text x="764" y="30" font-size="26" font-weight="600" fill="#f1f4f2">Strategy alignment</text><text x="764" y="62" font-size="21" fill="#a7b1ac">AI goals tied to business goals · leaders agree</text><text x="764" y="90" font-size="21" fill="#a7b1ac">· success measured with numbers</text></g>
+      <g data-step="2"><circle cx="900" cy="193" r="36" fill="#141a17" stroke="#f5c542" stroke-width="4"/><text x="900" y="195" text-anchor="middle" dominant-baseline="middle" font-size="28" font-weight="700" fill="#f5c542">2</text>
+        <text x="955" y="175" font-size="26" font-weight="600" fill="#f1f4f2">AI governance</text><text x="955" y="207" font-size="21" fill="#a7b1ac">Rules, owners and checks that keep</text><text x="955" y="235" font-size="21" fill="#a7b1ac">AI safe, legal and fair · human review</text></g>
+      <g data-step="3"><circle cx="828" cy="417" r="36" fill="#141a17" stroke="#38bdf8" stroke-width="4"/><text x="828" y="419" text-anchor="middle" dominant-baseline="middle" font-size="28" font-weight="700" fill="#38bdf8">3</text>
+        <text x="882" y="404" font-size="26" font-weight="600" fill="#f1f4f2">AI data</text><text x="882" y="436" font-size="21" fill="#a7b1ac">Enough data · easy to access · clean · labelled</text></g>
+      <g data-step="4"><circle cx="592" cy="417" r="36" fill="#141a17" stroke="#b794ff" stroke-width="4"/><text x="592" y="419" text-anchor="middle" dominant-baseline="middle" font-size="28" font-weight="700" fill="#b794ff">4</text>
+        <text x="538" y="404" text-anchor="end" font-size="26" font-weight="600" fill="#f1f4f2">Talent and AI skills</text><text x="538" y="436" text-anchor="end" font-size="21" fill="#a7b1ac">Leaders ready · staff understand AI · training</text><text x="538" y="464" text-anchor="end" font-size="21" fill="#a7b1ac">· experts have time for AI work</text></g>
+      <g data-step="5"><circle cx="520" cy="193" r="36" fill="#141a17" stroke="#ff6b6b" stroke-width="4"/><text x="520" y="195" text-anchor="middle" dominant-baseline="middle" font-size="28" font-weight="700" fill="#ff6b6b">5</text>
+        <text x="465" y="175" text-anchor="end" font-size="26" font-weight="600" fill="#f1f4f2">Technology and AI infrastructure</text><text x="465" y="207" text-anchor="end" font-size="21" fill="#a7b1ac">Cloud and computing · AI tools and models</text><text x="465" y="235" text-anchor="end" font-size="21" fill="#a7b1ac">· can grow with more use</text></g>
+    </svg>
+  </div>
+  <div class="notes"><p>Three minutes. One example question per dimension. Strategy: can a leader name the number AI should move? Governance: who checks AI output before a customer sees it? Data: if I ask for last season's specs, do I get one file or ten emails? Talent: do the experts have hours in their week for this? Technology: can a new tool connect to their systems?</p><p>Governance is the one companies forget most; it is also the one that stops projects late, when legal or security first see them.</p></div>
+</section>
+
+<!-- 8 · FIVE LEVELS -->
+<section class="slide">
+  <div class="kicker">Step 1 · Readiness</div>
+  <h2 class="title">Each dimension gets a maturity level from 1 to 5</h2>
+  <p class="sub">We give the level from questionnaire answers. The level tells us which kind of project is realistic now.</p>
+  <div class="body" style="margin-top:22px">
+    <svg class="svgfull" viewBox="0 0 1440 470" role="img" aria-label="Staircase of five levels: exploration, experimentation, proliferation, optimization, transformation">
+      <g fill="#141a17" stroke="#2b3530" stroke-width="2">
+        <rect x="0" y="380" width="270" height="90" rx="10"/><rect x="287" y="300" width="270" height="170" rx="10"/><rect x="574" y="220" width="270" height="250" rx="10"/><rect x="861" y="140" width="270" height="330" rx="10"/><rect x="1148" y="60" width="270" height="410" rx="10"/>
+      </g>
+      <g font-size="26" font-weight="700" fill="#f1f4f2"><text x="20" y="416">1 · Exploration</text><text x="307" y="336">2 · Experimentation</text><text x="594" y="256">3 · Proliferation</text><text x="881" y="176">4 · Optimization</text><text x="1168" y="96">5 · Transformation</text></g>
+      <g font-size="21" fill="#a7b1ac"><text x="20" y="448">Ideas, no AI project</text>
+        <text x="307" y="368">Pilots test if AI works</text><text x="307" y="396">first measured results</text>
+        <text x="594" y="288">First AI in daily use</text><text x="594" y="316">governance takes shape</text>
+        <text x="881" y="208">Many AI systems</text><text x="881" y="236">clear return on cost</text>
+        <text x="1168" y="128">AI drives new business</text><text x="1168" y="156">and decisions everywhere</text></g>
+      <g data-step="1"><path d="M135,330 l-16,-26 h32 z" fill="#ff6b6b"/><rect x="40" y="250" width="190" height="52" rx="26" fill="#ff6b6b"/><text x="135" y="282" text-anchor="middle" font-size="22" font-weight="700" fill="#0c100e">Arc'teryx today</text></g>
+      <g data-step="2"><path d="M422,250 l-16,-26 h32 z" fill="#8fd14f"/><rect x="342" y="170" width="160" height="52" rx="26" fill="#8fd14f"/><text x="422" y="202" text-anchor="middle" font-size="22" font-weight="700" fill="#0c100e">The target</text></g>
+    </svg>
+  </div>
+  <div class="notes"><p>Two minutes. Example questions for AI data: is there one agreed source for product specs? Can a program read the source documents? Do the sources agree? At Arc'teryx the answers were: an Excel sheet filled by hand, mostly emails and PDFs, and 6% of specs in conflict. That is level 1.</p><p>When we already know an answer from our own work with the client, we score it ourselves and ask them to confirm.</p></div>
+</section>
+
+<!-- 9 · CLIENT RESULT -->
+<section class="slide">
+  <div class="kicker">Step 1 · The real result</div>
+  <h2 class="title">Arc'teryx was at level 1 on every dimension</h2>
+  <p class="sub">Overall score 0.5 to 1.5, Exploration. We set a realistic target one level up: Experimentation.</p>
+  <div class="body" style="display:grid;grid-template-columns:600px 1fr;gap:36px;align-items:center;margin-top:24px">
+    <div style="background:#fff;border-radius:20px;padding:14px"><img src="img/maturity-radar.png" alt="Radar chart: current maturity is a small shape near level 1; target maturity is a larger shape at level 2" style="width:100%;height:auto;display:block"></div>
+    <div class="col" style="gap:12px">
+      <div class="row" data-step="1" style="gap:16px;align-items:baseline"><span class="pill red" style="width:180px;text-align:center">Data</span><span class="t24 muted">Spread across teams, joined by hand, sources disagree</span></div>
+      <div class="row" data-step="1" style="gap:16px;align-items:baseline"><span class="pill red" style="width:180px;text-align:center">Governance</span><span class="t24 muted">No AI policies, no AI team</span></div>
+      <div class="row" data-step="2" style="gap:16px;align-items:baseline"><span class="pill amber" style="width:180px;text-align:center">Talent</span><span class="t24 muted">Little AI skill, knowledge in a few experts' heads</span></div>
+      <div class="row" data-step="2" style="gap:16px;align-items:baseline"><span class="pill amber" style="width:180px;text-align:center">Technology</span><span class="t24 muted">Basic infrastructure, no AI tools</span></div>
+      <div class="row" data-step="2" style="gap:16px;align-items:baseline"><span class="pill amber" style="width:180px;text-align:center">Strategy</span><span class="t24 muted">First AI ideas, small resources</span></div>
+    </div>
+  </div>
+  <div class="notes"><p>Three minutes. The chart and the observations are the real ones from the report. The inner line is today, the outer line is the target. I point out that a good assessment does not promise transformation; it names the next realistic step.</p><p>Data and governance were the weakest, which is why the first solution is about data and why one recommendation was a governance program.</p></div>
+</section>
+
+<!-- 10 · DIVIDER PART 2 -->
+<section class="slide divider">
+  <div class="num">02</div>
+  <h2 class="title">Part 2 · Discovery</h2>
+  <p class="sub">We study how the work is done today, together with the people who do it, and find where time and money are lost.</p>
+  <div class="notes"><p>Ten seconds.</p></div>
+</section>
+
+<!-- 11 · WHO WE MEET -->
+<section class="slide">
+  <div class="kicker">Step 2 · Discovery sessions</div>
+  <h2 class="title">In discovery we meet three groups of people</h2>
+  <p class="sub">Together they give us the full picture of the work. We write it down in one document: the current state report.</p>
+  <div class="body" style="display:grid;grid-template-columns:720px 1fr;gap:40px;align-items:center;margin-top:20px">
+    <svg class="svgfull" viewBox="0 0 720 470" role="img" aria-label="Three overlapping circles: subject matter experts, stakeholders, decision makers; the overlap is the current state report">
+      <g data-step="1"><circle cx="250" cy="170" r="150" fill="rgba(183,148,255,.14)" stroke="#b794ff" stroke-width="3"/><text x="190" y="120" text-anchor="middle" font-size="26" font-weight="700" fill="#b794ff">SMEs</text><text x="190" y="152" text-anchor="middle" font-size="21" fill="#a7b1ac">do the work</text></g>
+      <g data-step="2"><circle cx="470" cy="170" r="150" fill="rgba(56,189,248,.12)" stroke="#38bdf8" stroke-width="3"/><text x="530" y="120" text-anchor="middle" font-size="26" font-weight="700" fill="#38bdf8">Stakeholders</text><text x="530" y="152" text-anchor="middle" font-size="21" fill="#a7b1ac">send input or</text><text x="530" y="178" text-anchor="middle" font-size="21" fill="#a7b1ac">use the output</text></g>
+      <g data-step="3"><circle cx="360" cy="330" r="150" fill="rgba(245,197,66,.12)" stroke="#f5c542" stroke-width="3"/><text x="360" y="410" text-anchor="middle" font-size="26" font-weight="700" fill="#f5c542">Decision makers</text><text x="360" y="442" text-anchor="middle" font-size="21" fill="#a7b1ac">approve budget</text></g>
+      <g data-step="4"><rect x="285" y="200" width="150" height="92" rx="12" fill="#8fd14f"/><text x="360" y="236" text-anchor="middle" font-size="21" font-weight="700" fill="#0c100e">Current state</text><text x="360" y="264" text-anchor="middle" font-size="21" font-weight="700" fill="#0c100e">report</text></g>
+    </svg>
+    <div class="col" style="gap:22px">
+      <p class="def" data-step="1"><b>SME</b>, subject matter expert: a person who knows one area of the work deeply. At Arc'teryx, the product education team.</p>
+      <p class="def" data-step="4"><b>Current state report</b>: every step of the work today, with people, tools, time and <b>pain points</b>, the steps that waste time or money or cause errors.</p>
+      <div class="card" data-step="4" style="border-left:5px solid var(--green)"><h3>Our best tool: &ldquo;show me&rdquo;</h3><p>The experts do one real task on their screen while we watch. People forget steps when they only describe them.</p></div>
+    </div>
+  </div>
+  <div class="notes"><p>Two minutes. At Arc'teryx the product education team did a live demo of one season's work: emails, PDFs and their Excel sheet. That demo told us more than any interview.</p></div>
+</section>
+
+<!-- 12 · WORKFLOW BEFORE -->
+<section class="slide">
+  <div class="kicker">Step 2 · The case</div>
+  <h2 class="title">The workflow before AI, step by step</h2>
+  <p class="sub">Every season, specs from five teams were checked by hand and turned into content for retail sellers and advertising.</p>
+  <div class="body flow" style="margin-top:26px;gap:16px">
+    <script type="application/json">{"width":1420,"height":370,"label":"Workflow before AI","nodes":[
+      {"id":"design","label":"Design team","x":125,"y":60,"w":230,"h":64,"type":"source","step":1},
+      {"id":"manuf","label":"Manufacturing","x":125,"y":185,"w":230,"h":64,"type":"source","step":1},
+      {"id":"other","label":"Marketing,\ncompliance, materials","x":125,"y":315,"w":240,"h":80,"type":"source","step":1},
+      {"id":"compare","label":"Collect, verify and\nreconcile by hand","x":445,"y":185,"w":270,"h":84,"type":"human","step":2,"pain":2},
+      {"id":"excel","label":"Excel sheet:\nsingle source of truth","x":755,"y":185,"w":260,"h":84,"type":"data","step":3},
+      {"id":"story","label":"Write the nature\nstory by hand","x":1060,"y":75,"w":240,"h":84,"type":"human","step":4,"pain":4},
+      {"id":"translate","label":"Translate specs\nfor athletes","x":1060,"y":300,"w":240,"h":84,"type":"human","step":4,"pain":4},
+      {"id":"content","label":"Content for\nsellers and ads","x":1320,"y":185,"w":190,"h":84,"type":"data","step":5}],
+     "edges":[{"from":"design","to":"compare","step":2},{"from":"manuf","to":"compare","step":2},{"from":"other","to":"compare","step":2},
+      {"from":"compare","to":"excel","step":3},{"from":"excel","to":"story","step":4},{"from":"excel","to":"translate","step":4},
+      {"from":"story","to":"content","step":5},{"from":"translate","to":"content","step":5}]}</script>
+    <p class="cap" data-step="0">Press &rarr; to follow the work one step at a time.</p>
+    <p class="cap" data-step="1"><b>1.</b> For each new product, for example a trail shoe, specs come from five teams in emails, PDFs and spreadsheets. 94% of the information overlaps between teams.</p>
+    <p class="cap" data-step="2"><b>2. Pain point.</b> About 6% of the specs disagree. Design says the shoe weighs 80 g, manufacturing says 85 g. An expert reads everything and decides each value.</p>
+    <p class="cap" data-step="3"><b>3.</b> The agreed values go into one Excel sheet, the <b>single source of truth</b>: the one place everyone trusts for the final value.</p>
+    <p class="cap" data-step="4"><b>4. Pain points.</b> Experts write a nature story for each product and translate specs into words athletes understand. Each writer does it differently.</p>
+    <p class="cap" data-step="5"><b>5.</b> The result is training content for retail sellers and the advertising team: about one week of work for three experts.</p>
+  </div>
+  <div class="notes"><p>Three minutes. This is the current state report in one picture. Red dashed boxes are pain points: expert time spent reading, comparing and rewriting, not on expert judgement.</p><p>94% overlap and 6% conflict come from the assessment report. 80 g against 85 g is the type of conflict the team showed us; the product is a generic trail shoe.</p></div>
+</section>
+
+<!-- 13 · PAIN POINTS -->
+<section class="slide">
+  <div class="kicker">Step 2 · The case</div>
+  <h2 class="title">Three pain points, each a different kind of problem</h2>
+  <p class="sub">Because the problems differ, one AI tool cannot fix all three. Each one needs its own solution.</p>
+  <div class="body g3" style="margin-top:28px">
+    <div class="card" data-step="1" style="border-top:5px solid var(--red)">
+      <div class="label">1 · Reconcile the specs</div>
+      <div class="row" style="gap:22px;align-items:center"><div class="waffle"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></div>
+      <div><div class="big red" style="font-size:72px">6%</div><p class="t22">of specs conflict</p></div></div>
+      <p style="margin-top:18px"><b>Reconcile</b> means making several sources agree on one final value. A problem of <b>reading and comparing</b>.</p>
+    </div>
+    <div class="card" data-step="2" style="border-top:5px solid var(--amber)">
+      <div class="label">2 · Write the nature story</div>
+      <svg class="svgfull" viewBox="0 0 400 120" aria-hidden="true"><line x1="20" y1="60" x2="380" y2="60" stroke="#2b3530" stroke-width="6"/><circle cx="20" cy="60" r="12" fill="#f5c542"/><circle cx="380" cy="60" r="12" fill="#8fd14f"/><text x="20" y="28" font-size="21" fill="#f5c542">story written</text><text x="380" y="28" text-anchor="end" font-size="21" fill="#8fd14f">in shops</text><text x="200" y="104" text-anchor="middle" font-size="24" font-weight="700" fill="#f1f4f2">7 months</text></svg>
+      <p style="margin-top:10px">A <b>nature story</b> shows the product in real use outdoors: temperature, ground, water, wind. It must say what is <b>new</b> compared with last season. A problem of <b>writing with memory</b>.</p>
+    </div>
+    <div class="card" data-step="3" style="border-top:5px solid var(--violet)">
+      <div class="label">3 · Translate the specs</div>
+      <div class="col" style="gap:10px;align-items:flex-start"><span class="chip mono">membrane: 28,000 mm</span><span class="arrow" style="font-size:30px;align-self:center">&darr;</span><span class="chip" style="border-color:var(--violet)">&ldquo;dry feet in heavy rain&rdquo;</span></div>
+      <p style="margin-top:16px">Athletes do not read spec numbers. Only the experts know the right words. A problem of <b>expert knowledge</b>.</p>
+    </div>
+  </div>
+  <div class="notes"><p>Three minutes. Three different kinds of problem: reading and comparing, writing with memory, and expert knowledge. That is why the solution has three separate features.</p><p>28,000 mm is a waterproof rating: a column of water that high would not push through the fabric. The story and the translation sentence are my own examples of the style.</p></div>
+</section>
+
+<!-- 14 · PROPOSALS -->
+<section class="slide">
+  <div class="kicker">Step 3 · Proposals</div>
+  <h2 class="title">For each pain point we proposed one AI solution</h2>
+  <p class="sub">Every proposal must reduce cost, reduce time, or raise quality. The client then changed the list to fit their priorities.</p>
+  <div class="body" style="gap:30px;margin-top:40px">
+    <div class="row" data-step="1" style="align-items:center"><div class="chip" style="padding:20px 22px;font-size:24px;width:380px;border-color:var(--red)">Reading and comparing spec documents</div><span class="arrow">&rarr;</span><div class="chip" style="padding:20px 22px;font-size:24px;flex:1;border-color:var(--green)"><b>Data Consolidation Intelligence Engine</b></div><span class="pill green">time</span><span class="pill green">quality</span></div>
+    <div class="row" data-step="2" style="align-items:center"><div class="chip" style="padding:20px 22px;font-size:24px;width:380px;border-color:var(--red)">Writing a distinctive story</div><span class="arrow">&rarr;</span><div class="chip" style="padding:20px 22px;font-size:24px;flex:1;border-color:var(--green)"><b>Dynamic Product Differentiator</b></div><span class="pill green">time</span><span class="pill green">quality</span></div>
+    <div class="row" data-step="3" style="align-items:center"><div class="chip" style="padding:20px 22px;font-size:24px;width:380px;border-color:var(--red)">Translating specs for athletes</div><span class="arrow">&rarr;</span><div class="chip" style="padding:20px 22px;font-size:24px;flex:1;border-color:var(--green)"><b>Technical Content Co-Pilot</b></div><span class="pill green">time</span><span class="pill green">quality</span></div>
+    <div class="row" data-step="4" style="align-items:center"><div class="chip" style="padding:20px 22px;font-size:24px;width:380px;border-color:var(--red)">No AI rules, no AI owner</div><span class="arrow">&rarr;</span><div class="chip" style="padding:20px 22px;font-size:24px;flex:1;border-color:var(--amber)"><span><b>AI Governance Program</b>, three workshops on owners, policies and risk</span></div><span class="pill amber">safety</span></div>
+  </div>
+  <div class="notes"><p>Two minutes. These are the real names from the assessment. The fourth proposal is not a system: it fixes the governance gap from Part 1, so the three solutions can be used safely.</p><p>The client asked that a person always approves the final value and the final story. That became a design rule from day one.</p></div>
+</section>
+
+<!-- 15 · DIVIDER PART 3 -->
+<section class="slide divider">
+  <div class="num">03</div>
+  <h2 class="title">Part 3 · Solution design</h2>
+  <p class="sub">How a workflow becomes concrete AI features, and what happens inside each one.</p>
+  <div class="notes"><p>Ten seconds. This is the part most students ask about.</p></div>
+</section>
+
+<!-- 16 · MATRIX -->
+<section class="slide">
+  <div class="kicker">Step 4 · Solution design</div>
+  <h2 class="title">Requests and capabilities combine into features</h2>
+  <p class="sub">A request is what users need. A capability is one thing technology can do. Where a request meets the capabilities it needs, we get a feature.</p>
+  <div class="body" style="margin-top:26px">
+    <table class="tbl" style="font-size:24px">
+      <thead><tr><th style="width:330px">Request from users</th><th>Read documents</th><th>Expert rules</th><th>LLM writing</th><th>Search past content</th><th>Human review</th><th style="width:300px">Feature</th></tr></thead>
+      <tbody>
+        <tr data-step="1"><td>Agree one value per spec</td><td class="green">&#9679;</td><td class="green">&#9679;</td><td class="green">&#9679;</td><td></td><td class="green">&#9679;</td><td><b class="green">Data Consolidation Engine</b></td></tr>
+        <tr data-step="2"><td>Story that shows what is new</td><td class="green">&#9679;</td><td></td><td class="green">&#9679;</td><td class="green">&#9679;</td><td class="green">&#9679;</td><td><b class="green">Product Differentiator</b></td></tr>
+        <tr data-step="3"><td>Explain specs to athletes</td><td></td><td class="green">&#9679;</td><td class="green">&#9679;</td><td></td><td class="green">&#9679;</td><td><b class="green">Technical Content Co-Pilot</b></td></tr>
+      </tbody>
+    </table>
+    <div class="g2" data-step="4" style="margin-top:6px">
+      <p class="def"><b>LLM</b>, large language model: AI that reads and writes text, like ChatGPT or Claude.</p>
+      <p class="def"><b>Reuse:</b> a column used by several rows is built once and shared, here the LLM and human review.</p>
+    </div>
+  </div>
+  <div class="notes"><p>Three minutes. I read row 1 aloud: to agree one value, we must read the documents, apply the experts' rules, let an LLM reason about the conflict, and have a person approve. Four capabilities, one feature.</p><p>Each dot later becomes build tasks in the backlog. That is how a design turns into a time and cost estimate.</p></div>
+</section>
+
+<!-- 17 · FEATURE 1 -->
+<section class="slide">
+  <div class="kicker">Feature 1 · Data Consolidation Intelligence Engine</div>
+  <h2 class="title">Feature 1 finds conflicts and suggests the right value</h2>
+  <p class="sub">A document pipeline reads every file, an LLM proposes a value with its evidence, and an expert makes the final decision.</p>
+  <div class="body flow" style="margin-top:24px;gap:16px">
+    <script type="application/json">{"width":1420,"height":350,"label":"Data consolidation engine","nodes":[
+      {"id":"docs","label":"Emails, PDFs,\nspreadsheets","x":130,"y":70,"w":240,"h":80,"type":"data","step":1},
+      {"id":"extract","label":"Document intelligence:\nread and extract","x":460,"y":70,"w":300,"h":80,"type":"ai","step":2},
+      {"id":"records","label":"One spec record\nper source","x":790,"y":70,"w":250,"h":80,"type":"data","step":2},
+      {"id":"compare","label":"Compare fields,\nfind conflicts","x":1150,"y":70,"w":270,"h":80,"type":"ai","step":3,"pain":3,"painText":"80 g vs 85 g"},
+      {"id":"rules","label":"Expert rules","x":880,"y":185,"w":200,"h":60,"type":"knowledge","step":4},
+      {"id":"llm","label":"LLM suggests a value\nwith its evidence","x":1150,"y":285,"w":300,"h":80,"type":"ai","step":4,"flag":4,"flagText":"suggests 85 g"},
+      {"id":"human","label":"Expert approves\nor edits","x":620,"y":285,"w":250,"h":80,"type":"human","step":5},
+      {"id":"ssot","label":"Single source of\ntruth updated","x":180,"y":285,"w":260,"h":80,"type":"data","step":5}],
+     "edges":[{"from":"docs","to":"extract","step":2},{"from":"extract","to":"records","step":2},{"from":"records","to":"compare","step":3},
+      {"from":"compare","to":"llm","step":4,"label":"conflict"},{"from":"rules","to":"llm","step":4},{"from":"llm","to":"human","step":5},{"from":"human","to":"ssot","step":5}]}</script>
+    <p class="cap" data-step="0">Press &rarr; to follow one season's files through the engine.</p>
+    <p class="cap" data-step="1"><b>1.</b> The inputs are the season's real files from the five teams: emails, PDFs and spreadsheets.</p>
+    <p class="cap" data-step="2"><b>2.</b> <b>Document intelligence</b>, software that reads documents even when the text is free-form, pulls out the fields: weight, membrane, sole. One record per source.</p>
+    <p class="cap" data-step="3"><b>3.</b> The engine compares the records field by field and flags every conflict automatically: design 80 g, manufacturing 85 g.</p>
+    <p class="cap" data-step="4"><b>4.</b> The LLM gets the conflict, the source text and the experts' rules, for example <b>for weight, the manufacturing measurement wins</b>. It suggests 85 g and quotes the line it used.</p>
+    <p class="cap" data-step="5"><b>5.</b> An expert accepts or edits in one click. The value goes into the single source of truth with its source. The expert now judges instead of searching.</p>
+  </div>
+  <div class="notes"><p>Three minutes. The key design choice is step 4: the LLM does not decide freely. It follows rules the experts wrote and must show its evidence, so a person can check it in seconds.</p><p>The weight rule is an example of the type of rule; the assessment report's own example also prefers the manufacturing spec. A pipeline is a fixed chain of processing steps, each feeding the next.</p></div>
+</section>
+
+<!-- 18 · FEATURE 2 -->
+<section class="slide">
+  <div class="kicker">Feature 2 · Dynamic Product Differentiator</div>
+  <h2 class="title">Feature 2 compares past models and writes the story</h2>
+  <p class="sub">It finds what is new about this model, then writes the nature story from a fixed template so every story has the same quality.</p>
+  <div class="body flow" style="margin-top:24px;gap:16px">
+    <script type="application/json">{"width":1420,"height":320,"label":"Product differentiator","nodes":[
+      {"id":"new","label":"New model specs\n(single source of truth)","x":175,"y":75,"w":320,"h":80,"type":"data","step":1},
+      {"id":"past","label":"Past seasons and\nother models","x":175,"y":245,"w":320,"h":80,"type":"knowledge","step":1},
+      {"id":"diff","label":"Find what is\nnew or better","x":560,"y":160,"w":260,"h":80,"type":"ai","step":2,"flag":2,"flagText":"5 g lighter, new sole"},
+      {"id":"gen","label":"LLM writes the story\nfrom the brand template","x":945,"y":160,"w":330,"h":80,"type":"ai","step":3},
+      {"id":"review","label":"Expert\nreview","x":1310,"y":160,"w":180,"h":80,"type":"human","step":4}],
+     "edges":[{"from":"new","to":"diff","step":2},{"from":"past","to":"diff","step":2},{"from":"diff","to":"gen","step":3},{"from":"gen","to":"review","step":4}]}</script>
+    <p class="cap" data-step="0">Press &rarr; to follow one new product.</p>
+    <p class="cap" data-step="1"><b>1.</b> Two inputs: the new model's agreed specs from Feature 1, and the stories and specs of last season's version and of other models a customer could choose instead.</p>
+    <p class="cap" data-step="2"><b>2.</b> The system <b>searches</b> the past content for the most similar products and lists the differences, for example 5 g lighter and a new sole for wet rock.</p>
+    <p class="cap" data-step="3"><b>3.</b> The LLM writes the story from a <b>brand template</b>, a fixed structure the marketing team approved once: temperature, ground, water, wind, and what is new.</p>
+    <p class="cap" data-step="4"><b>4.</b> An expert reviews and edits. Because every story follows the same template, the style is the same across the whole company.</p>
+  </div>
+  <div class="notes"><p>Three minutes. Searching past content and giving it to the LLM is called retrieval: the LLM writes from real past text, not from memory. Without it, stories would be generic and could repeat last year's words.</p><p>This feature reads Feature 1's output, which is why Feature 1 had to come first.</p></div>
+</section>
+
+<!-- 19 · FEATURE 3 -->
+<section class="slide">
+  <div class="kicker">Feature 3 · Technical Content Co-Pilot</div>
+  <h2 class="title">Feature 3 turns specs into words athletes understand</h2>
+  <p class="sub">The experts write the meaning of each spec once, in a dictionary. The LLM uses only that meaning, so it cannot invent a claim.</p>
+  <div class="body flow" style="margin-top:24px;gap:16px">
+    <script type="application/json">{"width":1420,"height":320,"label":"Technical content co-pilot","nodes":[
+      {"id":"spec","label":"Spec: membrane,\n28,000 mm","x":180,"y":75,"w":300,"h":80,"type":"data","step":1},
+      {"id":"dict","label":"Expert dictionary:\n28,000 mm = heavy rain","x":180,"y":245,"w":320,"h":80,"type":"knowledge","step":2},
+      {"id":"llm","label":"LLM writes the sentence\nfor each audience","x":640,"y":160,"w":330,"h":80,"type":"ai","step":2},
+      {"id":"out","label":"\"Dry feet through\nhours of heavy rain\"","x":1100,"y":75,"w":320,"h":80,"type":"data","step":3},
+      {"id":"check","label":"Expert check","x":1100,"y":245,"w":240,"h":64,"type":"human","step":3}],
+     "edges":[{"from":"spec","to":"llm","step":2},{"from":"dict","to":"llm","step":2},{"from":"llm","to":"out","step":3},{"from":"out","to":"check","step":3}]}</script>
+    <p class="cap" data-step="0">Press &rarr; to follow one spec.</p>
+    <p class="cap" data-step="1"><b>1.</b> A technical spec arrives from the single source of truth. An athlete does not know what 28,000 mm means.</p>
+    <p class="cap" data-step="2"><b>2.</b> The system finds the matching entry in the <b>expert dictionary</b>: a table, written by the experts, from each spec value to what it means for the user.</p>
+    <p class="cap" data-step="3"><b>3.</b> The LLM writes a clear sentence from that meaning, in versions for sellers, trainers or ads. An expert checks the draft.</p>
+  </div>
+  <div class="notes"><p>Two minutes. Why a dictionary and not just ask the LLM? The LLM does not know the company's tested claims, and a wrong waterproof claim is a legal and safety problem. The dictionary keeps the knowledge with the experts and makes every product use the same words.</p><p>It also raised data readiness: knowledge that lived in people's heads is now data.</p></div>
+</section>
+
+<!-- 20 · DIVIDER PART 4 -->
+<section class="slide divider">
+  <div class="num">04</div>
+  <h2 class="title">Part 4 · Value and plan</h2>
+  <p class="sub">How we chose what to build first, showed the value in money, planned the work, and picked the size of the first build.</p>
+  <div class="notes"><p>Ten seconds.</p></div>
+</section>
+
+<!-- 21 · PRIORITIZATION -->
+<section class="slide">
+  <div class="kicker">Step 3 · Priorities</div>
+  <h2 class="title">How we chose which solution comes first</h2>
+  <p class="sub">Two yes-or-no checks remove weak ideas. Then we compare business value with complexity, which means how hard it is to build.</p>
+  <div class="body" style="display:grid;grid-template-columns:470px 1fr;gap:40px;margin-top:20px">
+    <svg class="svgfull" viewBox="0 0 470 470" role="img" aria-label="Two gates: supports company strategy, then follows governance rules; a no at either gate drops the idea">
+      <rect x="135" y="0" width="200" height="56" rx="12" fill="#1b2320" stroke="#8b9692" stroke-width="2"/><text x="235" y="35" text-anchor="middle" font-size="22" fill="#f1f4f2">Use case idea</text>
+      <line x1="235" y1="56" x2="235" y2="90" stroke="#8b9692" stroke-width="3"/>
+      <g data-step="1"><polygon points="235,90 345,160 235,230 125,160" fill="rgba(143,209,79,.12)" stroke="#8fd14f" stroke-width="3"/><text x="235" y="154" text-anchor="middle" font-size="21" fill="#f1f4f2">Supports company</text><text x="235" y="180" text-anchor="middle" font-size="21" fill="#f1f4f2">strategy?</text>
+        <line x1="345" y1="160" x2="420" y2="160" stroke="#ff6b6b" stroke-width="3"/><text x="380" y="148" text-anchor="middle" font-size="20" fill="#ff6b6b">no</text><text x="440" y="166" text-anchor="middle" font-size="21" font-weight="700" fill="#ff6b6b">drop</text>
+        <line x1="235" y1="230" x2="235" y2="260" stroke="#8fd14f" stroke-width="3"/><text x="252" y="252" font-size="20" fill="#8fd14f">yes</text></g>
+      <g data-step="2"><polygon points="235,260 345,330 235,400 125,330" fill="rgba(143,209,79,.12)" stroke="#8fd14f" stroke-width="3"/><text x="235" y="324" text-anchor="middle" font-size="21" fill="#f1f4f2">Follows governance</text><text x="235" y="350" text-anchor="middle" font-size="21" fill="#f1f4f2">rules?</text>
+        <line x1="345" y1="330" x2="420" y2="330" stroke="#ff6b6b" stroke-width="3"/><text x="380" y="318" text-anchor="middle" font-size="20" fill="#ff6b6b">no</text><text x="440" y="336" text-anchor="middle" font-size="21" font-weight="700" fill="#ff6b6b">drop</text>
+        <line x1="235" y1="400" x2="235" y2="440" stroke="#8fd14f" stroke-width="3"/><text x="235" y="466" text-anchor="middle" font-size="21" font-weight="700" fill="#8fd14f">rank by value and complexity &rarr;</text></g>
+    </svg>
+    <svg class="svgfull" viewBox="0 0 860 470" role="img" aria-label="Value against complexity: all three are high value; the differentiator has low complexity, the engine and co-pilot medium">
+      <rect x="80" y="10" width="760" height="400" rx="10" fill="#141a17" stroke="#2b3530" stroke-width="2"/>
+      <line x1="460" y1="10" x2="460" y2="410" stroke="#2b3530" stroke-width="2"/><line x1="80" y1="210" x2="840" y2="210" stroke="#2b3530" stroke-width="2"/>
+      <text x="270" y="44" text-anchor="middle" font-size="21" fill="#8fd14f">high value, easier</text><text x="650" y="44" text-anchor="middle" font-size="21" fill="#f5c542">high value, harder</text>
+      <text x="460" y="452" text-anchor="middle" font-size="22" fill="#a7b1ac">complexity &rarr;</text><text x="40" y="210" text-anchor="middle" font-size="22" fill="#a7b1ac" transform="rotate(-90 40 210)">business value &rarr;</text>
+      <g data-step="3"><circle cx="300" cy="110" r="34" fill="#8fd14f"/><text x="300" y="170" text-anchor="middle" font-size="22" font-weight="600" fill="#f1f4f2">Differentiator</text>
+        <circle cx="560" cy="105" r="34" fill="#38bdf8"/><text x="560" y="165" text-anchor="middle" font-size="22" font-weight="600" fill="#f1f4f2">Data engine</text>
+        <circle cx="720" cy="130" r="34" fill="#b794ff"/><text x="720" y="190" text-anchor="middle" font-size="22" font-weight="600" fill="#f1f4f2">Co-pilot</text></g>
+      <g data-step="4"><rect x="110" y="250" width="700" height="130" rx="14" fill="#1b2320" stroke="#38bdf8" stroke-width="2"/>
+        <text x="135" y="295" font-size="23" font-weight="700" fill="#38bdf8">Yet the data engine came first.</text>
+        <text x="135" y="330" font-size="21" fill="#a7b1ac">The other two read its agreed specs, so they depend on it.</text>
+        <text x="135" y="360" font-size="21" fill="#a7b1ac">Priority = value, complexity, and what depends on what.</text></g>
+    </svg>
+  </div>
+  <div class="notes"><p>Two minutes. The two gates and the value and complexity ratings come from the assessment report. The surprise is step 4: the easiest feature did not come first, because of the dependency on clean data.</p></div>
+</section>
+
+<!-- 22 · BUSINESS CASE -->
+<section class="slide">
+  <div class="kicker">Step 3 · Business case</div>
+  <h2 class="title">The business case: hours saved &times; cost per hour</h2>
+  <p class="sub">We use the client's own numbers, so every manager can check every figure.</p>
+  <div class="body" style="display:grid;grid-template-columns:1fr 470px;gap:44px;align-items:center;margin-top:24px">
+    <div class="col" style="gap:22px">
+      <div class="row" data-step="1" style="align-items:center;gap:14px"><span class="chip">3 experts</span><span class="arrow" style="font-size:30px">&times;</span><span class="chip">5 days</span><span class="arrow" style="font-size:30px">&times;</span><span class="chip">8 hours</span><span class="arrow" style="font-size:30px">=</span><span class="chip" style="border-color:var(--red)"><b>120 hours</b></span><span class="arrow" style="font-size:30px">&times; $50 =</span><span class="chip" style="border-color:var(--red)"><b>$6,000</b></span></div>
+      <div class="row" data-step="2" style="align-items:center;gap:14px"><span class="chip">3 experts</span><span class="arrow" style="font-size:30px">&times;</span><span class="chip">1 day</span><span class="arrow" style="font-size:30px">&times;</span><span class="chip">8 hours</span><span class="arrow" style="font-size:30px">=</span><span class="chip" style="border-color:var(--green)"><b>24 hours</b></span><span class="arrow" style="font-size:30px">&times; $50 =</span><span class="chip" style="border-color:var(--green)"><b>$1,200</b></span></div>
+      <div class="card" data-step="4" style="border-left:5px solid var(--amber)"><h3>To finish the case</h3><p>Yearly saving = saving per season &times; seasons per year. <b>Payback time</b> = build cost &divide; yearly saving: how long until the project has paid for itself.</p></div>
+    </div>
+    <div class="card" data-step="3" style="text-align:center;padding:40px">
+      <div class="label">Saved every season</div>
+      <div class="big green" style="font-size:110px">$4,800</div>
+      <p class="t26" style="margin-top:16px">96 expert hours · 80%</p>
+      <p style="margin-top:18px">plus one standard for every story, measured with an expert checklist</p>
+    </div>
+  </div>
+  <div class="notes"><p>Three minutes. $50 is the cost of one expert hour that the client gave us; I assume 8-hour days. I do the multiplication on the board.</p><p>We avoid claims like "AI makes you ten times faster". We show the hours of their own people, which a manager can check.</p></div>
+</section>
+
+<!-- 23 · ROADMAP -->
+<section class="slide">
+  <div class="kicker">Step 5 · Backlog and roadmap</div>
+  <h2 class="title">Features become tasks, and tasks become a roadmap</h2>
+  <p class="sub">The backlog is the list of all build tasks, each with days and a role. The roadmap puts the work in order, quarter by quarter.</p>
+  <div class="body g2" style="gap:50px;margin-top:26px">
+    <div class="col" style="gap:16px">
+      <div class="label">Backlog · days per feature (example)</div>
+      <div class="col" style="gap:12px">
+        <div class="row" style="align-items:center"><span class="t22" style="width:200px">Data engine</span><div class="hbar" data-step="1" style="width:400px;background:var(--cyan);height:48px">25 days</div></div>
+        <div class="row" style="align-items:center"><span class="t22" style="width:200px">Differentiator</span><div class="hbar" data-step="1" style="width:224px;background:var(--green);height:48px">14</div></div>
+        <div class="row" style="align-items:center"><span class="t22" style="width:200px">Co-pilot</span><div class="hbar" data-step="1" style="width:112px;background:var(--violet);height:48px">7</div></div>
+        <div class="row" style="align-items:center"><span class="t22" style="width:200px">Security, deploy</span><div class="hbar" data-step="1" style="width:128px;background:var(--grey);height:48px">8</div></div>
+      </div>
+      <p class="t20 muted">Example numbers to show the method, not the client's estimate. Days &times; daily cost of each role = build cost.</p>
+    </div>
+    <div class="col" style="gap:16px">
+      <div class="label">Roadmap from the assessment</div>
+      <div style="display:grid;grid-template-columns:200px repeat(3,1fr);gap:10px 8px;align-items:center;font-size:22px">
+        <span></span><span class="muted" style="text-align:center">Q1</span><span class="muted" style="text-align:center">Q2</span><span class="muted" style="text-align:center">Q3</span>
+        <span>Governance</span><div class="hbar" data-step="2" style="grid-column:2/3;height:48px;background:var(--amber)"></div><span></span><span></span>
+        <span>Data engine</span><div class="hbar" data-step="2" style="grid-column:2/3;height:48px;background:var(--cyan)"></div><span></span><span></span>
+        <span>Differentiator</span><span></span><div class="hbar" data-step="3" style="grid-column:3/4;height:48px;background:var(--green)"></div><span></span>
+        <span>Co-pilot</span><span></span><span></span><div class="hbar" data-step="4" style="grid-column:4/5;height:48px;background:var(--violet)"></div>
+      </div>
+      <p class="t22 muted" data-step="4">Governance and data first, because everything else depends on them. After the client accepts the roadmap, building starts.</p>
+    </div>
+  </div>
+  <div class="notes"><p>Three minutes. The backlog comes straight from the matrix: each dot becomes tasks. The day counts here are mine, to show the method. The quarter order is the real one from the assessment roadmap.</p></div>
+</section>
+
+<!-- 24 · POC MVP OPT -->
+<section class="slide">
+  <div class="kicker">Step 6 · First build</div>
+  <h2 class="title">PoC, MVP or optimization: the size of the first build</h2>
+  <p class="sub">The client's maturity level decides which one we start with. A bigger first build is not better; the right size is.</p>
+  <div class="body" style="margin-top:24px">
+    <svg class="svgfull" viewBox="0 0 1420 470" role="img" aria-label="Three builds of increasing size along the maturity levels">
+      <line x1="40" y1="440" x2="1400" y2="440" stroke="#2b3530" stroke-width="4"/><text x="1400" y="470" text-anchor="end" font-size="21" fill="#a7b1ac">maturity level &rarr;</text>
+      <text x="40" y="470" font-size="21" fill="#a7b1ac">1 Exploration</text><text x="560" y="470" font-size="21" fill="#a7b1ac">2 to 3</text><text x="1000" y="470" font-size="21" fill="#a7b1ac">4 to 5</text>
+      <g data-step="1"><rect x="40" y="250" width="400" height="180" rx="16" fill="rgba(143,209,79,.10)" stroke="#8fd14f" stroke-width="3"/>
+        <text x="64" y="292" font-size="30" font-weight="700" fill="#8fd14f">PoC</text><text x="64" y="322" font-size="21" fill="#f1f4f2">proof of concept</text>
+        <text x="64" y="360" font-size="21" fill="#a7b1ac">A small test on real data: can AI</text><text x="64" y="388" font-size="21" fill="#a7b1ac">do this task well enough?</text><text x="64" y="416" font-size="21" fill="#a7b1ac">2 to 6 weeks</text></g>
+      <g data-step="2"><rect x="490" y="150" width="440" height="280" rx="16" fill="rgba(56,189,248,.10)" stroke="#38bdf8" stroke-width="3"/>
+        <text x="514" y="192" font-size="30" font-weight="700" fill="#38bdf8">MVP</text><text x="514" y="222" font-size="21" fill="#f1f4f2">minimum viable product</text>
+        <text x="514" y="262" font-size="21" fill="#a7b1ac">The smallest real product that</text><text x="514" y="290" font-size="21" fill="#a7b1ac">real users use in their daily work.</text><text x="514" y="318" font-size="21" fill="#a7b1ac">2 to 4 months</text></g>
+      <g data-step="3"><rect x="980" y="40" width="420" height="390" rx="16" fill="rgba(183,148,255,.10)" stroke="#b794ff" stroke-width="3"/>
+        <text x="1004" y="82" font-size="30" font-weight="700" fill="#b794ff">Optimization</text><text x="1004" y="112" font-size="21" fill="#f1f4f2">of a system in production</text>
+        <text x="1004" y="152" font-size="21" fill="#a7b1ac">Improve an AI system that already</text><text x="1004" y="180" font-size="21" fill="#a7b1ac">runs every day: cost, speed,</text><text x="1004" y="208" font-size="21" fill="#a7b1ac">accuracy, monitoring. Ongoing.</text></g>
+      <g data-step="4"><rect x="70" y="150" width="340" height="56" rx="28" fill="#ff6b6b"/><text x="240" y="186" text-anchor="middle" font-size="22" font-weight="700" fill="#0c100e">Arc'teryx started here</text><path d="M240,234 l-16,-26 h32 z" fill="#ff6b6b"/></g>
+    </svg>
+  </div>
+  <div class="notes"><p>Three minutes. A common mistake: a company at level 1 asks for a full production system. A PoC first is far cheaper than a failed big project. Production means the system runs every day for real users, with monitoring and support.</p><p>Arc'teryx was at Exploration, so the right first build was a PoC of the data engine on one season's real files.</p></div>
+</section>
+
+<!-- 25 · READINESS AFTER -->
+<section class="slide">
+  <div class="kicker">Back to readiness</div>
+  <h2 class="title">The project also raised the client's AI maturity</h2>
+  <p class="sub">Each solution improved one or more of the five dimensions, so the next AI project does not start from zero.</p>
+  <div class="body" style="gap:14px;margin-top:26px">
+    <div style="display:grid;grid-template-columns:200px 1fr 60px 1fr;gap:14px 16px;align-items:center;font-size:22px">
+      <span class="label" style="margin:0">Dimension</span><span class="label" style="margin:0">Before</span><span></span><span class="label" style="margin:0">After the project</span>
+      <b data-step="1">Data</b><span class="chip" data-step="1" style="border-color:var(--red)">Spread across 5 teams, 6% conflicts</span><span class="arrow" data-step="1">&rarr;</span><span class="chip" data-step="1" style="border-color:var(--green)">One trusted source; expert knowledge stored as data</span>
+      <b data-step="2">Technology</b><span class="chip" data-step="2" style="border-color:var(--red)">No AI tools</span><span class="arrow" data-step="2">&rarr;</span><span class="chip" data-step="2" style="border-color:var(--green)">A document pipeline and LLM access to reuse</span>
+      <b data-step="3">Talent</b><span class="chip" data-step="3" style="border-color:var(--red)">Knowledge in a few heads</span><span class="arrow" data-step="3">&rarr;</span><span class="chip" data-step="3" style="border-color:var(--green)">Experts write rules and review AI output</span>
+      <b data-step="4">Governance</b><span class="chip" data-step="4" style="border-color:var(--red)">No policies, no AI team</span><span class="arrow" data-step="4">&rarr;</span><span class="chip" data-step="4" style="border-color:var(--green)">Owners, policies, a fixed human approval</span>
+      <b data-step="5">Strategy</b><span class="chip" data-step="5" style="border-color:var(--red)">First ideas, small resources</span><span class="arrow" data-step="5">&rarr;</span><span class="chip" data-step="5" style="border-color:var(--green)">A measured result and a case for the next project</span>
+    </div>
+  </div>
+  <div class="notes"><p>Two minutes. The left column is the assessment's real observations; the right column is what each solution built. Together they move the client toward the Experimentation target from Part 1.</p></div>
+</section>
+
+<!-- 26 · TAKEAWAYS -->
+<section class="slide">
+  <div class="kicker">What to remember</div>
+  <h2 class="title">Three ideas to take with you</h2>
+  <p class="sub">They apply to any company and any workflow, not only to product content.</p>
+  <div class="body g3" style="margin-top:34px">
+    <div class="card" data-step="1" style="border-top:6px solid var(--cyan)"><div class="big cyan" style="font-size:64px">01</div><h3 style="margin-top:18px">Start from the workflow, not the model</h3><p>Watch the real work, find the pain points, then choose the technology.</p></div>
+    <div class="card" data-step="2" style="border-top:6px solid var(--amber)"><div class="big amber" style="font-size:64px">02</div><h3 style="margin-top:18px">Expert knowledge makes AI correct</h3><p>Rules, dictionaries and human review turn a general LLM into a reliable tool.</p></div>
+    <div class="card" data-step="3" style="border-top:6px solid var(--green)"><div class="big green" style="font-size:64px">03</div><h3 style="margin-top:18px">Show value the client can check</h3><p>Hours, money and quality in the client's own numbers win the decision.</p></div>
+  </div>
+  <div class="notes"><p>Two minutes. If there is time, I ask the room to name a workflow they know, for example course registration, and we place one pain point on the matrix from Part 3.</p></div>
+</section>
+
+<!-- 27 · THANK YOU -->
+<section class="slide" style="justify-content:center">
+  <div class="kicker">Thank you</div>
+  <h2 class="title" style="font-size:90px;margin-top:24px">Questions</h2>
+  <p class="sub" style="font-size:32px">Readiness &rarr; discovery &rarr; solution design &rarr; business case and roadmap &rarr; first build.</p>
+  <div class="notes"><p>Open questions.</p></div>
+</section>
+
+</div></div>
+<script src="deck.js?v=5"></script>
+</body>
+</html>

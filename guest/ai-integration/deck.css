@@ -1,0 +1,111 @@
+/* AI Integration in the Market · standalone keynote deck */
+:root{
+  --bg:#0c100e; --panel:#141a17; --panel2:#1b2320; --line:#2b3530;
+  --text:#f1f4f2; --muted:#a7b1ac; --dim:#6f7a75;
+  --green:#8fd14f; --green-d:#4f8a24; --cyan:#38bdf8; --violet:#b794ff;
+  --amber:#f5c542; --red:#ff6b6b; --grey:#8b9692;
+  --head:'Space Grotesk',system-ui,sans-serif; --sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#040605;overflow:hidden}
+body{font-family:var(--sans);color:var(--text)}
+.stage{position:fixed;inset:0;display:grid;place-items:center}
+.deck{width:1600px;height:900px;position:absolute;left:50%;top:50%;transform-origin:center center}
+.slide{position:absolute;inset:0;background:var(--bg);padding:64px 90px 84px;display:none;flex-direction:column;overflow:hidden}
+.slide.active{display:flex}
+.slide::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(900px 500px at 100% 0%,rgba(143,209,79,.07),transparent 60%)}
+
+/* type */
+.kicker{font:600 20px/1 var(--head);letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+.title{font:700 52px/1.08 var(--head);margin:16px 0 0;letter-spacing:-.01em;max-width:1400px}
+.sub{font:400 27px/1.4 var(--sans);color:var(--muted);margin:14px 0 0;max-width:1300px}
+.body{flex:1;min-height:0;margin-top:36px;display:flex;flex-direction:column;gap:24px;position:relative}
+p{margin:0}
+b,strong{color:var(--text);font-weight:600}
+.muted{color:var(--muted)} .green{color:var(--green)} .red{color:var(--red)} .cyan{color:var(--cyan)} .amber{color:var(--amber)} .violet{color:var(--violet)}
+.t20{font-size:20px} .t22{font-size:22px} .t24{font-size:24px} .t26{font-size:26px} .t30{font-size:30px}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+
+/* footer */
+.foot{position:absolute;left:90px;right:90px;bottom:30px;display:flex;justify-content:space-between;font:500 20px/1 var(--sans);color:var(--dim)}
+.bar{position:absolute;left:0;bottom:0;height:5px;background:var(--green);transition:width .4s}
+
+/* layout */
+.row{display:flex;gap:24px;align-items:stretch}
+.col{display:flex;flex-direction:column;gap:20px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:26px 28px}
+.card h3{font:600 28px/1.2 var(--head);margin:0 0 10px}
+.card p{font-size:23px;line-height:1.4;color:var(--muted)}
+.label{font:600 20px/1 var(--head);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.big{font:700 96px/1 var(--head);letter-spacing:-.02em}
+.pill{display:inline-block;font:600 20px/1 var(--sans);padding:9px 16px;border-radius:999px;border:1.5px solid currentColor}
+.def{font-size:22px;color:var(--muted);border-left:3px solid var(--green);padding:4px 0 4px 16px;line-height:1.45}
+.def b{color:var(--green)}
+
+/* steps */
+[data-step]{transition:opacity .45s ease,transform .45s ease}
+[data-step]:not(.on){opacity:0;transform:translateY(14px)}
+.flow [data-step]:not(.on){opacity:.10;transform:none}
+.cap{display:none;font-size:24px;line-height:1.45;color:var(--muted)}
+.cap.now{display:block}
+.cap b{color:var(--text)}
+
+/* divider */
+.slide.divider{justify-content:center}
+.divider .num{font:700 260px/0.8 var(--head);color:transparent;-webkit-text-stroke:2px var(--green);opacity:.9}
+.divider .title{font-size:76px;margin-top:30px}
+.divider .sub{font-size:32px}
+
+/* tables */
+table.tbl{width:100%;border-collapse:collapse;font-size:23px}
+.tbl th{text-align:left;font:600 20px/1.2 var(--head);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);padding:0 16px 14px;border-bottom:2px solid var(--line)}
+.tbl td{padding:15px 16px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted);line-height:1.35}
+.tbl td:first-child{color:var(--text);font-weight:600}
+
+/* flow svg */
+.flow svg{width:100%;height:auto;display:block;overflow:visible}
+.flow .nd rect{rx:14;stroke-width:2.5}
+.flow .nd text{font:500 22px var(--sans);fill:var(--text)}
+.flow .ed path{fill:none;stroke:var(--grey);stroke-width:2.5}
+.flow .ed.now path{stroke:var(--green);stroke-dasharray:10 8;animation:dash 1s linear infinite}
+.flow .ed text{font:500 20px var(--sans);fill:var(--muted)}
+@keyframes dash{to{stroke-dashoffset:-36}}
+.flow .badge rect{rx:14}
+.flow .badge text{font:700 20px var(--sans);fill:#0c100e}
+.legend{display:flex;gap:28px;flex-wrap:wrap;font-size:20px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:10px}
+.legend i{width:22px;height:16px;border-radius:5px;border:2.5px solid;display:inline-block}
+
+/* notes drawer */
+.notes{display:none}
+#drawer{position:fixed;left:0;right:0;bottom:0;max-height:40vh;overflow:auto;background:#111714ee;border-top:2px solid var(--green);
+  padding:18px 28px;font:18px/1.5 var(--sans);color:#dfe6e2;transform:translateY(100%);transition:transform .3s;z-index:10}
+#drawer.open{transform:none}
+#drawer p{margin:0 0 8px}
+#nav{position:fixed;right:18px;bottom:14px;display:flex;gap:8px;z-index:11;opacity:.35;transition:opacity .2s}
+#nav:hover{opacity:1}
+#nav button{background:#1b2320;color:#dfe6e2;border:1px solid #2b3530;border-radius:8px;padding:6px 12px;font:14px var(--sans);cursor:pointer}
+
+@media print{
+  html,body{overflow:visible;height:auto;background:#fff}
+  .stage{position:static;display:block} .deck{transform:none!important}
+  .slide{display:flex!important;position:relative;page-break-after:always}
+  [data-step]{opacity:1!important;transform:none!important}
+  #nav,#drawer{display:none}
+}
+
+/* growing bars and chips */
+.hbar{height:64px;border-radius:12px;display:flex;align-items:center;padding:0 22px;font:600 26px var(--head);color:#0c100e;transform-origin:left center;transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .4s}
+.hbar[data-step]:not(.on){transform:scaleX(0);opacity:1}
+.chip{display:inline-flex;align-items:center;gap:10px;font:500 22px/1.2 var(--sans);padding:12px 18px;border-radius:14px;background:var(--panel2);border:1.5px solid var(--line)}
+.arrow{font:700 40px/1 var(--head);color:var(--green);align-self:center}
+.waffle{display:grid;grid-template-columns:repeat(10,22px);gap:5px}
+.waffle i{width:22px;height:22px;border-radius:5px;background:#2c3a33;display:block}
+.waffle i.x{background:var(--red)}
+.svgfull{width:100%;height:auto;display:block;overflow:visible}
+.svgfull text{font-family:var(--sans)}
+.flow .badge:not(.on){opacity:0}
