@@ -250,12 +250,11 @@ SELECT ?product WHERE {
 
 <!-- ==================================================================== 13 -->
 <section class="slide" data-label="Picking the closest examples" data-section="Grounding" data-minutes="3">
-  <div class="lu-eyebrow">For &ldquo;How many orders did carrier V44_3 carry?&rdquo;: the words it shares with each example</div>
-  <h2 class="lu-h2" style="max-width:66ch">The three with most shared words go into the prompt: 1, 2 and 4</h2>
+  <div class="lu-eyebrow">Grounding, part 3 · retrieval: which 3 of the 6 examples go into the prompt</div>
+  <h2 class="lu-h2" style="max-width:90ch">For &ldquo;How many orders did carrier V44_3 carry?&rdquo;, the closest examples are 1, 2 and 4</h2>
 
-  <table class="lu-table"><thead><tr><th>Example</th><th>Its question</th><th>Shared words</th></tr></thead><tbody><tr><td><b>1</b></td><td>Which orders did carrier V44_3 carry, with their service level?</td><td><b>4</b>: carrier, carry, orders, v44_3</td></tr><tr><td><b>2</b></td><td>How many orders and how many late orders does each carrier have?</td><td><b>2</b>: carrier, orders</td></tr><tr><td><b>4</b></td><td>How many orders are there in total, late ones included?</td><td><b>1</b>: orders</td></tr><tr><td>6</td><td>How many orders did customer V555_15 place with service level DTP?</td><td>1: orders (a tie, later in the file)</td></tr><tr><td>3, 5</td><td>Which products does plant PLANT08 make? · Which ports does ...</td><td>0</td></tr></tbody></table>
-  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Retrieval</span><p class="lu-sub">Picking the examples closest to the question is <b>retrieval</b>. Here we count shared words, ignoring common ones (how, many, did). sparql-llm compares meanings instead, with embeddings.</p></div>
-  <p class="lu-caption lu-autodefs lu-autodefs--tight" style="font-size:0.72em;margin-top:0;line-height:1.25"><span data-auto="1"><b>sparql-llm</b> SIB&#x27;s Python library for text to SPARQL: VoID, retrieved examples, validation and repair.</span></p>
+  <table class="lu-table"><thead><tr><th>Example</th><th>Its question</th><th>Words it shares with the question</th></tr></thead><tbody><tr><td><b>1</b></td><td>Which orders did carrier V44_3 carry, with their service level?</td><td><b>4</b>: carrier, carry, orders, v44_3</td></tr><tr><td><b>2</b></td><td>How many orders and how many late orders does each carrier have?</td><td><b>2</b>: carrier, orders</td></tr><tr><td><b>4</b></td><td>How many orders are there in total, late ones included?</td><td><b>1</b>: orders</td></tr><tr><td>6</td><td>How many orders did customer V555_15 place with service level DTP?</td><td>1: orders (a tie, later in the file)</td></tr><tr><td>3, 5</td><td>Which products does plant PLANT08 make? · Which ports does ...</td><td>0</td></tr></tbody></table>
+  <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">Retrieval: why and how</span><p class="lu-sub">Choosing the examples closest to the question is <b>retrieval</b>. A real system has hundreds of examples, too many for one prompt, so it keeps the closest. They help most: example 1's query already uses <code>ul:carriedBy</code>, the property this question needs. Here closeness is the number of shared words, ignoring common ones (how, many, did).</p></div>
   <template data-notes><p>Three minutes. Real output of <code>show_prompt.py</code>: <code>examples picked: 1, 2, 4</code>. Example 1 is almost the question itself, which is why test questions and examples must never be the same (next slide).</p></template>
 </section>
 
@@ -496,6 +495,7 @@ answer: 1 row
       <div class="lu-callout lu-callout--neutral"><span class="lu-callout__label">What the winner does</span><p class="lu-sub">SPARQL-LLM: VoID, retrieved examples, validation and repair. The same four parts as the lab, done on a much larger scale.</p></div>
     </div>
   </div>
+  <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>sparql-llm</b> SIB&#x27;s Python library for text to SPARQL: VoID, retrieved examples, validation and repair.</span></p>
   <template data-notes><p>Three minutes. Results published 2026-05-13 at text2sparql.aksw.org (datasets DB26 and CK26). In 2025 the organisers reported a plain Qwen2.5 7B model at 0.129 on DBpedia: grounding is most of the difference.</p></template>
 </section>
 
