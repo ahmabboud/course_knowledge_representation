@@ -168,11 +168,11 @@
   <div class="lu-eyebrow">VoID · what it is for</div>
   <h2 class="lu-h2" style="max-width:66ch">VoID is a graph's own short description of what it contains</h2>
 
-  <p class="lu-sub" style="max-width:70ch;margin-top:var(--lu-s2)"><b>VoID</b> (Vocabulary of Interlinked Datasets) is a W3C standard (2011) for describing a dataset in RDF: where to query it, how big it is, which classes and properties it uses and how often. The ontology says what <i>may</i> be in the graph; VoID says what <i>is</i> in it, with counts. In our system one file, <code>void.ttl</code>, does three jobs:</p>
+  <p class="lu-sub" style="max-width:70ch;margin-top:var(--lu-s2)"><b>VoID</b> (Vocabulary of Interlinked Datasets) is a W3C standard (2011) for describing a dataset in RDF: where to query it, how big it is, which classes and properties it uses and how often. The ontology says what <i>may</i> be in the graph; VoID says what <i>is</i> in it, with counts. VoID itself does nothing: it is a file, <code>void.ttl</code>, and our code reads it for two jobs. A third is a habit you can add.</p>
   <div class="lu-cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:var(--lu-s3)">
-    <div class="lu-card"><span class="lu-card__label">Use 1 · Part 2</span><h3 class="lu-h3">Tell the model what exists</h3><p class="lu-sub">The real classes and properties, and their counts, go into the prompt. The prompt could never hold 135,841 triples.</p></div>
-    <div class="lu-card"><span class="lu-card__label">Use 2 · Part 3</span><h3 class="lu-h3">Check the model's query</h3><p class="lu-sub">Every class and property in a query must appear in VoID. <code>ul:shippedBy</code> does not, so it is caught.</p></div>
-    <div class="lu-card"><span class="lu-card__label">Use 3 · Part 5</span><h3 class="lu-h3">Notice when data changes</h3><p class="lu-sub">Compare this week's counts with last week's. A jump means the data or the mapping changed.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Use 1 · Part 2 · in the lab</span><h3 class="lu-h3">Tell the model what exists</h3><p class="lu-sub">The code reads the classes, properties and counts from VoID and puts them in the prompt. The prompt could never hold 135,841 triples.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Use 2 · Part 3 · in the lab</span><h3 class="lu-h3">Check the model's query</h3><p class="lu-sub"><code>check.py</code> looks up each <code>ul:</code> property of the query in VoID. <code>ul:shippedBy</code> is not there, so it is caught. Classes: only after lab task Y2.</p></div>
+    <div class="lu-card"><span class="lu-card__label">Use 3 · Part 5 · not in the lab</span><h3 class="lu-h3">Notice when data changes</h3><p class="lu-sub">Run <code>make_void.py</code> again each week and compare the counts. A jump means the data or the mapping changed.</p></div>
   </div>
   <p class="lu-caption lu-autodefs" style="margin-top:var(--lu-s2);line-height:1.25"><span data-auto="1"><b>VoID</b> Vocabulary of Interlinked Datasets: a small RDF description of a graph&#x27;s classes, properties and counts.</span></p>
   <template data-notes><p>Three minutes. VoID is a W3C Interest Group Note, "Describing Linked Datasets with the VoID Vocabulary", 3 March 2011. Data catalogues and federated query tools use it to find which endpoint holds which data; we use its statistics part. The three uses come back in Parts 2, 3 and 5.</p></template>
@@ -322,7 +322,7 @@ Question: How many orders did carrier V44_3 carry?</code></pre></div>
 <!-- ==================================================================== 18 -->
 <section class="slide" data-label="Check before running" data-section="Check and repair" data-minutes="4">
   <div class="lu-eyebrow">VoID use 2 · checking a query before it runs · a real run of check.py</div>
-  <h2 class="lu-h2">Two tests: is it SPARQL, and does every term exist in void.ttl?</h2>
+  <h2 class="lu-h2">Two tests: is it SPARQL, and is every ul: property listed in void.ttl?</h2>
   <div class="lu-split">
     <div class="lu-stack">
       <div class="lu-code lu-code--sm" data-name="broken.sparql · a query a model could write"><pre><code>SELECT (COUNT(?order) AS ?n) WHERE {
@@ -536,7 +536,7 @@ answer: 1 row
   <div class="lu-eyebrow">Four things that break silently, and the signal for each</div>
   <h2 class="lu-h2" style="max-width:66ch">Every signal is something you already built</h2>
 
-  <table class="lu-table"><thead><tr><th>What breaks</th><th>How you notice</th><th>Session</th></tr></thead><tbody><tr><td>The data drifts</td><td>class counts move: compare today's void.ttl with last week's</td><td>7</td></tr><tr><td>A mapping breaks</td><td>a renamed column: fewer triples, a jump in SHACL results</td><td>4, 5</td></tr><tr><td>The model changes</td><td>the provider updates it: rerun evaluate.py, record model and date</td><td>7</td></tr><tr><td>A query is too slow</td><td>set a timeout; Session 2's <code>NOT EXISTS</code> version of Q6 took 172 s</td><td>2</td></tr></tbody></table>
+  <table class="lu-table"><thead><tr><th>What breaks</th><th>How you notice</th><th>Session</th></tr></thead><tbody><tr><td>The data changes</td><td>class counts move: compare today's void.ttl with last week's (a habit, not built in the lab)</td><td>7</td></tr><tr><td>A mapping breaks</td><td>a renamed column: fewer triples, a jump in SHACL results</td><td>4, 5</td></tr><tr><td>The model changes</td><td>the provider updates it: rerun evaluate.py, record model and date</td><td>7</td></tr><tr><td>A query is too slow</td><td>set a timeout; Session 2's <code>NOT EXISTS</code> version of Q6 took 172 s</td><td>2</td></tr></tbody></table>
   <div class="lu-callout lu-callout--concept"><span class="lu-callout__label">Defined on this slide</span><dl class="lu-defs"><dt>Data drift</dt><dd>The data changing over time until what was true of it no longer is.</dd></dl></div>
   <template data-notes><p>Three minutes. The test set is a monitor too: run it every week, and a drop in F1 says something changed, in the data, the mapping or the model. References: Dimou and others, ISWC 2015, on assessing mapping quality.</p></template>
 </section>
