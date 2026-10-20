@@ -109,3 +109,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:23px}
 .svgfull{width:100%;height:auto;display:block;overflow:visible}
 .svgfull text{font-family:var(--sans)}
 .flow .badge:not(.on){opacity:0}
+
+/* stacked images: only the current step is visible */
+.layer[data-step]:not(.now){opacity:0}
