@@ -261,11 +261,11 @@
     </div>
     <div class="card" data-step="3" style="border-top:5px solid var(--violet)">
       <div class="label">3 · Translate the specs</div>
-      <div class="col" style="gap:10px;align-items:flex-start"><span class="chip mono">membrane: 28,000 mm</span><span class="arrow" style="font-size:30px;align-self:center">&darr;</span><span class="chip" style="border-color:var(--violet)">&ldquo;dry feet in heavy rain&rdquo;</span></div>
+      <div class="col" style="gap:10px;align-items:flex-start"><span class="chip mono">outsole lugs: 5 mm</span><span class="arrow" style="font-size:30px;align-self:center">&darr;</span><span class="chip" style="border-color:var(--violet)">&ldquo;sure grip on mud and wet rock&rdquo;</span></div>
       <p style="margin-top:16px">Athletes do not read spec numbers. Only the experts know the right words. A problem of <b>expert knowledge</b>.</p>
     </div>
   </div>
-  <div class="notes"><p>Three minutes. Three different kinds of problem: reading and comparing, writing with memory, and expert knowledge. That is why the solution has three separate features.</p><p>28,000 mm is a waterproof rating: a column of water that high would not push through the fabric. The story and the translation sentence are my own examples of the style.</p></div>
+  <div class="notes"><p>Three minutes. Three different kinds of problem: reading and comparing, writing with memory, and expert knowledge. That is why the solution has three separate features.</p></div>
 </section>
 
 <!-- 14 · PROPOSALS -->
@@ -368,18 +368,18 @@
   <p class="sub">The experts write the meaning of each spec once, in a dictionary. The LLM uses only that meaning, so it cannot invent a claim.</p>
   <div class="body flow" style="margin-top:24px;gap:16px">
     <script type="application/json">{"width":1420,"height":320,"label":"Technical content co-pilot","nodes":[
-      {"id":"spec","label":"Spec: membrane,\n28,000 mm","x":180,"y":75,"w":300,"h":80,"type":"data","step":1},
-      {"id":"dict","label":"Expert dictionary:\n28,000 mm = heavy rain","x":180,"y":245,"w":320,"h":80,"type":"knowledge","step":2},
+      {"id":"spec","label":"Spec: outsole lugs,\n5 mm","x":180,"y":75,"w":300,"h":80,"type":"data","step":1},
+      {"id":"dict","label":"Expert dictionary:\n5 mm lugs = mud grip","x":180,"y":245,"w":320,"h":80,"type":"knowledge","step":2},
       {"id":"llm","label":"LLM writes the sentence\nfor each audience","x":640,"y":160,"w":330,"h":80,"type":"ai","step":2},
-      {"id":"out","label":"\"Dry feet through\nhours of heavy rain\"","x":1100,"y":75,"w":320,"h":80,"type":"data","step":3},
+      {"id":"out","label":"\"Sure grip on mud\nand wet rock\"","x":1100,"y":75,"w":320,"h":80,"type":"data","step":3},
       {"id":"check","label":"Expert check","x":1100,"y":245,"w":240,"h":64,"type":"human","step":3}],
      "edges":[{"from":"spec","to":"llm","step":2},{"from":"dict","to":"llm","step":2},{"from":"llm","to":"out","step":3},{"from":"out","to":"check","step":3}]}</script>
     <p class="cap" data-step="0">Press &rarr; to follow one spec.</p>
-    <p class="cap" data-step="1"><b>1.</b> A technical spec arrives from the single source of truth. An athlete does not know what 28,000 mm means.</p>
+    <p class="cap" data-step="1"><b>1.</b> A technical spec arrives from the single source of truth. An athlete does not know what 5 mm lugs mean.</p>
     <p class="cap" data-step="2"><b>2.</b> The system finds the matching entry in the <b>expert dictionary</b>: a table, written by the experts, from each spec value to what it means for the user.</p>
     <p class="cap" data-step="3"><b>3.</b> The LLM writes a clear sentence from that meaning, in versions for sellers, trainers or ads. An expert checks the draft.</p>
   </div>
-  <div class="notes"><p>Two minutes. Why a dictionary and not just ask the LLM? The LLM does not know the company's tested claims, and a wrong waterproof claim is a legal and safety problem. The dictionary keeps the knowledge with the experts and makes every product use the same words.</p><p>It also raised data readiness: knowledge that lived in people's heads is now data.</p></div>
+  <div class="notes"><p>Two minutes. Why a dictionary and not just ask the LLM? The LLM does not know the company's tested claims, and a wrong grip claim is a safety problem. The dictionary keeps the knowledge with the experts and makes every product use the same words.</p><p>It also raised data readiness: knowledge that lived in people's heads is now data.</p></div>
 </section>
 
 <!-- 20 · DIVIDER PART 4 -->
